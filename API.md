@@ -1,15 +1,21 @@
 # API reference
 
-Everything lives in one package:
+The API spans two modules and two packages:
 
 ```kotlin
-import dev.srsouza.kotlinx.datetime.locale.*
+// dev.carcara:kotlinx-locale
+import dev.carcara.kotlinx.locale.Locale
+
+// dev.carcara:kotlinx-locale-datetime
+import dev.carcara.kotlinx.locale.datetime.*
 ```
 
-The library adds extension functions to the kotlinx-datetime types
-`LocalDate`, `LocalTime`, `LocalDateTime`, `Month` and `DayOfWeek`, plus three
-types of its own: `Locale`, `FormatStyle` and `TextStyle`. All examples below
-are real output for the date 2026-07-27 (a Monday) and the time 15:05:09.
+The base module provides `Locale`. The datetime module adds `FormatStyle` and
+`TextStyle` plus extension functions on the kotlinx-datetime types
+`LocalDate`, `LocalTime`, `LocalDateTime`, `Month` and `DayOfWeek`. Depending
+on `kotlinx-locale-datetime` pulls the base module in transitively. All
+examples below are real output for the date 2026-07-27 (a Monday) and the
+time 15:05:09.
 
 ## Locale
 

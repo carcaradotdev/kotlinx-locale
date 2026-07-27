@@ -1,12 +1,12 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
+    kotlin("jvm")
 }
 
 kotlin {
     jvmToolchain(21)
 }
 
-val mainClassFqn = "dev.srsouza.kotlinx.datetime.locale.codegen.MainKt"
+val mainClassFqn = "dev.carcara.kotlinx.locale.codegen.MainKt"
 
 // Clones the pinned CLDR and ICU repositories into codegen/repos/ (gitignored).
 tasks.register<JavaExec>("cloneLocaleRepos") {
@@ -17,10 +17,11 @@ tasks.register<JavaExec>("cloneLocaleRepos") {
     args("clone", rootDir.absolutePath)
 }
 
-// Full pipeline: clone (if needed) + parse + generate Kotlin sources into :core.
+// Full pipeline: clone (if needed) + parse + generate Kotlin sources into the
+// :kotlinx-locale and :kotlinx-locale-datetime modules.
 tasks.register<JavaExec>("generateLocaleData") {
     group = "codegen"
-    description = "Generate locale data Kotlin sources into core/src from CLDR, plus ICU golden test fixtures"
+    description = "Generate locale data Kotlin sources from CLDR, plus ICU golden test fixtures"
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass = mainClassFqn
     args("generate", rootDir.absolutePath)

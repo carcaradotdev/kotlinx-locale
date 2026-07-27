@@ -31,8 +31,10 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "kotlinx-datetime-locale"
+rootProject.name = "kotlinx-locale-project"
 
-include(":core")
-project(":core").name = "kotlinx-datetime-locale"
+include(":locale")
+project(":locale").name = "kotlinx-locale"
+include(":datetime")
+project(":datetime").name = "kotlinx-locale-datetime"
 include(":codegen")

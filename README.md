@@ -1,17 +1,19 @@
-# kotlinx-datetime-locale
+# kotlinx-locale
 
-Locale-aware formatting for [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime),
-written entirely in common Kotlin.
+Locale support for Kotlin Multiplatform, written entirely in common Kotlin.
 
-kotlinx-datetime gives you `LocalDate`, `LocalTime` and friends on every Kotlin
-platform, but it deliberately ships no locale data: there is no way to turn a
-date into "27 de julho de 2026" or "2026年7月27日". This library adds that. The
-locale data comes from Unicode's CLDR, compiled into Kotlin source by a code
-generator, so formatting produces identical output on JVM, Android, JS, Wasm
-and every Native target. The platform's own locale APIs are never involved.
+Kotlin has no multiplatform locale API: there is no common `Locale` type, and
+libraries like [kotlinx-datetime](https://github.com/Kotlin/kotlinx-datetime)
+deliberately ship no locale data, so there is no way to turn a date into
+"27 de julho de 2026" or "2026年7月27日" from common code. This project fills
+that gap. The locale data comes from Unicode's CLDR, compiled into Kotlin
+source by a code generator, so results are identical on JVM, Android, JS,
+Wasm and every Native target. The platform's own locale APIs are never
+involved.
 
 ```kotlin
-import dev.srsouza.kotlinx.datetime.locale.*
+import dev.carcara.kotlinx.locale.Locale
+import dev.carcara.kotlinx.locale.datetime.*
 import kotlinx.datetime.*
 
 val date = LocalDate(2026, 7, 27)
@@ -31,6 +33,17 @@ LocalDateTime(date, LocalTime(15, 5)).format(FormatStyle.SHORT, Locale.current)
 
 The full API, with every enum value and edge case, is documented in [API.md](API.md).
 
+## Modules
+
+| Module | Artifact | What it contains |
+| --- | --- | --- |
+| `locale/` | `dev.carcara:kotlinx-locale` | The `Locale` type: tag parsing, normalization, system locale detection, the list of CLDR locales, and the data-lookup infrastructure formatter modules build on. Depends on nothing. |
+| `datetime/` | `dev.carcara:kotlinx-locale-datetime` | Extensions for kotlinx-datetime: date/time/date-time formatting in the four CLDR lengths, month and weekday names, per-locale digit systems. Carries the generated CLDR formatting data. |
+
+More formatter modules are planned on top of `kotlinx-locale`, currency
+formatting first. Each formatter module brings its own generated CLDR data and
+depends only on the base module, so you ship the data for what you use.
+
 ## Features
 
 - Date, time and date-time formatting in the four CLDR standard lengths
@@ -39,7 +52,7 @@ The full API, with every enum value and edge case, is documented in [API.md](API
 - Native digit systems: ar-EG formats years as ٢٠٢٦, fa as ۲۰۲۶, bn as ২০২৬.
 - A `Locale` type that parses BCP 47 tags and POSIX identifiers, with CLDR
   fallback (pt-XX falls back to pt, unknown languages to CLDR root).
-- `Locale.current` reads the system locale. This is the library's single
+- `Locale.current` reads the system locale. This is the project's single
   expect/actual: one function per platform returns a raw tag, and everything
   else runs in commonMain.
 
@@ -59,7 +72,8 @@ repositories { mavenLocal(); mavenCentral() }
 
 kotlin {
     sourceSets.commonMain.dependencies {
-        implementation("dev.srsouza:kotlinx-datetime-locale:0.1.0-SNAPSHOT")
+        implementation("dev.carcara:kotlinx-locale-datetime:0.1.0-SNAPSHOT")
+        // pulls in dev.carcara:kotlinx-locale transitively
     }
 }
 ```
@@ -87,8 +101,8 @@ The `:codegen` module clones two official Unicode repositories into
 - [unicode-org/cldr](https://github.com/unicode-org/cldr) at `release-48-2`,
   the source of truth. The generator parses the LDML files, resolves each
   locale's inheritance chain (parentLocales rules, root aliases), and emits
-  the flattened result as encoded string constants under
-  `core/src/commonMain/.../internal/data/`. Identical payloads are
+  the flattened result as encoded string constants into the datetime module,
+  plus the locale tag list into the base module. Identical payloads are
   deduplicated: 1121 locales plus root collapse to 429 unique constants,
   around 500 KB of Kotlin source.
 - [unicode-org/icu](https://github.com/unicode-org/icu) at `release-78.3`,
@@ -120,10 +134,8 @@ can execute: JVM, Android host tests, Node.js for JS and both Wasm targets,
 macOS, and the iOS/watchOS simulators. Apple simulator tests skip themselves
 when the matching runtime is not installed in Xcode.
 
-The test suite includes exact-output tests for major locales, an
-all-locales sweep that formats every style in every bundled locale, and the
-ICU golden cross-check described above. All of it runs from commonTest on
-every platform.
+The library modules share their target list and publishing setup through the
+`kotlinx-locale-multiplatform` convention plugin in `buildSrc/`.
 
 ## Scope and limitations
 
