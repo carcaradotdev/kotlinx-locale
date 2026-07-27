@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+
+# Kotlin
+.kotlin/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+local.properties
+
+# macOS
+.DS_Store
+
+# Xcode
+xcuserdata/
+
+# Android
+captures/
+.externalNativeBuild/
+.cxx/
