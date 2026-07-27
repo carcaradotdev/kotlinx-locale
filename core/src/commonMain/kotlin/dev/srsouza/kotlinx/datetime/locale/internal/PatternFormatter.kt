@@ -80,21 +80,34 @@ internal fun parseDateTimePattern(pattern: String): List<PatternToken> {
 internal fun List<PatternToken>.withoutZoneFields(): List<PatternToken> {
     if (none { it is PatternToken.Field && it.letter in ZONE_FIELD_LETTERS }) return this
     val result = ArrayList<PatternToken>(size)
-    var skipNextWhitespace = false
+    var trimNextLiteral = false
     for (token in this) {
         when {
             token is PatternToken.Field && token.letter in ZONE_FIELD_LETTERS -> {
-                val previous = result.lastOrNull()
-                if (previous is PatternToken.Literal && previous.text.isBlank()) {
-                    result.removeAt(result.lastIndex)
-                } else {
-                    skipNextWhitespace = true
+                // Swallow the whitespace that separated the zone from the rest:
+                // drop a blank literal before it, or trim a non-blank one.
+                when (val previous = result.lastOrNull()) {
+                    is PatternToken.Literal -> {
+                        if (previous.text.isBlank()) {
+                            result.removeAt(result.lastIndex)
+                        } else if (previous.text != previous.text.trimEnd()) {
+                            result[result.lastIndex] = PatternToken.Literal(previous.text.trimEnd())
+                        } else {
+                            trimNextLiteral = true
+                        }
+                    }
+                    else -> trimNextLiteral = true
                 }
             }
-            skipNextWhitespace && token is PatternToken.Literal && token.text.isBlank() ->
-                skipNextWhitespace = false
+            trimNextLiteral && token is PatternToken.Literal -> {
+                trimNextLiteral = false
+                if (!token.text.isBlank()) {
+                    val trimmed = token.text.trimStart()
+                    if (trimmed.isNotEmpty()) result.add(PatternToken.Literal(trimmed))
+                }
+            }
             else -> {
-                skipNextWhitespace = false
+                trimNextLiteral = false
                 result.add(token)
             }
         }
