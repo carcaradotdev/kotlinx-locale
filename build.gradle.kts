@@ -1,5 +1,2 @@
-plugins {
-    alias(libs.plugins.kotlin.multiplatform) apply false
-    alias(libs.plugins.kotlin.jvm) apply false
-    alias(libs.plugins.android.kotlin.multiplatform.library) apply false
-}
+// Plugin versions come from the buildSrc classpath (see buildSrc/build.gradle.kts);
+// library modules apply the kotlinx-locale-multiplatform convention plugin.
