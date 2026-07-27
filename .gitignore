@@ -2,6 +2,9 @@
 .gradle/
 build/
 
+# Cloned CLDR/ICU data repositories used by :codegen
+/codegen/repos/
+
 # Kotlin
 .kotlin/
 

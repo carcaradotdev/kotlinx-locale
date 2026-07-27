@@ -35,3 +35,4 @@ rootProject.name = "kotlinx-datetime-locale"
 
 include(":core")
 project(":core").name = "kotlinx-datetime-locale"
+include(":codegen")
