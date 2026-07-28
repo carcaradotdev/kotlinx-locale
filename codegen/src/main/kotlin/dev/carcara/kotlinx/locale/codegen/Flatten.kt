@@ -70,8 +70,11 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
         return chain
     }
 
+    /** [chain] restricted to levels that actually have a data file (plus root). */
+    fun dataChain(id: String): List<String> = chain(id).filter { it == "root" || it in available }
+
     fun resolve(id: String): ResolvedLocaleData {
-        val chain = chain(id).filter { it == "root" || it in available }
+        val chain = dataChain(id)
 
         val monthsWide = arrayOfNulls<String>(12)
         val monthsAbbr = arrayOfNulls<String>(12)
@@ -156,6 +159,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
 
 const val FIELD_SEPARATOR = "\u001F"
 const val LIST_SEPARATOR = "\u001E"
+const val KEY_SEPARATOR = "\u001D"
 
 /**
  * Encodes resolved data as a compact record: fields joined by U+001F,

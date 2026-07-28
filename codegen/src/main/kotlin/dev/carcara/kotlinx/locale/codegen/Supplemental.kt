@@ -2,6 +2,21 @@ package dev.carcara.kotlinx.locale.codegen
 
 import java.io.File
 
+/** ISO 3166-1 code mappings for one territory. */
+class TerritoryCodes(
+    val alpha2: String,
+    val alpha3: String?,
+    val numeric: Int?,
+)
+
+/** CLDR currency fraction info: how many digits CLDR formats and how it rounds. */
+class CurrencyFractions(
+    val digits: Int,
+    val rounding: Int,
+    val cashDigits: Int,
+    val cashRounding: Int,
+)
+
 class SupplementalData(
     /** child locale id -> explicit parent locale id (component-less parentLocales only). */
     val parentOverrides: Map<String, String>,
@@ -9,6 +24,13 @@ class SupplementalData(
     val numberingSystemDigits: Map<String, String>,
     /** locale id -> that locale's flexible day period rules (formatting ruleset). */
     val dayPeriodRules: Map<String, List<DayPeriodRule>>,
+    /** ISO 3166-1 alpha-2 -> code mappings (includes non-ISO CLDR territories). */
+    val territoryCodes: Map<String, TerritoryCodes>,
+    /** ISO 4217 code -> CLDR fraction info (explicit entries only, see [defaultFractions]). */
+    val currencyFractions: Map<String, CurrencyFractions>,
+    val defaultFractions: CurrencyFractions,
+    /** region alpha-2 -> current legal-tender currency codes, preferred first. */
+    val regionCurrencies: Map<String, List<String>>,
 )
 
 /**
@@ -33,9 +55,9 @@ class DayPeriodRule(val type: String, val start: Int, val end: Int) {
 
 fun parseSupplemental(cldrDir: File): SupplementalData {
     val supplementalDir = cldrDir.resolve("common/supplemental")
+    val supplementalData = parseXml(supplementalDir.resolve("supplementalData.xml")).documentElement
 
     val parentOverrides = LinkedHashMap<String, String>()
-    val supplementalData = parseXml(supplementalDir.resolve("supplementalData.xml")).documentElement
     for (block in supplementalData.childElements("parentLocales")) {
         if (block.hasAttribute("component")) continue
         for (rule in block.childElements("parentLocale")) {
@@ -60,7 +82,57 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
 
     val dayPeriodRules = parseDayPeriodRules(supplementalDir.resolve("dayPeriods.xml"))
 
-    return SupplementalData(parentOverrides, digits, dayPeriodRules)
+    val territoryCodes = LinkedHashMap<String, TerritoryCodes>()
+    supplementalData.child("codeMappings")?.let { mappings ->
+        for (territory in mappings.childElements("territoryCodes")) {
+            val alpha2 = territory.getAttribute("type")
+            if (alpha2.isEmpty()) continue
+            territoryCodes[alpha2] = TerritoryCodes(
+                alpha2 = alpha2,
+                alpha3 = territory.getAttribute("alpha3").takeIf(String::isNotEmpty),
+                numeric = territory.getAttribute("numeric").takeIf(String::isNotEmpty)?.toIntOrNull(),
+            )
+        }
+    }
+
+    var defaultFractions = CurrencyFractions(digits = 2, rounding = 0, cashDigits = 2, cashRounding = 0)
+    val currencyFractions = LinkedHashMap<String, CurrencyFractions>()
+    val regionCurrencies = LinkedHashMap<String, List<String>>()
+    supplementalData.child("currencyData")?.let { currencyData ->
+        currencyData.child("fractions")?.let { fractions ->
+            for (info in fractions.childElements("info")) {
+                val code = info.getAttribute("iso4217")
+                val infoDigits = info.getAttribute("digits").toIntOrNull() ?: continue
+                val rounding = info.getAttribute("rounding").toIntOrNull() ?: 0
+                val parsed = CurrencyFractions(
+                    digits = infoDigits,
+                    rounding = rounding,
+                    cashDigits = info.getAttribute("cashDigits").toIntOrNull() ?: infoDigits,
+                    cashRounding = info.getAttribute("cashRounding").toIntOrNull() ?: rounding,
+                )
+                if (code == "DEFAULT") defaultFractions = parsed else currencyFractions[code] = parsed
+            }
+        }
+        for (region in currencyData.childElements("region")) {
+            val alpha2 = region.getAttribute("iso3166")
+            if (alpha2.isEmpty()) continue
+            val current = region.childElements("currency")
+                .filter { !it.hasAttribute("to") && it.getAttribute("tender") != "false" }
+                .map { it.getAttribute("iso4217") }
+                .filter(String::isNotEmpty)
+            if (current.isNotEmpty()) regionCurrencies[alpha2] = current
+        }
+    }
+
+    return SupplementalData(
+        parentOverrides = parentOverrides,
+        numberingSystemDigits = digits,
+        dayPeriodRules = dayPeriodRules,
+        territoryCodes = territoryCodes,
+        currencyFractions = currencyFractions,
+        defaultFractions = defaultFractions,
+        regionCurrencies = regionCurrencies,
+    )
 }
 
 private fun parseDayPeriodRules(file: File): Map<String, List<DayPeriodRule>> {

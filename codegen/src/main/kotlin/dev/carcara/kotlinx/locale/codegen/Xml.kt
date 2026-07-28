@@ -20,6 +20,12 @@ fun parseXml(file: File): Document {
     return builder.parse(file)
 }
 
+fun parseXml(stream: java.io.InputStream): Document {
+    val builder = documentBuilderFactory.newDocumentBuilder()
+    builder.setEntityResolver { _, _ -> InputSource(StringReader("")) }
+    return builder.parse(stream)
+}
+
 fun Element.childElements(name: String? = null): List<Element> {
     val result = ArrayList<Element>()
     var node = firstChild

@@ -207,6 +207,40 @@ class IcuResolver(private val localesDir: File) {
         (lookup(id, *path) as? IcuList)?.values
 }
 
+/**
+ * Cross-checks the vendored ISO 4217 numeric codes against ICU's independently
+ * maintained table, mirroring how ICU golden data cross-checks the CLDR parse.
+ * Mismatches are warnings: the vendored official list stays authoritative.
+ */
+fun crossCheckCurrencyNumericCodes(iso4217: Iso4217Data, icuDir: File) {
+    val file = icuDir.resolve("icu4c/source/data/misc/currencyNumericCodes.txt")
+    if (!file.exists()) {
+        println("[codegen] WARNING: $file not found, skipping ISO 4217 numeric code cross-check")
+        return
+    }
+    val table = parseIcuBundle(file).second
+    val codeMap = table.entries["codeMap"] as? IcuTable
+        ?: error("${file.name}: missing codeMap table")
+    var mismatches = 0
+    for (currency in iso4217.currencies) {
+        val icuNumeric = (codeMap.entries[currency.code] as? IcuString)?.value?.toIntOrNull()
+        when {
+            icuNumeric == null -> {
+                println("[codegen] WARNING: ICU has no numeric code for ${currency.code}")
+                mismatches++
+            }
+            currency.numericCode != icuNumeric -> {
+                println(
+                    "[codegen] WARNING: numeric code mismatch for ${currency.code}: " +
+                        "ISO ${currency.numericCode}, ICU $icuNumeric",
+                )
+                mismatches++
+            }
+        }
+    }
+    println("[codegen] cross-checked ${iso4217.currencies.size} ISO 4217 numeric codes against ICU ($mismatches warnings)")
+}
+
 class IcuGoldenEntry(
     val tag: String,
     val dateFormats: List<String>?,

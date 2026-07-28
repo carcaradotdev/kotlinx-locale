@@ -18,28 +18,45 @@ val CLDR_REPO = RepoSpec(
     name = "cldr",
     url = "https://github.com/unicode-org/cldr.git",
     tag = "release-48-2",
-    sparsePaths = listOf("common/main", "common/supplemental", "common/dtd"),
+    sparsePaths = listOf("common/main", "common/supplemental", "common/dtd", "common/validity"),
 )
 
 val ICU_REPO = RepoSpec(
     name = "icu",
     url = "https://github.com/unicode-org/icu.git",
     tag = "release-78.3",
-    sparsePaths = listOf("icu4c/source/data/locales"),
+    sparsePaths = listOf(
+        "icu4c/source/data/locales",
+        "icu4c/source/data/misc",
+        "icu4c/source/data/curr",
+        "icu4c/source/data/region",
+    ),
 )
 
 fun reposDir(rootDir: File): File = rootDir.resolve("codegen/repos")
 
 /**
  * Shallow, blobless, sparse clone of [spec] pinned to its release tag.
- * Reuses an existing clone when the tag marker matches.
+ * Reuses an existing clone when the marker matches; widens the sparse
+ * checkout in place when only the path set changed (blobless clones fetch
+ * the missing blobs on demand).
  */
 fun ensureCloned(rootDir: File, spec: RepoSpec): File {
     val dir = reposDir(rootDir).resolve(spec.name)
     val marker = dir.resolve(".pinned-tag")
-    if (dir.resolve(".git").exists() && marker.takeIf(File::exists)?.readText() == spec.tag) {
-        println("[codegen] ${spec.name} already cloned at ${spec.tag}")
-        return dir
+    val markerContent = (listOf(spec.tag) + spec.sparsePaths).joinToString("\n")
+    if (dir.resolve(".git").exists()) {
+        val existing = marker.takeIf(File::exists)?.readText()
+        if (existing == markerContent) {
+            println("[codegen] ${spec.name} already cloned at ${spec.tag}")
+            return dir
+        }
+        if (existing?.lineSequence()?.firstOrNull() == spec.tag) {
+            println("[codegen] ${spec.name} at ${spec.tag}: updating sparse paths to ${spec.sparsePaths.joinToString()}")
+            exec("git", "-C", dir.absolutePath, "sparse-checkout", "set", *spec.sparsePaths.toTypedArray())
+            marker.writeText(markerContent)
+            return dir
+        }
     }
     dir.deleteRecursively()
     dir.parentFile.mkdirs()
@@ -54,7 +71,7 @@ fun ensureCloned(rootDir: File, spec: RepoSpec): File {
         dir.absolutePath,
     )
     exec("git", "-C", dir.absolutePath, "sparse-checkout", "set", *spec.sparsePaths.toTypedArray())
-    marker.writeText(spec.tag)
+    marker.writeText(markerContent)
     return dir
 }
 
