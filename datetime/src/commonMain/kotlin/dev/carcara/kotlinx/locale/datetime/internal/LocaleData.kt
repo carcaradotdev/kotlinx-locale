@@ -36,6 +36,46 @@ internal class LocaleData(payload: String) {
 
     /** The ten digits of the locale's default numbering system. */
     val digits: String = fields[22]
+
+    /**
+     * Flexible day period names in code order (code - 2, see [DayPeriodCodes]);
+     * "" when the locale has no name for that period.
+     */
+    val dayPeriodNames: List<String> = fields[23].split(LIST_SEPARATOR)
+
+    /** Day period rules from CLDR dayPeriods.xml: point rules first, then intervals. */
+    val dayPeriodRules: List<DayPeriodRule> = fields[24].split(LIST_SEPARATOR).map { item ->
+        val (code, start, end) = item.split(',')
+        DayPeriodRule(code.toInt(), start.toInt(), end.toInt())
+    }
+
+    /** The name for a day period code, or null when this locale has none. */
+    fun dayPeriodName(code: Int): String? = when (code) {
+        DayPeriodCodes.AM -> am
+        DayPeriodCodes.PM -> pm
+        else -> dayPeriodNames[code - 2].ifEmpty { null }
+    }
+}
+
+/**
+ * Day period type codes as encoded by :codegen (the DAY_PERIOD_TYPES order):
+ * am, pm, midnight, noon, morning1, morning2, afternoon1, afternoon2,
+ * evening1, evening2, night1, night2.
+ */
+internal object DayPeriodCodes {
+    const val AM = 0
+    const val PM = 1
+    const val MIDNIGHT = 2
+    const val NOON = 3
+}
+
+/**
+ * One day period rule, times as minutes of the day. A point rule (midnight,
+ * noon) has start == end; an interval rule covers [start, end) and wraps past
+ * midnight when start > end.
+ */
+internal class DayPeriodRule(val code: Int, val start: Int, val end: Int) {
+    val isPoint: Boolean get() = start == end
 }
 
 /**

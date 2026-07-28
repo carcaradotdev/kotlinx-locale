@@ -15,6 +15,7 @@ internal class IcuGolden(
     val daysAbbr: List<String>?,
     val am: String?,
     val pm: String?,
+    val dayPeriods: List<String?>?,
 )
 
 internal val icuGoldenData: List<IcuGolden> = listOf(
@@ -29,6 +30,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("midnight", "noon", "in the morning", null, "in the afternoon", null, "in the evening", null, "at night", null),
     ),
     IcuGolden(
         tag = "en-GB",
@@ -41,6 +43,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
         am = "am",
         pm = "pm",
+        dayPeriods = listOf("midnight", "noon", "in the morning", null, "in the afternoon", null, "in the evening", null, "at night", null),
     ),
     IcuGolden(
         tag = "en-AU",
@@ -53,6 +56,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
         am = "am",
         pm = "pm",
+        dayPeriods = listOf("midnight", "midday", "in the morning", null, "in the afternoon", null, "in the evening", null, "at night", null),
     ),
     IcuGolden(
         tag = "de",
@@ -65,6 +69,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa.", "So."),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("Mitternacht", null, "morgens", "vorm.", "mittags", "nachm.", "abends", null, "nachts", null),
     ),
     IcuGolden(
         tag = "de-AT",
@@ -77,6 +82,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa.", "So."),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("Mitternacht", null, "morgens", "vorm.", "mittags", "nachm.", "abends", null, "nachts", null),
     ),
     IcuGolden(
         tag = "fr",
@@ -89,6 +95,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("minuit", "midi", "matin", null, "après-midi", null, "soir", null, "matin", null),
     ),
     IcuGolden(
         tag = "fr-CA",
@@ -101,6 +108,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."),
         am = "a.m.",
         pm = "p.m.",
+        dayPeriods = listOf("minuit", "midi", "du mat.", null, "après-midi", null, "du soir", null, "du mat.", null),
     ),
     IcuGolden(
         tag = "es",
@@ -113,6 +121,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("lun", "mar", "mié", "jue", "vie", "sáb", "dom"),
         am = "a. m.",
         pm = "p. m.",
+        dayPeriods = listOf(null, "del mediodía", "de la madrugada", "de la mañana", null, null, "de la tarde", null, "de la noche", null),
     ),
     IcuGolden(
         tag = "es-MX",
@@ -125,6 +134,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("lun", "mar", "mié", "jue", "vie", "sáb", "dom"),
         am = "a.m.",
         pm = "p.m.",
+        dayPeriods = listOf(null, "del mediodía", "de la madrugada", "de la mañana", null, null, "de la tarde", null, "de la noche", null),
     ),
     IcuGolden(
         tag = "it",
@@ -137,6 +147,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("lun", "mar", "mer", "gio", "ven", "sab", "dom"),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("mezzanotte", "mezzogiorno", "di mattina", null, "di pomeriggio", null, "di sera", null, "di notte", null),
     ),
     IcuGolden(
         tag = "pt",
@@ -149,6 +160,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("seg.", "ter.", "qua.", "qui.", "sex.", "sáb.", "dom."),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("meia-noite", "meio-dia", "da manhã", null, "da tarde", null, "da noite", null, "da madrugada", null),
     ),
     IcuGolden(
         tag = "pt-PT",
@@ -161,6 +173,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("segunda", "terça", "quarta", "quinta", "sexta", "sábado", "domingo"),
         am = "a.m.",
         pm = "p.m.",
+        dayPeriods = listOf("meia-noite", "meio-dia", "da manhã", null, "da tarde", null, "da noite", null, "da madrugada", null),
     ),
     IcuGolden(
         tag = "ja",
@@ -173,6 +186,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("月", "火", "水", "木", "金", "土", "日"),
         am = "午前",
         pm = "午後",
+        dayPeriods = listOf("真夜中", "正午", "朝", null, "昼", null, "夕方", null, "夜", "夜中"),
     ),
     IcuGolden(
         tag = "ko",
@@ -185,6 +199,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("월", "화", "수", "목", "금", "토", "일"),
         am = "오전",
         pm = "오후",
+        dayPeriods = listOf("자정", "정오", "아침", "오전", "오후", null, "저녁", null, "밤", null),
     ),
     IcuGolden(
         tag = "ru",
@@ -197,6 +212,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("пн", "вт", "ср", "чт", "пт", "сб", "вс"),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("полн.", "полд.", "утра", null, "дня", null, "вечера", null, "ночи", null),
     ),
     IcuGolden(
         tag = "ar",
@@ -209,6 +225,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = null,
         am = "ص",
         pm = "م",
+        dayPeriods = listOf(null, null, "فجرًا", "ص", "ظهرًا", "بعد الظهر", "مساءً", null, "في المساء", "ليلاً"),
     ),
     IcuGolden(
         tag = "fi",
@@ -221,6 +238,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("ma", "ti", "ke", "to", "pe", "la", "su"),
         am = "ap.",
         pm = "ip.",
+        dayPeriods = listOf("keskiyöllä", "keskip.", "aamulla", "aamup.", "iltap.", null, "illalla", null, "yöllä", null),
     ),
     IcuGolden(
         tag = "pl",
@@ -233,6 +251,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("pon.", "wt.", "śr.", "czw.", "pt.", "sob.", "niedz."),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("o północy", "w południe", "rano", "przed południem", "po południu", null, "wieczorem", null, "w nocy", null),
     ),
     IcuGolden(
         tag = "tr",
@@ -245,6 +264,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"),
         am = "ÖÖ",
         pm = "ÖS",
+        dayPeriods = listOf("gece yarısı", "öğle", "sabah", "öğleden önce", "öğleden sonra", "akşamüstü", "akşam", null, "gece", null),
     ),
     IcuGolden(
         tag = "nl",
@@ -257,6 +277,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("ma", "di", "wo", "do", "vr", "za", "zo"),
         am = "a.m.",
         pm = "p.m.",
+        dayPeriods = listOf("middernacht", null, "’s ochtends", null, "’s middags", null, "’s avonds", null, "’s nachts", null),
     ),
     IcuGolden(
         tag = "th",
@@ -269,6 +290,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์", "อาทิตย์"),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("เที่ยงคืน", "เที่ยง", "ในตอนเช้า", null, "ในตอนบ่าย", "บ่าย", "ในตอนเย็น", "ค่ำ", "กลางคืน", null),
     ),
     IcuGolden(
         tag = "zh",
@@ -281,6 +303,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("周一", "周二", "周三", "周四", "周五", "周六", "周日"),
         am = "上午",
         pm = "下午",
+        dayPeriods = listOf("午夜", null, "早上", "上午", "中午", "下午", "晚上", null, "凌晨", null),
     ),
     IcuGolden(
         tag = "zh-Hant",
@@ -293,6 +316,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("週一", "週二", "週三", "週四", "週五", "週六", "週日"),
         am = "上午",
         pm = "下午",
+        dayPeriods = listOf("午夜", null, "清晨", "上午", "中午", "下午", "晚上", null, "凌晨", null),
     ),
     IcuGolden(
         tag = "hi",
@@ -305,6 +329,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि", "रवि"),
         am = "am",
         pm = "pm",
+        dayPeriods = listOf("मध्यरात्रि", null, "सुबह", null, "दोपहर", null, "शाम", null, "रात", null),
     ),
     IcuGolden(
         tag = "cs",
@@ -317,6 +342,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("po", "út", "st", "čt", "pá", "so", "ne"),
         am = "dop.",
         pm = "odp.",
+        dayPeriods = listOf("půln.", "pol.", "r.", "dop.", "odp.", null, "več.", null, "v n.", null),
     ),
     IcuGolden(
         tag = "sv",
@@ -329,6 +355,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("mån", "tis", "ons", "tors", "fre", "lör", "sön"),
         am = "fm",
         pm = "em",
+        dayPeriods = listOf("midnatt", null, "på morg.", "på förm.", "på efterm.", null, "på kvällen", null, "på natten", null),
     ),
     IcuGolden(
         tag = "uk",
@@ -341,6 +368,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("пн", "вт", "ср", "чт", "пт", "сб", "нд"),
         am = "дп",
         pm = "пп",
+        dayPeriods = listOf("ночі", "дня", "ранку", null, "дня", null, "вечора", null, "ночі", null),
     ),
     IcuGolden(
         tag = "he",
@@ -353,6 +381,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("יום ב׳", "יום ג׳", "יום ד׳", "יום ה׳", "יום ו׳", "שבת", "יום א׳"),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("חצות", null, "בוקר", null, "צהריים", "אחר הצהריים", "ערב", null, "לילה", "לפנות בוקר"),
     ),
     IcuGolden(
         tag = "id",
@@ -365,6 +394,7 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"),
         am = "AM",
         pm = "PM",
+        dayPeriods = listOf("tengah malam", "tengah hari", "pagi", null, "siang", null, "sore", null, "malam", null),
     ),
     IcuGolden(
         tag = "vi",
@@ -377,5 +407,6 @@ internal val icuGoldenData: List<IcuGolden> = listOf(
         daysAbbr = listOf("Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "CN"),
         am = "SA",
         pm = "CH",
+        dayPeriods = listOf("nửa đêm", "TR", "sáng", null, "chiều", null, "tối", null, "đêm", null),
     ),
 )

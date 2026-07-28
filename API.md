@@ -206,17 +206,56 @@ Output for 15:05:09:
 | ja | 15時05分09秒 | 15:05:09 | 15:05:09 | 15:05 |
 | ko | 오후 3시 5분 9초 | 오후 3시 5분 9초 | 오후 3:05:09 | 오후 3:05 |
 | fi | 15.05.09 | 15.05.09 | 15.05.09 | 15.05 |
+| zh-Hant | 下午3:05:09 | 下午3:05:09 | 下午3:05:09 | 下午3:05 |
 | ar-EG | ٣:٠٥:٠٩ م | ٣:٠٥:٠٩ م | ٣:٠٥:٠٩ م | ٣:٠٥ م |
 
-Two things to know:
+Three things to know:
 
 - CLDR's FULL and LONG time patterns end in a time-zone name (`zzzz`, `z`).
   A `LocalTime` has no zone, so the library drops those fields and the
-  whitespace around them. That is why FULL, LONG and MEDIUM look identical in
+  whitespace around them — including the brackets in patterns like zh-Hant's
+  `Bh:mm:ss [zzzz]`. That is why FULL, LONG and MEDIUM look identical in
   many locales here.
 - Twelve-hour locales handle noon and midnight the CLDR way: 00:30 is
   `12:30 AM` and 12:30 is `12:30 PM` in `en`. The separator before AM/PM is
   U+202F (narrow no-break space), not a regular space, matching CLDR 48.
+- The 下午 in the zh-Hant row is not a plain PM marker but a flexible
+  [day period](#day-periods) that changes across the day.
+
+## Day periods
+
+CLDR time patterns can mark the part of day in three ways, and the formatter
+implements all three pattern fields:
+
+- `a` — plain AM/PM.
+- `b` — AM/PM, except that exactly 00:00:00 and 12:00:00 use the locale's
+  midnight and noon names when it has them: `12:00 noon` in `en`. German has
+  a name for midnight but none for noon, so 12:00 stays `PM`. One second past
+  the mark and the field is back to plain AM/PM.
+- `B` — flexible day periods: the period picked by the locale's rules in
+  CLDR's `dayPeriods.xml`, named things like `in the afternoon` (en),
+  `abends` (de) or `晚上` (zh). Period boundaries are locale-specific:
+  night runs 21:00 to 24:00 in `en` but 22:00 to 04:00 in `ru`, wrapping
+  past midnight.
+
+You never write these fields yourself; they matter because they occur in the
+standard patterns that `LocalTime.format` uses. Traditional Chinese is the
+locale family whose standard time patterns use `B` (`Bh:mm`), so its output
+changes across the day:
+
+| Time | zh-Hant SHORT | Period |
+| --- | --- | --- |
+| 00:00 | 午夜12:00 | midnight (exact time only) |
+| 02:05 | 凌晨2:05 | night |
+| 06:05 | 清晨6:05 | early morning |
+| 09:05 | 上午9:05 | morning |
+| 12:05 | 中午12:05 | midday |
+| 15:05 | 下午3:05 | afternoon |
+| 20:05 | 晚上8:05 | evening |
+
+A day period the locale has no name for falls back to AM/PM, as UTS #35
+specifies, so `B` and `b` always produce something. Names come from the
+abbreviated format width, the same width the `a` field uses.
 
 ## LocalDateTime.format
 

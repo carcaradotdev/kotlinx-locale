@@ -12,6 +12,9 @@ class ResolvedLocaleData(
     val daysNarrow: List<String>,
     val am: String,
     val pm: String,
+    /** Flexible day period names ([DAY_PERIOD_TYPES] minus am/pm); "" when the locale has none. */
+    val dayPeriods: List<String>,
+    val dayPeriodRules: List<DayPeriodRule>,
     val era0: String,
     val era1: String,
     val dateFormats: List<String>,
@@ -34,6 +37,21 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
 
     private fun partial(id: String): PartialLocaleData =
         partialCache.getOrPut(id) { parseLdml(mainDir.resolve("$id.xml")) }
+
+    /**
+     * Day period rules for [id], resolved by plain truncation of the locale id
+     * (the way ICU resolves its dayPeriods data), NOT via parentLocales.
+     * zh_Hant relies on this: its parentLocales parent is root, but its
+     * standard time patterns use B and expect the zh rules.
+     */
+    private fun dayPeriodRulesFor(id: String): List<DayPeriodRule> {
+        var current = id
+        while (true) {
+            supplemental.dayPeriodRules[current]?.let { return it }
+            current = current.substringBeforeLast('_', "")
+                .ifEmpty { return supplemental.dayPeriodRules.getValue("root") }
+        }
+    }
 
     /** Inheritance chain from the locale itself up to and including root. */
     fun chain(id: String): List<String> {
@@ -65,6 +83,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
         val daysStandaloneNarrow = arrayOfNulls<String>(7)
         var am: String? = null
         var pm: String? = null
+        val dayPeriods = arrayOfNulls<String>(DAY_PERIOD_TYPES.size - 2)
         var era0: String? = null
         var era1: String? = null
         val dateFormats = arrayOfNulls<String>(4)
@@ -89,6 +108,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             mergeList(dateFormats, p.dateFormats)
             mergeList(timeFormats, p.timeFormats)
             mergeList(glueFormats, p.glueFormats)
+            mergeList(dayPeriods, p.dayPeriods)
             if (am == null) am = p.am
             if (pm == null) pm = p.pm
             if (era0 == null) era0 = p.era0
@@ -122,6 +142,8 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             daysNarrow = full("daysNarrow", daysNarrow),
             am = checkNotNull(am) { "$id: missing am" },
             pm = checkNotNull(pm) { "$id: missing pm" },
+            dayPeriods = dayPeriods.map { it ?: "" },
+            dayPeriodRules = dayPeriodRulesFor(id),
             era0 = checkNotNull(era0) { "$id: missing era0" },
             era1 = checkNotNull(era1) { "$id: missing era1" },
             dateFormats = full("dateFormats", dateFormats),
@@ -140,7 +162,7 @@ const val LIST_SEPARATOR = "\u001E"
  * list items joined by U+001E. Decoded at runtime by LocaleData.
  */
 fun ResolvedLocaleData.encode(): String {
-    val fields = ArrayList<String>(23)
+    val fields = ArrayList<String>(25)
     fun list(items: List<String>) = fields.add(items.joinToString("\u001E"))
     list(monthsWide); list(monthsAbbr); list(monthsNarrow)
     list(daysWide); list(daysAbbr); list(daysNarrow)
@@ -150,5 +172,8 @@ fun ResolvedLocaleData.encode(): String {
     timeFormats.forEach(fields::add)
     glueFormats.forEach(fields::add)
     fields.add(digits)
+    list(dayPeriods)
+    // Each rule as "typeCode,start,end" minutes; start == end marks a point rule.
+    list(dayPeriodRules.map { "${DAY_PERIOD_TYPES.indexOf(it.type)},${it.start},${it.end}" })
     return fields.joinToString("\u001F")
 }
