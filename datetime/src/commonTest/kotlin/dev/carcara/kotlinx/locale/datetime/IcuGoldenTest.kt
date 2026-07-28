@@ -47,6 +47,15 @@ class IcuGoldenTest {
             }
             golden.am?.let { assertEquals(it.normalized(), data.am.normalized(), "${golden.tag} am") }
             golden.pm?.let { assertEquals(it.normalized(), data.pm.normalized(), "${golden.tag} pm") }
+            golden.dayPeriods?.forEachIndexed { index, name ->
+                if (name != null) {
+                    assertEquals(
+                        name.normalized(),
+                        data.dayPeriodNames[index].normalized(),
+                        "${golden.tag} dayPeriods[$index]",
+                    )
+                }
+            }
         }
     }
 }

@@ -2,6 +2,9 @@ package dev.carcara.kotlinx.locale.datetime
 
 import dev.carcara.kotlinx.locale.Locale
 
+import dev.carcara.kotlinx.locale.datetime.internal.formatPattern
+import dev.carcara.kotlinx.locale.datetime.internal.localeDataFor
+import dev.carcara.kotlinx.locale.datetime.internal.parseDateTimePattern
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
@@ -34,6 +37,23 @@ class AllLocalesSmokeTest {
                     "$locale dateTime $style '$dateTimeResult' does not contain " +
                         "'$dateResult' and '$timeResult'",
                 )
+            }
+        }
+    }
+
+    @Test
+    fun everyLocaleResolvesADayPeriodAtEveryHour() {
+        val bTokens = parseDateTimePattern("B")
+        val bLowerTokens = parseDateTimePattern("b")
+        for (locale in Locale.availableLocales) {
+            val data = localeDataFor(locale)
+            for (hour in 0..23) {
+                for (probe in listOf(LocalTime(hour, 0), LocalTime(hour, 30, 9))) {
+                    val flexible = formatPattern(bTokens, data, date = null, time = probe)
+                    assertTrue(flexible.isNotBlank(), "$locale B at $probe was blank")
+                    val amPm = formatPattern(bLowerTokens, data, date = null, time = probe)
+                    assertTrue(amPm.isNotBlank(), "$locale b at $probe was blank")
+                }
             }
         }
     }

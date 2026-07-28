@@ -112,8 +112,30 @@ internal fun List<PatternToken>.withoutZoneFields(): List<PatternToken> {
             }
         }
     }
-    return result
+    // Bracketed zones ("Bh:mm:ss [zzzz]") leave an empty pair behind; merge
+    // adjacent literals and drop those pairs, and any literal left blank by it.
+    val merged = ArrayList<PatternToken>(result.size)
+    for (token in result) {
+        val last = merged.lastOrNull()
+        if (token is PatternToken.Literal && last is PatternToken.Literal) {
+            merged[merged.lastIndex] = PatternToken.Literal(last.text + token.text)
+        } else {
+            merged.add(token)
+        }
+    }
+    return merged.mapNotNull { token ->
+        if (token !is PatternToken.Literal || !EMPTY_BRACKET_PAIR.containsMatchIn(token.text)) {
+            token
+        } else {
+            token.text.replace(EMPTY_BRACKET_PAIR, "")
+                .takeUnless(String::isBlank)
+                ?.let { PatternToken.Literal(it) }
+        }
+    }
 }
+
+// The closing ] must be escaped: JS unicode-mode regexes reject a lone one.
+private val EMPTY_BRACKET_PAIR = Regex("""\(\s*\)|\[\s*\]""")
 
 internal fun formatPattern(
     tokens: List<PatternToken>,
@@ -169,7 +191,9 @@ private fun formatField(
                 else -> sb.append(data.daysAbbr[index])
             }
         }
-        'a', 'b', 'B' -> if (time != null) sb.append(if (time.hour < 12) data.am else data.pm)
+        'a' -> if (time != null) sb.append(data.amPm(time))
+        'b' -> if (time != null) sb.append(amPmNoonMidnight(time, data))
+        'B' -> if (time != null) sb.append(flexibleDayPeriod(time, data))
         'h' -> if (time != null) sb.appendNumber(((time.hour + 11) % 12) + 1, count, data.digits)
         'H' -> if (time != null) sb.appendNumber(time.hour, count, data.digits)
         'K' -> if (time != null) sb.appendNumber(time.hour % 12, count, data.digits)
@@ -180,6 +204,39 @@ private fun formatField(
         // rather than crashing; they do not occur in CLDR standard style patterns.
         else -> {}
     }
+}
+
+private fun LocaleData.amPm(time: LocalTime): String = if (time.hour < 12) am else pm
+
+/**
+ * The `b` field: AM/PM, except that exactly 00:00:00 and 12:00:00 use the
+ * locale's midnight/noon names when it has them.
+ */
+private fun amPmNoonMidnight(time: LocalTime, data: LocaleData): String {
+    if (time.minute == 0 && time.second == 0) {
+        if (time.hour == 0) data.dayPeriodName(DayPeriodCodes.MIDNIGHT)?.let { return it }
+        if (time.hour == 12) data.dayPeriodName(DayPeriodCodes.NOON)?.let { return it }
+    }
+    return data.amPm(time)
+}
+
+/**
+ * The `B` field: the flexible day period ("in the afternoon", 晚上) selected by
+ * the locale's CLDR day period rules. Midnight/noon point rules only apply at
+ * the exact time (zero seconds); a period the locale has no name for falls
+ * back to AM/PM, per UTS #35.
+ */
+private fun flexibleDayPeriod(time: LocalTime, data: LocaleData): String {
+    val minuteOfDay = time.hour * 60 + time.minute
+    for (rule in data.dayPeriodRules) {
+        val matches = when {
+            rule.isPoint -> minuteOfDay == rule.start && time.second == 0
+            rule.start < rule.end -> minuteOfDay >= rule.start && minuteOfDay < rule.end
+            else -> minuteOfDay >= rule.start || minuteOfDay < rule.end
+        }
+        if (matches) return data.dayPeriodName(rule.code) ?: data.amPm(time)
+    }
+    return data.amPm(time)
 }
 
 private fun StringBuilder.appendNumber(value: Int, minWidth: Int, digits: String) {

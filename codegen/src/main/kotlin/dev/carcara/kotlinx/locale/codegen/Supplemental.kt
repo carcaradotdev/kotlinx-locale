@@ -7,7 +7,29 @@ class SupplementalData(
     val parentOverrides: Map<String, String>,
     /** numbering system id -> its ten digits (numeric systems only). */
     val numberingSystemDigits: Map<String, String>,
+    /** locale id -> that locale's flexible day period rules (formatting ruleset). */
+    val dayPeriodRules: Map<String, List<DayPeriodRule>>,
 )
+
+/**
+ * The day period types, in the order used by the encoded rule records. am and pm
+ * come first so that the flexible types line up with the runtime name list
+ * (whose index is `code - 2`).
+ */
+val DAY_PERIOD_TYPES = listOf(
+    "am", "pm", "midnight", "noon",
+    "morning1", "morning2", "afternoon1", "afternoon2",
+    "evening1", "evening2", "night1", "night2",
+)
+
+/**
+ * One rule of a day period ruleset, times as minutes of the day. A point rule
+ * (`at="12:00"`, only midnight and noon) has start == end; an interval rule
+ * covers [start, end) and wraps past midnight when start > end.
+ */
+class DayPeriodRule(val type: String, val start: Int, val end: Int) {
+    val isPoint: Boolean get() = start == end
+}
 
 fun parseSupplemental(cldrDir: File): SupplementalData {
     val supplementalDir = cldrDir.resolve("common/supplemental")
@@ -36,5 +58,47 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
     }
     check("latn" in digits) { "numberingSystems.xml did not provide latn digits" }
 
-    return SupplementalData(parentOverrides, digits)
+    val dayPeriodRules = parseDayPeriodRules(supplementalDir.resolve("dayPeriods.xml"))
+
+    return SupplementalData(parentOverrides, digits, dayPeriodRules)
+}
+
+private fun parseDayPeriodRules(file: File): Map<String, List<DayPeriodRule>> {
+    val root = parseXml(file).documentElement
+    // The first (untyped) ruleset drives formatting with the B pattern field;
+    // the type="selection" ruleset is for message selection and is not used here.
+    val ruleSet = root.childElements("dayPeriodRuleSet").firstOrNull { !it.hasAttribute("type") }
+        ?: error("dayPeriods.xml has no formatting dayPeriodRuleSet")
+
+    fun minutes(value: String): Int {
+        val (h, m) = value.split(':').map(String::toInt)
+        return h * 60 + m
+    }
+
+    val rulesByLocale = LinkedHashMap<String, List<DayPeriodRule>>()
+    for (rulesEl in ruleSet.childElements("dayPeriodRules")) {
+        val rules = ArrayList<DayPeriodRule>()
+        for (rule in rulesEl.childElements("dayPeriodRule")) {
+            val type = rule.getAttribute("type")
+            check(type in DAY_PERIOD_TYPES) { "dayPeriods.xml: unknown day period type '$type'" }
+            if (rule.hasAttribute("at")) {
+                // A point rule; 24:00 is the same instant as 00:00.
+                val at = minutes(rule.getAttribute("at")) % (24 * 60)
+                rules.add(DayPeriodRule(type, at, at))
+            } else {
+                val start = minutes(rule.getAttribute("from")) % (24 * 60)
+                val end = minutes(rule.getAttribute("before"))
+                check(start != end) { "dayPeriods.xml: zero-length interval for '$type'" }
+                rules.add(DayPeriodRule(type, start, end))
+            }
+        }
+        // Points first: the runtime scans in order and midnight/noon must win
+        // over the interval that contains the same minute.
+        rules.sortBy { !it.isPoint }
+        for (locale in rulesEl.getAttribute("locales").split(' ')) {
+            if (locale.isNotBlank()) rulesByLocale[locale] = rules
+        }
+    }
+    check("root" in rulesByLocale) { "dayPeriods.xml did not provide root rules" }
+    return rulesByLocale
 }

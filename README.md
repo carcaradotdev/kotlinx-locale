@@ -49,6 +49,8 @@ depends only on the base module, so you ship the data for what you use.
 - Date, time and date-time formatting in the four CLDR standard lengths
   (`FULL`, `LONG`, `MEDIUM`, `SHORT`) for all 1121 CLDR locales.
 - Localized month and day-of-week names in wide, abbreviated and narrow widths.
+- Flexible day periods where a locale's standard patterns use them: zh-Hant
+  times render as 凌晨2:05, 下午3:05 and 晚上8:05 as the day progresses.
 - Native digit systems: ar-EG formats years as ٢٠٢٦, fa as ۲۰۲۶, bn as ২০২৬.
 - A `Locale` type that parses BCP 47 tags and POSIX identifiers, with CLDR
   fallback (pt-XX falls back to pt, unknown languages to CLDR root).

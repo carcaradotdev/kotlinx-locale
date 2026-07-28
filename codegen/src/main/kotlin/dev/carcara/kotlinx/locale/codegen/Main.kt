@@ -26,9 +26,27 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
 
     println("[codegen] flattening ${flattener.localeIds.size} CLDR locales")
     val encoded = LinkedHashMap<String, String>()
-    encoded["root"] = flattener.resolve("root").encode() // final runtime fallback
+    val dayPeriodGaps = LinkedHashMap<String, List<String>>()
+    fun encodeChecked(id: String): String {
+        val resolved = flattener.resolve(id)
+        // A flexible rule type without a name renders as plain AM/PM at runtime;
+        // surface how often that fallback is in play.
+        val unnamed = resolved.dayPeriodRules
+            .map { it.type }
+            .filter { it != "am" && it != "pm" }
+            .filter { resolved.dayPeriods[DAY_PERIOD_TYPES.indexOf(it) - 2].isEmpty() }
+        if (unnamed.isNotEmpty()) dayPeriodGaps[id] = unnamed
+        return resolved.encode()
+    }
+    encoded["root"] = encodeChecked("root") // final runtime fallback
     for (id in flattener.localeIds) {
-        encoded[id] = flattener.resolve(id).encode()
+        encoded[id] = encodeChecked(id)
+    }
+    if (dayPeriodGaps.isNotEmpty()) {
+        println(
+            "[codegen] ${dayPeriodGaps.size} locales have day period rules without names " +
+                "(am/pm fallback), e.g. ${dayPeriodGaps.entries.take(5).joinToString { "${it.key}=${it.value}" }}",
+        )
     }
 
     val dataDir = rootDir.resolve(

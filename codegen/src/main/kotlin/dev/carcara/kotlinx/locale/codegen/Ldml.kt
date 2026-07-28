@@ -25,6 +25,8 @@ class PartialLocaleData {
     val daysStandaloneNarrow = arrayOfNulls<String>(7)
     var am: String? = null
     var pm: String? = null
+    /** Flexible day period names, indexed like [DAY_PERIOD_TYPES] minus am/pm. */
+    val dayPeriods = arrayOfNulls<String>(DAY_PERIOD_TYPES.size - 2)
     var era0: String? = null
     var era1: String? = null
     val dateFormats = arrayOfNulls<String>(4)
@@ -80,15 +82,23 @@ fun parseLdml(file: File): PartialLocaleData {
         }
     }
 
+    // Abbreviated is the base width for day periods (root aliases wide and
+    // narrow to it), and it is what the a/b/B pattern fields render.
     gregorian.child("dayPeriods")
         ?.child("dayPeriodContext", "type" to "format")
         ?.child("dayPeriodWidth", "type" to "abbreviated")
         ?.let { widthEl ->
             for (period in widthEl.childElements("dayPeriod")) {
                 if (period.hasAttribute("alt")) continue
-                when (period.getAttribute("type")) {
+                when (val type = period.getAttribute("type")) {
                     "am" -> if (data.am == null) data.am = period.textContent.cleaned()
                     "pm" -> if (data.pm == null) data.pm = period.textContent.cleaned()
+                    else -> {
+                        val index = DAY_PERIOD_TYPES.indexOf(type) - 2
+                        if (index >= 0 && data.dayPeriods[index] == null) {
+                            data.dayPeriods[index] = period.textContent.cleaned()
+                        }
+                    }
                 }
             }
         }
