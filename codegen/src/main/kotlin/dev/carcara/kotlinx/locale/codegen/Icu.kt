@@ -37,7 +37,7 @@ private class IcuTokenizer(private val text: String) {
         while (pos < text.length) {
             val ch = text[pos]
             when {
-                ch.isWhitespace() || ch == '' -> pos++
+                ch.isWhitespace() || ch == '\uFEFF' -> pos++
                 ch == '/' && pos + 1 < text.length && text[pos + 1] == '/' -> {
                     while (pos < text.length && text[pos] != '\n') pos++
                 }
