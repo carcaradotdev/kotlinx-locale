@@ -64,5 +64,86 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
     )
     emitIcuGolden(goldenFile, ICU_REPO.tag, extractIcuGolden(icuDir))
 
+    generateCountryAndCurrency(rootDir, cldrDir, icuDir, supplemental, flattener)
+
     println("[codegen] done")
+}
+
+private fun generateCountryAndCurrency(
+    rootDir: File,
+    cldrDir: File,
+    icuDir: File,
+    supplemental: SupplementalData,
+    flattener: Flattener,
+) {
+    val iso4217 = parseIso4217()
+    crossCheckCurrencyNumericCodes(iso4217, icuDir)
+
+    val territoryCodes = countryTerritoryCodes(parseRegularRegions(cldrDir), supplemental)
+    val countryCodes = territoryCodes.map(TerritoryCodes::alpha2).toSet()
+    val currencyCodes = iso4217.currencies.map(Iso4217Currency::code).toSet()
+
+    println("[codegen] extracting country/currency data for ${flattener.localeIds.size} CLDR locales")
+    val extras = ExtrasResolver(cldrDir, flattener, supplemental, countryCodes, currencyCodes)
+    val countries = buildCountryList(territoryCodes) { alpha2 ->
+        extras.resolveValue("en") { it.territoryNames[alpha2] }
+    }
+
+    val countryDir = rootDir.resolve("country/src/commonMain/kotlin/dev/carcara/kotlinx/locale/country")
+    emitCountryEnum(countryDir.resolve("Country.kt"), CLDR_REPO.tag, countries)
+    KeyedPayloadEmitter(
+        outputDir = countryDir.resolve("internal/data"),
+        packageName = "dev.carcara.kotlinx.locale.country.internal.data",
+        filePrefix = "CountryNames",
+        constPrefix = "COUNTRY_NAMES",
+        registryProperty = "countryNamesRegistry",
+        source = "CLDR ${CLDR_REPO.tag}",
+        versionConst = "CLDR_VERSION" to CLDR_REPO.tag,
+    ).emit(buildCountryNamePayloads(flattener, extras))
+
+    val currencyDir = rootDir.resolve("currency/src/commonMain/kotlin/dev/carcara/kotlinx/locale/currency")
+    val currencies = iso4217.currencies.map { iso ->
+        CurrencyGen(iso, supplemental.currencyFractions[iso.code] ?: supplemental.defaultFractions)
+    }
+    emitCurrencyEnum(currencyDir.resolve("Currency.kt"), CLDR_REPO.tag, iso4217.published, currencies)
+    KeyedPayloadEmitter(
+        outputDir = currencyDir.resolve("internal/data"),
+        packageName = "dev.carcara.kotlinx.locale.currency.internal.data",
+        filePrefix = "CurrencyFormats",
+        constPrefix = "CURRENCY_FORMATS",
+        registryProperty = "currencyFormatsRegistry",
+        source = "CLDR ${CLDR_REPO.tag}",
+        versionConst = "CLDR_VERSION" to CLDR_REPO.tag,
+    ).emit(buildCurrencyFormatPayloads(flattener, extras))
+    KeyedPayloadEmitter(
+        outputDir = currencyDir.resolve("internal/data"),
+        packageName = "dev.carcara.kotlinx.locale.currency.internal.data",
+        filePrefix = "CurrencyNames",
+        constPrefix = "CURRENCY_NAMES",
+        registryProperty = "currencyNamesRegistry",
+        source = "CLDR ${CLDR_REPO.tag}",
+    ).emit(buildCurrencyNamePayloads(flattener, extras))
+    emitCountryCurrencies(
+        outputFile = currencyDir.resolve("internal/data/CountryCurrencies.kt"),
+        cldrTag = CLDR_REPO.tag,
+        countries = countries,
+        supplemental = supplemental,
+        currencyCodes = currencyCodes,
+    )
+
+    emitIcuCountryGolden(
+        outputFile = rootDir.resolve(
+            "country/src/commonTest/kotlin/dev/carcara/kotlinx/locale/country/IcuCountryGoldenData.kt",
+        ),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuCountryGolden(icuDir),
+    )
+    emitIcuCurrencyGolden(
+        outputFile = rootDir.resolve(
+            "currency/src/commonTest/kotlin/dev/carcara/kotlinx/locale/currency/IcuCurrencyGoldenData.kt",
+        ),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuCurrencyGolden(icuDir),
+        numericCodes = extractIcuNumericCodes(icuDir),
+    )
 }

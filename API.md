@@ -1,6 +1,6 @@
 # API reference
 
-The API spans two modules and two packages:
+The API spans four modules and four packages:
 
 ```kotlin
 // dev.carcara:kotlinx-locale
@@ -8,14 +8,24 @@ import dev.carcara.kotlinx.locale.Locale
 
 // dev.carcara:kotlinx-locale-datetime
 import dev.carcara.kotlinx.locale.datetime.*
+
+// dev.carcara:kotlinx-locale-country
+import dev.carcara.kotlinx.locale.country.Country
+
+// dev.carcara:kotlinx-locale-currency
+import dev.carcara.kotlinx.locale.currency.*
 ```
 
 The base module provides `Locale`. The datetime module adds `FormatStyle` and
 `TextStyle` plus extension functions on the kotlinx-datetime types
-`LocalDate`, `LocalTime`, `LocalDateTime`, `Month` and `DayOfWeek`. Depending
-on `kotlinx-locale-datetime` pulls the base module in transitively. All
-examples below are real output for the date 2026-07-27 (a Monday) and the
-time 15:05:09.
+`LocalDate`, `LocalTime`, `LocalDateTime`, `Month` and `DayOfWeek`. The
+country module adds the `Country` enum with the ISO 3166-1 codes and CLDR
+display names. The currency module adds the `Currency` enum (ISO 4217 codes
+and decimals plus CLDR formatting behavior), the `CurrencyAmount` value type
+and the CLDR currency formatter; it depends on the country module for
+country-to-currency mapping. Each formatter module pulls the base module in
+transitively. All datetime examples below are real output for the date
+2026-07-27 (a Monday) and the time 15:05:09.
 
 ## Locale
 
@@ -341,18 +351,237 @@ One consequence of CLDR 48 that surprises people: plain `ar` defaults to
 Latin digits. The Arabic-Indic digits shown above come from `ar-EG` and other
 regional Arabic locales.
 
+## Country
+
+```kotlin
+// dev.carcara:kotlinx-locale-country
+import dev.carcara.kotlinx.locale.country.Country
+```
+
+An enum of the 249 officially assigned ISO 3166-1 countries, keyed by alpha-2
+code, so `Country.BR` is Brazil and works in `when` exhaustively. CLDR-only
+region codes are deliberately excluded: no macroregions (`419`, `EU`), no
+exceptionally reserved codes (`AC`, `IC`, `TA`) and no user-assigned codes
+(`XK`).
+
+| Member | Example for `Country.US` |
+| --- | --- |
+| `alpha2` | `"US"` (same as `name`) |
+| `alpha3` | `"USA"` |
+| `numericCode` | `840` |
+| `displayName(locale)` | `"United States"` |
+
+### Mapping between representations
+
+Every representation converts to every other. The `OrNull` variants return
+null on unknown input; the plain variants throw `IllegalArgumentException`.
+Code lookups are case-insensitive.
+
+```kotlin
+Country.forAlpha2("br")            // Country.BR
+Country.forAlpha3("DEU")           // Country.DE
+Country.forNumericCode(392)        // Country.JP
+Country.forAlpha2OrNull("XX")      // null
+
+Country.forLocaleOrNull(Locale.forLanguageTag("pt-BR"))   // Country.BR
+Country.forLocaleOrNull(Locale.forLanguageTag("pt"))      // null (no region)
+
+// Reverse lookup by localized name, case-insensitive.
+Country.forDisplayNameOrNull("United States")                              // Country.US
+Country.forDisplayNameOrNull("Estados Unidos", Locale.forLanguageTag("pt")) // Country.US
+```
+
+### Localized names
+
+`displayName` resolves the CLDR territory name through the locale's
+inheritance chain, including CLDR `parentLocales` overrides:
+
+```kotlin
+val us = Country.US
+us.displayName(Locale.forLanguageTag("en"))     // United States
+us.displayName(Locale.forLanguageTag("pt-BR"))  // Estados Unidos
+us.displayName(Locale.forLanguageTag("ja"))     // アメリカ合衆国
+us.displayName(Locale.forLanguageTag("zh"))     // 美国
+
+// es-AR inherits from es-419, which renames some countries relative to es:
+Country.CI.displayName(Locale.forLanguageTag("es"))     // Côte d’Ivoire
+Country.CI.displayName(Locale.forLanguageTag("es-AR"))  // Costa de Marfil
+```
+
+CLDR root carries no country names, so a locale with no data anywhere in its
+chain falls back to the alpha-2 code. `displayName` defaults its argument to
+`Locale.current`, as do all locale-taking functions in these modules.
+
+## Currency
+
+```kotlin
+// dev.carcara:kotlinx-locale-currency
+import dev.carcara.kotlinx.locale.currency.*
+```
+
+An enum of the 178 active ISO 4217 currencies, keyed by alphabetic code —
+including the fund codes (`USN`, `CLF`), precious metals (`XAU`, `XPT`) and
+special codes (`XXX`, `XDR`), matching `java.util.Currency`.
+
+Each entry carries both what ISO defines and what CLDR does when formatting,
+because the two intentionally disagree for some currencies:
+
+| Member | Meaning | USD | JPY | BHD | ALL | XAU |
+| --- | --- | --- | --- | --- | --- | --- |
+| `numericCode` | ISO 4217 numeric code | 840 | 392 | 48 | 8 | 959 |
+| `defaultFractionDigits` | ISO minor units, -1 when N.A. | 2 | 0 | 3 | 2 | -1 |
+| `cldrFractionDigits` | digits CLDR formats | 2 | 0 | 3 | 0 | 2 |
+| `minorUnitDigits` | digits of minor-unit amounts (ISO, or 0 when N.A.) | 2 | 0 | 3 | 2 | 0 |
+
+The Albanian lek is the interesting column: ISO says two decimals, CLDR
+formats none. The cash cases work the same way — `cldrCashFractionDigits` and
+the rounding increments `cldrRoundingIncrement` / `cldrCashRoundingIncrement`
+describe how CLDR rounds cash amounts (CHF cash rounds to 0.05, DKK to 0.50,
+AMD drops the decimals entirely).
+
+### Converting between the ISO and CLDR scales
+
+```kotlin
+// ALL: ISO 2 decimals, CLDR 0. Rounding is half-even.
+Currency.ALL.isoToCldrUnits(12345)   // 123   (123.45 lekë -> 123)
+Currency.ALL.isoToCldrUnits(12350)   // 124   (tie: 123 is odd, round away)
+Currency.ALL.cldrToIsoUnits(123)     // 12300
+
+// Currencies where the scales agree pass values through unchanged.
+Currency.USD.isoToCldrUnits(1234)    // 1234
+```
+
+### Lookups
+
+```kotlin
+Currency.forCode("usd")           // Currency.USD (case-insensitive)
+Currency.forNumericCode(978)      // Currency.EUR
+Currency.forCodeOrNull("ZZZ")     // null
+
+// Country mapping, from CLDR's legal-tender data:
+Currency.forCountryOrNull(Country.DE)                     // Currency.EUR
+Currency.forLocaleOrNull(Locale.forLanguageTag("pt-BR"))  // Currency.BRL
+
+Country.US.currency     // Currency.USD (extension property)
+Country.PA.currencies   // [PAB, USD]   (multi-currency countries, preferred first)
+Country.AQ.currency     // null         (Antarctica has no universal currency)
+```
+
+### Symbols and names
+
+```kotlin
+Currency.USD.symbol(Locale.forLanguageTag("en"))     // $
+Currency.USD.symbol(Locale.forLanguageTag("pt-BR"))  // US$
+Currency.JPY.symbol(Locale.forLanguageTag("ja"))     // ￥ (fullwidth; en uses ¥)
+Currency.CHF.symbol(Locale.forLanguageTag("de-CH"))  // CHF (no symbol -> the code)
+
+Currency.USD.displayName(Locale.forLanguageTag("en"))     // US Dollar
+Currency.USD.displayName(Locale.forLanguageTag("pt-BR"))  // Dólar americano
+Currency.EUR.displayName(Locale.forLanguageTag("es"))     // euro
+```
+
+Both resolve through the locale chain like country names and fall back to the
+ISO code when CLDR has nothing.
+
+## CurrencyAmount
+
+```kotlin
+public class CurrencyAmount(val currency: Currency, val minorUnits: Long)
+```
+
+A monetary amount as a currency plus a `Long` count of ISO minor units: cents
+for USD, fils for BHD, whole yen for JPY. `CurrencyAmount(Currency.USD, 1234_56)`
+is $1,234.56.
+
+```kotlin
+val price = CurrencyAmount.of(Currency.USD, 12, 50)   // 12.50
+price.majorUnits            // 12
+price.minorPart             // 50
+price.toDecimalString()     // "12.50"
+price.toString()            // "USD 12.50"
+
+CurrencyAmount.parse(Currency.USD, "12.5")    // 12.50
+CurrencyAmount.parseOrNull(Currency.USD, "12.345")  // null (too many decimals)
+
+// Arithmetic stays within one currency; mixing currencies throws.
+val total = price + CurrencyAmount(Currency.USD, 100)   // 13.50
+-total                                                   // -13.50
+price < total                                            // true
+```
+
+`toDecimalString`/`parse` speak plain ISO decimals (`-12.50`), useful for
+serialization. Negative amounts carry the sign on both `majorUnits` and
+`minorPart`.
+
+### Formatting
+
+```kotlin
+fun CurrencyAmount.format(
+    locale: Locale = Locale.current,
+    style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL,  // or CODE
+    accounting: Boolean = false,
+    cash: Boolean = false,
+): String
+```
+
+Real output for 123456 minor units (1,234.56) across locales:
+
+| Locale | USD | EUR | JPY (1234) |
+| --- | --- | --- | --- |
+| en | $1,234.56 | €1,234.56 | ¥1,234 |
+| de | 1.234,56 $ | 1.234,56 € | 1.234 ¥ |
+| pt-BR | US$ 1.234,56 | € 1.234,56 | JP¥ 1.234 |
+| de-CH | $ 1'234.56 | EUR 1'234.56 | ¥ 1'234 |
+| fr | 1 234,56 $US | 1 234,56 € | 1 234 JPY |
+| ar-EG | ‏١٬٢٣٤٫٥٦ US$ | ‏١٬٢٣٤٫٥٦ € | ‏١٬٢٣٤ JP¥ |
+
+Symbols are locale-relative, exactly as CLDR sees the world: French writes
+the US dollar as `$US`, Hindi writes yen as `JP¥`, and Swiss German uses the
+plain code for the euro. The separator between an alphabetic symbol and the
+number is U+00A0 (no-break space); French groups digits with U+202F. Grouping
+follows the locale's pattern, including Indian lakh/crore grouping
+(`₹1,23,456.78` in hi) and Spanish's minimum-grouping rule (`1000,00 €`, but
+`10.000,00 €`).
+
+The knobs:
+
+```kotlin
+val amount = CurrencyAmount(Currency.USD, -123456)
+val en = Locale.forLanguageTag("en")
+
+amount.format(en)                                       // -$1,234.56
+amount.format(en, accounting = true)                    // ($1,234.56)
+amount.format(en, style = CurrencySymbolStyle.CODE)     // -USD 1,234.56
+
+// cash = true applies CLDR's cash digits and rounding increments:
+CurrencyAmount(Currency.CHF, 1003).format(en, cash = true)   // CHF 10.05
+CurrencyAmount(Currency.AMD, 12350).format(en, cash = true)  // AMD 124
+
+// CLDR digits differ from ISO digits for some currencies (half-even):
+CurrencyAmount(Currency.ALL, 12345).format(en)   // ALL 123
+```
+
+When CLDR provides an `alphaNextToNumber` pattern variant, it is used
+automatically whenever the character next to the number would be a letter —
+that is why `CHF 10.05` and `USD 1,234.56` get a space while `$1,234.56` does
+not.
+
 ## Errors, guarantees and versions
 
-`format` and `displayName` never throw for any `Locale`: an unknown locale
-falls back along the chain in [Fallback resolution](#fallback-resolution) and
-ends at CLDR root. The only throwing entry points are `Locale.of` and
-`Locale.forLanguageTag`, both with `IllegalArgumentException`, and both have
-non-throwing alternatives (`forLanguageTagOrNull`, or validating input
-yourself).
+`format`, `displayName` and `symbol` never throw for any `Locale`: an unknown
+locale falls back along the chain in [Fallback resolution](#fallback-resolution)
+and ends at CLDR root (names additionally fall back to the ISO code). The
+throwing entry points are `Locale.of`, `Locale.forLanguageTag`, the non-`OrNull`
+code lookups on `Country` and `Currency`, `CurrencyAmount.of`/`parse`, and
+`CurrencyAmount` arithmetic across two different currencies — all with
+`IllegalArgumentException`, and all with non-throwing alternatives where
+lookup can fail.
 
 All types are immutable and safe to share between threads. Formatting
 allocates its working state per call and touches no global mutable data.
 
-The bundled data comes from CLDR `release-48-2`. Test fixtures are extracted
-from ICU `release-78.3`. Regeneration instructions are in the
+The bundled data comes from CLDR `release-48-2` plus, for currency identity
+(numeric codes and ISO minor units), the official ISO 4217 list one published
+2026-01-01. Test fixtures and the ISO 4217 numeric cross-check come from ICU
+`release-78.3`. Regeneration instructions are in the
 [README](README.md#where-the-data-comes-from).

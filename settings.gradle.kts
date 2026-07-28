@@ -37,4 +37,8 @@ include(":locale")
 project(":locale").name = "kotlinx-locale"
 include(":datetime")
 project(":datetime").name = "kotlinx-locale-datetime"
+include(":country")
+project(":country").name = "kotlinx-locale-country"
+include(":currency")
+project(":currency").name = "kotlinx-locale-currency"
 include(":codegen")

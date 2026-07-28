@@ -4,7 +4,7 @@ import java.io.File
 import org.w3c.dom.Element
 
 /** CLDR marks "inherit from parent" with three up arrows. */
-private const val INHERITANCE_MARKER = "↑↑↑"
+internal const val INHERITANCE_MARKER = "↑↑↑"
 
 private val STYLES = listOf("full", "long", "medium", "short")
 private val DAY_KEYS_ISO = listOf("mon", "tue", "wed", "thu", "fri", "sat", "sun")
@@ -135,4 +135,4 @@ fun parseLdml(file: File): PartialLocaleData {
     return data
 }
 
-private fun String.cleaned(): String? = takeUnless { it == INHERITANCE_MARKER }
+internal fun String.cleaned(): String? = takeUnless { it == INHERITANCE_MARKER }
