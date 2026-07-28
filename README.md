@@ -40,7 +40,7 @@ The full API, with every enum value and edge case, is documented in [API.md](API
 | `locale/` | `dev.carcara:kotlinx-locale` | The `Locale` type: tag parsing, normalization, system locale detection, the list of CLDR locales, and the data-lookup infrastructure formatter modules build on. Depends on nothing. |
 | `datetime/` | `dev.carcara:kotlinx-locale-datetime` | Extensions for kotlinx-datetime: date/time/date-time formatting in the four CLDR lengths, month and weekday names, per-locale digit systems. Carries the generated CLDR formatting data. |
 | `country/` | `dev.carcara:kotlinx-locale-country` | The `Country` enum: all 249 ISO 3166-1 countries with alpha-2, alpha-3 and numeric codes, CLDR-localized display names, and conversion between every representation. |
-| `currency/` | `dev.carcara:kotlinx-locale-currency` | The `Currency` enum (active ISO 4217: alphabetic and numeric codes, ISO minor units, CLDR fraction and cash-rounding behavior), the `CurrencyAmount` type, a CLDR currency formatter, ISO↔CLDR decimal-scale mappers, and country→currency mapping (depends on the country module). |
+| `currency/` | `dev.carcara:kotlinx-locale-currency` | The `Currency` enum (active ISO 4217: alphabetic and numeric codes, ISO minor units, CLDR fraction and cash-rounding behavior), the `CurrencyAmount` type, a CLDR currency formatter, mappers between the ISO and CLDR decimal scales, and country-to-currency mapping (depends on the country module). |
 
 Each formatter module brings its own generated CLDR data and depends on the
 base module, so you ship the data for what you use. More formatter modules
@@ -70,13 +70,13 @@ Country.BR.currency                                   // Currency.BRL
 - The ISO 3166-1 countries as an enum, with localized names for every CLDR
   locale and conversion between alpha-2, alpha-3, numeric code and name.
 - The active ISO 4217 currencies as an enum with both the ISO decimals and
-  CLDR's formatting decimals (they differ — Albanian lek has 2 ISO minor units
-  but formats with 0), plus mappers between the two scales.
+  CLDR's formatting decimals (they differ: the Albanian lek has 2 ISO minor
+  units but formats with 0), plus mappers between the two scales.
 - Locale-aware currency formatting from CLDR patterns: `$1,234.56`,
   `1.234,56 €`, `₹1,23,456.78`, `‏١٬٢٣٤٫٥٦ ج.م.‏`, with accounting and
-  cash-rounding variants (CHF cash rounds to 0.05), and parsing of formatted
-  strings back to ISO minor units (`200 Ft` → 20000, since HUF prints without
-  its two ISO decimals).
+  cash-rounding variants (CHF cash rounds to 0.05). Formatted strings also
+  parse back to ISO minor units: `200 Ft` becomes 20000, because HUF prints
+  without its two ISO decimals.
 - A `Locale` type that parses BCP 47 tags and POSIX identifiers, with CLDR
   fallback (pt-XX falls back to pt, unknown languages to CLDR root).
 - `Locale.current` reads the system locale. This is the project's single
@@ -142,8 +142,8 @@ The `:codegen` module clones two official Unicode repositories into
   many times over.
 - [unicode-org/icu](https://github.com/unicode-org/icu) at `release-78.3`,
   used only for verification. The generator extracts golden fixtures for 30
-  major locales from ICU's resource bundles — datetime patterns and names,
-  country display names, currency symbols/names, and number separators — and
+  major locales from ICU's resource bundles (datetime patterns and names,
+  country display names, currency symbols and names, number separators), and
   generated `Icu*GoldenTest`s verify in each module's commonTest that the
   CLDR-derived runtime data agrees with them on every platform. ICU encodes
   the same upstream data through a completely different pipeline, so agreement
@@ -195,9 +195,9 @@ The library modules share their target list and publishing setup through the
   types carry no zone, so those fields are dropped and FULL/LONG times equal
   the MEDIUM ones in most locales.
 - Date/time formatting only: parsing "27 de julho de 2026" back into a
-  `LocalDate` is not supported. Currency strings do parse back —
+  `LocalDate` is not supported. Currency strings do parse back:
   `CurrencyAmount.parseFormatted` reads CLDR-formatted values like
-  `R$ 1.234,56` or `200 Ft` into ISO minor units — but only one number with
+  `R$ 1.234,56` or `200 Ft` into ISO minor units. It expects one number with
   one locale's separators, not free-form text.
 - Skeleton-based patterns (`availableFormats`), relative formatting
   ("yesterday") and interval formatting are not implemented.

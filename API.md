@@ -223,7 +223,7 @@ Three things to know:
 
 - CLDR's FULL and LONG time patterns end in a time-zone name (`zzzz`, `z`).
   A `LocalTime` has no zone, so the library drops those fields and the
-  whitespace around them — including the brackets in patterns like zh-Hant's
+  whitespace around them, including the brackets in patterns like zh-Hant's
   `Bh:mm:ss [zzzz]`. That is why FULL, LONG and MEDIUM look identical in
   many locales here.
 - Twelve-hour locales handle noon and midnight the CLDR way: 00:30 is
@@ -237,12 +237,12 @@ Three things to know:
 CLDR time patterns can mark the part of day in three ways, and the formatter
 implements all three pattern fields:
 
-- `a` — plain AM/PM.
-- `b` — AM/PM, except that exactly 00:00:00 and 12:00:00 use the locale's
+- `a` is plain AM/PM.
+- `b` is AM/PM, except that exactly 00:00:00 and 12:00:00 use the locale's
   midnight and noon names when it has them: `12:00 noon` in `en`. German has
   a name for midnight but none for noon, so 12:00 stays `PM`. One second past
   the mark and the field is back to plain AM/PM.
-- `B` — flexible day periods: the period picked by the locale's rules in
+- `B` is the flexible day period: the period picked by the locale's rules in
   CLDR's `dayPeriods.xml`, named things like `in the afternoon` (en),
   `abends` (de) or `晚上` (zh). Period boundaries are locale-specific:
   night runs 21:00 to 24:00 in `en` but 22:00 to 04:00 in `ru`, wrapping
@@ -419,9 +419,10 @@ chain falls back to the alpha-2 code. `displayName` defaults its argument to
 import dev.carcara.kotlinx.locale.currency.*
 ```
 
-An enum of the 178 active ISO 4217 currencies, keyed by alphabetic code —
-including the fund codes (`USN`, `CLF`), precious metals (`XAU`, `XPT`) and
-special codes (`XXX`, `XDR`), matching `java.util.Currency`.
+An enum of the 178 active ISO 4217 currencies, keyed by alphabetic code. The
+set includes the fund codes (`USN`, `CLF`), the precious metals (`XAU`,
+`XPT`) and the special codes (`XXX`, `XDR`), the same coverage as
+`java.util.Currency`.
 
 Each entry carries both what ISO defines and what CLDR does when formatting,
 because the two intentionally disagree for some currencies:
@@ -434,10 +435,10 @@ because the two intentionally disagree for some currencies:
 | `minorUnitDigits` | digits of minor-unit amounts (ISO, or 0 when N.A.) | 2 | 0 | 3 | 2 | 0 |
 
 The Albanian lek is the interesting column: ISO says two decimals, CLDR
-formats none. The cash cases work the same way — `cldrCashFractionDigits` and
-the rounding increments `cldrRoundingIncrement` / `cldrCashRoundingIncrement`
-describe how CLDR rounds cash amounts (CHF cash rounds to 0.05, DKK to 0.50,
-AMD drops the decimals entirely).
+formats none. The cash cases work the same way: `cldrCashFractionDigits` and
+the rounding increments `cldrRoundingIncrement` and `cldrCashRoundingIncrement`
+describe how CLDR rounds cash amounts. CHF cash rounds to 0.05, DKK to 0.50,
+and AMD drops the decimals entirely.
 
 ### Converting between the ISO and CLDR scales
 
@@ -509,7 +510,7 @@ val total = price + CurrencyAmount(Currency.USD, 100)   // 13.50
 price < total                                            // true
 ```
 
-`toDecimalString`/`parse` speak plain ISO decimals (`-12.50`), useful for
+`toDecimalString` and `parse` speak plain ISO decimals (`-12.50`), useful for
 serialization. Negative amounts carry the sign on both `majorUnits` and
 `minorPart`.
 
@@ -541,15 +542,15 @@ CurrencyAmount.parseFormatted(Currency.USD, "($1,234.56)", en).minorUnits  // -1
 CurrencyAmount.parseFormatted(Currency.EGP, "١٬٢٣٤٫٥٦", Locale.forLanguageTag("ar-EG"))
 ```
 
-Parsing is lenient about placement — the currency may appear as its symbol,
-ISO code or display name, anywhere or not at all, with any spacing — and
+Parsing is lenient about placement (the currency may appear as its symbol,
+ISO code or display name, anywhere or not at all, with any spacing) and
 strict about content: leftover characters that are not digits or the locale's
 separators fail the parse, as does a fraction ISO minor units cannot
 represent (`"5.5"` for JPY). Negatives are recognized from the locale's minus
 sign or accounting parentheses. `format` output round trips for every bundled
-locale; the value comes back through the CLDR digit conversion, so a lossy
-format like ALL's 0-digit rendering parses back to the printed value
-(`"ALL 123"` → 12300).
+locale. The value comes back through the CLDR digit conversion, so a lossy
+format like ALL's 0-digit rendering parses back to the printed value:
+`"ALL 123"` gives 12300.
 
 ### Formatting
 
@@ -600,8 +601,8 @@ CurrencyAmount(Currency.ALL, 12345).format(en)   // ALL 123
 ```
 
 When CLDR provides an `alphaNextToNumber` pattern variant, it is used
-automatically whenever the character next to the number would be a letter —
-that is why `CHF 10.05` and `USD 1,234.56` get a space while `$1,234.56` does
+automatically whenever the character next to the number would be a letter.
+That is why `CHF 10.05` and `USD 1,234.56` get a space while `$1,234.56` does
 not.
 
 ## Errors, guarantees and versions
@@ -610,10 +611,10 @@ not.
 locale falls back along the chain in [Fallback resolution](#fallback-resolution)
 and ends at CLDR root (names additionally fall back to the ISO code). The
 throwing entry points are `Locale.of`, `Locale.forLanguageTag`, the non-`OrNull`
-code lookups on `Country` and `Currency`, `CurrencyAmount.of`/`parse`, and
-`CurrencyAmount` arithmetic across two different currencies — all with
-`IllegalArgumentException`, and all with non-throwing alternatives where
-lookup can fail.
+code lookups on `Country` and `Currency`, the `CurrencyAmount` parse and `of`
+functions, and `CurrencyAmount` arithmetic across two different currencies.
+All of them throw `IllegalArgumentException`, and every lookup that can fail
+has a non-throwing alternative.
 
 All types are immutable and safe to share between threads. Formatting
 allocates its working state per call and touches no global mutable data.
