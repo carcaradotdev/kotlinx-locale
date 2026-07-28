@@ -3,12 +3,7 @@ package dev.carcara.kotlinx.locale.codegen
 import java.io.File
 
 /** One ISO 3166-1 country: both alpha codes, the numeric code and its English name. */
-class CountryInfo(
-    val alpha2: String,
-    val alpha3: String,
-    val numeric: Int,
-    val englishName: String,
-)
+class CountryInfo(val alpha2: String, val alpha3: String, val numeric: Int, val englishName: String)
 
 /**
  * The alpha-2 region codes CLDR considers `regular` (common/validity/region.xml).
@@ -54,13 +49,12 @@ fun countryTerritoryCodes(regularRegions: Set<String>, supplemental: Supplementa
     return codes
 }
 
-fun buildCountryList(codes: List<TerritoryCodes>, englishNameFor: (String) -> String?): List<CountryInfo> =
-    codes.map { territory ->
-        CountryInfo(
-            alpha2 = territory.alpha2,
-            alpha3 = territory.alpha3!!,
-            numeric = territory.numeric!!,
-            englishName = englishNameFor(territory.alpha2)
-                ?: error("no English display name for territory ${territory.alpha2}"),
-        )
-    }
+fun buildCountryList(codes: List<TerritoryCodes>, englishNameFor: (String) -> String?): List<CountryInfo> = codes.map { territory ->
+    CountryInfo(
+        alpha2 = territory.alpha2,
+        alpha3 = territory.alpha3!!,
+        numeric = territory.numeric!!,
+        englishName = englishNameFor(territory.alpha2)
+            ?: error("no English display name for territory ${territory.alpha2}"),
+    )
+}

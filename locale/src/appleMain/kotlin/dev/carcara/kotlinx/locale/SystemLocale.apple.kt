@@ -5,6 +5,5 @@ import platform.Foundation.currentLocale
 import platform.Foundation.localeIdentifier
 import platform.Foundation.preferredLanguages
 
-internal actual fun platformSystemLocaleTag(): String? =
-    (NSLocale.preferredLanguages.firstOrNull() as? String)
-        ?: NSLocale.currentLocale.localeIdentifier
+internal actual fun platformSystemLocaleTag(): String? = (NSLocale.preferredLanguages.firstOrNull() as? String)
+    ?: NSLocale.currentLocale.localeIdentifier

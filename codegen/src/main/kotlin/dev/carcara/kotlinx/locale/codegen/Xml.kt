@@ -1,11 +1,11 @@
 package dev.carcara.kotlinx.locale.codegen
 
-import java.io.File
-import javax.xml.parsers.DocumentBuilderFactory
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.xml.sax.InputSource
+import java.io.File
 import java.io.StringReader
+import javax.xml.parsers.DocumentBuilderFactory
 
 private val documentBuilderFactory: DocumentBuilderFactory = DocumentBuilderFactory.newInstance().apply {
     isValidating = false
@@ -57,5 +57,4 @@ fun Element.path(vararg steps: Any): Element? {
     return current
 }
 
-fun step(name: String, attrName: String, attrValue: String): Pair<String, Pair<String, String>> =
-    name to (attrName to attrValue)
+fun step(name: String, attrName: String, attrValue: String): Pair<String, Pair<String, String>> = name to (attrName to attrValue)

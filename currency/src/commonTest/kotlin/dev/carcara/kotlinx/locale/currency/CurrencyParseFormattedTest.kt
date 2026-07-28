@@ -86,8 +86,12 @@ class CurrencyParseFormattedTest {
     @Test
     fun formattedOutputRoundTripsInEveryLocale() {
         val currencies = listOf(
-            Currency.USD, Currency.EUR, Currency.JPY,
-            Currency.BHD, Currency.HUF, Currency.ALL,
+            Currency.USD,
+            Currency.EUR,
+            Currency.JPY,
+            Currency.BHD,
+            Currency.HUF,
+            Currency.ALL,
         )
         val samples = listOf(0L, 5, -1, 100, 123456, -9999999)
         for (locale in Locale.availableLocales) {

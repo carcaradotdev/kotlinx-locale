@@ -186,6 +186,16 @@ when the matching runtime is not installed in Xcode.
 The library modules share their target list and publishing setup through the
 `kotlinx-locale-multiplatform` convention plugin in `buildSrc/`.
 
+Formatting is enforced with [ktlint](https://pinterest.github.io/ktlint/)
+through the `org.jlleitschuh.gradle.ktlint` plugin; generated sources are
+excluded by their `// GENERATED` header. Run `./gradlew ktlintFormat` to fix
+style before committing, or `./gradlew ktlintCheck` to verify.
+
+CI (`.github/workflows/ci.yml`) runs on every push to `main` and on pull
+requests: a ktlint check plus `./gradlew build` on Linux, macOS and Windows
+runners, which together cover every target's tests a host can execute. Pull
+requests must be green on all of these checks before merging.
+
 ## Scope and limitations
 
 - Formatting uses each locale's gregorian calendar data. Non-gregorian

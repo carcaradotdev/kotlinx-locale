@@ -7,12 +7,7 @@ import java.io.File
  * unicode-org repositories (not archived mirrors), pinned to release tags so the
  * generated output is reproducible.
  */
-data class RepoSpec(
-    val name: String,
-    val url: String,
-    val tag: String,
-    val sparsePaths: List<String>,
-)
+data class RepoSpec(val name: String, val url: String, val tag: String, val sparsePaths: List<String>)
 
 val CLDR_REPO = RepoSpec(
     name = "cldr",

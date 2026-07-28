@@ -10,8 +10,6 @@ private val currenciesByCountry: Map<String, List<Currency>> by lazy {
     }
 }
 
-internal fun currenciesOf(country: Country): List<Currency> =
-    currenciesByCountry[country.alpha2].orEmpty()
+internal fun currenciesOf(country: Country): List<Currency> = currenciesByCountry[country.alpha2].orEmpty()
 
-internal fun primaryCurrencyOf(country: Country): Currency? =
-    currenciesOf(country).firstOrNull()
+internal fun primaryCurrencyOf(country: Country): Currency? = currenciesOf(country).firstOrNull()

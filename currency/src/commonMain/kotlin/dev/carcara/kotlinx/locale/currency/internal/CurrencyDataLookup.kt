@@ -22,6 +22,7 @@ internal class CurrencyLocaleFormat(payload: String) {
     val digits: String = fields[0]
     val decimal: String = fields[1]
     val group: String = fields[2]
+
     /** Decimal/group separators used inside currency values (rarely differ). */
     val currencyDecimal: String = fields[3]
     val currencyGroup: String = fields[4]
@@ -47,8 +48,7 @@ internal fun currencyFormatFor(locale: Locale): CurrencyLocaleFormat {
  * entries being `code KS value` joined by ES, holding only what that locale's
  * own CLDR file declares. Lookups walk the embedded parent chain.
  */
-internal fun currencySymbolFor(currency: Currency, locale: Locale): String? =
-    lookupCurrencyName(locale, field = 1, key = currency.code)
+internal fun currencySymbolFor(currency: Currency, locale: Locale): String? = lookupCurrencyName(locale, field = 1, key = currency.code)
 
 internal fun currencyDisplayNameFor(currency: Currency, locale: Locale): String? =
     lookupCurrencyName(locale, field = 2, key = currency.code)
