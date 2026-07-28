@@ -74,7 +74,9 @@ Country.BR.currency                                   // Currency.BRL
   but formats with 0), plus mappers between the two scales.
 - Locale-aware currency formatting from CLDR patterns: `$1,234.56`,
   `1.234,56 €`, `₹1,23,456.78`, `‏١٬٢٣٤٫٥٦ ج.م.‏`, with accounting and
-  cash-rounding variants (CHF cash rounds to 0.05).
+  cash-rounding variants (CHF cash rounds to 0.05), and parsing of formatted
+  strings back to ISO minor units (`200 Ft` → 20000, since HUF prints without
+  its two ISO decimals).
 - A `Locale` type that parses BCP 47 tags and POSIX identifiers, with CLDR
   fallback (pt-XX falls back to pt, unknown languages to CLDR root).
 - `Locale.current` reads the system locale. This is the project's single
@@ -192,9 +194,11 @@ The library modules share their target list and publishing setup through the
 - CLDR's FULL and LONG time patterns end with a time-zone name. The formatted
   types carry no zone, so those fields are dropped and FULL/LONG times equal
   the MEDIUM ones in most locales.
-- Formatting only. Parsing "27 de julho de 2026" back into a `LocalDate` is
-  not supported; the same goes for localized currency strings
-  (`CurrencyAmount.parse` reads plain ISO decimals like `-12.50` only).
+- Date/time formatting only: parsing "27 de julho de 2026" back into a
+  `LocalDate` is not supported. Currency strings do parse back —
+  `CurrencyAmount.parseFormatted` reads CLDR-formatted values like
+  `R$ 1.234,56` or `200 Ft` into ISO minor units — but only one number with
+  one locale's separators, not free-form text.
 - Skeleton-based patterns (`availableFormats`), relative formatting
   ("yesterday") and interval formatting are not implemented.
 - The currency enum covers the active ISO 4217 set; historic currencies (DEM,

@@ -513,6 +513,44 @@ price < total                                            // true
 serialization. Negative amounts carry the sign on both `majorUnits` and
 `minorPart`.
 
+### Parsing formatted strings
+
+```kotlin
+fun CurrencyAmount.Companion.parseFormattedOrNull(
+    currency: Currency,
+    text: String,
+    locale: Locale = Locale.current,
+): CurrencyAmount?   // parseFormatted throws instead
+```
+
+The reverse of `format`: reads a CLDR-formatted string with the locale's
+separators, digits and currency symbol. The printed number is taken at face
+value and scaled to ISO minor units, so CLDR's reduced formatting digits do
+not distort the result:
+
+```kotlin
+val ptBR = Locale.forLanguageTag("pt-BR")
+CurrencyAmount.parseFormatted(Currency.BRL, "R$ 1.234,56", ptBR).minorUnits  // 123456
+
+// HUF formats with 0 decimals (CLDR) but has 2 ISO decimals:
+val hu = Locale.forLanguageTag("hu")
+CurrencyAmount.parseFormatted(Currency.HUF, "200 Ft", hu).minorUnits   // 20000
+CurrencyAmount.parseFormatted(Currency.HUF, "200,50 Ft", hu).minorUnits // 20050
+
+CurrencyAmount.parseFormatted(Currency.USD, "($1,234.56)", en).minorUnits  // -123456
+CurrencyAmount.parseFormatted(Currency.EGP, "١٬٢٣٤٫٥٦", Locale.forLanguageTag("ar-EG"))
+```
+
+Parsing is lenient about placement — the currency may appear as its symbol,
+ISO code or display name, anywhere or not at all, with any spacing — and
+strict about content: leftover characters that are not digits or the locale's
+separators fail the parse, as does a fraction ISO minor units cannot
+represent (`"5.5"` for JPY). Negatives are recognized from the locale's minus
+sign or accounting parentheses. `format` output round trips for every bundled
+locale; the value comes back through the CLDR digit conversion, so a lossy
+format like ALL's 0-digit rendering parses back to the printed value
+(`"ALL 123"` → 12300).
+
 ### Formatting
 
 ```kotlin
