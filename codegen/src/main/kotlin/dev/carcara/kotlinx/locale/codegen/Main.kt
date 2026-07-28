@@ -69,13 +69,7 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
     println("[codegen] done")
 }
 
-private fun generateCountryAndCurrency(
-    rootDir: File,
-    cldrDir: File,
-    icuDir: File,
-    supplemental: SupplementalData,
-    flattener: Flattener,
-) {
+private fun generateCountryAndCurrency(rootDir: File, cldrDir: File, icuDir: File, supplemental: SupplementalData, flattener: Flattener) {
     val iso4217 = parseIso4217()
     crossCheckCurrencyNumericCodes(iso4217, icuDir)
 

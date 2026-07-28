@@ -3,19 +3,10 @@ package dev.carcara.kotlinx.locale.codegen
 import java.io.File
 
 /** ISO 3166-1 code mappings for one territory. */
-class TerritoryCodes(
-    val alpha2: String,
-    val alpha3: String?,
-    val numeric: Int?,
-)
+class TerritoryCodes(val alpha2: String, val alpha3: String?, val numeric: Int?)
 
 /** CLDR currency fraction info: how many digits CLDR formats and how it rounds. */
-class CurrencyFractions(
-    val digits: Int,
-    val rounding: Int,
-    val cashDigits: Int,
-    val cashRounding: Int,
-)
+class CurrencyFractions(val digits: Int, val rounding: Int, val cashDigits: Int, val cashRounding: Int)
 
 class SupplementalData(
     /** child locale id -> explicit parent locale id (component-less parentLocales only). */

@@ -49,11 +49,7 @@ public fun LocalTime.format(style: FormatStyle, locale: Locale): String {
  * Formats this date-time by combining the locale's date and time patterns with
  * its CLDR "glue" pattern (e.g. `Sunday, July 27, 2026, 3:05 PM` for `en`).
  */
-public fun LocalDateTime.format(
-    dateStyle: FormatStyle,
-    timeStyle: FormatStyle,
-    locale: Locale,
-): String {
+public fun LocalDateTime.format(dateStyle: FormatStyle, timeStyle: FormatStyle, locale: Locale): String {
     val data = localeDataFor(locale)
     val datePart = formatPattern(
         parseDateTimePattern(data.dateFormats[dateStyle.ordinal]),
@@ -79,8 +75,7 @@ public fun LocalDateTime.format(
 }
 
 /** Formats this date-time using the same [style] for the date and time parts. */
-public fun LocalDateTime.format(style: FormatStyle, locale: Locale): String =
-    format(style, style, locale)
+public fun LocalDateTime.format(style: FormatStyle, locale: Locale): String = format(style, style, locale)
 
 /** The localized name of this month in the CLDR "format" context, e.g. `julho`. */
 public fun Month.displayName(style: TextStyle, locale: Locale): String {

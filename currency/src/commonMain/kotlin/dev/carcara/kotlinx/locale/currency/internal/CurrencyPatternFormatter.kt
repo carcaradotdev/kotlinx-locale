@@ -35,13 +35,7 @@ private class ParsedPattern(pattern: String) {
     }
 }
 
-private class Subpattern(
-    val prefix: String,
-    val suffix: String,
-    val primaryGroup: Int,
-    val secondaryGroup: Int,
-    val minIntegerDigits: Int,
-)
+private class Subpattern(val prefix: String, val suffix: String, val primaryGroup: Int, val secondaryGroup: Int, val minIntegerDigits: Int)
 
 private fun splitUnquoted(pattern: String): List<String> {
     var inQuote = false
@@ -219,12 +213,7 @@ private fun renderNumber(
     }
 }
 
-private fun renderAffix(
-    affix: String,
-    currency: Currency,
-    currencyText: String,
-    locale: Locale,
-): String {
+private fun renderAffix(affix: String, currency: Currency, currencyText: String, locale: Locale): String {
     if ('¤' !in affix) return affix
     return buildString(affix.length + currencyText.length) {
         var index = 0

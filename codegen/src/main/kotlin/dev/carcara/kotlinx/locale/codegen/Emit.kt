@@ -12,12 +12,14 @@ private fun header(source: String): String = """
 """.trimMargin()
 
 fun kotlinEscape(value: String): String = buildString(value.length + 8) {
-    for (ch in value) when {
-        ch == '\\' -> append("\\\\")
-        ch == '"' -> append("\\\"")
-        ch == '$' -> append("\\$")
-        ch.code < 0x20 || ch.code == 0x7F -> append("\\u%04X".format(ch.code))
-        else -> append(ch)
+    for (ch in value) {
+        when {
+            ch == '\\' -> append("\\\\")
+            ch == '"' -> append("\\\"")
+            ch == '$' -> append("\\$")
+            ch.code < 0x20 || ch.code == 0x7F -> append("\\u%04X".format(ch.code))
+            else -> append(ch)
+        }
     }
 }
 
@@ -63,39 +65,43 @@ class LocaleDataEmitter(private val outputDir: File, private val cldrTag: String
         }
         for ((bucket, consts) in ownersByBucket) {
             val file = outputDir.resolve("LocaleData_$bucket.kt")
-            file.writeText(buildString {
-                append(header("CLDR $cldrTag"))
-                for ((const, payload) in consts.sortedBy { it.first }) {
-                    append("\ninternal const val ")
-                    append(const)
-                    append(": String =\n    \"")
-                    append(kotlinEscape(payload))
-                    append("\"\n")
-                }
-            })
+            file.writeText(
+                buildString {
+                    append(header("CLDR $cldrTag"))
+                    for ((const, payload) in consts.sortedBy { it.first }) {
+                        append("\ninternal const val ")
+                        append(const)
+                        append(": String =\n    \"")
+                        append(kotlinEscape(payload))
+                        append("\"\n")
+                    }
+                },
+            )
         }
 
-        outputDir.resolve("LocaleDataRegistry.kt").writeText(buildString {
-            append(header("CLDR $cldrTag"))
-            append("\ninternal const val CLDR_VERSION: String = \"")
-            append(kotlinEscape(cldrTag))
-            append("\"\n")
-            append("\ninternal val localeDataRegistry: Map<String, String> = buildMap(")
-            append(constByLocaleId.size)
-            append(") {\n")
-            for ((id, const) in constByLocaleId.entries.sortedBy { canonicalTag(it.key) }) {
-                append("    put(\"")
-                append(kotlinEscape(canonicalTag(id)))
-                append("\", ")
-                append(const)
-                append(")\n")
-            }
-            append("}\n")
-        })
+        outputDir.resolve("LocaleDataRegistry.kt").writeText(
+            buildString {
+                append(header("CLDR $cldrTag"))
+                append("\ninternal const val CLDR_VERSION: String = \"")
+                append(kotlinEscape(cldrTag))
+                append("\"\n")
+                append("\ninternal val localeDataRegistry: Map<String, String> = buildMap(")
+                append(constByLocaleId.size)
+                append(") {\n")
+                for ((id, const) in constByLocaleId.entries.sortedBy { canonicalTag(it.key) }) {
+                    append("    put(\"")
+                    append(kotlinEscape(canonicalTag(id)))
+                    append("\", ")
+                    append(const)
+                    append(")\n")
+                }
+                append("}\n")
+            },
+        )
 
         println(
             "[codegen] emitted ${constByLocaleId.size} locales " +
-                "(${constByPayload.size} unique payloads) to ${outputDir}",
+                "(${constByPayload.size} unique payloads) to $outputDir",
         )
     }
 }
@@ -122,8 +128,7 @@ class KeyedPayloadEmitter(
         |
     """.trimMargin()
 
-    private fun constNameFor(tag: String): String =
-        constPrefix + "_" + tag.uppercase().replace('-', '_')
+    private fun constNameFor(tag: String): String = constPrefix + "_" + tag.uppercase().replace('-', '_')
 
     fun emit(payloadByTag: Map<String, String>) {
         outputDir.mkdirs()
@@ -143,41 +148,45 @@ class KeyedPayloadEmitter(
             ownersByBucket.getOrPut(ownerTag.first()) { ArrayList() }.add(const to payload)
         }
         for ((bucket, consts) in ownersByBucket) {
-            outputDir.resolve("${filePrefix}_$bucket.kt").writeText(buildString {
-                append(header())
-                for ((const, payload) in consts.sortedBy { it.first }) {
-                    append("\ninternal const val ")
-                    append(const)
-                    append(": String =\n    \"")
-                    append(kotlinEscape(payload))
-                    append("\"\n")
-                }
-            })
+            outputDir.resolve("${filePrefix}_$bucket.kt").writeText(
+                buildString {
+                    append(header())
+                    for ((const, payload) in consts.sortedBy { it.first }) {
+                        append("\ninternal const val ")
+                        append(const)
+                        append(": String =\n    \"")
+                        append(kotlinEscape(payload))
+                        append("\"\n")
+                    }
+                },
+            )
         }
 
-        outputDir.resolve("${filePrefix}Registry.kt").writeText(buildString {
-            append(header())
-            versionConst?.let { (name, value) ->
-                append("\ninternal const val ")
-                append(name)
-                append(": String = \"")
-                append(kotlinEscape(value))
-                append("\"\n")
-            }
-            append("\ninternal val ")
-            append(registryProperty)
-            append(": Map<String, String> = buildMap(")
-            append(constByTag.size)
-            append(") {\n")
-            for ((tag, const) in constByTag.entries.sortedBy { it.key }) {
-                append("    put(\"")
-                append(kotlinEscape(tag))
-                append("\", ")
-                append(const)
-                append(")\n")
-            }
-            append("}\n")
-        })
+        outputDir.resolve("${filePrefix}Registry.kt").writeText(
+            buildString {
+                append(header())
+                versionConst?.let { (name, value) ->
+                    append("\ninternal const val ")
+                    append(name)
+                    append(": String = \"")
+                    append(kotlinEscape(value))
+                    append("\"\n")
+                }
+                append("\ninternal val ")
+                append(registryProperty)
+                append(": Map<String, String> = buildMap(")
+                append(constByTag.size)
+                append(") {\n")
+                for ((tag, const) in constByTag.entries.sortedBy { it.key }) {
+                    append("    put(\"")
+                    append(kotlinEscape(tag))
+                    append("\", ")
+                    append(const)
+                    append(")\n")
+                }
+                append("}\n")
+            },
+        )
 
         println(
             "[codegen] emitted $registryProperty: ${constByTag.size} locales " +
@@ -189,22 +198,24 @@ class KeyedPayloadEmitter(
 /** The list of real locale tags (no root) bundled into the base :kotlinx-locale module. */
 fun emitAvailableLocaleTags(outputFile: File, cldrTag: String, localeIds: List<String>) {
     outputFile.parentFile.mkdirs()
-    outputFile.writeText(buildString {
-        append("// GENERATED by :codegen from CLDR ")
-        append(cldrTag)
-        append(". Do not edit.\n")
-        append("// Regenerate with: ./gradlew :codegen:generateLocaleData\n")
-        append("package dev.carcara.kotlinx.locale.internal\n")
-        append("\ninternal const val CLDR_VERSION: String = \"")
-        append(kotlinEscape(cldrTag))
-        append("\"\n")
-        append("\ninternal val availableLocaleTags: List<String> = listOf(\n")
-        for (tag in localeIds.map(::canonicalTag).sorted()) {
-            append("    \"")
-            append(kotlinEscape(tag))
-            append("\",\n")
-        }
-        append(")\n")
-    })
+    outputFile.writeText(
+        buildString {
+            append("// GENERATED by :codegen from CLDR ")
+            append(cldrTag)
+            append(". Do not edit.\n")
+            append("// Regenerate with: ./gradlew :codegen:generateLocaleData\n")
+            append("package dev.carcara.kotlinx.locale.internal\n")
+            append("\ninternal const val CLDR_VERSION: String = \"")
+            append(kotlinEscape(cldrTag))
+            append("\"\n")
+            append("\ninternal val availableLocaleTags: List<String> = listOf(\n")
+            for (tag in localeIds.map(::canonicalTag).sorted()) {
+                append("    \"")
+                append(kotlinEscape(tag))
+                append("\",\n")
+            }
+            append(")\n")
+        },
+    )
     println("[codegen] emitted ${localeIds.size} locale tags to $outputFile")
 }

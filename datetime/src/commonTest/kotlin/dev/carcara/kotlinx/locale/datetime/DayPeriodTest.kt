@@ -15,13 +15,12 @@ import kotlin.test.assertEquals
  */
 class DayPeriodTest {
 
-    private fun dayPeriod(tag: String, time: LocalTime, pattern: String = "B"): String =
-        formatPattern(
-            parseDateTimePattern(pattern),
-            localeDataFor(Locale.forLanguageTag(tag)),
-            date = null,
-            time = time,
-        )
+    private fun dayPeriod(tag: String, time: LocalTime, pattern: String = "B"): String = formatPattern(
+        parseDateTimePattern(pattern),
+        localeDataFor(Locale.forLanguageTag(tag)),
+        date = null,
+        time = time,
+    )
 
     @Test
     fun flexibleDayPeriodsInEnglish() {

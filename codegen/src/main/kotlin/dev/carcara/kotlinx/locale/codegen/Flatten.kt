@@ -35,8 +35,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
 
     private val available = localeIds.toHashSet()
 
-    private fun partial(id: String): PartialLocaleData =
-        partialCache.getOrPut(id) { parseLdml(mainDir.resolve("$id.xml")) }
+    private fun partial(id: String): PartialLocaleData = partialCache.getOrPut(id) { parseLdml(mainDir.resolve("$id.xml")) }
 
     /**
      * Day period rules for [id], resolved by plain truncation of the locale id
@@ -168,10 +167,16 @@ const val KEY_SEPARATOR = "\u001D"
 fun ResolvedLocaleData.encode(): String {
     val fields = ArrayList<String>(25)
     fun list(items: List<String>) = fields.add(items.joinToString("\u001E"))
-    list(monthsWide); list(monthsAbbr); list(monthsNarrow)
-    list(daysWide); list(daysAbbr); list(daysNarrow)
-    fields.add(am); fields.add(pm)
-    fields.add(era0); fields.add(era1)
+    list(monthsWide)
+    list(monthsAbbr)
+    list(monthsNarrow)
+    list(daysWide)
+    list(daysAbbr)
+    list(daysNarrow)
+    fields.add(am)
+    fields.add(pm)
+    fields.add(era0)
+    fields.add(era1)
     dateFormats.forEach(fields::add)
     timeFormats.forEach(fields::add)
     glueFormats.forEach(fields::add)

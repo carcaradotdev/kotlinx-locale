@@ -137,12 +137,7 @@ internal fun List<PatternToken>.withoutZoneFields(): List<PatternToken> {
 // The closing ] must be escaped: JS unicode-mode regexes reject a lone one.
 private val EMPTY_BRACKET_PAIR = Regex("""\(\s*\)|\[\s*\]""")
 
-internal fun formatPattern(
-    tokens: List<PatternToken>,
-    data: LocaleData,
-    date: LocalDate?,
-    time: LocalTime?,
-): String {
+internal fun formatPattern(tokens: List<PatternToken>, data: LocaleData, date: LocalDate?, time: LocalTime?): String {
     val sb = StringBuilder()
     for (token in tokens) {
         when (token) {
@@ -153,14 +148,7 @@ internal fun formatPattern(
     return sb.toString()
 }
 
-private fun formatField(
-    sb: StringBuilder,
-    letter: Char,
-    count: Int,
-    data: LocaleData,
-    date: LocalDate?,
-    time: LocalTime?,
-) {
+private fun formatField(sb: StringBuilder, letter: Char, count: Int, data: LocaleData, date: LocalDate?, time: LocalTime?) {
     when (letter) {
         'G' -> if (date != null) sb.append(if (date.year > 0) data.era1 else data.era0)
         'y' -> if (date != null) {

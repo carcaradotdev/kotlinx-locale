@@ -91,8 +91,7 @@ public class CurrencyAmount(
         }
     }
 
-    override fun equals(other: Any?): Boolean =
-        other is CurrencyAmount && currency == other.currency && minorUnits == other.minorUnits
+    override fun equals(other: Any?): Boolean = other is CurrencyAmount && currency == other.currency && minorUnits == other.minorUnits
 
     override fun hashCode(): Int = 31 * currency.hashCode() + minorUnits.hashCode()
 
@@ -154,10 +153,9 @@ public class CurrencyAmount(
         }
 
         /** Like [parseOrNull] but throws on invalid input. */
-        public fun parse(currency: Currency, text: String): CurrencyAmount =
-            requireNotNull(parseOrNull(currency, text)) {
-                "Cannot parse ${currency.code} amount: '$text'"
-            }
+        public fun parse(currency: Currency, text: String): CurrencyAmount = requireNotNull(parseOrNull(currency, text)) {
+            "Cannot parse ${currency.code} amount: '$text'"
+        }
 
         /**
          * Parses a CLDR-formatted string — `R$ 1.234,56`, `($1,234.56)`,
@@ -174,19 +172,11 @@ public class CurrencyAmount(
          * one number with this locale's separators, or when the fraction
          * cannot be represented in ISO minor units.
          */
-        public fun parseFormattedOrNull(
-            currency: Currency,
-            text: String,
-            locale: Locale = Locale.current,
-        ): CurrencyAmount? =
+        public fun parseFormattedOrNull(currency: Currency, text: String, locale: Locale = Locale.current): CurrencyAmount? =
             parseFormattedCurrency(text, currency, locale)?.let { CurrencyAmount(currency, it) }
 
         /** Like [parseFormattedOrNull] but throws on invalid input. */
-        public fun parseFormatted(
-            currency: Currency,
-            text: String,
-            locale: Locale = Locale.current,
-        ): CurrencyAmount =
+        public fun parseFormatted(currency: Currency, text: String, locale: Locale = Locale.current): CurrencyAmount =
             requireNotNull(parseFormattedOrNull(currency, text, locale)) {
                 "Cannot parse ${currency.code} amount: '$text'"
             }

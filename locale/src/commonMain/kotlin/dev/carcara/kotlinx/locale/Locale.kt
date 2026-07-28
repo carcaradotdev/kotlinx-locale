@@ -25,12 +25,11 @@ public class Locale private constructor(
 
     override fun toString(): String = toLanguageTag()
 
-    override fun equals(other: Any?): Boolean =
-        other is Locale &&
-            language == other.language &&
-            script == other.script &&
-            region == other.region &&
-            variant == other.variant
+    override fun equals(other: Any?): Boolean = other is Locale &&
+        language == other.language &&
+        script == other.script &&
+        region == other.region &&
+        variant == other.variant
 
     override fun hashCode(): Int {
         var result = language.hashCode()
@@ -47,12 +46,7 @@ public class Locale private constructor(
          *
          * @throws IllegalArgumentException if [language] is not a 2-8 letter code.
          */
-        public fun of(
-            language: String,
-            script: String? = null,
-            region: String? = null,
-            variant: String? = null,
-        ): Locale {
+        public fun of(language: String, script: String? = null, region: String? = null, variant: String? = null): Locale {
             require(language.length in 2..8 && language.all(Char::isLatinLetter)) {
                 "Invalid language subtag: '$language'"
             }
@@ -97,13 +91,19 @@ public class Locale private constructor(
                 val part = parts[index]
                 if (part.length == 1) break // singleton starts extensions: ignore the rest
                 when {
-                    script == null && region == null && variant == null &&
-                        part.length == 4 && part.all(Char::isLatinLetter) ->
+                    script == null &&
+                        region == null &&
+                        variant == null &&
+                        part.length == 4 &&
+                        part.all(Char::isLatinLetter) ->
                         script = part.lowercase().replaceFirstChar(Char::uppercaseChar)
 
-                    region == null && variant == null &&
-                        ((part.length == 2 && part.all(Char::isLatinLetter)) ||
-                            (part.length == 3 && part.all(Char::isAsciiDigit))) ->
+                    region == null &&
+                        variant == null &&
+                        (
+                            (part.length == 2 && part.all(Char::isLatinLetter)) ||
+                                (part.length == 3 && part.all(Char::isAsciiDigit))
+                            ) ->
                         region = part.uppercase()
 
                     variant == null -> variant = part.lowercase()
@@ -115,8 +115,7 @@ public class Locale private constructor(
         /**
          * Like [forLanguageTagOrNull] but throws on tags without a valid language subtag.
          */
-        public fun forLanguageTag(tag: String): Locale =
-            requireNotNull(forLanguageTagOrNull(tag)) { "Cannot parse language tag: '$tag'" }
+        public fun forLanguageTag(tag: String): Locale = requireNotNull(forLanguageTagOrNull(tag)) { "Cannot parse language tag: '$tag'" }
 
         /**
          * The current locale of the underlying platform, or `en` when the platform

@@ -1,7 +1,7 @@
 package dev.carcara.kotlinx.locale.codegen
 
-import java.io.File
 import org.w3c.dom.Element
+import java.io.File
 
 /** CLDR marks "inherit from parent" with three up arrows. */
 internal const val INHERITANCE_MARKER = "↑↑↑"
@@ -17,6 +17,7 @@ class PartialLocaleData {
     val monthsWide = arrayOfNulls<String>(12)
     val monthsAbbr = arrayOfNulls<String>(12)
     val monthsNarrow = arrayOfNulls<String>(12)
+
     /** Only used to emulate root.xml's narrow -> stand-alone narrow alias. */
     val monthsStandaloneNarrow = arrayOfNulls<String>(12)
     val daysWide = arrayOfNulls<String>(7)
@@ -25,6 +26,7 @@ class PartialLocaleData {
     val daysStandaloneNarrow = arrayOfNulls<String>(7)
     var am: String? = null
     var pm: String? = null
+
     /** Flexible day period names, indexed like [DAY_PERIOD_TYPES] minus am/pm. */
     val dayPeriods = arrayOfNulls<String>(DAY_PERIOD_TYPES.size - 2)
     var era0: String? = null

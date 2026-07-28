@@ -1,7 +1,6 @@
 package dev.carcara.kotlinx.locale.codegen
 
 import java.io.File
-import org.w3c.dom.Element
 
 /**
  * The country/currency subset of one LDML file: localized display names and the
@@ -11,15 +10,19 @@ import org.w3c.dom.Element
 class PartialLocaleExtras {
     /** alpha-2 -> localized country name, only entries this file declares. */
     val territoryNames = LinkedHashMap<String, String>()
+
     /** currency code -> localized symbol. */
     val currencySymbols = LinkedHashMap<String, String>()
+
     /** currency code -> localized display name (count-less form). */
     val currencyNames = LinkedHashMap<String, String>()
 
     var defaultNumberingSystem: String? = null
     var minimumGroupingDigits: Int? = null
+
     /** numbering system attribute value ("" when absent) -> declared symbols. */
     val symbols = LinkedHashMap<String, PartialNumberSymbols>()
+
     /** numbering system attribute value ("" when absent) -> declared currency patterns. */
     val currencyPatterns = LinkedHashMap<String, PartialCurrencyPatterns>()
 }

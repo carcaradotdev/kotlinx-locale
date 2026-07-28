@@ -17,8 +17,7 @@ internal fun rescaleFraction(value: Long, fromDigits: Int, toDigits: Int): Long 
 }
 
 /** Rounds [value] to the nearest multiple of [increment], ties to the even multiple. */
-internal fun roundToIncrement(value: Long, increment: Long): Long =
-    divideHalfEven(value, increment) * increment
+internal fun roundToIncrement(value: Long, increment: Long): Long = divideHalfEven(value, increment) * increment
 
 private fun divideHalfEven(value: Long, divisor: Long): Long {
     val quotient = value / divisor

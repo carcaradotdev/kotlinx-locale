@@ -37,7 +37,7 @@ private class IcuTokenizer(private val text: String) {
         while (pos < text.length) {
             val ch = text[pos]
             when {
-                ch.isWhitespace() || ch == '﻿' -> pos++
+                ch.isWhitespace() || ch == '' -> pos++
                 ch == '/' && pos + 1 < text.length && text[pos + 1] == '/' -> {
                     while (pos < text.length && text[pos] != '\n') pos++
                 }
@@ -46,9 +46,18 @@ private class IcuTokenizer(private val text: String) {
         }
         if (pos >= text.length) return Eof
         return when (val ch = text[pos]) {
-            '{' -> { pos++; LBrace }
-            '}' -> { pos++; RBrace }
-            ',' -> { pos++; Comma }
+            '{' -> {
+                pos++
+                LBrace
+            }
+            '}' -> {
+                pos++
+                RBrace
+            }
+            ',' -> {
+                pos++
+                Comma
+            }
             '"' -> Str(lexString())
             else -> {
                 val start = pos
@@ -64,7 +73,10 @@ private class IcuTokenizer(private val text: String) {
         val sb = StringBuilder()
         while (pos < text.length) {
             when (val ch = text[pos]) {
-                '"' -> { pos++; return sb.toString() }
+                '"' -> {
+                    pos++
+                    return sb.toString()
+                }
                 '\\' -> {
                     pos++
                     when (val esc = text[pos]) {
@@ -72,12 +84,24 @@ private class IcuTokenizer(private val text: String) {
                             sb.append(text.substring(pos + 1, pos + 5).toInt(16).toChar())
                             pos += 5
                         }
-                        'n' -> { sb.append('\n'); pos++ }
-                        't' -> { sb.append('\t'); pos++ }
-                        else -> { sb.append(esc); pos++ }
+                        'n' -> {
+                            sb.append('\n')
+                            pos++
+                        }
+                        't' -> {
+                            sb.append('\t')
+                            pos++
+                        }
+                        else -> {
+                            sb.append(esc)
+                            pos++
+                        }
                     }
                 }
-                else -> { sb.append(ch); pos++ }
+                else -> {
+                    sb.append(ch)
+                    pos++
+                }
             }
         }
         error("unterminated string")
@@ -98,7 +122,10 @@ private fun parseTable(tokenizer: IcuTokenizer, source: String): IcuTable {
     val entries = LinkedHashMap<String, IcuValue>()
     while (true) {
         when (val token = tokenizer.peek()) {
-            is IcuTokenizer.RBrace -> { tokenizer.next(); return IcuTable(entries) }
+            is IcuTokenizer.RBrace -> {
+                tokenizer.next()
+                return IcuTable(entries)
+            }
             is IcuTokenizer.Eof -> error("$source: unexpected EOF in table")
             is IcuTokenizer.Bare, is IcuTokenizer.Str -> {
                 if (tokenizer.peek(1) is IcuTokenizer.LBrace) {
@@ -106,7 +133,8 @@ private fun parseTable(tokenizer: IcuTokenizer, source: String): IcuTable {
                         is IcuTokenizer.Bare -> token.value
                         is IcuTokenizer.Str -> token.value
                     }
-                    tokenizer.next(); tokenizer.next() // key {
+                    tokenizer.next()
+                    tokenizer.next() // key {
                     val key = rawKey.substringBefore(':')
                     val type = rawKey.substringAfter(':', "")
                     val value = parseValue(tokenizer, source)
@@ -126,7 +154,10 @@ private fun parseTable(tokenizer: IcuTokenizer, source: String): IcuTable {
 private fun parseValue(tokenizer: IcuTokenizer, source: String): IcuValue {
     // After 'key {': decide between nested table and (list of) scalar values.
     val first = tokenizer.peek()
-    if (first is IcuTokenizer.RBrace) { tokenizer.next(); return IcuList(emptyList()) }
+    if (first is IcuTokenizer.RBrace) {
+        tokenizer.next()
+        return IcuList(emptyList())
+    }
     val isTable = (first is IcuTokenizer.Bare || first is IcuTokenizer.Str) &&
         tokenizer.peek(1) is IcuTokenizer.LBrace
     if (isTable) {
@@ -200,11 +231,9 @@ class IcuResolver(private val localesDir: File) {
         return null
     }
 
-    fun string(id: String, vararg path: String): String? =
-        (lookup(id, *path) as? IcuString)?.value
+    fun string(id: String, vararg path: String): String? = (lookup(id, *path) as? IcuString)?.value
 
-    fun list(id: String, vararg path: String): List<String>? =
-        (lookup(id, *path) as? IcuList)?.values
+    fun list(id: String, vararg path: String): List<String>? = (lookup(id, *path) as? IcuList)?.values
 }
 
 /**
@@ -305,48 +334,54 @@ fun extractIcuGolden(icuDir: File): List<IcuGoldenEntry> {
 fun emitIcuGolden(outputFile: File, icuTag: String, entries: List<IcuGoldenEntry>) {
     outputFile.parentFile.mkdirs()
     fun stringOrNull(value: String?): String = if (value == null) "null" else "\"${kotlinEscape(value)}\""
-    fun listOrNull(values: List<String>?): String =
-        if (values == null) "null"
-        else "listOf(${values.joinToString(", ") { "\"${kotlinEscape(it)}\"" }})"
-    fun nullableListOrNull(values: List<String?>?): String =
-        if (values == null) "null"
-        else "listOf(${values.joinToString(", ", transform = ::stringOrNull)})"
+    fun listOrNull(values: List<String>?): String = if (values == null) {
+        "null"
+    } else {
+        "listOf(${values.joinToString(", ") { "\"${kotlinEscape(it)}\"" }})"
+    }
+    fun nullableListOrNull(values: List<String?>?): String = if (values == null) {
+        "null"
+    } else {
+        "listOf(${values.joinToString(", ", transform = ::stringOrNull)})"
+    }
 
-    outputFile.writeText(buildString {
-        append("// GENERATED by :codegen from ICU $icuTag. Do not edit.\n")
-        append("// Regenerate with: ./gradlew :codegen:generateLocaleData\n")
-        append("package dev.carcara.kotlinx.locale.datetime\n\n")
-        append("internal const val ICU_VERSION: String = \"${kotlinEscape(icuTag)}\"\n\n")
-        append("internal class IcuGolden(\n")
-        append("    val tag: String,\n")
-        append("    val dateFormats: List<String>?,\n")
-        append("    val timeFormats: List<String>?,\n")
-        append("    val glueFormats: List<String>?,\n")
-        append("    val monthsWide: List<String>?,\n")
-        append("    val monthsAbbr: List<String>?,\n")
-        append("    val daysWide: List<String>?,\n")
-        append("    val daysAbbr: List<String>?,\n")
-        append("    val am: String?,\n")
-        append("    val pm: String?,\n")
-        append("    val dayPeriods: List<String?>?,\n")
-        append(")\n\n")
-        append("internal val icuGoldenData: List<IcuGolden> = listOf(\n")
-        for (entry in entries) {
-            append("    IcuGolden(\n")
-            append("        tag = \"${kotlinEscape(entry.tag)}\",\n")
-            append("        dateFormats = ${listOrNull(entry.dateFormats)},\n")
-            append("        timeFormats = ${listOrNull(entry.timeFormats)},\n")
-            append("        glueFormats = ${listOrNull(entry.glueFormats)},\n")
-            append("        monthsWide = ${listOrNull(entry.monthsWide)},\n")
-            append("        monthsAbbr = ${listOrNull(entry.monthsAbbr)},\n")
-            append("        daysWide = ${listOrNull(entry.daysWide)},\n")
-            append("        daysAbbr = ${listOrNull(entry.daysAbbr)},\n")
-            append("        am = ${stringOrNull(entry.am)},\n")
-            append("        pm = ${stringOrNull(entry.pm)},\n")
-            append("        dayPeriods = ${nullableListOrNull(entry.dayPeriods)},\n")
-            append("    ),\n")
-        }
-        append(")\n")
-    })
+    outputFile.writeText(
+        buildString {
+            append("// GENERATED by :codegen from ICU $icuTag. Do not edit.\n")
+            append("// Regenerate with: ./gradlew :codegen:generateLocaleData\n")
+            append("package dev.carcara.kotlinx.locale.datetime\n\n")
+            append("internal const val ICU_VERSION: String = \"${kotlinEscape(icuTag)}\"\n\n")
+            append("internal class IcuGolden(\n")
+            append("    val tag: String,\n")
+            append("    val dateFormats: List<String>?,\n")
+            append("    val timeFormats: List<String>?,\n")
+            append("    val glueFormats: List<String>?,\n")
+            append("    val monthsWide: List<String>?,\n")
+            append("    val monthsAbbr: List<String>?,\n")
+            append("    val daysWide: List<String>?,\n")
+            append("    val daysAbbr: List<String>?,\n")
+            append("    val am: String?,\n")
+            append("    val pm: String?,\n")
+            append("    val dayPeriods: List<String?>?,\n")
+            append(")\n\n")
+            append("internal val icuGoldenData: List<IcuGolden> = listOf(\n")
+            for (entry in entries) {
+                append("    IcuGolden(\n")
+                append("        tag = \"${kotlinEscape(entry.tag)}\",\n")
+                append("        dateFormats = ${listOrNull(entry.dateFormats)},\n")
+                append("        timeFormats = ${listOrNull(entry.timeFormats)},\n")
+                append("        glueFormats = ${listOrNull(entry.glueFormats)},\n")
+                append("        monthsWide = ${listOrNull(entry.monthsWide)},\n")
+                append("        monthsAbbr = ${listOrNull(entry.monthsAbbr)},\n")
+                append("        daysWide = ${listOrNull(entry.daysWide)},\n")
+                append("        daysAbbr = ${listOrNull(entry.daysAbbr)},\n")
+                append("        am = ${stringOrNull(entry.am)},\n")
+                append("        pm = ${stringOrNull(entry.pm)},\n")
+                append("        dayPeriods = ${nullableListOrNull(entry.dayPeriods)},\n")
+                append("    ),\n")
+            }
+            append(")\n")
+        },
+    )
     println("[codegen] emitted ${entries.size} ICU golden entries to $outputFile")
 }
