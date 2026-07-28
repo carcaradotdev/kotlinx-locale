@@ -249,7 +249,7 @@ private fun renderAffix(
 }
 
 /** The ten digits as strings, supporting supplementary-plane numbering systems. */
-private fun digitStringsOf(digits: String): List<String> {
+internal fun digitStringsOf(digits: String): List<String> {
     val result = ArrayList<String>(10)
     var index = 0
     while (index < digits.length) {

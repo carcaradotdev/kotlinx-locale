@@ -2,6 +2,7 @@ package dev.carcara.kotlinx.locale.currency
 
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.internal.formatCurrency
+import dev.carcara.kotlinx.locale.currency.internal.parseFormattedCurrency
 
 /**
  * A monetary amount: a [currency] and a count of its ISO minor units — cents for
@@ -155,6 +156,38 @@ public class CurrencyAmount(
         /** Like [parseOrNull] but throws on invalid input. */
         public fun parse(currency: Currency, text: String): CurrencyAmount =
             requireNotNull(parseOrNull(currency, text)) {
+                "Cannot parse ${currency.code} amount: '$text'"
+            }
+
+        /**
+         * Parses a CLDR-formatted string — `R$ 1.234,56`, `($1,234.56)`,
+         * `200 Ft` — back into an amount, using [locale]'s separators, digits
+         * and currency symbol.
+         *
+         * The printed number is taken at face value and scaled to ISO minor
+         * units, so CLDR's formatting digits do not distort the result: HUF
+         * formats with no decimals but has two ISO decimals, and `"200 Ft"`
+         * parses to 20000 minor units. The currency may appear as its
+         * localized symbol, ISO code or display name, or be absent entirely.
+         * Negatives are recognized from the locale's minus sign or accounting
+         * parentheses. Returns `null` when the text has content other than
+         * one number with this locale's separators, or when the fraction
+         * cannot be represented in ISO minor units.
+         */
+        public fun parseFormattedOrNull(
+            currency: Currency,
+            text: String,
+            locale: Locale = Locale.current,
+        ): CurrencyAmount? =
+            parseFormattedCurrency(text, currency, locale)?.let { CurrencyAmount(currency, it) }
+
+        /** Like [parseFormattedOrNull] but throws on invalid input. */
+        public fun parseFormatted(
+            currency: Currency,
+            text: String,
+            locale: Locale = Locale.current,
+        ): CurrencyAmount =
+            requireNotNull(parseFormattedOrNull(currency, text, locale)) {
                 "Cannot parse ${currency.code} amount: '$text'"
             }
     }
