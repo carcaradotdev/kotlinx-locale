@@ -207,9 +207,10 @@ klib for every target and only a macOS host can build them all, so running it
 elsewhere would compare a subset and still report success.
 
 CI (`.github/workflows/ci.yml`) runs on every push to `main` and on pull
-requests: a ktlint check plus `./gradlew build` on Linux, macOS and Windows
-runners, which together cover every target's tests a host can execute. Pull
-requests must be green on all of these checks before merging.
+requests: a ktlint check, an ABI check on macOS, plus `./gradlew build` on
+Linux, macOS and Windows runners, which together cover every target's tests a
+host can execute. Pull requests must be green on all of these checks before
+merging.
 
 ## Scope and limitations
 
