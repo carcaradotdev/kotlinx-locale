@@ -10,17 +10,23 @@ end can be re-cut around whatever changes.
 
 ## What the measurements say
 
-From the probe in PR 11, gzipped, with the whole public API exported:
+Measured by the probes in `tools/`, gzipped over the minified Kotlin/JS bundle.
+The right-hand column is what phase 3 committed as a ceiling:
 
-| scenario | gzip | CLDR share of the bundle |
+| scenario | gzip | budget |
 | --- | ---: | ---: |
-| `kotlinx-datetime` (third party) | 23.7 KB | 0% |
-| country enum, codes and lookups only | 24.4 KB | 0% |
-| currency enum, codes and lookups only (includes country) | 33.3 KB | 0% |
-| country, full | 427.8 KB | 92% |
-| currency, full | 748.5 KB | 92% |
-| datetime, full | 115.8 KB | 83% |
-| everything | 845.1 KB | 91% |
+| `Locale` alone, the floor | 13.9 KB | 18 KB |
+| country codes and lookups | 14.6 KB | 20 KB |
+| currency codes, unit maths and `CurrencyAmount` | 23.3 KB | 30 KB |
+| datetime, full | 112.6 KB | 130 KB |
+| currency, full | 329.0 KB | 370 KB |
+| country, full | 416.7 KB | 460 KB |
+| everything | 823.6 KB | 900 KB |
+
+The earlier figures from the PR 11 probe were 24.4 KB, 33.3 KB, 115.8 KB,
+748.5 KB, 427.8 KB and 845.1 KB for the same rows. The codes-only rows came
+down because `-core` no longer drags a data module, and the currency row came
+down a lot because a currency-only consumer no longer pays for country names.
 
 Three facts drive the whole design.
 
