@@ -288,10 +288,35 @@ with the CLDR version they were generated from. Open decision 4 if you disagree.
 
 ## A generated locale catalog
 
-Locales should be referable by generated constant rather than by hand-typed
-string, for the same reason `Country` and `Currency` are enums. A flat enum of
-1121 entries named `PT_BR`, `EN_US_POSIX` and so on is the shape to avoid, so
-the catalog nests.
+The catalog is a generated list of the 1121 locale *identifiers* CLDR has data
+for, expressed as Kotlin declarations instead of raw strings. It carries no
+translations and no CLDR payloads. It is to locales what `Country` is to
+countries: the type-safe way to name one.
+
+Today, naming a locale means writing a string:
+
+```kotlin
+Locale.forLanguageTag("pt-BR")   // fine
+Locale.forLanguageTag("pt-BRA")  // compiles, throws at runtime
+Locale.forLanguageTag("pt_BR")   // compiles, throws at runtime
+```
+
+With the catalog:
+
+```kotlin
+Locale.forLanguageTag(Pt.BR.tag)  // cannot be misspelled, autocompletes
+```
+
+The reason it earns its own artifact is the Gradle plugin. Its configuration is
+a locale set, and a typo there is worse than at runtime: the build succeeds and
+silently generates data for one locale fewer than intended. Passing a
+`LocaleRef` makes that unrepresentable, and it is also how a developer discovers
+that `es-419` exists at all without going to read the CLDR release.
+
+It is the compile-time counterpart of `LocaleDataSource.supportedLocales`, which
+answers the same question at runtime for whichever source is installed. Neither
+replaces the other: dynamic tags still go through `Locale.forLanguageTag`, which
+stays the zero-cost path.
 
 The structure is derivable from what codegen already has. A CLDR locale ID is
 `language[-script][-region][-variant]`, and `Flattener.localeIds` is the full
@@ -336,13 +361,31 @@ already lives.
 
 ### Two shapes, and where the catalog lives
 
-**Enum per language, implementing a shared interface.**
+**Enum per language, implementing a shared interface.** The whole generated
+artifact is 322 files shaped like this one:
 
 ```kotlin
-public interface LocaleRef { public val tag: String }
+// kotlinx-locale-catalog, hand-written
+public interface LocaleRef {
+    public val tag: String
+}
 
+// kotlinx-locale-catalog, generated: one enum per language, 322 of them
 public enum class Pt(override val tag: String) : LocaleRef {
-    BASE("pt"), AO("pt-AO"), BR("pt-BR"), CH("pt-CH"), /* ... */ ;
+    BASE("pt"),
+    AO("pt-AO"),
+    BR("pt-BR"),
+    CH("pt-CH"),
+    CV("pt-CV"),
+    GQ("pt-GQ"),
+    GW("pt-GW"),
+    LU("pt-LU"),
+    MO("pt-MO"),
+    MZ("pt-MZ"),
+    PT("pt-PT"),
+    ST("pt-ST"),
+    TL("pt-TL"),
+    ;
 }
 ```
 
