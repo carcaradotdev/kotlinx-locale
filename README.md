@@ -43,10 +43,12 @@ in the bottom one.
 | Directory | Artifact | What it contains |
 | --- | --- | --- |
 | `locale-core/` | `dev.carcara:kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing. |
+| `locale-platform/` | `dev.carcara:kotlinx-locale-platform` | What the host can say about locales before any domain is involved: whether it exposes locale data, and which locales it enumerates. |
 | `locale-types/` | `dev.carcara:kotlinx-locale-types` | The generated locale catalog: one enum per language, so `Pt.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
 | `country-types/` | `dev.carcara:kotlinx-locale-country-types` | The `Country` enum: 249 ISO 3166-1 entries carrying their alpha-3 and numeric codes. Generated, and nothing else. |
 | `country-core/` | `dev.carcara:kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
 | `country-cldr-format/` | `dev.carcara:kotlinx-locale-country-cldr-format` | The reader for the CLDR name records, without the records. What a generated table binds to. |
+| `country-platform/` | `dev.carcara:kotlinx-locale-country-platform` | `PlatformCountry`: country names from `java.util.Locale`, `Intl.DisplayNames` or `NSLocale`. Ships no tables. |
 | `country-cldr/` | `dev.carcara:kotlinx-locale-country-cldr` | `CldrCountry` and the CLDR name tables behind it, plus `Country.displayName`. |
 | `currency-types/` | `dev.carcara:kotlinx-locale-currency-types` | The `Currency` enum (active ISO 4217 codes, ISO minor units, CLDR fraction and cash-rounding behavior) and the country-to-currency map. |
 | `currency-core/` | `dev.carcara:kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |

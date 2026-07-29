@@ -40,12 +40,17 @@ class ConformanceSuiteTest {
     }
 
     @Test
-    fun rejectsASourceThatSupportsNoLocale() {
-        val nothing = object : CountryNameSource {
+    fun acceptsASourceThatAnswersWithoutEnumerating() {
+        // What a source over Intl looks like: every lookup works, the coverage
+        // cannot be listed. The behavioural tier has to allow this, or the
+        // platform layer could never pass it.
+        val opaque = object : CountryNameSource {
             override val supportedLocales: Set<Locale> = emptySet()
             override fun countryNameOrNull(alpha2: String, locale: Locale): String = "Country $alpha2"
         }
-        assertFailsWith<AssertionError> { nothing.assertConformsToCountryNames(ConformanceTier.BEHAVIOURAL) }
+        opaque.assertConformsToCountryNames(ConformanceTier.BEHAVIOURAL)
+        // The exact tier still wants a source that can describe itself.
+        assertFailsWith<AssertionError> { opaque.assertConformsToCountryNames(ConformanceTier.EXACT) }
     }
 
     @Test

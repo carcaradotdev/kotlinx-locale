@@ -20,12 +20,16 @@ import kotlin.test.assertTrue
  * of where the data came from.
  */
 public fun CountryNameSource.assertConformsToCountryNames(tier: ConformanceTier) {
-    assertTrue(supportedLocales.isNotEmpty(), "a source that supports no locale answers nothing")
-
     val english = Locale.of("en")
-    assertTrue(english in supportedLocales, "every source is expected to carry English")
 
-    if (tier == ConformanceTier.EXACT) assertMatchesIcuCountryNames()
+    // Only the exact tier can require these. A source over Intl answers every
+    // lookup and still enumerates nothing, because ECMA-402 offers no way to ask
+    // what it supports, so its coverage cannot be asserted, only exercised.
+    if (tier == ConformanceTier.EXACT) {
+        assertTrue(supportedLocales.isNotEmpty(), "a CLDR-backed source is expected to enumerate its locales")
+        assertTrue(english in supportedLocales, "a CLDR-backed source is expected to carry English")
+        assertMatchesIcuCountryNames()
+    }
     assertNamesAreWellShaped(english)
     assertNamesReverseLookUp(english)
     assertUnknownLocalesStillAnswer()

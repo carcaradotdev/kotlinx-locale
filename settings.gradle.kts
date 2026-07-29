@@ -45,10 +45,12 @@ rootProject.name = "kotlinx-locale-project"
 listOf(
     "locale-core" to "kotlinx-locale-core",
     "locale-types" to "kotlinx-locale-types",
+    "locale-platform" to "kotlinx-locale-platform",
     "country-types" to "kotlinx-locale-country-types",
     "country-core" to "kotlinx-locale-country-core",
     "country-cldr-format" to "kotlinx-locale-country-cldr-format",
     "country-cldr" to "kotlinx-locale-country-cldr",
+    "country-platform" to "kotlinx-locale-country-platform",
     "currency-types" to "kotlinx-locale-currency-types",
     "currency-core" to "kotlinx-locale-currency-core",
     "currency-cldr-format" to "kotlinx-locale-currency-cldr-format",

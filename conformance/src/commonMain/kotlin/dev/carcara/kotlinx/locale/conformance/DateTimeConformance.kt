@@ -28,7 +28,12 @@ private val SAMPLE_TIME = LocalTime(15, 5, 9)
  * them.
  */
 public fun DateTimeFormatSource.assertConformsToDateTimeFormats(tier: ConformanceTier) {
-    assertTrue(supportedLocales.isNotEmpty(), "a source that supports no locale answers nothing")
+    // Only the exact tier can require this. A source over Intl answers every
+    // lookup and still enumerates nothing, because ECMA-402 has no API to ask
+    // what it supports.
+    if (tier == ConformanceTier.EXACT) {
+        assertTrue(supportedLocales.isNotEmpty(), "a CLDR-backed source is expected to enumerate its locales")
+    }
 
     if (tier == ConformanceTier.EXACT) assertMatchesIcuCalendarNames()
     assertEveryStyleRenders()

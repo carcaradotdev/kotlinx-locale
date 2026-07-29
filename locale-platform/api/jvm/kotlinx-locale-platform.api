@@ -1,0 +1,6 @@
+public final class dev/carcara/kotlinx/locale/platform/PlatformLocaleData {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/platform/PlatformLocaleData;
+	public final fun availableLocaleTags ()Ljava/util/Set;
+	public final fun isAvailable ()Z
+}
+

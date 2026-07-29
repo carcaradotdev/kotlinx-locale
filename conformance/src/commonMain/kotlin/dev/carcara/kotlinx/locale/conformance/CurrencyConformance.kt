@@ -26,7 +26,12 @@ private val FORMAT_LOCALES = listOf("en", "de", "ja", "pt-BR", "ar-EG", "hi", "f
  * on the first disagreement.
  */
 public fun CurrencyNameSource.assertConformsToCurrencyNames(tier: ConformanceTier) {
-    assertTrue(supportedLocales.isNotEmpty(), "a source that supports no locale answers nothing")
+    // Only the exact tier can require this. A source over Intl answers every
+    // lookup and still enumerates nothing, because ECMA-402 has no API to ask
+    // what it supports.
+    if (tier == ConformanceTier.EXACT) {
+        assertTrue(supportedLocales.isNotEmpty(), "a CLDR-backed source is expected to enumerate its locales")
+    }
 
     if (tier == ConformanceTier.EXACT) assertMatchesIcuCurrencyNames()
 
@@ -78,7 +83,12 @@ private fun CurrencyNameSource.assertMatchesIcuCurrencyNames() {
  * [CurrencyAmount.format] documents it prints.
  */
 public fun CurrencyFormatSource.assertConformsToCurrencyFormats(tier: ConformanceTier) {
-    assertTrue(supportedLocales.isNotEmpty(), "a source that supports no locale answers nothing")
+    // Only the exact tier can require this. A source over Intl answers every
+    // lookup and still enumerates nothing, because ECMA-402 has no API to ask
+    // what it supports.
+    if (tier == ConformanceTier.EXACT) {
+        assertTrue(supportedLocales.isNotEmpty(), "a CLDR-backed source is expected to enumerate its locales")
+    }
 
     val amounts = listOf(0L, 1, -1, 50, 123456, -123456, 999999999)
     for (tag in FORMAT_LOCALES) {
