@@ -48,19 +48,21 @@ module boundary is the only lever that exists.
 
 ## Target layout
 
-Four layers, repeated per domain, with one shared root.
+Layers repeated per domain, with one shared root.
 
 ```
-kotlinx-locale                       Locale, tag parsing, fallback chain, LocaleDataSource
-kotlinx-locale-catalog               LocaleRef, one generated enum per language
+kotlinx-locale-core                  Locale, tag parsing, fallback chain, LocaleDataSource
+kotlinx-locale-types                 LocaleRef, one generated enum per language
 
 kotlinx-locale-country-core          CountryNameSource
-kotlinx-locale-country-types         Country enum, typed overloads
+kotlinx-locale-country-types         Country enum
+kotlinx-locale-country-model         lookups, typed overloads
 kotlinx-locale-country-cldr          CldrCountryNames + payloads
 kotlinx-locale-country-platform      later
 
 kotlinx-locale-currency-core         CurrencyNameSource, CurrencyFormatSource
-kotlinx-locale-currency-types        Currency, CurrencyAmount, CurrencySymbolStyle, typed overloads
+kotlinx-locale-currency-types        Currency enum, country to currency map
+kotlinx-locale-currency-model        CurrencyAmount, lookups, unit math, typed overloads
 kotlinx-locale-currency-cldr         CldrCurrencyNames, CldrCurrencyFormats + payloads
 kotlinx-locale-currency-platform     later
 
@@ -69,14 +71,60 @@ kotlinx-locale-datetime-cldr         CldrDateTimeFormats + payloads
 kotlinx-locale-datetime-platform     later
 ```
 
-Eleven modules now, fourteen once platform lands. Within a domain the arrows run
-`core <- types <- cldr`, and `*-core` never depends on `*-types`, so an
-implementor of a source needs the interface and nothing else.
+The naming rule is mechanical: `kotlinx-locale[-<domain>]-<layer>`, with the
+domain segment omitted for the locale domain itself because it is the root. That
+costs renaming today's `kotlinx-locale` to `kotlinx-locale-core`, which is free
+at 0.1.0-SNAPSHOT and buys a listing where every artifact says what layer it is.
 
-Across domains: `currency-types` depends on `country-types` for
-`Country.currencies` and `Currency.forCountry`. Nothing else crosses.
+Thirteen modules now, sixteen once platform lands. Within a domain the arrows
+run `core <- types <- model <- cldr`, and `*-core` never depends on anything
+above it, so an implementor of a source needs the interface and nothing else.
 
-`kotlinx-locale-datetime-types` does not appear because its only candidates,
+Across domains: `currency-types` depends on `country-types` for the country to
+currency map, and `currency-model` on `country-model`. Nothing else crosses.
+
+### Which layers are swappable, and what that costs
+
+The point of the layering is that everything above `-core` can come from
+somewhere other than Maven. `-core` is the fixed contract; `-types`, `-cldr` and
+`-platform` are things that satisfy it:
+
+| layer | hand written | who can supply it |
+| --- | --- | --- |
+| `-core` | yes | us, only |
+| `-types` | no, fully generated | us, or the Gradle plugin narrowed to a config |
+| `-model` | yes | us, only |
+| `-cldr` | no, fully generated | us, or the Gradle plugin narrowed to a config |
+| `-platform` | yes | us, per target |
+
+A consumer depends on one supplier per swappable layer, never two. Taking the
+plugin's `-types` means not taking ours, the same way taking `-platform` means
+not taking `-cldr`.
+
+This is why the design keeps the `-core` interfaces keyed by string codes rather
+than by `Country` and `Currency`. If `-core` referenced the enums, a narrowed
+`-types` would change the interface, and `-cldr` compiled against the full enum
+could not satisfy it. String keys make the contract independent of whichever
+entry set is in play.
+
+`-model` exists because of that same requirement. `-types` has to be *only*
+generated declarations for the plugin to be able to emit it, otherwise the
+emitter would have to carry a verbatim copy of hand-written source and the two
+would drift. But `CurrencyAmount`, the `forCode` and `forNumericCode` lookups,
+`isoToCldrUnits` and the typed overloads are hand-written, entry-set independent
+code that merely *mentions* `Currency`. They go one layer up.
+
+The alternative is to not narrow types at all: ship `-types` from Maven always,
+let the plugin narrow only `-cldr`, and drop `-model` back into `-types`. That
+is three layers per domain instead of four and no generator carrying hand-written
+code. What it gives up is exactly what you described wanting: a build where
+`Currency.JPY` does not exist because you said you do not handle it.
+
+Worth knowing which way you want before phase 2, because it decides whether
+`-model` is a module or a package. Open decision 4.
+
+`kotlinx-locale-datetime-types` and `-model` do not appear because datetime has
+no generated enum and no hand-written value type. Its only type candidates,
 `FormatStyle` and `TextStyle`, are not generated enum lists. They are seven
 hand-written constants that appear in the `DateTimeFormatSource` signatures, so
 they belong in `datetime-core` next to the interface that uses them. See open
@@ -113,7 +161,7 @@ implementation-bound convenience overload. A consumer declares the layers it
 wants:
 
 ```kotlin
-implementation("dev.carcara:kotlinx-locale-country-types:$version")
+implementation("dev.carcara:kotlinx-locale-country-model:$version")
 implementation("dev.carcara:kotlinx-locale-country-cldr:$version")
 ```
 
@@ -243,7 +291,7 @@ shared root keeps `Locale`, tag parsing, the fallback chain (`dataLookupTags`,
 which every implementation needs) and the one thing every source must answer:
 
 ```kotlin
-// kotlinx-locale
+// kotlinx-locale-core
 public interface LocaleDataSource {
     public val supportedLocales: Set<Locale>
 }
@@ -365,12 +413,12 @@ already lives.
 artifact is 322 files shaped like this one:
 
 ```kotlin
-// kotlinx-locale-catalog, hand-written
+// kotlinx-locale-core, hand-written
 public interface LocaleRef {
     public val tag: String
 }
 
-// kotlinx-locale-catalog, generated: one enum per language, 322 of them
+// kotlinx-locale-types, generated: one enum per language, 322 of them
 public enum class Pt(override val tag: String) : LocaleRef {
     BASE("pt"),
     AO("pt-AO"),
@@ -408,11 +456,16 @@ public object Pt {
 `String`, so a typo is caught by the plugin validating its configuration rather
 than by the compiler.
 
-Recommendation: the enum form, in its own artifact
-(`kotlinx-locale-catalog`), depended on by the Gradle plugin and by anyone who
-wants it in app code. Keeping it out of `kotlinx-locale` means the runtime cost
-is opt-in and `Locale.forLanguageTag` stays the zero-cost path for code that
-builds tags dynamically. The plugin DSL should accept `LocaleRef` and `String`
+Recommendation: the enum form, in `kotlinx-locale-types`, depended on by the
+Gradle plugin and by anyone who wants it in app code. Keeping it out of
+`kotlinx-locale-core` means the runtime cost is opt-in and
+`Locale.forLanguageTag` stays the zero-cost path for code that builds tags
+dynamically.
+
+The catalog is the cleanest case for a plugin-generated `-types`: it is one
+hundred percent generated with no hand-written behaviour attached, so a build
+configured for three locales gets a catalog with three entries and `Ja.BASE`
+simply does not compile. The plugin DSL should accept `LocaleRef` and `String`
 both, and validate strings at configuration time.
 
 ## Full mode
@@ -473,7 +526,7 @@ kotlinxLocale {
 }
 ```
 
-It consumes `*-core + *-types + catalog` exactly as you described: `LocaleRef`
+It consumes `*-core + *-types` exactly as you described: `LocaleRef`
 to express the locale set, `Country` and `Currency` to express narrowing. Those
 layers must stay free of anything with no business on a build classpath, which
 is another reason `*-types` carries no dependency on a data module.
@@ -560,24 +613,32 @@ reviewed diff, not a running battle with the check.
    on `*-types` in any domain. Breaking them out means the layer names are
    uniform but `datetime-core` gains a dependency on `datetime-types`.
    Same question for `CurrencySymbolStyle` in `currency-core`.
-4. Do the four `cldr*` integer fields and the country to currency map stay in
+4. Is `-model` a module or a package? A module means `-types` is purely
+   generated and the plugin can narrow it, so `Currency.JPY` can be made not to
+   exist. A package inside `-types` means three layers per domain instead of
+   four, no generator carrying hand-written code, and the plugin narrows only
+   `-cldr`. This is the decision that the rest of the layering hangs on, so it
+   is worth taking first.
+5. Do the four `cldr*` integer fields and the country to currency map stay in
    `currency-types`, or move behind a source?
-5. On a miss, does a source return null, consult a configured fallback locale,
+6. On a miss, does a source return null, consult a configured fallback locale,
    or throw? The interfaces above return null and let a composer decide, which
    makes fallback a plugin config value rather than a library policy.
-6. Entity narrowing in the plugin: never, name-tables-only, or full?
-7. Does `Locale.availableLocales` move to `LocaleDataSource.supportedLocales`,
+7. Entity narrowing in the plugin: never, name-tables-only, or full? Decision 4
+   sets the ceiling on this one.
+8. Does `Locale.availableLocales` move to `LocaleDataSource.supportedLocales`,
    or disappear from the public API?
-8. Catalog shape: enum per language implementing `LocaleRef`, or object per
-   language holding `const val` tags? Recommended is the enum, on the grounds
-   that its only stated use is plugin configuration where the cost is nil.
-9. Does the catalog nest two levels (`Zh.HANS_CN`) or three (`Zh.Hans.CN`)? Two
-   keeps every reference uniform and only 33 of 322 languages would ever use the
-   third.
-10. Artifact names. `kotlinx-locale-country-cldr` reads naturally but sorts the
+9. Locale catalog shape: enum per language implementing `LocaleRef`, or object
+   per language holding `const val` tags? Recommended is the enum, on the
+   grounds that its only stated use is plugin configuration where the cost is
+   nil.
+10. Does the locale catalog nest two levels (`Zh.HANS_CN`) or three
+    (`Zh.Hans.CN`)? Two keeps every reference uniform and only 33 of 322
+    languages would ever use the third.
+11. Artifact names. `kotlinx-locale-country-cldr` reads naturally but sorts the
     domains together and the layers apart; `kotlinx-locale-cldr-country` groups
-    by layer in a repository listing. Eleven to fourteen artifacts is enough for
-    the choice to matter.
+    by layer in a repository listing. Thirteen to sixteen artifacts is enough
+    for the choice to matter.
 
 ## Phases
 
@@ -593,7 +654,7 @@ changes yet, so the golden tests are the proof that nothing changed. Fold in the
 `const val` to `val` change in the emitters here, which the probe measured at
 16% off the minified bundle overall and 48% off datetime.
 
-**Phase 2. Split each domain into core, types and cldr.** Eleven modules, the
+**Phase 2. Split each domain into its layers.** Thirteen modules, the
 call shape moves to source-as-receiver, and the old aggregate artifacts stop
 being published. This is the breaking phase and it should land as one change
 rather than a drip, so users migrate once. The catalog is generated here too,
