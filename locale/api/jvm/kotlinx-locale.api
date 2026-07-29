@@ -26,3 +26,7 @@ public final class dev/carcara/kotlinx/locale/LocaleDataLookupKt {
 	public static final fun dataLookupTags (Ldev/carcara/kotlinx/locale/Locale;)Ljava/util/List;
 }
 
+public abstract interface class dev/carcara/kotlinx/locale/LocaleDataSource {
+	public abstract fun getSupportedLocales ()Ljava/util/Set;
+}
+

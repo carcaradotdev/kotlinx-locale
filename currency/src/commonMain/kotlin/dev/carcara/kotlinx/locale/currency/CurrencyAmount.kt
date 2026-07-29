@@ -1,8 +1,7 @@
 package dev.carcara.kotlinx.locale.currency
 
 import dev.carcara.kotlinx.locale.Locale
-import dev.carcara.kotlinx.locale.currency.internal.formatCurrency
-import dev.carcara.kotlinx.locale.currency.internal.parseFormattedCurrency
+import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 
 /**
  * A monetary amount: a [currency] and a count of its ISO minor units — cents for
@@ -66,7 +65,7 @@ public class CurrencyAmount(
         style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL,
         accounting: Boolean = false,
         cash: Boolean = false,
-    ): String = formatCurrency(minorUnits, currency, locale, style, accounting, cash)
+    ): String = CldrCurrency.format(this, locale, style, accounting, cash)
 
     /**
      * The plain ISO decimal representation with `.` and ISO minor-unit digits:
@@ -173,7 +172,7 @@ public class CurrencyAmount(
          * cannot be represented in ISO minor units.
          */
         public fun parseFormattedOrNull(currency: Currency, text: String, locale: Locale = Locale.current): CurrencyAmount? =
-            parseFormattedCurrency(text, currency, locale)?.let { CurrencyAmount(currency, it) }
+            CldrCurrency.parseFormattedOrNull(currency, text, locale)
 
         /** Like [parseFormattedOrNull] but throws on invalid input. */
         public fun parseFormatted(currency: Currency, text: String, locale: Locale = Locale.current): CurrencyAmount =

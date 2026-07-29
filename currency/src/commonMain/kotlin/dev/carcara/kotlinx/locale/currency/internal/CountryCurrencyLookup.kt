@@ -1,9 +1,10 @@
 package dev.carcara.kotlinx.locale.currency.internal
 
+import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.currency.Currency
-import dev.carcara.kotlinx.locale.currency.internal.data.countryCurrencyCodes
 
+@OptIn(InternalKotlinxLocaleApi::class)
 private val currenciesByCountry: Map<String, List<Currency>> by lazy {
     countryCurrencyCodes.mapValues { (_, codes) ->
         codes.split(' ').mapNotNull(Currency::forCodeOrNull)
