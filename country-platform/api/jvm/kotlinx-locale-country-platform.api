@@ -1,0 +1,14 @@
+public final class dev/carcara/kotlinx/locale/country/platform/PlatformCountry : dev/carcara/kotlinx/locale/country/CountryNameSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/country/platform/PlatformCountry;
+	public fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public final fun isAvailable ()Z
+}
+
+public final class dev/carcara/kotlinx/locale/country/platform/PlatformCountryKt {
+	public static final fun displayName (Ldev/carcara/kotlinx/locale/country/Country;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun displayName$default (Ldev/carcara/kotlinx/locale/country/Country;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun forDisplayNameOrNull (Ldev/carcara/kotlinx/locale/country/Country$Companion;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static synthetic fun forDisplayNameOrNull$default (Ldev/carcara/kotlinx/locale/country/Country$Companion;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/country/Country;
+}
+
