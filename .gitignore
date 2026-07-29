@@ -24,3 +24,7 @@ xcuserdata/
 captures/
 .externalNativeBuild/
 .cxx/
+
+# Lock file of the JS bundle-size probe: its npm dependency set changes with
+# the scenario being measured, so it is regenerated rather than pinned.
+/tools/js-size/kotlin-js-store/
