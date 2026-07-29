@@ -737,13 +737,32 @@ keeps working and only its display name falls back.
 
 ## Verification
 
-**A conformance suite, extracted and parameterized.** The existing ICU golden
-tests become a shared test module that runs against any source. Two tiers:
-exact, for CLDR-backed sources (the shipped modules and anything the plugin
-generates, which must match ICU byte for byte), and behavioural, for platform
-sources, which can only be checked for shape, round-tripping and non-emptiness
-because system data varies by OS version. Without this the platform layer is
+**A conformance suite, extracted and parameterized.** `kotlinx-locale-conformance`
+holds the ICU fixtures and runs any source through them. Two tiers: exact, for
+CLDR-backed sources (the shipped modules and anything the plugin generates,
+which must match ICU byte for byte), and behavioural, for platform sources,
+which can only be checked for shape, round-tripping and non-emptiness because
+system data varies by OS version. Without this the platform layer is
 unverifiable, so it is worth building before it is needed.
+
+Two things the extraction settled that were not obvious from the outside:
+
+- **The currency round trip is not the identity, and cannot be.** CLDR formats
+  some currencies with fewer fraction digits than ISO gives them, so HUF prints
+  `0.01` as `HUF 0` and there is no cent left to read back. What the suite
+  asserts is the amount taken through CLDR's scale, which is what `format`
+  documents it prints. A plain round-trip assertion looks right and fails on
+  real data.
+- **Not everything can be parameterized over a source.** The datetime fixtures
+  hold CLDR's *patterns*, and the interface deliberately does not expose
+  patterns, because no platform could implement one that did. So the suite
+  compares month and weekday names against ICU and checks formatted output
+  behaviourally, and the pattern tables stay cross-checked inside
+  `datetime-cldr`, which can reach them. The same split applies to currency's
+  number tables.
+
+The suite is tested against a fake source that gets it wrong, so that "the
+suite passes" means something.
 
 **Size budgets in CI.** `scripts/js-size.mjs --json` already emits byte counts.
 Add a ceiling per artifact so an accidental dependency from a types module into

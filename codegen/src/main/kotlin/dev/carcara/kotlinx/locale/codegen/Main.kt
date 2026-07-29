@@ -24,6 +24,13 @@ fun main(args: Array<String>) {
 private fun File.sourceDir(module: String, sourceSet: String, packageName: String): File =
     resolve("$module/src/$sourceSet/kotlin/${packageName.replace('.', '/')}")
 
+/**
+ * The ICU fixtures live in the conformance module rather than in one domain's
+ * tests, so that any source can be checked against them and not just the
+ * bundled one.
+ */
+private fun conformanceDir(rootDir: File): File = rootDir.sourceDir("conformance", "commonMain", "dev.carcara.kotlinx.locale.conformance")
+
 private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
     val supplemental = parseSupplemental(cldrDir)
     val flattener = Flattener(cldrDir, supplemental)
@@ -65,9 +72,7 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
     )
 
     emitIcuGolden(
-        outputFile = rootDir
-            .sourceDir("datetime-cldr", "commonTest", "dev.carcara.kotlinx.locale.datetime")
-            .resolve("IcuGoldenData.kt"),
+        outputFile = conformanceDir(rootDir).resolve("IcuGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuGolden(icuDir),
     )
@@ -147,16 +152,12 @@ private fun generateCountryAndCurrency(rootDir: File, cldrDir: File, icuDir: Fil
     )
 
     emitIcuCountryGolden(
-        outputFile = rootDir
-            .sourceDir("country-cldr", "commonTest", "dev.carcara.kotlinx.locale.country")
-            .resolve("IcuCountryGoldenData.kt"),
+        outputFile = conformanceDir(rootDir).resolve("IcuCountryGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuCountryGolden(icuDir),
     )
     emitIcuCurrencyGolden(
-        outputFile = rootDir
-            .sourceDir("currency-cldr", "commonTest", "dev.carcara.kotlinx.locale.currency")
-            .resolve("IcuCurrencyGoldenData.kt"),
+        outputFile = conformanceDir(rootDir).resolve("IcuCurrencyGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuCurrencyGolden(icuDir),
         numericCodes = extractIcuNumericCodes(icuDir),
