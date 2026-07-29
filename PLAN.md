@@ -666,6 +666,13 @@ alone.
 wholesale, so each phase should end with one deliberate `updateKotlinAbi` and a
 reviewed diff, not a running battle with the check.
 
+## The resulting API surface
+
+`API-NEXT.md` works the change through `API.md` entry by entry, for a consumer
+taking core, types and CLDR. The short version: twenty-four public entry points,
+seventeen of them unchanged, and every output table in `API.md` stays byte for
+byte identical because it is the same data through the same formatter.
+
 ## Open decisions
 
 1. Source as receiver (option B) over domain object as receiver (option A).
