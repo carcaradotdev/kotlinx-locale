@@ -50,7 +50,17 @@ dependency alone, so the datetime figure can be read as "ours plus this".
 ## Scenarios
 
 Any comma-separated combination of `locale`, `country`, `currency`, `datetime`
-and `kotlinx-datetime`, plus `all` and `none`:
+and `kotlinx-datetime`, plus `all` and `none`.
+
+`country-codes` and `currency-codes` are slices rather than modules, so `all`
+skips them. They export the same modules minus the four entry points that reach
+CLDR text (`Country.displayName`, `Currency.symbol`, `Currency.displayName`,
+`CurrencyAmount.format` and `parseFormatted`), which measures what a core/data
+split would leave behind:
+
+```
+node scripts/js-size.mjs country-codes country
+```
 
 ```
 node scripts/js-size.mjs currency               # a consumer who only uses currency
