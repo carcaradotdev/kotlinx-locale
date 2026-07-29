@@ -1,8 +1,10 @@
+@file:OptIn(InternalKotlinxLocaleApi::class)
+
 package dev.carcara.kotlinx.locale.datetime
 
+import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.icuGoldenData
-import dev.carcara.kotlinx.locale.datetime.cldr.internal.localeDataFor
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

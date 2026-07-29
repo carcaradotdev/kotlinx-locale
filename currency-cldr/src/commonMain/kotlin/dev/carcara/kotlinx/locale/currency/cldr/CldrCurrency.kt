@@ -1,33 +1,38 @@
 package dev.carcara.kotlinx.locale.currency.cldr
 
 import dev.carcara.kotlinx.locale.Locale
-import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.CurrencyFormatSource
 import dev.carcara.kotlinx.locale.currency.CurrencyNameSource
 import dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle
-import dev.carcara.kotlinx.locale.currency.cldr.internal.bundledCurrencyLocales
-import dev.carcara.kotlinx.locale.currency.cldr.internal.bundledCurrencyName
-import dev.carcara.kotlinx.locale.currency.cldr.internal.bundledCurrencySymbol
-import dev.carcara.kotlinx.locale.currency.cldr.internal.formatCurrency
-import dev.carcara.kotlinx.locale.currency.cldr.internal.parseFormattedCurrency
-import dev.carcara.kotlinx.locale.currency.forCodeOrNull
+import dev.carcara.kotlinx.locale.currency.cldr.format.PayloadCurrencyFormats
+import dev.carcara.kotlinx.locale.currency.cldr.format.PayloadCurrencyNames
+import dev.carcara.kotlinx.locale.currency.cldr.internal.data.currencyFormatsRegistry
+import dev.carcara.kotlinx.locale.currency.cldr.internal.data.currencyNamesRegistry
 
 /**
  * The currency symbols, display names and number formats CLDR ships, compiled
  * into this artifact.
  *
- * Formatting and parsing need the currency's fraction behavior, which is what
- * fixes the scale of an ISO minor-unit amount, so both return `null` for a code
- * this build's [Currency] does not carry.
+ * All this object contributes is the tables. The lookups, the pattern-based
+ * formatter and the parser live in `kotlinx-locale-currency-cldr-format`, which
+ * is also what a build that generated narrowed tables binds to.
+ *
+ * The delegation is written out rather than expressed with `by` because both
+ * interfaces declare `supportedLocales`, and being explicit about which one
+ * answers is better than resolving the clash with a one-line override.
  */
 public object CldrCurrency : CurrencyNameSource, CurrencyFormatSource {
 
+    private val names = PayloadCurrencyNames(currencyNamesRegistry)
+    private val formats = PayloadCurrencyFormats(currencyFormatsRegistry, currencyNamesRegistry)
+
+    // The two tables cover the same locale set, so either answer is the same.
     override val supportedLocales: Set<Locale>
-        get() = bundledCurrencyLocales
+        get() = formats.supportedLocales
 
-    override fun currencySymbolOrNull(currencyCode: String, locale: Locale): String? = bundledCurrencySymbol(currencyCode, locale)
+    override fun currencySymbolOrNull(currencyCode: String, locale: Locale): String? = names.currencySymbolOrNull(currencyCode, locale)
 
-    override fun currencyNameOrNull(currencyCode: String, locale: Locale): String? = bundledCurrencyName(currencyCode, locale)
+    override fun currencyNameOrNull(currencyCode: String, locale: Locale): String? = names.currencyNameOrNull(currencyCode, locale)
 
     override fun formatOrNull(
         minorUnits: Long,
@@ -36,13 +41,8 @@ public object CldrCurrency : CurrencyNameSource, CurrencyFormatSource {
         style: CurrencySymbolStyle,
         accounting: Boolean,
         cash: Boolean,
-    ): String? {
-        val currency = Currency.forCodeOrNull(currencyCode) ?: return null
-        return formatCurrency(minorUnits, currency, locale, style, accounting, cash)
-    }
+    ): String? = formats.formatOrNull(minorUnits, currencyCode, locale, style, accounting, cash)
 
-    override fun parseToMinorUnitsOrNull(text: String, currencyCode: String, locale: Locale): Long? {
-        val currency = Currency.forCodeOrNull(currencyCode) ?: return null
-        return parseFormattedCurrency(text, currency, locale)
-    }
+    override fun parseToMinorUnitsOrNull(text: String, currencyCode: String, locale: Locale): Long? =
+        formats.parseToMinorUnitsOrNull(text, currencyCode, locale)
 }

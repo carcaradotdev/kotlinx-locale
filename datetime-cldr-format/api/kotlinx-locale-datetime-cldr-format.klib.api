@@ -1,0 +1,119 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-datetime-cldr-format>
+sealed interface dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken { // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken|null[0]
+    final class Field : dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken { // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field|null[0]
+        constructor <init>(kotlin/Char, kotlin/Int) // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.<init>|<init>(kotlin.Char;kotlin.Int){}[0]
+
+        final val count // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.count|{}count[0]
+            final fun <get-count>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.count.<get-count>|<get-count>(){}[0]
+        final val letter // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.letter|{}letter[0]
+            final fun <get-letter>(): kotlin/Char // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.letter.<get-letter>|<get-letter>(){}[0]
+
+        final fun component1(): kotlin/Char // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.component1|component1(){}[0]
+        final fun component2(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.component2|component2(){}[0]
+        final fun copy(kotlin/Char = ..., kotlin/Int = ...): dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.copy|copy(kotlin.Char;kotlin.Int){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Field.toString|toString(){}[0]
+    }
+
+    final class Literal : dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken { // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal|null[0]
+        constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal.<init>|<init>(kotlin.String){}[0]
+
+        final val text // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal.text|{}text[0]
+            final fun <get-text>(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal.text.<get-text>|<get-text>(){}[0]
+
+        final fun component1(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken.Literal.toString|toString(){}[0]
+    }
+}
+
+final class dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord { // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord|null[0]
+    constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.<init>|<init>(kotlin.String){}[0]
+
+    final val am // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.am|{}am[0]
+        final fun <get-am>(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.am.<get-am>|<get-am>(){}[0]
+    final val dateFormats // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.dateFormats|{}dateFormats[0]
+        final fun <get-dateFormats>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.dateFormats.<get-dateFormats>|<get-dateFormats>(){}[0]
+    final val dayPeriodNames // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.dayPeriodNames|{}dayPeriodNames[0]
+        final fun <get-dayPeriodNames>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.dayPeriodNames.<get-dayPeriodNames>|<get-dayPeriodNames>(){}[0]
+    final val dayPeriodRules // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.dayPeriodRules|{}dayPeriodRules[0]
+        final fun <get-dayPeriodRules>(): kotlin.collections/List<dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.dayPeriodRules.<get-dayPeriodRules>|<get-dayPeriodRules>(){}[0]
+    final val daysAbbr // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.daysAbbr|{}daysAbbr[0]
+        final fun <get-daysAbbr>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.daysAbbr.<get-daysAbbr>|<get-daysAbbr>(){}[0]
+    final val daysNarrow // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.daysNarrow|{}daysNarrow[0]
+        final fun <get-daysNarrow>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.daysNarrow.<get-daysNarrow>|<get-daysNarrow>(){}[0]
+    final val daysWide // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.daysWide|{}daysWide[0]
+        final fun <get-daysWide>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.daysWide.<get-daysWide>|<get-daysWide>(){}[0]
+    final val digits // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.digits|{}digits[0]
+        final fun <get-digits>(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.digits.<get-digits>|<get-digits>(){}[0]
+    final val era0 // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.era0|{}era0[0]
+        final fun <get-era0>(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.era0.<get-era0>|<get-era0>(){}[0]
+    final val era1 // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.era1|{}era1[0]
+        final fun <get-era1>(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.era1.<get-era1>|<get-era1>(){}[0]
+    final val glueFormats // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.glueFormats|{}glueFormats[0]
+        final fun <get-glueFormats>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.glueFormats.<get-glueFormats>|<get-glueFormats>(){}[0]
+    final val monthsAbbr // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.monthsAbbr|{}monthsAbbr[0]
+        final fun <get-monthsAbbr>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.monthsAbbr.<get-monthsAbbr>|<get-monthsAbbr>(){}[0]
+    final val monthsNarrow // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.monthsNarrow|{}monthsNarrow[0]
+        final fun <get-monthsNarrow>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.monthsNarrow.<get-monthsNarrow>|<get-monthsNarrow>(){}[0]
+    final val monthsWide // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.monthsWide|{}monthsWide[0]
+        final fun <get-monthsWide>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.monthsWide.<get-monthsWide>|<get-monthsWide>(){}[0]
+    final val pm // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.pm|{}pm[0]
+        final fun <get-pm>(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.pm.<get-pm>|<get-pm>(){}[0]
+    final val timeFormats // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.timeFormats|{}timeFormats[0]
+        final fun <get-timeFormats>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.timeFormats.<get-timeFormats>|<get-timeFormats>(){}[0]
+
+    final fun dayPeriodName(kotlin/Int): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord.dayPeriodName|dayPeriodName(kotlin.Int){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule { // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule|null[0]
+    constructor <init>(kotlin/Int, kotlin/Int, kotlin/Int) // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+
+    final val code // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule.code|{}code[0]
+        final fun <get-code>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule.code.<get-code>|<get-code>(){}[0]
+    final val end // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule.end|{}end[0]
+        final fun <get-end>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule.end.<get-end>|<get-end>(){}[0]
+    final val isPoint // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule.isPoint|{}isPoint[0]
+        final fun <get-isPoint>(): kotlin/Boolean // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule.isPoint.<get-isPoint>|<get-isPoint>(){}[0]
+    final val start // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule.start|{}start[0]
+        final fun <get-start>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodRule.start.<get-start>|<get-start>(){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats : dev.carcara.kotlinx.locale.datetime/DateTimeFormatSource { // dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>) // dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final val supportedLocales // dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun dayOfWeekNameOrNull(kotlin/Int, dev.carcara.kotlinx.locale.datetime/TextStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats.dayOfWeekNameOrNull|dayOfWeekNameOrNull(kotlin.Int;dev.carcara.kotlinx.locale.datetime.TextStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun formatDateOrNull(kotlinx.datetime/LocalDate, dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats.formatDateOrNull|formatDateOrNull(kotlinx.datetime.LocalDate;dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun formatDateTimeOrNull(kotlinx.datetime/LocalDateTime, dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats.formatDateTimeOrNull|formatDateTimeOrNull(kotlinx.datetime.LocalDateTime;dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun formatTimeOrNull(kotlinx.datetime/LocalTime, dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats.formatTimeOrNull|formatTimeOrNull(kotlinx.datetime.LocalTime;dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun monthNameOrNull(kotlin/Int, dev.carcara.kotlinx.locale.datetime/TextStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.format/PayloadDateTimeFormats.monthNameOrNull|monthNameOrNull(kotlin.Int;dev.carcara.kotlinx.locale.datetime.TextStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final object dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes { // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes|null[0]
+    final const val AM // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes.AM|{}AM[0]
+        final fun <get-AM>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes.AM.<get-AM>|<get-AM>(){}[0]
+    final const val MIDNIGHT // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes.MIDNIGHT|{}MIDNIGHT[0]
+        final fun <get-MIDNIGHT>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes.MIDNIGHT.<get-MIDNIGHT>|<get-MIDNIGHT>(){}[0]
+    final const val NOON // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes.NOON|{}NOON[0]
+        final fun <get-NOON>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes.NOON.<get-NOON>|<get-NOON>(){}[0]
+    final const val PM // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes.PM|{}PM[0]
+        final fun <get-PM>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.format/DayPeriodCodes.PM.<get-PM>|<get-PM>(){}[0]
+}
+
+final fun (kotlin.collections/List<dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken>).dev.carcara.kotlinx.locale.datetime.cldr.format/withoutZoneFields(): kotlin.collections/List<dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken> // dev.carcara.kotlinx.locale.datetime.cldr.format/withoutZoneFields|withoutZoneFields@kotlin.collections.List<dev.carcara.kotlinx.locale.datetime.cldr.format.PatternToken>(){}[0]
+final fun dev.carcara.kotlinx.locale.datetime.cldr.format/dateTimeRecordFor(kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord // dev.carcara.kotlinx.locale.datetime.cldr.format/dateTimeRecordFor|dateTimeRecordFor(kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun dev.carcara.kotlinx.locale.datetime.cldr.format/formatPattern(kotlin.collections/List<dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken>, dev.carcara.kotlinx.locale.datetime.cldr.format/DateTimeRecord, kotlinx.datetime/LocalDate?, kotlinx.datetime/LocalTime?): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.format/formatPattern|formatPattern(kotlin.collections.List<dev.carcara.kotlinx.locale.datetime.cldr.format.PatternToken>;dev.carcara.kotlinx.locale.datetime.cldr.format.DateTimeRecord;kotlinx.datetime.LocalDate?;kotlinx.datetime.LocalTime?){}[0]
+final fun dev.carcara.kotlinx.locale.datetime.cldr.format/parseDateTimePattern(kotlin/String): kotlin.collections/List<dev.carcara.kotlinx.locale.datetime.cldr.format/PatternToken> // dev.carcara.kotlinx.locale.datetime.cldr.format/parseDateTimePattern|parseDateTimePattern(kotlin.String){}[0]

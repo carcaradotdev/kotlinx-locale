@@ -1,8 +1,10 @@
+@file:OptIn(InternalKotlinxLocaleApi::class)
+
 package dev.carcara.kotlinx.locale.currency
 
+import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.icuCurrencyGoldenData
-import dev.carcara.kotlinx.locale.currency.cldr.internal.currencyFormatFor
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

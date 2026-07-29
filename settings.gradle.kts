@@ -47,11 +47,14 @@ listOf(
     "locale-types" to "kotlinx-locale-types",
     "country-types" to "kotlinx-locale-country-types",
     "country-core" to "kotlinx-locale-country-core",
+    "country-cldr-format" to "kotlinx-locale-country-cldr-format",
     "country-cldr" to "kotlinx-locale-country-cldr",
     "currency-types" to "kotlinx-locale-currency-types",
     "currency-core" to "kotlinx-locale-currency-core",
+    "currency-cldr-format" to "kotlinx-locale-currency-cldr-format",
     "currency-cldr" to "kotlinx-locale-currency-cldr",
     "datetime-core" to "kotlinx-locale-datetime-core",
+    "datetime-cldr-format" to "kotlinx-locale-datetime-cldr-format",
     "datetime-cldr" to "kotlinx-locale-datetime-cldr",
 ).forEach { (dir, artifact) ->
     include(":$dir")

@@ -45,5 +45,15 @@ final class dev.carcara.kotlinx.locale/Locale { // dev.carcara.kotlinx.locale/Lo
     }
 }
 
+final const val dev.carcara.kotlinx.locale.internal/ENTRY_SEPARATOR // dev.carcara.kotlinx.locale.internal/ENTRY_SEPARATOR|{}ENTRY_SEPARATOR[0]
+    final fun <get-ENTRY_SEPARATOR>(): kotlin/Char // dev.carcara.kotlinx.locale.internal/ENTRY_SEPARATOR.<get-ENTRY_SEPARATOR>|<get-ENTRY_SEPARATOR>(){}[0]
+final const val dev.carcara.kotlinx.locale.internal/FIELD_SEPARATOR // dev.carcara.kotlinx.locale.internal/FIELD_SEPARATOR|{}FIELD_SEPARATOR[0]
+    final fun <get-FIELD_SEPARATOR>(): kotlin/Char // dev.carcara.kotlinx.locale.internal/FIELD_SEPARATOR.<get-FIELD_SEPARATOR>|<get-FIELD_SEPARATOR>(){}[0]
+final const val dev.carcara.kotlinx.locale.internal/KEY_SEPARATOR // dev.carcara.kotlinx.locale.internal/KEY_SEPARATOR|{}KEY_SEPARATOR[0]
+    final fun <get-KEY_SEPARATOR>(): kotlin/Char // dev.carcara.kotlinx.locale.internal/KEY_SEPARATOR.<get-KEY_SEPARATOR>|<get-KEY_SEPARATOR>(){}[0]
+
 final fun (dev.carcara.kotlinx.locale/Locale).dev.carcara.kotlinx.locale/dataLookupTags(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale/dataLookupTags|dataLookupTags@dev.carcara.kotlinx.locale.Locale(){}[0]
 final fun (dev.carcara.kotlinx.locale/LocaleRef).dev.carcara.kotlinx.locale/toLocale(): dev.carcara.kotlinx.locale/Locale // dev.carcara.kotlinx.locale/toLocale|toLocale@dev.carcara.kotlinx.locale.LocaleRef(){}[0]
+final fun dev.carcara.kotlinx.locale.internal/resolvedRecord(kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.internal/resolvedRecord|resolvedRecord(kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun dev.carcara.kotlinx.locale.internal/sparseRecordValue(kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale/Locale, kotlin/Int, kotlin/Int, kotlin/String): kotlin/String? // dev.carcara.kotlinx.locale.internal/sparseRecordValue|sparseRecordValue(kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.Locale;kotlin.Int;kotlin.Int;kotlin.String){}[0]
+final fun dev.carcara.kotlinx.locale.internal/supportedLocalesOf(kotlin.collections/Map<kotlin/String, kotlin/String>): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.internal/supportedLocalesOf|supportedLocalesOf(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]

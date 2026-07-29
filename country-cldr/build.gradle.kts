@@ -5,7 +5,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":kotlinx-locale-country-core"))
+            api(project(":kotlinx-locale-country-cldr-format"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
