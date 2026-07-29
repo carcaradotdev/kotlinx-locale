@@ -2,7 +2,7 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.currency.cldr.internal.data
 
-internal const val CLDR_VERSION: String = "release-48-2"
+internal const val CURRENCY_FORMATS_CLDR_VERSION: String = "release-48-2"
 
 internal val currencyFormatsRegistry: Map<String, String> = buildMap(1122) {
     put("aa", CURRENCY_FORMATS_AA)

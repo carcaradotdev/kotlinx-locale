@@ -38,6 +38,8 @@ public fun canonicalTag(cldrId: String): String {
     }.joinToString("-")
 }
 
+private const val FILE_PREFIX = "LocaleData"
+
 public class LocaleDataEmitter(private val outputDir: File, private val cldrTag: String, private val packageName: String) {
 
     private fun header(source: String): String = """
@@ -50,7 +52,11 @@ public class LocaleDataEmitter(private val outputDir: File, private val cldrTag:
     /** Keyed by canonical tag, the same keys the runtime registry is looked up by. */
     public fun emit(encodedByTag: Map<String, String>) {
         outputDir.mkdirs()
-        outputDir.listFiles { f: File -> f.extension == "kt" }?.forEach(File::delete)
+        // Only this emitter's own files. The shipped layout gives every emitter
+        // its own directory, but a generated source set puts all four in one, so
+        // deleting every .kt here would wipe the country and currency tables.
+        outputDir.listFiles { f: File -> f.extension == "kt" && f.name.startsWith(FILE_PREFIX) }
+            ?.forEach(File::delete)
 
         // Deduplicate identical payloads (a locale that adds nothing over its
         // parent encodes to the same record).
@@ -86,7 +92,7 @@ public class LocaleDataEmitter(private val outputDir: File, private val cldrTag:
         outputDir.resolve("LocaleDataRegistry.kt").writeText(
             buildString {
                 append(header("CLDR $cldrTag"))
-                append("\ninternal const val CLDR_VERSION: String = \"")
+                append("\ninternal const val LOCALE_DATA_CLDR_VERSION: String = \"")
                 append(kotlinEscape(cldrTag))
                 append("\"\n")
                 append("\ninternal val localeDataRegistry: Map<String, String> = buildMap(")

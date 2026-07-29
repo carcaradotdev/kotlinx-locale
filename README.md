@@ -46,15 +46,19 @@ in the bottom one.
 | `locale-types/` | `dev.carcara:kotlinx-locale-types` | The generated locale catalog: one enum per language, so `Pt.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
 | `country-types/` | `dev.carcara:kotlinx-locale-country-types` | The `Country` enum: 249 ISO 3166-1 entries carrying their alpha-3 and numeric codes. Generated, and nothing else. |
 | `country-core/` | `dev.carcara:kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
+| `country-cldr-format/` | `dev.carcara:kotlinx-locale-country-cldr-format` | The reader for the CLDR name records, without the records. What a generated table binds to. |
 | `country-cldr/` | `dev.carcara:kotlinx-locale-country-cldr` | `CldrCountry` and the CLDR name tables behind it, plus `Country.displayName`. |
 | `currency-types/` | `dev.carcara:kotlinx-locale-currency-types` | The `Currency` enum (active ISO 4217 codes, ISO minor units, CLDR fraction and cash-rounding behavior) and the country-to-currency map. |
 | `currency-core/` | `dev.carcara:kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
+| `currency-cldr-format/` | `dev.carcara:kotlinx-locale-currency-cldr-format` | The reader for the CLDR symbol, name and number records, plus the pattern-based formatter and parser. |
 | `currency-cldr/` | `dev.carcara:kotlinx-locale-currency-cldr` | `CldrCurrency`, the CLDR symbol and name tables, the pattern-based number formatter and parser, plus `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
 | `datetime-core/` | `dev.carcara:kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
+| `datetime-cldr-format/` | `dev.carcara:kotlinx-locale-datetime-cldr-format` | The reader for the CLDR pattern records, plus the pattern parser and formatter. |
 | `datetime-cldr/` | `dev.carcara:kotlinx-locale-datetime-cldr` | `CldrDateTime`, the CLDR pattern data, parser and formatter, plus `LocalDate.format` and friends. |
 | `conformance/` | `dev.carcara:kotlinx-locale-conformance` | The ICU fixtures and the suite that runs any source through them, at an exact tier for CLDR-backed sources and a behavioural tier for platform ones. For test source sets. |
 | `codegen-api/` | `dev.carcara:kotlinx-locale-codegen` | The emitters and the bundle reader: the half of code generation that a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
 | `cldr-data/` | `dev.carcara:kotlinx-locale-cldr-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
+| `gradle-plugin/` | `dev.carcara:kotlinx-locale-gradle-plugin` | The `dev.carcara.kotlinx-locale` plugin: generates a data set narrowed to the locales a build declares. |
 
 A `-cldr` module is one implementation of its domain's contract, not the only
 possible one. Which one answers is visible in the import rather than inferred
@@ -143,6 +147,45 @@ locale-country = ["locale-country-types", "locale-country-core", "locale-country
 Dropping `-cldr` gives you the codes, the lookups and `CurrencyAmount` without
 any translated text, which is the difference between roughly 25 KB and roughly
 430 KB gzipped for country on Kotlin/JS.
+
+## Shipping only the locales you use
+
+Most applications need a handful of locales, not 1121. The Gradle plugin
+generates the data set for the ones a build declares:
+
+```kotlin
+plugins {
+    id("dev.carcara.kotlinx-locale") version "0.1.0-SNAPSHOT"
+}
+
+kotlinxLocale {
+    locales(Pt.BR, En.US, Ja.BASE)
+    fallback(En.US)
+    packageName = "com.example.locale"
+
+    country { names = true }
+    currency { names = true; formats = true }
+    datetime { patterns = true }
+}
+```
+
+The dependency block then takes `-core`, `-types` and `-cldr-format` and leaves
+out `-cldr`, because the records come from the generator instead. Call sites do
+not change: the generated source implements the same interfaces and carries the
+same extensions, so `Country.BR.displayName(locale)` still reads the same and
+only the import moves. `samples/narrowed/` is a build that does this, with 124 KB
+of generated Kotlin where the shipped tables are 3764 KB.
+
+`fallback` is required, and required to be one of the generated locales. Ask a
+three-locale build for `de` and it answers in the fallback rather than returning
+nothing, which matters most for dates: a country or a currency can degrade to its
+ISO code, but a date would surface as an ISO 8601 timestamp in the middle of a
+translated screen.
+
+Narrowing only ever touches locale data. `Country.forAlpha2("br")` and
+`Currency.forCode("jpy")` keep working whatever you generated, because an app
+that displays three currencies can still be handed an arbitrary code by a payment
+API.
 
 ## Supported platforms
 
