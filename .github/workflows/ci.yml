@@ -17,8 +17,8 @@ defaults:
     shell: bash
 
 jobs:
-  ktlint:
-    name: ktlint
+  lint:
+    name: lint
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -30,6 +30,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Check formatting
         run: ./gradlew ktlintCheck
+      - name: Check that hand-written code names no specific enum entry
+        run: ./gradlew checkLayeringRule
 
   abi:
     name: abi

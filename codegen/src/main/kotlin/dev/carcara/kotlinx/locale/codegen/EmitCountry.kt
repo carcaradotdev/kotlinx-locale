@@ -5,8 +5,10 @@ import java.io.File
 private const val COUNTRY_PACKAGE = "dev.carcara.kotlinx.locale.country"
 
 /**
- * Emits the public Country enum. Only the entry list is data-driven; the members
- * and companion are a fixed template delegating to hand-written internals.
+ * Emits the Country enum into the -types layer: the entry list and nothing
+ * else. Every behaviour is an extension declared in -core or in an
+ * implementation module, which is what keeps this emitter writing data only
+ * and lets the Gradle plugin narrow the entry set without copying logic.
  */
 fun emitCountryEnum(outputFile: File, cldrTag: String, countries: List<CountryInfo>) {
     outputFile.parentFile.mkdirs()
@@ -29,15 +31,13 @@ fun emitCountryEnum(outputFile: File, cldrTag: String, countries: List<CountryIn
         |// Regenerate with: ./gradlew :codegen:generateLocaleData
         |package $COUNTRY_PACKAGE
         |
-        |import dev.carcara.kotlinx.locale.Locale
-        |import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
-        |
         |/**
         | * The countries of ISO 3166-1, keyed by alpha-2 code.
         | *
-        | * Each entry carries the ISO alpha-3 and numeric codes, and [displayName]
-        | * localizes the country name from CLDR data. The companion parses any of
-        | * those representations back to a [Country].
+        | * Each entry carries only the codes ISO assigns it. Everything else is an
+        | * extension: `alpha2` and the `for*` lookups come from
+        | * `kotlinx-locale-country-core`, and `displayName` from whichever
+        | * implementation module you put on the classpath.
         | */
         |public enum class Country(
         |    /** The ISO 3166-1 alpha-3 code, e.g. `USA`. */
@@ -47,54 +47,7 @@ fun emitCountryEnum(outputFile: File, cldrTag: String, countries: List<CountryIn
         |) {
         |$entries    ;
         |
-        |    /** The ISO 3166-1 alpha-2 code, e.g. `US`. */
-        |    public val alpha2: String
-        |        get() = name
-        |
-        |    /**
-        |     * The country name for [locale] from CLDR data, resolved through the
-        |     * locale's inheritance chain; falls back to [alpha2] when CLDR has no name.
-        |     */
-        |    public fun displayName(locale: Locale = Locale.current): String =
-        |        CldrCountry.displayName(this, locale)
-        |
-        |    public companion object {
-        |        private val byAlpha2: Map<String, Country> by lazy { entries.associateBy(Country::alpha2) }
-        |        private val byAlpha3: Map<String, Country> by lazy { entries.associateBy(Country::alpha3) }
-        |        private val byNumeric: Map<Int, Country> by lazy { entries.associateBy(Country::numericCode) }
-        |
-        |        /** The country with the given ISO 3166-1 alpha-2 code, case-insensitively, or `null`. */
-        |        public fun forAlpha2OrNull(code: String): Country? = byAlpha2[code.uppercase()]
-        |
-        |        /** Like [forAlpha2OrNull] but throws on unknown codes. */
-        |        public fun forAlpha2(code: String): Country =
-        |            requireNotNull(forAlpha2OrNull(code)) { "Unknown ISO 3166-1 alpha-2 code: '${'$'}code'" }
-        |
-        |        /** The country with the given ISO 3166-1 alpha-3 code, case-insensitively, or `null`. */
-        |        public fun forAlpha3OrNull(code: String): Country? = byAlpha3[code.uppercase()]
-        |
-        |        /** Like [forAlpha3OrNull] but throws on unknown codes. */
-        |        public fun forAlpha3(code: String): Country =
-        |            requireNotNull(forAlpha3OrNull(code)) { "Unknown ISO 3166-1 alpha-3 code: '${'$'}code'" }
-        |
-        |        /** The country with the given ISO 3166-1 numeric code, or `null`. */
-        |        public fun forNumericCodeOrNull(code: Int): Country? = byNumeric[code]
-        |
-        |        /** Like [forNumericCodeOrNull] but throws on unknown codes. */
-        |        public fun forNumericCode(code: Int): Country =
-        |            requireNotNull(forNumericCodeOrNull(code)) { "Unknown ISO 3166-1 numeric code: ${'$'}code" }
-        |
-        |        /** The country of [locale]'s region subtag, or `null`. */
-        |        public fun forLocaleOrNull(locale: Locale = Locale.current): Country? =
-        |            locale.region?.let { byAlpha2[it] }
-        |
-        |        /**
-        |         * The country whose CLDR display name in [locale] matches [name],
-        |         * case-insensitively, or `null`.
-        |         */
-        |        public fun forDisplayNameOrNull(name: String, locale: Locale = Locale.current): Country? =
-        |            CldrCountry.countryForDisplayNameOrNull(name, locale)
-        |    }
+        |    public companion object
         |}
         |
         """.trimMargin(),

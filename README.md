@@ -14,6 +14,7 @@ involved.
 ```kotlin
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.*
+import dev.carcara.kotlinx.locale.datetime.cldr.*
 import kotlinx.datetime.*
 
 val date = LocalDate(2026, 7, 27)
@@ -35,20 +36,33 @@ The full API, with every enum value and edge case, is documented in [API.md](API
 
 ## Modules
 
-| Module | Artifact | What it contains |
-| --- | --- | --- |
-| `locale/` | `dev.carcara:kotlinx-locale` | The `Locale` type: tag parsing, normalization, system locale detection, the list of CLDR locales, and the data-lookup infrastructure formatter modules build on. Depends on nothing. |
-| `datetime/` | `dev.carcara:kotlinx-locale-datetime` | Extensions for kotlinx-datetime: date/time/date-time formatting in the four CLDR lengths, month and weekday names, per-locale digit systems. Carries the generated CLDR formatting data. |
-| `country/` | `dev.carcara:kotlinx-locale-country` | The `Country` enum: all 249 ISO 3166-1 countries with alpha-2, alpha-3 and numeric codes, CLDR-localized display names, and conversion between every representation. |
-| `currency/` | `dev.carcara:kotlinx-locale-currency` | The `Currency` enum (active ISO 4217: alphabetic and numeric codes, ISO minor units, CLDR fraction and cash-rounding behavior), the `CurrencyAmount` type, a CLDR currency formatter, mappers between the ISO and CLDR decimal scales, and country-to-currency mapping (depends on the country module). |
+Artifacts are named `kotlinx-locale[-<domain>]-<layer>`. Every domain has the
+same three layers, and the translated text — the part that is big — lives only
+in the bottom one.
 
-Each formatter module brings its own generated CLDR data and depends on the
-base module, so you ship the data for what you use. More formatter modules
-are planned on the same foundation.
+| Directory | Artifact | What it contains |
+| --- | --- | --- |
+| `locale-core/` | `dev.carcara:kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing. |
+| `locale-types/` | `dev.carcara:kotlinx-locale-types` | The generated locale catalog: one enum per language, so `Pt.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
+| `country-types/` | `dev.carcara:kotlinx-locale-country-types` | The `Country` enum: 249 ISO 3166-1 entries carrying their alpha-3 and numeric codes. Generated, and nothing else. |
+| `country-core/` | `dev.carcara:kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
+| `country-cldr/` | `dev.carcara:kotlinx-locale-country-cldr` | `CldrCountry` and the CLDR name tables behind it, plus `Country.displayName`. |
+| `currency-types/` | `dev.carcara:kotlinx-locale-currency-types` | The `Currency` enum (active ISO 4217 codes, ISO minor units, CLDR fraction and cash-rounding behavior) and the country-to-currency map. |
+| `currency-core/` | `dev.carcara:kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
+| `currency-cldr/` | `dev.carcara:kotlinx-locale-currency-cldr` | `CldrCurrency`, the CLDR symbol and name tables, the pattern-based number formatter and parser, plus `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
+| `datetime-core/` | `dev.carcara:kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
+| `datetime-cldr/` | `dev.carcara:kotlinx-locale-datetime-cldr` | `CldrDateTime`, the CLDR pattern data, parser and formatter, plus `LocalDate.format` and friends. |
+
+A `-cldr` module is one implementation of its domain's contract, not the only
+possible one. Which one answers is visible in the import rather than inferred
+from the dependency graph, so a build can compose two of them or swap one out
+by changing an import.
 
 ```kotlin
-import dev.carcara.kotlinx.locale.country.Country
+import dev.carcara.kotlinx.locale.country.*
+import dev.carcara.kotlinx.locale.country.cldr.*
 import dev.carcara.kotlinx.locale.currency.*
+import dev.carcara.kotlinx.locale.currency.cldr.*
 
 Country.forAlpha3("BRA")                      // Country.BR
 Country.BR.displayName(Locale.forLanguageTag("fr"))   // Brésil
@@ -58,6 +72,11 @@ price.format(Locale.forLanguageTag("de"))             // 1.234,56 €
 price.format(Locale.forLanguageTag("en"))             // €1,234.56
 Country.BR.currency                                   // Currency.BRL
 ```
+
+Nothing at the call site says which layer answered, which is the point:
+`Country.BR.alpha3` reads from `-types`, `Country.forAlpha3("BRA")` from
+`-core` and `Country.BR.displayName(locale)` from `-cldr`, and all three are
+written the same way.
 
 ## Features
 
@@ -99,14 +118,28 @@ repositories { mavenLocal(); mavenCentral() }
 
 kotlin {
     sourceSets.commonMain.dependencies {
-        implementation("dev.carcara:kotlinx-locale-datetime:0.1.0-SNAPSHOT")
-        implementation("dev.carcara:kotlinx-locale-country:0.1.0-SNAPSHOT")
-        implementation("dev.carcara:kotlinx-locale-currency:0.1.0-SNAPSHOT")
-        // each pulls in dev.carcara:kotlinx-locale transitively; take only
-        // the modules you need
+        // one domain, all three layers
+        implementation("dev.carcara:kotlinx-locale-country-types:0.1.0-SNAPSHOT")
+        implementation("dev.carcara:kotlinx-locale-country-core:0.1.0-SNAPSHOT")
+        implementation("dev.carcara:kotlinx-locale-country-cldr:0.1.0-SNAPSHOT")
     }
 }
 ```
+
+Each layer pulls the ones below it transitively, so `-cldr` alone is enough in
+practice; declaring all three keeps what you depend on visible. There is no
+umbrella artifact, because an artifact whose only job is to pull three others
+is a second place for the dependency set to be wrong. A version catalog bundle
+does the same job in the build where the versions already live:
+
+```toml
+[bundles]
+locale-country = ["locale-country-types", "locale-country-core", "locale-country-cldr"]
+```
+
+Dropping `-cldr` gives you the codes, the lookups and `CurrencyAmount` without
+any translated text, which is the difference between roughly 25 KB and roughly
+430 KB gzipped for country on Kotlin/JS.
 
 ## Supported platforms
 

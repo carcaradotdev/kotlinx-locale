@@ -1,0 +1,114 @@
+import org.gradle.api.DefaultTask
+import org.gradle.api.file.ConfigurableFileCollection
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.tasks.InputFiles
+import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
+import org.gradle.api.tasks.TaskAction
+
+/**
+ * Enforces the rule that lets any `-cldr` link against any `-types`:
+ * hand-written code may name the generated enum types and their members, never
+ * a specific entry.
+ *
+ * A `Currency.USD` compiled into an artifact shipped from Maven would fail to
+ * link against a `-types` the Gradle plugin narrowed to a different entry set.
+ * Generated sources are exempt, since they are the entry set. Tests are exempt,
+ * since they never ship.
+ */
+abstract class CheckLayeringRule : DefaultTask() {
+
+    @get:InputFiles
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    abstract val sources: ConfigurableFileCollection
+
+    @get:Internal
+    abstract val rootDirectory: DirectoryProperty
+
+    @TaskAction
+    fun check() {
+        val entry = Regex("""\b(Country|Currency)\.([A-Z][A-Z0-9_]+)\b""")
+        val root = rootDirectory.get().asFile
+        val handWritten = sources.files.sorted().filterNot { it.readText().startsWith("// GENERATED") }
+        val offenders = handWritten.flatMap { file ->
+            blankComments(file.readText()).lineSequence().flatMapIndexed { index, line ->
+                entry.findAll(line).map { "${file.relativeTo(root)}:${index + 1}: ${it.value}" }
+            }.toList()
+        }
+        if (offenders.isEmpty()) {
+            logger.lifecycle("[layering] ${handWritten.size} hand-written sources name no specific enum entry")
+            return
+        }
+        error(
+            buildString {
+                appendLine("Hand-written code named a specific enum entry, which breaks the guarantee that")
+                appendLine("any -cldr links against any -types. Use the enum type or its members instead,")
+                appendLine("and leave the entries to generated code:")
+                offenders.forEach { appendLine("  $it") }
+            },
+        )
+    }
+
+    /** Blanks out comments and string bodies, keeping line numbering intact. */
+    private fun blankComments(text: String): String = buildString(text.length) {
+        var index = 0
+        var inBlock = false
+        var inLine = false
+        var inString = false
+        while (index < text.length) {
+            val ch = text[index]
+            val next = text.getOrNull(index + 1)
+            when {
+                ch == '\n' -> {
+                    inLine = false
+                    append(ch)
+                    index++
+                }
+                inLine -> {
+                    append(' ')
+                    index++
+                }
+                inBlock -> {
+                    if (ch == '*' && next == '/') {
+                        inBlock = false
+                        append("  ")
+                        index += 2
+                    } else {
+                        append(' ')
+                        index++
+                    }
+                }
+                inString -> {
+                    if (ch == '\\') {
+                        append("  ")
+                        index += 2
+                    } else {
+                        if (ch == '"') inString = false
+                        append(ch)
+                        index++
+                    }
+                }
+                ch == '/' && next == '/' -> {
+                    inLine = true
+                    append("  ")
+                    index += 2
+                }
+                ch == '/' && next == '*' -> {
+                    inBlock = true
+                    append("  ")
+                    index += 2
+                }
+                ch == '"' -> {
+                    inString = true
+                    append(ch)
+                    index++
+                }
+                else -> {
+                    append(ch)
+                    index++
+                }
+            }
+        }
+    }
+}

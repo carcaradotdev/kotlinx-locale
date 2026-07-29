@@ -33,12 +33,24 @@ dependencyResolutionManagement {
 
 rootProject.name = "kotlinx-locale-project"
 
-include(":locale")
-project(":locale").name = "kotlinx-locale"
-include(":datetime")
-project(":datetime").name = "kotlinx-locale-datetime"
-include(":country")
-project(":country").name = "kotlinx-locale-country"
-include(":currency")
-project(":currency").name = "kotlinx-locale-currency"
+// Artifacts are kotlinx-locale[-<domain>]-<layer>: -types is generator output,
+// -core is the hand-written contract, -cldr is one implementation of it. The
+// locale domain is the root, so it carries no domain segment. Directory names
+// drop the shared kotlinx-locale prefix.
+listOf(
+    "locale-core" to "kotlinx-locale-core",
+    "locale-types" to "kotlinx-locale-types",
+    "country-types" to "kotlinx-locale-country-types",
+    "country-core" to "kotlinx-locale-country-core",
+    "country-cldr" to "kotlinx-locale-country-cldr",
+    "currency-types" to "kotlinx-locale-currency-types",
+    "currency-core" to "kotlinx-locale-currency-core",
+    "currency-cldr" to "kotlinx-locale-currency-cldr",
+    "datetime-core" to "kotlinx-locale-datetime-core",
+    "datetime-cldr" to "kotlinx-locale-datetime-cldr",
+).forEach { (dir, artifact) ->
+    include(":$dir")
+    project(":$dir").name = artifact
+}
+
 include(":codegen")

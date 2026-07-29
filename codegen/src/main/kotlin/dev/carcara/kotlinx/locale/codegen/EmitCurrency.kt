@@ -8,8 +8,10 @@ private const val CURRENCY_PACKAGE = "dev.carcara.kotlinx.locale.currency"
 class CurrencyGen(val iso: Iso4217Currency, val fractions: CurrencyFractions)
 
 /**
- * Emits the public Currency enum. Only the entry list is data-driven; the members
- * and companion are a fixed template delegating to hand-written internals.
+ * Emits the Currency enum into the -types layer: the entry list and nothing
+ * else. The four `cldr*` fields ride along because `isoToCldrUnits` needs them
+ * with no locale in play, which makes them per-entry data rather than locale
+ * data.
  */
 fun emitCurrencyEnum(outputFile: File, cldrTag: String, isoPublished: String, currencies: List<CurrencyGen>) {
     outputFile.parentFile.mkdirs()
@@ -40,21 +42,18 @@ fun emitCurrencyEnum(outputFile: File, cldrTag: String, isoPublished: String, cu
         |// Regenerate with: ./gradlew :codegen:generateLocaleData
         |package $CURRENCY_PACKAGE
         |
-        |import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
-        |import dev.carcara.kotlinx.locale.Locale
-        |import dev.carcara.kotlinx.locale.country.Country
-        |import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
-        |import dev.carcara.kotlinx.locale.currency.internal.primaryCurrencyOf
-        |import dev.carcara.kotlinx.locale.currency.internal.rescaleFraction
-        |
         |/**
         | * The active currencies of ISO 4217, keyed by alphabetic code.
         | *
         | * Each entry carries the ISO numeric code and minor units together with the
         | * CLDR fraction behavior (formatting digits, rounding increments and their
         | * cash variants), which CLDR intentionally lets diverge from ISO — e.g. ALL
-        | * has 2 ISO minor units but is formatted with 0 digits. [isoToCldrUnits] and
-        | * [cldrToIsoUnits] convert amounts between the two scales.
+        | * has 2 ISO minor units but is formatted with 0 digits.
+        | *
+        | * Everything else is an extension: `code`, `minorUnitDigits`, the unit
+        | * conversions and the `for*` lookups come from `kotlinx-locale-currency-core`,
+        | * and `symbol` and `displayName` from whichever implementation module you put
+        | * on the classpath.
         | */
         |public enum class Currency(
         |    /** The ISO 4217 numeric code, e.g. 840 for USD; -1 when ISO assigns none. */
@@ -72,73 +71,7 @@ fun emitCurrencyEnum(outputFile: File, cldrTag: String, isoPublished: String, cu
         |) {
         |$entries    ;
         |
-        |    /** The ISO 4217 alphabetic code, e.g. `USD`. */
-        |    public val code: String
-        |        get() = name
-        |
-        |    /**
-        |     * The fraction digits of ISO minor-unit amounts such as
-        |     * [CurrencyAmount.minorUnits]: [defaultFractionDigits], or 0 when ISO
-        |     * defines no minor units.
-        |     */
-        |    public val minorUnitDigits: Int
-        |        get() = if (defaultFractionDigits >= 0) defaultFractionDigits else 0
-        |
-        |    /**
-        |     * The CLDR currency symbol for [locale] (e.g. `US${'$'}` for USD in pt-BR),
-        |     * resolved through the locale's inheritance chain; falls back to [code].
-        |     */
-        |    public fun symbol(locale: Locale = Locale.current): String =
-        |        CldrCurrency.symbol(this, locale)
-        |
-        |    /** The CLDR display name for [locale]; falls back to [code]. */
-        |    public fun displayName(locale: Locale = Locale.current): String =
-        |        CldrCurrency.displayName(this, locale)
-        |
-        |    /**
-        |     * Converts an amount in ISO minor units to the CLDR fraction scale,
-        |     * rounding half-even when CLDR uses fewer digits than ISO.
-        |     * For ALL (ISO 2 decimals, CLDR 0): `12345 -> 123`.
-        |     */
-        |    @OptIn(InternalKotlinxLocaleApi::class)
-        |    public fun isoToCldrUnits(minorUnits: Long): Long =
-        |        rescaleFraction(minorUnits, minorUnitDigits, cldrFractionDigits)
-        |
-        |    /**
-        |     * Converts an amount in the CLDR fraction scale back to ISO minor units.
-        |     * For ALL: `123 -> 12300`.
-        |     */
-        |    @OptIn(InternalKotlinxLocaleApi::class)
-        |    public fun cldrToIsoUnits(cldrUnits: Long): Long =
-        |        rescaleFraction(cldrUnits, cldrFractionDigits, minorUnitDigits)
-        |
-        |    public companion object {
-        |        private val byCode: Map<String, Currency> by lazy { entries.associateBy(Currency::code) }
-        |        private val byNumeric: Map<Int, Currency> by lazy {
-        |            entries.filter { it.numericCode >= 0 }.associateBy(Currency::numericCode)
-        |        }
-        |
-        |        /** The currency with the given ISO 4217 alphabetic code, case-insensitively, or `null`. */
-        |        public fun forCodeOrNull(code: String): Currency? = byCode[code.uppercase()]
-        |
-        |        /** Like [forCodeOrNull] but throws on unknown codes. */
-        |        public fun forCode(code: String): Currency =
-        |            requireNotNull(forCodeOrNull(code)) { "Unknown ISO 4217 code: '${'$'}code'" }
-        |
-        |        /** The currency with the given ISO 4217 numeric code, or `null`. */
-        |        public fun forNumericCodeOrNull(code: Int): Currency? = byNumeric[code]
-        |
-        |        /** Like [forNumericCodeOrNull] but throws on unknown codes. */
-        |        public fun forNumericCode(code: Int): Currency =
-        |            requireNotNull(forNumericCodeOrNull(code)) { "Unknown ISO 4217 numeric code: ${'$'}code" }
-        |
-        |        /** The primary legal-tender currency of [country] per CLDR, or `null`. */
-        |        public fun forCountryOrNull(country: Country): Currency? = primaryCurrencyOf(country)
-        |
-        |        /** The primary currency of [locale]'s region, or `null`. */
-        |        public fun forLocaleOrNull(locale: Locale = Locale.current): Currency? =
-        |            Country.forLocaleOrNull(locale)?.let(::forCountryOrNull)
-        |    }
+        |    public companion object
         |}
         |
         """.trimMargin(),
