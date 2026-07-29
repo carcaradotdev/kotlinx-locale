@@ -48,7 +48,12 @@ fun libraryModule(name: String, vararg requires: String) = Facade(
  * `kotlinx-datetime` is not one of ours: it is the transitive dependency the
  * datetime module exposes, measured on its own so that the datetime figure can
  * be read as "our code plus this".
+ *
+ * The `-codes` entries are slices of a module rather than modules, so `all`
+ * skips them. They exist to measure a core/data split before it is built.
  */
+val publishedModules = listOf("locale", "country", "currency", "datetime")
+
 val moduleFacades = mapOf(
     "locale" to libraryModule("kotlinx-locale"),
     "country" to libraryModule("kotlinx-locale-country", "locale"),
@@ -58,13 +63,19 @@ val moduleFacades = mapOf(
         dependency = "org.jetbrains.kotlinx:kotlinx-datetime:${catalogVersion("kotlinx-datetime")}",
         requires = emptyList(),
     ),
+    // Slices that skip every entry point reaching CLDR text, to measure what a
+    // core/data split would leave behind. They deliberately do not require the
+    // `locale` facade: `Locale.availableLocales` is itself a generated table.
+    "country-codes" to libraryModule("kotlinx-locale-country"),
+    "currency-codes" to libraryModule("kotlinx-locale-currency", "country-codes"),
 )
 
 val selectedModules: List<String> = run {
     val raw = (findProperty("modules") as String? ?: "all").trim()
     val requested = when (raw) {
-        // `all` means all of ours; kotlinx-datetime comes along through datetime.
-        "all" -> moduleFacades.keys.filter { it != "kotlinx-datetime" }
+        // `all` means the published modules; kotlinx-datetime comes along
+        // through datetime, and the `-codes` slices are subsets of a module.
+        "all" -> publishedModules
         "none", "" -> emptyList()
         else -> raw.split(',').map { it.trim() }.filter { it.isNotEmpty() }
     }
