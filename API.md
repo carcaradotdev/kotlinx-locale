@@ -661,6 +661,19 @@ The total operations `-core` layers over each interface supply the documented
 fallback: the ISO code for country and currency names, and ISO 8601 for dates
 and times, which is close to what CLDR root already prints.
 
+**Checking your own source.** `kotlinx-locale-conformance` runs any
+implementation through the ICU fixtures:
+
+```kotlin
+@Test
+fun conforms() = MyCountryNames.assertConformsToCountryNames(ConformanceTier.EXACT)
+```
+
+`EXACT` is for sources compiled from CLDR, which are a second encoding of the
+data ICU encodes and must match it byte for byte. `BEHAVIOURAL` is for platform
+sources, whose data belongs to the host and moves with OS versions; it checks
+that answers are well-shaped and round trip, not what they say.
+
 ## The locale catalog
 
 `kotlinx-locale-types` is optional and carries no translations. It generates one

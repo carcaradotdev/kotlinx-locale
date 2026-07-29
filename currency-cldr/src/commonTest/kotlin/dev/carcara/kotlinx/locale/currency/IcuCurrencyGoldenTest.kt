@@ -1,44 +1,23 @@
 package dev.carcara.kotlinx.locale.currency
 
 import dev.carcara.kotlinx.locale.Locale
-import dev.carcara.kotlinx.locale.currency.cldr.displayName
-import dev.carcara.kotlinx.locale.currency.cldr.format
+import dev.carcara.kotlinx.locale.conformance.icuCurrencyGoldenData
 import dev.carcara.kotlinx.locale.currency.cldr.internal.currencyFormatFor
-import dev.carcara.kotlinx.locale.currency.cldr.symbol
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /**
- * Cross-checks the CLDR-generated currency data — symbols, display names,
- * number separators and the standard currency pattern — against ICU's
- * independently encoded resource bundles.
+ * Cross-checks the number-formatting tables against ICU's independently encoded
+ * resource bundles.
+ *
+ * Symbols and display names are checked by the shared conformance suite, which
+ * any source can run. These are the raw tables behind the formatter, reachable
+ * only from inside the module that owns them, and no source interface exposes
+ * them because no platform could implement one that did.
  */
 class IcuCurrencyGoldenTest {
 
-    private fun String.normalized() = replace('\u00A0', ' ').replace('\u202F', ' ')
-
-    @Test
-    fun runtimeSymbolsAndNamesMatchIcu() {
-        assertTrue(icuCurrencyGoldenData.size >= 25, "expected the full golden locale set")
-        for (golden in icuCurrencyGoldenData) {
-            val locale = Locale.forLanguageTag(golden.tag)
-            for ((code, icuSymbol) in golden.symbols) {
-                assertEquals(
-                    icuSymbol.normalized(),
-                    Currency.forCode(code).symbol(locale).normalized(),
-                    "${golden.tag} $code symbol",
-                )
-            }
-            for ((code, icuName) in golden.names) {
-                assertEquals(
-                    icuName.normalized(),
-                    Currency.forCode(code).displayName(locale).normalized(),
-                    "${golden.tag} $code name",
-                )
-            }
-        }
-    }
+    private fun String.normalized() = replace(' ', ' ').replace(' ', ' ')
 
     @Test
     fun runtimeNumberDataMatchesIcu() {

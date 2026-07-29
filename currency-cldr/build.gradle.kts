@@ -9,6 +9,7 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(project(":kotlinx-locale-conformance"))
         }
     }
 }

@@ -53,6 +53,9 @@ listOf(
     project(":$dir").name = artifact
 }
 
+include(":conformance")
+project(":conformance").name = "kotlinx-locale-conformance"
+
 include(":codegen")
 
 // Kotlin/JS probes that measure what each dependency set costs a consumer.

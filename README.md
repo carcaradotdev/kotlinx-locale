@@ -52,6 +52,7 @@ in the bottom one.
 | `currency-cldr/` | `dev.carcara:kotlinx-locale-currency-cldr` | `CldrCurrency`, the CLDR symbol and name tables, the pattern-based number formatter and parser, plus `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
 | `datetime-core/` | `dev.carcara:kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
 | `datetime-cldr/` | `dev.carcara:kotlinx-locale-datetime-cldr` | `CldrDateTime`, the CLDR pattern data, parser and formatter, plus `LocalDate.format` and friends. |
+| `conformance/` | `dev.carcara:kotlinx-locale-conformance` | The ICU fixtures and the suite that runs any source through them, at an exact tier for CLDR-backed sources and a behavioural tier for platform ones. For test source sets. |
 
 A `-cldr` module is one implementation of its domain's contract, not the only
 possible one. Which one answers is visible in the import rather than inferred
