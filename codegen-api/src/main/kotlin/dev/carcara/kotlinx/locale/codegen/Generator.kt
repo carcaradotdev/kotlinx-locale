@@ -9,6 +9,15 @@ import java.io.File
  * turns features off and how a caller that only wants data skips the enums.
  * Every root is a package root: the emitters append their own package path.
  */
+public class BindingTarget(
+    /** The package root the file is written under. */
+    public val root: File,
+    /** The package the object and its extensions live in. */
+    public val packageName: String,
+    /** The object's name, e.g. `CldrCountry` or `GeneratedCountryNames`. */
+    public val objectName: String,
+)
+
 public class SourceRoots(
     public val localeCatalog: File? = null,
     public val countryEnum: File? = null,
@@ -18,6 +27,10 @@ public class SourceRoots(
     public val currencyFormats: File? = null,
     public val currencyNames: File? = null,
     public val dateTime: File? = null,
+    /** The source object and convenience extensions over the country table. */
+    public val countryBinding: BindingTarget? = null,
+    public val currencyBinding: BindingTarget? = null,
+    public val dateTimeBinding: BindingTarget? = null,
 )
 
 /**
@@ -141,6 +154,25 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             packageName = packages.dateTime,
         ).emit(bundle.dateTime)
     }
+
+    roots.countryBinding?.let { target ->
+        emitCountryBinding(target.root, target.spec(packages.countryNames, cldr))
+    }
+
+    roots.currencyBinding?.let { target ->
+        emitCurrencyBinding(target.root, target.spec(packages.currencyNames, cldr))
+    }
+
+    roots.dateTimeBinding?.let { target ->
+        emitDateTimeBinding(target.root, target.spec(packages.dateTime, cldr))
+    }
 }
+
+private fun BindingTarget.spec(registryPackage: String, cldrTag: String) = BindingSpec(
+    packageName = packageName,
+    objectName = objectName,
+    registryPackage = registryPackage,
+    source = "CLDR $cldrTag",
+)
 
 private fun File.packageDir(packageName: String): File = resolve(packageName.replace('.', '/'))
