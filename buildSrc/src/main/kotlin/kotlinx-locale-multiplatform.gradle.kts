@@ -1,11 +1,12 @@
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeSimulatorTest
 import org.jetbrains.kotlin.konan.target.HostManager
 
 /**
  * Shared configuration for the published multiplatform library modules:
- * the full target set, explicit API mode, Android library setup and
- * publishing. The Android namespace derives from the module name
+ * the full target set, explicit API mode, ABI validation, Android library
+ * setup and publishing. The Android namespace derives from the module name
  * (kotlinx-locale-datetime -> dev.carcara.kotlinx.locale.datetime).
  */
 plugins {
@@ -18,6 +19,12 @@ val libs = the<VersionCatalogsExtension>().named("libs")
 
 kotlin {
     explicitApi()
+
+    // Dumps the public ABI of every target to api/<module>.klib.api and
+    // api/jvm/<module>.api. `checkKotlinAbi` compares the code against those
+    // files; `updateKotlinAbi` rewrites them.
+    @OptIn(ExperimentalAbiValidation::class)
+    abiValidation()
 
     jvmToolchain(21)
 
@@ -85,6 +92,19 @@ kotlin {
         macosX64()
         watchosX64()
         tvosX64()
+    }
+}
+
+// The plugin wires checkKotlinAbi into `check` by default; detach it again. A
+// complete comparison needs a klib for every target and only a macOS host can
+// compile all of them, so `check` on Linux or Windows would quietly compare a
+// subset of the ABI and report success. Run `./gradlew checkKotlinAbi` on a Mac
+// instead. KGP adds the dependency after afterEvaluate, hence projectsEvaluated.
+@OptIn(ExperimentalAbiValidation::class)
+val abiCheckTaskName = kotlin.abiValidation.checkTaskProvider.name
+gradle.projectsEvaluated {
+    tasks.named("check") {
+        setDependsOn(dependsOn.filterNot { it is TaskProvider<*> && it.name == abiCheckTaskName })
     }
 }
 
