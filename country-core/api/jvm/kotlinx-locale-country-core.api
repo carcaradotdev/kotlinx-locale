@@ -1,0 +1,27 @@
+public final class dev/carcara/kotlinx/locale/country/CountryCodesKt {
+	public static final fun forAlpha2 (Ldev/carcara/kotlinx/locale/country/Country$Companion;Ljava/lang/String;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun forAlpha2OrNull (Ldev/carcara/kotlinx/locale/country/Country$Companion;Ljava/lang/String;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun forAlpha3 (Ldev/carcara/kotlinx/locale/country/Country$Companion;Ljava/lang/String;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun forAlpha3OrNull (Ldev/carcara/kotlinx/locale/country/Country$Companion;Ljava/lang/String;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun forLocaleOrNull (Ldev/carcara/kotlinx/locale/country/Country$Companion;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static synthetic fun forLocaleOrNull$default (Ldev/carcara/kotlinx/locale/country/Country$Companion;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun forNumericCode (Ldev/carcara/kotlinx/locale/country/Country$Companion;I)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun forNumericCodeOrNull (Ldev/carcara/kotlinx/locale/country/Country$Companion;I)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun getAlpha2 (Ldev/carcara/kotlinx/locale/country/Country;)Ljava/lang/String;
+}
+
+public abstract interface class dev/carcara/kotlinx/locale/country/CountryNameSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public abstract fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/country/CountryNameSourceKt {
+	public static final fun countryForDisplayNameOrNull (Ldev/carcara/kotlinx/locale/country/CountryNameSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun displayName (Ldev/carcara/kotlinx/locale/country/CountryNameSource;Ldev/carcara/kotlinx/locale/country/Country;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/country/FallbackCountryNames : dev/carcara/kotlinx/locale/country/CountryNameSource {
+	public fun <init> (Ldev/carcara/kotlinx/locale/country/CountryNameSource;Ldev/carcara/kotlinx/locale/country/CountryNameSource;)V
+	public fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+}
+

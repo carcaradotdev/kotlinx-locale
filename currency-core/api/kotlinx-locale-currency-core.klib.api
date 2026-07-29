@@ -1,0 +1,100 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-currency-core>
+final enum class dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle : kotlin/Enum<dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle> { // dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle|null[0]
+    enum entry CODE // dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle.CODE|null[0]
+    enum entry SYMBOL // dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle.SYMBOL|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle> // dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle // dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle> // dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle.values|values#static(){}[0]
+}
+
+abstract interface dev.carcara.kotlinx.locale.currency/CurrencyFormatSource : dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale.currency/CurrencyFormatSource|null[0]
+    abstract fun formatOrNull(kotlin/Long, kotlin/String, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle, kotlin/Boolean, kotlin/Boolean): kotlin/String? // dev.carcara.kotlinx.locale.currency/CurrencyFormatSource.formatOrNull|formatOrNull(kotlin.Long;kotlin.String;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle;kotlin.Boolean;kotlin.Boolean){}[0]
+    abstract fun parseToMinorUnitsOrNull(kotlin/String, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/Long? // dev.carcara.kotlinx.locale.currency/CurrencyFormatSource.parseToMinorUnitsOrNull|parseToMinorUnitsOrNull(kotlin.String;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+abstract interface dev.carcara.kotlinx.locale.currency/CurrencyNameSource : dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale.currency/CurrencyNameSource|null[0]
+    abstract fun currencyNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency/CurrencyNameSource.currencyNameOrNull|currencyNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    abstract fun currencySymbolOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency/CurrencyNameSource.currencySymbolOrNull|currencySymbolOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.currency/CurrencyAmount : kotlin/Comparable<dev.carcara.kotlinx.locale.currency/CurrencyAmount> { // dev.carcara.kotlinx.locale.currency/CurrencyAmount|null[0]
+    constructor <init>(dev.carcara.kotlinx.locale.currency/Currency, kotlin/Long) // dev.carcara.kotlinx.locale.currency/CurrencyAmount.<init>|<init>(dev.carcara.kotlinx.locale.currency.Currency;kotlin.Long){}[0]
+
+    final val currency // dev.carcara.kotlinx.locale.currency/CurrencyAmount.currency|{}currency[0]
+        final fun <get-currency>(): dev.carcara.kotlinx.locale.currency/Currency // dev.carcara.kotlinx.locale.currency/CurrencyAmount.currency.<get-currency>|<get-currency>(){}[0]
+    final val majorUnits // dev.carcara.kotlinx.locale.currency/CurrencyAmount.majorUnits|{}majorUnits[0]
+        final fun <get-majorUnits>(): kotlin/Long // dev.carcara.kotlinx.locale.currency/CurrencyAmount.majorUnits.<get-majorUnits>|<get-majorUnits>(){}[0]
+    final val minorPart // dev.carcara.kotlinx.locale.currency/CurrencyAmount.minorPart|{}minorPart[0]
+        final fun <get-minorPart>(): kotlin/Int // dev.carcara.kotlinx.locale.currency/CurrencyAmount.minorPart.<get-minorPart>|<get-minorPart>(){}[0]
+    final val minorUnits // dev.carcara.kotlinx.locale.currency/CurrencyAmount.minorUnits|{}minorUnits[0]
+        final fun <get-minorUnits>(): kotlin/Long // dev.carcara.kotlinx.locale.currency/CurrencyAmount.minorUnits.<get-minorUnits>|<get-minorUnits>(){}[0]
+
+    final fun compareTo(dev.carcara.kotlinx.locale.currency/CurrencyAmount): kotlin/Int // dev.carcara.kotlinx.locale.currency/CurrencyAmount.compareTo|compareTo(dev.carcara.kotlinx.locale.currency.CurrencyAmount){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.carcara.kotlinx.locale.currency/CurrencyAmount.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.carcara.kotlinx.locale.currency/CurrencyAmount.hashCode|hashCode(){}[0]
+    final fun minus(dev.carcara.kotlinx.locale.currency/CurrencyAmount): dev.carcara.kotlinx.locale.currency/CurrencyAmount // dev.carcara.kotlinx.locale.currency/CurrencyAmount.minus|minus(dev.carcara.kotlinx.locale.currency.CurrencyAmount){}[0]
+    final fun plus(dev.carcara.kotlinx.locale.currency/CurrencyAmount): dev.carcara.kotlinx.locale.currency/CurrencyAmount // dev.carcara.kotlinx.locale.currency/CurrencyAmount.plus|plus(dev.carcara.kotlinx.locale.currency.CurrencyAmount){}[0]
+    final fun toDecimalString(): kotlin/String // dev.carcara.kotlinx.locale.currency/CurrencyAmount.toDecimalString|toDecimalString(){}[0]
+    final fun toString(): kotlin/String // dev.carcara.kotlinx.locale.currency/CurrencyAmount.toString|toString(){}[0]
+    final fun unaryMinus(): dev.carcara.kotlinx.locale.currency/CurrencyAmount // dev.carcara.kotlinx.locale.currency/CurrencyAmount.unaryMinus|unaryMinus(){}[0]
+
+    final object Companion { // dev.carcara.kotlinx.locale.currency/CurrencyAmount.Companion|null[0]
+        final fun of(dev.carcara.kotlinx.locale.currency/Currency, kotlin/Long, kotlin/Int = ...): dev.carcara.kotlinx.locale.currency/CurrencyAmount // dev.carcara.kotlinx.locale.currency/CurrencyAmount.Companion.of|of(dev.carcara.kotlinx.locale.currency.Currency;kotlin.Long;kotlin.Int){}[0]
+        final fun parse(dev.carcara.kotlinx.locale.currency/Currency, kotlin/String): dev.carcara.kotlinx.locale.currency/CurrencyAmount // dev.carcara.kotlinx.locale.currency/CurrencyAmount.Companion.parse|parse(dev.carcara.kotlinx.locale.currency.Currency;kotlin.String){}[0]
+        final fun parseOrNull(dev.carcara.kotlinx.locale.currency/Currency, kotlin/String): dev.carcara.kotlinx.locale.currency/CurrencyAmount? // dev.carcara.kotlinx.locale.currency/CurrencyAmount.Companion.parseOrNull|parseOrNull(dev.carcara.kotlinx.locale.currency.Currency;kotlin.String){}[0]
+    }
+}
+
+final class dev.carcara.kotlinx.locale.currency/FallbackCurrencyFormats : dev.carcara.kotlinx.locale.currency/CurrencyFormatSource { // dev.carcara.kotlinx.locale.currency/FallbackCurrencyFormats|null[0]
+    constructor <init>(dev.carcara.kotlinx.locale.currency/CurrencyFormatSource, dev.carcara.kotlinx.locale.currency/CurrencyFormatSource) // dev.carcara.kotlinx.locale.currency/FallbackCurrencyFormats.<init>|<init>(dev.carcara.kotlinx.locale.currency.CurrencyFormatSource;dev.carcara.kotlinx.locale.currency.CurrencyFormatSource){}[0]
+
+    final val supportedLocales // dev.carcara.kotlinx.locale.currency/FallbackCurrencyFormats.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.currency/FallbackCurrencyFormats.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun formatOrNull(kotlin/Long, kotlin/String, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle, kotlin/Boolean, kotlin/Boolean): kotlin/String? // dev.carcara.kotlinx.locale.currency/FallbackCurrencyFormats.formatOrNull|formatOrNull(kotlin.Long;kotlin.String;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle;kotlin.Boolean;kotlin.Boolean){}[0]
+    final fun parseToMinorUnitsOrNull(kotlin/String, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/Long? // dev.carcara.kotlinx.locale.currency/FallbackCurrencyFormats.parseToMinorUnitsOrNull|parseToMinorUnitsOrNull(kotlin.String;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.currency/FallbackCurrencyNames : dev.carcara.kotlinx.locale.currency/CurrencyNameSource { // dev.carcara.kotlinx.locale.currency/FallbackCurrencyNames|null[0]
+    constructor <init>(dev.carcara.kotlinx.locale.currency/CurrencyNameSource, dev.carcara.kotlinx.locale.currency/CurrencyNameSource) // dev.carcara.kotlinx.locale.currency/FallbackCurrencyNames.<init>|<init>(dev.carcara.kotlinx.locale.currency.CurrencyNameSource;dev.carcara.kotlinx.locale.currency.CurrencyNameSource){}[0]
+
+    final val supportedLocales // dev.carcara.kotlinx.locale.currency/FallbackCurrencyNames.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.currency/FallbackCurrencyNames.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun currencyNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency/FallbackCurrencyNames.currencyNameOrNull|currencyNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun currencySymbolOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency/FallbackCurrencyNames.currencySymbolOrNull|currencySymbolOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final val dev.carcara.kotlinx.locale.currency/code // dev.carcara.kotlinx.locale.currency/code|@dev.carcara.kotlinx.locale.currency.Currency{}code[0]
+    final fun (dev.carcara.kotlinx.locale.currency/Currency).<get-code>(): kotlin/String // dev.carcara.kotlinx.locale.currency/code.<get-code>|<get-code>@dev.carcara.kotlinx.locale.currency.Currency(){}[0]
+final val dev.carcara.kotlinx.locale.currency/currencies // dev.carcara.kotlinx.locale.currency/currencies|@dev.carcara.kotlinx.locale.country.Country{}currencies[0]
+    final fun (dev.carcara.kotlinx.locale.country/Country).<get-currencies>(): kotlin.collections/List<dev.carcara.kotlinx.locale.currency/Currency> // dev.carcara.kotlinx.locale.currency/currencies.<get-currencies>|<get-currencies>@dev.carcara.kotlinx.locale.country.Country(){}[0]
+final val dev.carcara.kotlinx.locale.currency/currency // dev.carcara.kotlinx.locale.currency/currency|@dev.carcara.kotlinx.locale.country.Country{}currency[0]
+    final fun (dev.carcara.kotlinx.locale.country/Country).<get-currency>(): dev.carcara.kotlinx.locale.currency/Currency? // dev.carcara.kotlinx.locale.currency/currency.<get-currency>|<get-currency>@dev.carcara.kotlinx.locale.country.Country(){}[0]
+final val dev.carcara.kotlinx.locale.currency/minorUnitDigits // dev.carcara.kotlinx.locale.currency/minorUnitDigits|@dev.carcara.kotlinx.locale.currency.Currency{}minorUnitDigits[0]
+    final fun (dev.carcara.kotlinx.locale.currency/Currency).<get-minorUnitDigits>(): kotlin/Int // dev.carcara.kotlinx.locale.currency/minorUnitDigits.<get-minorUnitDigits>|<get-minorUnitDigits>@dev.carcara.kotlinx.locale.currency.Currency(){}[0]
+
+final fun (dev.carcara.kotlinx.locale.currency/Currency).dev.carcara.kotlinx.locale.currency/cldrToIsoUnits(kotlin/Long): kotlin/Long // dev.carcara.kotlinx.locale.currency/cldrToIsoUnits|cldrToIsoUnits@dev.carcara.kotlinx.locale.currency.Currency(kotlin.Long){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/Currency).dev.carcara.kotlinx.locale.currency/isoToCldrUnits(kotlin/Long): kotlin/Long // dev.carcara.kotlinx.locale.currency/isoToCldrUnits|isoToCldrUnits@dev.carcara.kotlinx.locale.currency.Currency(kotlin.Long){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/Currency.Companion).dev.carcara.kotlinx.locale.currency/forCode(kotlin/String): dev.carcara.kotlinx.locale.currency/Currency // dev.carcara.kotlinx.locale.currency/forCode|forCode@dev.carcara.kotlinx.locale.currency.Currency.Companion(kotlin.String){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/Currency.Companion).dev.carcara.kotlinx.locale.currency/forCodeOrNull(kotlin/String): dev.carcara.kotlinx.locale.currency/Currency? // dev.carcara.kotlinx.locale.currency/forCodeOrNull|forCodeOrNull@dev.carcara.kotlinx.locale.currency.Currency.Companion(kotlin.String){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/Currency.Companion).dev.carcara.kotlinx.locale.currency/forCountryOrNull(dev.carcara.kotlinx.locale.country/Country): dev.carcara.kotlinx.locale.currency/Currency? // dev.carcara.kotlinx.locale.currency/forCountryOrNull|forCountryOrNull@dev.carcara.kotlinx.locale.currency.Currency.Companion(dev.carcara.kotlinx.locale.country.Country){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/Currency.Companion).dev.carcara.kotlinx.locale.currency/forLocaleOrNull(dev.carcara.kotlinx.locale/Locale = ...): dev.carcara.kotlinx.locale.currency/Currency? // dev.carcara.kotlinx.locale.currency/forLocaleOrNull|forLocaleOrNull@dev.carcara.kotlinx.locale.currency.Currency.Companion(dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/Currency.Companion).dev.carcara.kotlinx.locale.currency/forNumericCode(kotlin/Int): dev.carcara.kotlinx.locale.currency/Currency // dev.carcara.kotlinx.locale.currency/forNumericCode|forNumericCode@dev.carcara.kotlinx.locale.currency.Currency.Companion(kotlin.Int){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/Currency.Companion).dev.carcara.kotlinx.locale.currency/forNumericCodeOrNull(kotlin/Int): dev.carcara.kotlinx.locale.currency/Currency? // dev.carcara.kotlinx.locale.currency/forNumericCodeOrNull|forNumericCodeOrNull@dev.carcara.kotlinx.locale.currency.Currency.Companion(kotlin.Int){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/CurrencyFormatSource).dev.carcara.kotlinx.locale.currency/format(dev.carcara.kotlinx.locale.currency/CurrencyAmount, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle = ..., kotlin/Boolean = ..., kotlin/Boolean = ...): kotlin/String // dev.carcara.kotlinx.locale.currency/format|format@dev.carcara.kotlinx.locale.currency.CurrencyFormatSource(dev.carcara.kotlinx.locale.currency.CurrencyAmount;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle;kotlin.Boolean;kotlin.Boolean){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/CurrencyFormatSource).dev.carcara.kotlinx.locale.currency/parseFormattedOrNull(dev.carcara.kotlinx.locale.currency/Currency, kotlin/String, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.currency/CurrencyAmount? // dev.carcara.kotlinx.locale.currency/parseFormattedOrNull|parseFormattedOrNull@dev.carcara.kotlinx.locale.currency.CurrencyFormatSource(dev.carcara.kotlinx.locale.currency.Currency;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/CurrencyNameSource).dev.carcara.kotlinx.locale.currency/displayName(dev.carcara.kotlinx.locale.currency/Currency, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.currency/displayName|displayName@dev.carcara.kotlinx.locale.currency.CurrencyNameSource(dev.carcara.kotlinx.locale.currency.Currency;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/CurrencyNameSource).dev.carcara.kotlinx.locale.currency/symbol(dev.carcara.kotlinx.locale.currency/Currency, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.currency/symbol|symbol@dev.carcara.kotlinx.locale.currency.CurrencyNameSource(dev.carcara.kotlinx.locale.currency.Currency;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun dev.carcara.kotlinx.locale.currency.internal/rescaleFraction(kotlin/Long, kotlin/Int, kotlin/Int): kotlin/Long // dev.carcara.kotlinx.locale.currency.internal/rescaleFraction|rescaleFraction(kotlin.Long;kotlin.Int;kotlin.Int){}[0]
+final fun dev.carcara.kotlinx.locale.currency.internal/roundToIncrement(kotlin/Long, kotlin/Long): kotlin/Long // dev.carcara.kotlinx.locale.currency.internal/roundToIncrement|roundToIncrement(kotlin.Long;kotlin.Long){}[0]

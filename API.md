@@ -1,31 +1,39 @@
 # API reference
 
-The API spans four modules and four packages:
+Each domain is three artifacts and two packages: the type and the contract share
+a package, and the implementation gets its own so that two of them can sit on
+one classpath without silently resolving by classpath order.
 
 ```kotlin
-// dev.carcara:kotlinx-locale
+// kotlinx-locale-core
 import dev.carcara.kotlinx.locale.Locale
 
-// dev.carcara:kotlinx-locale-datetime
+// kotlinx-locale-datetime-core and -cldr
 import dev.carcara.kotlinx.locale.datetime.*
+import dev.carcara.kotlinx.locale.datetime.cldr.*
 
-// dev.carcara:kotlinx-locale-country
-import dev.carcara.kotlinx.locale.country.Country
+// kotlinx-locale-country-types, -core and -cldr
+import dev.carcara.kotlinx.locale.country.*
+import dev.carcara.kotlinx.locale.country.cldr.*
 
-// dev.carcara:kotlinx-locale-currency
+// kotlinx-locale-currency-types, -core and -cldr
 import dev.carcara.kotlinx.locale.currency.*
+import dev.carcara.kotlinx.locale.currency.cldr.*
 ```
 
-The base module provides `Locale`. The datetime module adds `FormatStyle` and
-`TextStyle` plus extension functions on the kotlinx-datetime types
-`LocalDate`, `LocalTime`, `LocalDateTime`, `Month` and `DayOfWeek`. The
-country module adds the `Country` enum with the ISO 3166-1 codes and CLDR
-display names. The currency module adds the `Currency` enum (ISO 4217 codes
-and decimals plus CLDR formatting behavior), the `CurrencyAmount` value type
-and the CLDR currency formatter; it depends on the country module for
-country-to-currency mapping. Each formatter module pulls the base module in
-transitively. All datetime examples below are real output for the date
-2026-07-27 (a Monday) and the time 15:05:09.
+`kotlinx-locale-core` provides `Locale` and the `LocaleDataSource` contract.
+Datetime adds `FormatStyle`, `TextStyle` and extension functions on the
+kotlinx-datetime types `LocalDate`, `LocalTime`, `LocalDateTime`, `Month` and
+`DayOfWeek`. Country adds the `Country` enum with the ISO 3166-1 codes and CLDR
+display names. Currency adds the `Currency` enum (ISO 4217 codes and decimals
+plus CLDR formatting behavior), the `CurrencyAmount` value type and the CLDR
+currency formatter; it depends on country for country-to-currency mapping.
+
+Generated types carry only their per-entry data. Everything else about them is
+an extension, so `Country.BR.alpha3`, `Country.forAlpha3("BRA")` and
+`Country.BR.displayName(locale)` are written identically even though they come
+from three different artifacts. All datetime examples below are real output for
+the date 2026-07-27 (a Monday) and the time 15:05:09.
 
 ## Locale
 
@@ -94,15 +102,17 @@ platform exposes nothing (Wasm-WASI) or reports something unparseable, you get
 unusable value. The per-platform sources are listed in the
 [README](README.md#supported-platforms).
 
-### Locale.availableLocales
+### LocaleDataSource.supportedLocales
 
 ```kotlin
-Locale.availableLocales.size   // 1121
+CldrCountry.supportedLocales.size    // 1121
+CldrCurrency.supportedLocales.size   // 1121
+CldrDateTime.supportedLocales.size   // 1121
 ```
 
-Every locale with bundled CLDR data, sorted by tag. You do not have to pick
-from this list: formatting accepts any `Locale` and falls back as described
-next.
+Which locales resolve is a property of the source that is installed, not of the
+`Locale` type, so every source answers for itself. You do not have to pick from
+the set: formatting accepts any `Locale` and falls back as described next.
 
 ### Fallback resolution
 
@@ -354,8 +364,9 @@ regional Arabic locales.
 ## Country
 
 ```kotlin
-// dev.carcara:kotlinx-locale-country
-import dev.carcara.kotlinx.locale.country.Country
+// kotlinx-locale-country-types, -core and -cldr
+import dev.carcara.kotlinx.locale.country.*
+import dev.carcara.kotlinx.locale.country.cldr.*
 ```
 
 An enum of the 249 officially assigned ISO 3166-1 countries, keyed by alpha-2
@@ -415,8 +426,9 @@ chain falls back to the alpha-2 code. `displayName` defaults its argument to
 ## Currency
 
 ```kotlin
-// dev.carcara:kotlinx-locale-currency
+// kotlinx-locale-currency-types, -core and -cldr
 import dev.carcara.kotlinx.locale.currency.*
+import dev.carcara.kotlinx.locale.currency.cldr.*
 ```
 
 An enum of the 178 active ISO 4217 currencies, keyed by alphabetic code. The
@@ -604,6 +616,70 @@ When CLDR provides an `alphaNextToNumber` pattern variant, it is used
 automatically whenever the character next to the number would be a letter.
 That is why `CHF 10.05` and `USD 1,234.56` get a space while `$1,234.56` does
 not.
+
+## Data sources
+
+Every domain's data reaches you through an interface, and a `-cldr` module is
+one implementation of it rather than the only possible one. Each convenience
+extension above is a single line over a public source object, so the explicit
+form is always there:
+
+```kotlin
+Country.BR.displayName(locale)                // convenience
+CldrCountry.displayName(Country.BR, locale)   // exactly what it calls
+```
+
+That matters in two places the convenience form cannot serve.
+
+**Testing without CLDR.** A test that needs `displayName` to return a known
+string implements the interface instead of pinning a real CLDR value that a
+data upgrade can change:
+
+```kotlin
+val fake = object : CountryNameSource {
+    override val supportedLocales = setOf(Locale.of("en"))
+    override fun countryNameOrNull(alpha2: String, locale: Locale) = "Testland"
+}
+fake.displayName(Country.BR, Locale.of("en"))   // Testland
+```
+
+**Composition.** The interfaces are partial — every lookup returns `null` where
+the source has nothing — so a composing source can tell a miss from an answer:
+
+```kotlin
+val names = FallbackCountryNames(primary = MyOwnNames, fallback = CldrCountry)
+names.displayName(Country.BR, locale)
+```
+
+There is one composer per interface: `FallbackCountryNames`,
+`FallbackCurrencyNames`, `FallbackCurrencyFormats` and
+`FallbackDateTimeFormats`. Each dispatches per lookup rather than per locale, so
+a primary that knows a locale but not one entry within it still falls through
+for that entry, and `supportedLocales` is the union of both.
+
+The total operations `-core` layers over each interface supply the documented
+fallback: the ISO code for country and currency names, and ISO 8601 for dates
+and times, which is close to what CLDR root already prints.
+
+## The locale catalog
+
+`kotlinx-locale-types` is optional and carries no translations. It generates one
+enum per language, so a locale can be named rather than spelled:
+
+```kotlin
+Locale.forLanguageTag("pt-BRA")   // compiles, throws at runtime
+Pt.BR.toLocale()                  // cannot be misspelled, autocompletes
+```
+
+Two levels, always `Language.Rest`: `Pt.BR`, `Zh.HANS_CN`, `Ca.ES_VALENCIA`. The
+three CLDR macroregions are not valid Kotlin identifiers, so they take their
+English region names: `Ar.WORLD` for `ar-001`, `En.EUROPE` for `en-150` and
+`Es.LATIN_AMERICA` for `es-419`. The bare language is `BASE`.
+
+Its reason to exist is the Gradle plugin, whose configuration is a locale set: a
+typo there does not throw, it quietly generates data for one locale fewer than
+intended. Nothing requires it in application code, and `Locale.forLanguageTag`
+stays the zero-cost path for tags built at runtime.
 
 ## Errors, guarantees and versions
 
