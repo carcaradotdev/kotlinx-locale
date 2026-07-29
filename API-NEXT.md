@@ -119,8 +119,8 @@ locale-country = ["locale-country-core", "locale-country-types", "locale-country
 implementation(libs.bundles.locale.country)
 ```
 
-Open question 1 asks whether we should publish that bundle ourselves as a
-code-free aggregate artifact.
+We do not publish that bundle ourselves as a code-free aggregate artifact; see
+decision 1 below.
 
 ## Migration at a glance
 
@@ -165,8 +165,8 @@ public fun Country.displayName(locale: Locale = Locale.current): String =
     CldrCountry.displayName(this, locale)
 ```
 
-Whether we want that default is open question 4, but the split does not force
-the answer.
+The defaults stay exactly as they are today (decision 4), so no call site loses
+an argument it was allowed to omit.
 
 ## What does change
 
@@ -254,8 +254,10 @@ narrowed source has no root, so it needs one of:
 3. The plugin requires a configured fallback locale, so every generated source
    is total.
 
-Option 3 keeps the guarantee intact for every source, at the cost of making
-`fallback(...)` mandatory in the plugin rather than optional. Open question 3.
+We take 2 and 3 together (decision 3): the interface stays nullable so composers
+work, `-core` layers a total operation with ISO 8601 behind it, and the plugin
+makes `fallback(...)` mandatory so a generated source is total on its own terms
+and never reaches the backstop.
 
 ## What does not change
 
@@ -281,18 +283,21 @@ on the class, if `@JsExport` is ever added. Nothing is exported today.
 **The generated enums need `public companion object`** so the lookups can be
 companion extensions. A one-line emitter requirement, easy to forget.
 
-## Open questions on the surface
+## Decisions on the surface
 
-1. Do we publish code-free aggregate artifacts as dependency shorthand, so
-   `kotlinx-locale-country-all` pulls core, types and cldr? This is not the
-   rejected sugar, since it binds nothing into a call, but it is more to
-   publish.
-2. Source object names. `CldrCountry`, `CldrCurrency`, `CldrDateTime` are short
-   and say which data is behind them.
-3. Datetime totality: nullable, ISO fallback, or a mandatory configured fallback
-   in the plugin.
-4. Do the `locale: Locale = Locale.current` defaults survive? They are possible
-   again under this design, so this is now a taste question rather than a
-   constraint.
-5. Sub-package name for implementations: `...country.cldr` reads well.
-   `...cldr.country` would group all implementations of one backend together.
+1. **No aggregate artifacts.** A version catalog bundle already collapses the
+   three lines, it lives in the consumer's build where the versions are, and it
+   costs us nothing to publish or to keep consistent. An artifact that exists
+   only to pull three others is a second place for the dependency set to be
+   wrong.
+2. **`CldrCountry`, `CldrCurrency`, `CldrDateTime`.** Short, and the prefix says
+   which data answers.
+3. **Datetime is total, with ISO 8601 as the backstop.** The source interface
+   returns `String?` so a composer can tell a miss from an answer, `-core` layers
+   a total operation over it that falls back to ISO 8601, and the plugin requires
+   a configured fallback locale so a generated source never reaches the backstop
+   in the first place. Today's CLDR root patterns are already ISO-like, so the
+   backstop matches what a full build produces.
+4. **The `Locale.current` defaults survive**, unchanged from today: country and
+   currency have them, datetime does not. See decision 2 in `PLAN.md`.
+5. **`...country.cldr`.** See decision 1 in `PLAN.md`.
