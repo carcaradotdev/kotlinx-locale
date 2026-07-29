@@ -292,6 +292,24 @@ public object CldrCountryNames : CountryNameSource { /* generated tables */ }
 Core never learns the enums exist, types never learns an implementation exists,
 and a platform source implements core alone.
 
+**D. A context parameter**, which keeps today's call site without binding an
+implementation:
+
+```kotlin
+// country-core, written once
+context(source: CountryNameSource)
+public fun Country.displayName(locale: Locale): String =
+    source.countryNameOrNull(alpha2, locale) ?: alpha2
+
+// call site
+with(CldrCountry) { Country.BR.displayName(locale) }
+```
+
+Verified on Kotlin 2.4.0: no compiler flag, no experimental warning. The source
+stays explicit and lexically scoped, the extension is declared once for every
+implementation, and it propagates through application code as a context rather
+than an argument. `API-NEXT.md` works through what it does to the surface.
+
 **C. A runtime registry**, for the record, is the option that would let
 `displayName` stay a member of the enum: a global `LocaleData.provider` that a
 data module installs. Rejected. It costs a mutable global, a failure mode where
@@ -675,8 +693,11 @@ byte identical because it is the same data through the same formatter.
 
 ## Open decisions
 
-1. Source as receiver (option B) over domain object as receiver (option A).
-   Recommended, and everything above assumes it.
+1. Source as receiver (option B), domain object as receiver (option A), or a
+   context parameter (option D) that keeps today's call site. The prose above
+   assumes B; D is the later suggestion and is the one worth taking if the
+   ergonomics of today's call site matter, since it costs a `with` scope and
+   nothing else. See "Keeping today's call site" in `API-NEXT.md`.
 2. Does `Locale.current` survive as a default anywhere? Under "explicit
    everything" the locale would always be passed, and `Locale.current` stays
    available as a value you pass deliberately. This is a separate axis from the
