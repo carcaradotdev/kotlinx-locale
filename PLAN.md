@@ -717,13 +717,31 @@ plugin resolves both from Maven. No network beyond dependency resolution, no
 clone, offline-friendly, and the output is pinned to a CLDR version the user can
 see in their lock file.
 
+Both artifacts exist. The bundle is 2.8 MB of text: a header, the country and
+currency entry lists, the country-to-currency map, and the four payload maps
+keyed by canonical tag. `LocaleDataBundle.narrowTo(tags)` does the filtering,
+and it keeps each locale's ancestors, which is not optional: a country-name
+record holds only what that locale's own CLDR file declares and points at its
+parent for the rest, so a build that kept `pt-BR` and dropped `pt` would resolve
+almost nothing. `es-AR` is the case that catches a naive implementation, because
+its parent is `es-419` rather than plain `es`.
+
 ### One generator, two consumers
 
 The shipped `*-cldr` modules and the plugin must run the same emitters, or they
-drift and "the split and definitions must be the same" stops being true. The
-test that keeps them honest: run the plugin configured for every locale and
-every feature, and assert the output is byte-identical to the checked-in
-`*-cldr` sources. If that passes, there is one code path by construction.
+drift and "the split and definitions must be the same" stops being true.
+
+This is now built and pinned. `generateSources(bundle, roots, packages)` in
+`kotlinx-locale-codegen` is the single entry point; `:codegen` calls it with the
+shipped roots after extracting the bundle from CLDR, and the plugin calls it
+with roots under `build/generated/`. They differ in where output lands and which
+package the registries take, never in what is written.
+
+`BundleRoundTripTest` is the proof: it reads the published bundle, regenerates
+every shipped source from it with no CLDR clone in sight, and compares byte for
+byte. A failure means either the bundle is stale, or it cannot carry something
+the sources need — which is the more interesting case, because the plugin would
+then generate it wrong and nothing else would notice.
 
 ### Narrowing: locales yes, entities carefully
 
@@ -871,8 +889,41 @@ only for JS.
 source, run the shipped implementations through it.
 
 **Phase 5. Publishable generation.** `kotlinx-locale-cldr-data` and
-`kotlinx-locale-codegen` artifacts, then the Gradle plugin, then the
-byte-identity test that pins them together.
+`kotlinx-locale-codegen` are published, generation runs from the bundle alone,
+and `BundleRoundTripTest` pins the two together. The Gradle plugin itself is
+still to write, and phase 5 turned up what it costs.
+
+The plan assumed the plugin emits "objects implementing the same core
+interfaces" — a handful of lines binding a generated registry to
+`CountryNameSource`. That is true for country and currency names. It is not true
+for datetime or currency formatting, because the pattern parser, the number
+formatter and the payload decoders live in `*-cldr` internals, and generated
+code in a user's build cannot reach them. A narrowed datetime source needs the
+whole formatter, which is around 300 lines, not a binding.
+
+So the plugin needs one of two things first, and it is worth taking the decision
+deliberately rather than discovering it halfway through:
+
+1. **Move the decoders and formatters into `*-core`**, behind
+   `@InternalKotlinxLocaleApi`, parameterized by the registry they read. One
+   compiled copy, and generated code is genuinely a few lines. It costs the
+   property that "the pattern parser and the number formatter live in `*-cldr`,
+   not in core", and it moves roughly 700 lines across the boundary — which also
+   moves them into every consumer of `-core`, including one that only wants
+   codes.
+2. **Ship them as templates in `kotlinx-locale-codegen`**, and generate the
+   `*-cldr` sources from the same templates. This is the fallback the risk note
+   above already anticipated, and it keeps exactly one copy of the source text
+   rather than one copy of the compiled code. It costs turning working
+   hand-written runtime into generated runtime.
+
+Option 1 is better engineering and worse layering; option 2 is the reverse. The
+size probes make the cost of option 1 measurable, which is the argument for
+deciding it with a number rather than by taste: generate the formatter into a
+codes-only probe and see what it adds.
+
+Everything else phase 5 called for is in place, so whichever way this goes, the
+plugin is a DSL, a task, and one call to `generateSources`.
 
 **Phase 6, later. Platform sources.** JS over `Intl`, JVM and Android over
 `java.util.Locale` and ICU4J, Apple over `NSLocale`. Composed with a bundled

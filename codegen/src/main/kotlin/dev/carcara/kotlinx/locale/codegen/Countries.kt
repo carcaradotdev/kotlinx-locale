@@ -3,8 +3,6 @@ package dev.carcara.kotlinx.locale.codegen
 import java.io.File
 
 /** One ISO 3166-1 country: both alpha codes, the numeric code and its English name. */
-class CountryInfo(val alpha2: String, val alpha3: String, val numeric: Int, val englishName: String)
-
 /**
  * The alpha-2 region codes CLDR considers `regular` (common/validity/region.xml).
  * Ranges are written with `~` over the last character: `AL~M` means AL, AM.

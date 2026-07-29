@@ -156,10 +156,6 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
     }
 }
 
-const val FIELD_SEPARATOR = "\u001F"
-const val LIST_SEPARATOR = "\u001E"
-const val KEY_SEPARATOR = "\u001D"
-
 /**
  * Encodes resolved data as a compact record: fields joined by U+001F,
  * list items joined by U+001E. Decoded at runtime by LocaleData.
