@@ -1,0 +1,39 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-datetime>
+final enum class dev.carcara.kotlinx.locale.datetime/FormatStyle : kotlin/Enum<dev.carcara.kotlinx.locale.datetime/FormatStyle> { // dev.carcara.kotlinx.locale.datetime/FormatStyle|null[0]
+    enum entry FULL // dev.carcara.kotlinx.locale.datetime/FormatStyle.FULL|null[0]
+    enum entry LONG // dev.carcara.kotlinx.locale.datetime/FormatStyle.LONG|null[0]
+    enum entry MEDIUM // dev.carcara.kotlinx.locale.datetime/FormatStyle.MEDIUM|null[0]
+    enum entry SHORT // dev.carcara.kotlinx.locale.datetime/FormatStyle.SHORT|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.datetime/FormatStyle.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.datetime/FormatStyle> // dev.carcara.kotlinx.locale.datetime/FormatStyle.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.datetime/FormatStyle // dev.carcara.kotlinx.locale.datetime/FormatStyle.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.datetime/FormatStyle> // dev.carcara.kotlinx.locale.datetime/FormatStyle.values|values#static(){}[0]
+}
+
+final enum class dev.carcara.kotlinx.locale.datetime/TextStyle : kotlin/Enum<dev.carcara.kotlinx.locale.datetime/TextStyle> { // dev.carcara.kotlinx.locale.datetime/TextStyle|null[0]
+    enum entry ABBREVIATED // dev.carcara.kotlinx.locale.datetime/TextStyle.ABBREVIATED|null[0]
+    enum entry FULL // dev.carcara.kotlinx.locale.datetime/TextStyle.FULL|null[0]
+    enum entry NARROW // dev.carcara.kotlinx.locale.datetime/TextStyle.NARROW|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.datetime/TextStyle.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.datetime/TextStyle> // dev.carcara.kotlinx.locale.datetime/TextStyle.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.datetime/TextStyle // dev.carcara.kotlinx.locale.datetime/TextStyle.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.datetime/TextStyle> // dev.carcara.kotlinx.locale.datetime/TextStyle.values|values#static(){}[0]
+}
+
+final fun (kotlinx.datetime/DayOfWeek).dev.carcara.kotlinx.locale.datetime/displayName(dev.carcara.kotlinx.locale.datetime/TextStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.datetime/displayName|displayName@kotlinx.datetime.DayOfWeek(dev.carcara.kotlinx.locale.datetime.TextStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (kotlinx.datetime/LocalDate).dev.carcara.kotlinx.locale.datetime/format(dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.datetime/format|format@kotlinx.datetime.LocalDate(dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (kotlinx.datetime/LocalDateTime).dev.carcara.kotlinx.locale.datetime/format(dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.datetime/format|format@kotlinx.datetime.LocalDateTime(dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (kotlinx.datetime/LocalDateTime).dev.carcara.kotlinx.locale.datetime/format(dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.datetime/format|format@kotlinx.datetime.LocalDateTime(dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (kotlinx.datetime/LocalTime).dev.carcara.kotlinx.locale.datetime/format(dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.datetime/format|format@kotlinx.datetime.LocalTime(dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (kotlinx.datetime/Month).dev.carcara.kotlinx.locale.datetime/displayName(dev.carcara.kotlinx.locale.datetime/TextStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.datetime/displayName|displayName@kotlinx.datetime.Month(dev.carcara.kotlinx.locale.datetime.TextStyle;dev.carcara.kotlinx.locale.Locale){}[0]
