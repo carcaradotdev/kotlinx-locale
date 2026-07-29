@@ -1,0 +1,33 @@
+public final class dev/carcara/kotlinx/locale/currency/cldr/format/CurrencyNumberFormat {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getAccountingAlphaPattern ()Ljava/lang/String;
+	public final fun getAccountingPattern ()Ljava/lang/String;
+	public final fun getCurrencyDecimal ()Ljava/lang/String;
+	public final fun getCurrencyGroup ()Ljava/lang/String;
+	public final fun getDecimal ()Ljava/lang/String;
+	public final fun getDigits ()Ljava/lang/String;
+	public final fun getGroup ()Ljava/lang/String;
+	public final fun getMinimumGroupingDigits ()I
+	public final fun getMinusSign ()Ljava/lang/String;
+	public final fun getStandardAlphaPattern ()Ljava/lang/String;
+	public final fun getStandardPattern ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/currency/cldr/format/PayloadCurrencyFormats : dev/carcara/kotlinx/locale/currency/CurrencyFormatSource {
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;)V
+	public fun formatOrNull (JLjava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;ZZ)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun parseToMinorUnitsOrNull (Ljava/lang/String;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/Long;
+}
+
+public final class dev/carcara/kotlinx/locale/currency/cldr/format/PayloadCurrencyNames : dev/carcara/kotlinx/locale/currency/CurrencyNameSource {
+	public fun <init> (Ljava/util/Map;)V
+	public fun currencyNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun currencySymbolOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+}
+
+public final class dev/carcara/kotlinx/locale/currency/cldr/format/PayloadCurrencySourcesKt {
+	public static final fun currencyNumberFormatFor (Ljava/util/Map;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/currency/cldr/format/CurrencyNumberFormat;
+}
+

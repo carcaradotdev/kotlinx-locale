@@ -1,9 +1,15 @@
-package dev.carcara.kotlinx.locale.currency.cldr.internal
+@file:OptIn(InternalKotlinxLocaleApi::class)
 
+package dev.carcara.kotlinx.locale.currency.cldr.format
+
+import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.Currency
+import dev.carcara.kotlinx.locale.currency.CurrencyNameSource
 import dev.carcara.kotlinx.locale.currency.code
+import dev.carcara.kotlinx.locale.currency.displayName
 import dev.carcara.kotlinx.locale.currency.minorUnitDigits
+import dev.carcara.kotlinx.locale.currency.symbol
 
 /** Invisible bidi and zero-width marks that CLDR affixes and symbols carry. */
 private const val INVISIBLE_MARKS = "\u200E\u200F\u061C\u200B\uFEFF"
@@ -23,8 +29,13 @@ private const val NON_BREAKING_SPACES = "\u00A0\u202F\u2007\u2009"
  * fails the parse. Negative amounts are recognized from the locale's minus
  * sign, ASCII/Unicode minus, or accounting parentheses.
  */
-internal fun parseFormattedCurrency(text: String, currency: Currency, locale: Locale): Long? {
-    val data = currencyFormatFor(locale)
+internal fun parseFormattedCurrency(
+    data: CurrencyNumberFormat,
+    names: CurrencyNameSource,
+    text: String,
+    currency: Currency,
+    locale: Locale,
+): Long? {
     var value = text.filterNot { it in INVISIBLE_MARKS }.trim()
     if (value.isEmpty()) return null
 
@@ -37,8 +48,8 @@ internal fun parseFormattedCurrency(text: String, currency: Currency, locale: Lo
     // Strip one currency representation: display name, symbol or ISO code,
     // longest first so "HUF" is not half-eaten by a shorter token.
     val tokens = listOf(
-        bundledCurrencyName(currency.code, locale) ?: currency.code,
-        bundledCurrencySymbol(currency.code, locale) ?: currency.code,
+        names.displayName(currency, locale),
+        names.symbol(currency, locale),
         currency.code,
     )
         .map { token -> token.filterNot { it in INVISIBLE_MARKS } }

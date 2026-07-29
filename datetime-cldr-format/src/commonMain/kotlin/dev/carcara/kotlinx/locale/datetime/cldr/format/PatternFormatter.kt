@@ -1,13 +1,25 @@
-package dev.carcara.kotlinx.locale.datetime.cldr.internal
+@file:OptIn(InternalKotlinxLocaleApi::class)
 
+package dev.carcara.kotlinx.locale.datetime.cldr.format
+
+import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.number
 
-internal sealed interface PatternToken {
-    data class Literal(val text: String) : PatternToken
-    data class Field(val letter: Char, val count: Int) : PatternToken
+/**
+ * The pattern engine, exposed under the internal-API marker.
+ *
+ * A source built over CLDR-shaped records needs to render them, and the tests
+ * that cover day periods and the all-locales sweep drive the engine directly
+ * rather than through whatever pattern a locale happens to use.
+ */
+@InternalKotlinxLocaleApi
+public sealed interface PatternToken {
+    public data class Literal(public val text: String) : PatternToken
+
+    public data class Field(public val letter: Char, public val count: Int) : PatternToken
 }
 
 private val ZONE_FIELD_LETTERS = setOf('z', 'Z', 'v', 'V', 'O', 'x', 'X')
@@ -16,7 +28,8 @@ private val ZONE_FIELD_LETTERS = setOf('z', 'Z', 'v', 'V', 'O', 'x', 'X')
  * Parses a CLDR date/time pattern into tokens. Handles `'quoted literals'` and
  * the `''` escape for a literal apostrophe.
  */
-internal fun parseDateTimePattern(pattern: String): List<PatternToken> {
+@InternalKotlinxLocaleApi
+public fun parseDateTimePattern(pattern: String): List<PatternToken> {
     val tokens = ArrayList<PatternToken>()
     var literal = StringBuilder()
 
@@ -77,7 +90,8 @@ internal fun parseDateTimePattern(pattern: String): List<PatternToken> {
  * adjacent whitespace-only literal so patterns like `HH:mm:ss zzzz` degrade to
  * `HH:mm:ss` rather than leaving a dangling space.
  */
-internal fun List<PatternToken>.withoutZoneFields(): List<PatternToken> {
+@InternalKotlinxLocaleApi
+public fun List<PatternToken>.withoutZoneFields(): List<PatternToken> {
     if (none { it is PatternToken.Field && it.letter in ZONE_FIELD_LETTERS }) return this
     val result = ArrayList<PatternToken>(size)
     var trimNextLiteral = false
@@ -137,7 +151,8 @@ internal fun List<PatternToken>.withoutZoneFields(): List<PatternToken> {
 // The closing ] must be escaped: JS unicode-mode regexes reject a lone one.
 private val EMPTY_BRACKET_PAIR = Regex("""\(\s*\)|\[\s*\]""")
 
-internal fun formatPattern(tokens: List<PatternToken>, data: LocaleData, date: LocalDate?, time: LocalTime?): String {
+@InternalKotlinxLocaleApi
+public fun formatPattern(tokens: List<PatternToken>, data: DateTimeRecord, date: LocalDate?, time: LocalTime?): String {
     val sb = StringBuilder()
     for (token in tokens) {
         when (token) {
@@ -148,7 +163,7 @@ internal fun formatPattern(tokens: List<PatternToken>, data: LocaleData, date: L
     return sb.toString()
 }
 
-private fun formatField(sb: StringBuilder, letter: Char, count: Int, data: LocaleData, date: LocalDate?, time: LocalTime?) {
+private fun formatField(sb: StringBuilder, letter: Char, count: Int, data: DateTimeRecord, date: LocalDate?, time: LocalTime?) {
     when (letter) {
         'G' -> if (date != null) sb.append(if (date.year > 0) data.era1 else data.era0)
         'y' -> if (date != null) {
@@ -194,13 +209,13 @@ private fun formatField(sb: StringBuilder, letter: Char, count: Int, data: Local
     }
 }
 
-private fun LocaleData.amPm(time: LocalTime): String = if (time.hour < 12) am else pm
+private fun DateTimeRecord.amPm(time: LocalTime): String = if (time.hour < 12) am else pm
 
 /**
  * The `b` field: AM/PM, except that exactly 00:00:00 and 12:00:00 use the
  * locale's midnight/noon names when it has them.
  */
-private fun amPmNoonMidnight(time: LocalTime, data: LocaleData): String {
+private fun amPmNoonMidnight(time: LocalTime, data: DateTimeRecord): String {
     if (time.minute == 0 && time.second == 0) {
         if (time.hour == 0) data.dayPeriodName(DayPeriodCodes.MIDNIGHT)?.let { return it }
         if (time.hour == 12) data.dayPeriodName(DayPeriodCodes.NOON)?.let { return it }
@@ -214,7 +229,7 @@ private fun amPmNoonMidnight(time: LocalTime, data: LocaleData): String {
  * the exact time (zero seconds); a period the locale has no name for falls
  * back to AM/PM, per UTS #35.
  */
-private fun flexibleDayPeriod(time: LocalTime, data: LocaleData): String {
+private fun flexibleDayPeriod(time: LocalTime, data: DateTimeRecord): String {
     val minuteOfDay = time.hour * 60 + time.minute
     for (rule in data.dayPeriodRules) {
         val matches = when {

@@ -58,16 +58,28 @@ public class LocaleDataBundle(
      * Ancestors are not optional. A country-name record holds only what that
      * locale's own CLDR file declares and points at its parent for the rest, so
      * a build that kept `pt-BR` and dropped `pt` would resolve almost nothing.
+     *
+     * [fallbackTag], when given, becomes the record stored under `root`, which is
+     * what the runtime reaches for when a locale is not in the set at all. That
+     * is what keeps a narrowed source total: ask a three-locale build for `ja`
+     * and it answers in the fallback locale rather than returning nothing. It
+     * must be one of [tags], since a fallback nobody generated data for would not
+     * answer either.
      */
-    public fun narrowTo(tags: Set<String>): LocaleDataBundle {
+    public fun narrowTo(tags: Set<String>, fallbackTag: String? = null): LocaleDataBundle {
+        require(tags.isNotEmpty()) { "narrowing to no locales would generate nothing" }
         val kept = LinkedHashSet<String>()
-        for (tag in tags) {
+        for (tag in tags.sorted()) {
             require(tag in dateTime) { "no CLDR data for locale '$tag'" }
             kept += tag
             kept += ancestorsOf(tag, countryNames)
             kept += ancestorsOf(tag, currencyNames)
         }
         kept += "root"
+        if (fallbackTag != null) {
+            require(fallbackTag in tags) { "the fallback locale '$fallbackTag' is not one of the generated locales" }
+        }
+
         return LocaleDataBundle(
             cldrVersion = cldrVersion,
             isoPublished = isoPublished,
@@ -75,11 +87,67 @@ public class LocaleDataBundle(
             countries = countries,
             currencies = currencies,
             countryCurrencies = countryCurrencies,
-            dateTime = dateTime.filterKeys { it in kept },
-            countryNames = countryNames.filterKeys { it in kept },
-            currencyFormats = currencyFormats.filterKeys { it in kept },
-            currencyNames = currencyNames.filterKeys { it in kept },
+            dateTime = withFallback(dateTime.filterKeys { it in kept }, dateTime, fallbackTag, sparseFields = 0),
+            countryNames = withFallback(countryNames.filterKeys { it in kept }, countryNames, fallbackTag, sparseFields = 1),
+            currencyFormats = withFallback(currencyFormats.filterKeys { it in kept }, currencyFormats, fallbackTag, sparseFields = 0),
+            currencyNames = withFallback(currencyNames.filterKeys { it in kept }, currencyNames, fallbackTag, sparseFields = 2),
         )
+    }
+
+    /**
+     * Replaces the `root` record with the fallback locale's, so an unlisted
+     * locale resolves to the fallback instead of to CLDR root.
+     *
+     * A resolved record ([sparseFields] of 0) can be copied as it is. A sparse
+     * one cannot: it holds only what its own locale declared and defers the rest
+     * to its parent, so copying `pt-BR` to `root` would resolve almost nothing.
+     * The chain is flattened into one parentless record instead, nearest
+     * declaration winning, which is exactly what a lookup starting at the
+     * fallback would have found.
+     */
+    private fun withFallback(
+        narrowed: Map<String, String>,
+        full: Map<String, String>,
+        fallbackTag: String?,
+        sparseFields: Int,
+    ): Map<String, String> {
+        if (fallbackTag == null) return narrowed
+        val record = full[fallbackTag] ?: return narrowed
+        val rootRecord = if (sparseFields == 0) record else flattenSparse(full, fallbackTag, sparseFields)
+        return LinkedHashMap(narrowed).apply { put("root", rootRecord) }
+    }
+
+    /** The fallback's whole chain as one parentless record with [fields] data fields. */
+    private fun flattenSparse(full: Map<String, String>, fallbackTag: String, fields: Int): String {
+        val merged = List(fields) { LinkedHashMap<String, String>() }
+        var tag: String? = fallbackTag
+        var hops = 0
+        while (tag != null && hops++ < 16) {
+            val record = full[tag] ?: break
+            val parts = record.split(FIELD_SEPARATOR)
+            for (field in 1..fields) {
+                val body = parts.getOrNull(field) ?: continue
+                for (entry in body.split(LIST_SEPARATOR)) {
+                    if (entry.isEmpty()) continue
+                    val separator = entry.indexOf(KEY_SEPARATOR)
+                    if (separator <= 0) continue
+                    // Nearest declaration wins, so only fill what is still absent.
+                    merged[field - 1].putIfAbsent(entry.substring(0, separator), entry.substring(separator + 1))
+                }
+            }
+            tag = parts.firstOrNull()?.takeIf(String::isNotEmpty)
+        }
+        return buildString {
+            append("") // an empty parent field: the chain ends here
+            for (field in merged) {
+                append(FIELD_SEPARATOR)
+                append(
+                    field.entries
+                        .sortedBy { it.key }
+                        .joinToString(LIST_SEPARATOR) { it.key + KEY_SEPARATOR + it.value },
+                )
+            }
+        }
     }
 
     /** The chain a sparse record walks: the parent tag is field 0 of the payload. */

@@ -1,13 +1,18 @@
-package dev.carcara.kotlinx.locale.currency.cldr.internal
+@file:OptIn(InternalKotlinxLocaleApi::class)
+
+package dev.carcara.kotlinx.locale.currency.cldr.format
 
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.Currency
+import dev.carcara.kotlinx.locale.currency.CurrencyNameSource
 import dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle
 import dev.carcara.kotlinx.locale.currency.code
+import dev.carcara.kotlinx.locale.currency.displayName
 import dev.carcara.kotlinx.locale.currency.internal.rescaleFraction
 import dev.carcara.kotlinx.locale.currency.internal.roundToIncrement
 import dev.carcara.kotlinx.locale.currency.minorUnitDigits
+import dev.carcara.kotlinx.locale.currency.symbol
 
 /** The characters that make up the number core of a CLDR number pattern. */
 private const val NUMBER_CHARS = "#0,."
@@ -119,8 +124,9 @@ private fun unquote(text: String): String {
     }
 }
 
-@OptIn(InternalKotlinxLocaleApi::class)
 internal fun formatCurrency(
+    data: CurrencyNumberFormat,
+    names: CurrencyNameSource,
     minorUnits: Long,
     currency: Currency,
     locale: Locale,
@@ -128,9 +134,8 @@ internal fun formatCurrency(
     accounting: Boolean,
     cash: Boolean,
 ): String {
-    val data = currencyFormatFor(locale)
     val currencyText = when (style) {
-        CurrencySymbolStyle.SYMBOL -> bundledCurrencySymbol(currency.code, locale) ?: currency.code
+        CurrencySymbolStyle.SYMBOL -> names.symbol(currency, locale)
         CurrencySymbolStyle.CODE -> currency.code
     }
 
@@ -160,9 +165,9 @@ internal fun formatCurrency(
         prefix = (if (negative) data.minusSign else "") + parsed.positivePrefix
         suffix = parsed.positiveSuffix
     }
-    return renderAffix(prefix, currency, currencyText, locale) +
+    return renderAffix(prefix, names, currency, currencyText, locale) +
         number +
-        renderAffix(suffix, currency, currencyText, locale)
+        renderAffix(suffix, names, currency, currencyText, locale)
 }
 
 /**
@@ -180,7 +185,7 @@ private fun renderNumber(
     scaled: Long,
     fractionDigits: Int,
     parsed: ParsedPattern,
-    data: CurrencyLocaleFormat,
+    data: CurrencyNumberFormat,
     digitStrings: List<String>,
 ): String {
     // ULong magnitude survives Long.MIN_VALUE.
@@ -219,7 +224,7 @@ private fun renderNumber(
     }
 }
 
-private fun renderAffix(affix: String, currency: Currency, currencyText: String, locale: Locale): String {
+private fun renderAffix(affix: String, names: CurrencyNameSource, currency: Currency, currencyText: String, locale: Locale): String {
     if ('¤' !in affix) return affix
     return buildString(affix.length + currencyText.length) {
         var index = 0
@@ -237,7 +242,7 @@ private fun renderAffix(affix: String, currency: Currency, currencyText: String,
             when (run) {
                 1 -> append(currencyText)
                 2 -> append(currency.code)
-                else -> append(bundledCurrencyName(currency.code, locale) ?: currency.code)
+                else -> append(names.displayName(currency, locale))
             }
         }
     }
