@@ -54,3 +54,17 @@ listOf(
 }
 
 include(":codegen")
+
+// Kotlin/JS probes that measure what each dependency set costs a consumer.
+// Not published; see tools/README.md.
+listOf(
+    "probe-locale",
+    "probe-country-codes",
+    "probe-country-full",
+    "probe-currency-codes",
+    "probe-currency-full",
+    "probe-datetime-full",
+    "probe-everything",
+).forEach { probe ->
+    include(":tools:$probe")
+}
