@@ -107,21 +107,90 @@ than by `Country` and `Currency`. If `-core` referenced the enums, a narrowed
 could not satisfy it. String keys make the contract independent of whichever
 entry set is in play.
 
-`-model` exists because of that same requirement. `-types` has to be *only*
-generated declarations for the plugin to be able to emit it, otherwise the
-emitter would have to carry a verbatim copy of hand-written source and the two
-would drift. But `CurrencyAmount`, the `forCode` and `forNumericCode` lookups,
-`isoToCldrUnits` and the typed overloads are hand-written, entry-set independent
-code that merely *mentions* `Currency`. They go one layer up.
+### What `-model` is
 
-The alternative is to not narrow types at all: ship `-types` from Maven always,
-let the plugin narrow only `-cldr`, and drop `-model` back into `-types`. That
-is three layers per domain instead of four and no generator carrying hand-written
-code. What it gives up is exactly what you described wanting: a build where
-`Currency.JPY` does not exist because you said you do not handle it.
+`-model` is everything hand-written about a domain that is not an interface. It
+exists because two neighbours are each closed to it.
 
-Worth knowing which way you want before phase 2, because it decides whether
-`-model` is a module or a package. Open decision 4.
+It cannot go in `-types`, because `-types` has to be nothing but generator
+output for the plugin to be able to emit a narrowed replacement. Any
+hand-written line in there would have to be carried inside the emitter as a
+verbatim copy, and the copy would drift from the original.
+
+It cannot go in `-core`, because `-core` must not know the enums exist. That is
+what lets a full `-cldr` satisfy the same interface as a narrowed `-types`.
+
+So for currency it holds:
+
+```
+CurrencyAmount                      the value type, its arithmetic, toDecimalString, parse
+Currency.forCode / forCodeOrNull    lookups built from Currency.entries
+Currency.forNumericCode / OrNull
+Currency.forCountryOrNull
+Currency.forLocaleOrNull
+Currency.isoToCldrUnits             ISO to CLDR minor unit conversion
+Currency.cldrToIsoUnits
+CurrencyNameSource.symbol(Currency, Locale)        typed overloads on the
+CurrencyNameSource.displayName(Currency, Locale)   string-keyed core interfaces
+CurrencyFormatSource.format(CurrencyAmount, ...)
+```
+
+and for country, the `forAlpha2`, `forAlpha3`, `forNumericCode` and
+`forLocaleOrNull` lookups plus the typed overloads. Datetime has none of this,
+which is why it has no `-model`.
+
+That splits today's enums in two. `-types` gets the enum with its generated
+constructor properties and nothing else. Every behaviour that is a member today
+becomes an extension one layer up:
+
+```kotlin
+// currency-types, generated
+public enum class Currency(
+    public val numericCode: Int,
+    public val defaultFractionDigits: Int,
+    public val cldrFractionDigits: Int,
+    /* ... */
+) { AED(784, 2, 2, /* ... */), AFN(971, 2, 0, /* ... */), /* ... */ }
+
+// currency-model, hand written
+public val Currency.code: String get() = name
+public val Currency.minorUnitDigits: Int get() = defaultFractionDigits
+public fun Currency.isoToCldrUnits(minorUnits: Long): Long { /* ... */ }
+public fun Currency.Companion.forCode(code: String): Currency { /* ... */ }
+```
+
+The emitter then only ever writes data, never logic, which is the property that
+keeps the shipped module and the plugin output honest.
+
+**The rule that makes it work:** `-model` may reference the enum type and its
+members, never a specific entry. No `Currency.USD` anywhere in it. Otherwise a
+build that narrowed `USD` away would fail to link. Nothing in the current
+sources breaks that rule, and it is cheap to enforce with a test.
+
+**The risk to check before committing to it:** `-model` ships precompiled from
+Maven and binds to whichever `-types` is present, which for a narrowed build is
+generated source in the user's own project rather than our artifact. On the JVM
+that is ordinary classpath resolution. For Kotlin/Native and JS klibs, a
+precompiled klib records the module its dependencies came from, and whether it
+will accept a same-package, same-FQN substitute is something to prove with a
+spike before phase 2 rather than assume.
+
+If the spike fails, the fallback is to merge `-model` into `-types` and keep the
+hand-written portion as a template resource inside the codegen artifact, so the
+shipped module is generated from the same template the plugin uses and there is
+still exactly one copy.
+
+### The simpler alternative
+
+Do not narrow types at all. Ship `-types` from Maven always, let the plugin
+narrow only `-cldr`, and drop `-model` back into `-types` as ordinary members.
+Three layers per domain instead of four, no generator carrying hand-written
+code, no klib substitution question. What it gives up is exactly what you
+described wanting: a build where `Currency.JPY` does not exist because you said
+you do not handle it.
+
+Worth settling before phase 2, since it decides whether `-model` is a module or
+a package. Open decision 4.
 
 `kotlinx-locale-datetime-types` and `-model` do not appear because datetime has
 no generated enum and no hand-written value type. Its only type candidates,
@@ -618,7 +687,10 @@ reviewed diff, not a running battle with the check.
    exist. A package inside `-types` means three layers per domain instead of
    four, no generator carrying hand-written code, and the plugin narrows only
    `-cldr`. This is the decision that the rest of the layering hangs on, so it
-   is worth taking first.
+   is worth taking first. If it stays a module, its name is also open:
+   `-model` is standard vocabulary for types plus behaviour, and the
+   alternative worth considering is renaming its neighbour instead, since
+   `-entries` describes a generated enum more literally than `-types` does.
 5. Do the four `cldr*` integer fields and the country to currency map stay in
    `currency-types`, or move behind a source?
 6. On a miss, does a source return null, consult a configured fallback locale,
