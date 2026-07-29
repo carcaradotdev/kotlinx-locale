@@ -70,6 +70,9 @@ project(":codegen-api").name = "kotlinx-locale-codegen"
 include(":conformance")
 project(":conformance").name = "kotlinx-locale-conformance"
 
+include(":gradle-plugin")
+project(":gradle-plugin").name = "kotlinx-locale-gradle-plugin"
+
 include(":codegen")
 
 // Kotlin/JS probes that measure what each dependency set costs a consumer. Not

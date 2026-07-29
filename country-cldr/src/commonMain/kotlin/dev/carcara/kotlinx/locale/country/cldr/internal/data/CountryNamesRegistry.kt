@@ -2,7 +2,7 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.country.cldr.internal.data
 
-internal const val CLDR_VERSION: String = "release-48-2"
+internal const val COUNTRY_NAMES_CLDR_VERSION: String = "release-48-2"
 
 internal val countryNamesRegistry: Map<String, String> = buildMap(1122) {
     put("aa", COUNTRY_NAMES_AA)

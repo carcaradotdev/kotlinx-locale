@@ -2,7 +2,7 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal const val CLDR_VERSION: String = "release-48-2"
+internal const val LOCALE_DATA_CLDR_VERSION: String = "release-48-2"
 
 internal val localeDataRegistry: Map<String, String> = buildMap(1122) {
     put("aa", LOCALE_AA)

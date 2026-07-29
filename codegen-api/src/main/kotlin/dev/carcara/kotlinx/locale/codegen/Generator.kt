@@ -120,7 +120,7 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             constPrefix = "COUNTRY_NAMES",
             registryProperty = "countryNamesRegistry",
             source = "CLDR $cldr",
-            versionConst = "CLDR_VERSION" to cldr,
+            versionConst = "COUNTRY_NAMES_CLDR_VERSION" to cldr,
         ).emit(bundle.countryNames)
     }
 
@@ -132,7 +132,7 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             constPrefix = "CURRENCY_FORMATS",
             registryProperty = "currencyFormatsRegistry",
             source = "CLDR $cldr",
-            versionConst = "CLDR_VERSION" to cldr,
+            versionConst = "CURRENCY_FORMATS_CLDR_VERSION" to cldr,
         ).emit(bundle.currencyFormats)
     }
 

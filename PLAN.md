@@ -888,42 +888,30 @@ only for JS.
 **Phase 4. Conformance suite.** Extract the golden tests, parameterize over a
 source, run the shipped implementations through it.
 
-**Phase 5. Publishable generation.** `kotlinx-locale-cldr-data` and
-`kotlinx-locale-codegen` are published, generation runs from the bundle alone,
-and `BundleRoundTripTest` pins the two together. The Gradle plugin itself is
-still to write, and phase 5 turned up what it costs.
+**Phase 5. Done.** `kotlinx-locale-cldr-data` and `kotlinx-locale-codegen` are
+published, `BundleRoundTripTest` pins them to the checked-in sources, and
+`dev.carcara.kotlinx-locale` generates a narrowed data set from the bundle.
 
-The plan assumed the plugin emits "objects implementing the same core
-interfaces" — a handful of lines binding a generated registry to
-`CountryNameSource`. That is true for country and currency names. It is not true
-for datetime or currency formatting, because the pattern parser, the number
-formatter and the payload decoders live in `*-cldr` internals, and generated
-code in a user's build cannot reach them. A narrowed datetime source needs the
-whole formatter, which is around 300 lines, not a binding.
+The blocker the first attempt found was resolved by neither of the two options it
+listed. Moving the formatter into `-core` would have put CLDR pattern code in
+front of a codes-only consumer and, worse, in front of the platform sources;
+templating it would have turned working runtime into generated runtime. Splitting
+logic from data instead gave each domain a `-cldr-format` artifact holding the
+reader and the formatter, with the tables passed in. `CldrDateTime` is now a
+one-line delegation over the shipped table and a generated source is the same
+delegation over a narrowed one.
 
-So the plugin needs one of two things first, and it is worth taking the decision
-deliberately rather than discovering it halfway through:
+`samples/narrowed/` is a standalone build that consumes the published artifacts
+for three locales: 124 KB of generated Kotlin where the shipped tables are
+3764 KB. It takes `-core`, `-types` and `-cldr-format` and leaves out `-cldr`,
+which is where the saving comes from, and its call sites are unchanged from a full
+build apart from the import.
 
-1. **Move the decoders and formatters into `*-core`**, behind
-   `@InternalKotlinxLocaleApi`, parameterized by the registry they read. One
-   compiled copy, and generated code is genuinely a few lines. It costs the
-   property that "the pattern parser and the number formatter live in `*-cldr`,
-   not in core", and it moves roughly 700 lines across the boundary — which also
-   moves them into every consumer of `-core`, including one that only wants
-   codes.
-2. **Ship them as templates in `kotlinx-locale-codegen`**, and generate the
-   `*-cldr` sources from the same templates. This is the fallback the risk note
-   above already anticipated, and it keeps exactly one copy of the source text
-   rather than one copy of the compiled code. It costs turning working
-   hand-written runtime into generated runtime.
-
-Option 1 is better engineering and worse layering; option 2 is the reverse. The
-size probes make the cost of option 1 measurable, which is the argument for
-deciding it with a number rather than by taste: generate the formatter into a
-codes-only probe and see what it adds.
-
-Everything else phase 5 called for is in place, so whichever way this goes, the
-plugin is a DSL, a task, and one call to `generateSources`.
+Two defects only the single-directory layout could surface, both found by the
+sample rather than by the unit tests: the datetime emitter deleted every `.kt` in
+its output directory, which wiped the country and currency tables when all four
+share one package; and three emitters each wrote a `CLDR_VERSION` constant, which
+only collides when they land in the same package.
 
 **Phase 6, later. Platform sources.** JS over `Intl`, JVM and Android over
 `java.util.Locale` and ICU4J, Apple over `NSLocale`. Composed with a bundled
