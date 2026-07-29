@@ -32,6 +32,10 @@ jobs:
         run: ./gradlew ktlintCheck
       - name: Check that hand-written code names no specific enum entry
         run: ./gradlew checkLayeringRule
+      - name: Validate the convention plugins and task declarations
+        run: ./gradlew -p build-logic validatePlugins
+      - name: Check the configuration cache round-trips
+        run: ./gradlew :help --configuration-cache && ./gradlew :help --configuration-cache
 
   size:
     name: size

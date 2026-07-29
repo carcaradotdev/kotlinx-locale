@@ -3,10 +3,6 @@
 // no network beyond dependency resolution and the version is visible in the
 // consumer's lock file.
 plugins {
-    kotlin("jvm")
+    id("kotlinx-locale-jvm")
     `maven-publish`
-}
-
-kotlin {
-    jvmToolchain(21)
 }
