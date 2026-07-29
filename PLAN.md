@@ -75,10 +75,9 @@ domain segment omitted for the locale domain itself because it is the root. That
 costs renaming today's `kotlinx-locale` to `kotlinx-locale-core`, which is free
 at 0.1.0-SNAPSHOT and buys a listing where every artifact says what layer it is.
 
-Eleven modules now, fourteen once platform lands. Within a domain, `-core`
-depends on `-types` for the enum, and `-cldr` depends on `-core` alone. See the
-note below on where hand-written code that mentions the enums belongs, which is
-what decides whether this is eleven modules or thirteen.
+Ten published modules now, thirteen once platform lands. Within a domain,
+`-core` depends on `-types` for the enum, and `-cldr` depends on `-core` alone.
+See the note below on where hand-written code that mentions the enums belongs.
 
 Across domains: `currency-types` depends on `country-types` for the country to
 currency map, and `currency-core` on `country-core`. Nothing else crosses.
@@ -110,8 +109,8 @@ also holds typed overloads over those same interfaces.
 
 `CurrencyAmount`, the `forCode` and `forNumericCode` lookups, `isoToCldrUnits`
 and the typed overloads are hand-written, and they mention `Currency`. That
-combination needs a home, and the question only arises if decision 4 says the
-plugin may narrow `-types`:
+combination needs a home, and the question only arises because decision 4 lets
+the plugin narrow `-types`:
 
 - **If the plugin narrows only `-cldr`**, `-types` is free to hold hand-written
   code and this whole question disappears. Three layers per domain, no
@@ -193,8 +192,7 @@ keeps the shipped module and the plugin output honest.
 generated enum. Its only type candidates,
 `FormatStyle` and `TextStyle`, are not generated enum lists. They are seven
 hand-written constants that appear in the `DateTimeFormatSource` signatures, so
-they belong in `datetime-core` next to the interface that uses them. See open
-decision 3 if you want them broken out anyway.
+they belong in `datetime-core` next to the interface that uses them (decision 3).
 
 ### Why per domain, all the way down
 
@@ -476,8 +474,8 @@ The four `cldr*` integer fields and the country to currency map sit in
 for. They come from CLDR supplemental data, so they carry a CLDR version, but
 they are structural rather than linguistic: roughly 900 numbers and 250
 mappings, a rounding error in size, and `isoToCldrUnits` needs them with no
-locale in play. Recommendation: keep them there and stamp the `-types`
-artifacts with the CLDR version they were generated from. Open decision 6.
+locale in play. They stay there, and the `-types` artifacts are stamped with the
+CLDR version they were generated from (decision 6).
 
 Note that under the extension rule this placement is cheap to revisit. Moving
 any of them later changes no call site.
@@ -751,66 +749,77 @@ reviewed diff, not a running battle with the check.
 ## The resulting API surface
 
 `API-NEXT.md` works the change through `API.md` entry by entry, for a consumer
-taking core, types and CLDR. The short version: twenty-four public entry points,
-seventeen of them unchanged, and every output table in `API.md` stays byte for
+taking core, types and CLDR. The short version: twenty-six public entry points,
+twenty-five of them unchanged, and every output table in `API.md` stays byte for
 byte identical because it is the same data through the same formatter.
 
-## Open decisions
+## Decisions
 
-1. Settled: everything about a generated type is an extension, and the
-   implementation module declares the convenience extension in its own package.
-   Call sites are unchanged from today. What remains open is the sub-package
-   name: `...country.cldr` reads well at the import, `...cldr.country` groups
-   all of one backend together.
-2. Does `Locale.current` survive as a default anywhere? Under "explicit
-   everything" the locale would always be passed, and `Locale.current` stays
-   available as a value you pass deliberately. This is a separate axis from the
-   source dispatch and can go either way.
-3. Do `FormatStyle` and `TextStyle` stay in `datetime-core`, or get their own
-   `datetime-types` artifact? Keeping them in core means `*-core` never depends
-   on `*-types` in any domain. Breaking them out means the layer names are
-   uniform but `datetime-core` gains a dependency on `datetime-types`.
-   Same question for `CurrencySymbolStyle` in `currency-core`.
-4. May the Gradle plugin narrow `-types`, or only `-cldr`? Narrowing `-types`
-   is what lets a build declare that `Currency.JPY` does not exist, and it
-   forces `-types` to be nothing but generator output. Narrowing only `-cldr`
-   leaves `-types` free to hold hand-written members and removes decision 5
-   entirely. The rest of the layering hangs on this, so it is worth taking
-   first.
-5. If the plugin may narrow `-types`: does the hand-written, enum-dependent
-   code (`CurrencyAmount`, the lookups, the unit math, the typed overloads) go
-   into `-core`, or into a separate layer of its own? This plan assumes
-   `-core`, on the grounds that the "any `-cldr` links against any `-types`"
-   property is protected by a rule (never name a specific entry) rather than by
-   a module boundary. A separate layer keeps `-core` to pure interfaces and
-   costs two more modules.
-6. Do the four `cldr*` integer fields and the country to currency map stay in
-   `currency-types`, or move behind a source?
-7. On a miss, does a source return null, consult a configured fallback locale,
-   or throw? The interfaces above return null and let a composer decide, which
-   makes fallback a plugin config value rather than a library policy.
-8. Entity narrowing in the plugin: never, name-tables-only, or full? Decision 4
-   sets the ceiling on this one.
-9. Does `Locale.availableLocales` move to `LocaleDataSource.supportedLocales`,
-   or disappear from the public API?
-10. Locale catalog shape: enum per language implementing `LocaleRef`, or object
-   per language holding `const val` tags? Recommended is the enum, on the
-   grounds that its only stated use is plugin configuration where the cost is
-   nil.
-11. Does the locale catalog nest two levels (`Zh.HANS_CN`) or three
-    (`Zh.Hans.CN`)? Two keeps every reference uniform and only 33 of 322
-    languages would ever use the third.
-12. Artifact names. `kotlinx-locale-country-cldr` reads naturally but sorts the
-    domains together and the layers apart; `kotlinx-locale-cldr-country` groups
-    by layer in a repository listing. Eleven to sixteen artifacts is enough
-    for the choice to matter.
+Phase 0 closed all twelve. Everything below is what the later phases assume.
+
+1. **Implementations live in `...<domain>.cldr`.** The import reads in the order
+   you think: pick the domain, then pick the backend. `...cldr.country` groups
+   one backend across domains, which helps whoever is auditing that backend and
+   nobody else. Migrating to a different backend is a search and replace either
+   way.
+2. **The `locale: Locale = Locale.current` defaults stay exactly where they are
+   today.** Country and currency keep them, datetime keeps requiring an explicit
+   locale, because that is what those APIs do now and the promise of this
+   refactor is that call sites do not move. The implementation module declares
+   the extension, so it can also supply the default. "Explicit everything" is a
+   separate argument and it can be had later without a structural change.
+3. **`FormatStyle`, `TextStyle` and `CurrencySymbolStyle` stay in their
+   `-core`.** They appear in the source signatures, so a `-cldr` cannot compile
+   without them; putting them in `-types` would make every `-core` depend on a
+   `-types` to declare its own interfaces. They are also hand-written constants,
+   and `-types` is generator output only (decision 4). There is no
+   `datetime-types`.
+4. **The plugin may narrow `-types`.** Being able to say that `Currency.JPY`
+   does not exist in this build is the point of the layer, and it is what makes
+   the locale catalog worth generating at all. The cost is that `-types` must be
+   nothing but emitter output.
+5. **The hand-written, enum-dependent code goes into `-core`.** `CurrencyAmount`,
+   the lookups, the unit math and the typed overloads sit next to the interfaces.
+   What protects "any `-cldr` links against any `-types`" is the rule that
+   hand-written code never names a specific entry, not a module boundary. A test
+   enforces the rule.
+6. **The four `cldr*` integer fields and the country to currency map stay in
+   `-types`.** They are per-entry generated data, `isoToCldrUnits` needs them
+   with no locale in play, and they are roughly 900 numbers and 250 mappings.
+   The `-types` artifacts carry the CLDR version they were generated from.
+7. **A source returns null on a miss.** Fallback is a composer's job, so it stays
+   a configuration value rather than a library policy. `-core` layers the total
+   operation over the partial interface with the fallback the library already
+   documents: the ISO code for country and currency, ISO 8601 for datetime.
+8. **Entity narrowing, when it lands, narrows name tables only.** An app that
+   only displays BRL can still be handed an arbitrary code by a payment API, so
+   `Currency.forCode("JPY")` keeps working and only its display name degrades.
+   Locale filtering ships first regardless.
+9. **`Locale.availableLocales` becomes `LocaleDataSource.supportedLocales`.** It
+   was a property of a data set masquerading as a property of the type, and it
+   stops being true the moment a build narrows its locales. No new table is
+   needed: each source already keys its registry by tag.
+10. **The catalog is an enum per language implementing `LocaleRef`.** Its stated
+    use is plugin configuration, where a `const val` gives the DSL a `String`
+    parameter and pushes typo detection from the compiler to a validation pass.
+    Only the language you touch is loaded.
+11. **The catalog nests two levels.** `Zh.HANS_CN`, not `Zh.Hans.CN`. Only 33 of
+    322 languages carry a script, and a uniform `Language.Rest` is worth more
+    than saving four characters in a tenth of the cases. It lives in
+    `...locale.catalog` rather than the base package, because 322 short names
+    like `Pt` and `As` have no business arriving through a star import of
+    `dev.carcara.kotlinx.locale`.
+12. **Artifacts are `kotlinx-locale[-<domain>]-<layer>`.** Domain first. A
+    repository listing that sorts all of country together matches how the
+    dependency block is written, and the layer suffix is what you read to know
+    what an artifact is.
 
 ## Phases
 
 Each phase ends green: all tests pass, one ABI dump update, one probe run
 recorded.
 
-**Phase 0.** Settle the open decisions. No code.
+**Phase 0. Done.** The decisions above are settled. No code.
 
 **Phase 1. Interfaces, inside the existing modules.** Introduce
 `LocaleDataSource` and the operation-shaped source interfaces, move the pattern
