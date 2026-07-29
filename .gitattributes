@@ -1,3 +1,5 @@
 * text=auto
 *.bat text eol=crlf
 gradlew text eol=lf
+# ABI dumps are compared against freshly generated ones, which always use LF.
+*.api text eol=lf

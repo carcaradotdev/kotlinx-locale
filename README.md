@@ -191,6 +191,21 @@ through the `org.jlleitschuh.gradle.ktlint` plugin; generated sources are
 excluded by their `// GENERATED` header. Run `./gradlew ktlintFormat` to fix
 style before committing, or `./gradlew ktlintCheck` to verify.
 
+Each library module records its public ABI under `<module>/api/`: one
+`.klib.api` file covering every Kotlin/Native, JS and Wasm target, plus
+`jvm/<module>.api` for the JVM bytecode.
+
+```sh
+./gradlew checkKotlinAbi   # compare the sources against the recorded ABI
+./gradlew updateKotlinAbi  # rewrite it after a deliberate API change
+```
+
+Commit the rewritten files together with the code that changed them, so the
+diff shows what the change does to the published surface. The check is not
+part of `check`, so `./gradlew build` skips it: a complete comparison needs a
+klib for every target and only a macOS host can build them all, so running it
+elsewhere would compare a subset and still report success.
+
 CI (`.github/workflows/ci.yml`) runs on every push to `main` and on pull
 requests: a ktlint check plus `./gradlew build` on Linux, macOS and Windows
 runners, which together cover every target's tests a host can execute. Pull

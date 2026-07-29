@@ -1,0 +1,28 @@
+public abstract interface annotation class dev/carcara/kotlinx/locale/InternalKotlinxLocaleApi : java/lang/annotation/Annotation {
+}
+
+public final class dev/carcara/kotlinx/locale/Locale {
+	public static final field Companion Ldev/carcara/kotlinx/locale/Locale$Companion;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLanguage ()Ljava/lang/String;
+	public final fun getRegion ()Ljava/lang/String;
+	public final fun getScript ()Ljava/lang/String;
+	public final fun getVariant ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun toLanguageTag ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/Locale$Companion {
+	public final fun forLanguageTag (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/Locale;
+	public final fun forLanguageTagOrNull (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/Locale;
+	public final fun getAvailableLocales ()Ljava/util/List;
+	public final fun getCurrent ()Ldev/carcara/kotlinx/locale/Locale;
+	public final fun of (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ldev/carcara/kotlinx/locale/Locale;
+	public static synthetic fun of$default (Ldev/carcara/kotlinx/locale/Locale$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/Locale;
+}
+
+public final class dev/carcara/kotlinx/locale/LocaleDataLookupKt {
+	public static final fun dataLookupTags (Ldev/carcara/kotlinx/locale/Locale;)Ljava/util/List;
+}
+
