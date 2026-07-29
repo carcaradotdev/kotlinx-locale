@@ -44,6 +44,23 @@ class BundleRoundTripTest {
                     currencyFormats = regenerated.resolve("currency-cldr"),
                     currencyNames = regenerated.resolve("currency-cldr"),
                     dateTime = regenerated.resolve("datetime-cldr"),
+                    // The source objects and their extensions come from the same
+                    // emitter the Gradle plugin uses, so they are covered too.
+                    countryBinding = BindingTarget(
+                        root = regenerated.resolve("country-cldr"),
+                        packageName = "dev.carcara.kotlinx.locale.country.cldr",
+                        objectName = "CldrCountry",
+                    ),
+                    currencyBinding = BindingTarget(
+                        root = regenerated.resolve("currency-cldr"),
+                        packageName = "dev.carcara.kotlinx.locale.currency.cldr",
+                        objectName = "CldrCurrency",
+                    ),
+                    dateTimeBinding = BindingTarget(
+                        root = regenerated.resolve("datetime-cldr"),
+                        packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
+                        objectName = "CldrDateTime",
+                    ),
                 ),
             )
 

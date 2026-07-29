@@ -59,6 +59,24 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots(
     currencyFormats = rootDir.sourceRoot("currency-cldr"),
     currencyNames = rootDir.sourceRoot("currency-cldr"),
     dateTime = rootDir.sourceRoot("datetime-cldr"),
+    // The source objects and their convenience extensions come from the same
+    // emitter the Gradle plugin uses, so a narrowed build and a full one cannot
+    // present a different API.
+    countryBinding = BindingTarget(
+        root = rootDir.sourceRoot("country-cldr"),
+        packageName = "dev.carcara.kotlinx.locale.country.cldr",
+        objectName = "CldrCountry",
+    ),
+    currencyBinding = BindingTarget(
+        root = rootDir.sourceRoot("currency-cldr"),
+        packageName = "dev.carcara.kotlinx.locale.currency.cldr",
+        objectName = "CldrCurrency",
+    ),
+    dateTimeBinding = BindingTarget(
+        root = rootDir.sourceRoot("datetime-cldr"),
+        packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
+        objectName = "CldrDateTime",
+    ),
 )
 
 /**
