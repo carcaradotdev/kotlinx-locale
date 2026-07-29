@@ -328,6 +328,94 @@ Option 3 is the one that keeps the guarantee intact for every source, at the
 cost of making `fallback(...)` mandatory in the plugin rather than optional.
 Open question 3.
 
+## Keeping today's call site
+
+Everything above assumes the source is the receiver. There are three ways to
+keep `Country.BR.displayName(locale)` instead, and one of them costs almost
+nothing.
+
+### Context parameters, declared once in `-core`
+
+```kotlin
+// country-core, written once, works for every implementation
+context(source: CountryNameSource)
+public fun Country.displayName(locale: Locale): String =
+    source.countryNameOrNull(alpha2, locale) ?: alpha2
+```
+
+```kotlin
+with(CldrCountry) {
+    Country.BR.displayName(locale)      // exactly today's call
+}
+```
+
+The source is explicit and lexically visible, there is no global state, and
+nothing is bound at the declaration, so the same extension serves CLDR, the
+platform sources and anything the plugin generates.
+
+It also propagates, which is the dependency-injection story the split was
+supposed to buy:
+
+```kotlin
+context(names: CountryNameSource)
+fun row(country: Country, locale: Locale): String =
+    "${country.alpha3}: ${country.displayName(locale)}"
+
+class Screen(private val names: CountryNameSource) {
+    fun label(country: Country) = with(names) { country.displayName(Locale.current) }
+}
+```
+
+Verified against Kotlin 2.4.0: compiles and runs with no compiler flag and no
+experimental warning, including the propagating and class-held forms above.
+
+The cost is that the call only compiles inside a scope that provides the
+source. `Country.BR.displayName(locale)` on its own is an error saying no
+context argument was found. That is the feature, but it is a real change: you
+cannot format from anywhere without first deciding where the source comes from.
+
+### An extension shipped by each implementation module
+
+```kotlin
+// country-cldr
+public fun Country.displayName(locale: Locale): String =
+    CldrCountry.displayName(this, locale)
+```
+
+Zero ceremony at the call site, and the binding is explicit in the import
+rather than at the call: `import ...country.cldr.displayName` versus
+`import ...country.platform.displayName`. Two implementations on one classpath
+collide at compile time, which forces the choice into the open.
+
+This is the "sugar" that was rejected earlier, and the reason to look again is
+that the import genuinely names the implementation. The reason it is still
+second best is that it has to be written once per implementation module rather
+than once in `-core`, so every new source repeats it and can drift.
+
+### The consumer writes the one-liner
+
+```kotlin
+// in the application, not the library
+fun Country.displayName(locale: Locale) = CldrCountry.displayName(this, locale)
+```
+
+The most explicit of the three, since the binding lives in code the consumer
+owns, and the library ships nothing extra. Five lines per project for the five
+entry points.
+
+### Recommendation
+
+Context parameters. They are the only option where the call is unchanged, the
+source is visible at the call site's scope, and the declaration is written once
+for every implementation. Adopt them and the migration table above collapses:
+every row becomes "unchanged, inside a `with` scope", except the `format` and
+`parse` entry points where the source is genuinely a formatter rather than a
+name table and reading `CldrCurrency.format(amount, ...)` is arguably clearer
+anyway.
+
+The options do not compose. Shipping both context parameters and a plain
+extension makes calls inside a `with` block ambiguous, so this is a pick-one.
+
 ## What does not change
 
 - Every output table in `API.md`. Same data, same formatter, same bytes.
