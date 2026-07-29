@@ -1,9 +1,9 @@
 package dev.carcara.kotlinx.locale.datetime
 
 import dev.carcara.kotlinx.locale.Locale
-import dev.carcara.kotlinx.locale.datetime.internal.formatPattern
-import dev.carcara.kotlinx.locale.datetime.internal.localeDataFor
-import dev.carcara.kotlinx.locale.datetime.internal.parseDateTimePattern
+import dev.carcara.kotlinx.locale.datetime.cldr.internal.formatPattern
+import dev.carcara.kotlinx.locale.datetime.cldr.internal.localeDataFor
+import dev.carcara.kotlinx.locale.datetime.cldr.internal.parseDateTimePattern
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime

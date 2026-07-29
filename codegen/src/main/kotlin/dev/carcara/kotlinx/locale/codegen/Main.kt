@@ -50,7 +50,7 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
     }
 
     val dataDir = rootDir.resolve(
-        "datetime/src/commonMain/kotlin/dev/carcara/kotlinx/locale/datetime/internal/data",
+        "datetime/src/commonMain/kotlin/dev/carcara/kotlinx/locale/datetime/cldr/internal/data",
     )
     LocaleDataEmitter(dataDir, CLDR_REPO.tag).emit(encoded)
 
@@ -86,8 +86,8 @@ private fun generateCountryAndCurrency(rootDir: File, cldrDir: File, icuDir: Fil
     val countryDir = rootDir.resolve("country/src/commonMain/kotlin/dev/carcara/kotlinx/locale/country")
     emitCountryEnum(countryDir.resolve("Country.kt"), CLDR_REPO.tag, countries)
     KeyedPayloadEmitter(
-        outputDir = countryDir.resolve("internal/data"),
-        packageName = "dev.carcara.kotlinx.locale.country.internal.data",
+        outputDir = countryDir.resolve("cldr/internal/data"),
+        packageName = "dev.carcara.kotlinx.locale.country.cldr.internal.data",
         filePrefix = "CountryNames",
         constPrefix = "COUNTRY_NAMES",
         registryProperty = "countryNamesRegistry",
@@ -101,8 +101,8 @@ private fun generateCountryAndCurrency(rootDir: File, cldrDir: File, icuDir: Fil
     }
     emitCurrencyEnum(currencyDir.resolve("Currency.kt"), CLDR_REPO.tag, iso4217.published, currencies)
     KeyedPayloadEmitter(
-        outputDir = currencyDir.resolve("internal/data"),
-        packageName = "dev.carcara.kotlinx.locale.currency.internal.data",
+        outputDir = currencyDir.resolve("cldr/internal/data"),
+        packageName = "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
         filePrefix = "CurrencyFormats",
         constPrefix = "CURRENCY_FORMATS",
         registryProperty = "currencyFormatsRegistry",
@@ -110,15 +110,15 @@ private fun generateCountryAndCurrency(rootDir: File, cldrDir: File, icuDir: Fil
         versionConst = "CLDR_VERSION" to CLDR_REPO.tag,
     ).emit(buildCurrencyFormatPayloads(flattener, extras))
     KeyedPayloadEmitter(
-        outputDir = currencyDir.resolve("internal/data"),
-        packageName = "dev.carcara.kotlinx.locale.currency.internal.data",
+        outputDir = currencyDir.resolve("cldr/internal/data"),
+        packageName = "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
         filePrefix = "CurrencyNames",
         constPrefix = "CURRENCY_NAMES",
         registryProperty = "currencyNamesRegistry",
         source = "CLDR ${CLDR_REPO.tag}",
     ).emit(buildCurrencyNamePayloads(flattener, extras))
     emitCountryCurrencies(
-        outputFile = currencyDir.resolve("internal/data/CountryCurrencies.kt"),
+        outputFile = currencyDir.resolve("internal/CountryCurrencies.kt"),
         cldrTag = CLDR_REPO.tag,
         countries = countries,
         supplemental = supplemental,

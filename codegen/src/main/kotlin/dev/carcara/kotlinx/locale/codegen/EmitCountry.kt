@@ -30,8 +30,7 @@ fun emitCountryEnum(outputFile: File, cldrTag: String, countries: List<CountryIn
         |package $COUNTRY_PACKAGE
         |
         |import dev.carcara.kotlinx.locale.Locale
-        |import dev.carcara.kotlinx.locale.country.internal.countryDisplayNameFor
-        |import dev.carcara.kotlinx.locale.country.internal.countryForDisplayName
+        |import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
         |
         |/**
         | * The countries of ISO 3166-1, keyed by alpha-2 code.
@@ -57,7 +56,7 @@ fun emitCountryEnum(outputFile: File, cldrTag: String, countries: List<CountryIn
         |     * locale's inheritance chain; falls back to [alpha2] when CLDR has no name.
         |     */
         |    public fun displayName(locale: Locale = Locale.current): String =
-        |        countryDisplayNameFor(this, locale) ?: alpha2
+        |        CldrCountry.displayName(this, locale)
         |
         |    public companion object {
         |        private val byAlpha2: Map<String, Country> by lazy { entries.associateBy(Country::alpha2) }
@@ -94,7 +93,7 @@ fun emitCountryEnum(outputFile: File, cldrTag: String, countries: List<CountryIn
         |         * case-insensitively, or `null`.
         |         */
         |        public fun forDisplayNameOrNull(name: String, locale: Locale = Locale.current): Country? =
-        |            countryForDisplayName(name, locale)
+        |            CldrCountry.countryForDisplayNameOrNull(name, locale)
         |    }
         |}
         |

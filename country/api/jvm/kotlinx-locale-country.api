@@ -272,3 +272,24 @@ public final class dev/carcara/kotlinx/locale/country/Country$Companion {
 	public final fun forNumericCodeOrNull (I)Ldev/carcara/kotlinx/locale/country/Country;
 }
 
+public abstract interface class dev/carcara/kotlinx/locale/country/CountryNameSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public abstract fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/country/CountryNameSourceKt {
+	public static final fun countryForDisplayNameOrNull (Ldev/carcara/kotlinx/locale/country/CountryNameSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun displayName (Ldev/carcara/kotlinx/locale/country/CountryNameSource;Ldev/carcara/kotlinx/locale/country/Country;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/country/FallbackCountryNames : dev/carcara/kotlinx/locale/country/CountryNameSource {
+	public fun <init> (Ldev/carcara/kotlinx/locale/country/CountryNameSource;Ldev/carcara/kotlinx/locale/country/CountryNameSource;)V
+	public fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+}
+
+public final class dev/carcara/kotlinx/locale/country/cldr/CldrCountry : dev/carcara/kotlinx/locale/country/CountryNameSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/country/cldr/CldrCountry;
+	public fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+}
+

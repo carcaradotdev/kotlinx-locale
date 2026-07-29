@@ -1,7 +1,7 @@
 package dev.carcara.kotlinx.locale.currency
 
 import dev.carcara.kotlinx.locale.Locale
-import dev.carcara.kotlinx.locale.currency.internal.currencyFormatFor
+import dev.carcara.kotlinx.locale.currency.cldr.internal.currencyFormatFor
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

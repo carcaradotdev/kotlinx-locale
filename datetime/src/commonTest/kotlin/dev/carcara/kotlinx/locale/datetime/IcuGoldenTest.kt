@@ -1,7 +1,7 @@
 package dev.carcara.kotlinx.locale.datetime
 
 import dev.carcara.kotlinx.locale.Locale
-import dev.carcara.kotlinx.locale.datetime.internal.localeDataFor
+import dev.carcara.kotlinx.locale.datetime.cldr.internal.localeDataFor
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

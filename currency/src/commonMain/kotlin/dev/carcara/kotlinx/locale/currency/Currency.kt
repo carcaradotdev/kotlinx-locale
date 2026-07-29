@@ -2,10 +2,10 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.currency
 
+import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.country.Country
-import dev.carcara.kotlinx.locale.currency.internal.currencyDisplayNameFor
-import dev.carcara.kotlinx.locale.currency.internal.currencySymbolFor
+import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.internal.primaryCurrencyOf
 import dev.carcara.kotlinx.locale.currency.internal.rescaleFraction
 
@@ -407,17 +407,18 @@ public enum class Currency(
      * resolved through the locale's inheritance chain; falls back to [code].
      */
     public fun symbol(locale: Locale = Locale.current): String =
-        currencySymbolFor(this, locale) ?: code
+        CldrCurrency.symbol(this, locale)
 
     /** The CLDR display name for [locale]; falls back to [code]. */
     public fun displayName(locale: Locale = Locale.current): String =
-        currencyDisplayNameFor(this, locale) ?: code
+        CldrCurrency.displayName(this, locale)
 
     /**
      * Converts an amount in ISO minor units to the CLDR fraction scale,
      * rounding half-even when CLDR uses fewer digits than ISO.
      * For ALL (ISO 2 decimals, CLDR 0): `12345 -> 123`.
      */
+    @OptIn(InternalKotlinxLocaleApi::class)
     public fun isoToCldrUnits(minorUnits: Long): Long =
         rescaleFraction(minorUnits, minorUnitDigits, cldrFractionDigits)
 
@@ -425,6 +426,7 @@ public enum class Currency(
      * Converts an amount in the CLDR fraction scale back to ISO minor units.
      * For ALL: `123 -> 12300`.
      */
+    @OptIn(InternalKotlinxLocaleApi::class)
     public fun cldrToIsoUnits(cldrUnits: Long): Long =
         rescaleFraction(cldrUnits, cldrFractionDigits, minorUnitDigits)
 

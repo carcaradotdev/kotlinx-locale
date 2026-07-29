@@ -1,10 +1,17 @@
 package dev.carcara.kotlinx.locale.currency.internal
 
+import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
+
 /**
  * Rescales [value] from [fromDigits] fraction digits to [toDigits], multiplying
  * when gaining digits and dividing half-even when losing them.
+ *
+ * Shared with the implementation modules, which have to move an ISO minor-unit
+ * amount onto whatever scale they format at. There is one rounding rule and it
+ * lives here.
  */
-internal fun rescaleFraction(value: Long, fromDigits: Int, toDigits: Int): Long {
+@InternalKotlinxLocaleApi
+public fun rescaleFraction(value: Long, fromDigits: Int, toDigits: Int): Long {
     if (fromDigits == toDigits) return value
     if (toDigits > fromDigits) {
         var result = value
@@ -17,7 +24,8 @@ internal fun rescaleFraction(value: Long, fromDigits: Int, toDigits: Int): Long 
 }
 
 /** Rounds [value] to the nearest multiple of [increment], ties to the even multiple. */
-internal fun roundToIncrement(value: Long, increment: Long): Long = divideHalfEven(value, increment) * increment
+@InternalKotlinxLocaleApi
+public fun roundToIncrement(value: Long, increment: Long): Long = divideHalfEven(value, increment) * increment
 
 private fun divideHalfEven(value: Long, divisor: Long): Long {
     val quotient = value / divisor

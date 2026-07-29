@@ -257,7 +257,6 @@ public fun Country.Companion.forAlpha2(code: String): Country = /* ... */
 
 public interface CountryNameSource : LocaleDataSource {
     public fun countryNameOrNull(alpha2: String, locale: Locale): String?
-    public fun countryCodeForName(name: String, locale: Locale): String?
 }
 
 public fun CountryNameSource.displayName(country: Country, locale: Locale): String =
@@ -353,21 +352,21 @@ public enum class FormatStyle { FULL, LONG, MEDIUM, SHORT }
 public enum class TextStyle { FULL, ABBREVIATED, NARROW }
 
 public interface DateTimeFormatSource : LocaleDataSource {
-    public fun formatDate(date: LocalDate, style: FormatStyle, locale: Locale): String?
-    public fun formatTime(time: LocalTime, style: FormatStyle, locale: Locale): String?
-    public fun formatDateTime(
+    public fun formatDateOrNull(date: LocalDate, style: FormatStyle, locale: Locale): String?
+    public fun formatTimeOrNull(time: LocalTime, style: FormatStyle, locale: Locale): String?
+    public fun formatDateTimeOrNull(
         dateTime: LocalDateTime,
         dateStyle: FormatStyle,
         timeStyle: FormatStyle,
         locale: Locale,
     ): String?
-    public fun monthName(month: Int, style: TextStyle, locale: Locale): String?
-    public fun dayOfWeekName(isoDayNumber: Int, style: TextStyle, locale: Locale): String?
+    public fun monthNameOrNull(month: Int, style: TextStyle, locale: Locale): String?
+    public fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, locale: Locale): String?
 }
 
 // currency-core
 public interface CurrencyFormatSource : LocaleDataSource {
-    public fun format(
+    public fun formatOrNull(
         minorUnits: Long,
         currencyCode: String,
         locale: Locale,
@@ -375,7 +374,7 @@ public interface CurrencyFormatSource : LocaleDataSource {
         accounting: Boolean,
         cash: Boolean,
     ): String?
-    public fun parse(text: String, currencyCode: String, locale: Locale): Long?
+    public fun parseToMinorUnitsOrNull(text: String, currencyCode: String, locale: Locale): Long?
 }
 ```
 
@@ -415,7 +414,14 @@ Applying the extension rule to today's API, domain by domain.
   `OrNull` forms
 - `Country.Companion.forLocaleOrNull`, which reads the region subtag and needs
   no data
-- `CountryNameSource`, and `CountryNameSource.displayName(Country, Locale)`
+- `CountryNameSource`, `CountryNameSource.displayName(Country, Locale)` and
+  `CountryNameSource.countryForDisplayNameOrNull(String, Locale)`
+
+The reverse lookup is an extension over the one-way interface rather than a
+second interface method. A partial `countryCodeForName` cannot express "no name,
+so it fell back to the code", which is the semantics the current API has, and
+every platform source would have to reimplement that rule to stay compatible.
+Scanning the entries costs what it costs today.
 
 `country-cldr`, generated tables plus a hand-written binding, package
 `...locale.country.cldr`
@@ -634,11 +640,8 @@ public class FallbackCountryNames(
     override val supportedLocales: Set<Locale>
         get() = primary.supportedLocales + fallback.supportedLocales
 
-    override fun displayName(alpha2: String, locale: Locale): String? =
-        primary.displayName(alpha2, locale) ?: fallback.displayName(alpha2, locale)
-
-    override fun countryForName(name: String, locale: Locale): String? =
-        primary.countryForName(name, locale) ?: fallback.countryForName(name, locale)
+    override fun countryNameOrNull(alpha2: String, locale: Locale): String? =
+        primary.countryNameOrNull(alpha2, locale) ?: fallback.countryNameOrNull(alpha2, locale)
 }
 ```
 
