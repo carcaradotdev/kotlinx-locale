@@ -1,4 +1,5 @@
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
@@ -25,6 +26,7 @@ import java.util.zip.GZIPOutputStream
  * Sizes are gzip at the default level over the minified bundle, which is what
  * a CDN would serve and what the numbers in PLAN.md were measured at.
  */
+@CacheableTask
 abstract class CheckBundleSize : DefaultTask() {
 
     @get:InputFiles

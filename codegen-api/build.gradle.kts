@@ -2,19 +2,14 @@
 // reader for the pre-resolved CLDR bundle. Nothing here clones a repository or
 // parses XML, so it is safe on a build classpath.
 plugins {
-    kotlin("jvm")
+    id("kotlinx-locale-jvm")
     `maven-publish`
 }
 
 kotlin {
     explicitApi()
-    jvmToolchain(21)
 }
 
 dependencies {
     testImplementation(libs.kotlin.test)
-}
-
-tasks.test {
-    useJUnitPlatform()
 }

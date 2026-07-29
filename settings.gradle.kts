@@ -1,4 +1,9 @@
 pluginManagement {
+    // The convention plugins live in an included build rather than in buildSrc:
+    // a buildSrc change invalidates every task in the build, an included build
+    // only invalidates the consumers of the plugin that changed.
+    includeBuild("build-logic")
+
     repositories {
         mavenCentral()
         gradlePluginPortal()
@@ -64,16 +69,15 @@ project(":conformance").name = "kotlinx-locale-conformance"
 
 include(":codegen")
 
-// Kotlin/JS probes that measure what each dependency set costs a consumer.
-// Not published; see tools/README.md.
-listOf(
-    "probe-locale",
-    "probe-country-codes",
-    "probe-country-full",
-    "probe-currency-codes",
-    "probe-currency-full",
-    "probe-datetime-full",
-    "probe-everything",
-).forEach { probe ->
-    include(":tools:$probe")
-}
+// Kotlin/JS probes that measure what each dependency set costs a consumer. Not
+// published; see tools/README.md. The list lives in one file that both this and
+// the verification convention plugin read, so a probe cannot be built without
+// also being reported on.
+providers
+    .fileContents(layout.rootDirectory.file("gradle/size-probes.txt"))
+    .asText
+    .get()
+    .lineSequence()
+    .map(String::trim)
+    .filter { it.isNotEmpty() && !it.startsWith("#") }
+    .forEach { probe -> include(":tools:$probe") }

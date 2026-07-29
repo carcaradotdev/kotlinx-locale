@@ -1,6 +1,9 @@
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.tasks.CacheableTask
+import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.PathSensitive
@@ -17,6 +20,7 @@ import org.gradle.api.tasks.TaskAction
  * Generated sources are exempt, since they are the entry set. Tests are exempt,
  * since they never ship.
  */
+@CacheableTask
 abstract class CheckLayeringRule : DefaultTask() {
 
     @get:InputFiles
@@ -25,6 +29,14 @@ abstract class CheckLayeringRule : DefaultTask() {
 
     @get:Internal
     abstract val rootDirectory: DirectoryProperty
+
+    /**
+     * A stamp, so the task participates in up-to-date checks and the build
+     * cache. A verification task with no output re-reads every source on every
+     * build, which is the wrong default for something in `check`.
+     */
+    @get:OutputFile
+    abstract val stamp: RegularFileProperty
 
     @TaskAction
     fun check() {
@@ -38,6 +50,10 @@ abstract class CheckLayeringRule : DefaultTask() {
         }
         if (offenders.isEmpty()) {
             logger.lifecycle("[layering] ${handWritten.size} hand-written sources name no specific enum entry")
+            stamp.get().asFile.apply {
+                parentFile.mkdirs()
+                writeText("${handWritten.size} sources checked\n")
+            }
             return
         }
         error(

@@ -13,6 +13,7 @@ plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.kotlin.multiplatform.library")
     `maven-publish`
+    id("kotlinx-locale-ktlint")
 }
 
 val libs = the<VersionCatalogsExtension>().named("libs")
@@ -99,10 +100,16 @@ kotlin {
 // complete comparison needs a klib for every target and only a macOS host can
 // compile all of them, so `check` on Linux or Windows would quietly compare a
 // subset of the ABI and report success. Run `./gradlew checkKotlinAbi` on a Mac
-// instead. KGP adds the dependency after afterEvaluate, hence projectsEvaluated.
+// instead.
+//
+// This is afterEvaluate rather than a lazy Provider chain because KGP adds the
+// dependency from its own afterEvaluate and offers no lazy hook to intercept it,
+// which is the third-party-bridge exception to the no-afterEvaluate rule. It was
+// gradle.projectsEvaluated before, which registered a build-scoped callback that
+// then mutated this project: the same job, but an Isolated Projects violation.
 @OptIn(ExperimentalAbiValidation::class)
 val abiCheckTaskName = kotlin.abiValidation.checkTaskProvider.name
-gradle.projectsEvaluated {
+afterEvaluate {
     tasks.named("check") {
         setDependsOn(dependsOn.filterNot { it is TaskProvider<*> && it.name == abiCheckTaskName })
     }

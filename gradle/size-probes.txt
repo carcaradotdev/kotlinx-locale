@@ -1,0 +1,12 @@
+# The Kotlin/JS size probes, one directory under tools/ per line.
+#
+# Read by settings.gradle.kts to include the projects, and by the
+# kotlinx-locale-verification convention plugin to depend on their reports.
+# One list, so a probe cannot be built without also being reported on.
+probe-locale
+probe-country-codes
+probe-country-full
+probe-currency-codes
+probe-currency-full
+probe-datetime-full
+probe-everything
