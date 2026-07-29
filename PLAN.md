@@ -56,17 +56,17 @@ kotlinx-locale-types                 LocaleRef, one generated enum per language
 
 kotlinx-locale-country-core          CountryNameSource, lookups, typed overloads
 kotlinx-locale-country-types         Country enum
-kotlinx-locale-country-cldr          CldrCountryNames + payloads
+kotlinx-locale-country-cldr          CldrCountry + payloads + convenience extensions
 kotlinx-locale-country-platform      later
 
 kotlinx-locale-currency-core         CurrencyNameSource, CurrencyFormatSource, CurrencyAmount,
                                      lookups, unit math, typed overloads
 kotlinx-locale-currency-types        Currency enum, country to currency map
-kotlinx-locale-currency-cldr         CldrCurrencyNames, CldrCurrencyFormats + payloads
+kotlinx-locale-currency-cldr         CldrCurrency + payloads + convenience extensions
 kotlinx-locale-currency-platform     later
 
 kotlinx-locale-datetime-core         DateTimeFormatSource, FormatStyle, TextStyle
-kotlinx-locale-datetime-cldr         CldrDateTimeFormats + payloads
+kotlinx-locale-datetime-cldr         CldrDateTime + payloads + convenience extensions
 kotlinx-locale-datetime-platform     later
 ```
 
@@ -241,86 +241,97 @@ produce colliding imports, since nothing is imported implicitly.
 
 ## How a call reaches its data
 
-The source is a parameter, always. The remaining choice is which side of the
-call it sits on.
-
-**A. The domain object is the receiver.**
-
-```kotlin
-Country.BR.displayName(locale, CldrCountryNames)
-CldrCurrencyFormats.let { amount.format(locale, CurrencySymbolStyle.SYMBOL, false, false, it) }
-```
-
-Reads from the thing you have. Gets awkward fast once an operation already takes
-four arguments, because the source lands last and far from the verb.
-
-**B. The source is the receiver.** Recommended.
+Settled: **generated types carry only their per-entry data as constructor
+properties, and everything else about them is an extension, in every layer.**
+The implementation module declares the convenience extension over its own
+source, in its own package.
 
 ```kotlin
-CldrCountryNames.displayName(Country.BR, locale)
-CldrCurrencyNames.symbol(Currency.BRL, locale)
-CldrCurrencyFormats.format(amount, locale, CurrencySymbolStyle.SYMBOL, accounting = false, cash = false)
-CldrDateTimeFormats.formatDate(date, FormatStyle.LONG, locale)
-CldrCountryNames.countryForName("Brasil", locale)
-```
-
-Every data-backed operation becomes a method on a source, and the source is the
-first thing you read. It also gives the type layer a clean job: `*-core`
-declares the interface keyed by string codes, and `*-types` adds typed overloads
-as extensions on that interface.
-
-```kotlin
-// country-core
-public interface CountryNameSource : LocaleDataSource {
-    public fun displayName(alpha2: String, locale: Locale): String?
-    public fun countryForName(name: String, locale: Locale): String?
+// country-types (generated)     package dev.carcara.kotlinx.locale.country
+public enum class Country(public val alpha3: String, public val numericCode: Int) {
+    AD("AND", 20), AE("ARE", 784), /* ... */ ;
+    public companion object
 }
 
-// country-types
-public enum class Country(public val alpha3: String, public val numericCode: Int) { /* ... */ }
+// country-core                  package dev.carcara.kotlinx.locale.country
+public val Country.alpha2: String get() = name
+public fun Country.Companion.forAlpha2(code: String): Country = /* ... */
+
+public interface CountryNameSource : LocaleDataSource {
+    public fun countryNameOrNull(alpha2: String, locale: Locale): String?
+    public fun countryCodeForName(name: String, locale: Locale): String?
+}
 
 public fun CountryNameSource.displayName(country: Country, locale: Locale): String =
-    displayName(country.alpha2, locale) ?: country.alpha2
+    countryNameOrNull(country.alpha2, locale) ?: country.alpha2
 
-public fun CountryNameSource.countryForName(name: String, locale: Locale): Country? =
-    countryForName(name, locale)?.let(Country::forAlpha2OrNull)
+// country-cldr                  package dev.carcara.kotlinx.locale.country.cldr
+public object CldrCountry : CountryNameSource { /* generated tables */ }
 
-// country-cldr
-public object CldrCountryNames : CountryNameSource { /* generated tables */ }
+public fun Country.displayName(locale: Locale): String = CldrCountry.displayName(this, locale)
 ```
 
-Core never learns the enums exist, types never learns an implementation exists,
-and a platform source implements core alone.
-
-**D. A context parameter**, which keeps today's call site without binding an
-implementation:
+The consumer writes what they write today:
 
 ```kotlin
-// country-core, written once
-context(source: CountryNameSource)
-public fun Country.displayName(locale: Locale): String =
-    source.countryNameOrNull(alpha2, locale) ?: alpha2
+import dev.carcara.kotlinx.locale.country.*
+import dev.carcara.kotlinx.locale.country.cldr.*
 
-// call site
-with(CldrCountry) { Country.BR.displayName(locale) }
+Country.BR.alpha3                 // types
+Country.forAlpha2("br")           // core
+Country.BR.displayName(locale)    // cldr
 ```
 
-Verified on Kotlin 2.4.0: no compiler flag, no experimental warning. The source
-stays explicit and lexically scoped, the extension is declared once for every
-implementation, and it propagates through application code as a context rather
-than an argument. `API-NEXT.md` works through what it does to the surface.
+Nothing at the call site says which layer answered, which is the point. Swapping
+CLDR for the platform sources is a dependency change plus replacing `.cldr` with
+`.platform` in one import.
 
-**C. A runtime registry**, for the record, is the option that would let
-`displayName` stay a member of the enum: a global `LocaleData.provider` that a
-data module installs. Rejected. It costs a mutable global, a failure mode where
-nothing is installed, an initialization order problem KMP has no clean answer
-for, and it defeats dead code elimination because the registry holds a reference
-to every source that was linked.
+Three properties fall out of the rule:
 
-Under B, today's members and extensions all move onto sources. `displayName`,
-`symbol`, `format`, `parseFormatted`, `Country.forDisplayNameOrNull`, and the
-datetime `format` and `displayName` extensions. At 0.1.0-SNAPSHOT that is free
-to do.
+- **Layer moves are free.** Members and extensions are called identically, so a
+  declaration can move between artifacts later without touching a call site.
+  Packaging becomes a deployment decision instead of an API one.
+- **The emitter only ever writes data**, never logic, which is what keeps the
+  shipped `-cldr` module and the plugin output from drifting.
+- **The explicit form always exists.** Every convenience extension is one line
+  over a public source object, so composition and test fakes work without any
+  special support.
+
+### Implementations get their own package
+
+`-types` and `-core` share the base package. Implementation modules do not, and
+this was measured rather than assumed.
+
+A spike put `country-cldr` and `country-platform` both declaring
+`Country.displayName(Locale)` in `dev.carcara.kotlinx.locale.country`, with an
+app depending on both. It **compiled with no error and no warning, and resolved
+to whichever came first on the classpath**. Not an ambiguity error, a silent
+wrong answer. Distinct packages remove the hazard and let both coexist, which
+composition needs anyway.
+
+Verified alongside it: split packages across modules do work. `-types` and
+`-core` contributing to one package, including companion extensions, compiles on
+JVM, JS and Native. That is what makes the single base import above possible.
+
+### The rejected alternatives, for the record
+
+**A runtime registry** would let `displayName` stay a member of the enum: a
+global provider that a data module installs on load. It cannot work. On JS, Wasm
+and Native there is no hook that runs code for a linked but unreferenced module,
+because that is precisely what dead code elimination deletes. `ServiceLoader`
+covers JVM and Android only, so the API would silently work on one half of the
+targets and silently return nothing on the other. Auto-registration and tree
+shaking are the same trade-off seen from two sides: the reason a country-only
+build is 24 KB and not 428 KB is that unreferenced code disappears.
+
+**A context parameter** on the source works and was verified on Kotlin 2.4.0
+with no compiler flag, but it requires every call site to sit inside a `with`
+scope or propagate a context, which is ceremony the extension rule avoids
+entirely.
+
+**Passing the source at every call** (`CldrCountry.displayName(Country.BR,
+locale)`) remains available and is what composition and test fakes use. It is
+just not the shape ordinary code has to write.
 
 ## The interfaces have to be operation-shaped
 
@@ -388,35 +399,88 @@ does not belong in the shared root; it belongs to whichever source is installed.
 rule that puts `FormatStyle` in `datetime-core` it belongs in `currency-core`
 rather than `currency-types`.
 
-## What lives in each types module
+## What lives in each layer
 
-`*-types` holds the generated enum entries, the facts that are true regardless
-of language, and the typed overloads.
+Applying the extension rule to today's API, domain by domain.
 
-`country-types`
+### country
 
-- `Country` with `alpha2`, `alpha3`, `numericCode`
-- `forAlpha2`, `forAlpha3`, `forNumericCode` and their `OrNull` forms
-- `forLocaleOrNull`, which reads the region subtag and needs no data
-- typed overloads on `CountryNameSource`
+`country-types`, generated, package `...locale.country`
 
-`currency-types`
+- `Country` with `alpha3` and `numericCode` as constructor properties
+- an empty `public companion object` so the lookups can attach to it
 
-- `Currency` with `code`, `numericCode`, `defaultFractionDigits`,
-  `minorUnitDigits`
-- `cldrFractionDigits`, `cldrRoundingIncrement`, `cldrCashFractionDigits`,
-  `cldrCashRoundingIncrement`
-- `isoToCldrUnits`, `cldrToIsoUnits`
-- `CurrencyAmount` in full except `format` and `parseFormatted`
-- the country to currency map behind `Country.currencies` and `Country.currency`
-- typed overloads on `CurrencyNameSource` and `CurrencyFormatSource`
+`country-core`, hand written, same package
 
-The four `cldr*` integer fields and the country to currency map are the
-arguable ones. They come from CLDR supplemental data, so they carry a CLDR
-version, but they are structural rather than linguistic: roughly 900 numbers and
-250 mappings, a rounding error in size, and `isoToCldrUnits` needs them with no
-locale in play. Recommendation: keep them in types and stamp the types artifacts
-with the CLDR version they were generated from. Open decision 4 if you disagree.
+- `val Country.alpha2 get() = name`
+- `Country.Companion.forAlpha2`, `forAlpha3`, `forNumericCode` and their
+  `OrNull` forms
+- `Country.Companion.forLocaleOrNull`, which reads the region subtag and needs
+  no data
+- `CountryNameSource`, and `CountryNameSource.displayName(Country, Locale)`
+
+`country-cldr`, generated tables plus a hand-written binding, package
+`...locale.country.cldr`
+
+- `CldrCountry : CountryNameSource`
+- `Country.displayName(locale)` and `Country.Companion.forDisplayNameOrNull`
+
+### currency
+
+`currency-types`, generated, package `...locale.currency`
+
+- `Currency` with `numericCode`, `defaultFractionDigits`, `cldrFractionDigits`,
+  `cldrRoundingIncrement`, `cldrCashFractionDigits` and
+  `cldrCashRoundingIncrement` as constructor properties, plus a companion
+- the country to currency map, which is generated CLDR supplemental data
+
+`currency-core`, hand written, same package
+
+- `val Currency.code get() = name` and `val Currency.minorUnitDigits`
+- `Currency.isoToCldrUnits`, `Currency.cldrToIsoUnits`
+- `Currency.Companion.forCode`, `forNumericCode`, `forCountryOrNull`,
+  `forLocaleOrNull` and the `OrNull` forms
+- `val Country.currencies` and `val Country.currency` over the generated map
+- `CurrencyAmount` in full except `format` and `parseFormatted`, as a
+  hand-written class with ordinary members
+- `CurrencySymbolStyle`, referenced by the interface
+- `CurrencyNameSource`, `CurrencyFormatSource` and the typed operations over
+  them
+
+`currency-cldr`, package `...locale.currency.cldr`
+
+- `CldrCurrency : CurrencyNameSource, CurrencyFormatSource`
+- `Currency.symbol`, `Currency.displayName`, `CurrencyAmount.format` and
+  `CurrencyAmount.Companion.parseFormatted`
+
+### datetime
+
+`datetime-core`, hand written, package `...locale.datetime`
+
+- `FormatStyle` and `TextStyle`, which are not generated
+- `DateTimeFormatSource` and the typed operations over it
+
+`datetime-cldr`, package `...locale.datetime.cldr`
+
+- `CldrDateTime : DateTimeFormatSource`, holding the pattern parser and the
+  formatter
+- `LocalDate.format`, `LocalTime.format`, both `LocalDateTime.format` overloads,
+  `Month.displayName` and `DayOfWeek.displayName`
+
+There is no `datetime-types` because datetime has no generated enum.
+
+### The arguable placements
+
+The four `cldr*` integer fields and the country to currency map sit in
+`-types` because they are per-entry generated data, which is what `-types` is
+for. They come from CLDR supplemental data, so they carry a CLDR version, but
+they are structural rather than linguistic: roughly 900 numbers and 250
+mappings, a rounding error in size, and `isoToCldrUnits` needs them with no
+locale in play. Recommendation: keep them there and stamp the `-types`
+artifacts with the CLDR version they were generated from. Open decision 6.
+
+Note that under the extension rule this placement is cheap to revisit. Moving
+any of them later changes no call site.
 
 ## A generated locale catalog
 
@@ -626,9 +690,9 @@ source set, and produces objects implementing the same core interfaces:
 public object GeneratedCountryNames : CountryNameSource { /* ... */ }
 ```
 
-which the user then passes explicitly, exactly like `CldrCountryNames`. Swapping
-a filtered build for the full one is a one-line change at the call site and a
-dependency swap, with no hidden defaults to keep straight.
+plus the same convenience extensions `-cldr` ships, in its own package. Swapping
+a filtered build for the full one is a dependency change and an import change,
+with no edit to any call site.
 
 The generated object name should be configurable, since a project may want more
 than one (a filtered default and a full one behind a lazy load).
@@ -693,11 +757,11 @@ byte identical because it is the same data through the same formatter.
 
 ## Open decisions
 
-1. Source as receiver (option B), domain object as receiver (option A), or a
-   context parameter (option D) that keeps today's call site. The prose above
-   assumes B; D is the later suggestion and is the one worth taking if the
-   ergonomics of today's call site matter, since it costs a `with` scope and
-   nothing else. See "Keeping today's call site" in `API-NEXT.md`.
+1. Settled: everything about a generated type is an extension, and the
+   implementation module declares the convenience extension in its own package.
+   Call sites are unchanged from today. What remains open is the sub-package
+   name: `...country.cldr` reads well at the import, `...cldr.country` groups
+   all of one backend together.
 2. Does `Locale.current` survive as a default anywhere? Under "explicit
    everything" the locale would always be passed, and `Locale.current` stays
    available as a value you pass deliberately. This is a separate axis from the
