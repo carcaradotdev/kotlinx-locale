@@ -10,7 +10,7 @@ private const val COUNTRY_PACKAGE = "dev.carcara.kotlinx.locale.country"
  * implementation module, which is what keeps this emitter writing data only
  * and lets the Gradle plugin narrow the entry set without copying logic.
  */
-fun emitCountryEnum(outputFile: File, cldrTag: String, countries: List<CountryInfo>) {
+public fun emitCountryEnum(outputFile: File, cldrTag: String, countries: List<CountryInfo>) {
     outputFile.parentFile.mkdirs()
     val entries = buildString {
         for (country in countries) {
@@ -53,21 +53,4 @@ fun emitCountryEnum(outputFile: File, cldrTag: String, countries: List<CountryIn
         """.trimMargin(),
     )
     println("[codegen] emitted ${countries.size} countries to $outputFile")
-}
-
-/**
- * Sparse per-locale country-name payloads: the parent tag, then only the names
- * this locale's own file declares. The runtime walks the parent chain.
- */
-fun buildCountryNamePayloads(flattener: Flattener, extras: ExtrasResolver): Map<String, String> {
-    val payloads = LinkedHashMap<String, String>()
-    for (id in listOf("root") + flattener.localeIds) {
-        val partial = extras.partial(id)
-        val parentTag = flattener.dataChain(id).getOrNull(1)?.let(::canonicalTag).orEmpty()
-        val entries = partial.territoryNames.entries
-            .sortedBy { it.key }
-            .joinToString(LIST_SEPARATOR) { (code, name) -> code + KEY_SEPARATOR + name }
-        payloads[canonicalTag(id)] = parentTag + FIELD_SEPARATOR + entries
-    }
-    return payloads
 }

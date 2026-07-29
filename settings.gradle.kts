@@ -53,6 +53,12 @@ listOf(
     project(":$dir").name = artifact
 }
 
+include(":cldr-data")
+project(":cldr-data").name = "kotlinx-locale-cldr-data"
+
+include(":codegen-api")
+project(":codegen-api").name = "kotlinx-locale-codegen"
+
 include(":conformance")
 project(":conformance").name = "kotlinx-locale-conformance"
 

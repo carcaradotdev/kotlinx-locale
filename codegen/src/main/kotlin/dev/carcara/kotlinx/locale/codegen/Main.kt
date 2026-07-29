@@ -20,23 +20,59 @@ fun main(args: Array<String>) {
     }
 }
 
-/** `<module>/src/<sourceSet>/kotlin/<package as path>`. */
-private fun File.sourceDir(module: String, sourceSet: String, packageName: String): File =
-    resolve("$module/src/$sourceSet/kotlin/${packageName.replace('.', '/')}")
+/** `<module>/src/<sourceSet>/kotlin`, the package root the emitters write under. */
+private fun File.sourceRoot(module: String, sourceSet: String = "commonMain"): File = resolve("$module/src/$sourceSet/kotlin")
 
 /**
  * The ICU fixtures live in the conformance module rather than in one domain's
  * tests, so that any source can be checked against them and not just the
  * bundled one.
  */
-private fun conformanceDir(rootDir: File): File = rootDir.sourceDir("conformance", "commonMain", "dev.carcara.kotlinx.locale.conformance")
+private fun conformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("conformance")
+    .resolve("dev/carcara/kotlinx/locale/conformance")
+
+/** Where the published bundle lives, as a resource inside kotlinx-locale-cldr-data. */
+internal fun bundleFile(rootDir: File): File = rootDir.resolve("cldr-data/src/main/resources/dev/carcara/kotlinx/locale/cldr-data.txt")
 
 private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
+    val bundle = extractBundle(rootDir, cldrDir, icuDir)
+
+    val bundleFile = bundleFile(rootDir)
+    bundleFile.parentFile.mkdirs()
+    bundleFile.bufferedWriter().use(bundle::writeTo)
+    println("[codegen] wrote the CLDR bundle (${bundleFile.length() / 1024} KB) to $bundleFile")
+
+    // The same call the Gradle plugin makes, with the shipped roots and packages.
+    generateSources(bundle, shippedRoots(rootDir))
+
+    println("[codegen] done")
+}
+
+/** Every published artifact that carries generated source, and where its package root is. */
+internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots(
+    localeCatalog = rootDir.sourceRoot("locale-types"),
+    countryEnum = rootDir.sourceRoot("country-types"),
+    countryNames = rootDir.sourceRoot("country-cldr"),
+    currencyEnum = rootDir.sourceRoot("currency-types"),
+    countryCurrencies = rootDir.sourceRoot("currency-types"),
+    currencyFormats = rootDir.sourceRoot("currency-cldr"),
+    currencyNames = rootDir.sourceRoot("currency-cldr"),
+    dateTime = rootDir.sourceRoot("datetime-cldr"),
+)
+
+/**
+ * Reads CLDR and ICU once and resolves everything the emitters need.
+ *
+ * This is the half that cannot run in a user's build: it clones repositories
+ * and parses XML. Its output is the bundle, which is what gets published.
+ */
+private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDataBundle {
     val supplemental = parseSupplemental(cldrDir)
     val flattener = Flattener(cldrDir, supplemental)
 
     println("[codegen] flattening ${flattener.localeIds.size} CLDR locales")
-    val encoded = LinkedHashMap<String, String>()
+    val dateTime = LinkedHashMap<String, String>()
     val dayPeriodGaps = LinkedHashMap<String, List<String>>()
     fun encodeChecked(id: String): String {
         val resolved = flattener.resolve(id)
@@ -49,9 +85,9 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
         if (unnamed.isNotEmpty()) dayPeriodGaps[id] = unnamed
         return resolved.encode()
     }
-    encoded["root"] = encodeChecked("root") // final runtime fallback
+    dateTime["root"] = encodeChecked("root") // final runtime fallback
     for (id in flattener.localeIds) {
-        encoded[id] = encodeChecked(id)
+        dateTime[canonicalTag(id)] = encodeChecked(id)
     }
     if (dayPeriodGaps.isNotEmpty()) {
         println(
@@ -60,29 +96,6 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
         )
     }
 
-    LocaleDataEmitter(
-        outputDir = rootDir.sourceDir("datetime-cldr", "commonMain", "dev.carcara.kotlinx.locale.datetime.cldr.internal.data"),
-        cldrTag = CLDR_REPO.tag,
-    ).emit(encoded)
-
-    emitLocaleCatalog(
-        outputDir = rootDir.sourceDir("locale-types", "commonMain", "dev.carcara.kotlinx.locale.catalog"),
-        cldrTag = CLDR_REPO.tag,
-        localeIds = flattener.localeIds,
-    )
-
-    emitIcuGolden(
-        outputFile = conformanceDir(rootDir).resolve("IcuGoldenData.kt"),
-        icuTag = ICU_REPO.tag,
-        entries = extractIcuGolden(icuDir),
-    )
-
-    generateCountryAndCurrency(rootDir, cldrDir, icuDir, supplemental, flattener)
-
-    println("[codegen] done")
-}
-
-private fun generateCountryAndCurrency(rootDir: File, cldrDir: File, icuDir: File, supplemental: SupplementalData, flattener: Flattener) {
     val iso4217 = parseIso4217()
     crossCheckCurrencyNumericCodes(iso4217, icuDir)
 
@@ -96,61 +109,17 @@ private fun generateCountryAndCurrency(rootDir: File, cldrDir: File, icuDir: Fil
         extras.resolveValue("en") { it.territoryNames[alpha2] }
     }
 
-    emitCountryEnum(
-        outputFile = rootDir
-            .sourceDir("country-types", "commonMain", "dev.carcara.kotlinx.locale.country")
-            .resolve("Country.kt"),
-        cldrTag = CLDR_REPO.tag,
-        countries = countries,
-    )
-    KeyedPayloadEmitter(
-        outputDir = rootDir.sourceDir("country-cldr", "commonMain", "dev.carcara.kotlinx.locale.country.cldr.internal.data"),
-        packageName = "dev.carcara.kotlinx.locale.country.cldr.internal.data",
-        filePrefix = "CountryNames",
-        constPrefix = "COUNTRY_NAMES",
-        registryProperty = "countryNamesRegistry",
-        source = "CLDR ${CLDR_REPO.tag}",
-        versionConst = "CLDR_VERSION" to CLDR_REPO.tag,
-    ).emit(buildCountryNamePayloads(flattener, extras))
-
-    val currencies = iso4217.currencies.map { iso ->
-        CurrencyGen(iso, supplemental.currencyFractions[iso.code] ?: supplemental.defaultFractions)
+    val countryCurrencies = LinkedHashMap<String, String>()
+    for (country in countries) {
+        val codes = supplemental.regionCurrencies[country.alpha2]?.filter { it in currencyCodes }.orEmpty()
+        if (codes.isNotEmpty()) countryCurrencies[country.alpha2] = codes.joinToString(" ")
     }
-    emitCurrencyEnum(
-        outputFile = rootDir
-            .sourceDir("currency-types", "commonMain", "dev.carcara.kotlinx.locale.currency")
-            .resolve("Currency.kt"),
-        cldrTag = CLDR_REPO.tag,
-        isoPublished = iso4217.published,
-        currencies = currencies,
-    )
-    KeyedPayloadEmitter(
-        outputDir = rootDir.sourceDir("currency-cldr", "commonMain", "dev.carcara.kotlinx.locale.currency.cldr.internal.data"),
-        packageName = "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
-        filePrefix = "CurrencyFormats",
-        constPrefix = "CURRENCY_FORMATS",
-        registryProperty = "currencyFormatsRegistry",
-        source = "CLDR ${CLDR_REPO.tag}",
-        versionConst = "CLDR_VERSION" to CLDR_REPO.tag,
-    ).emit(buildCurrencyFormatPayloads(flattener, extras))
-    KeyedPayloadEmitter(
-        outputDir = rootDir.sourceDir("currency-cldr", "commonMain", "dev.carcara.kotlinx.locale.currency.cldr.internal.data"),
-        packageName = "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
-        filePrefix = "CurrencyNames",
-        constPrefix = "CURRENCY_NAMES",
-        registryProperty = "currencyNamesRegistry",
-        source = "CLDR ${CLDR_REPO.tag}",
-    ).emit(buildCurrencyNamePayloads(flattener, extras))
-    emitCountryCurrencies(
-        outputFile = rootDir
-            .sourceDir("currency-types", "commonMain", "dev.carcara.kotlinx.locale.currency.internal")
-            .resolve("CountryCurrencies.kt"),
-        cldrTag = CLDR_REPO.tag,
-        countries = countries,
-        supplemental = supplemental,
-        currencyCodes = currencyCodes,
-    )
 
+    emitIcuGolden(
+        outputFile = conformanceDir(rootDir).resolve("IcuGoldenData.kt"),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuGolden(icuDir),
+    )
     emitIcuCountryGolden(
         outputFile = conformanceDir(rootDir).resolve("IcuCountryGoldenData.kt"),
         icuTag = ICU_REPO.tag,
@@ -161,5 +130,30 @@ private fun generateCountryAndCurrency(rootDir: File, cldrDir: File, icuDir: Fil
         icuTag = ICU_REPO.tag,
         entries = extractIcuCurrencyGolden(icuDir),
         numericCodes = extractIcuNumericCodes(icuDir),
+    )
+
+    return LocaleDataBundle(
+        cldrVersion = CLDR_REPO.tag,
+        isoPublished = iso4217.published,
+        localeTags = flattener.localeIds.map(::canonicalTag),
+        countries = countries,
+        currencies = iso4217.currencies.map { iso ->
+            val fractions = supplemental.currencyFractions[iso.code] ?: supplemental.defaultFractions
+            CurrencyEntry(
+                code = iso.code,
+                numericCode = iso.numericCode ?: -1,
+                minorUnits = iso.minorUnits,
+                cldrDigits = fractions.digits,
+                cldrRounding = fractions.rounding,
+                cldrCashDigits = fractions.cashDigits,
+                cldrCashRounding = fractions.cashRounding,
+                englishName = iso.name,
+            )
+        },
+        countryCurrencies = countryCurrencies,
+        dateTime = dateTime,
+        countryNames = buildCountryNamePayloads(flattener, extras),
+        currencyFormats = buildCurrencyFormatPayloads(flattener, extras),
+        currencyNames = buildCurrencyNamePayloads(flattener, extras),
     )
 }

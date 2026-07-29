@@ -26,3 +26,18 @@ tasks.register<JavaExec>("generateLocaleData") {
     mainClass = mainClassFqn
     args("generate", rootDir.absolutePath)
 }
+
+dependencies {
+    implementation(project(":kotlinx-locale-codegen"))
+}
+
+dependencies {
+    testImplementation(libs.kotlin.test)
+}
+
+tasks.test {
+    useJUnitPlatform()
+    // The round-trip test regenerates the shipped sources and diffs them, so it
+    // needs to know where the checked-in ones are.
+    systemProperty("kotlinx.locale.rootDir", rootDir.absolutePath)
+}

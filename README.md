@@ -53,6 +53,8 @@ in the bottom one.
 | `datetime-core/` | `dev.carcara:kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
 | `datetime-cldr/` | `dev.carcara:kotlinx-locale-datetime-cldr` | `CldrDateTime`, the CLDR pattern data, parser and formatter, plus `LocalDate.format` and friends. |
 | `conformance/` | `dev.carcara:kotlinx-locale-conformance` | The ICU fixtures and the suite that runs any source through them, at an exact tier for CLDR-backed sources and a behavioural tier for platform ones. For test source sets. |
+| `codegen-api/` | `dev.carcara:kotlinx-locale-codegen` | The emitters and the bundle reader: the half of code generation that a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
+| `cldr-data/` | `dev.carcara:kotlinx-locale-cldr-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
 
 A `-cldr` module is one implementation of its domain's contract, not the only
 possible one. Which one answers is visible in the import rather than inferred

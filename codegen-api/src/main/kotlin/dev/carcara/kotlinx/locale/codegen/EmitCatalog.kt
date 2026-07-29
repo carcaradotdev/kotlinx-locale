@@ -30,22 +30,22 @@ private val MACROREGION_NAMES = mapOf(
  * languages carry a script, and a third level would pay for those in every
  * other reference.
  */
-fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeIds: List<String>) {
+public fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeTags: List<String>) {
     outputDir.mkdirs()
     outputDir.listFiles { f: File -> f.extension == "kt" }?.forEach(File::delete)
 
-    val idsByLanguage = LinkedHashMap<String, MutableList<String>>()
-    for (id in localeIds.sorted()) {
-        idsByLanguage.getOrPut(id.substringBefore('_')) { ArrayList() }.add(id)
+    val tagsByLanguage = LinkedHashMap<String, MutableList<String>>()
+    for (tag in localeTags.sorted()) {
+        tagsByLanguage.getOrPut(tag.substringBefore('-')) { ArrayList() }.add(tag)
     }
 
-    for ((language, ids) in idsByLanguage) {
+    for ((language, tags) in tagsByLanguage) {
         val className = language.replaceFirstChar(Char::uppercaseChar)
         val members = LinkedHashMap<String, String>()
-        for (id in ids) {
-            val member = memberNameFor(language, id)
-            val clash = members.put(member, canonicalTag(id))
-            check(clash == null) { "$language: '$member' names both $clash and ${canonicalTag(id)}" }
+        for (tag in tags) {
+            val member = memberNameFor(language, tag)
+            val clash = members.put(member, tag)
+            check(clash == null) { "$language: '$member' names both $clash and $tag" }
         }
         outputDir.resolve("$className.kt").writeText(
             buildString {
@@ -74,17 +74,17 @@ fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeIds: List<String>)
         )
     }
 
-    println("[codegen] emitted ${idsByLanguage.size} language catalogs (${localeIds.size} locales) to $outputDir")
+    println("[codegen] emitted ${tagsByLanguage.size} language catalogs (${localeTags.size} locales) to $outputDir")
 }
 
-/** `pt` -> `BASE`, `pt_BR` -> `BR`, `zh_Hans_CN` -> `HANS_CN`, `es_419` -> `LATIN_AMERICA`. */
-private fun memberNameFor(language: String, id: String): String {
-    val rest = id.removePrefix(language).removePrefix("_")
+/** `pt` -> `BASE`, `pt-BR` -> `BR`, `zh-Hans-CN` -> `HANS_CN`, `es-419` -> `LATIN_AMERICA`. */
+private fun memberNameFor(language: String, tag: String): String {
+    val rest = tag.removePrefix(language).removePrefix("-")
     if (rest.isEmpty()) return "BASE"
-    return rest.split('_').joinToString("_") { part ->
+    return rest.split('-').joinToString("_") { part ->
         if (part.first().isDigit()) {
             MACROREGION_NAMES[part]
-                ?: error("No identifier name for region '$part' in locale id '$id'; add it to MACROREGION_NAMES")
+                ?: error("No identifier name for region '$part' in locale tag '$tag'; add it to MACROREGION_NAMES")
         } else {
             part.uppercase()
         }
