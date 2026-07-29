@@ -54,15 +54,14 @@ Layers repeated per domain, with one shared root.
 kotlinx-locale-core                  Locale, tag parsing, fallback chain, LocaleDataSource
 kotlinx-locale-types                 LocaleRef, one generated enum per language
 
-kotlinx-locale-country-core          CountryNameSource
+kotlinx-locale-country-core          CountryNameSource, lookups, typed overloads
 kotlinx-locale-country-types         Country enum
-kotlinx-locale-country-model         lookups, typed overloads
 kotlinx-locale-country-cldr          CldrCountryNames + payloads
 kotlinx-locale-country-platform      later
 
-kotlinx-locale-currency-core         CurrencyNameSource, CurrencyFormatSource
+kotlinx-locale-currency-core         CurrencyNameSource, CurrencyFormatSource, CurrencyAmount,
+                                     lookups, unit math, typed overloads
 kotlinx-locale-currency-types        Currency enum, country to currency map
-kotlinx-locale-currency-model        CurrencyAmount, lookups, unit math, typed overloads
 kotlinx-locale-currency-cldr         CldrCurrencyNames, CldrCurrencyFormats + payloads
 kotlinx-locale-currency-platform     later
 
@@ -76,12 +75,13 @@ domain segment omitted for the locale domain itself because it is the root. That
 costs renaming today's `kotlinx-locale` to `kotlinx-locale-core`, which is free
 at 0.1.0-SNAPSHOT and buys a listing where every artifact says what layer it is.
 
-Thirteen modules now, sixteen once platform lands. Within a domain the arrows
-run `core <- types <- model <- cldr`, and `*-core` never depends on anything
-above it, so an implementor of a source needs the interface and nothing else.
+Eleven modules now, fourteen once platform lands. Within a domain, `-core`
+depends on `-types` for the enum, and `-cldr` depends on `-core` alone. See the
+note below on where hand-written code that mentions the enums belongs, which is
+what decides whether this is eleven modules or thirteen.
 
 Across domains: `currency-types` depends on `country-types` for the country to
-currency map, and `currency-model` on `country-model`. Nothing else crosses.
+currency map, and `currency-core` on `country-core`. Nothing else crosses.
 
 ### Which layers are swappable, and what that costs
 
@@ -93,7 +93,6 @@ somewhere other than Maven. `-core` is the fixed contract; `-types`, `-cldr` and
 | --- | --- | --- |
 | `-core` | yes | us, only |
 | `-types` | no, fully generated | us, or the Gradle plugin narrowed to a config |
-| `-model` | yes | us, only |
 | `-cldr` | no, fully generated | us, or the Gradle plugin narrowed to a config |
 | `-platform` | yes | us, per target |
 
@@ -101,47 +100,75 @@ A consumer depends on one supplier per swappable layer, never two. Taking the
 plugin's `-types` means not taking ours, the same way taking `-platform` means
 not taking `-cldr`.
 
-This is why the design keeps the `-core` interfaces keyed by string codes rather
-than by `Country` and `Currency`. If `-core` referenced the enums, a narrowed
-`-types` would change the interface, and `-cldr` compiled against the full enum
-could not satisfy it. String keys make the contract independent of whichever
-entry set is in play.
+This is why the `-core` *interfaces* stay keyed by string codes rather than by
+`Country` and `Currency`. A narrowed `-types` must not change the interface, or
+a `-cldr` compiled against the full enum could not satisfy it. String keys make
+the contract independent of whichever entry set is in play, even though `-core`
+also holds typed overloads over those same interfaces.
 
-### What `-model` is
+### Where hand-written, enum-dependent code lives
 
-`-model` is everything hand-written about a domain that is not an interface. It
-exists because two neighbours are each closed to it.
+`CurrencyAmount`, the `forCode` and `forNumericCode` lookups, `isoToCldrUnits`
+and the typed overloads are hand-written, and they mention `Currency`. That
+combination needs a home, and the question only arises if decision 4 says the
+plugin may narrow `-types`:
 
-It cannot go in `-types`, because `-types` has to be nothing but generator
-output for the plugin to be able to emit a narrowed replacement. Any
-hand-written line in there would have to be carried inside the emitter as a
-verbatim copy, and the copy would drift from the original.
+- **If the plugin narrows only `-cldr`**, `-types` is free to hold hand-written
+  code and this whole question disappears. Three layers per domain, no
+  `-model`, nothing further to decide.
+- **If the plugin may narrow `-types`**, then `-types` has to be nothing but
+  generator output, because any hand-written line in it would have to live
+  inside the emitter as a verbatim copy and the copy would drift. The
+  hand-written code then goes either into `-core` or into a layer of its own.
 
-It cannot go in `-core`, because `-core` must not know the enums exist. That is
-what lets a full `-cldr` satisfy the same interface as a narrowed `-types`.
+For that second branch, `-core` is the simpler answer and is what this plan now
+assumes. `currency-core` holds the interfaces, `CurrencySymbolStyle`,
+`CurrencyAmount`, the lookups and the typed overloads, and it depends on
+`currency-types` for the enum. `-types` needs nothing back, so there is no
+cycle.
 
-So for currency it holds:
+An earlier draft put this in a separate `-model` layer on the grounds that
+`-core` must not know the enums exist. That reason does not survive scrutiny.
+The property actually worth protecting is that any `-cldr` links against any
+`-types`, and what protects it is not the module boundary but a rule:
 
-```
-CurrencyAmount                      the value type, its arithmetic, toDecimalString, parse
-Currency.forCode / forCodeOrNull    lookups built from Currency.entries
-Currency.forNumericCode / OrNull
-Currency.forCountryOrNull
-Currency.forLocaleOrNull
-Currency.isoToCldrUnits             ISO to CLDR minor unit conversion
-Currency.cldrToIsoUnits
-CurrencyNameSource.symbol(Currency, Locale)        typed overloads on the
-CurrencyNameSource.displayName(Currency, Locale)   string-keyed core interfaces
-CurrencyFormatSource.format(CurrencyAmount, ...)
-```
+**hand-written code may reference the enum type and its members, never a
+specific entry.** No `Currency.USD` outside generated data. A build that
+narrowed `USD` away would otherwise fail to link. The current sources already
+obey it (the only occurrence in the tree is inside a doc comment) and a test can
+keep them honest.
 
-and for country, the `forAlpha2`, `forAlpha3`, `forNumericCode` and
-`forLocaleOrNull` lookups plus the typed overloads. Datetime has none of this,
-which is why it has no `-model`.
+With that rule in force, merging into `-core` costs one thing and one thing
+only: a module implementing a source inherits a dependency on the enum it may
+not use. That is roughly 9 KB gzipped for currency, and in practice anyone
+implementing `CurrencyNameSource` is also consuming `Currency`, so the dependency
+is not wasted. Two fewer modules is worth more than the purity.
 
-That splits today's enums in two. `-types` gets the enum with its generated
-constructor properties and nothing else. Every behaviour that is a member today
-becomes an extension one layer up:
+Keep `-model` as a separate layer only if third parties outside this repository
+are expected to implement sources against a minimal contract, or if "core is
+pure interfaces" is a rule you want to hold regardless. Both are legitimate, and
+the layout above changes by two modules either way.
+
+### The risk to check either way
+
+Whichever home it gets, this code ships precompiled from Maven and binds to
+whichever `-types` is present, which for a narrowed build is generated source in
+the user's own project rather than our artifact. On the JVM that is ordinary
+classpath resolution. For Kotlin/Native and JS klibs, a precompiled klib records
+the module its dependencies came from, and whether it will accept a same-package,
+same-FQN substitute is something to prove with a spike before phase 2 rather
+than assume.
+
+If the spike fails, the fallback is to keep the hand-written portion as a
+template resource inside the codegen artifact, so the shipped module is
+generated from the same template the plugin uses and there is still exactly one
+copy.
+
+### What splitting the enum does to it
+
+Either way, today's enums split in two. `-types` gets the enum with its
+generated constructor properties and nothing else, and every behaviour that is a
+member today becomes an extension:
 
 ```kotlin
 // currency-types, generated
@@ -152,7 +179,7 @@ public enum class Currency(
     /* ... */
 ) { AED(784, 2, 2, /* ... */), AFN(971, 2, 0, /* ... */), /* ... */ }
 
-// currency-model, hand written
+// currency-core, hand written
 public val Currency.code: String get() = name
 public val Currency.minorUnitDigits: Int get() = defaultFractionDigits
 public fun Currency.isoToCldrUnits(minorUnits: Long): Long { /* ... */ }
@@ -162,38 +189,8 @@ public fun Currency.Companion.forCode(code: String): Currency { /* ... */ }
 The emitter then only ever writes data, never logic, which is the property that
 keeps the shipped module and the plugin output honest.
 
-**The rule that makes it work:** `-model` may reference the enum type and its
-members, never a specific entry. No `Currency.USD` anywhere in it. Otherwise a
-build that narrowed `USD` away would fail to link. Nothing in the current
-sources breaks that rule, and it is cheap to enforce with a test.
-
-**The risk to check before committing to it:** `-model` ships precompiled from
-Maven and binds to whichever `-types` is present, which for a narrowed build is
-generated source in the user's own project rather than our artifact. On the JVM
-that is ordinary classpath resolution. For Kotlin/Native and JS klibs, a
-precompiled klib records the module its dependencies came from, and whether it
-will accept a same-package, same-FQN substitute is something to prove with a
-spike before phase 2 rather than assume.
-
-If the spike fails, the fallback is to merge `-model` into `-types` and keep the
-hand-written portion as a template resource inside the codegen artifact, so the
-shipped module is generated from the same template the plugin uses and there is
-still exactly one copy.
-
-### The simpler alternative
-
-Do not narrow types at all. Ship `-types` from Maven always, let the plugin
-narrow only `-cldr`, and drop `-model` back into `-types` as ordinary members.
-Three layers per domain instead of four, no generator carrying hand-written
-code, no klib substitution question. What it gives up is exactly what you
-described wanting: a build where `Currency.JPY` does not exist because you said
-you do not handle it.
-
-Worth settling before phase 2, since it decides whether `-model` is a module or
-a package. Open decision 4.
-
-`kotlinx-locale-datetime-types` and `-model` do not appear because datetime has
-no generated enum and no hand-written value type. Its only type candidates,
+`kotlinx-locale-datetime-types` does not appear because datetime has no
+generated enum. Its only type candidates,
 `FormatStyle` and `TextStyle`, are not generated enum lists. They are seven
 hand-written constants that appear in the `DateTimeFormatSource` signatures, so
 they belong in `datetime-core` next to the interface that uses them. See open
@@ -230,7 +227,7 @@ implementation-bound convenience overload. A consumer declares the layers it
 wants:
 
 ```kotlin
-implementation("dev.carcara:kotlinx-locale-country-model:$version")
+implementation("dev.carcara:kotlinx-locale-country-core:$version")
 implementation("dev.carcara:kotlinx-locale-country-cldr:$version")
 ```
 
@@ -682,34 +679,38 @@ reviewed diff, not a running battle with the check.
    on `*-types` in any domain. Breaking them out means the layer names are
    uniform but `datetime-core` gains a dependency on `datetime-types`.
    Same question for `CurrencySymbolStyle` in `currency-core`.
-4. Is `-model` a module or a package? A module means `-types` is purely
-   generated and the plugin can narrow it, so `Currency.JPY` can be made not to
-   exist. A package inside `-types` means three layers per domain instead of
-   four, no generator carrying hand-written code, and the plugin narrows only
-   `-cldr`. This is the decision that the rest of the layering hangs on, so it
-   is worth taking first. If it stays a module, its name is also open:
-   `-model` is standard vocabulary for types plus behaviour, and the
-   alternative worth considering is renaming its neighbour instead, since
-   `-entries` describes a generated enum more literally than `-types` does.
-5. Do the four `cldr*` integer fields and the country to currency map stay in
+4. May the Gradle plugin narrow `-types`, or only `-cldr`? Narrowing `-types`
+   is what lets a build declare that `Currency.JPY` does not exist, and it
+   forces `-types` to be nothing but generator output. Narrowing only `-cldr`
+   leaves `-types` free to hold hand-written members and removes decision 5
+   entirely. The rest of the layering hangs on this, so it is worth taking
+   first.
+5. If the plugin may narrow `-types`: does the hand-written, enum-dependent
+   code (`CurrencyAmount`, the lookups, the unit math, the typed overloads) go
+   into `-core`, or into a separate layer of its own? This plan assumes
+   `-core`, on the grounds that the "any `-cldr` links against any `-types`"
+   property is protected by a rule (never name a specific entry) rather than by
+   a module boundary. A separate layer keeps `-core` to pure interfaces and
+   costs two more modules.
+6. Do the four `cldr*` integer fields and the country to currency map stay in
    `currency-types`, or move behind a source?
-6. On a miss, does a source return null, consult a configured fallback locale,
+7. On a miss, does a source return null, consult a configured fallback locale,
    or throw? The interfaces above return null and let a composer decide, which
    makes fallback a plugin config value rather than a library policy.
-7. Entity narrowing in the plugin: never, name-tables-only, or full? Decision 4
+8. Entity narrowing in the plugin: never, name-tables-only, or full? Decision 4
    sets the ceiling on this one.
-8. Does `Locale.availableLocales` move to `LocaleDataSource.supportedLocales`,
+9. Does `Locale.availableLocales` move to `LocaleDataSource.supportedLocales`,
    or disappear from the public API?
-9. Locale catalog shape: enum per language implementing `LocaleRef`, or object
+10. Locale catalog shape: enum per language implementing `LocaleRef`, or object
    per language holding `const val` tags? Recommended is the enum, on the
    grounds that its only stated use is plugin configuration where the cost is
    nil.
-10. Does the locale catalog nest two levels (`Zh.HANS_CN`) or three
+11. Does the locale catalog nest two levels (`Zh.HANS_CN`) or three
     (`Zh.Hans.CN`)? Two keeps every reference uniform and only 33 of 322
     languages would ever use the third.
-11. Artifact names. `kotlinx-locale-country-cldr` reads naturally but sorts the
+12. Artifact names. `kotlinx-locale-country-cldr` reads naturally but sorts the
     domains together and the layers apart; `kotlinx-locale-cldr-country` groups
-    by layer in a repository listing. Thirteen to sixteen artifacts is enough
+    by layer in a repository listing. Eleven to sixteen artifacts is enough
     for the choice to matter.
 
 ## Phases
@@ -726,7 +727,7 @@ changes yet, so the golden tests are the proof that nothing changed. Fold in the
 `const val` to `val` change in the emitters here, which the probe measured at
 16% off the minified bundle overall and 48% off datetime.
 
-**Phase 2. Split each domain into its layers.** Thirteen modules, the
+**Phase 2. Split each domain into its layers.** Eleven modules, the
 call shape moves to source-as-receiver, and the old aggregate artifacts stop
 being published. This is the breaking phase and it should land as one change
 rather than a drip, so users migrate once. The catalog is generated here too,
