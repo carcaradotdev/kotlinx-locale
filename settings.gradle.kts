@@ -55,6 +55,7 @@ listOf(
     "currency-core" to "kotlinx-locale-currency-core",
     "currency-cldr-format" to "kotlinx-locale-currency-cldr-format",
     "currency-cldr" to "kotlinx-locale-currency-cldr",
+    "currency-platform" to "kotlinx-locale-currency-platform",
     "datetime-core" to "kotlinx-locale-datetime-core",
     "datetime-cldr-format" to "kotlinx-locale-datetime-cldr-format",
     "datetime-cldr" to "kotlinx-locale-datetime-cldr",
