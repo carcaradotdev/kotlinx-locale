@@ -173,6 +173,8 @@ against each layer: 20.2 KB against 416.9 KB for country, 20.7 KB against
 329.4 KB for currency, 35.3 KB against 112.5 KB for datetime, and 45.0 KB
 against 823.7 KB for all three at once. Datetime saves the least because
 `kotlinx-datetime` is in both numbers and only the formatting moved.
+[`docs/size.md`](docs/size.md) has the full table and is regenerated from the
+build rather than typed.
 
 Two things to know before choosing it.
 
