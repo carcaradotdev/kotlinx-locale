@@ -81,6 +81,7 @@ not published.
 | `kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. What a narrowed build binds its own tables to. |
 | `kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
 | `kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
+| `kotlinx-locale-datetime-cldr-skeletons` | `-cldr-full` plus the skeleton tables: `CldrDateTimeSkeletons` and `date.format("yMMMd", locale)`, where the fields are named and the locale decides their order. Opt in; the tables are around 60 KB gzipped on top of `-cldr-full`. |
 | `kotlinx-locale-codegen-emitters` | The emitters and the bundle reader: the half of code generation that a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
 | `kotlinx-locale-codegen-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
 | `kotlinx-locale-gradle-plugin` | The `dev.carcara.kotlinx-locale` plugin: generates a data set narrowed to the locales a build declares. |
@@ -199,13 +200,19 @@ package split is for.
 
 What that saves, from the Kotlin/JS probes in `tools/` making identical calls
 against each layer: 20.2 KB against 416.9 KB for country, 20.7 KB against
-329.4 KB for currency, 35.3 KB against 112.5 KB for datetime, and 45.0 KB
-against 823.7 KB for all three at once. Datetime saves the least because
+329.4 KB for currency, 35.3 KB against 112.7 KB for datetime, and 45.0 KB
+against 823.4 KB for all three at once. Datetime saves the least because
 `kotlinx-datetime` is in both numbers and only the formatting moved.
 [`docs/size.md`](docs/size.md) has the full table and is regenerated from the
 build rather than typed.
 
 Two things to know before choosing it.
+
+Skeleton formatting is CLDR only. No platform source answers it, and that is a
+decision rather than a gap: the hosts will format from a template, but none of
+them hands back the pattern it chose, and half of what makes a skeleton useful is
+being able to reuse that pattern for parsing. A build that wants skeletons takes
+`kotlinx-locale-datetime-cldr-skeletons`.
 
 Platform sources are partial, and deliberately so. Linux, Windows, Android
 Native and WASI expose no locale data Kotlin can read, so on those four every
@@ -222,6 +229,61 @@ Composition does not round trip across sources. Foundation writes `¥` for JPY i
 `ja` where CLDR writes the fullwidth `￥`, so a string one produced is not
 necessarily one the other parses. Formatting with the platform and parsing with
 CLDR is not something the library promises.
+
+## Naming the fields instead of picking a length
+
+`FormatStyle` offers four fixed lengths. A skeleton instead names the fields
+wanted, in no particular order, and the locale decides how to arrange them —
+what `DateFormat.getBestDateTimePattern` gives an Android developer and
+`setLocalizedDateFormatFromTemplate` an iOS one.
+
+```kotlin
+import dev.carcara.kotlinx.locale.datetime.cldr.skeletons.*
+
+date.format("yMMMd", Locale.forLanguageTag("pt-BR"))  // "27 de jul. de 2026"
+date.format("yMMMd", Locale.forLanguageTag("ja"))     // "2026年7月27日"
+date.format("MMMEd", Locale.forLanguageTag("en"))     // "Mon, Jul 27"
+```
+
+The letters are CLDR's: `y` year, `M` month, `d` day, `E` weekday, `Q` quarter,
+`h`/`H` hour, `m` minute, `s` second, `G` era. Repeating one asks for a width, so
+`MMM` is an abbreviated month name and `MMMM` a full one. `j` asks for whichever
+hour the locale prefers together with the day period that goes with it, which is
+usually what you want:
+
+```kotlin
+time.format("jm", Locale.forLanguageTag("en"))     // "3:05 PM"  (U+202F before PM)
+time.format("jm", Locale.forLanguageTag("en-GB"))  // "15:05"
+```
+
+The pattern is available on its own, rather than only the formatted string:
+
+```kotlin
+skeletonPatternOrNull("yMMMd", Locale.forLanguageTag("pt-BR"))  // "d 'de' MMM 'de' y"
+skeletonPatternOrNull("yMd", Locale.forLanguageTag("pt-BR"))    // "dd/MM/y"
+```
+
+A numeric one of those composes with `kotlinx-datetime` today, which buys locale
+aware *parsing* off the same table:
+
+```kotlin
+LocalDate.Format { byUnicodePattern(skeletonPatternOrNull("yMd", ptBR)!!) }
+```
+
+A pattern naming a month or a weekday does not. `byUnicodePattern` rejects
+`MMM` and `EEE` with "the directive is locale-dependent, but locales are not
+supported in Kotlin" — which is the gap this library exists to fill on the
+formatting side and does not yet fill on the parsing side. Formatting is
+one-way for anything with a name in it.
+
+Time zones, week numbers and fractional seconds are out of scope — a `LocalDate`
+carries no zone, and week numbering needs data this library does not ship — so a
+skeleton naming one of those is refused rather than answered a field short.
+Non-gregorian calendars and interval formatting are not supported either.
+
+The matcher is the algorithm from UTS #35, written in common Kotlin, and it is
+held to patterns generated from ICU4J across 859 locales and 109 skeletons, plus
+CLDR's own datetime cases.
 
 ## Shipping only the locales you use
 
@@ -240,9 +302,13 @@ kotlinxLocale {
 
     country { names = true }
     currency { names = true; formats = true }
-    datetime { patterns = true }
+    datetime { patterns = true; skeletons = true }
 }
 ```
+
+`skeletons` implies `patterns`: matching a skeleton scores against the locale's
+standard date and time patterns, and rendering the winner needs its month and
+weekday names, so the two tables travel together.
 
 The dependency block then takes `-core`, `-types` and `-cldr-runtime` and leaves
 out `-cldr-full`, because the records come from the generator instead. Call sites
@@ -379,8 +445,9 @@ merging.
   `CurrencyAmount.parseFormatted` reads CLDR-formatted values like
   `R$ 1.234,56` or `200 Ft` into ISO minor units. It expects one number with
   one locale's separators, not free-form text.
-- Skeleton-based patterns (`availableFormats`), relative formatting
-  ("yesterday") and interval formatting are not implemented.
+- Skeleton-based patterns are implemented, in `kotlinx-locale-datetime-cldr-skeletons`;
+  see [naming the fields](#naming-the-fields-instead-of-picking-a-length).
+  Relative formatting ("yesterday") and interval formatting are not.
 - The currency enum covers the active ISO 4217 set; historic currencies (DEM,
   the pre-2005 TRL) are not included. Compact currency notation (`$1.2K`) and
   plural-aware currency names (`¤¤¤` with count) are not implemented.

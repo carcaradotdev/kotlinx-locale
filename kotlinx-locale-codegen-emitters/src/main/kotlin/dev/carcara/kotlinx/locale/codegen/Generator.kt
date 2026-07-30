@@ -27,10 +27,17 @@ public class SourceRoots(
     public val currencyFormats: File? = null,
     public val currencyNames: File? = null,
     public val dateTime: File? = null,
+    /** The three skeleton tables, which travel together. */
+    public val skeletons: File? = null,
     /** The source object and convenience extensions over the country table. */
     public val countryBinding: BindingTarget? = null,
     public val currencyBinding: BindingTarget? = null,
     public val dateTimeBinding: BindingTarget? = null,
+    /**
+     * The skeleton source object. Needs [dateTimeBinding] too: a skeleton
+     * binding reads the pattern table through it rather than carrying a copy.
+     */
+    public val skeletonBinding: BindingTarget? = null,
 )
 
 /**
@@ -45,6 +52,7 @@ public class RegistryPackages(
     public val currencyFormats: String,
     public val currencyNames: String,
     public val dateTime: String,
+    public val skeletons: String,
 ) {
     public companion object {
 
@@ -54,6 +62,7 @@ public class RegistryPackages(
             currencyFormats = "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
             currencyNames = "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
             dateTime = "dev.carcara.kotlinx.locale.datetime.cldr.internal.data",
+            skeletons = "dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data",
         )
 
         /** Everything under one package, which is what a generated source set wants. */
@@ -62,6 +71,7 @@ public class RegistryPackages(
             currencyFormats = "$basePackage.internal.data",
             currencyNames = "$basePackage.internal.data",
             dateTime = "$basePackage.internal.data",
+            skeletons = "$basePackage.internal.data",
         )
     }
 }
@@ -155,6 +165,31 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
         ).emit(bundle.dateTime)
     }
 
+    roots.skeletons?.let { root ->
+        // Three tables rather than one record: a locale's own availableFormats
+        // is the bulk of it, its append formats are almost always root's, and
+        // its names sit somewhere between. Deduplicating them together would
+        // cost the two small ones the saving they have.
+        fun emitSkeletonTable(payloads: Map<String, String>, filePrefix: String, constPrefix: String, property: String) {
+            KeyedPayloadEmitter(
+                outputDir = root.packageDir(packages.skeletons),
+                packageName = packages.skeletons,
+                filePrefix = filePrefix,
+                constPrefix = constPrefix,
+                registryProperty = property,
+                source = "CLDR $cldr",
+            ).emit(payloads)
+        }
+        emitSkeletonTable(bundle.skeletonFormats, "SkeletonFormats", "SKELETON_FORMATS", "skeletonFormatsRegistry")
+        emitSkeletonTable(
+            bundle.skeletonAppendFormats,
+            "SkeletonAppendFormats",
+            "SKELETON_APPEND_FORMATS",
+            "skeletonAppendFormatsRegistry",
+        )
+        emitSkeletonTable(bundle.skeletonNames, "SkeletonNames", "SKELETON_NAMES", "skeletonNamesRegistry")
+    }
+
     roots.countryBinding?.let { target ->
         emitCountryBinding(target.root, target.spec(packages.countryNames, cldr))
     }
@@ -165,6 +200,17 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
 
     roots.dateTimeBinding?.let { target ->
         emitDateTimeBinding(target.root, target.spec(packages.dateTime, cldr))
+    }
+
+    roots.skeletonBinding?.let { target ->
+        val dateTime = requireNotNull(roots.dateTimeBinding) {
+            "a skeleton binding reads its patterns through the datetime binding, so it needs one"
+        }
+        emitSkeletonBinding(
+            target.root,
+            target.spec(packages.skeletons, cldr),
+            dateTimeObject = "${dateTime.packageName}.${dateTime.objectName}",
+        )
     }
 }
 

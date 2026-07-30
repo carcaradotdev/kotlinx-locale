@@ -29,6 +29,7 @@ val checkLayeringRule = tasks.register<CheckLayeringRule>("checkLayeringRule") {
             include("*-core/src/*Main/**/*.kt")
             include("*-cldr-full/src/*Main/**/*.kt")
             include("*-cldr-runtime/src/*Main/**/*.kt")
+            include("*-cldr-skeletons/src/*Main/**/*.kt")
             exclude("**/build/**")
         },
     )

@@ -6,10 +6,18 @@ android-compileSdk = "36"
 android-minSdk = "21"
 ktlint-gradle = "14.2.0"
 maven-publish = "0.37.0"
+# Matches ICU_REPO.tag in Repos.kt: the goldens the skeleton matcher is held to
+# have to come from the same ICU release the CLDR data is pinned against.
+icu4j = "78.3"
 
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+
+# :codegen only, and :codegen runs at build time and ships nothing. Used to
+# generate the skeleton goldens; no published artifact depends on ICU, and
+# nothing in the runtime delegates to it.
+icu4j = { module = "com.ibm.icu:icu4j", version.ref = "icu4j" }
 
 # Plugin artifacts for the buildSrc classpath; modules apply plugins by id
 # (versionless) through the kotlinx-locale-multiplatform convention plugin.

@@ -151,19 +151,41 @@ public fun List<PatternToken>.withoutZoneFields(): List<PatternToken> {
 // The closing ] must be escaped: JS unicode-mode regexes reject a lone one.
 private val EMPTY_BRACKET_PAIR = Regex("""\(\s*\)|\[\s*\]""")
 
+/**
+ * Renders [tokens] against [date] and [time].
+ *
+ * [skeletons] carries the quarter names, and is null for everything but skeleton
+ * formatting: no standard date or time pattern in any locale uses `Q`, so
+ * `kotlinx-locale-datetime-cldr-full` has no use for the names and does not
+ * carry them.
+ */
 @InternalKotlinxLocaleApi
-public fun formatPattern(tokens: List<PatternToken>, data: DateTimeRecord, date: LocalDate?, time: LocalTime?): String {
+public fun formatPattern(
+    tokens: List<PatternToken>,
+    data: DateTimeRecord,
+    date: LocalDate?,
+    time: LocalTime?,
+    skeletons: SkeletonRecord? = null,
+): String {
     val sb = StringBuilder()
     for (token in tokens) {
         when (token) {
             is PatternToken.Literal -> sb.append(token.text)
-            is PatternToken.Field -> formatField(sb, token.letter, token.count, data, date, time)
+            is PatternToken.Field -> formatField(sb, token.letter, token.count, data, date, time, skeletons)
         }
     }
     return sb.toString()
 }
 
-private fun formatField(sb: StringBuilder, letter: Char, count: Int, data: DateTimeRecord, date: LocalDate?, time: LocalTime?) {
+private fun formatField(
+    sb: StringBuilder,
+    letter: Char,
+    count: Int,
+    data: DateTimeRecord,
+    date: LocalDate?,
+    time: LocalTime?,
+    skeletons: SkeletonRecord?,
+) {
     when (letter) {
         'G' -> if (date != null) sb.append(if (date.year > 0) data.era1 else data.era0)
         'y' -> if (date != null) {
@@ -182,6 +204,16 @@ private fun formatField(sb: StringBuilder, letter: Char, count: Int, data: DateT
                 3 -> sb.append(data.monthsAbbr[month - 1])
                 4 -> sb.append(data.monthsWide[month - 1])
                 else -> sb.append(data.monthsNarrow[month - 1])
+            }
+        }
+        // Q is the calendar quarter, and q its stand-alone form; CLDR gives the
+        // two the same names for every locale that declares them at all.
+        'Q', 'q' -> if (date != null && skeletons != null) {
+            val quarter = (date.month.number - 1) / 3
+            when (count) {
+                1, 2 -> sb.appendNumber(quarter + 1, count, data.digits)
+                3 -> sb.append(skeletons.quartersAbbr[quarter])
+                else -> sb.append(skeletons.quartersWide[quarter])
             }
         }
         'd' -> if (date != null) sb.appendNumber(date.day, count, data.digits)

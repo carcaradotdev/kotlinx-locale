@@ -61,6 +61,7 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots(
     currencyFormats = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
     currencyNames = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
     dateTime = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"),
+    skeletons = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"),
     // The source objects and their convenience extensions come from the same
     // emitter the Gradle plugin uses, so a narrowed build and a full one cannot
     // present a different API.
@@ -78,6 +79,11 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots(
         root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"),
         packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
         objectName = "CldrDateTime",
+    ),
+    skeletonBinding = BindingTarget(
+        root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"),
+        packageName = "dev.carcara.kotlinx.locale.datetime.cldr.skeletons",
+        objectName = "CldrDateTimeSkeletons",
     ),
 )
 
@@ -108,6 +114,25 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
     dateTime["root"] = encodeChecked("root") // final runtime fallback
     for (id in flattener.localeIds) {
         dateTime[canonicalTag(id)] = encodeChecked(id)
+    }
+
+    val skeletonFormats = LinkedHashMap<String, String>()
+    val skeletonAppendFormats = LinkedHashMap<String, String>()
+    val skeletonNames = LinkedHashMap<String, String>()
+    val resolvedSkeletons = LinkedHashMap<String, ResolvedSkeletonData>()
+    val resolvedDateTime = LinkedHashMap<String, ResolvedLocaleData>()
+    val declaredFormats = LinkedHashMap<String, Map<String, String>>()
+    for (id in listOf("root") + flattener.localeIds) {
+        val skeletons = flattener.resolveSkeletons(id)
+        val tag = canonicalTag(id)
+        skeletonFormats[tag] = skeletons.encodeFormats()
+        skeletonAppendFormats[tag] = skeletons.encodeAppendFormats()
+        skeletonNames[tag] = skeletons.encodeNames()
+        if (id != "root") {
+            resolvedSkeletons[id] = skeletons
+            resolvedDateTime[id] = flattener.resolve(id)
+            declaredFormats[id] = flattener.declaredAvailableFormats(id)
+        }
     }
     if (dayPeriodGaps.isNotEmpty()) {
         println(
@@ -145,6 +170,18 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         icuTag = ICU_REPO.tag,
         entries = extractIcuCountryGolden(icuDir),
     )
+    emitCldrDateTimeCases(
+        outputFile = conformanceDir(rootDir).resolve("CldrDateTimeCaseData.kt"),
+        cldrTag = CLDR_REPO.tag,
+        cases = extractCldrDateTimeCases(cldrDir),
+    )
+    val goldenSkeletons = goldenSkeletons(skeletonFormats)
+    emitIcuSkeletonGolden(
+        outputDir = conformanceDir(rootDir),
+        icuTag = ICU_REPO.tag,
+        skeletons = goldenSkeletons,
+        entries = extractIcuSkeletonGolden(icuDir, goldenSkeletons, resolvedSkeletons, resolvedDateTime, declaredFormats),
+    )
     emitIcuCurrencyGolden(
         outputFile = conformanceDir(rootDir).resolve("IcuCurrencyGoldenData.kt"),
         icuTag = ICU_REPO.tag,
@@ -175,5 +212,8 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         countryNames = buildCountryNamePayloads(flattener, extras),
         currencyFormats = buildCurrencyFormatPayloads(flattener, extras),
         currencyNames = buildCurrencyNamePayloads(flattener, extras),
+        skeletonFormats = skeletonFormats,
+        skeletonAppendFormats = skeletonAppendFormats,
+        skeletonNames = skeletonNames,
     )
 }

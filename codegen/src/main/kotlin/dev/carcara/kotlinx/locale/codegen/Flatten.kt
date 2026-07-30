@@ -23,6 +23,37 @@ class ResolvedLocaleData(
     val digits: String,
 )
 
+/**
+ * The skeleton half of one locale, resolved.
+ *
+ * Separate from [ResolvedLocaleData] because it is carried by a separate module
+ * and encoded into separate bundle sections: `availableFormats` is large and
+ * varies per locale, while `appendItems` is near-universal, so folding them into
+ * one record would make the second dedupe as badly as the first.
+ */
+class ResolvedSkeletonData(
+    /** Skeleton id to pattern, e.g. `yMMMd` to `d 'de' MMM 'de' y`. */
+    val availableFormats: Map<String, String>,
+    /** Indexed by [DATE_FIELD_TYPES]; "" where CLDR declares no append format. */
+    val appendItems: List<String>,
+    /** Indexed by [DATE_FIELD_TYPES]; the `{2}` an appendItem writes. "" where absent. */
+    val fieldNames: List<String>,
+    val quartersWide: List<String>,
+    val quartersAbbr: List<String>,
+    /**
+     * The `atTime` date-time glue, in FULL, LONG, MEDIUM, SHORT order.
+     *
+     * Skeleton formatting joins a date and a time with this rather than with the
+     * standard glue the style-based API uses, which is why `en` reads
+     * "July 27, 2026 at 3:05 PM" here and "July 27, 2026, 3:05 PM" there.
+     */
+    val glueAtTimeFormats: List<String>,
+    /** What the `j` skeleton letter resolves to for this locale. */
+    val hourPreferred: Char,
+    /** What `C` resolves to; a trailing `b` or `B` names the day period letter. */
+    val hourFirstAllowed: String,
+)
+
 class Flattener(private val cldrDir: File, private val supplemental: SupplementalData) {
     private val mainDir = cldrDir.resolve("common/main")
     private val partialCache = HashMap<String, PartialLocaleData>()
@@ -68,6 +99,14 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
         chain.add("root")
         return chain
     }
+
+    /**
+     * Only the skeleton ids this locale's own file declares, before inheritance.
+     *
+     * For the ICU cross-check: a locale that overrides an id its parent also has
+     * is exactly where a pruned ICU bundle answers out of the parent instead.
+     */
+    fun declaredAvailableFormats(id: String): Map<String, String> = partial(id).availableFormats
 
     /** [chain] restricted to levels that actually have a data file (plus root). */
     fun dataChain(id: String): List<String> = chain(id).filter { it == "root" || it in available }
@@ -154,6 +193,66 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             digits = digits,
         )
     }
+
+    /**
+     * The skeleton tables for [id], resolved down the same chain [resolve] walks.
+     *
+     * `availableFormats` merges per skeleton id rather than wholesale: a locale
+     * declaring only `yMMMd` still inherits the other fifty-odd ids from its
+     * parent, which is why 1122 locales average 55 entries against the 49 root
+     * alone declares.
+     */
+    fun resolveSkeletons(id: String): ResolvedSkeletonData {
+        val availableFormats = LinkedHashMap<String, String>()
+        val appendItems = arrayOfNulls<String>(DATE_FIELD_TYPES.size)
+        val fieldNames = arrayOfNulls<String>(DATE_FIELD_TYPES.size)
+        val quartersWide = arrayOfNulls<String>(4)
+        val quartersAbbr = arrayOfNulls<String>(4)
+
+        for (level in dataChain(id)) {
+            val p = partial(level)
+            for ((skeleton, pattern) in p.availableFormats) availableFormats.putIfAbsent(skeleton, pattern)
+            for (i in appendItems.indices) {
+                if (appendItems[i] == null) appendItems[i] = p.appendItems[i]
+                if (fieldNames[i] == null) fieldNames[i] = p.fieldNames[i]
+            }
+            for (i in 0..3) {
+                if (quartersWide[i] == null) quartersWide[i] = p.quartersWide[i]
+                if (quartersAbbr[i] == null) quartersAbbr[i] = p.quartersAbbr[i]
+            }
+        }
+
+        // root.xml aliases format abbreviated to format wide, the way it does for
+        // months and days.
+        for (i in 0..3) if (quartersAbbr[i] == null) quartersAbbr[i] = quartersWide[i]
+
+        val glueAtTime = arrayOfNulls<String>(4)
+        for (level in dataChain(id)) {
+            val p = partial(level)
+            for (i in 0..3) if (glueAtTime[i] == null) glueAtTime[i] = p.glueAtTimeFormats[i]
+        }
+        // root declares no atTime at all, so a locale that inherits all the way
+        // up lands on its standard glue, which is what CLDR's alias says.
+        val standardGlue = resolve(id).glueFormats
+
+        val hourCycle = supplemental.hourCycleFor(id)
+
+        // Positions stay put so the runtime can index by field, but a field no
+        // skeleton can ask for carries nothing.
+        fun forRenderable(values: Array<String?>): List<String> =
+            values.mapIndexed { i, v -> if (DATE_FIELD_TYPES[i] in RENDERABLE_FIELDS) v.orEmpty() else "" }
+
+        return ResolvedSkeletonData(
+            availableFormats = availableFormats.toSortedMap(),
+            appendItems = forRenderable(appendItems),
+            fieldNames = forRenderable(fieldNames),
+            quartersWide = quartersWide.mapIndexed { i, v -> checkNotNull(v) { "$id: missing quartersWide[$i]" } },
+            quartersAbbr = quartersAbbr.mapIndexed { i, v -> checkNotNull(v) { "$id: missing quartersAbbr[$i]" } },
+            glueAtTimeFormats = List(4) { glueAtTime[it] ?: standardGlue[it] },
+            hourPreferred = hourCycle.preferred,
+            hourFirstAllowed = hourCycle.firstAllowed,
+        )
+    }
 }
 
 /**
@@ -182,3 +281,88 @@ fun ResolvedLocaleData.encode(): String {
     list(dayPeriodRules.map { "${DAY_PERIOD_TYPES.indexOf(it.type)},${it.start},${it.end}" })
     return fields.joinToString("\u001F")
 }
+
+/**
+ * Field letters this library cannot render, and so will not offer a skeleton for.
+ *
+ * `U` is a cyclic year name, which only the non-gregorian calendars the README
+ * already lists as unsupported use. `v z Z V O X x` are time zones, which a
+ * `LocalDate` or `LocalTime` does not carry — the same reason
+ * `withoutZoneFields()` exists and FULL and LONG times already collapse to
+ * MEDIUM. `w W F` are week numbering, which needs each locale's first day of
+ * week and minimum days, a supplemental data set nothing here reads yet. `g S A`
+ * are a Julian day number and sub-second precision, which no standard id asks
+ * for.
+ *
+ * Across CLDR 48.2 this drops thirteen ids, all of them zone or week:
+ * `Hv Hmv Hmsv hv hmv hmsv` and their `vvvv` forms, `HHmmZ`, `MMMMW` and `yw`.
+ */
+private val UNSUPPORTED_FIELD_LETTERS = setOf(
+    'U',
+    'v', 'z', 'Z', 'V', 'O', 'X', 'x',
+    'w', 'W', 'F',
+    'g', 'S', 'A',
+)
+
+/**
+ * The field letters of a CLDR pattern, ignoring `'quoted literals'`.
+ *
+ * Scanning the raw characters instead would read the `U` of German `'Uhr'`, the
+ * `z` of `'zeg'` and the `g` of `'ga'` as fields and throw away forty-seven
+ * perfectly renderable entries.
+ */
+internal fun patternFieldLetters(pattern: String): Set<Char> {
+    val letters = LinkedHashSet<Char>()
+    var i = 0
+    while (i < pattern.length) {
+        val ch = pattern[i]
+        when {
+            ch == '\'' -> {
+                i++
+                if (i < pattern.length && pattern[i] == '\'') {
+                    i++ // an escaped apostrophe, not a quoted section
+                } else {
+                    while (i < pattern.length && pattern[i] != '\'') i++
+                    i++
+                }
+            }
+            ch in 'a'..'z' || ch in 'A'..'Z' -> {
+                letters.add(ch)
+                i++
+            }
+            else -> i++
+        }
+    }
+    return letters
+}
+
+/**
+ * Whether a skeleton id is one this library can both match and render.
+ *
+ * The id enumerates the fields, so it is what decides; the pattern is checked
+ * only so that a future CLDR release moving an unrenderable field into a pattern
+ * whose id does not mention it cannot slip through and render one field short.
+ * As of CLDR 48.2 the pattern check drops nothing the id check has not.
+ */
+fun isSupportedSkeleton(id: String, pattern: String): Boolean = id.none { it in UNSUPPORTED_FIELD_LETTERS } &&
+    patternFieldLetters(pattern).none { it in UNSUPPORTED_FIELD_LETTERS }
+
+/** The skeleton table: `id<KEY>pattern` entries joined by the list separator. */
+fun ResolvedSkeletonData.encodeFormats(): String = availableFormats.entries
+    .filter { (id, pattern) -> isSupportedSkeleton(id, pattern) }
+    .joinToString(LIST_SEPARATOR) { (id, pattern) -> id + KEY_SEPARATOR + pattern }
+
+/** The appendItem patterns alone, positional against [DATE_FIELD_TYPES]. */
+fun ResolvedSkeletonData.encodeAppendFormats(): String = appendItems.joinToString(LIST_SEPARATOR)
+
+/**
+ * The per-locale names and the hour cycle: field display names, wide quarters,
+ * abbreviated quarters, then what `j` and `C` resolve to.
+ */
+fun ResolvedSkeletonData.encodeNames(): String = listOf(
+    fieldNames.joinToString(LIST_SEPARATOR),
+    quartersWide.joinToString(LIST_SEPARATOR),
+    quartersAbbr.joinToString(LIST_SEPARATOR),
+    listOf(hourPreferred.toString(), hourFirstAllowed).joinToString(LIST_SEPARATOR),
+    glueAtTimeFormats.joinToString(LIST_SEPARATOR),
+).joinToString(FIELD_SEPARATOR)

@@ -49,6 +49,18 @@ public class LocaleDataBundle(
     public val currencyFormats: Map<String, String>,
     /** Sparse currency symbol and name records carrying their parent tag, including `root`. */
     public val currencyNames: Map<String, String>,
+    /**
+     * Fully resolved skeleton tables, including `root`.
+     *
+     * Three sections rather than one record because they dedupe on very
+     * different scales: almost every locale has its own `availableFormats`,
+     * almost none has its own `appendItems`.
+     */
+    public val skeletonFormats: Map<String, String> = emptyMap(),
+    /** Fully resolved `appendItems` patterns, including `root`. */
+    public val skeletonAppendFormats: Map<String, String> = emptyMap(),
+    /** Fully resolved field display names and quarter names, including `root`. */
+    public val skeletonNames: Map<String, String> = emptyMap(),
 ) {
 
     /**
@@ -91,6 +103,15 @@ public class LocaleDataBundle(
             countryNames = withFallback(countryNames.filterKeys { it in kept }, countryNames, fallbackTag, sparseFields = 1),
             currencyFormats = withFallback(currencyFormats.filterKeys { it in kept }, currencyFormats, fallbackTag, sparseFields = 0),
             currencyNames = withFallback(currencyNames.filterKeys { it in kept }, currencyNames, fallbackTag, sparseFields = 2),
+            // Resolved rather than sparse, so these copy the way dateTime does.
+            skeletonFormats = withFallback(skeletonFormats.filterKeys { it in kept }, skeletonFormats, fallbackTag, sparseFields = 0),
+            skeletonAppendFormats = withFallback(
+                skeletonAppendFormats.filterKeys { it in kept },
+                skeletonAppendFormats,
+                fallbackTag,
+                sparseFields = 0,
+            ),
+            skeletonNames = withFallback(skeletonNames.filterKeys { it in kept }, skeletonNames, fallbackTag, sparseFields = 0),
         )
     }
 
@@ -176,7 +197,7 @@ public class LocaleDataBundle(
             out.write("\n")
         }
 
-        section("bundle 1")
+        section("bundle 2")
         row("cldr", cldrVersion)
         row("iso4217", isoPublished)
 
@@ -208,6 +229,9 @@ public class LocaleDataBundle(
             "countryNames" to countryNames,
             "currencyFormats" to currencyFormats,
             "currencyNames" to currencyNames,
+            "skeletonFormats" to skeletonFormats,
+            "skeletonAppendFormats" to skeletonAppendFormats,
+            "skeletonNames" to skeletonNames,
         )) {
             section(name)
             for ((tag, payload) in payloads) row(tag, payload)
@@ -231,6 +255,9 @@ public class LocaleDataBundle(
                 "countryNames" to LinkedHashMap(),
                 "currencyFormats" to LinkedHashMap(),
                 "currencyNames" to LinkedHashMap(),
+                "skeletonFormats" to LinkedHashMap(),
+                "skeletonAppendFormats" to LinkedHashMap(),
+                "skeletonNames" to LinkedHashMap(),
             )
 
             var section = ""
@@ -239,7 +266,9 @@ public class LocaleDataBundle(
                     section = line.removePrefix("#")
                     if (section.startsWith("bundle ")) {
                         val version = section.removePrefix("bundle ")
-                        check(version == "1") { "unsupported bundle format version '$version'" }
+                        // Version 1 predates the skeleton sections and is not read:
+                        // nothing has shipped, so there is no bundle in the wild.
+                        check(version == "2") { "unsupported bundle format version '$version'" }
                         section = "header"
                     }
                     return@forEachLine
@@ -281,6 +310,9 @@ public class LocaleDataBundle(
                 countryNames = payloads.getValue("countryNames"),
                 currencyFormats = payloads.getValue("currencyFormats"),
                 currencyNames = payloads.getValue("currencyNames"),
+                skeletonFormats = payloads.getValue("skeletonFormats"),
+                skeletonAppendFormats = payloads.getValue("skeletonAppendFormats"),
+                skeletonNames = payloads.getValue("skeletonNames"),
             )
         }
     }

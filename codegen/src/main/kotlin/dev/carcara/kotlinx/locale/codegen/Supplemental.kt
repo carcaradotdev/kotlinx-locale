@@ -22,7 +22,26 @@ class SupplementalData(
     val defaultFractions: CurrencyFractions,
     /** region alpha-2 -> current legal-tender currency codes, preferred first. */
     val regionCurrencies: Map<String, List<String>>,
+    /**
+     * `<timeData>` keyed the way it is written: mostly regions, but with locale
+     * ids mixed in (`en_IL`, `fr_CA`, `ca_ES`, `it_CH`, `it_IT` and others).
+     */
+    val hourCycles: Map<String, HourCycle>,
+    /** language, or language_script, -> the region likely subtags maximises it to. */
+    val likelyRegions: Map<String, String>,
 )
+
+/**
+ * A `<timeData>` row: which hour field a locale prefers, and which one the `C`
+ * skeleton letter reaches for.
+ *
+ * [preferred] answers the `j` skeleton letter. [firstAllowed] answers `C`, which
+ * takes the first *allowed* format rather than the preferred one, and whose
+ * trailing `b` or `B` decides which day period letter comes with it — so `C` in
+ * `hi-IN`, whose first allowed format is `hB`, asks for a flexible day period
+ * where `j` would ask for AM/PM.
+ */
+class HourCycle(val preferred: Char, val firstAllowed: String)
 
 /**
  * The day period types, in the order used by the encoded rule records. am and pm
@@ -115,6 +134,37 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
         }
     }
 
+    // ICU builds one list per key as [preferred] + allowed, then reads the
+    // preferred hour char off the head and the C letter off allowed[0].
+    val hourCycles = LinkedHashMap<String, HourCycle>()
+    supplementalData.child("timeData")?.let { timeData ->
+        for (hours in timeData.childElements("hours")) {
+            val allowed = hours.getAttribute("allowed").split(' ').filter(String::isNotBlank)
+            val preferred = hours.getAttribute("preferred").takeIf(String::isNotEmpty)
+                ?: allowed.firstOrNull()
+                ?: "H"
+            val cycle = HourCycle(preferred = preferred[0], firstAllowed = allowed.firstOrNull() ?: preferred)
+            for (key in hours.getAttribute("regions").split(' ')) {
+                if (key.isNotBlank()) hourCycles[key] = cycle
+            }
+        }
+    }
+    check("001" in hourCycles) { "supplementalData.xml timeData has no 001 row" }
+
+    val likelyRegions = LinkedHashMap<String, String>()
+    val likelySubtags = parseXml(supplementalDir.resolve("likelySubtags.xml")).documentElement
+    likelySubtags.child("likelySubtags")?.let { container ->
+        for (entry in container.childElements("likelySubtag")) {
+            val from = entry.getAttribute("from")
+            // Only language and language_script keys matter: a locale that already
+            // names a region does not need maximising.
+            if (from.isEmpty() || from.count { it == '_' } > 1) continue
+            val region = entry.getAttribute("to").split('_').lastOrNull() ?: continue
+            if (region.length == 2 || (region.length == 3 && region.all(Char::isDigit))) likelyRegions[from] = region
+        }
+    }
+    check("und" in likelyRegions) { "likelySubtags.xml has no und entry" }
+
     return SupplementalData(
         parentOverrides = parentOverrides,
         numberingSystemDigits = digits,
@@ -123,7 +173,32 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
         currencyFractions = currencyFractions,
         defaultFractions = defaultFractions,
         regionCurrencies = regionCurrencies,
+        hourCycles = hourCycles,
+        likelyRegions = likelyRegions,
     )
+}
+
+/**
+ * The hour cycle for a CLDR locale id, resolved the way ICU resolves it.
+ *
+ * Region first, from the id or from likely subtags when the id carries none;
+ * then `language_region` before `region` alone, because `<timeData>` is not
+ * purely region keyed — `it_CH` and `it_IT` sit in a different row from `CH` and
+ * `IT`. Resolved here rather than at runtime because the maximisation step needs
+ * likely subtags, which is a table nothing else in the shipped artifacts reads.
+ */
+fun SupplementalData.hourCycleFor(cldrId: String): HourCycle {
+    val parts = cldrId.split('_')
+    val language = parts[0]
+    val script = parts.getOrNull(1)?.takeIf { it.length == 4 }
+    val region = parts.drop(1).firstOrNull { it.length == 2 || (it.length == 3 && it.all(Char::isDigit)) }
+        ?: likelyRegions[if (script != null) "${language}_$script" else language]
+        ?: likelyRegions[language]
+        ?: likelyRegions.getValue("und")
+
+    return hourCycles["${language}_$region"]
+        ?: hourCycles[region]
+        ?: hourCycles.getValue("001")
 }
 
 private fun parseDayPeriodRules(file: File): Map<String, List<DayPeriodRule>> {

@@ -67,6 +67,7 @@ val published = listOf(
     "kotlinx-locale-datetime-core",
     "kotlinx-locale-datetime-cldr-runtime",
     "kotlinx-locale-datetime-cldr-full",
+    "kotlinx-locale-datetime-cldr-skeletons",
     "kotlinx-locale-datetime-platform",
     "kotlinx-locale-codegen-emitters",
     "kotlinx-locale-codegen-data",
