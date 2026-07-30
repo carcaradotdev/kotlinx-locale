@@ -33,7 +33,9 @@ private fun conformanceDir(rootDir: File): File = rootDir
     .resolve("dev/carcara/kotlinx/locale/conformance")
 
 /** Where the published bundle lives, as a resource inside kotlinx-locale-codegen-data. */
-internal fun bundleFile(rootDir: File): File = rootDir.resolve("codegen-data/src/main/resources/dev/carcara/kotlinx/locale/cldr-data.txt")
+internal fun bundleFile(rootDir: File): File = rootDir
+    .resolve("kotlinx-locale-codegen-data/src/main/resources")
+    .resolve("dev/carcara/kotlinx/locale/cldr-data.txt")
 
 private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
     val bundle = extractBundle(rootDir, cldrDir, icuDir)
@@ -51,29 +53,29 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
 
 /** Every published artifact that carries generated source, and where its package root is. */
 internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots(
-    localeCatalog = rootDir.sourceRoot("locale-types"),
-    countryEnum = rootDir.sourceRoot("country-types"),
-    countryNames = rootDir.sourceRoot("country-cldr-full"),
-    currencyEnum = rootDir.sourceRoot("currency-types"),
-    countryCurrencies = rootDir.sourceRoot("currency-types"),
-    currencyFormats = rootDir.sourceRoot("currency-cldr-full"),
-    currencyNames = rootDir.sourceRoot("currency-cldr-full"),
-    dateTime = rootDir.sourceRoot("datetime-cldr-full"),
+    localeCatalog = rootDir.sourceRoot("kotlinx-locale-types"),
+    countryEnum = rootDir.sourceRoot("kotlinx-locale-country-types"),
+    countryNames = rootDir.sourceRoot("kotlinx-locale-country-cldr-full"),
+    currencyEnum = rootDir.sourceRoot("kotlinx-locale-currency-types"),
+    countryCurrencies = rootDir.sourceRoot("kotlinx-locale-currency-types"),
+    currencyFormats = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
+    currencyNames = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
+    dateTime = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"),
     // The source objects and their convenience extensions come from the same
     // emitter the Gradle plugin uses, so a narrowed build and a full one cannot
     // present a different API.
     countryBinding = BindingTarget(
-        root = rootDir.sourceRoot("country-cldr-full"),
+        root = rootDir.sourceRoot("kotlinx-locale-country-cldr-full"),
         packageName = "dev.carcara.kotlinx.locale.country.cldr",
         objectName = "CldrCountry",
     ),
     currencyBinding = BindingTarget(
-        root = rootDir.sourceRoot("currency-cldr-full"),
+        root = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
         packageName = "dev.carcara.kotlinx.locale.currency.cldr",
         objectName = "CldrCurrency",
     ),
     dateTimeBinding = BindingTarget(
-        root = rootDir.sourceRoot("datetime-cldr-full"),
+        root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"),
         packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
         objectName = "CldrDateTime",
     ),
