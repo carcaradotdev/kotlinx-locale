@@ -22,8 +22,8 @@ import java.util.Properties
  * }
  *
  * kotlinxLocale {
- *     locales(Pt.BR, En.US)
- *     fallback(En.US)
+ *     locales(PT.BR, EN.US)
+ *     fallback(EN.US)
  *     packageName = "com.example.locale"
  *     country { names = true }
  * }

@@ -526,7 +526,7 @@ Locale.forLanguageTag("pt_BR")   // compiles, throws at runtime
 With the catalog:
 
 ```kotlin
-Locale.forLanguageTag(Pt.BR.tag)  // cannot be misspelled, autocompletes
+Locale.forLanguageTag(PT.BR.tag)  // cannot be misspelled, autocompletes
 ```
 
 The reason it earns its own artifact is the Gradle plugin. Its configuration is
@@ -558,22 +558,37 @@ ids we currently ship:
 
 Two levels are enough. Nest by language and flatten whatever follows inside it,
 so the 33 script-carrying languages do not force a third level and every
-reference is `Language.Rest`:
+reference is `LANGUAGE.REST`:
 
 ```kotlin
-Pt.BR          // pt-BR
-Zh.HANS_CN     // zh-Hans-CN
-Ca.ES_VALENCIA // ca-ES-valencia
-Sr.CYRL_BA     // sr-Cyrl-BA
+PT.BR          // pt-BR
+ZH.HANS_CN     // zh-Hans-CN
+CA.ES_VALENCIA // ca-ES-valencia
+SR.CYRL_BA     // sr-Cyrl-BA
 ```
 
-The bare language needs a member name of its own, since `Pt` is the container.
-`Pt.TAG` or `Pt.BASE` rather than overloading the object.
+Both segments are upper case. Casing the container differently from what it
+contains — `Pt.BR` — advertises an implementation detail (one is a classifier,
+the other a member) that a reader of a locale name has no use for.
+
+The bare language is the container itself: `PT` is `pt`, with no member name at
+all. A type cannot be a value of itself, but a class name in expression position
+resolves to its companion, so a companion implementing `LocaleRef` gets there:
+
+```kotlin
+PT      // pt      — the companion
+PT.BR   // pt-BR   — an entry
+PT.PT   // pt-PT   — an entry, and the collision resolves the right way
+```
+
+That is worth more than the `BASE` it replaces. `pt` and `pt-BR` are locales of
+the same standing, and a member name for one of them implies a hierarchy CLDR
+does not have; `Pt.BASE` also read as though `BASE` were a region.
 
 Three subtags are not valid Kotlin identifiers: `001`, `150` and `419`. Rather
 than backticking them, which produces JVM field names Java callers cannot
 reference, name them from CLDR's own English region names, which codegen already
-parses: `Ar.WORLD` for `ar-001`, `En.EUROPE` for `en-150`, `Es.LATIN_AMERICA`
+parses: `AR.WORLD` for `ar-001`, `EN.EUROPE` for `en-150`, `ES.LATIN_AMERICA`
 for `es-419`.
 
 Note the nesting must follow the *identifier* structure, not the CLDR parent
@@ -593,8 +608,7 @@ public interface LocaleRef {
 }
 
 // kotlinx-locale-types, generated: one enum per language, 322 of them
-public enum class Pt(override val tag: String) : LocaleRef {
-    BASE("pt"),
+public enum class PT(override val tag: String) : LocaleRef {
     AO("pt-AO"),
     BR("pt-BR"),
     CH("pt-CH"),
@@ -608,27 +622,33 @@ public enum class Pt(override val tag: String) : LocaleRef {
     ST("pt-ST"),
     TL("pt-TL"),
     ;
+
+    /** The bare language, `pt`. */
+    public companion object : LocaleRef {
+        override val tag: String = "pt"
+    }
 }
 ```
 
 Real type safety, so the plugin DSL can take `LocaleRef` and reject anything
-else, and `Pt.entries` gives every Portuguese locale. Costs 322 enum classes and
+else, and `PT.entries` gives every Portuguese region. Costs 322 enum classes and
 1121 instances, though only the language you touch is loaded.
 
 **Object per language, `const val` members.**
 
 ```kotlin
-public object Pt {
+public object PT {
     public const val BASE: String = "pt"
     public const val BR: String = "pt-BR"
     /* ... */
 }
 ```
 
-`const val` is inlined at every use site, so at runtime `Pt.BR` is the string
+`const val` is inlined at every use site, so at runtime `PT.BR` is the string
 `"pt-BR"` and the object is never loaded. Zero cost, but the DSL parameter is
 `String`, so a typo is caught by the plugin validating its configuration rather
-than by the compiler.
+than by the compiler — and the bare language is back to needing a member name,
+because a plain object cannot both contain the members and be one.
 
 Recommendation: the enum form, in `kotlinx-locale-types`, depended on by the
 Gradle plugin and by anyone who wants it in app code. Keeping it out of
@@ -638,9 +658,12 @@ dynamically.
 
 The catalog is the cleanest case for a plugin-generated `-types`: it is one
 hundred percent generated with no hand-written behaviour attached, so a build
-configured for three locales gets a catalog with three entries and `Ja.BASE`
-simply does not compile. The plugin DSL should accept `LocaleRef` and `String`
-both, and validate strings at configuration time.
+configured for three locales gets a catalog with three entries and `JA` simply
+does not compile. That holds for the bare language too: the companion is emitted
+only when the bare tag survives the filter, so a build that asked for `pt-BR`
+alone gets a `PT` that has a `BR` and is not itself a locale. The plugin DSL
+should accept `LocaleRef` and `String` both, and validate strings at
+configuration time.
 
 ## Full mode
 
@@ -685,8 +708,8 @@ plugins {
 }
 
 kotlinxLocale {
-    locales(En.US, Pt.BR, Es.LATIN_AMERICA)
-    fallback(En.US)                 // answers requests for anything not generated
+    locales(EN.US, PT.BR, ES.LATIN_AMERICA)
+    fallback(EN.US)                 // answers requests for anything not generated
 
     country { names() }
     currency { names(); symbols(); formats() }
@@ -861,15 +884,19 @@ Phase 0 closed all twelve. Everything below is what the later phases assume.
    was a property of a data set masquerading as a property of the type, and it
    stops being true the moment a build narrows its locales. No new table is
    needed: each source already keys its registry by tag.
-10. **The catalog is an enum per language implementing `LocaleRef`.** Its stated
-    use is plugin configuration, where a `const val` gives the DSL a `String`
-    parameter and pushes typo detection from the compiler to a validation pass.
-    Only the language you touch is loaded.
-11. **The catalog nests two levels.** `Zh.HANS_CN`, not `Zh.Hans.CN`. Only 33 of
-    322 languages carry a script, and a uniform `Language.Rest` is worth more
-    than saving four characters in a tenth of the cases. It lives in
-    `...locale.catalog` rather than the base package, because 322 short names
-    like `Pt` and `As` have no business arriving through a star import of
+10. **The catalog is an enum per language implementing `LocaleRef`, with the
+    bare language on the companion.** Its stated use is plugin configuration,
+    where a `const val` gives the DSL a `String` parameter and pushes typo
+    detection from the compiler to a validation pass. Only the language you
+    touch is loaded. The companion is what lets `PT` name `pt` without a `BASE`
+    member, and it is emitted only when the bare tag is in the build.
+11. **The catalog nests two levels, upper case throughout.** `ZH.HANS_CN`, not
+    `Zh.Hans.CN` and not `Zh.HANS_CN`. Only 33 of 322 languages carry a script,
+    and a uniform `LANGUAGE.REST` is worth more than saving four characters in a
+    tenth of the cases; casing the two segments alike keeps a locale name from
+    reading as two different kinds of thing. It lives in `...locale.catalog`
+    rather than the base package, because 322 short names like `PT` and `AS`
+    have no business arriving through a star import of
     `dev.carcara.kotlinx.locale`.
 12. **Artifacts are `kotlinx-locale[-<domain>]-<layer>`.** Domain first. A
     repository listing that sorts all of country together matches how the

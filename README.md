@@ -44,7 +44,7 @@ in the bottom one.
 | --- | --- | --- |
 | `locale-core/` | `dev.carcara:kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing. |
 | `locale-platform/` | `dev.carcara:kotlinx-locale-platform` | What the host can say about locales before any domain is involved: whether it exposes locale data, and which locales it enumerates. |
-| `locale-types/` | `dev.carcara:kotlinx-locale-types` | The generated locale catalog: one enum per language, so `Pt.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
+| `locale-types/` | `dev.carcara:kotlinx-locale-types` | The generated locale catalog: one enum per language, so `PT.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
 | `country-types/` | `dev.carcara:kotlinx-locale-country-types` | The `Country` enum: 249 ISO 3166-1 entries carrying their alpha-3 and numeric codes. Generated, and nothing else. |
 | `country-core/` | `dev.carcara:kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
 | `country-cldr-format/` | `dev.carcara:kotlinx-locale-country-cldr-format` | The reader for the CLDR name records, without the records. What a generated table binds to. |
@@ -205,8 +205,8 @@ plugins {
 }
 
 kotlinxLocale {
-    locales(Pt.BR, En.US, Ja.BASE)
-    fallback(En.US)
+    locales(PT.BR, EN.US, JA)
+    fallback(EN.US)
     packageName = "com.example.locale"
 
     country { names = true }

@@ -14,8 +14,8 @@ import javax.inject.Inject
  *
  * ```
  * kotlinxLocale {
- *     locales(Pt.BR, En.US)
- *     fallback(En.US)
+ *     locales(PT.BR, EN.US, JA)
+ *     fallback(EN.US)
  *     packageName = "com.example.locale"
  *
  *     country { names = true }
