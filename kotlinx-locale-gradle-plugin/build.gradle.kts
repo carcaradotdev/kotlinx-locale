@@ -64,7 +64,7 @@ tasks.test {
     systemProperty(
         "kotlinx.locale.bundle",
         rootProject.layout.projectDirectory
-            .file("codegen-data/src/main/resources/dev/carcara/kotlinx/locale/cldr-data.txt")
+            .file("kotlinx-locale-codegen-data/src/main/resources/dev/carcara/kotlinx/locale/cldr-data.txt")
             .asFile.absolutePath,
     )
 }

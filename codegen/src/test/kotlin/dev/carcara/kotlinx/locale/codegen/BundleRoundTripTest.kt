@@ -36,28 +36,28 @@ class BundleRoundTripTest {
             generateSources(
                 bundle = bundle,
                 roots = SourceRoots(
-                    localeCatalog = regenerated.resolve("locale-types"),
-                    countryEnum = regenerated.resolve("country-types"),
-                    countryNames = regenerated.resolve("country-cldr-full"),
-                    currencyEnum = regenerated.resolve("currency-types"),
-                    countryCurrencies = regenerated.resolve("currency-types"),
-                    currencyFormats = regenerated.resolve("currency-cldr-full"),
-                    currencyNames = regenerated.resolve("currency-cldr-full"),
-                    dateTime = regenerated.resolve("datetime-cldr-full"),
+                    localeCatalog = regenerated.resolve("kotlinx-locale-types"),
+                    countryEnum = regenerated.resolve("kotlinx-locale-country-types"),
+                    countryNames = regenerated.resolve("kotlinx-locale-country-cldr-full"),
+                    currencyEnum = regenerated.resolve("kotlinx-locale-currency-types"),
+                    countryCurrencies = regenerated.resolve("kotlinx-locale-currency-types"),
+                    currencyFormats = regenerated.resolve("kotlinx-locale-currency-cldr-full"),
+                    currencyNames = regenerated.resolve("kotlinx-locale-currency-cldr-full"),
+                    dateTime = regenerated.resolve("kotlinx-locale-datetime-cldr-full"),
                     // The source objects and their extensions come from the same
                     // emitter the Gradle plugin uses, so they are covered too.
                     countryBinding = BindingTarget(
-                        root = regenerated.resolve("country-cldr-full"),
+                        root = regenerated.resolve("kotlinx-locale-country-cldr-full"),
                         packageName = "dev.carcara.kotlinx.locale.country.cldr",
                         objectName = "CldrCountry",
                     ),
                     currencyBinding = BindingTarget(
-                        root = regenerated.resolve("currency-cldr-full"),
+                        root = regenerated.resolve("kotlinx-locale-currency-cldr-full"),
                         packageName = "dev.carcara.kotlinx.locale.currency.cldr",
                         objectName = "CldrCurrency",
                     ),
                     dateTimeBinding = BindingTarget(
-                        root = regenerated.resolve("datetime-cldr-full"),
+                        root = regenerated.resolve("kotlinx-locale-datetime-cldr-full"),
                         packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
                         objectName = "CldrDateTime",
                     ),
@@ -66,12 +66,12 @@ class BundleRoundTripTest {
 
             var compared = 0
             val modules = listOf(
-                "locale-types",
-                "country-types",
-                "country-cldr-full",
-                "currency-types",
-                "currency-cldr-full",
-                "datetime-cldr-full",
+                "kotlinx-locale-types",
+                "kotlinx-locale-country-types",
+                "kotlinx-locale-country-cldr-full",
+                "kotlinx-locale-currency-types",
+                "kotlinx-locale-currency-cldr-full",
+                "kotlinx-locale-datetime-cldr-full",
             )
             for (module in modules) {
                 val fresh = regenerated.resolve(module)

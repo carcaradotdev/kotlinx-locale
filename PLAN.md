@@ -794,7 +794,7 @@ keeps working and only its display name falls back.
 
 ## Verification
 
-**A conformance suite, extracted and parameterized.** `kotlinx-locale-conformance-test-suite`
+**A conformance suite, extracted and parameterized.** `conformance-test-suite`
 holds the ICU fixtures and runs any source through them. Two tiers: exact, for
 CLDR-backed sources (the shipped modules and anything the plugin generates,
 which must match ICU byte for byte), and behavioural, for platform sources,

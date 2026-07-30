@@ -12,7 +12,7 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-            implementation(project(":kotlinx-locale-conformance-test-suite"))
+            implementation(project(":conformance-test-suite"))
             implementation(project(":kotlinx-locale-datetime-cldr-full"))
         }
     }

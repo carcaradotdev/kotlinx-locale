@@ -43,28 +43,34 @@ rootProject.name = "kotlinx-locale-project"
 // CLDR-shaped tables, and -cldr-full is that engine plus every locale CLDR has.
 // The locale domain is the root, so it carries no domain segment. Anything named
 // codegen-* runs at build time and never belongs on an application classpath.
-// Directory names drop the shared kotlinx-locale prefix.
+//
+// A published module's directory is its artifact name, the way kotlinx-coroutines
+// lays its modules out. It costs a long prefix on twenty directories and buys two
+// things: a listing of the repository root reads like a listing on Maven Central,
+// and carrying the prefix is what publishing means here, so a directory without
+// one ships to nobody. There is also no directory-to-artifact mapping left to
+// keep in sync, because the two are one string.
 val published = listOf(
-    "locale-core" to "kotlinx-locale-core",
-    "locale-types" to "kotlinx-locale-types",
-    "locale-platform" to "kotlinx-locale-platform",
-    "country-types" to "kotlinx-locale-country-types",
-    "country-core" to "kotlinx-locale-country-core",
-    "country-cldr-runtime" to "kotlinx-locale-country-cldr-runtime",
-    "country-cldr-full" to "kotlinx-locale-country-cldr-full",
-    "country-platform" to "kotlinx-locale-country-platform",
-    "currency-types" to "kotlinx-locale-currency-types",
-    "currency-core" to "kotlinx-locale-currency-core",
-    "currency-cldr-runtime" to "kotlinx-locale-currency-cldr-runtime",
-    "currency-cldr-full" to "kotlinx-locale-currency-cldr-full",
-    "currency-platform" to "kotlinx-locale-currency-platform",
-    "datetime-core" to "kotlinx-locale-datetime-core",
-    "datetime-cldr-runtime" to "kotlinx-locale-datetime-cldr-runtime",
-    "datetime-cldr-full" to "kotlinx-locale-datetime-cldr-full",
-    "datetime-platform" to "kotlinx-locale-datetime-platform",
-    "codegen-emitters" to "kotlinx-locale-codegen-emitters",
-    "codegen-data" to "kotlinx-locale-codegen-data",
-    "gradle-plugin" to "kotlinx-locale-gradle-plugin",
+    "kotlinx-locale-core",
+    "kotlinx-locale-types",
+    "kotlinx-locale-platform",
+    "kotlinx-locale-country-types",
+    "kotlinx-locale-country-core",
+    "kotlinx-locale-country-cldr-runtime",
+    "kotlinx-locale-country-cldr-full",
+    "kotlinx-locale-country-platform",
+    "kotlinx-locale-currency-types",
+    "kotlinx-locale-currency-core",
+    "kotlinx-locale-currency-cldr-runtime",
+    "kotlinx-locale-currency-cldr-full",
+    "kotlinx-locale-currency-platform",
+    "kotlinx-locale-datetime-core",
+    "kotlinx-locale-datetime-cldr-runtime",
+    "kotlinx-locale-datetime-cldr-full",
+    "kotlinx-locale-datetime-platform",
+    "kotlinx-locale-codegen-emitters",
+    "kotlinx-locale-codegen-data",
+    "kotlinx-locale-gradle-plugin",
 )
 
 // No published artifact name may be a strict prefix of another at a hyphen
@@ -75,10 +81,8 @@ val published = listOf(
 // the coordinate tells a reader — or a tool matching on target suffixes — which
 // of them is a platform variant. Checked here because this is where the names
 // are, and at configuration time so a rename cannot reach `check` uncaught.
-val collisions = published.map { (_, artifact) -> artifact }.let { artifacts ->
-    artifacts.flatMap { prefix ->
-        artifacts.filter { it.startsWith("$prefix-") }.map { "$prefix is a prefix of $it" }
-    }
+val collisions = published.flatMap { prefix ->
+    published.filter { it.startsWith("$prefix-") }.map { "$prefix is a prefix of $it" }
 }
 require(collisions.isEmpty()) {
     collisions.joinToString(
@@ -87,17 +91,13 @@ require(collisions.isEmpty()) {
     )
 }
 
-published.forEach { (dir, artifact) ->
-    include(":$dir")
-    project(":$dir").name = artifact
-}
+// The project name follows the directory, so nothing has to be renamed here.
+published.forEach { include(":$it") }
 
-// Not published, and so absent from the check above. The conformance suite is
-// for this build's own test source sets, and :codegen is the extraction half of
-// code generation, which clones repositories and parses XML.
+// Not published, and so absent from the check above and from the prefix. The
+// conformance suite is for this build's own test source sets, and :codegen is the
+// extraction half of code generation, which clones repositories and parses XML.
 include(":conformance-test-suite")
-project(":conformance-test-suite").name = "kotlinx-locale-conformance-test-suite"
-
 include(":codegen")
 
 // Kotlin/JS probes that measure what each dependency set costs a consumer. Not

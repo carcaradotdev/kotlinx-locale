@@ -41,47 +41,57 @@ same layers, and they sort along one axis: who supplies the data. The translated
 text — the part that is big — lives in exactly one of them.
 
 ```
-currency-types          generated enums
-currency-core           the contract
-currency-cldr-runtime   the engine, no data            (plugin-narrowed builds bind here)
-currency-cldr-full      the engine plus 1121 locales   (the normal dependency)
-currency-platform       the host supplies it
+kotlinx-locale-currency-types          generated enums
+kotlinx-locale-currency-core           the contract
+kotlinx-locale-currency-cldr-runtime   the engine, no data
+kotlinx-locale-currency-cldr-full      the engine plus 1121 locales
+kotlinx-locale-currency-platform       the host supplies it
 ```
+
+`-cldr-full` is the normal dependency. A build that narrows its locale set with
+the Gradle plugin takes `-cldr-runtime` instead and generates its own tables
+against it.
 
 No artifact name is a prefix of another at a hyphen boundary, because Kotlin
 Multiplatform already owns that suffix space: every module publishes one
 artifact per target, so `-jvm` and `-iosarm64` sit beside the bare coordinate on
 Maven Central. `settings.gradle.kts` enforces this.
 
-| Directory | Artifact | What it contains |
-| --- | --- | --- |
-| `locale-core/` | `dev.carcara:kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing. |
-| `locale-platform/` | `dev.carcara:kotlinx-locale-platform` | What the host can say about locales before any domain is involved: whether it exposes locale data, and which locales it enumerates. |
-| `locale-types/` | `dev.carcara:kotlinx-locale-types` | The generated locale catalog: one enum per language, so `PT.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
-| `country-types/` | `dev.carcara:kotlinx-locale-country-types` | The `Country` enum: 249 ISO 3166-1 entries carrying their alpha-3 and numeric codes. Generated, and nothing else. |
-| `country-core/` | `dev.carcara:kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
-| `country-cldr-runtime/` | `dev.carcara:kotlinx-locale-country-cldr-runtime` | The country-name lookup over CLDR-shaped name records, and none of the records. The table is a constructor argument, which is what a narrowed build binds its own to. |
-| `country-platform/` | `dev.carcara:kotlinx-locale-country-platform` | `PlatformCountry`: country names from `java.util.Locale`, `Intl.DisplayNames` or `NSLocale`. Ships no tables. |
-| `country-cldr-full/` | `dev.carcara:kotlinx-locale-country-cldr-full` | `-cldr-runtime` plus the CLDR name tables for all 1121 locales: `CldrCountry` and `Country.displayName`. |
-| `currency-types/` | `dev.carcara:kotlinx-locale-currency-types` | The `Currency` enum (active ISO 4217 codes, ISO minor units, CLDR fraction and cash-rounding behavior) and the country-to-currency map. |
-| `currency-core/` | `dev.carcara:kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
-| `currency-cldr-runtime/` | `dev.carcara:kotlinx-locale-currency-cldr-runtime` | The symbol and name lookup plus the pattern-based number formatter and parser, over CLDR-shaped records it does not carry. What a narrowed build binds its own tables to. |
-| `currency-platform/` | `dev.carcara:kotlinx-locale-currency-platform` | `PlatformCurrency`: symbols, names and number formatting from `NumberFormat`, `Intl.NumberFormat` or `NSNumberFormatter`. Ships no tables. |
-| `currency-cldr-full/` | `dev.carcara:kotlinx-locale-currency-cldr-full` | `-cldr-runtime` plus the CLDR symbol, name and number tables for all 1121 locales: `CldrCurrency`, `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
-| `datetime-core/` | `dev.carcara:kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
-| `datetime-cldr-runtime/` | `dev.carcara:kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. What a narrowed build binds its own tables to. |
-| `datetime-platform/` | `dev.carcara:kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
-| `datetime-cldr-full/` | `dev.carcara:kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
-| `codegen-emitters/` | `dev.carcara:kotlinx-locale-codegen-emitters` | The emitters and the bundle reader: the half of code generation that a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
-| `codegen-data/` | `dev.carcara:kotlinx-locale-codegen-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
-| `gradle-plugin/` | `dev.carcara:kotlinx-locale-gradle-plugin` | The `dev.carcara.kotlinx-locale` plugin: generates a data set narrowed to the locales a build declares. |
+Each module below lives in a directory of the same name and publishes under the
+`dev.carcara` group, so `kotlinx-locale-country-core` is both the folder in this
+repository and the artifact on Maven Central. A directory without the prefix is
+not published.
 
-Anything starting with `codegen-` runs at build time and never belongs on an
-application classpath. Three more directories are part of this build and publish
-nothing: `conformance-test-suite/` holds the ICU fixtures and the assertions this
-repo's own test source sets run, `codegen/` is the extraction half of code
-generation that clones CLDR and ICU, and `tools/` holds the Kotlin/JS size
-probes.
+| Module | What it contains |
+| --- | --- |
+| `kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing. |
+| `kotlinx-locale-platform` | What the host can say about locales before any domain is involved: whether it exposes locale data, and which locales it enumerates. |
+| `kotlinx-locale-types` | The generated locale catalog: one enum per language, so `PT.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
+| `kotlinx-locale-country-types` | The `Country` enum: 249 ISO 3166-1 entries carrying their alpha-3 and numeric codes. Generated, and nothing else. |
+| `kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
+| `kotlinx-locale-country-cldr-runtime` | The country-name lookup over CLDR-shaped name records, and none of the records. The table is a constructor argument, which is what a narrowed build binds its own to. |
+| `kotlinx-locale-country-platform` | `PlatformCountry`: country names from `java.util.Locale`, `Intl.DisplayNames` or `NSLocale`. Ships no tables. |
+| `kotlinx-locale-country-cldr-full` | `-cldr-runtime` plus the CLDR name tables for all 1121 locales: `CldrCountry` and `Country.displayName`. |
+| `kotlinx-locale-currency-types` | The `Currency` enum (active ISO 4217 codes, ISO minor units, CLDR fraction and cash-rounding behavior) and the country-to-currency map. |
+| `kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
+| `kotlinx-locale-currency-cldr-runtime` | The symbol and name lookup plus the pattern-based number formatter and parser, over CLDR-shaped records it does not carry. What a narrowed build binds its own tables to. |
+| `kotlinx-locale-currency-platform` | `PlatformCurrency`: symbols, names and number formatting from `NumberFormat`, `Intl.NumberFormat` or `NSNumberFormatter`. Ships no tables. |
+| `kotlinx-locale-currency-cldr-full` | `-cldr-runtime` plus the CLDR symbol, name and number tables for all 1121 locales: `CldrCurrency`, `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
+| `kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
+| `kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. What a narrowed build binds its own tables to. |
+| `kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
+| `kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
+| `kotlinx-locale-codegen-emitters` | The emitters and the bundle reader: the half of code generation that a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
+| `kotlinx-locale-codegen-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
+| `kotlinx-locale-gradle-plugin` | The `dev.carcara.kotlinx-locale` plugin: generates a data set narrowed to the locales a build declares. |
+
+Within that list, anything starting with `kotlinx-locale-codegen-` runs at build
+time and never belongs on an application classpath. Everything else in the
+repository root publishes nothing, which is why it carries no prefix:
+`conformance-test-suite/` holds the ICU fixtures and the assertions this repo's
+own test source sets run, `codegen/` is the extraction half of code generation
+that clones CLDR and ICU, `tools/` holds the Kotlin/JS size probes, and
+`build-logic/` is the included build with the convention plugins.
 
 A `-cldr-full` module is one implementation of its domain's contract, not the
 only possible one. Which one answers is visible in the import rather than

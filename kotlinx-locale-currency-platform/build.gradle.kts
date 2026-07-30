@@ -12,7 +12,7 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-            implementation(project(":kotlinx-locale-conformance-test-suite"))
+            implementation(project(":conformance-test-suite"))
             // To compose with, and to fall back to on the targets that have no
             // platform data of their own.
             implementation(project(":kotlinx-locale-currency-cldr-full"))
