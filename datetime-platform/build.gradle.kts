@@ -1,5 +1,5 @@
 // Date and time formatting from the host platform rather than from bundled CLDR
-// patterns. No dependency on -cldr or -cldr-format.
+// patterns. No dependency on -cldr-full or -cldr-runtime.
 plugins {
     id("kotlinx-locale-multiplatform")
 }
@@ -12,8 +12,8 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-            implementation(project(":kotlinx-locale-conformance"))
-            implementation(project(":kotlinx-locale-datetime-cldr"))
+            implementation(project(":kotlinx-locale-conformance-test-suite"))
+            implementation(project(":kotlinx-locale-datetime-cldr-full"))
         }
     }
 }

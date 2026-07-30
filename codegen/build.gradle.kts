@@ -1,12 +1,12 @@
 // Extraction: clones the pinned CLDR and ICU repositories and parses their XML.
 // This half cannot run in a user's build, which is why the emitters live in
-// :kotlinx-locale-codegen and the resolved data in :kotlinx-locale-cldr-data.
+// :kotlinx-locale-codegen-emitters and the resolved data in :kotlinx-locale-codegen-data.
 plugins {
     id("kotlinx-locale-jvm")
 }
 
 dependencies {
-    implementation(project(":kotlinx-locale-codegen"))
+    implementation(project(":kotlinx-locale-codegen-emitters"))
     testImplementation(libs.kotlin.test)
 }
 

@@ -30,7 +30,7 @@ public fun Country.Companion.forAlpha2(code: String): Country = /* ... */
 public fun Country.Companion.forAlpha2OrNull(code: String): Country? = /* ... */
 public interface CountryNameSource : LocaleDataSource { /* ... */ }
 
-// country-cldr                       package dev.carcara.kotlinx.locale.country.cldr
+// country-cldr-full                  package dev.carcara.kotlinx.locale.country.cldr
 public object CldrCountry : CountryNameSource { /* generated tables */ }
 public fun Country.displayName(locale: Locale): String = CldrCountry.displayName(this, locale)
 ```
@@ -41,7 +41,7 @@ deployment decision rather than an API one, which is worth a lot while the
 design is still moving.
 
 It also means the emitter only ever writes data, never logic. That is the
-property that keeps the shipped `-cldr` module and the plugin's generated output
+property that keeps the shipped `-cldr-full` module and the plugin's generated output
 from drifting apart.
 
 ## Imports
@@ -75,7 +75,7 @@ and they never collide.
 Implementation modules do not, and this was measured rather than assumed. Two
 modules declaring the same extension signature in the same package **compile
 cleanly and one silently wins by classpath order**. A test project with
-`country-cldr` and `country-platform` both declaring
+`country-cldr-full` and `country-platform` both declaring
 `Country.displayName(Locale)` in `dev.carcara.kotlinx.locale.country` built with
 no error and no warning, and resolved to whichever came first. That is the exact
 failure mode this whole design exists to avoid, so the implementations get
@@ -99,12 +99,12 @@ implementation("dev.carcara:kotlinx-locale-datetime:$v")
 implementation("dev.carcara:kotlinx-locale-core:$v")
 implementation("dev.carcara:kotlinx-locale-country-core:$v")
 implementation("dev.carcara:kotlinx-locale-country-types:$v")
-implementation("dev.carcara:kotlinx-locale-country-cldr:$v")
+implementation("dev.carcara:kotlinx-locale-country-cldr-full:$v")
 implementation("dev.carcara:kotlinx-locale-currency-core:$v")
 implementation("dev.carcara:kotlinx-locale-currency-types:$v")
-implementation("dev.carcara:kotlinx-locale-currency-cldr:$v")
+implementation("dev.carcara:kotlinx-locale-currency-cldr-full:$v")
 implementation("dev.carcara:kotlinx-locale-datetime-core:$v")
-implementation("dev.carcara:kotlinx-locale-datetime-cldr:$v")
+implementation("dev.carcara:kotlinx-locale-datetime-cldr-full:$v")
 ```
 
 Three lines become nine, and that is the real cost of the split. A version
@@ -112,7 +112,7 @@ catalog bundle absorbs it:
 
 ```toml
 [bundles]
-locale-country = ["locale-country-core", "locale-country-types", "locale-country-cldr"]
+locale-country = ["locale-country-core", "locale-country-types", "locale-country-cldr-full"]
 ```
 
 ```kotlin
@@ -160,7 +160,7 @@ Today's default arguments survive too, because the implementation module that
 declares the extension can also supply the default:
 
 ```kotlin
-// country-cldr
+// country-cldr-full
 public fun Country.displayName(locale: Locale = Locale.current): String =
     CldrCountry.displayName(this, locale)
 ```

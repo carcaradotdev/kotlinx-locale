@@ -13,19 +13,22 @@ plugins {
 }
 
 // Guards the property the whole layering rests on: hand-written code never names
-// a specific Country or Currency entry, so a -cldr from Maven links against a
-// -types the Gradle plugin narrowed.
+// a specific Country or Currency entry, so a -cldr-full from Maven links against
+// a -types the Gradle plugin narrowed.
 val checkLayeringRule = tasks.register<CheckLayeringRule>("checkLayeringRule") {
     group = "verification"
     description = "Fails when hand-written main sources name a specific Country or Currency entry"
-    // The published modules only. Every artifact name ends in one of the three
-    // layers, and tools/ is not published, so nothing there ships an entry.
+    // The published layers that carry lookup code, matched by directory name.
+    // These globs and the directory names are one fact stored twice: rename a
+    // module without touching them and the task keeps passing over less than it
+    // used to, which is the failure this rule can least afford. If the source
+    // count it logs moves without a source having moved, a glob is stale.
     sources.from(
         layout.projectDirectory.asFileTree.matching {
             include("*-types/src/*Main/**/*.kt")
             include("*-core/src/*Main/**/*.kt")
-            include("*-cldr/src/*Main/**/*.kt")
-            include("*-cldr-format/src/*Main/**/*.kt")
+            include("*-cldr-full/src/*Main/**/*.kt")
+            include("*-cldr-runtime/src/*Main/**/*.kt")
             exclude("**/build/**")
         },
     )

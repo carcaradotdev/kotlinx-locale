@@ -1,7 +1,8 @@
 // Country names from the host platform rather than from bundled CLDR data.
 //
-// Note what is absent: no dependency on -cldr or -cldr-format. That is the point
-// of the layering. A build that takes this module ships no name tables at all.
+// Note what is absent: no dependency on -cldr-full or -cldr-runtime. That is
+// the point of the layering. A build that takes this module ships no name
+// tables at all.
 plugins {
     id("kotlinx-locale-multiplatform")
 }
@@ -14,10 +15,10 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-            implementation(project(":kotlinx-locale-conformance"))
+            implementation(project(":kotlinx-locale-conformance-test-suite"))
             // To compose with, and to compare against, on the targets that have
             // no platform data of their own.
-            implementation(project(":kotlinx-locale-country-cldr"))
+            implementation(project(":kotlinx-locale-country-cldr-full"))
         }
     }
 }

@@ -19,7 +19,7 @@ import java.util.zip.GZIPOutputStream
  *
  * The budget exists to catch a dependency mistake as a build failure rather
  * than as 400 KB nobody notices: a `-types` module that grew an edge into a
- * `-cldr` module moves its probe by an order of magnitude. It is a ceiling,
+ * `-cldr-full` module moves its probe by an order of magnitude. It is a ceiling,
  * not a target, so shrinking is always fine and the task says by how much when
  * the headroom gets large enough to be worth tightening.
  *

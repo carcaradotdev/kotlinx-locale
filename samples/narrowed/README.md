@@ -15,14 +15,14 @@ repository it can see. From the repository root:
 ```sh
 ./gradlew \
   :kotlinx-locale-gradle-plugin:publishToMavenLocal \
-  :kotlinx-locale-codegen:publishToMavenLocal \
-  :kotlinx-locale-cldr-data:publishToMavenLocal
+  :kotlinx-locale-codegen-emitters:publishToMavenLocal \
+  :kotlinx-locale-codegen-data:publishToMavenLocal
 
 # The sample is JVM-only, so the JVM variants are all it needs. Publishing every
 # target would take minutes and prove nothing extra here.
-./gradlew $(for m in core types country-types country-core country-cldr-format \
-                     currency-types currency-core currency-cldr-format \
-                     datetime-core datetime-cldr-format; do
+./gradlew $(for m in core types country-types country-core country-cldr-runtime \
+                     currency-types currency-core currency-cldr-runtime \
+                     datetime-core datetime-cldr-runtime; do
   printf ':kotlinx-locale-%s:publishKotlinMultiplatformPublicationToMavenLocal ' "$m"
   printf ':kotlinx-locale-%s:publishJvmPublicationToMavenLocal ' "$m"
 done)
@@ -32,10 +32,11 @@ done)
 
 ## What it shows
 
-The dependency block is missing something: there is no `-cldr` artifact. The
-contract comes from `-core`, the entry sets from `-types`, the record format from
-`-cldr-format`, and the records themselves are generated into this build. That is
-where the saving comes from.
+The dependency block is missing something: there is no `-cldr-full` artifact. The
+contract comes from `-core`, the entry sets from `-types`, the lookup and
+formatting code from `-cldr-runtime`, and the records themselves are generated
+into this build. That is where the saving comes from: `-cldr-runtime` and
+`-cldr-full` are the same engine, and only one of them brings 1121 locales along.
 
 `build/generated/kotlinx-locale/` holds 124 KB of Kotlin across 20 files. The
 shipped tables it replaces are 3764 KB, so this is roughly a thirtieth of the

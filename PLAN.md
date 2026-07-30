@@ -78,17 +78,17 @@ kotlinx-locale-types                 LocaleRef, one generated enum per language
 
 kotlinx-locale-country-core          CountryNameSource, lookups, typed overloads
 kotlinx-locale-country-types         Country enum
-kotlinx-locale-country-cldr          CldrCountry + payloads + convenience extensions
+kotlinx-locale-country-cldr-full     CldrCountry + payloads + convenience extensions
 kotlinx-locale-country-platform      later
 
 kotlinx-locale-currency-core         CurrencyNameSource, CurrencyFormatSource, CurrencyAmount,
                                      lookups, unit math, typed overloads
 kotlinx-locale-currency-types        Currency enum, country to currency map
-kotlinx-locale-currency-cldr         CldrCurrency + payloads + convenience extensions
+kotlinx-locale-currency-cldr-full    CldrCurrency + payloads + convenience extensions
 kotlinx-locale-currency-platform     later
 
 kotlinx-locale-datetime-core         DateTimeFormatSource, FormatStyle, TextStyle
-kotlinx-locale-datetime-cldr         CldrDateTime + payloads + convenience extensions
+kotlinx-locale-datetime-cldr-full    CldrDateTime + payloads + convenience extensions
 kotlinx-locale-datetime-platform     later
 ```
 
@@ -98,7 +98,7 @@ costs renaming today's `kotlinx-locale` to `kotlinx-locale-core`, which is free
 at 0.1.0-SNAPSHOT and buys a listing where every artifact says what layer it is.
 
 Ten published modules now, thirteen once platform lands. Within a domain,
-`-core` depends on `-types` for the enum, and `-cldr` depends on `-core` alone.
+`-core` depends on `-types` for the enum, and `-cldr-full` depends on `-core` alone.
 See the note below on where hand-written code that mentions the enums belongs.
 
 Across domains: `currency-types` depends on `country-types` for the country to
@@ -107,23 +107,23 @@ currency map, and `currency-core` on `country-core`. Nothing else crosses.
 ### Which layers are swappable, and what that costs
 
 The point of the layering is that everything above `-core` can come from
-somewhere other than Maven. `-core` is the fixed contract; `-types`, `-cldr` and
+somewhere other than Maven. `-core` is the fixed contract; `-types`, `-cldr-full` and
 `-platform` are things that satisfy it:
 
 | layer | hand written | who can supply it |
 | --- | --- | --- |
 | `-core` | yes | us, only |
 | `-types` | no, fully generated | us, or the Gradle plugin narrowed to a config |
-| `-cldr` | no, fully generated | us, or the Gradle plugin narrowed to a config |
+| `-cldr-full` | no, fully generated | us, or the Gradle plugin narrowed to a config |
 | `-platform` | yes | us, per target |
 
 A consumer depends on one supplier per swappable layer, never two. Taking the
 plugin's `-types` means not taking ours, the same way taking `-platform` means
-not taking `-cldr`.
+not taking `-cldr-full`.
 
 This is why the `-core` *interfaces* stay keyed by string codes rather than by
 `Country` and `Currency`. A narrowed `-types` must not change the interface, or
-a `-cldr` compiled against the full enum could not satisfy it. String keys make
+a `-cldr-full` compiled against the full enum could not satisfy it. String keys make
 the contract independent of whichever entry set is in play, even though `-core`
 also holds typed overloads over those same interfaces.
 
@@ -134,7 +134,7 @@ and the typed overloads are hand-written, and they mention `Currency`. That
 combination needs a home, and the question only arises because decision 4 lets
 the plugin narrow `-types`:
 
-- **If the plugin narrows only `-cldr`**, `-types` is free to hold hand-written
+- **If the plugin narrows only `-cldr-full`**, `-types` is free to hold hand-written
   code and this whole question disappears. Three layers per domain, no
   `-model`, nothing further to decide.
 - **If the plugin may narrow `-types`**, then `-types` has to be nothing but
@@ -150,7 +150,7 @@ cycle.
 
 An earlier draft put this in a separate `-model` layer on the grounds that
 `-core` must not know the enums exist. That reason does not survive scrutiny.
-The property actually worth protecting is that any `-cldr` links against any
+The property actually worth protecting is that any `-cldr-full` links against any
 `-types`, and what protects it is not the module boundary but a rule:
 
 **hand-written code may reference the enum type and its members, never a
@@ -248,7 +248,7 @@ wants:
 
 ```kotlin
 implementation("dev.carcara:kotlinx-locale-country-core:$version")
-implementation("dev.carcara:kotlinx-locale-country-cldr:$version")
+implementation("dev.carcara:kotlinx-locale-country-cldr-full:$version")
 ```
 
 and passes the source at the call site. Which implementation answers is visible
@@ -284,7 +284,7 @@ public interface CountryNameSource : LocaleDataSource {
 public fun CountryNameSource.displayName(country: Country, locale: Locale): String =
     countryNameOrNull(country.alpha2, locale) ?: country.alpha2
 
-// country-cldr                  package dev.carcara.kotlinx.locale.country.cldr
+// country-cldr-full             package dev.carcara.kotlinx.locale.country.cldr
 public object CldrCountry : CountryNameSource { /* generated tables */ }
 
 public fun Country.displayName(locale: Locale): String = CldrCountry.displayName(this, locale)
@@ -311,7 +311,7 @@ Three properties fall out of the rule:
   declaration can move between artifacts later without touching a call site.
   Packaging becomes a deployment decision instead of an API one.
 - **The emitter only ever writes data**, never logic, which is what keeps the
-  shipped `-cldr` module and the plugin output from drifting.
+  shipped `-cldr-full` module and the plugin output from drifting.
 - **The explicit form always exists.** Every convenience extension is one line
   over a public source object, so composition and test fakes work without any
   special support.
@@ -321,7 +321,7 @@ Three properties fall out of the rule:
 `-types` and `-core` share the base package. Implementation modules do not, and
 this was measured rather than assumed.
 
-A spike put `country-cldr` and `country-platform` both declaring
+A spike put `country-cldr-full` and `country-platform` both declaring
 `Country.displayName(Locale)` in `dev.carcara.kotlinx.locale.country`, with an
 app depending on both. It **compiled with no error and no warning, and resolved
 to whichever came first on the classpath**. Not an ambiguity error, a silent
@@ -400,7 +400,7 @@ public interface CurrencyFormatSource : LocaleDataSource {
 }
 ```
 
-The pattern parser and the number formatter live in `*-cldr`, not in core. The
+The pattern parser and the number formatter live in `*-cldr-full`, not in core. The
 shared root keeps `Locale`, tag parsing, the fallback chain (`dataLookupTags`,
 which every implementation needs) and the one thing every source must answer:
 
@@ -445,7 +445,7 @@ so it fell back to the code", which is the semantics the current API has, and
 every platform source would have to reimplement that rule to stay compatible.
 Scanning the entries costs what it costs today.
 
-`country-cldr`, generated tables plus a hand-written binding, package
+`country-cldr-full`, generated tables plus a hand-written binding, package
 `...locale.country.cldr`
 
 - `CldrCountry : CountryNameSource`
@@ -473,7 +473,7 @@ Scanning the entries costs what it costs today.
 - `CurrencyNameSource`, `CurrencyFormatSource` and the typed operations over
   them
 
-`currency-cldr`, package `...locale.currency.cldr`
+`currency-cldr-full`, package `...locale.currency.cldr`
 
 - `CldrCurrency : CurrencyNameSource, CurrencyFormatSource`
 - `Currency.symbol`, `Currency.displayName`, `CurrencyAmount.format` and
@@ -486,7 +486,7 @@ Scanning the entries costs what it costs today.
 - `FormatStyle` and `TextStyle`, which are not generated
 - `DateTimeFormatSource` and the typed operations over it
 
-`datetime-cldr`, package `...locale.datetime.cldr`
+`datetime-cldr-full`, package `...locale.datetime.cldr`
 
 - `CldrDateTime : DateTimeFormatSource`, holding the pattern parser and the
   formatter
@@ -593,7 +593,7 @@ for `es-419`.
 
 Note the nesting must follow the *identifier* structure, not the CLDR parent
 chain. Those differ: `en-150`'s parent is `en-001`, and `zh-Hant-MO`'s is
-`zh-Hant-HK`. The parent chain stays runtime data inside `*-cldr`, where it
+`zh-Hant-HK`. The parent chain stays runtime data inside `*-cldr-full`, where it
 already lives.
 
 ### Two shapes, and where the catalog lives
@@ -667,7 +667,7 @@ configuration time.
 
 ## Full mode
 
-"Everything works" is `*-core + *-types + *-cldr` for each domain you use.
+"Everything works" is `*-core + *-types + *-cldr-full` for each domain you use.
 Behaviour identical to today apart from the call shape, same golden tests, same
 numbers as the current probe run.
 
@@ -736,7 +736,7 @@ source set, and produces objects implementing the same core interfaces:
 public object GeneratedCountryNames : CountryNameSource { /* ... */ }
 ```
 
-plus the same convenience extensions `-cldr` ships, in its own package. Swapping
+plus the same convenience extensions `-cldr-full` ships, in its own package. Swapping
 a filtered build for the full one is a dependency change and an import change,
 with no edit to any call site.
 
@@ -750,8 +750,8 @@ a user's build. The pipeline already produces the right intermediate:
 `Flattener` resolves inheritance and `encode()` emits one compact string per
 locale, which is exactly what a filtered generator needs.
 
-Publish that intermediate as `dev.carcara:kotlinx-locale-cldr-data`, versioned
-by CLDR release, and publish the emitters as `kotlinx-locale-codegen`. The
+Publish that intermediate as `dev.carcara:kotlinx-locale-codegen-data`, versioned
+by CLDR release, and publish the emitters as `kotlinx-locale-codegen-emitters`. The
 plugin resolves both from Maven. No network beyond dependency resolution, no
 clone, offline-friendly, and the output is pinned to a CLDR version the user can
 see in their lock file.
@@ -767,11 +767,11 @@ its parent is `es-419` rather than plain `es`.
 
 ### One generator, two consumers
 
-The shipped `*-cldr` modules and the plugin must run the same emitters, or they
+The shipped `*-cldr-full` modules and the plugin must run the same emitters, or they
 drift and "the split and definitions must be the same" stops being true.
 
 This is now built and pinned. `generateSources(bundle, roots, packages)` in
-`kotlinx-locale-codegen` is the single entry point; `:codegen` calls it with the
+`kotlinx-locale-codegen-emitters` is the single entry point; `:codegen` calls it with the
 shipped roots after extracting the bundle from CLDR, and the plugin calls it
 with roots under `build/generated/`. They differ in where output lands and which
 package the registries take, never in what is written.
@@ -794,7 +794,7 @@ keeps working and only its display name falls back.
 
 ## Verification
 
-**A conformance suite, extracted and parameterized.** `kotlinx-locale-conformance`
+**A conformance suite, extracted and parameterized.** `kotlinx-locale-conformance-test-suite`
 holds the ICU fixtures and runs any source through them. Two tiers: exact, for
 CLDR-backed sources (the shipped modules and anything the plugin generates,
 which must match ICU byte for byte), and behavioural, for platform sources,
@@ -815,7 +815,7 @@ Two things the extraction settled that were not obvious from the outside:
   patterns, because no platform could implement one that did. So the suite
   compares month and weekday names against ICU and checks formatted output
   behaviourally, and the pattern tables stay cross-checked inside
-  `datetime-cldr`, which can reach them. The same split applies to currency's
+  `datetime-cldr-full`, which can reach them. The same split applies to currency's
   number tables.
 
 The suite is tested against a fake source that gets it wrong, so that "the
@@ -854,7 +854,7 @@ Phase 0 closed all twelve. Everything below is what the later phases assume.
    the extension, so it can also supply the default. "Explicit everything" is a
    separate argument and it can be had later without a structural change.
 3. **`FormatStyle`, `TextStyle` and `CurrencySymbolStyle` stay in their
-   `-core`.** They appear in the source signatures, so a `-cldr` cannot compile
+   `-core`.** They appear in the source signatures, so a `-cldr-full` cannot compile
    without them; putting them in `-types` would make every `-core` depend on a
    `-types` to declare its own interfaces. They are also hand-written constants,
    and `-types` is generator output only (decision 4). There is no
@@ -865,7 +865,7 @@ Phase 0 closed all twelve. Everything below is what the later phases assume.
    nothing but emitter output.
 5. **The hand-written, enum-dependent code goes into `-core`.** `CurrencyAmount`,
    the lookups, the unit math and the typed overloads sit next to the interfaces.
-   What protects "any `-cldr` links against any `-types`" is the rule that
+   What protects "any `-cldr-full` links against any `-types`" is the rule that
    hand-written code never names a specific entry, not a module boundary. A test
    enforces the rule.
 6. **The four `cldr*` integer fields and the country to currency map stay in
@@ -931,7 +931,7 @@ only for JS.
 **Phase 4. Conformance suite.** Extract the golden tests, parameterize over a
 source, run the shipped implementations through it.
 
-**Phase 5. Done.** `kotlinx-locale-cldr-data` and `kotlinx-locale-codegen` are
+**Phase 5. Done.** `kotlinx-locale-codegen-data` and `kotlinx-locale-codegen-emitters` are
 published, `BundleRoundTripTest` pins them to the checked-in sources, and
 `dev.carcara.kotlinx-locale` generates a narrowed data set from the bundle.
 
@@ -939,16 +939,16 @@ The blocker the first attempt found was resolved by neither of the two options i
 listed. Moving the formatter into `-core` would have put CLDR pattern code in
 front of a codes-only consumer and, worse, in front of the platform sources;
 templating it would have turned working runtime into generated runtime. Splitting
-logic from data instead gave each domain a `-cldr-format` artifact holding the
+logic from data instead gave each domain a `-cldr-runtime` artifact holding the
 reader and the formatter, with the tables passed in. `CldrDateTime` is now a
 one-line delegation over the shipped table and a generated source is the same
 delegation over a narrowed one.
 
 `samples/narrowed/` is a standalone build that consumes the published artifacts
 for three locales: 124 KB of generated Kotlin where the shipped tables are
-3764 KB. It takes `-core`, `-types` and `-cldr-format` and leaves out `-cldr`,
-which is where the saving comes from, and its call sites are unchanged from a full
-build apart from the import.
+3764 KB. It takes `-core`, `-types` and `-cldr-runtime` and leaves out
+`-cldr-full`, which is where the saving comes from, and its call sites are
+unchanged from a full build apart from the import.
 
 Two defects only the single-directory layout could surface, both found by the
 sample rather than by the unit tests: the datetime emitter deleted every `.kt` in

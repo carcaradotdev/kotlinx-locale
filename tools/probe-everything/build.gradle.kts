@@ -8,9 +8,9 @@ sizeProbe {
 
 kotlin {
     sourceSets.jsMain.dependencies {
-        implementation(project(":kotlinx-locale-country-cldr"))
-        implementation(project(":kotlinx-locale-currency-cldr"))
-        implementation(project(":kotlinx-locale-datetime-cldr"))
+        implementation(project(":kotlinx-locale-country-cldr-full"))
+        implementation(project(":kotlinx-locale-currency-cldr-full"))
+        implementation(project(":kotlinx-locale-datetime-cldr-full"))
         implementation(project(":kotlinx-locale-types"))
     }
 }

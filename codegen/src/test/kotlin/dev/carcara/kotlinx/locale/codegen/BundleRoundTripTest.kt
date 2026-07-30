@@ -8,7 +8,7 @@ import kotlin.test.assertTrue
 /**
  * Pins the published bundle to the checked-in sources.
  *
- * The shipped `-types` and `-cldr` artifacts and anything the Gradle plugin
+ * The shipped `-types` and `-cldr-full` artifacts and anything the Gradle plugin
  * generates must come out of one code path, or "the split and the definitions
  * are the same" stops being true. What guarantees it is that there is exactly
  * one set of emitters and one bundle; what proves it is this: regenerate every
@@ -38,26 +38,26 @@ class BundleRoundTripTest {
                 roots = SourceRoots(
                     localeCatalog = regenerated.resolve("locale-types"),
                     countryEnum = regenerated.resolve("country-types"),
-                    countryNames = regenerated.resolve("country-cldr"),
+                    countryNames = regenerated.resolve("country-cldr-full"),
                     currencyEnum = regenerated.resolve("currency-types"),
                     countryCurrencies = regenerated.resolve("currency-types"),
-                    currencyFormats = regenerated.resolve("currency-cldr"),
-                    currencyNames = regenerated.resolve("currency-cldr"),
-                    dateTime = regenerated.resolve("datetime-cldr"),
+                    currencyFormats = regenerated.resolve("currency-cldr-full"),
+                    currencyNames = regenerated.resolve("currency-cldr-full"),
+                    dateTime = regenerated.resolve("datetime-cldr-full"),
                     // The source objects and their extensions come from the same
                     // emitter the Gradle plugin uses, so they are covered too.
                     countryBinding = BindingTarget(
-                        root = regenerated.resolve("country-cldr"),
+                        root = regenerated.resolve("country-cldr-full"),
                         packageName = "dev.carcara.kotlinx.locale.country.cldr",
                         objectName = "CldrCountry",
                     ),
                     currencyBinding = BindingTarget(
-                        root = regenerated.resolve("currency-cldr"),
+                        root = regenerated.resolve("currency-cldr-full"),
                         packageName = "dev.carcara.kotlinx.locale.currency.cldr",
                         objectName = "CldrCurrency",
                     ),
                     dateTimeBinding = BindingTarget(
-                        root = regenerated.resolve("datetime-cldr"),
+                        root = regenerated.resolve("datetime-cldr-full"),
                         packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
                         objectName = "CldrDateTime",
                     ),
@@ -65,7 +65,15 @@ class BundleRoundTripTest {
             )
 
             var compared = 0
-            for (module in listOf("locale-types", "country-types", "country-cldr", "currency-types", "currency-cldr", "datetime-cldr")) {
+            val modules = listOf(
+                "locale-types",
+                "country-types",
+                "country-cldr-full",
+                "currency-types",
+                "currency-cldr-full",
+                "datetime-cldr-full",
+            )
+            for (module in modules) {
                 val fresh = regenerated.resolve(module)
                 val shipped = rootDir.resolve("$module/src/commonMain/kotlin")
                 for (file in fresh.walkTopDown().filter(File::isFile)) {

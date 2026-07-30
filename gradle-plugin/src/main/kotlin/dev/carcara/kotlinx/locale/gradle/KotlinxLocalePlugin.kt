@@ -63,7 +63,7 @@ class KotlinxLocalePlugin : Plugin<Project> {
             // kotlinxLocaleCldrData replaces it, which is how a build pins a
             // different CLDR release or points at a bundle of its own.
             configuration.defaultDependencies { dependencies ->
-                dependencies.add(target.dependencies.create("dev.carcara:kotlinx-locale-cldr-data:$PLUGIN_VERSION"))
+                dependencies.add(target.dependencies.create("dev.carcara:kotlinx-locale-codegen-data:$PLUGIN_VERSION"))
             }
         }
         val resolvable = target.configurations.resolvable("kotlinxLocaleCldrDataClasspath") { configuration ->

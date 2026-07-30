@@ -72,7 +72,7 @@ public object PlatformCountry : CountryNameSource {
  * The country name for [locale] from the platform; falls back to the alpha-2
  * code when the platform has none.
  *
- * The same signature `kotlinx-locale-country-cldr` declares, in a different
+ * The same signature `kotlinx-locale-country-cldr-full` declares, in a different
  * package, so switching between them is an import change and nothing else.
  */
 public fun Country.displayName(locale: Locale = Locale.current): String = PlatformCountry.displayName(this, locale)

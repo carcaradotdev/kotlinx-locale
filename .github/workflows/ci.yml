@@ -69,11 +69,11 @@ jobs:
         run: |
           ./gradlew \
             :kotlinx-locale-gradle-plugin:publishToMavenLocal \
-            :kotlinx-locale-codegen:publishToMavenLocal \
-            :kotlinx-locale-cldr-data:publishToMavenLocal
-          ./gradlew $(for m in core types country-types country-core country-cldr-format \
-                                currency-types currency-core currency-cldr-format \
-                                datetime-core datetime-cldr-format; do
+            :kotlinx-locale-codegen-emitters:publishToMavenLocal \
+            :kotlinx-locale-codegen-data:publishToMavenLocal
+          ./gradlew $(for m in core types country-types country-core country-cldr-runtime \
+                                currency-types currency-core currency-cldr-runtime \
+                                datetime-core datetime-cldr-runtime; do
             printf ':kotlinx-locale-%s:publishKotlinMultiplatformPublicationToMavenLocal ' "$m"
             printf ':kotlinx-locale-%s:publishJvmPublicationToMavenLocal ' "$m"
           done)

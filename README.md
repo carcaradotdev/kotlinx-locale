@@ -37,8 +37,21 @@ The full API, with every enum value and edge case, is documented in [API.md](API
 ## Modules
 
 Artifacts are named `kotlinx-locale[-<domain>]-<layer>`. Every domain has the
-same three layers, and the translated text — the part that is big — lives only
-in the bottom one.
+same layers, and they sort along one axis: who supplies the data. The translated
+text — the part that is big — lives in exactly one of them.
+
+```
+currency-types          generated enums
+currency-core           the contract
+currency-cldr-runtime   the engine, no data            (plugin-narrowed builds bind here)
+currency-cldr-full      the engine plus 1121 locales   (the normal dependency)
+currency-platform       the host supplies it
+```
+
+No artifact name is a prefix of another at a hyphen boundary, because Kotlin
+Multiplatform already owns that suffix space: every module publishes one
+artifact per target, so `-jvm` and `-iosarm64` sit beside the bare coordinate on
+Maven Central. `settings.gradle.kts` enforces this.
 
 | Directory | Artifact | What it contains |
 | --- | --- | --- |
@@ -47,27 +60,33 @@ in the bottom one.
 | `locale-types/` | `dev.carcara:kotlinx-locale-types` | The generated locale catalog: one enum per language, so `PT.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
 | `country-types/` | `dev.carcara:kotlinx-locale-country-types` | The `Country` enum: 249 ISO 3166-1 entries carrying their alpha-3 and numeric codes. Generated, and nothing else. |
 | `country-core/` | `dev.carcara:kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
-| `country-cldr-format/` | `dev.carcara:kotlinx-locale-country-cldr-format` | The reader for the CLDR name records, without the records. What a generated table binds to. |
+| `country-cldr-runtime/` | `dev.carcara:kotlinx-locale-country-cldr-runtime` | The country-name lookup over CLDR-shaped name records, and none of the records. The table is a constructor argument, which is what a narrowed build binds its own to. |
 | `country-platform/` | `dev.carcara:kotlinx-locale-country-platform` | `PlatformCountry`: country names from `java.util.Locale`, `Intl.DisplayNames` or `NSLocale`. Ships no tables. |
-| `country-cldr/` | `dev.carcara:kotlinx-locale-country-cldr` | `CldrCountry` and the CLDR name tables behind it, plus `Country.displayName`. |
+| `country-cldr-full/` | `dev.carcara:kotlinx-locale-country-cldr-full` | `-cldr-runtime` plus the CLDR name tables for all 1121 locales: `CldrCountry` and `Country.displayName`. |
 | `currency-types/` | `dev.carcara:kotlinx-locale-currency-types` | The `Currency` enum (active ISO 4217 codes, ISO minor units, CLDR fraction and cash-rounding behavior) and the country-to-currency map. |
 | `currency-core/` | `dev.carcara:kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
-| `currency-cldr-format/` | `dev.carcara:kotlinx-locale-currency-cldr-format` | The reader for the CLDR symbol, name and number records, plus the pattern-based formatter and parser. |
+| `currency-cldr-runtime/` | `dev.carcara:kotlinx-locale-currency-cldr-runtime` | The symbol and name lookup plus the pattern-based number formatter and parser, over CLDR-shaped records it does not carry. What a narrowed build binds its own tables to. |
 | `currency-platform/` | `dev.carcara:kotlinx-locale-currency-platform` | `PlatformCurrency`: symbols, names and number formatting from `NumberFormat`, `Intl.NumberFormat` or `NSNumberFormatter`. Ships no tables. |
-| `currency-cldr/` | `dev.carcara:kotlinx-locale-currency-cldr` | `CldrCurrency`, the CLDR symbol and name tables, the pattern-based number formatter and parser, plus `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
+| `currency-cldr-full/` | `dev.carcara:kotlinx-locale-currency-cldr-full` | `-cldr-runtime` plus the CLDR symbol, name and number tables for all 1121 locales: `CldrCurrency`, `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
 | `datetime-core/` | `dev.carcara:kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
-| `datetime-cldr-format/` | `dev.carcara:kotlinx-locale-datetime-cldr-format` | The reader for the CLDR pattern records, plus the pattern parser and formatter. |
+| `datetime-cldr-runtime/` | `dev.carcara:kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. What a narrowed build binds its own tables to. |
 | `datetime-platform/` | `dev.carcara:kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
-| `datetime-cldr/` | `dev.carcara:kotlinx-locale-datetime-cldr` | `CldrDateTime`, the CLDR pattern data, parser and formatter, plus `LocalDate.format` and friends. |
-| `conformance/` | `dev.carcara:kotlinx-locale-conformance` | The ICU fixtures and the suite that runs any source through them, at an exact tier for CLDR-backed sources and a behavioural tier for platform ones. For test source sets. |
-| `codegen-api/` | `dev.carcara:kotlinx-locale-codegen` | The emitters and the bundle reader: the half of code generation that a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
-| `cldr-data/` | `dev.carcara:kotlinx-locale-cldr-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
+| `datetime-cldr-full/` | `dev.carcara:kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
+| `codegen-emitters/` | `dev.carcara:kotlinx-locale-codegen-emitters` | The emitters and the bundle reader: the half of code generation that a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
+| `codegen-data/` | `dev.carcara:kotlinx-locale-codegen-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
 | `gradle-plugin/` | `dev.carcara:kotlinx-locale-gradle-plugin` | The `dev.carcara.kotlinx-locale` plugin: generates a data set narrowed to the locales a build declares. |
 
-A `-cldr` module is one implementation of its domain's contract, not the only
-possible one. Which one answers is visible in the import rather than inferred
-from the dependency graph, so a build can compose two of them or swap one out
-by changing an import.
+Anything starting with `codegen-` runs at build time and never belongs on an
+application classpath. Three more directories are part of this build and publish
+nothing: `conformance-test-suite/` holds the ICU fixtures and the assertions this
+repo's own test source sets run, `codegen/` is the extraction half of code
+generation that clones CLDR and ICU, and `tools/` holds the Kotlin/JS size
+probes.
+
+A `-cldr-full` module is one implementation of its domain's contract, not the
+only possible one. Which one answers is visible in the import rather than
+inferred from the dependency graph, so a build can compose two of them or swap
+one out by changing an import.
 
 ```kotlin
 import dev.carcara.kotlinx.locale.country.*
@@ -86,7 +105,7 @@ Country.BR.currency                                   // Currency.BRL
 
 Nothing at the call site says which layer answered, which is the point:
 `Country.BR.alpha3` reads from `-types`, `Country.forAlpha3("BRA")` from
-`-core` and `Country.BR.displayName(locale)` from `-cldr`, and all three are
+`-core` and `Country.BR.displayName(locale)` from `-cldr-full`, and all three are
 written the same way.
 
 ## Features
@@ -132,25 +151,25 @@ kotlin {
         // one domain, all three layers
         implementation("dev.carcara:kotlinx-locale-country-types:0.1.0-SNAPSHOT")
         implementation("dev.carcara:kotlinx-locale-country-core:0.1.0-SNAPSHOT")
-        implementation("dev.carcara:kotlinx-locale-country-cldr:0.1.0-SNAPSHOT")
+        implementation("dev.carcara:kotlinx-locale-country-cldr-full:0.1.0-SNAPSHOT")
     }
 }
 ```
 
-Each layer pulls the ones below it transitively, so `-cldr` alone is enough in
-practice; declaring all three keeps what you depend on visible. There is no
+Each layer pulls the ones below it transitively, so `-cldr-full` alone is enough
+in practice; declaring all three keeps what you depend on visible. There is no
 umbrella artifact, because an artifact whose only job is to pull three others
 is a second place for the dependency set to be wrong. A version catalog bundle
 does the same job in the build where the versions already live:
 
 ```toml
 [bundles]
-locale-country = ["locale-country-types", "locale-country-core", "locale-country-cldr"]
+locale-country = ["locale-country-types", "locale-country-core", "locale-country-cldr-full"]
 ```
 
-Dropping `-cldr` gives you the codes, the lookups and `CurrencyAmount` without
-any translated text, which is the difference between roughly 25 KB and roughly
-430 KB gzipped for country on Kotlin/JS.
+Dropping `-cldr-full` gives you the codes, the lookups and `CurrencyAmount`
+without any translated text, which is the difference between roughly 25 KB and
+roughly 430 KB gzipped for country on Kotlin/JS.
 
 ## Using the platform's data instead of ours
 
@@ -215,10 +234,10 @@ kotlinxLocale {
 }
 ```
 
-The dependency block then takes `-core`, `-types` and `-cldr-format` and leaves
-out `-cldr`, because the records come from the generator instead. Call sites do
-not change: the generated source implements the same interfaces and carries the
-same extensions, so `Country.BR.displayName(locale)` still reads the same and
+The dependency block then takes `-core`, `-types` and `-cldr-runtime` and leaves
+out `-cldr-full`, because the records come from the generator instead. Call sites
+do not change: the generated source implements the same interfaces and carries
+the same extensions, so `Country.BR.displayName(locale)` still reads the same and
 only the import moves. `samples/narrowed/` is a build that does this, with 124 KB
 of generated Kotlin where the shipped tables are 3764 KB.
 

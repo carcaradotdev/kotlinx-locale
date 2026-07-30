@@ -29,11 +29,11 @@ private fun File.sourceRoot(module: String, sourceSet: String = "commonMain"): F
  * bundled one.
  */
 private fun conformanceDir(rootDir: File): File = rootDir
-    .sourceRoot("conformance")
+    .sourceRoot("conformance-test-suite")
     .resolve("dev/carcara/kotlinx/locale/conformance")
 
-/** Where the published bundle lives, as a resource inside kotlinx-locale-cldr-data. */
-internal fun bundleFile(rootDir: File): File = rootDir.resolve("cldr-data/src/main/resources/dev/carcara/kotlinx/locale/cldr-data.txt")
+/** Where the published bundle lives, as a resource inside kotlinx-locale-codegen-data. */
+internal fun bundleFile(rootDir: File): File = rootDir.resolve("codegen-data/src/main/resources/dev/carcara/kotlinx/locale/cldr-data.txt")
 
 private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
     val bundle = extractBundle(rootDir, cldrDir, icuDir)
@@ -53,27 +53,27 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
 internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots(
     localeCatalog = rootDir.sourceRoot("locale-types"),
     countryEnum = rootDir.sourceRoot("country-types"),
-    countryNames = rootDir.sourceRoot("country-cldr"),
+    countryNames = rootDir.sourceRoot("country-cldr-full"),
     currencyEnum = rootDir.sourceRoot("currency-types"),
     countryCurrencies = rootDir.sourceRoot("currency-types"),
-    currencyFormats = rootDir.sourceRoot("currency-cldr"),
-    currencyNames = rootDir.sourceRoot("currency-cldr"),
-    dateTime = rootDir.sourceRoot("datetime-cldr"),
+    currencyFormats = rootDir.sourceRoot("currency-cldr-full"),
+    currencyNames = rootDir.sourceRoot("currency-cldr-full"),
+    dateTime = rootDir.sourceRoot("datetime-cldr-full"),
     // The source objects and their convenience extensions come from the same
     // emitter the Gradle plugin uses, so a narrowed build and a full one cannot
     // present a different API.
     countryBinding = BindingTarget(
-        root = rootDir.sourceRoot("country-cldr"),
+        root = rootDir.sourceRoot("country-cldr-full"),
         packageName = "dev.carcara.kotlinx.locale.country.cldr",
         objectName = "CldrCountry",
     ),
     currencyBinding = BindingTarget(
-        root = rootDir.sourceRoot("currency-cldr"),
+        root = rootDir.sourceRoot("currency-cldr-full"),
         packageName = "dev.carcara.kotlinx.locale.currency.cldr",
         objectName = "CldrCurrency",
     ),
     dateTimeBinding = BindingTarget(
-        root = rootDir.sourceRoot("datetime-cldr"),
+        root = rootDir.sourceRoot("datetime-cldr-full"),
         packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
         objectName = "CldrDateTime",
     ),
