@@ -4,10 +4,14 @@ import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToDateTimeFormats
 import dev.carcara.kotlinx.locale.datetime.cldr.CldrDateTime
+import dev.carcara.kotlinx.locale.datetime.displayName
+import dev.carcara.kotlinx.locale.datetime.format
 import dev.carcara.kotlinx.locale.datetime.platform.PlatformDateTime
+import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
+import kotlinx.datetime.Month
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -30,22 +34,54 @@ class PlatformDateTimeTest {
     }
 
     @Test
-    fun thePlatformSourceConformsBehaviourallyWhereItHasData() {
-        if (!PlatformDateTime.isAvailable) return
-        PlatformDateTime.assertConformsToDateTimeFormats(ConformanceTier.BEHAVIOURAL)
+    fun theCompositionNamesTheMonthsAndWeekdaysIdenticallyEverywhere() {
+        // Every host and CLDR agree on the English calendar names, so these are
+        // exact assertions that hold on every target: the platform answers on
+        // JVM, JS and Apple, the bundled source answers on the other four.
+        assertEquals("July", composed.displayName(Month(7), TextStyle.FULL, en))
+        assertEquals("Jan", composed.displayName(Month(1), TextStyle.ABBREVIATED, en))
+        assertEquals("Monday", composed.displayName(DayOfWeek(1), TextStyle.FULL, en))
+        // Sunday is ISO 7 and Foundation indexes weekdays from Sunday, so this is
+        // the off-by-one that a careless mapping gets wrong.
+        assertEquals("Sunday", composed.displayName(DayOfWeek(7), TextStyle.FULL, en))
     }
 
     @Test
-    fun theUnavailableTargetsSaySoRatherThanAnsweringBadly() {
-        if (PlatformDateTime.isAvailable) return
-        assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
-        assertEquals(null, PlatformDateTime.monthNameOrNull(7, TextStyle.FULL, en))
-        assertTrue(PlatformDateTime.supportedLocales.isEmpty())
+    fun theCompositionRendersEveryStyleEverywhere() {
+        val moment = LocalDateTime(date, time)
+        for (tag in listOf("en", "de", "ja", "pt-BR", "ar-EG")) {
+            val locale = Locale.forLanguageTag(tag)
+            for (style in FormatStyle.entries) {
+                assertTrue(composed.format(date, style, locale).isNotBlank(), "$tag date $style was blank")
+                assertTrue(composed.format(time, style, locale).isNotBlank(), "$tag time $style was blank")
+                assertTrue(composed.format(moment, style, style, locale).isNotBlank(), "$tag moment $style was blank")
+            }
+        }
+    }
+
+    @Test
+    fun theSourceHonoursItsAvailabilityContract() {
+        if (PlatformDateTime.isAvailable) {
+            PlatformDateTime.assertConformsToDateTimeFormats(ConformanceTier.BEHAVIOURAL)
+        } else {
+            // Linux, Windows, Android Native and WASI, asserted rather than skipped
+            // so that a target growing locale data is noticed.
+            assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
+            assertEquals(null, PlatformDateTime.formatTimeOrNull(time, FormatStyle.SHORT, en))
+            assertEquals(null, PlatformDateTime.formatDateTimeOrNull(LocalDateTime(date, time), FormatStyle.LONG, FormatStyle.SHORT, en))
+            assertEquals(null, PlatformDateTime.monthNameOrNull(7, TextStyle.FULL, en))
+            assertEquals(null, PlatformDateTime.dayOfWeekNameOrNull(1, TextStyle.FULL, en))
+            assertTrue(PlatformDateTime.supportedLocales.isEmpty())
+        }
     }
 
     @Test
     fun theDayThatGoesInIsTheDayThatComesOut() {
-        if (!PlatformDateTime.isAvailable) return
+        if (!PlatformDateTime.isAvailable) {
+            // Covered by the availability contract test; nothing to shift.
+            assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
+            return
+        }
         // The trap this guards: a LocalDate has no zone, and the platform
         // formatters take an instant plus a zone. Formatted in the host's zone,
         // 2026-07-27 renders as the 26th or the 28th depending on where the
@@ -61,7 +97,10 @@ class PlatformDateTimeTest {
 
     @Test
     fun theHourThatGoesInIsTheHourThatComesOut() {
-        if (!PlatformDateTime.isAvailable) return
+        if (!PlatformDateTime.isAvailable) {
+            assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
+            return
+        }
         val formatted = assertNotNull(PlatformDateTime.formatTimeOrNull(time, FormatStyle.MEDIUM, en))
         assertTrue("05" in formatted || "5" in formatted, "lost the minutes: '$formatted'")
         // 15:05 in a 12-hour locale is 3:05, so either form is correct; what must
@@ -71,7 +110,10 @@ class PlatformDateTimeTest {
 
     @Test
     fun theFourLengthsDifferFromEachOther() {
-        if (!PlatformDateTime.isAvailable) return
+        if (!PlatformDateTime.isAvailable) {
+            assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
+            return
+        }
         val rendered = FormatStyle.entries.map { assertNotNull(PlatformDateTime.formatDateOrNull(date, it, en)) }
         // FULL and LONG can coincide in some locales, but all four collapsing to
         // one string would mean the style is being ignored.
@@ -81,7 +123,10 @@ class PlatformDateTimeTest {
 
     @Test
     fun theNamesAreLocalizedAndNotJustEnglish() {
-        if (!PlatformDateTime.isAvailable) return
+        if (!PlatformDateTime.isAvailable) {
+            assertEquals(null, PlatformDateTime.monthNameOrNull(7, TextStyle.FULL, en))
+            return
+        }
         assertEquals("July", PlatformDateTime.monthNameOrNull(7, TextStyle.FULL, en))
         assertEquals("Monday", PlatformDateTime.dayOfWeekNameOrNull(1, TextStyle.FULL, en))
 
@@ -95,7 +140,10 @@ class PlatformDateTimeTest {
 
     @Test
     fun theGluedDateTimeCarriesBothHalves() {
-        if (!PlatformDateTime.isAvailable) return
+        if (!PlatformDateTime.isAvailable) {
+            assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
+            return
+        }
         val moment = LocalDateTime(date, time)
         val glued = assertNotNull(
             PlatformDateTime.formatDateTimeOrNull(moment, FormatStyle.MEDIUM, FormatStyle.SHORT, en),
