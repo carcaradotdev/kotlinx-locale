@@ -22,7 +22,7 @@ dependencies {
 }
 
 kotlinxLocale {
-    // Pt.BR and En.US would be the type-checked form; tags are used here so the
+    // PT.BR, EN and JA would be the type-checked form; tags are used here so the
     // sample reads without the catalog import.
     locales("pt-BR", "en", "ja")
     fallback("en")

@@ -5,9 +5,10 @@ package dev.carcara.kotlinx.locale
  * checked when it is parsed.
  *
  * `kotlinx-locale-types` generates one implementation per language, so
- * `Pt.BR.tag` cannot be misspelled and autocompletes. That matters most in the
- * Gradle plugin, whose configuration is a locale set: a typo there does not
- * throw, it quietly generates data for one locale fewer than intended.
+ * `PT.BR.tag` cannot be misspelled and autocompletes, and `PT` alone is the bare
+ * `pt`. That matters most in the Gradle plugin, whose configuration is a locale
+ * set: a typo there does not throw, it quietly generates data for one locale
+ * fewer than intended.
  *
  * Nothing requires it in application code. [Locale.forLanguageTag] stays the
  * zero-cost path for tags built at runtime.

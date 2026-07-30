@@ -706,13 +706,19 @@ enum per language, so a locale can be named rather than spelled:
 
 ```kotlin
 Locale.forLanguageTag("pt-BRA")   // compiles, throws at runtime
-Pt.BR.toLocale()                  // cannot be misspelled, autocompletes
+PT.BR.toLocale()                  // cannot be misspelled, autocompletes
 ```
 
-Two levels, always `Language.Rest`: `Pt.BR`, `Zh.HANS_CN`, `Ca.ES_VALENCIA`. The
+Two levels, always `LANGUAGE.REST`: `PT.BR`, `ZH.HANS_CN`, `CA.ES_VALENCIA`. The
 three CLDR macroregions are not valid Kotlin identifiers, so they take their
-English region names: `Ar.WORLD` for `ar-001`, `En.EUROPE` for `en-150` and
-`Es.LATIN_AMERICA` for `es-419`. The bare language is `BASE`.
+English region names: `AR.WORLD` for `ar-001`, `EN.EUROPE` for `en-150` and
+`ES.LATIN_AMERICA` for `es-419`.
+
+The bare language is the language itself, with no member name: `PT` is `pt`, the
+way `PT.BR` is `pt-BR`. It comes from the enum's companion, which implements
+`LocaleRef` too, so `PT.entries` covers the regions and `PT` covers the language
+they sit under. Where the two names collide the region still wins the member
+slot: `PT.PT` is `pt-PT`.
 
 Its reason to exist is the Gradle plugin, whose configuration is a locale set: a
 typo there does not throw, it quietly generates data for one locale fewer than

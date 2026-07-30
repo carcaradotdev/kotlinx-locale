@@ -19,14 +19,24 @@ private val MACROREGION_NAMES = mapOf(
 
 /**
  * Emits the locale catalog into the -types layer: one enum per language,
- * implementing `LocaleRef`, with a member per locale id that language covers.
+ * implementing `LocaleRef`, with an entry per regional locale that language
+ * covers and the bare language on the companion.
+ *
+ * The bare language is the companion rather than a `BASE` entry because a class
+ * name in expression position resolves to its companion, so `PT` *is* the `pt`
+ * locale and `PT.BR` is `pt-BR`. A type cannot be a value of itself, and this is
+ * as close as Kotlin gets. It also keeps the name uniform: every segment of a
+ * reference is upper case, `PT.BR` and not `Pt.BR`.
+ *
+ * A language whose bare tag was filtered out gets no companion, so naming it
+ * does not compile — the same protection the entries already give.
  *
  * The nesting follows the *identifier* structure, not the CLDR parent chain.
  * Those differ — `en-150`'s parent is `en-001` and `zh-Hant-MO`'s is
  * `zh-Hant-HK` — and the parent chain is runtime data that belongs to the
  * implementation modules, where it already lives.
  *
- * Two levels, so a reference is always `Language.Rest`: only 33 of the 322
+ * Two levels, so a reference is always `LANGUAGE.REST`: only 33 of the 322
  * languages carry a script, and a third level would pay for those in every
  * other reference.
  */
@@ -40,9 +50,11 @@ public fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeTags: List<
     }
 
     for ((language, tags) in tagsByLanguage) {
-        val className = language.replaceFirstChar(Char::uppercaseChar)
+        val className = language.uppercase()
+        val hasBare = tags.any { it == language }
         val members = LinkedHashMap<String, String>()
         for (tag in tags) {
+            if (tag == language) continue
             val member = memberNameFor(language, tag)
             val clash = members.put(member, tag)
             check(clash == null) { "$language: '$member' names both $clash and $tag" }
@@ -56,9 +68,21 @@ public fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeTags: List<
                 append("package ")
                 append(CATALOG_PACKAGE)
                 append("\n\nimport dev.carcara.kotlinx.locale.LocaleRef\n")
-                append("\n/** The CLDR locales whose language subtag is `")
+                append("\n/**\n * The CLDR locales whose language subtag is `")
                 append(language)
-                append("`. */\n")
+                append("`.\n *\n * ")
+                if (hasBare) {
+                    append(className)
+                    append(" itself is the bare language, `")
+                    append(language)
+                    append("`; the entries are the locales below it.\n */\n")
+                } else {
+                    append("The bare language `")
+                    append(language)
+                    append("` is not in this build, so `")
+                    append(className)
+                    append("` names no locale on its own.\n */\n")
+                }
                 append("public enum class ")
                 append(className)
                 append("(override val tag: String) : LocaleRef {\n")
@@ -69,7 +93,18 @@ public fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeTags: List<
                     append(kotlinEscape(tag))
                     append("\"),\n")
                 }
-                append("    ;\n}\n")
+                append("    ;\n")
+                if (hasBare) {
+                    append("\n    /** The bare language, `")
+                    append(language)
+                    append("`. */\n")
+                    append("    public companion object : LocaleRef {\n")
+                    append("        override val tag: String = \"")
+                    append(kotlinEscape(language))
+                    append("\"\n")
+                    append("    }\n")
+                }
+                append("}\n")
             },
         )
     }
@@ -77,11 +112,9 @@ public fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeTags: List<
     println("[codegen] emitted ${tagsByLanguage.size} language catalogs (${localeTags.size} locales) to $outputDir")
 }
 
-/** `pt` -> `BASE`, `pt-BR` -> `BR`, `zh-Hans-CN` -> `HANS_CN`, `es-419` -> `LATIN_AMERICA`. */
-private fun memberNameFor(language: String, tag: String): String {
-    val rest = tag.removePrefix(language).removePrefix("-")
-    if (rest.isEmpty()) return "BASE"
-    return rest.split('-').joinToString("_") { part ->
+/** `pt-BR` -> `BR`, `zh-Hans-CN` -> `HANS_CN`, `es-419` -> `LATIN_AMERICA`. */
+private fun memberNameFor(language: String, tag: String): String =
+    tag.removePrefix(language).removePrefix("-").split('-').joinToString("_") { part ->
         if (part.first().isDigit()) {
             MACROREGION_NAMES[part]
                 ?: error("No identifier name for region '$part' in locale tag '$tag'; add it to MACROREGION_NAMES")
@@ -89,4 +122,3 @@ private fun memberNameFor(language: String, tag: String): String {
             part.uppercase()
         }
     }
-}

@@ -2,7 +2,7 @@
 
 package probe
 
-import dev.carcara.kotlinx.locale.catalog.Pt
+import dev.carcara.kotlinx.locale.catalog.PT
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.country.forAlpha2
 import dev.carcara.kotlinx.locale.country.platform.displayName
@@ -24,7 +24,7 @@ import kotlinx.datetime.LocalDateTime
  */
 @JsExport
 public fun probe(code: String, currencyCode: String, iso: String, minorUnits: String): String {
-    val locale = Pt.BR.toLocale()
+    val locale = PT.BR.toLocale()
     val money = Currency.forCode(currencyCode)
     val amount = CurrencyAmount(money, minorUnits.toLong())
     return listOf(

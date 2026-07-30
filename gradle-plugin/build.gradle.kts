@@ -19,7 +19,7 @@ dependencies {
     compileOnly(libs.gradle.plugin.kotlin.multiplatform)
 
     // LocaleRef so the DSL can take a locale rather than a string, and the
-    // catalog so a consumer can write Pt.BR in their own build script.
+    // catalog so a consumer can write PT.BR in their own build script.
     api(project(":kotlinx-locale-core"))
     api(project(":kotlinx-locale-types"))
 

@@ -215,7 +215,7 @@ New, and optional. `kotlinx-locale-types` adds a generated reference for every
 locale CLDR ships, so the Gradle plugin's configuration is type-checked:
 
 ```kotlin
-Locale.forLanguageTag(Pt.BR.tag)
+Locale.forLanguageTag(PT.BR.tag)
 ```
 
 Nothing requires it in application code.
