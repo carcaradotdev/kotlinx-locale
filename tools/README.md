@@ -1,6 +1,6 @@
 # Size probes
 
-Seven Kotlin/JS applications, one per dependency set worth knowing the price of.
+Eight Kotlin/JS applications, one per dependency set worth knowing the price of.
 Each declares a gzipped ceiling for its minified bundle, and `checkSize` fails
 the build when it goes over.
 
@@ -13,6 +13,12 @@ The budgets exist to turn a dependency mistake into a build failure rather than
 into 400 KB nobody notices. If `country-types` grew an edge into
 `country-cldr`, the `country-codes` probe would jump from roughly 15 KB to
 roughly 420 KB and say so by name.
+
+`country-platform` is the same probe as `country-full`, call for call, resolved
+against the host instead of against bundled tables: 20.2 KB gzipped where
+`country-full` is 416.9 KB. That is the price of the platform layer, measured
+rather than asserted, and its budget is the check that no CLDR data creeps back
+into that path.
 
 Kotlin/JS is the only target with dead code elimination, so it is the only one
 where "what does this artifact actually cost" has an answer a build can check.

@@ -6,6 +6,7 @@
 probe-locale
 probe-country-codes
 probe-country-full
+probe-country-platform
 probe-currency-codes
 probe-currency-full
 probe-datetime-full
