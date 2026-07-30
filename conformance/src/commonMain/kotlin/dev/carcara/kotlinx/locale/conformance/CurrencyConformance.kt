@@ -70,17 +70,22 @@ private fun CurrencyNameSource.assertMatchesIcuCurrencyNames() {
 /**
  * Runs this source through the currency formatting suite.
  *
- * There is no ICU fixture of formatted output to compare against, so both tiers
- * check the same property: what the source printed is what it reads back. That
- * is the strong check, because it catches a separator, digit or sign the
- * formatter writes and the parser does not recognize — the failure mode a
- * table comparison cannot see.
+ * There is no ICU fixture of formatted output to compare against, so what both
+ * tiers check is that what the source printed is what it reads back. That catches
+ * a separator, digit or sign the formatter writes and the parser does not
+ * recognize, which is the failure mode a table comparison cannot see.
  *
- * The round trip is not the identity, and cannot be. CLDR formats some
- * currencies with fewer fraction digits than ISO gives them, so HUF prints
- * `0.01` as `HUF 0` and there is no cent left to read back. What survives is
- * the amount taken through CLDR's scale, which is what
- * [CurrencyAmount.format] documents it prints.
+ * The property is stability, not identity, and the difference took a platform
+ * source to notice. CLDR formats some currencies with fewer fraction digits than
+ * ISO gives them, so HUF prints `0.01` as `HUF 0` and there is no cent left to
+ * read back; the amount that survives is the one taken through CLDR's scale. But
+ * that is a fact about CLDR, not about currency formatting: `java.util.Currency`
+ * gives HUF two fraction digits and round trips `0.01` exactly.
+ *
+ * So the universal property is that formatting is stable under a round trip:
+ * whatever scale a source prints at, re-parsing and re-formatting gives the same
+ * string. The stronger CLDR-scale claim is asserted only at
+ * [ConformanceTier.EXACT], where it is true by construction.
  */
 public fun CurrencyFormatSource.assertConformsToCurrencyFormats(tier: ConformanceTier) {
     // Only the exact tier can require this. A source over Intl answers every
@@ -102,12 +107,30 @@ public fun CurrencyFormatSource.assertConformsToCurrencyFormats(tier: Conformanc
 
                 val reread = parseFormattedOrNull(currency, formatted, locale)
                 assertNotNull(reread, "$tag $code could not read back '$formatted'")
-                val throughCldrScale = currency.cldrToIsoUnits(currency.isoToCldrUnits(minorUnits))
-                assertEquals(
-                    CurrencyAmount(currency, throughCldrScale),
-                    reread,
-                    "$tag $code did not round trip through '$formatted'",
-                )
+
+                // Stable under a second pass, whatever scale this source prints
+                // at, except where the amount rounds away to nothing. Formatting
+                // -0.01 ALL at zero fraction digits gives "-ALL 0" on Intl and
+                // Foundation: the sign is in the text and not in the value, so a
+                // second pass drops it. CLDR rounds the sign away too and prints
+                // "ALL 0", which is why only a platform source surfaces this.
+                val roundsAwayToZero = reread.minorUnits == 0L && minorUnits != 0L
+                if (!roundsAwayToZero) {
+                    assertEquals(
+                        formatted,
+                        format(reread, locale),
+                        "$tag $code is not stable: '$formatted' re-read and re-printed differently",
+                    )
+                }
+
+                if (tier == ConformanceTier.EXACT) {
+                    val throughCldrScale = currency.cldrToIsoUnits(currency.isoToCldrUnits(minorUnits))
+                    assertEquals(
+                        CurrencyAmount(currency, throughCldrScale),
+                        reread,
+                        "$tag $code did not round trip through CLDR's scale via '$formatted'",
+                    )
+                }
             }
         }
     }
