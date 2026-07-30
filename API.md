@@ -674,6 +674,31 @@ data ICU encodes and must match it byte for byte. `BEHAVIOURAL` is for platform
 sources, whose data belongs to the host and moves with OS versions; it checks
 that answers are well-shaped and round trip, not what they say.
 
+### Choosing between the bundled and platform sources
+
+Each domain ships two implementations of the same interfaces, and the extensions
+above are the same names in different packages, so the choice is an import:
+
+```kotlin
+import dev.carcara.kotlinx.locale.country.cldr.displayName        // bundled tables
+import dev.carcara.kotlinx.locale.country.platform.displayName    // the host
+```
+
+`-cldr` answers the same everywhere and costs what its tables weigh.
+`-platform` ships nothing and answers whatever the device says, which means it
+answers nothing at all on Linux, Windows, Android Native and Wasm-WASI, where no
+locale data is reachable from Kotlin. Neither is the default; a `Fallback*`
+composer is how you take the host's answer where there is one without giving up
+a guaranteed answer:
+
+```kotlin
+val names = FallbackCountryNames(primary = PlatformCountry, fallback = CldrCountry)
+```
+
+What the choice costs is measured rather than argued: 20.2 KB against 416.9 KB
+gzipped for country on Kotlin/JS, and 45.0 KB against 823.7 KB for all three
+domains at once. [`docs/size.md`](docs/size.md) has the whole table.
+
 ## The locale catalog
 
 `kotlinx-locale-types` is optional and carries no translations. It generates one

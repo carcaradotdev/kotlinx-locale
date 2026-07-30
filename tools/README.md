@@ -14,31 +14,29 @@ into 400 KB nobody notices. If `country-types` grew an edge into
 `country-cldr`, the `country-codes` probe would jump from roughly 15 KB to
 roughly 420 KB and say so by name.
 
-## What the platform layer costs
+## Where the numbers live
 
-Four probes pair with the CLDR ones, making the same calls against the host
-instead of against bundled tables, so the difference between the two columns is
-the data and nothing else:
+[`docs/size.md`](../docs/size.md) holds the current table, including the
+platform against CLDR comparison, and is generated:
 
-| domain | platform | CLDR | what survives |
-| --- | ---: | ---: | ---: |
-| country | 20.2 KB | 416.9 KB | 4.8% |
-| currency | 20.7 KB | 329.4 KB | 6.3% |
-| datetime | 35.3 KB | 112.5 KB | 31.4% |
-| all three | 45.0 KB | 823.7 KB | 5.5% |
+```sh
+./gradlew updateSizeDoc    # regenerate it
+./gradlew checkSizeDoc     # fails when it no longer matches, and runs in check
+```
 
-Datetime keeps the largest share because `kotlinx-datetime` is in both columns:
-the formatting moves to the host, the date arithmetic still ships. The 45.0 KB
-for all three is not the sum of the parts, since `Locale` and the enums are
-counted once.
+It is generated because the numbers were worth quoting in the prose, and four
+hand-copied tables would have disagreed with each other within a release. The
+check compares scenario names exactly, so a probe added without regenerating
+fails the build, and compares the figures within 10%, since a bundle moves a
+little with the toolchain and a byte-exact check would only teach people to
+regenerate without reading.
 
-Two numbers in the table read oddly and are worth knowing about before you
-compare the wrong pair. `currency-platform` lands below `currency-codes` because
-that probe calls `Country.currency` and therefore carries the
-country-to-currency table and the `Country` enum, which the platform probe never
-touches. And what is left in `country-platform` is mostly the 249-entry `Country`
-enum, which is why entity narrowing, not more platform work, is what would move
-that number next.
+Two rows read oddly and are worth knowing about before you compare the wrong
+pair. `currency-platform` lands below `currency-codes` because that probe calls
+`Country.currency` and therefore carries the country-to-currency table and the
+`Country` enum, which the platform probe never touches. And what is left in
+`country-platform` is mostly the 249-entry `Country` enum, which is why entity
+narrowing, not more platform work, is what would move that number next.
 
 Kotlin/JS is the only target with dead code elimination, so it is the only one
 where "what does this artifact actually cost" has an answer a build can check.

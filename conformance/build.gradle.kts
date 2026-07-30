@@ -12,5 +12,12 @@ kotlin {
             // through assertions, so a caller is already in a test source set.
             api(libs.kotlin.test)
         }
+        // Declared again for this module's own tests rather than inherited from
+        // the api above. The Android host test compilation does not pick it up
+        // that way, so `check` failed there on an unresolved `Test` annotation
+        // while every other target compiled.
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
+        }
     }
 }

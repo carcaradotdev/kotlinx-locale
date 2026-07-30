@@ -61,15 +61,43 @@ probeDirectories.get().forEach { probe ->
     dependencies.add(sizeProbes.name, dependencies.project(mapOf("path" to ":tools:$probe")))
 }
 
-tasks.register<SizeReport>("sizeReport") {
+val sizeDocument = layout.projectDirectory.file("docs/size.md")
+
+val sizeReport = tasks.register<SizeReport>("sizeReport") {
     group = "verification"
     description = "Builds every size probe and prints the gzipped bundle table"
     // Consuming the configuration carries the dependency on every probe's
     // checkSize task, so there is no task path to get wrong.
     reports.from(sizeReports)
     expectedProbes = probeDirectories.map { it.size }
+    document = layout.buildDirectory.file("reports/size/size.md")
+}
+
+// The published document, generated the same way an ABI dump is: one task writes
+// it into the tree on demand, another fails the build when what is committed no
+// longer matches. Nothing in `check` writes to the source tree.
+val updateSizeDoc = tasks.register<Copy>("updateSizeDoc") {
+    group = "documentation"
+    description = "Regenerates docs/size.md from the probe measurements"
+    from(sizeReport.flatMap { it.document })
+    into(sizeDocument.asFile.parentFile)
+}
+
+val checkSizeDoc = tasks.register<CheckSizeDoc>("checkSizeDoc") {
+    group = "verification"
+    description = "Fails when docs/size.md no longer matches what the probes measure"
+    generated = sizeReport.flatMap { it.document }
+    committed = sizeDocument
+    // Wide enough to absorb toolchain and host noise, narrow enough that a
+    // dependency mistake or a CLDR upgrade still shows up.
+    tolerancePercent = 10
+    stamp = layout.buildDirectory.file("reports/size/checked.txt")
+    // `./gradlew updateSizeDoc check` puts both in one graph, and this one reads
+    // the file the other writes. Without the ordering the result depends on which
+    // ran first, which Gradle rightly refuses to guess at.
+    mustRunAfter(updateSizeDoc)
 }
 
 tasks.named("check") {
-    dependsOn(checkLayeringRule)
+    dependsOn(checkLayeringRule, checkSizeDoc)
 }
