@@ -59,6 +59,7 @@ listOf(
     "datetime-core" to "kotlinx-locale-datetime-core",
     "datetime-cldr-format" to "kotlinx-locale-datetime-cldr-format",
     "datetime-cldr" to "kotlinx-locale-datetime-cldr",
+    "datetime-platform" to "kotlinx-locale-datetime-platform",
 ).forEach { (dir, artifact) ->
     include(":$dir")
     project(":$dir").name = artifact
