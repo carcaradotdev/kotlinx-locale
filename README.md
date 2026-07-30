@@ -166,7 +166,15 @@ date.format(FormatStyle.LONG, Locale.forLanguageTag("pt-BR"))
 ```
 
 The same call as the CLDR version with a different import, which is what the
-package split is for. Two things to know before choosing it.
+package split is for.
+
+What that saves, from the Kotlin/JS probes in `tools/` making identical calls
+against each layer: 20.2 KB against 416.9 KB for country, 20.7 KB against
+329.4 KB for currency, 35.3 KB against 112.5 KB for datetime, and 45.0 KB
+against 823.7 KB for all three at once. Datetime saves the least because
+`kotlinx-datetime` is in both numbers and only the formatting moved.
+
+Two things to know before choosing it.
 
 Platform sources are partial, and deliberately so. Linux, Windows, Android
 Native and WASI expose no locale data Kotlin can read, so on those four every
