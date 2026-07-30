@@ -10,6 +10,7 @@ dependencies {
     implementation(libs.gradle.plugin.kotlin.multiplatform)
     implementation(libs.gradle.plugin.android.kmp.library)
     implementation(libs.gradle.plugin.ktlint)
+    implementation(libs.gradle.plugin.maven.publish)
 }
 
 // Strict validation turns a missing annotation or an implicit ABSOLUTE path

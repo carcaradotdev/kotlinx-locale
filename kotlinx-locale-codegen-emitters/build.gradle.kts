@@ -3,7 +3,7 @@
 // parses XML, so it is safe on a build classpath.
 plugins {
     id("kotlinx-locale-jvm")
-    `maven-publish`
+    id("kotlinx-locale-publish")
 }
 
 kotlin {
@@ -12,14 +12,4 @@ kotlin {
 
 dependencies {
     testImplementation(libs.kotlin.test)
-}
-
-publishing {
-    publications {
-        // A plain JVM project has no publication until one is declared; the
-        // Kotlin Multiplatform plugin creates them, this one does not.
-        create<MavenPublication>("maven") {
-            from(components["java"])
-        }
-    }
 }

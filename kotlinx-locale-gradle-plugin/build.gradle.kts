@@ -4,7 +4,7 @@
 plugins {
     `java-gradle-plugin`
     id("kotlinx-locale-jvm")
-    `maven-publish`
+    id("kotlinx-locale-publish")
 }
 
 dependencies {
