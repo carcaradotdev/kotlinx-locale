@@ -53,9 +53,11 @@ in the bottom one.
 | `currency-types/` | `dev.carcara:kotlinx-locale-currency-types` | The `Currency` enum (active ISO 4217 codes, ISO minor units, CLDR fraction and cash-rounding behavior) and the country-to-currency map. |
 | `currency-core/` | `dev.carcara:kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
 | `currency-cldr-format/` | `dev.carcara:kotlinx-locale-currency-cldr-format` | The reader for the CLDR symbol, name and number records, plus the pattern-based formatter and parser. |
+| `currency-platform/` | `dev.carcara:kotlinx-locale-currency-platform` | `PlatformCurrency`: symbols, names and number formatting from `NumberFormat`, `Intl.NumberFormat` or `NSNumberFormatter`. Ships no tables. |
 | `currency-cldr/` | `dev.carcara:kotlinx-locale-currency-cldr` | `CldrCurrency`, the CLDR symbol and name tables, the pattern-based number formatter and parser, plus `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
 | `datetime-core/` | `dev.carcara:kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
 | `datetime-cldr-format/` | `dev.carcara:kotlinx-locale-datetime-cldr-format` | The reader for the CLDR pattern records, plus the pattern parser and formatter. |
+| `datetime-platform/` | `dev.carcara:kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
 | `datetime-cldr/` | `dev.carcara:kotlinx-locale-datetime-cldr` | `CldrDateTime`, the CLDR pattern data, parser and formatter, plus `LocalDate.format` and friends. |
 | `conformance/` | `dev.carcara:kotlinx-locale-conformance` | The ICU fixtures and the suite that runs any source through them, at an exact tier for CLDR-backed sources and a behavioural tier for platform ones. For test source sets. |
 | `codegen-api/` | `dev.carcara:kotlinx-locale-codegen` | The emitters and the bundle reader: the half of code generation that a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
@@ -149,6 +151,38 @@ locale-country = ["locale-country-types", "locale-country-core", "locale-country
 Dropping `-cldr` gives you the codes, the lookups and `CurrencyAmount` without
 any translated text, which is the difference between roughly 25 KB and roughly
 430 KB gzipped for country on Kotlin/JS.
+
+## Using the platform's data instead of ours
+
+Every domain also has a `-platform` layer that answers from the host rather than
+from bundled tables: `java.util.Locale` and `java.time` on JVM and Android,
+`Intl` on JS and Wasm/JS, Foundation on Apple. Nothing is shipped, and in
+exchange the answers are whatever the device says.
+
+```kotlin
+import dev.carcara.kotlinx.locale.datetime.platform.*
+
+date.format(FormatStyle.LONG, Locale.forLanguageTag("pt-BR"))
+```
+
+The same call as the CLDR version with a different import, which is what the
+package split is for. Two things to know before choosing it.
+
+Platform sources are partial, and deliberately so. Linux, Windows, Android
+Native and WASI expose no locale data Kotlin can read, so on those four every
+lookup misses. Cash rounding is not a platform concept anywhere. Accounting
+formats exist on `Intl` and Foundation but not in `java.text`. Currency parsing
+exists only where it is exact, which is JVM and Android. A miss is the signal the
+`Fallback*` composers read:
+
+```kotlin
+val dates = FallbackDateTimeFormats(primary = PlatformDateTime, fallback = CldrDateTime)
+```
+
+Composition does not round trip across sources. Foundation writes `¥` for JPY in
+`ja` where CLDR writes the fullwidth `￥`, so a string one produced is not
+necessarily one the other parses. Formatting with the platform and parsing with
+CLDR is not something the library promises.
 
 ## Shipping only the locales you use
 
