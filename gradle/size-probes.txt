@@ -9,5 +9,8 @@ probe-country-full
 probe-country-platform
 probe-currency-codes
 probe-currency-full
+probe-currency-platform
 probe-datetime-full
+probe-datetime-platform
 probe-everything
+probe-everything-platform

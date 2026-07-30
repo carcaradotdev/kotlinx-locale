@@ -17,16 +17,29 @@ The right-hand column is what phase 3 committed as a ceiling:
 | --- | ---: | ---: |
 | `Locale` alone, the floor | 13.9 KB | 18 KB |
 | country codes and lookups | 14.6 KB | 20 KB |
+| country, platform | 20.2 KB | 25 KB |
+| currency, platform | 20.7 KB | 26 KB |
 | currency codes, unit maths and `CurrencyAmount` | 23.3 KB | 30 KB |
-| datetime, full | 112.6 KB | 130 KB |
-| currency, full | 329.0 KB | 370 KB |
-| country, full | 416.7 KB | 460 KB |
-| everything | 823.6 KB | 900 KB |
+| datetime, platform | 35.3 KB | 42 KB |
+| everything, platform | 45.0 KB | 54 KB |
+| datetime, full | 112.5 KB | 130 KB |
+| currency, full | 329.4 KB | 370 KB |
+| country, full | 416.9 KB | 460 KB |
+| everything | 823.7 KB | 900 KB |
 
 The earlier figures from the PR 11 probe were 24.4 KB, 33.3 KB, 115.8 KB,
-748.5 KB, 427.8 KB and 845.1 KB for the same rows. The codes-only rows came
+748.5 KB, 427.8 KB and 845.1 KB for the CLDR rows. The codes-only rows came
 down because `-core` no longer drags a data module, and the currency row came
 down a lot because a currency-only consumer no longer pays for country names.
+
+The platform rows are the phase 6 layer, paired call for call with the CLDR
+probe above them so the only difference is where the answer comes from. All
+three domains at once cost 45.0 KB against 823.7 KB, so 5.5% of the shipped
+bundle survives. Datetime keeps the largest share of its CLDR counterpart, 31%,
+because `kotlinx-datetime` is in both columns and only the formatting moved. What
+is left in the country and currency platform rows is now mostly the enums
+themselves, which is what makes entity narrowing the next thing that would move
+these numbers rather than any further platform work.
 
 Three facts drive the whole design.
 
