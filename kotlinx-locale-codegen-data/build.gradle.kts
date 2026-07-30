@@ -4,15 +4,5 @@
 // consumer's lock file.
 plugins {
     id("kotlinx-locale-jvm")
-    `maven-publish`
-}
-
-publishing {
-    publications {
-        // A plain JVM project has no publication until one is declared; the
-        // Kotlin Multiplatform plugin creates them, this one does not.
-        create<MavenPublication>("maven") {
-            from(components["java"])
-        }
-    }
+    id("kotlinx-locale-publish")
 }

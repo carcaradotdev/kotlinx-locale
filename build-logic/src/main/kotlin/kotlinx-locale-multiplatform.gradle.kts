@@ -14,7 +14,9 @@ plugins {
     // Applied again so this script gets the `kotlin` accessor. Applying a plugin
     // twice is a no-op.
     id("org.jetbrains.kotlin.multiplatform")
-    `maven-publish`
+    // After the base plugin: publication setup inspects the applied plugins to
+    // learn this is a multiplatform module.
+    id("kotlinx-locale-publish")
 }
 
 kotlin {
