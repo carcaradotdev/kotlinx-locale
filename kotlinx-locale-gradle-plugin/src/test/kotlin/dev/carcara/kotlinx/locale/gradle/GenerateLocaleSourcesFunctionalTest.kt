@@ -114,6 +114,29 @@ class GenerateLocaleSourcesFunctionalTest {
         assertTrue(generated("com/example/locale/LocalizedFormat.kt").isFile, "datetime was requested")
         assertFalse(generated("com/example/locale/CountryNames.kt").isFile, "country was not requested")
         assertFalse(generated("com/example/locale/CurrencyNames.kt").isFile, "currency was not requested")
+        assertFalse(generated("com/example/locale/SkeletonFormat.kt").isFile, "skeletons were not requested")
+    }
+
+    @Test
+    fun `skeletons pull in the patterns they are matched against`() {
+        buildFile(features = "datetime { skeletons = true }")
+        run("generateLocaleSources")
+
+        // The matcher scores a request against the locale's standard date and
+        // time patterns as well as its skeleton table, and renders the winner
+        // with its month and weekday names, so asking for skeletons alone still
+        // has to produce both tables and both bindings.
+        val binding = generated("com/example/locale/SkeletonFormat.kt")
+        assertTrue(binding.isFile, "skeletons were requested")
+        assertContains(binding.readText(), "GeneratedDateTimeSkeletons")
+        assertContains(binding.readText(), "GeneratedDateTime.records")
+        assertTrue(generated("com/example/locale/LocalizedFormat.kt").isFile, "skeletons imply patterns")
+
+        val tables = generated("com/example/locale/internal/data").list()?.toList().orEmpty()
+        assertTrue(tables.any { it.startsWith("SkeletonFormats") }, "the skeleton table is missing")
+        assertTrue(tables.any { it.startsWith("SkeletonAppendFormats") }, "the append formats are missing")
+        assertTrue(tables.any { it.startsWith("SkeletonNames") }, "the names and quarters are missing")
+        assertTrue(tables.any { it.startsWith("LocaleData") }, "the patterns to match against are missing")
     }
 
     @Test

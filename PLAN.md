@@ -833,10 +833,11 @@ reviewed diff, not a running battle with the check.
 
 ## The resulting API surface
 
-`API-NEXT.md` works the change through `API.md` entry by entry, for a consumer
-taking core, types and CLDR. The short version: twenty-six public entry points,
-twenty-five of them unchanged, and every output table in `API.md` stays byte for
-byte identical because it is the same data through the same formatter.
+This was worked through `API.md` entry by entry while the split was in flight,
+for a consumer taking core, types and CLDR. The short version: twenty-six public
+entry points, twenty-five of them unchanged, and every output table in `API.md`
+stayed byte for byte identical because it is the same data through the same
+formatter. [`API.md`](API.md) is now the reference and the only one.
 
 ## Decisions
 

@@ -14,6 +14,9 @@ import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.*
 import dev.carcara.kotlinx.locale.datetime.cldr.*
 
+// kotlinx-locale-datetime-cldr-skeletons, if you want skeleton formatting
+import dev.carcara.kotlinx.locale.datetime.cldr.skeletons.*
+
 // kotlinx-locale-country-types, -core and -cldr-full
 import dev.carcara.kotlinx.locale.country.*
 import dev.carcara.kotlinx.locale.country.cldr.*
@@ -26,7 +29,8 @@ import dev.carcara.kotlinx.locale.currency.cldr.*
 `kotlinx-locale-core` provides `Locale` and the `LocaleDataSource` contract.
 Datetime adds `FormatStyle`, `TextStyle` and extension functions on the
 kotlinx-datetime types `LocalDate`, `LocalTime`, `LocalDateTime`, `Month` and
-`DayOfWeek`. Country adds the `Country` enum with the ISO 3166-1 codes and CLDR
+`DayOfWeek`; a fourth artifact, `-cldr-skeletons`, adds
+[skeleton formatting](#skeleton-formatting) on top of those. Country adds the `Country` enum with the ISO 3166-1 codes and CLDR
 display names. Currency adds the `Currency` enum (ISO 4217 codes and decimals
 plus CLDR formatting behavior), the `CurrencyAmount` value type and the CLDR
 currency formatter; it depends on country for country-to-currency mapping.
@@ -345,6 +349,187 @@ fun DayOfWeek.displayName(style: TextStyle, locale: Locale): String
 | es | lunes | lun | L |
 | zh | 星期一 | 周一 | 一 |
 | ru | понедельник | пн | П |
+
+## Skeleton formatting
+
+Requires `kotlinx-locale-datetime-cldr-skeletons`, which is opt in: its tables
+are around 60 KB gzipped on top of `-cldr-full`.
+
+```kotlin
+fun LocalDate.format(skeleton: String, locale: Locale = Locale.current): String
+fun LocalTime.format(skeleton: String, locale: Locale = Locale.current): String
+fun LocalDateTime.format(skeleton: String, locale: Locale = Locale.current): String
+fun skeletonPatternOrNull(skeleton: String, locale: Locale = Locale.current): String?
+```
+
+[`FormatStyle`](#formatstyle) offers four fixed lengths. A skeleton instead names
+the fields you want, in no particular order, and the locale decides how to
+arrange them. It is what `DateFormat.getBestDateTimePattern` gives an Android
+developer and `setLocalizedDateFormatFromTemplate` an iOS one.
+
+Output for 2026-07-27:
+
+| Locale | `yMd` | `yMMMd` | `yMMMMd` | `MMMEd` |
+| --- | --- | --- | --- | --- |
+| en | 7/27/2026 | Jul 27, 2026 | July 27, 2026 | Mon, Jul 27 |
+| en-GB | 27/07/2026 | 27 Jul 2026 | 27 July 2026 | Mon 27 Jul |
+| de | 27.7.2026 | 27. Juli 2026 | 27. Juli 2026 | Mo., 27. Juli |
+| fr | 27/07/2026 | 27 juil. 2026 | 27 juillet 2026 | lun. 27 juil. |
+| es | 27/7/2026 | 27 jul 2026 | 27 de julio de 2026 | lun, 27 jul |
+| it | 27/07/2026 | 27 lug 2026 | 27 luglio 2026 | lun 27 lug |
+| pt-BR | 27/07/2026 | 27 de jul. de 2026 | 27 de julho de 2026 | seg., 27 de jul. |
+| nl | 27-7-2026 | 27 jul 2026 | 27 juli 2026 | ma 27 jul |
+| sv | 2026-07-27 | 27 juli 2026 | 27 juli 2026 | mån 27 juli |
+| pl | 27.07.2026 | 27 lip 2026 | 27 lipca 2026 | pon., 27 lip |
+| tr | 27.07.2026 | 27 Tem 2026 | 27 Temmuz 2026 | 27 Tem Pzt |
+| ru | 27.07.2026 | 27 июл. 2026 г. | 27 июля 2026 г. | пн, 27 июл. |
+| ja | 2026/7/27 | 2026年7月27日 | 2026年7月27日 | 7月27日(月) |
+| ko | 2026. 7. 27. | 2026년 7월 27일 | 2026년 7월 27일 | 7월 27일 (월) |
+| zh | 2026/7/27 | 2026年7月27日 | 2026年7月27日 | 7月27日周一 |
+| hi | 27/7/2026 | 27 जुल॰ 2026 | 27 जुलाई 2026 | सोम, 27 जुल॰ |
+| th | 27/7/2026 | 27 ก.ค. 2026 | 27 กรกฎาคม 2026 | จันทร์ 27 ก.ค. |
+| fi | 27.7.2026 | 27.7.2026 | 27. heinäkuuta 2026 | ma 27.7. |
+| ar-EG | ٢٧‏/٧‏/٢٠٢٦ | ٢٧ يوليو ٢٠٢٦ | ٢٧ يوليو ٢٠٢٦ | الاثنين، ٢٧ يوليو |
+| fa | ۲۰۲۶/۷/۲۷ | ۲۷ ژوئیه ۲۰۲۶ | ۲۷ ژوئیهٔ ۲۰۲۶ | دوشنبه ۲۷ ژوئیه |
+
+The `fi` column is not a bug: Finnish writes an abbreviated month numerically,
+so `yMMMd` and `yMd` coincide there.
+
+And for 15:05:09, with `yMMMdjm` on the same date:
+
+| Locale | `jm` | `jms` | `yMMMdjm` | `yQQQ` |
+| --- | --- | --- | --- | --- |
+| en | 3:05 PM | 3:05:09 PM | Jul 27, 2026, 3:05 PM | Q3 2026 |
+| en-GB | 15:05 | 15:05:09 | 27 Jul 2026, 15:05 | Q3 2026 |
+| de | 15:05 | 15:05:09 | 27. Juli 2026, 15:05 | Q3 2026 |
+| fr | 15:05 | 15:05:09 | 27 juil. 2026, 15:05 | T3 2026 |
+| pt-BR | 15:05 | 15:05:09 | 27 de jul. de 2026, 15:05 | T3 de 2026 |
+| nl | 15:05 | 15:05:09 | 27 jul 2026, 15:05 | K3 2026 |
+| pl | 15:05 | 15:05:09 | 27 lip 2026, 15:05 | III kw. 2026 |
+| tr | 15:05 | 15:05:09 | 27 Tem 2026 15:05 | 2026 Ç3 |
+| ru | 15:05 | 15:05:09 | 27 июл. 2026 г., 15:05 | 3-й кв. 2026 г. |
+| ja | 15:05 | 15:05:09 | 2026年7月27日 15:05 | 2026/Q3 |
+| ko | 오후 3:05 | 오후 3:05:09 | 2026년 7월 27일 오후 3:05 | 2026년 3분기 |
+| zh | 15:05 | 15:05:09 | 2026年7月27日 15:05 | 2026年第3季度 |
+| hi | 3:05 pm | 3:05:09 pm | 27 जुल॰ 2026, 3:05 pm | ति3 2026 |
+| th | 15:05 น. | 15:05:09 | 27 ก.ค. 2026 15:05 น. | ไตรมาส 3 2026 |
+| fi | 15.05 | 15.05.09 | 27.7.2026 klo 15.05 | 3. nelj. 2026 |
+| ar-EG | ٣:٠٥ م | ٣:٠٥:٠٩ م | ٢٧ يوليو ٢٠٢٦، ٣:٠٥ م | الربع الثالث ٢٠٢٦ |
+| fa | ۱۵:۰۵ | ۱۵:۰۵:۰۹ | ۲۷ ژوئیه ۲۰۲۶، ۱۵:۰۵ | سه‌ماههٔ سوم ۲۰۲۶ |
+
+A skeleton spanning a date and a time is formatted in two halves and joined with
+the locale's own glue, which is why `fi` reads `klo` and `en` a comma. That glue
+is CLDR's `atTime` variant rather than the one
+[`LocalDateTime.format`](#localdatetimeformat) uses, so the two differ on
+purpose: `en` at LONG writes `July 27, 2026 at 3:05 PM` here and
+`July 27, 2026, 3:05 PM` there.
+
+### Skeleton letters
+
+`G` era, `y` year, `Q` quarter, `M` month, `E` weekday, `d` day, `D` day of
+year, `a`/`b`/`B` day period, `h`/`H`/`K`/`k` hour, `m` minute, `s` second.
+Repeating a letter asks for a width.
+
+| Skeleton | Pattern in `en` | Output |
+| --- | --- | --- |
+| `M` | `L` | 7 |
+| `MM` | `LL` | 07 |
+| `MMM` | `LLL` | Jul |
+| `MMMM` | `LLLL` | July |
+| `MMMMM` | `LLLLL` | J |
+| `E` | `ccc` | Mon |
+| `EEEE` | `cccc` | Monday |
+| `yM` | `M/y` | 7/2026 |
+| `yMM` | `MM/y` | 07/2026 |
+
+Two things that table shows. Asking for `M` can return a pattern written with
+`L`, the stand-alone month: which of the two renders a field is the locale's
+business, not the caller's, and the same holds for `E` against `c`. And the
+order you write a skeleton in is discarded — `yMMMd` and `dMMMy` are the same
+request.
+
+The hour is special enough to have its own letters. `j` asks for whichever hour
+the locale prefers together with the day period that goes with it, which is
+usually what you want; `J` asks for the hour with no day period at all; `C` asks
+for the locale's first *allowed* format, which can call for a flexible day
+period where `j` would have asked for AM/PM.
+
+| Locale | `jm` | `Jm` | `Cm` | `jm` output |
+| --- | --- | --- | --- | --- |
+| en | `h:mm a` | `hh:mm` | `h:mm a` | 3:05 PM |
+| en-GB | `HH:mm` | `HH:mm` | `HH:mm` | 15:05 |
+| pt-BR | `HH:mm` | `HH:mm` | `HH:mm` | 15:05 |
+| ja | `H:mm` | `H:mm` | `H:mm` | 15:05 |
+| hi-IN | `h:mm a` | `hh:mm` | `B h:mm` | 3:05 pm |
+| ko | `a h:mm` | `hh:mm` | `a h:mm` | 오후 3:05 |
+
+The hour keeps the width the locale wrote rather than the width you asked for,
+so `hhmm` in `en` still gives `h:mm a`. That is deliberate and matches ICU:
+minute and second behave the same way.
+
+### The pattern on its own
+
+```kotlin
+skeletonPatternOrNull("yMMMd", ptBR)  // "d 'de' MMM 'de' y"
+```
+
+| Locale | `yMd` | `yMMMd` | `jm` |
+| --- | --- | --- | --- |
+| en | `M/d/y` | `MMM d, y` | `h:mm a` |
+| en-GB | `dd/MM/y` | `d MMM y` | `HH:mm` |
+| de | `d.M.y` | `d. MMM y` | `HH:mm` |
+| pt-BR | `dd/MM/y` | `d 'de' MMM 'de' y` | `HH:mm` |
+| ja | `y/M/d` | `y年M月d日` | `H:mm` |
+| ru | `dd.MM.y` | `d MMM y 'г'.` | `HH:mm` |
+| ar-EG | `d‏/M‏/y` | `d MMM y` | `h:mm a` |
+
+A *numeric* pattern composes with kotlinx-datetime, which buys locale aware
+parsing off the same table:
+
+```kotlin
+@OptIn(FormatStringsInDatetimeFormats::class)
+val parser = LocalDate.Format { byUnicodePattern(skeletonPatternOrNull("yMd", ptBR)!!) }
+parser.parse("27/07/2026")
+```
+
+A pattern naming a month or a weekday does not. `byUnicodePattern` rejects `MMM`
+and `EEE` with *"the directive is locale-dependent, but locales are not supported
+in Kotlin"* — which is precisely the gap this library fills for formatting and
+does not yet fill for parsing. Formatting is one-way for anything with a name in
+it.
+
+### When no single pattern covers the request
+
+A locale declares around fifty skeletons, so most requests match one outright.
+When none covers every field, the leftover is folded in with the locale's
+`appendItems` format, which names the field it is adding:
+
+| Locale | `yMMMdQQQ` | Output |
+| --- | --- | --- |
+| en | `MMM d, y ('quarter': QQQ)` | Jul 27, 2026 (quarter: Q3) |
+| de | `d. MMM y ('Quartal': QQQ)` | 27. Juli 2026 (Quartal: Q3) |
+| pt-BR | `d 'de' MMM 'de' y ('trimestre': QQQ)` | 27 de jul. de 2026 (trimestre: T3) |
+| fr | `d MMM y ('trimestre': QQQ)` | 27 juil. 2026 (trimestre: T3) |
+
+### What is refused
+
+`skeletonPatternOrNull` returns `null`, and the `format` overloads fall back to
+ISO 8601, for any skeleton naming a field the library cannot render: time zones
+(`v z Z V O X x`), week numbering (`w W F`), fractional seconds (`S A`), the
+Julian day (`g`) and the non-gregorian cyclic year (`U`). A `LocalDate` carries
+no zone, and week numbering needs each locale's first day of week and minimum
+days, which is data this library does not ship. Answering a field short would be
+worse than not answering, so it declines.
+
+Interval formatting and non-gregorian calendars are not supported either.
+
+### How it is checked
+
+The matcher is UTS #35's algorithm written in common Kotlin — no `expect`/`actual`,
+no `Intl`, no host formatter, so Kotlin/JS answers identically to JVM and Native
+whether or not the host has ICU. It is held to patterns generated from ICU4J
+across 859 locales and 109 skeletons, and to CLDR's own datetime cases, on every
+target the library publishes.
 
 ## Numbering systems
 
@@ -697,8 +882,12 @@ a guaranteed answer:
 val names = FallbackCountryNames(primary = PlatformCountry, fallback = CldrCountry)
 ```
 
+[Skeleton formatting](#skeleton-formatting) is the one capability with no
+platform counterpart, and that is a decision rather than a gap: the hosts will
+format from a template, but none of them hands back the pattern it chose.
+
 What the choice costs is measured rather than argued: 20.2 KB against 416.9 KB
-gzipped for country on Kotlin/JS, and 45.0 KB against 823.7 KB for all three
+gzipped for country on Kotlin/JS, and 45.0 KB against 823.4 KB for all three
 domains at once. [`docs/size.md`](docs/size.md) has the whole table.
 
 ## The locale catalog
@@ -732,6 +921,9 @@ stays the zero-cost path for tags built at runtime.
 `format`, `displayName` and `symbol` never throw for any `Locale`: an unknown
 locale falls back along the chain in [Fallback resolution](#fallback-resolution)
 and ends at CLDR root (names additionally fall back to the ISO code). The
+skeleton overloads do not throw on a bad skeleton either: an unrenderable field
+makes `skeletonPatternOrNull` return `null` and `format` fall back to ISO 8601,
+rather than raising or silently dropping the field. The
 throwing entry points are `Locale.of`, `Locale.forLanguageTag`, the non-`OrNull`
 code lookups on `Country` and `Currency`, the `CurrencyAmount` parse and `of`
 functions, and `CurrencyAmount` arithmetic across two different currencies.

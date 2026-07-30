@@ -1,0 +1,22 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-datetime-cldr-skeletons>
+final object dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons : dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonFormatSource { // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons|null[0]
+    final val supportedLocales // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun formatOrNull(kotlinx.datetime/LocalDate, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.formatOrNull|formatOrNull(kotlinx.datetime.LocalDate;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun formatOrNull(kotlinx.datetime/LocalDateTime, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.formatOrNull|formatOrNull(kotlinx.datetime.LocalDateTime;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun formatOrNull(kotlinx.datetime/LocalTime, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.formatOrNull|formatOrNull(kotlinx.datetime.LocalTime;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun skeletonPatternOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.skeletonPatternOrNull|skeletonPatternOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final fun (kotlinx.datetime/LocalDate).dev.carcara.kotlinx.locale.datetime.cldr.skeletons/format(kotlin/String, dev.carcara.kotlinx.locale/Locale = ...): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/format|format@kotlinx.datetime.LocalDate(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (kotlinx.datetime/LocalDateTime).dev.carcara.kotlinx.locale.datetime.cldr.skeletons/format(kotlin/String, dev.carcara.kotlinx.locale/Locale = ...): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/format|format@kotlinx.datetime.LocalDateTime(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (kotlinx.datetime/LocalTime).dev.carcara.kotlinx.locale.datetime.cldr.skeletons/format(kotlin/String, dev.carcara.kotlinx.locale/Locale = ...): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/format|format@kotlinx.datetime.LocalTime(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun dev.carcara.kotlinx.locale.datetime.cldr.skeletons/skeletonPatternOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale = ...): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/skeletonPatternOrNull|skeletonPatternOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]

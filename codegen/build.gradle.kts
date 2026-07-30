@@ -7,6 +7,9 @@ plugins {
 
 dependencies {
     implementation(project(":kotlinx-locale-codegen-emitters"))
+    // Generates the skeleton goldens and nothing else. This module runs at build
+    // time and is never published, so ICU cannot reach a consumer's classpath.
+    implementation(libs.icu4j)
     testImplementation(libs.kotlin.test)
 }
 

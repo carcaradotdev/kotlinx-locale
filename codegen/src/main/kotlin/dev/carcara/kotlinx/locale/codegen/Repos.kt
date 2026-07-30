@@ -13,7 +13,15 @@ val CLDR_REPO = RepoSpec(
     name = "cldr",
     url = "https://github.com/unicode-org/cldr.git",
     tag = "release-48-2",
-    sparsePaths = listOf("common/main", "common/supplemental", "common/dtd", "common/validity"),
+    sparsePaths = listOf(
+        "common/main",
+        "common/supplemental",
+        "common/dtd",
+        "common/validity",
+        // CLDR's own datetime cases, a second opinion on the skeleton matcher
+        // that is independent of the ICU4J goldens.
+        "common/testData/datetime",
+    ),
 )
 
 val ICU_REPO = RepoSpec(
@@ -25,6 +33,10 @@ val ICU_REPO = RepoSpec(
         "icu4c/source/data/misc",
         "icu4c/source/data/curr",
         "icu4c/source/data/region",
+        // Not compiled against and not a dependency: DateTimePatternGenerator.java
+        // is the reference for the corners UTS #35 states tersely, and reading it
+        // is cheaper than guessing at them.
+        "icu4j/main/core/src/main/java/com/ibm/icu/text",
     ),
 )
 

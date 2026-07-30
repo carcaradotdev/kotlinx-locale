@@ -99,10 +99,17 @@ abstract class GenerateLocaleSources : DefaultTask() {
                 countryNames = root.takeIf { requested.countryNames },
                 currencyNames = root.takeIf { requested.currencyNames || requested.currencyFormats },
                 currencyFormats = root.takeIf { requested.currencyFormats },
-                dateTime = root.takeIf { requested.dateTimePatterns },
+                dateTime = root.takeIf { requested.dateTimePatterns || requested.dateTimeSkeletons },
+                skeletons = root.takeIf { requested.dateTimeSkeletons },
                 countryBinding = binding(root, basePackage, "${prefix}CountryNames", requested.countryNames),
                 currencyBinding = binding(root, basePackage, "${prefix}Currency", requested.currencyNames || requested.currencyFormats),
-                dateTimeBinding = binding(root, basePackage, "${prefix}DateTime", requested.dateTimePatterns),
+                dateTimeBinding = binding(
+                    root,
+                    basePackage,
+                    "${prefix}DateTime",
+                    requested.dateTimePatterns || requested.dateTimeSkeletons,
+                ),
+                skeletonBinding = binding(root, basePackage, "${prefix}DateTimeSkeletons", requested.dateTimeSkeletons),
             ),
             packages = registryPackages,
         )
@@ -168,4 +175,11 @@ interface GeneratedFeatures {
 
     @get:Input
     val dateTimePatterns: Boolean
+
+    /**
+     * Implies [dateTimePatterns]: matching scores against the standard patterns
+     * and rendering needs the calendar names, so the two tables travel together.
+     */
+    @get:Input
+    val dateTimeSkeletons: Boolean
 }

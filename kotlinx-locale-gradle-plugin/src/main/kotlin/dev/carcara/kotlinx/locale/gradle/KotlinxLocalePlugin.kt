@@ -43,6 +43,7 @@ class KotlinxLocalePlugin : Plugin<Project> {
         extension.currency.names.convention(false)
         extension.currency.formats.convention(false)
         extension.datetime.patterns.convention(false)
+        extension.datetime.skeletons.convention(false)
 
         val cldrData = declareCldrDataConfiguration(target)
         val generate = registerGenerateTask(target, extension, cldrData)
@@ -92,7 +93,7 @@ class KotlinxLocalePlugin : Plugin<Project> {
             target.provider {
                 require(!extension.generatesNothing()) {
                     "kotlinxLocale generates nothing: enable at least one of country.names, " +
-                        "currency.names, currency.formats or datetime.patterns"
+                        "currency.names, currency.formats, datetime.patterns or datetime.skeletons"
                 }
                 target.objects.newInstance(GeneratedFeaturesValue::class.java).apply {
                     countryNames = extension.country.names.get()
@@ -101,6 +102,7 @@ class KotlinxLocalePlugin : Plugin<Project> {
                     currencyNames = extension.currency.names.get() || extension.currency.formats.get()
                     currencyFormats = extension.currency.formats.get()
                     dateTimePatterns = extension.datetime.patterns.get()
+                    dateTimeSkeletons = extension.datetime.skeletons.get()
                 }
             },
         )
@@ -154,4 +156,5 @@ internal interface GeneratedFeaturesValue : GeneratedFeatures {
     override var currencyNames: Boolean
     override var currencyFormats: Boolean
     override var dateTimePatterns: Boolean
+    override var dateTimeSkeletons: Boolean
 }

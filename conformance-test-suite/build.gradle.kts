@@ -15,6 +15,10 @@ kotlin {
             api(project(":kotlinx-locale-country-core"))
             api(project(":kotlinx-locale-currency-core"))
             api(project(":kotlinx-locale-datetime-core"))
+            // The skeleton contract lives in -cldr-runtime rather than -core,
+            // because no platform source can answer it. The fixtures for it
+            // therefore need the runtime module, not just the core one.
+            api(project(":kotlinx-locale-datetime-cldr-runtime"))
             // kotlin-test is an api dependency on purpose: the suite reports
             // through assertions, so a caller is already in a test source set.
             api(libs.kotlin.test)

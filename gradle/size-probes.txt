@@ -11,6 +11,7 @@ probe-currency-codes
 probe-currency-full
 probe-currency-platform
 probe-datetime-full
+probe-datetime-skeletons
 probe-datetime-platform
 probe-everything
 probe-everything-platform

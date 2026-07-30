@@ -4,6 +4,7 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/CldrDateTime : dev/c
 	public fun formatDateOrNull (Lkotlinx/datetime/LocalDate;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatDateTimeOrNull (Lkotlinx/datetime/LocalDateTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatTimeOrNull (Lkotlinx/datetime/LocalTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public final fun getRecords ()Ljava/util/Map;
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public fun monthNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 }

@@ -1,6 +1,6 @@
 # Size probes
 
-Eleven Kotlin/JS applications, one per dependency set worth knowing the price of.
+Twelve Kotlin/JS applications, one per dependency set worth knowing the price of.
 Each declares a gzipped ceiling for its minified bundle, and `checkSize` fails
 the build when it goes over.
 

@@ -20,7 +20,7 @@ import javax.inject.Inject
  *
  *     country { names = true }
  *     currency { names = true; formats = true }
- *     datetime { patterns = true }
+ *     datetime { patterns = true; skeletons = true }
  * }
  * ```
  *
@@ -100,8 +100,11 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
     }
 
     /** True when nothing at all was asked for, which is worth failing on rather than generating an empty source set. */
-    internal fun generatesNothing(): Boolean =
-        !country.names.get() && !currency.names.get() && !currency.formats.get() && !datetime.patterns.get()
+    internal fun generatesNothing(): Boolean = !country.names.get() &&
+        !currency.names.get() &&
+        !currency.formats.get() &&
+        !datetime.patterns.get() &&
+        !datetime.skeletons.get()
 }
 
 abstract class CountryFeatures {
@@ -128,4 +131,17 @@ abstract class DateTimeFeatures {
     /** Date and time patterns plus month and weekday names. */
     @get:Input
     abstract val patterns: Property<Boolean>
+
+    /**
+     * Skeleton formatting: `format(date, "yMMMd", locale)` and the pattern
+     * behind it.
+     *
+     * Implies [patterns], because matching a skeleton scores against the
+     * locale's standard date and time patterns and rendering the winner needs
+     * its month and weekday names. Worth asking for deliberately: across all
+     * locales the tables are the larger half of the datetime data, which is why
+     * the shipped build puts them in their own artifact.
+     */
+    @get:Input
+    abstract val skeletons: Property<Boolean>
 }

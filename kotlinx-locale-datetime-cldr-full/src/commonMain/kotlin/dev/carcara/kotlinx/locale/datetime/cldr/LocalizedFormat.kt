@@ -2,6 +2,7 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr
 
+import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource
 import dev.carcara.kotlinx.locale.datetime.FormatStyle
@@ -22,7 +23,20 @@ import kotlinx.datetime.Month
  * The parser and formatter live in `kotlinx-locale-datetime-cldr-runtime`; all
  * this object contributes is the table.
  */
-public object CldrDateTime : DateTimeFormatSource by PayloadDateTimeFormats(localeDataRegistry)
+public object CldrDateTime : DateTimeFormatSource by PayloadDateTimeFormats(localeDataRegistry) {
+
+    /**
+     * The pattern table itself, for an engine layered over this one.
+     *
+     * Skeleton formatting needs it: matching scores against the four
+     * standard date and four standard time patterns as well as against the
+     * skeleton table, and rendering the winner needs the month and weekday
+     * names. Exposing the table beats making
+     * `kotlinx-locale-datetime-cldr-skeletons` carry a second copy of it.
+     */
+    @InternalKotlinxLocaleApi
+    public val records: Map<String, String> get() = localeDataRegistry
+}
 
 /**
  * Formats this date with the locale's standard date pattern of the given [style].
