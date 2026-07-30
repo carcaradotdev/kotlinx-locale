@@ -1,6 +1,6 @@
 // The published Gradle plugin. It runs the emitters from
-// :kotlinx-locale-codegen against the bundle the consumer resolves from
-// :kotlinx-locale-cldr-data.
+// :kotlinx-locale-codegen-emitters against the bundle the consumer resolves from
+// :kotlinx-locale-codegen-data.
 plugins {
     `java-gradle-plugin`
     id("kotlinx-locale-jvm")
@@ -12,7 +12,7 @@ dependencies {
     // disagree about the generator API is not a combination anyone should be
     // able to assemble. The data is not pinned, so a consumer can move to a
     // newer CLDR release without waiting for a plugin release.
-    implementation(project(":kotlinx-locale-codegen"))
+    implementation(project(":kotlinx-locale-codegen-emitters"))
 
     // Only to wire the generated directory into the right Kotlin source set. The
     // consumer's own Kotlin plugin provides it at runtime, so compileOnly.
@@ -64,7 +64,7 @@ tasks.test {
     systemProperty(
         "kotlinx.locale.bundle",
         rootProject.layout.projectDirectory
-            .file("cldr-data/src/main/resources/dev/carcara/kotlinx/locale/cldr-data.txt")
+            .file("codegen-data/src/main/resources/dev/carcara/kotlinx/locale/cldr-data.txt")
             .asFile.absolutePath,
     )
 }

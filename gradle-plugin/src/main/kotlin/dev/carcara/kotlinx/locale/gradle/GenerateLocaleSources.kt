@@ -37,7 +37,7 @@ import javax.inject.Inject
 abstract class GenerateLocaleSources : DefaultTask() {
 
     /**
-     * The `kotlinx-locale-cldr-data` artifact, resolved from the consumer's
+     * The `kotlinx-locale-codegen-data` artifact, resolved from the consumer's
      * repositories.
      *
      * NONE rather than the implicit ABSOLUTE: only the bundle's content decides
@@ -126,7 +126,7 @@ abstract class GenerateLocaleSources : DefaultTask() {
     private fun readBundle(): LocaleDataBundle {
         val candidates = cldrData.files.filter { it.isFile }
         check(candidates.isNotEmpty()) {
-            "No kotlinx-locale-cldr-data on the classpath. The plugin adds it by default, so " +
+            "No kotlinx-locale-codegen-data on the classpath. The plugin adds it by default, so " +
                 "either this build declares no repository that has it, or something replaced the " +
                 "kotlinxLocaleCldrData dependency."
         }

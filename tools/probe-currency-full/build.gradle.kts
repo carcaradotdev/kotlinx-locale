@@ -8,6 +8,6 @@ sizeProbe {
 
 kotlin {
     sourceSets.jsMain.dependencies {
-        implementation(project(":kotlinx-locale-currency-cldr"))
+        implementation(project(":kotlinx-locale-currency-cldr-full"))
     }
 }

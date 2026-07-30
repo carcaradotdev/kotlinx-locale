@@ -1,6 +1,0 @@
-public final class dev/carcara/kotlinx/locale/country/cldr/format/PayloadCountryNames : dev/carcara/kotlinx/locale/country/CountryNameSource {
-	public fun <init> (Ljava/util/Map;)V
-	public fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
-	public fun getSupportedLocales ()Ljava/util/Set;
-}
-

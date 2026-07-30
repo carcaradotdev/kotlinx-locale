@@ -1,22 +1,24 @@
 # API reference
 
-Each domain is three artifacts and two packages: the type and the contract share
-a package, and the implementation gets its own so that two of them can sit on
-one classpath without silently resolving by classpath order.
+Each domain is three artifacts to depend on and two packages to import: the type
+and the contract share a package, and the implementation gets its own so that two
+of them can sit on one classpath without silently resolving by classpath order.
+(`-cldr-full` pulls `-cldr-runtime`, the engine it supplies tables to, so the
+dependency block names three and resolves four.)
 
 ```kotlin
 // kotlinx-locale-core
 import dev.carcara.kotlinx.locale.Locale
 
-// kotlinx-locale-datetime-core and -cldr
+// kotlinx-locale-datetime-core and -cldr-full
 import dev.carcara.kotlinx.locale.datetime.*
 import dev.carcara.kotlinx.locale.datetime.cldr.*
 
-// kotlinx-locale-country-types, -core and -cldr
+// kotlinx-locale-country-types, -core and -cldr-full
 import dev.carcara.kotlinx.locale.country.*
 import dev.carcara.kotlinx.locale.country.cldr.*
 
-// kotlinx-locale-currency-types, -core and -cldr
+// kotlinx-locale-currency-types, -core and -cldr-full
 import dev.carcara.kotlinx.locale.currency.*
 import dev.carcara.kotlinx.locale.currency.cldr.*
 ```
@@ -364,7 +366,7 @@ regional Arabic locales.
 ## Country
 
 ```kotlin
-// kotlinx-locale-country-types, -core and -cldr
+// kotlinx-locale-country-types, -core and -cldr-full
 import dev.carcara.kotlinx.locale.country.*
 import dev.carcara.kotlinx.locale.country.cldr.*
 ```
@@ -426,7 +428,7 @@ chain falls back to the alpha-2 code. `displayName` defaults its argument to
 ## Currency
 
 ```kotlin
-// kotlinx-locale-currency-types, -core and -cldr
+// kotlinx-locale-currency-types, -core and -cldr-full
 import dev.carcara.kotlinx.locale.currency.*
 import dev.carcara.kotlinx.locale.currency.cldr.*
 ```
@@ -619,8 +621,8 @@ not.
 
 ## Data sources
 
-Every domain's data reaches you through an interface, and a `-cldr` module is
-one implementation of it rather than the only possible one. Each convenience
+Every domain's data reaches you through an interface, and a `-cldr-full` module
+is one implementation of it rather than the only possible one. Each convenience
 extension above is a single line over a public source object, so the explicit
 form is always there:
 
@@ -661,18 +663,18 @@ The total operations `-core` layers over each interface supply the documented
 fallback: the ISO code for country and currency names, and ISO 8601 for dates
 and times, which is close to what CLDR root already prints.
 
-**Checking your own source.** `kotlinx-locale-conformance` runs any
-implementation through the ICU fixtures:
+**How the shipped sources are checked.** Both implementations of every contract
+run through one conformance suite built from ICU fixtures. It lives in this
+repository's `conformance-test-suite/` module and is not published: it exists so
+that the CLDR source and the platform source of a domain are held to the same
+assertions, not as a compliance kit for sources outside this build.
 
-```kotlin
-@Test
-fun conforms() = MyCountryNames.assertConformsToCountryNames(ConformanceTier.EXACT)
-```
-
-`EXACT` is for sources compiled from CLDR, which are a second encoding of the
-data ICU encodes and must match it byte for byte. `BEHAVIOURAL` is for platform
-sources, whose data belongs to the host and moves with OS versions; it checks
-that answers are well-shaped and round trip, not what they say.
+The suite runs at two tiers. `EXACT` is for the sources compiled from CLDR,
+which are a second encoding of the data ICU encodes and must match it byte for
+byte. `BEHAVIOURAL` is for the platform sources, whose data belongs to the host
+and moves with OS versions; it checks that answers are well-shaped and round
+trip, not what they say. Pinning platform data to a fixture would turn the test
+into a report on the CI image.
 
 ### Choosing between the bundled and platform sources
 
@@ -684,7 +686,7 @@ import dev.carcara.kotlinx.locale.country.cldr.displayName        // bundled tab
 import dev.carcara.kotlinx.locale.country.platform.displayName    // the host
 ```
 
-`-cldr` answers the same everywhere and costs what its tables weigh.
+`-cldr-full` answers the same everywhere and costs what its tables weigh.
 `-platform` ships nothing and answers whatever the device says, which means it
 answers nothing at all on Linux, Windows, Android Native and Wasm-WASI, where no
 locale data is reachable from Kotlin. Neither is the default; a `Fallback*`

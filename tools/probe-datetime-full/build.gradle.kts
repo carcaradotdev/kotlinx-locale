@@ -8,6 +8,6 @@ sizeProbe {
 
 kotlin {
     sourceSets.jsMain.dependencies {
-        implementation(project(":kotlinx-locale-datetime-cldr"))
+        implementation(project(":kotlinx-locale-datetime-cldr-full"))
     }
 }

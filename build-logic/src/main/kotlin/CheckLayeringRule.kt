@@ -11,7 +11,7 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 
 /**
- * Enforces the rule that lets any `-cldr` link against any `-types`:
+ * Enforces the rule that lets any `-cldr-full` link against any `-types`:
  * hand-written code may name the generated enum types and their members, never
  * a specific entry.
  *
@@ -59,7 +59,7 @@ abstract class CheckLayeringRule : DefaultTask() {
         error(
             buildString {
                 appendLine("Hand-written code named a specific enum entry, which breaks the guarantee that")
-                appendLine("any -cldr links against any -types. Use the enum type or its members instead,")
+                appendLine("any -cldr-full links against any -types. Use the enum type or its members instead,")
                 appendLine("and leave the entries to generated code:")
                 offenders.forEach { appendLine("  $it") }
             },

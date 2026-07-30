@@ -9,14 +9,14 @@ kotlin {
 }
 
 dependencies {
-    // The contract and the entry sets. Note what is absent: no -cldr artifact,
+    // The contract and the entry sets. Note what is absent: no -cldr-full artifact,
     // because the data comes from the generator instead.
     implementation("dev.carcara:kotlinx-locale-country-core:0.1.0-SNAPSHOT")
-    implementation("dev.carcara:kotlinx-locale-country-cldr-format:0.1.0-SNAPSHOT")
+    implementation("dev.carcara:kotlinx-locale-country-cldr-runtime:0.1.0-SNAPSHOT")
     implementation("dev.carcara:kotlinx-locale-currency-core:0.1.0-SNAPSHOT")
-    implementation("dev.carcara:kotlinx-locale-currency-cldr-format:0.1.0-SNAPSHOT")
+    implementation("dev.carcara:kotlinx-locale-currency-cldr-runtime:0.1.0-SNAPSHOT")
     implementation("dev.carcara:kotlinx-locale-datetime-core:0.1.0-SNAPSHOT")
-    implementation("dev.carcara:kotlinx-locale-datetime-cldr-format:0.1.0-SNAPSHOT")
+    implementation("dev.carcara:kotlinx-locale-datetime-cldr-runtime:0.1.0-SNAPSHOT")
 
     testImplementation(kotlin("test"))
 }
