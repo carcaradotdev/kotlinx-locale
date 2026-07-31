@@ -38,32 +38,23 @@ dependencyResolutionManagement {
 
 rootProject.name = "kotlinx-locale-project"
 
-// Artifacts are kotlinx-locale[-<domain>]-<layer>: -types is generator output,
-// -core is the hand-written contract, -cldr-runtime is the engine that reads
-// CLDR-shaped tables, and -cldr-full is that engine plus every locale CLDR has.
-// The locale domain is the root, so it carries no domain segment. Anything named
-// codegen-* runs at build time and never belongs on an application classpath.
-//
-// A published module's directory is its artifact name, the way kotlinx-coroutines
-// lays its modules out. It costs a long prefix on twenty directories and buys two
-// things: a listing of the repository root reads like a listing on Maven Central,
-// and carrying the prefix is what publishing means here, so a directory without
-// one ships to nobody. There is also no directory-to-artifact mapping left to
-// keep in sync, because the two are one string.
 val published = listOf(
     "kotlinx-locale-core",
     "kotlinx-locale-types",
     "kotlinx-locale-platform",
+    "kotlinx-locale-serialization",
     "kotlinx-locale-country-types",
     "kotlinx-locale-country-core",
     "kotlinx-locale-country-cldr-runtime",
     "kotlinx-locale-country-cldr-full",
     "kotlinx-locale-country-platform",
+    "kotlinx-locale-country-serialization",
     "kotlinx-locale-currency-types",
     "kotlinx-locale-currency-core",
     "kotlinx-locale-currency-cldr-runtime",
     "kotlinx-locale-currency-cldr-full",
     "kotlinx-locale-currency-platform",
+    "kotlinx-locale-currency-serialization",
     "kotlinx-locale-datetime-core",
     "kotlinx-locale-datetime-cldr-runtime",
     "kotlinx-locale-datetime-cldr-full",

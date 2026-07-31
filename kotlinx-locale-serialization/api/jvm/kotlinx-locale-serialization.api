@@ -1,0 +1,9 @@
+public final class dev/carcara/kotlinx/locale/serialization/LocaleTagSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/serialization/LocaleTagSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/Locale;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/Locale;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+

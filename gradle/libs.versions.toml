@@ -1,6 +1,7 @@
 [versions]
 kotlin = "2.4.0"
 kotlinx-datetime = "0.8.0"
+kotlinx-serialization = "1.11.0"
 agp = "9.3.0"
 android-compileSdk = "36"
 android-minSdk = "21"
@@ -14,6 +15,13 @@ icu4j = "78.3"
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
+# The runtime the -serialization modules compile against, and the only thing they
+# need: their serializers are hand-written, so no module here applies the
+# serialization compiler plugin to its main sources. The Json format is a test
+# dependency, since a serializer is only proved by a round trip through a format.
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
 # :codegen only, and :codegen runs at build time and ships nothing. Used to
 # generate the skeleton goldens; no published artifact depends on ICU, and
 # nothing in the runtime delegates to it.
@@ -24,4 +32,5 @@ icu4j = { module = "com.ibm.icu:icu4j", version.ref = "icu4j" }
 gradle-plugin-kotlin-multiplatform = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
 gradle-plugin-android-kmp-library = { module = "com.android.kotlin.multiplatform.library:com.android.kotlin.multiplatform.library.gradle.plugin", version.ref = "agp" }
 gradle-plugin-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint-gradle" }
+gradle-plugin-kotlin-serialization = { module = "org.jetbrains.kotlin.plugin.serialization:org.jetbrains.kotlin.plugin.serialization.gradle.plugin", version.ref = "kotlin" }
 gradle-plugin-maven-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "maven-publish" }
