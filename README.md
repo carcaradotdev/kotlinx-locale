@@ -405,12 +405,18 @@ parsing. A build that wants skeletons takes
 
 Two things to know before choosing it.
 
-Platform sources are partial, deliberately. Linux, Windows, Android Native and
-WASI expose no locale data Kotlin can read, so on those four every lookup
-misses. Cash rounding is not a platform concept anywhere. Accounting formats
-exist on `Intl` and Foundation but not in `java.text`. Currency parsing exists
-only where it is exact, which is JVM and Android. A miss is the signal the
-`Fallback*` composers read:
+Platform sources are partial, for two different reasons.
+
+Locale data is not wired up on Linux, Windows, Android Native or Wasm-WASI yet,
+so every lookup misses on those four. That is a gap rather than a verdict on the
+platforms, and contributions are welcome.
+
+The rest is the shape of the host APIs. Cash rounding is not a platform concept
+anywhere. Accounting formats exist on `Intl` and Foundation but not in
+`java.text`. Currency parsing exists only where it is exact, which is JVM and
+Android.
+
+Either way a miss is the signal the `Fallback*` composers read:
 
 ```kotlin
 val dates = FallbackDateTimeFormats(primary = PlatformDateTime, fallback = CldrDateTime)
@@ -558,13 +564,19 @@ part of `kotlinx-locale-datetime-core`, so a `-platform` source cannot answer it
 even in principle, for the reason given above: the hosts format from a template
 but will not hand back the pattern they chose.
 
-Each 🟡 above has a reason, and none of them is a stub waiting to be filled in.
+The 🟡s come from two different places, and the difference matters if you are
+deciding whether to wait for one to change.
 
-Linux, Windows (`mingwX64`), Android Native and Wasm-WASI expose no locale data
-Kotlin can read, so all four return `null` for everything and report
-`isAvailable == false`. Reaching a system ICU from those targets would mean
-linking against a library the platform does not guarantee is present, at a
-version nothing pins.
+Linux, Windows (`mingwX64`), Android Native and Wasm-WASI have no locale data
+wired up yet, so all four return `null` for everything and report
+`isAvailable == false`. This is the one gap that is simply unbuilt rather than
+decided. Windows and Linux in particular do have locale facilities to read, and
+this library already reads a little of both for `Locale.current`, so extending
+that to names, currencies and dates is work waiting to be done rather than a
+wall. If you want one of these targets, that is a contribution worth having.
+
+Everything else below is a property of the host APIs and will not change by
+trying harder.
 
 The empty `availableLocaleTags()` on JS and Wasm-JS is not a gap in the runtime.
 ECMA-402 offers `supportedLocalesOf` to filter a list you already have but
@@ -711,6 +723,10 @@ all of it before merging.
 - The currency enum covers the active ISO 4217 set. Historic currencies (DEM,
   the pre-2005 TRL) are not included, and neither is compact notation (`$1.2K`)
   or plural-aware currency names (`¤¤¤` with a count).
+- The `-platform` modules do not read locale data on Linux, Windows, Android
+  Native or Wasm-WASI yet. The bundled `-cldr-*` modules answer on all of them,
+  so this only affects a build that chose the host's data; see
+  [what each module answers](#what-each-module-answers-per-target).
 
 ## License
 
