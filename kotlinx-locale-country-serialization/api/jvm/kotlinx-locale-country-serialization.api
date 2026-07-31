@@ -1,0 +1,36 @@
+public final class dev/carcara/kotlinx/locale/country/serialization/CountryAlpha2Serializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/country/serialization/CountryAlpha2Serializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/country/Country;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/country/Country;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class dev/carcara/kotlinx/locale/country/serialization/CountryAlpha3Serializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/country/serialization/CountryAlpha3Serializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/country/Country;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/country/Country;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class dev/carcara/kotlinx/locale/country/serialization/CountryLenientCodeSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/country/serialization/CountryLenientCodeSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/country/Country;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/country/Country;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class dev/carcara/kotlinx/locale/country/serialization/CountryNumericCodeSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/country/serialization/CountryNumericCodeSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/country/Country;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/country/Country;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+

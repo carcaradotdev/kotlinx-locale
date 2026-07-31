@@ -62,6 +62,7 @@ Every function, parameter and default is listed in [API.md](API.md).
 - [Modules](#modules)
 - [Naming the fields instead of picking a length](#naming-the-fields-instead-of-picking-a-length)
 - [Using the host's data instead of ours](#using-the-hosts-data-instead-of-ours)
+- [Serializing these types](#serializing-these-types)
 - [Shipping only the locales you use](#shipping-only-the-locales-you-use)
 - [Supported platforms](#supported-platforms)
 - [Where the data comes from](#where-the-data-comes-from)
@@ -114,6 +115,18 @@ Locales:
   expect/actual: one function per platform returns a raw tag, and everything
   else runs in commonMain.
 
+Serialization:
+
+- kotlinx.serialization strategies for `Locale`, `Country`, `Currency` and
+  `CurrencyAmount`, in artifacts of their own. Nothing else in the library
+  depends on them, so a build that serializes none of these types carries no
+  serialization runtime.
+- One serializer per representation instead of a blessed default. A country is
+  written as alpha-2, alpha-3 or its numeric code because you named the one you
+  meant, and an amount as an object, a decimal string or a single scalar.
+- A lenient reader per code type that takes every spelling and writes the
+  canonical one, which is what a field being migrated needs.
+
 ## Using it in your project
 
 The artifacts are not on Maven Central yet. Until they are, clone this
@@ -142,6 +155,8 @@ locale-core = { module = "dev.carcara:kotlinx-locale-core", version.ref = "kotli
 locale-types = { module = "dev.carcara:kotlinx-locale-types", version.ref = "kotlinx-locale" }
 # What the host can say about locales before any domain is involved.
 locale-platform = { module = "dev.carcara:kotlinx-locale-platform", version.ref = "kotlinx-locale" }
+# kotlinx.serialization strategies for Locale. Optional, and depended on by nothing else.
+locale-serialization = { module = "dev.carcara:kotlinx-locale-serialization", version.ref = "kotlinx-locale" }
 
 # Country
 locale-country-types = { module = "dev.carcara:kotlinx-locale-country-types", version.ref = "kotlinx-locale" }
@@ -149,6 +164,7 @@ locale-country-core = { module = "dev.carcara:kotlinx-locale-country-core", vers
 locale-country-cldr-runtime = { module = "dev.carcara:kotlinx-locale-country-cldr-runtime", version.ref = "kotlinx-locale" }
 locale-country-cldr-full = { module = "dev.carcara:kotlinx-locale-country-cldr-full", version.ref = "kotlinx-locale" }
 locale-country-platform = { module = "dev.carcara:kotlinx-locale-country-platform", version.ref = "kotlinx-locale" }
+locale-country-serialization = { module = "dev.carcara:kotlinx-locale-country-serialization", version.ref = "kotlinx-locale" }
 
 # Currency
 locale-currency-types = { module = "dev.carcara:kotlinx-locale-currency-types", version.ref = "kotlinx-locale" }
@@ -156,6 +172,7 @@ locale-currency-core = { module = "dev.carcara:kotlinx-locale-currency-core", ve
 locale-currency-cldr-runtime = { module = "dev.carcara:kotlinx-locale-currency-cldr-runtime", version.ref = "kotlinx-locale" }
 locale-currency-cldr-full = { module = "dev.carcara:kotlinx-locale-currency-cldr-full", version.ref = "kotlinx-locale" }
 locale-currency-platform = { module = "dev.carcara:kotlinx-locale-currency-platform", version.ref = "kotlinx-locale" }
+locale-currency-serialization = { module = "dev.carcara:kotlinx-locale-currency-serialization", version.ref = "kotlinx-locale" }
 
 # Date and time
 locale-datetime-core = { module = "dev.carcara:kotlinx-locale-datetime-core", version.ref = "kotlinx-locale" }
@@ -236,11 +253,19 @@ Only the JVM variant, since Maven cannot resolve Kotlin Multiplatform metadata:
 </dependency>
 ```
 
-### Kotlin and kotlinx-datetime versions
+### Kotlin, kotlinx-datetime and kotlinx.serialization versions
 
 Built against Kotlin 2.4.0. The datetime modules expose kotlinx-datetime 0.8.0
 as an `api` dependency, so `LocalDate` in your code and `LocalDate` in a format
-call are the same type.
+call are the same type. The `-serialization` modules expose
+kotlinx-serialization-core 1.11.0 the same way, for the same reason: a
+`KSerializer<Country>` you can name is one your own compile classpath has to
+know about.
+
+They need the runtime and nothing else. Their serializers are written by hand,
+so the serialization compiler plugin is not applied to a single published source
+file here. Apply it in your own build if you write `@Serializable` classes, as
+you already would.
 
 ## Modules
 
@@ -268,16 +293,19 @@ layers without touching a call site.
 | `kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing. |
 | `kotlinx-locale-platform` | What the host can say about locales before any domain is involved: whether it exposes locale data, and which locales it enumerates. |
 | `kotlinx-locale-types` | The generated locale catalog: one enum per language, so `PT.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
+| `kotlinx-locale-serialization` | `LocaleTagSerializer`, which writes a `Locale` as its BCP 47 tag and reads one as leniently as `Locale.forLanguageTag` does. |
 | `kotlinx-locale-country-types` | The `Country` enum: 249 ISO 3166-1 entries carrying their alpha-3 and numeric codes. Generated, and nothing else. |
 | `kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
 | `kotlinx-locale-country-cldr-runtime` | The country-name lookup over CLDR-shaped name records, and none of the records. The table is a constructor argument, which is what a narrowed build binds its own to. |
 | `kotlinx-locale-country-cldr-full` | `-cldr-runtime` plus the CLDR name tables for all 1121 locales: `CldrCountry` and `Country.displayName`. |
 | `kotlinx-locale-country-platform` | `PlatformCountry`: country names from `java.util.Locale`, `Intl.DisplayNames` or `NSLocale`. Ships no tables. |
+| `kotlinx-locale-country-serialization` | One `Country` serializer per ISO 3166-1 code (alpha-2, alpha-3, numeric), plus a lenient reader that takes all three and writes alpha-2. |
 | `kotlinx-locale-currency-types` | The `Currency` enum (active ISO 4217 codes, ISO minor units, CLDR fraction and cash-rounding behavior) and the country-to-currency map. |
 | `kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
 | `kotlinx-locale-currency-cldr-runtime` | The symbol and name lookup plus the pattern-based number formatter and parser, over CLDR-shaped records it does not carry. |
 | `kotlinx-locale-currency-cldr-full` | `-cldr-runtime` plus the CLDR symbol, name and number tables for all 1121 locales: `CldrCurrency`, `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
 | `kotlinx-locale-currency-platform` | `PlatformCurrency`: symbols, names and number formatting from `NumberFormat`, `Intl.NumberFormat` or `NSNumberFormatter`. Ships no tables. |
+| `kotlinx-locale-currency-serialization` | The `Currency` serializers (alphabetic code, numeric code, lenient) and the three `CurrencyAmount` forms. Locale-independent throughout, and so free of CLDR. |
 | `kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
 | `kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. |
 | `kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
@@ -450,6 +478,116 @@ Composition does not round trip across sources. Foundation writes `¥` for JPY i
 necessarily one the other parses. Formatting with the platform and parsing with
 CLDR is not something the library promises.
 
+## Serializing these types
+
+Three artifacts carry kotlinx.serialization strategies, one per domain, and
+nothing else in the library depends on them:
+
+```kotlin
+import dev.carcara.kotlinx.locale.serialization.*
+import dev.carcara.kotlinx.locale.country.serialization.*
+import dev.carcara.kotlinx.locale.currency.serialization.*
+
+@Serializable
+data class Order(
+    @Serializable(with = LocaleTagSerializer::class) val locale: Locale,
+    @Serializable(with = CountryAlpha3Serializer::class) val shipTo: Country,
+    @Serializable(with = CurrencyAmountMinorUnitsSerializer::class) val total: CurrencyAmount,
+)
+
+val order = Order(
+    locale = Locale.forLanguageTag("pt-BR"),
+    shipTo = Country.BR,
+    total = CurrencyAmount(Currency.BRL, 1234_56),
+)
+
+Json.encodeToString(order)
+// {"locale":"pt-BR","shipTo":"BRA","total":{"currency":"BRL","minorUnits":123456}}
+```
+
+`Country` and `Currency` need none of this to serialize at all. Their entry
+names are the alpha-2 and the ISO 4217 alphabetic code, and the plugin writes an
+enum as its entry name, so an unannotated property already produces `"BR"` and
+`"BRL"`. What the named serializers add is a contract: `CountryAlpha3Serializer`
+on a field says alpha-3 out loud, and it fails on the day something sends
+`"BR"` instead of quietly accepting it.
+
+### Naming the form, rather than picking a default
+
+Every serializer says which representation it is, and there is no unnamed one to
+fall into by accident:
+
+| Type | Serializer | JSON |
+| --- | --- | --- |
+| `Locale` | `LocaleTagSerializer` | `"pt-BR"` |
+| `Country` | `CountryAlpha2Serializer` | `"US"` |
+| | `CountryAlpha3Serializer` | `"USA"` |
+| | `CountryNumericCodeSerializer` | `840` |
+| | `CountryLenientCodeSerializer` | reads all three, writes `"US"` |
+| `Currency` | `CurrencyCodeSerializer` | `"USD"` |
+| | `CurrencyNumericCodeSerializer` | `840` |
+| | `CurrencyLenientCodeSerializer` | reads both, writes `"USD"` |
+| `CurrencyAmount` | `CurrencyAmountMinorUnitsSerializer` | `{"currency":"USD","minorUnits":123456}` |
+| | `CurrencyAmountDecimalSerializer` | `{"currency":"USD","amount":"1234.56"}` |
+| | `CurrencyAmountCodeAndDecimalSerializer` | `"USD 1234.56"` |
+
+The two object forms of an amount differ in where the scale lives. `minorUnits`
+is exact and needs no parsing, but `123456` is $1,234.56 only because the
+`Currency` enum says USD has two minor units, so both ends have to agree on the
+ISO data. The decimal string puts the scale in the payload, which is what a row
+that outlives a release wants. The combined string is the one to reach for when
+the amount has to fit a single scalar: a map key, a query parameter, a column
+you would rather not split in two.
+
+### Reading a field that has more than one spelling
+
+A country's three ISO code spaces do not overlap. Alpha-2 is two letters,
+alpha-3 is three, numeric is digits, so one reader can take any of them and
+still know which space it is in:
+
+```kotlin
+Json.decodeFromString(CountryLenientCodeSerializer, "\"US\"")   // Country.US
+Json.decodeFromString(CountryLenientCodeSerializer, "\"USA\"")  // Country.US
+Json.decodeFromString(CountryLenientCodeSerializer, "\"840\"")  // Country.US
+Json.decodeFromString(CountryLenientCodeSerializer, "\"004\"")  // Country.AF
+```
+
+It writes alpha-2 whichever one it read, so the second time a row is written it
+is canonical. That is the migration: point the field at this serializer, and the
+old spellings drain out as rows are touched.
+
+One limit is worth knowing before you rely on it. The lenient readers take the
+numeric code as a *string*, `"840"`. A JSON number `840` is a different token,
+and a `Decoder` has to commit to `decodeString` or `decodeInt` before it can see
+which one is coming. The format-agnostic API these are written against offers
+no way to peek. So a bare number needs one of two things:
+
+```kotlin
+// Tell the format to be forgiving; it hands the unquoted token over as text.
+Json { isLenient = true }.decodeFromString(CountryLenientCodeSerializer, "840")
+
+// Or, better, name the serializer for the type the field actually holds.
+Json.decodeFromString(CountryNumericCodeSerializer, "840")
+```
+
+The second is the honest answer when the field is genuinely a number. The
+declaration then says what the field holds, and read time has nothing left to
+resolve.
+
+### Amounts are never locale-formatted
+
+None of the `CurrencyAmount` serializers touches `Locale`, and
+`kotlinx-locale-currency-serialization` depends on no CLDR data. The two string
+forms of an amount do different jobs. `toDecimalString` writes ASCII digits and
+a `.` and nothing else; `format(locale)` writes what a person expects to read,
+which on some locales means grouping separators, a symbol, Arabic-Indic digits
+and a narrow no-break space.
+
+Only the first can be a wire format. The second cannot be read back without
+knowing which locale wrote it, and CLDR moves separators between releases, so an
+amount stored under one release could come back a different number under the
+next. `"USD 1,234.56"` is a `SerializationException` here, deliberately.
+
 ## Shipping only the locales you use
 
 Most applications need a handful of locales, not 1121. The Gradle plugin
@@ -547,6 +685,9 @@ no expect/actual, the same answer on all 25 targets.
 | `kotlinx-locale-currency-cldr-full` | 🟢 | 🟢 | 🟢 | 🟢 |
 | `kotlinx-locale-datetime-cldr-full` | 🟢 | 🟢 | 🟢 | 🟢 |
 | `kotlinx-locale-datetime-cldr-skeletons` | 🟢 | 🟢 | 🟢 | 🟢 |
+| `kotlinx-locale-serialization` | 🟢 | 🟢 | 🟢 | 🟢 |
+| `kotlinx-locale-country-serialization` | 🟢 | 🟢 | 🟢 | 🟢 |
+| `kotlinx-locale-currency-serialization` | 🟢 | 🟢 | 🟢 | 🟢 |
 
 `Locale.current` is the one exception in `-core`. It reads a real tag everywhere
 except Wasm-WASI, which exposes nothing and so returns `en`.

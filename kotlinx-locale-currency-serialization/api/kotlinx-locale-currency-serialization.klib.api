@@ -1,0 +1,55 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-currency-serialization>
+final object dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountCodeAndDecimalSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.currency/CurrencyAmount> { // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountCodeAndDecimalSerializer|null[0]
+    final val descriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountCodeAndDecimalSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountCodeAndDecimalSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.currency/CurrencyAmount // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountCodeAndDecimalSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.currency/CurrencyAmount) // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountCodeAndDecimalSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.currency.CurrencyAmount){}[0]
+}
+
+final object dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountDecimalSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.currency/CurrencyAmount> { // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountDecimalSerializer|null[0]
+    final val descriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountDecimalSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountDecimalSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.currency/CurrencyAmount // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountDecimalSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.currency/CurrencyAmount) // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountDecimalSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.currency.CurrencyAmount){}[0]
+}
+
+final object dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountMinorUnitsSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.currency/CurrencyAmount> { // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountMinorUnitsSerializer|null[0]
+    final val descriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountMinorUnitsSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountMinorUnitsSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.currency/CurrencyAmount // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountMinorUnitsSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.currency/CurrencyAmount) // dev.carcara.kotlinx.locale.currency.serialization/CurrencyAmountMinorUnitsSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.currency.CurrencyAmount){}[0]
+}
+
+final object dev.carcara.kotlinx.locale.currency.serialization/CurrencyCodeSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.currency/Currency> { // dev.carcara.kotlinx.locale.currency.serialization/CurrencyCodeSerializer|null[0]
+    final val descriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyCodeSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyCodeSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.currency/Currency // dev.carcara.kotlinx.locale.currency.serialization/CurrencyCodeSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.currency/Currency) // dev.carcara.kotlinx.locale.currency.serialization/CurrencyCodeSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.currency.Currency){}[0]
+}
+
+final object dev.carcara.kotlinx.locale.currency.serialization/CurrencyLenientCodeSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.currency/Currency> { // dev.carcara.kotlinx.locale.currency.serialization/CurrencyLenientCodeSerializer|null[0]
+    final val descriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyLenientCodeSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyLenientCodeSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.currency/Currency // dev.carcara.kotlinx.locale.currency.serialization/CurrencyLenientCodeSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.currency/Currency) // dev.carcara.kotlinx.locale.currency.serialization/CurrencyLenientCodeSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.currency.Currency){}[0]
+}
+
+final object dev.carcara.kotlinx.locale.currency.serialization/CurrencyNumericCodeSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.currency/Currency> { // dev.carcara.kotlinx.locale.currency.serialization/CurrencyNumericCodeSerializer|null[0]
+    final val descriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyNumericCodeSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.currency.serialization/CurrencyNumericCodeSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.currency/Currency // dev.carcara.kotlinx.locale.currency.serialization/CurrencyNumericCodeSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.currency/Currency) // dev.carcara.kotlinx.locale.currency.serialization/CurrencyNumericCodeSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.currency.Currency){}[0]
+}

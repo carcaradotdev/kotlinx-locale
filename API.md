@@ -48,6 +48,7 @@ All date and time examples are real output for 2026-07-27, a Monday, at
 - [Skeleton formatting](#skeleton-formatting)
 - [Country](#country)
 - [Currency](#currency)
+- [Serialization](#serialization)
 - [Gradle plugin](#gradle-plugin)
 - [Errors, guarantees and versions](#errors-guarantees-and-versions)
 
@@ -921,6 +922,194 @@ accounting parentheses. `format` output round trips for every bundled locale.
 
 Note that the `.platform` package offers only `parseFormattedOrNull`, with no
 throwing variant, because a miss is the expected outcome on most targets.
+
+## Serialization
+
+Three artifacts, one per domain, each depending on its own `-core` and on
+`kotlinx-serialization-core`. They are separate so that a build serializing
+nothing carries no serialization runtime, and separate from each other so that
+serializing a country does not put the `Currency` enum on the classpath.
+
+```kotlin
+// kotlinx-locale-serialization
+import dev.carcara.kotlinx.locale.serialization.*
+
+// kotlinx-locale-country-serialization
+import dev.carcara.kotlinx.locale.country.serialization.*
+
+// kotlinx-locale-currency-serialization
+import dev.carcara.kotlinx.locale.currency.serialization.*
+```
+
+Every serializer is a `public object` implementing `KSerializer<T>`, so any of
+them can be named in `@Serializable(with = ...)`, passed to `encodeToString`
+directly, registered as `contextual` in a `SerializersModule`, or wrapped by
+`ListSerializer` and `MapSerializer`.
+
+Bad input throws `SerializationException`, which is what a format expects a
+serializer to throw. Nothing here throws `IllegalArgumentException`, even where
+the underlying lookup would.
+
+### LocaleTagSerializer
+
+```kotlin
+public object LocaleTagSerializer : KSerializer<Locale>
+```
+
+A `Locale` as its canonical BCP 47 tag. Writing goes through
+`Locale.toLanguageTag`, so subtag case is normalized whatever the instance was
+built from. Reading goes through `Locale.forLanguageTagOrNull` and inherits its
+leniency: POSIX identifiers parse, and anything after a singleton subtag is
+ignored.
+
+```kotlin
+Json.encodeToString(LocaleTagSerializer, Locale.of("pt", region = "BR"))  // "pt-BR"
+Json.encodeToString(LocaleTagSerializer, Locale.of("PT", region = "br"))  // "pt-BR"
+
+Json.decodeFromString(LocaleTagSerializer, "\"pt_BR.UTF-8@latin\"")   // pt-BR
+Json.decodeFromString(LocaleTagSerializer, "\"en-US-u-ca-buddhist\"") // en-US
+Json.decodeFromString(LocaleTagSerializer, "\"\"")                    // throws
+```
+
+### Country serializers
+
+```kotlin
+public object CountryAlpha2Serializer : KSerializer<Country>
+public object CountryAlpha3Serializer : KSerializer<Country>
+public object CountryNumericCodeSerializer : KSerializer<Country>
+public object CountryLenientCodeSerializer : KSerializer<Country>
+```
+
+One per ISO 3166-1 code space, plus a lenient reader over all three. The three
+named ones are exact in both directions and reject the other spellings, which is
+what makes them worth naming: a field declared alpha-3 fails on the day a
+producer starts sending alpha-2. All of them read case-insensitively.
+
+`CountryAlpha2Serializer` produces what the serialization plugin already
+produces for an unannotated `Country` property, since the entry names are the
+alpha-2 codes. Naming it states the contract rather than changing the output. It
+also gives `Country` a serializer as a root object on Kotlin/JS and
+Kotlin/Native, where an enum the plugin never saw declared has none of its own.
+
+```kotlin
+Json.encodeToString(CountryAlpha2Serializer, Country.US)       // "US"
+Json.encodeToString(CountryAlpha3Serializer, Country.US)       // "USA"
+Json.encodeToString(CountryNumericCodeSerializer, Country.US)  // 840
+
+Json.decodeFromString(CountryAlpha3Serializer, "\"usa\"")      // Country.US
+Json.decodeFromString(CountryAlpha3Serializer, "\"US\"")       // throws
+```
+
+### CountryLenientCodeSerializer
+
+Reads any of the three codes from one string field and writes alpha-2. The code
+spaces do not overlap. Two letters, three letters, digits: a string belongs to
+exactly one of them, so nothing has to be guessed. Zero-padded numeric codes
+are the printed form of the standard and are accepted.
+
+```kotlin
+Json.decodeFromString(CountryLenientCodeSerializer, "\"US\"")   // Country.US
+Json.decodeFromString(CountryLenientCodeSerializer, "\"USA\"")  // Country.US
+Json.decodeFromString(CountryLenientCodeSerializer, "\"840\"")  // Country.US
+Json.decodeFromString(CountryLenientCodeSerializer, "\"004\"")  // Country.AF
+
+Json.encodeToString(CountryLenientCodeSerializer, Country.US)   // "US", always
+```
+
+It reads the numeric code from a string. A JSON number `840` is a different
+token, and a `Decoder` has to commit to `decodeString` or `decodeInt` before it
+can see which is coming, so a bare number needs either a forgiving format or the
+serializer for the type the field actually holds:
+
+```kotlin
+Json.decodeFromString(CountryLenientCodeSerializer, "840")                        // throws
+Json { isLenient = true }.decodeFromString(CountryLenientCodeSerializer, "840")   // Country.US
+Json.decodeFromString(CountryNumericCodeSerializer, "840")                        // Country.US
+```
+
+### Currency serializers
+
+```kotlin
+public object CurrencyCodeSerializer : KSerializer<Currency>
+public object CurrencyNumericCodeSerializer : KSerializer<Currency>
+public object CurrencyLenientCodeSerializer : KSerializer<Currency>
+```
+
+The same three shapes for ISO 4217. `CurrencyCodeSerializer` writes the
+alphabetic code and is total. `CurrencyLenientCodeSerializer` reads either code
+from one string field, with the same numeric-as-string rule as its country
+counterpart, and writes the alphabetic code.
+
+`CurrencyNumericCodeSerializer` is the one serializer here that can refuse to
+write. `Currency.numericCode` is documented as `-1` where ISO assigns no number,
+and writing such a currency throws rather than emitting a sentinel that could
+never be read back. All 178 currencies in the bundled data have a numeric code
+today, so nothing reaches that guard, but a numeric code is not something ISO
+promises every entry. `CurrencyCodeSerializer` has no such edge.
+
+```kotlin
+Json.encodeToString(CurrencyCodeSerializer, Currency.USD)         // "USD"
+Json.encodeToString(CurrencyNumericCodeSerializer, Currency.USD)  // 840
+
+Json.decodeFromString(CurrencyLenientCodeSerializer, "\"978\"")   // Currency.EUR
+Json.decodeFromString(CurrencyLenientCodeSerializer, "\"eur\"")   // Currency.EUR
+```
+
+### CurrencyAmount serializers
+
+```kotlin
+public object CurrencyAmountMinorUnitsSerializer : KSerializer<CurrencyAmount>
+public object CurrencyAmountDecimalSerializer : KSerializer<CurrencyAmount>
+public object CurrencyAmountCodeAndDecimalSerializer : KSerializer<CurrencyAmount>
+```
+
+Three forms, and none of them is the default. Each one names what it writes:
+
+```kotlin
+val price = CurrencyAmount(Currency.USD, 1234_56)
+
+Json.encodeToString(CurrencyAmountMinorUnitsSerializer, price)
+// {"currency":"USD","minorUnits":123456}
+
+Json.encodeToString(CurrencyAmountDecimalSerializer, price)
+// {"currency":"USD","amount":"1234.56"}
+
+Json.encodeToString(CurrencyAmountCodeAndDecimalSerializer, price)
+// "USD 1234.56"
+```
+
+`minorUnits` is the state the class holds, exact and free of parsing, but the
+scale is not in the payload: `123456` is $1,234.56 only because the `Currency`
+enum says USD has two minor units. The decimal string puts the scale in the
+payload instead, so a stored amount still means what it meant if a reader was
+built against different ISO data. The combined string carries both parts in one
+scalar, which is what fits a map key, a query parameter or a single column, and
+it is what `CurrencyAmount.toString` writes, so a value copied out of a log
+reads back in.
+
+The `currency` field of the two object forms is written and read by
+`CurrencyCodeSerializer`. Both object forms accept their fields in either order.
+
+Amounts parse as strictly as `CurrencyAmount.parse`: an optional `-`, digits,
+and at most `minorUnitDigits` fraction digits after `.`. Excess digits fail
+rather than round.
+
+```kotlin
+Json.encodeToString(CurrencyAmountDecimalSerializer, CurrencyAmount(Currency.JPY, 500))
+// {"currency":"JPY","amount":"500"}
+Json.encodeToString(CurrencyAmountDecimalSerializer, CurrencyAmount(Currency.BHD, 1234))
+// {"currency":"BHD","amount":"1.234"}
+Json.encodeToString(CurrencyAmountCodeAndDecimalSerializer, CurrencyAmount(Currency.USD, -1250))
+// "USD -12.50"
+
+Json.decodeFromString(CurrencyAmountCodeAndDecimalSerializer, "\"JPY 5.5\"")  // throws
+```
+
+None of these touches `Locale`, and the module depends on no CLDR data. The
+locale-aware form of an amount is
+[`CurrencyAmount.format`](#currencyamountformat), and it is not a wire format:
+it cannot be read back without knowing which locale wrote it, and CLDR moves
+separators between releases. `"USD 1,234.56"` throws here on purpose.
 
 ## Gradle plugin
 

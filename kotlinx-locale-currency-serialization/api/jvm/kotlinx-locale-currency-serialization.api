@@ -1,0 +1,54 @@
+public final class dev/carcara/kotlinx/locale/currency/serialization/CurrencyAmountCodeAndDecimalSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/currency/serialization/CurrencyAmountCodeAndDecimalSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class dev/carcara/kotlinx/locale/currency/serialization/CurrencyAmountDecimalSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/currency/serialization/CurrencyAmountDecimalSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class dev/carcara/kotlinx/locale/currency/serialization/CurrencyAmountMinorUnitsSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/currency/serialization/CurrencyAmountMinorUnitsSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class dev/carcara/kotlinx/locale/currency/serialization/CurrencyCodeSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/currency/serialization/CurrencyCodeSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/currency/Currency;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/currency/Currency;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class dev/carcara/kotlinx/locale/currency/serialization/CurrencyLenientCodeSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/currency/serialization/CurrencyLenientCodeSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/currency/Currency;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/currency/Currency;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class dev/carcara/kotlinx/locale/currency/serialization/CurrencyNumericCodeSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/currency/serialization/CurrencyNumericCodeSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/currency/Currency;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/currency/Currency;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
