@@ -397,6 +397,29 @@ kotlinx-datetime sits in both numbers and only the formatting moved.
 [`docs/size.md`](docs/size.md) has the full table and is regenerated from the
 build rather than typed.
 
+Read that CLDR column as the price of all 1121 locales, not the price of CLDR.
+Most products ship a language picker with a handful of entries in it, and the
+Gradle plugin generates the data for exactly those, against the same
+`-cldr-runtime` engine the full artifact uses. The three-locale build in
+`samples/narrowed/` generates 124 KB of Kotlin where the shipped tables are
+3764 KB, roughly a thirtieth of the data, and formats identically for the
+locales it kept because it is running the same code over a smaller table.
+
+So the choice is not the two columns above. It is three:
+
+| | what ships | answers | when it fits |
+| --- | --- | --- | --- |
+| `-platform` | nothing | whatever the host says, with the gaps below | you do not know the locale set, or you want it to track the device |
+| `-cldr-full` | all 1121 locales | the same on every target | you need arbitrary locales at runtime |
+| plugin plus `-cldr-runtime` | only the locales you named | the same on every target | you know the set at build time, which is most products |
+
+[Shipping only the locales you use](#shipping-only-the-locales-you-use) covers
+how to set the third one up.
+
+Those 124 KB and 3764 KB are Kotlin source, counted from the sample. The size
+probes in `tools/` do not cover a narrowed build, so there is no gzipped bundle
+figure for it to sit beside the table above.
+
 Skeleton formatting is CLDR only, and that is a decision rather than a gap. The
 hosts will format from a template, but none of them hands back the pattern it
 chose, and half of what makes a skeleton useful is reusing that pattern for
@@ -457,7 +480,8 @@ out `-cldr-full`, because the records come from the generator instead. Call
 sites do not change: the generated source implements the same interfaces and
 carries the same extensions, so `Country.BR.displayName(locale)` still reads the
 same and only the import moves. `samples/narrowed/` is a working build that does
-this, with 124 KB of generated Kotlin where the shipped tables are 3764 KB.
+this, at [roughly a thirtieth of the data](#using-the-hosts-data-instead-of-ours)
+for the three locales it declares.
 
 `fallback` is required, and required to be one of the generated locales. Ask a
 three-locale build for `de` and it answers in the fallback rather than returning
