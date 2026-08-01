@@ -10,6 +10,7 @@ fun main(args: Array<String>) {
         "clone" -> {
             ensureCloned(rootDir, CLDR_REPO)
             ensureCloned(rootDir, ICU_REPO)
+            ensureCloned(rootDir, PHONE_REPO)
         }
         "generate" -> {
             val cldrDir = ensureCloned(rootDir, CLDR_REPO)
@@ -256,6 +257,15 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
 
     val timeZoneNames = buildTimeZoneNamePayloads(flattener, ::zonesFor)
 
+    val phoneDir = ensureCloned(rootDir, PHONE_REPO)
+    crossCheckPhoneVersion(phoneDir)
+    val phoneMetadata = parsePhoneMetadata(phoneDir)
+    emitPhoneGolden(
+        outputFile = conformanceDir(rootDir).resolve("PhoneGoldenData.kt"),
+        tag = PHONE_REPO.tag,
+        entries = extractPhoneGolden(),
+    )
+
     val plurals = parsePlurals(cldrDir)
     val rbnf = parseRbnfOrdinals(cldrDir, flattener.localeIds, supplemental.parentOverrides)
     emitCldrPluralSamples(
@@ -317,6 +327,27 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         numericCodes = extractIcuNumericCodes(icuDir),
     )
 
+    val phoneTerritoryTable = encodePhoneTerritories(phoneMetadata)
+    val phoneFormatTable = encodePhoneFormats(phoneMetadata)
+    val phoneRoot = rootDir.sourceRoot("kotlinx-locale-phone-metadata-full")
+    emitPhoneTables(
+        outputRoot = phoneRoot,
+        registryPackage = "dev.carcara.kotlinx.locale.phone.metadata.internal.data",
+        source = "libphonenumber ${PHONE_REPO.tag}",
+        territories = phoneTerritoryTable,
+        formats = phoneFormatTable,
+    )
+    emitPhoneBinding(
+        outputRoot = phoneRoot,
+        spec = BindingSpec(
+            packageName = "dev.carcara.kotlinx.locale.phone.metadata",
+            objectName = "PhoneNumbers",
+            registryPackage = "dev.carcara.kotlinx.locale.phone.metadata.internal.data",
+            source = "libphonenumber ${PHONE_REPO.tag}",
+        ),
+        hasFormats = true,
+    )
+
     return LocaleDataBundle.Builder()
         .apply {
             cldrVersion = CLDR_REPO.tag
@@ -334,6 +365,8 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .section("timeZoneNames", timeZoneNames)
         .section("timeZoneCities", buildTimeZoneCityPayloads(flattener, ::zonesFor))
         .table(BundleTables.TIME_ZONE_METADATA, encodeTimeZoneMetadata(cldrDir))
+        .table(BundleTables.PHONE_TERRITORIES, phoneTerritoryTable)
+        .table(BundleTables.PHONE_FORMATS, phoneFormatTable)
         .section("countryNames", buildCountryNamePayloads(flattener, extras))
         .section("currencyFormats", buildCurrencyFormatPayloads(flattener, extras))
         .section("currencyNames", buildCurrencyNamePayloads(flattener, extras))
