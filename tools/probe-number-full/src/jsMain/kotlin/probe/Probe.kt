@@ -5,9 +5,9 @@ package probe
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.number.Decimal
 import dev.carcara.kotlinx.locale.number.NumberNotation
-import dev.carcara.kotlinx.locale.number.cldr.format
-import dev.carcara.kotlinx.locale.number.cldr.formatOrdinal
-import dev.carcara.kotlinx.locale.number.cldr.formatPercent
+import dev.carcara.kotlinx.locale.number.cldr.numberFormat
+import dev.carcara.kotlinx.locale.number.cldr.numberFormatPercent
+import dev.carcara.kotlinx.locale.number.cldr.numberOrdinal
 import dev.carcara.kotlinx.locale.number.cldr.pluralCategory
 
 /** Numbers, percentages, compact notation, plurals and ordinals. */
@@ -15,10 +15,10 @@ import dev.carcara.kotlinx.locale.number.cldr.pluralCategory
 public fun probe(tag: String): String {
     val locale = Locale.forLanguageTag(tag)
     return listOf(
-        1234567L.format(locale),
-        1200L.format(locale, NumberNotation.COMPACT_SHORT),
-        Decimal.parse("0.125").formatPercent(locale, fractionDigits = 1),
-        1L.formatOrdinal(locale),
-        3L.pluralCategory(locale).name,
+        numberFormat(1234567L, locale),
+        numberFormat(1200L, locale, NumberNotation.COMPACT_SHORT),
+        numberFormatPercent(Decimal.parse("0.125"), locale, fractionDigits = 1),
+        numberOrdinal(1L, locale),
+        pluralCategory(3L, locale).name,
     ).joinToString(" ")
 }

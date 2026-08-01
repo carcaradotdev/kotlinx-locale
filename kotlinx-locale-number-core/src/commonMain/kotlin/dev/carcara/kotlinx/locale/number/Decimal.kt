@@ -166,9 +166,3 @@ public class Decimal private constructor(public val unscaled: Long, public val s
         }
     }
 }
-
-/** This value as an exact decimal with no fraction digits. */
-public fun Long.toDecimal(): Decimal = Decimal.of(this)
-
-/** This value rounded half-even to [fractionDigits]; throws when it does not fit. */
-public fun Double.toDecimal(fractionDigits: Int): Decimal = Decimal.of(this, fractionDigits)

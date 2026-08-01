@@ -26,11 +26,11 @@ public object CldrRelativeTime : RelativeTimeFormatSource by PayloadRelativeTime
 )
 
 /**
- * This many [unit]s from now, written for [locale]; negative is the past.
+ * [value] many [unit]s from now, written for [locale]; negative is the past.
  *
  * ```
- * (-1L).formatRelative(RelativeTimeUnit.DAY, locale = cs)   // "včera"
- * (-3L).formatRelative(RelativeTimeUnit.DAY, locale = cs)   // "před 3 dny"
+ * relativeTimeFormat(-1L, RelativeTimeUnit.DAY, locale = cs)   // "včera"
+ * relativeTimeFormat(-3L, RelativeTimeUnit.DAY, locale = cs)   // "před 3 dny"
  * ```
  *
  * The unit is yours to choose. Deciding whether ninety minutes reads as
@@ -38,12 +38,13 @@ public object CldrRelativeTime : RelativeTimeFormatSource by PayloadRelativeTime
  * ICU, all of which take the unit from the caller, so this library does not
  * pick one either: the thresholds a chat app wants are not a changelog's.
  */
-public fun Long.formatRelative(
+public fun relativeTimeFormat(
+    value: Long,
     unit: RelativeTimeUnit,
     style: RelativeTimeStyle = RelativeTimeStyle.FULL,
     numbering: RelativeTimeNumbering = RelativeTimeNumbering.AUTO,
     locale: Locale = Locale.current,
-): String = CldrRelativeTime.format(this, unit, style, numbering, locale)
+): String = CldrRelativeTime.format(value, unit, style, numbering, locale)
 
 /** The locale's own name for [unit]: `month`, `měsíc`. */
 public fun relativeUnitName(

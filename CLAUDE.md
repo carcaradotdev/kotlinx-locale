@@ -5,6 +5,30 @@ data comes from CLDR, compiled into Kotlin source by the generator in `codegen/`
 Artifacts are named `kotlinx-locale[-<domain>]-<layer>`, and `settings.gradle.kts`
 carries the authoritative list of what publishes.
 
+## Naming the public API
+
+No extension function takes a primitive receiver. `String` counts as one, along
+with `Long`, `Int`, `Double`, `Float`, `Boolean` and `Char`, whatever the
+bytecode says. An extension on a type this library declares is fine, so
+`Country.displayName` and `Currency.symbol` stay.
+
+An entry point that turns a value into a rendering is a top-level function whose
+name starts with its domain, so one prefix completes to the whole family:
+`numberFormat`, `numberFormatPercent`, `numberOrdinal`, `numberSymbols`,
+`numberParseOrNull`, `relativeTimeFormat`. The value is the first parameter and
+the locale comes after it.
+
+A function that can answer nothing ends in `OrNull` and returns a nullable type.
+One that always answers does not, and says in its KDoc what it falls back to.
+
+An option that changes the form of the output is a parameter rather than a second
+function. Compact notation is `notation = COMPACT_SHORT`, not a `formatCompact`
+of its own.
+
+Two entry points that differ only in what they assume about the input are named
+for the assumption, never distinguished by the argument alone. `numberFormatPercent`
+takes a fraction and `numberFormatPercentValue` takes an already-scaled value.
+
 ## Editing README.md and API.md
 
 These two files are what someone reads before they decide whether to use the

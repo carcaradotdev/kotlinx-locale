@@ -27,11 +27,6 @@ public final class dev/carcara/kotlinx/locale/number/Decimal$Companion {
 	public final fun parseOrNull (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/number/Decimal;
 }
 
-public final class dev/carcara/kotlinx/locale/number/DecimalKt {
-	public static final fun toDecimal (DI)Ldev/carcara/kotlinx/locale/number/Decimal;
-	public static final fun toDecimal (J)Ldev/carcara/kotlinx/locale/number/Decimal;
-}
-
 public final class dev/carcara/kotlinx/locale/number/FallbackNumberFormats : dev/carcara/kotlinx/locale/number/NumberFormatSource {
 	public fun <init> (Ldev/carcara/kotlinx/locale/number/NumberFormatSource;Ldev/carcara/kotlinx/locale/number/NumberFormatSource;)V
 	public fun formatOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
