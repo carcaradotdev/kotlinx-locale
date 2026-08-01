@@ -38,6 +38,18 @@ public enum class GeneratedTable {
 
     /** The three skeleton tables, which travel together. */
     SKELETONS,
+
+    /** Number symbols and the plain decimal and percent patterns. */
+    NUMBER,
+
+    /** The three compact tables: short and long decimal, and short currency. */
+    NUMBER_COMPACT,
+
+    /** Cardinal and ordinal plural rules, shared by id across locales. */
+    PLURALS,
+
+    /** The rule closures behind `1st` and `1.`, shared the same way. */
+    ORDINALS,
 }
 
 /** Every source object the binding emitter can write, and the suffix its name takes. */
@@ -51,6 +63,7 @@ public enum class GeneratedBinding(public val objectSuffix: String) {
      * it rather than carrying a copy.
      */
     SKELETONS("DateTimeSkeletons"),
+    NUMBER("Number"),
 }
 
 public class SourceRoots private constructor(
@@ -100,6 +113,10 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
                 GeneratedTable.CURRENCY_NAMES to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.DATE_TIME to "dev.carcara.kotlinx.locale.datetime.cldr.internal.data",
                 GeneratedTable.SKELETONS to "dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data",
+                GeneratedTable.NUMBER to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
+                GeneratedTable.NUMBER_COMPACT to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
+                GeneratedTable.PLURALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
+                GeneratedTable.ORDINALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
             ),
         )
 
@@ -183,6 +200,70 @@ private val PAYLOAD_TABLES = listOf(
         "SKELETON_NAMES",
         "skeletonNamesRegistry",
     ),
+    PayloadTableSpec(
+        GeneratedTable.NUMBER,
+        "numberSymbols",
+        "NumberSymbols",
+        "NUMBER_SYMBOLS",
+        "numberSymbolsRegistry",
+        "NUMBER_CLDR_VERSION",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.NUMBER,
+        "numberPatterns",
+        "NumberPatterns",
+        "NUMBER_PATTERNS",
+        "numberPatternsRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.NUMBER_COMPACT,
+        "numberCompactShort",
+        "CompactShort",
+        "COMPACT_SHORT",
+        "compactShortRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.NUMBER_COMPACT,
+        "numberCompactLong",
+        "CompactLong",
+        "COMPACT_LONG",
+        "compactLongRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.NUMBER_COMPACT,
+        "currencyCompactShort",
+        "CurrencyCompact",
+        "CURRENCY_COMPACT",
+        "currencyCompactRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.PLURALS,
+        "pluralRuleSets",
+        "PluralRuleSets",
+        "PLURAL_RULES",
+        "pluralRuleSetsRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.PLURALS,
+        "pluralRuleIndex",
+        "PluralRuleIndex",
+        "PLURAL_INDEX",
+        "pluralRuleIndexRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.ORDINALS,
+        "ordinalRuleSets",
+        "OrdinalRuleSets",
+        "ORDINAL_RULES",
+        "ordinalRuleSetsRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.ORDINALS,
+        "ordinalRuleIndex",
+        "OrdinalRuleIndex",
+        "ORDINAL_INDEX",
+        "ordinalRuleIndexRegistry",
+    ),
 )
 
 /**
@@ -263,6 +344,15 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
 
     roots[GeneratedBinding.DATE_TIME]?.let { target ->
         emitDateTimeBinding(target.root, target.spec(packages[GeneratedTable.DATE_TIME], cldr))
+    }
+
+    roots[GeneratedBinding.NUMBER]?.let { target ->
+        emitNumberBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.NUMBER], cldr),
+            hasCompact = roots[GeneratedTable.NUMBER_COMPACT] != null,
+            hasOrdinals = roots[GeneratedTable.ORDINALS] != null,
+        )
     }
 
     roots[GeneratedBinding.SKELETONS]?.let { target ->

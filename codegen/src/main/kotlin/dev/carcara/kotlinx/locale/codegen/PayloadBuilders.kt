@@ -48,6 +48,67 @@ fun buildCurrencyFormatPayloads(flattener: Flattener, extras: ExtrasResolver): M
     return payloads
 }
 
+/** Fully resolved number symbols per locale: eighteen fields, all of CLDR's `<symbols>`. */
+fun buildNumberSymbolPayloads(flattener: Flattener, extras: ExtrasResolver): Map<String, String> {
+    val payloads = LinkedHashMap<String, String>()
+    for (id in listOf("root") + flattener.localeIds) {
+        val symbols = extras.resolveNumberSymbols(id)
+        payloads[canonicalTag(id)] = listOf(
+            symbols.numberingSystem,
+            symbols.digits,
+            symbols.decimal,
+            symbols.group,
+            symbols.currencyDecimal,
+            symbols.currencyGroup,
+            symbols.minusSign,
+            symbols.plusSign,
+            symbols.percentSign,
+            symbols.perMille,
+            symbols.approximatelySign,
+            symbols.exponential,
+            symbols.superscriptingExponent,
+            symbols.infinity,
+            symbols.nan,
+            symbols.listSeparator,
+            symbols.timeSeparator,
+            symbols.minimumGroupingDigits.toString(),
+        ).joinToString(FIELD_SEPARATOR)
+    }
+    return payloads
+}
+
+/** The plain decimal and percent patterns per locale. */
+fun buildNumberPatternPayloads(flattener: Flattener, extras: ExtrasResolver): Map<String, String> {
+    val payloads = LinkedHashMap<String, String>()
+    for (id in listOf("root") + flattener.localeIds) {
+        val patterns = extras.resolveNumberPatterns(id)
+        payloads[canonicalTag(id)] = patterns.decimal + FIELD_SEPARATOR + patterns.percent
+    }
+    return payloads
+}
+
+/**
+ * One compact table per locale, fully resolved.
+ *
+ * Resolved rather than sparse because compact is not the shape sparse pays off
+ * on: of the locales that declare a short decimal table, the average declares
+ * almost all twenty-four of its patterns, so a sparse record would carry the
+ * whole table anyway and add a chain walk per lookup.
+ */
+fun buildCompactPayloads(
+    flattener: Flattener,
+    extras: ExtrasResolver,
+    select: (PartialLocaleExtras) -> Map<String, MutableMap<String, String>>,
+): Map<String, String> {
+    val payloads = LinkedHashMap<String, String>()
+    for (id in listOf("root") + flattener.localeIds) {
+        payloads[canonicalTag(id)] = extras.resolveCompact(id, select).entries
+            .sortedBy { it.key }
+            .joinToString(LIST_SEPARATOR) { (key, pattern) -> "$key=$pattern" }
+    }
+    return payloads
+}
+
 /**
  * Sparse per-locale currency-name payloads: the parent tag, the symbols this
  * locale's own file declares, and the display names it declares.

@@ -62,6 +62,10 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.CURRENCY_NAMES, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
     .table(GeneratedTable.DATE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
     .table(GeneratedTable.SKELETONS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"))
+    .table(GeneratedTable.NUMBER, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
+    .table(GeneratedTable.NUMBER_COMPACT, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
+    .table(GeneratedTable.PLURALS, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
+    .table(GeneratedTable.ORDINALS, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     // The source objects and their convenience extensions come from the same
     // emitter the Gradle plugin uses, so a narrowed build and a full one cannot
     // present a different API.
@@ -95,6 +99,14 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
             root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"),
             packageName = "dev.carcara.kotlinx.locale.datetime.cldr.skeletons",
             objectName = "CldrDateTimeSkeletons",
+        ),
+    )
+    .binding(
+        GeneratedBinding.NUMBER,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-number-cldr-full"),
+            packageName = "dev.carcara.kotlinx.locale.number.cldr",
+            objectName = "CldrNumber",
         ),
     )
     .build()
@@ -166,6 +178,14 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         extras.resolveValue("en") { it.territoryNames[alpha2] }
     }
 
+    val plurals = parsePlurals(cldrDir)
+    val rbnf = parseRbnfOrdinals(cldrDir, flattener.localeIds, supplemental.parentOverrides)
+    emitCldrPluralSamples(
+        outputFile = conformanceDir(rootDir).resolve("CldrPluralSampleData.kt"),
+        cldrTag = CLDR_REPO.tag,
+        samples = plurals.samples,
+    )
+
     val emoji = crossCheckCountryFlags(countryList)
     emitEmojiFlagGolden(conformanceDir(rootDir).resolve("EmojiFlagGoldenData.kt"), emoji)
 
@@ -232,5 +252,17 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .section("skeletonFormats", skeletonFormats)
         .section("skeletonAppendFormats", skeletonAppendFormats)
         .section("skeletonNames", skeletonNames)
+        .section("numberSymbols", buildNumberSymbolPayloads(flattener, extras))
+        .section("numberPatterns", buildNumberPatternPayloads(flattener, extras))
+        .section("numberCompactShort", buildCompactPayloads(flattener, extras) { it.compactShort })
+        .section("numberCompactLong", buildCompactPayloads(flattener, extras) { it.compactLong })
+        .section("currencyCompactShort", buildCompactPayloads(flattener, extras) { it.currencyCompact })
+        .section("pluralRuleSets", plurals.ruleSets)
+        .section("pluralRuleIndex", plurals.index.mapKeys(::canonicalTagOf))
+        .section("ordinalRuleSets", rbnf.closures)
+        .section("ordinalRuleIndex", rbnf.index.mapKeys(::canonicalTagOf))
         .build()
 }
+
+/** A map key that is a CLDR locale id, as the canonical tag the runtime looks up by. */
+private fun canonicalTagOf(entry: Map.Entry<String, String>): String = canonicalTag(entry.key)
