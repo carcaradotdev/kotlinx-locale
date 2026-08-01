@@ -30,6 +30,15 @@ import dev.carcara.kotlinx.locale.number.internal.roundToSignificantDigits
 private const val COMPACT_SIGNIFICANT_DIGITS = 2
 
 /**
+ * The smallest `minimumGroupingDigits` compact notation will use.
+ *
+ * Not in UTS #35. ICU's compact notation defaults to `GroupingStrategy.MIN2`
+ * and `Intl.NumberFormat` does the same, so a locale whose own minimum is one
+ * still writes a four-digit compact result ungrouped.
+ */
+private const val COMPACT_GROUPING_FLOOR = 2
+
+/**
  * Picks the plural category of the divided value, which is step 8 of the compact
  * algorithm.
  *
@@ -63,38 +72,65 @@ public fun formatCompact(
     affix: AffixSubstitution = AffixSubstitution.None,
 ): FormattedNumber {
     if (table.isEmpty) {
-        return renderNumber(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
     }
 
     var magnitude = magnitudeOf(value)
     if (magnitude < 3) {
         // Below the smallest bucket CLDR declares, compact output is the plain
-        // number. The tables start at 1000 for every locale.
-        return renderNumber(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+        // number: the tables start at 1000 for every locale. The precision rule
+        // still applies, though, which is what makes 0.125 read as 0.12 rather
+        // than in full. Compact notation is a request for an approximate
+        // reading, and the magnitude it lands on does not change that.
+        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
     }
     if (magnitude > table.maximumMagnitude) magnitude = table.maximumMagnitude
+    if (!table.hasCompactForm(magnitude)) {
+        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+    }
 
-    var divided = divideAndRound(value, magnitude, options, fixedFractionDigits)
-    // Rounding can push the value up a bucket: 999999 rounds to 1000 thousand,
-    // which is one million.
-    if (magnitude < table.maximumMagnitude && magnitudeOf(divided) >= 3) {
-        magnitude += 3
-        divided = divideAndRound(value, magnitude, options, fixedFractionDigits)
+    var divisor = table.divisorExponent(magnitude)
+    var divided = divideAndRound(value, divisor, options, fixedFractionDigits)
+    // Rounding can push the value into a different entry, and the entries are
+    // keyed by digit count rather than by power-of-1000 bucket: CLDR declares
+    // 1000, 10000, 100000 and so on separately. So 9999 rounds to ten thousand
+    // and takes the 10000 entry, which in Arabic is a different word from the
+    // 1000 one, and 999999 rounds to one million and takes the 1000000 entry.
+    val adjusted = minOf(magnitudeOf(divided) + divisor, table.maximumMagnitude)
+    if (adjusted != magnitude) {
+        if (!table.hasCompactForm(adjusted)) {
+            return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+        }
+        magnitude = adjusted
+        divisor = table.divisorExponent(magnitude)
+        divided = divideAndRound(value, divisor, options, fixedFractionDigits)
     }
 
     val interim = renderNumber(divided, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators)
     val category = selectCategory.categoryOf(interim)
-    val pattern = table.patternOrNull(magnitude, category, false)
-        ?: return renderNumber(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+    val exact = if (divided.scale == 0) divided.unscaled else null
+    val pattern = table.patternOrNull(magnitude, category, false, exact)
+        ?: return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
 
-    // The "0" sentinel means this magnitude has no compact form in this locale.
+    // The "0" sentinel means this magnitude has no compact form in this locale,
+    // so the whole number is written out. Ten locales use it to override a
+    // parent's entry, which is why it has to be read as a value rather than
+    // skipped past as an absence.
     if (pattern == "0") {
-        return renderNumber(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
     }
 
     val alpha = currencyText.isNotEmpty() &&
         isAlphaAdjacent(NumberPattern.parse(pattern), currencyText)
-    val chosen = if (alpha) table.patternOrNull(magnitude, category, true) ?: pattern else pattern
+    val chosen = if (alpha) table.patternOrNull(magnitude, category, true, exact) ?: pattern else pattern
+
+    // A pattern with no digit placeholder is the whole answer on its own.
+    // French declares one thousand long as `mille`, which is a word rather than
+    // a number and a word, so appending the digits would write `mille1`.
+    if (!hasDigitPlaceholder(chosen)) {
+        val literal = renderAffix(unquote(chosen), affix)
+        return FormattedNumber(literal, divided.absoluteDigits(), "", magnitude)
+    }
 
     // The pattern's own zeros say how many integer digits the divided value has,
     // not how many to pad to: "00K" means the bucket covers two digits. Only the
@@ -109,6 +145,40 @@ public fun formatCompact(
         useCurrencySeparators = useCurrencySeparators,
         affix = affix,
         compactExponent = magnitude,
+        groupingFloor = COMPACT_GROUPING_FLOOR,
+    )
+}
+
+/**
+ * A number written out in full, but still under compact's precision and
+ * grouping.
+ *
+ * The three ways out of the compact path all land here: a locale with no table,
+ * a value below the smallest bucket, and the `"0"` sentinel. None of them is a
+ * reason to fall back to plain formatting, because the caller asked for compact
+ * notation and the answer is still an approximate reading. German writes 1234 as
+ * `1234` here rather than as `1.234`, which is grouping, and rounds it to the
+ * compact precision rather than the pattern's, which is the other half.
+ */
+private fun renderPlain(
+    value: Decimal,
+    standardPattern: NumberPattern,
+    symbols: NumberSymbols,
+    options: NumberFormatOptions,
+    fixedFractionDigits: Int?,
+    useCurrencySeparators: Boolean,
+    affix: AffixSubstitution,
+): FormattedNumber {
+    val rounded = divideAndRound(value, 0, options, fixedFractionDigits)
+    return renderNumber(
+        value = rounded,
+        pattern = standardPattern,
+        symbols = symbols,
+        options = options,
+        fixedFractionDigits = fixedFractionDigits ?: rounded.scale,
+        useCurrencySeparators = useCurrencySeparators,
+        affix = affix,
+        groupingFloor = COMPACT_GROUPING_FLOOR,
     )
 }
 
@@ -124,10 +194,9 @@ private fun magnitudeOf(value: Decimal): Int {
     return magnitude
 }
 
-private fun divideAndRound(value: Decimal, magnitude: Int, options: NumberFormatOptions, fixedFractionDigits: Int?): Decimal {
+private fun divideAndRound(value: Decimal, divisor: Int, options: NumberFormatOptions, fixedFractionDigits: Int?): Decimal {
     // Dividing by lowering the scale keeps the value exact: 123456 at scale 0
     // divided by 1000 is 123456 at scale 3, which is 123.456.
-    val divisor = magnitude - (magnitude % 3)
     val divided = Decimal.ofUnscaled(value.unscaled, value.scale + divisor)
 
     val explicit = fixedFractionDigits ?: options.maximumFractionDigits
@@ -177,6 +246,15 @@ private fun placeholderOf(pattern: String): String = buildString(pattern.length)
                 append(ch)
                 index++
             }
+            // The negative subpattern is a pattern of its own and needs its own
+            // placeholder. Swahili writes its millions as `0M;-0M`, and a flag
+            // carried across the separator would leave the negative half with
+            // no digits at all.
+            !inQuote && ch == ';' -> {
+                written = false
+                append(ch)
+                index++
+            }
             !inQuote && ch == '0' -> {
                 while (index < pattern.length && pattern[index] == '0') index++
                 if (!written) {
@@ -189,5 +267,39 @@ private fun placeholderOf(pattern: String): String = buildString(pattern.length)
                 index++
             }
         }
+    }
+}
+
+/** Whether [pattern] has a `0` outside quotes, which is where the number goes. */
+private fun hasDigitPlaceholder(pattern: String): Boolean {
+    var inQuote = false
+    for (ch in pattern) {
+        when {
+            ch == '\'' -> inQuote = !inQuote
+            !inQuote && ch == '0' -> return true
+        }
+    }
+    return false
+}
+
+/** [pattern] with its LDML quoting removed, so `Mio'.'` reads `Mio.`. */
+private fun unquote(pattern: String): String = buildString(pattern.length) {
+    var inQuote = false
+    var index = 0
+    while (index < pattern.length) {
+        val ch = pattern[index]
+        if (ch == '\'') {
+            // A doubled quote is a literal one.
+            if (inQuote && index + 1 < pattern.length && pattern[index + 1] == '\'') {
+                append('\'')
+                index += 2
+                continue
+            }
+            inQuote = !inQuote
+            index++
+            continue
+        }
+        append(ch)
+        index++
     }
 }

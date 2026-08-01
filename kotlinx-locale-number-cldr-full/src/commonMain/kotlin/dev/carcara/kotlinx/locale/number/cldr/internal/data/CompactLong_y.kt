@@ -9,7 +9,13 @@ internal val COMPACT_LONG_YO_BJ: String =
     "10:other=00 bilíɔ̀nù\u001E11:other=000 bilíɔ̀nù\u001E12:other=0 tiriliɔ̀nù\u001E13:other=00 tiriliɔ̀nù\u001E14:other=000 tiriliɔ̀nù\u001E3:other=0 ɛgbɛ̀rún\u001E4:other=00 ɛgbɛ̀rún\u001E5:other=000 ɛgbɛ̀rún\u001E6:other=0 mílíɔ̀nù\u001E7:other=00 mílíɔ̀nù\u001E8:other=000 mílíɔ̀nù\u001E9:other=0 bilíɔ̀nù"
 
 internal val COMPACT_LONG_YRL: String =
-    "10:one=00 biliãu\u001E10:other=00 biliãu-ita\u001E11:one=000 biliãu\u001E11:other=000 biliãu-ita\u001E12:one=0 tiriliãu\u001E12:other=0 tiriliãu-ita\u001E13:one=00 tiriliãu\u001E13:other=00 tiriliãu-ita\u001E14:one=000 tiriliãu\u001E14:other=000 tiriliãu-ita\u001E3:one=0 miu\u001E3:other=0 miu\u001E4:one=00 miu\u001E4:other=00 miu\u001E5:one=000 miu\u001E5:other=000 miu\u001E6:one=0 miliãu\u001E6:other=0 miliãu-ita\u001E7:one=00 miliãu\u001E7:other=00 miliãu-ita\u001E8:one=000 miliãu\u001E8:other=000 miliãu-ita\u001E9:one=0 biliãu\u001E9:other=0 biliãu-ita"
+    "10:one=00 biliãu\u001E10:other=00 biliãu-ita\u001E11:one=000 biliãu\u001E11:other=000 biliãu-ita\u001E12:one=0 tiriliãu\u001E12:other=0 tiriliãu-ita\u001E13:one=00 tiriliãu\u001E13:other=00 tiriliãu-ita\u001E14:one=000 tiriliãu\u001E14:other=000 tiriliãu-ita\u001E3:other=0 miu\u001E4:other=00 miu\u001E5:other=000 miu\u001E6:one=0 miliãu\u001E6:other=0 miliãu-ita\u001E7:one=00 miliãu\u001E7:other=00 miliãu-ita\u001E8:one=000 miliãu\u001E8:other=000 miliãu-ita\u001E9:one=0 biliãu\u001E9:other=0 biliãu-ita"
 
 internal val COMPACT_LONG_YRL_CO: String =
-    "10:one=00 billón\u001E10:other=00 billón-ita\u001E11:one=000 billón\u001E11:other=000 billón-ita\u001E12:one=0 tirillón\u001E12:other=0 tirillón-ita\u001E13:one=00 tirillón\u001E13:other=00 tirillón-ita\u001E14:one=000 tirillón\u001E14:other=000 tirillón-ita\u001E3:one=0 miu\u001E3:other=0 miu\u001E4:one=00 miu\u001E4:other=00 miu\u001E5:one=000 miu\u001E5:other=000 miu\u001E6:one=0 millón\u001E6:other=0 millón-ita\u001E7:one=00 millón\u001E7:other=00 millón-ita\u001E8:one=000 millón\u001E8:other=000 millón-ita\u001E9:one=0 billón\u001E9:other=0 billón-ita"
+    "10:one=00 billón\u001E10:other=00 billón-ita\u001E11:one=000 billón\u001E11:other=000 billón-ita\u001E12:one=0 tirillón\u001E12:other=0 tirillón-ita\u001E13:one=00 tirillón\u001E13:other=00 tirillón-ita\u001E14:one=000 tirillón\u001E14:other=000 tirillón-ita\u001E3:other=0 miu\u001E4:other=00 miu\u001E5:other=000 miu\u001E6:one=0 millón\u001E6:other=0 millón-ita\u001E7:one=00 millón\u001E7:other=00 millón-ita\u001E8:one=000 millón\u001E8:other=000 millón-ita\u001E9:one=0 billón\u001E9:other=0 billón-ita"
+
+internal val COMPACT_LONG_YUE: String =
+    "10:other=000億\u001E11:other=0000億\u001E12:other=0兆\u001E13:other=00兆\u001E14:other=000兆\u001E3:other=0千\u001E4:other=0萬\u001E5:other=00萬\u001E6:other=000萬\u001E7:other=0000萬\u001E8:other=0億\u001E9:other=00億"
+
+internal val COMPACT_LONG_YUE_HANS: String =
+    "10:other=000亿\u001E11:other=0000亿\u001E12:other=0兆\u001E13:other=00兆\u001E14:other=000兆\u001E3:other=0千\u001E4:other=0万\u001E5:other=00万\u001E6:other=000万\u001E7:other=0000万\u001E8:other=0亿\u001E9:other=00亿"

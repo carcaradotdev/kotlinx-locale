@@ -3,7 +3,7 @@
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
 internal val COMPACT_LONG_OM: String =
-    "10:one=biiliyoona 00\u001E10:other=biiliyoona 00\u001E11:one=biiliyoona 000\u001E11:other=biiliyoona 000\u001E12:one=tiriiliyoona 0\u001E12:other=tiriiliyoona 0\u001E13:one=tiriiliyoona 00\u001E13:other=tiriiliyoona 00\u001E14:one=tiriiliyoona 000\u001E14:other=tiriiliyoona 000\u001E3:one=Kuma 0\u001E3:other=kuma 0\u001E4:one=kuma 00\u001E4:other=kuma 00\u001E5:one=kuma 000\u001E5:other=kuma 000\u001E6:one=miiliyoona 0\u001E6:other=miiliyoona 0\u001E7:one=miiliyoona 00\u001E7:other=miiliyoona 00\u001E8:one=miiliyoona 000\u001E8:other=miiliyoona 000\u001E9:one=biiliyoona 0\u001E9:other=biiliyoona 0"
+    "10:other=biiliyoona 00\u001E11:other=biiliyoona 000\u001E12:other=tiriiliyoona 0\u001E13:other=tiriiliyoona 00\u001E14:other=tiriiliyoona 000\u001E3:one=Kuma 0\u001E3:other=kuma 0\u001E4:other=kuma 00\u001E5:other=kuma 000\u001E6:other=miiliyoona 0\u001E7:other=miiliyoona 00\u001E8:other=miiliyoona 000\u001E9:other=biiliyoona 0"
 
 internal val COMPACT_LONG_OR: String =
-    "10:one=00 ଶହକୋଟି\u001E10:other=00 ଶହକୋଟି\u001E11:one=000 ଶହକୋଟି\u001E11:other=000 ଶହକୋଟି\u001E12:one=0 ଲକ୍ଷକୋଟି\u001E12:other=0 ଲକ୍ଷକୋଟି\u001E13:one=00 ଲକ୍ଷକୋଟି\u001E13:other=00 ଲକ୍ଷକୋଟି\u001E14:one=000 ଲକ୍ଷକୋଟି\u001E14:other=000 ଲକ୍ଷକୋଟି\u001E3:one=0 ହଜାର\u001E3:other=0 ହଜାର\u001E4:one=00 ହଜାର\u001E4:other=00 ହଜାର\u001E5:one=000 ହଜାର\u001E5:other=000 ହଜାର\u001E6:one=0 ନିୟୁତ\u001E6:other=0 ନିୟୁତ\u001E7:one=00 ନିୟୁତ\u001E7:other=00 ନିୟୁତ\u001E8:one=000 ନିୟୁତ\u001E8:other=000 ନିୟୁତ\u001E9:one=0 ଶହକୋଟି\u001E9:other=0 ଶହକୋଟି"
+    "10:other=00 ଶହକୋଟି\u001E11:other=000 ଶହକୋଟି\u001E12:other=0 ଲକ୍ଷକୋଟି\u001E13:other=00 ଲକ୍ଷକୋଟି\u001E14:other=000 ଲକ୍ଷକୋଟି\u001E3:other=0 ହଜାର\u001E4:other=00 ହଜାର\u001E5:other=000 ହଜାର\u001E6:other=0 ନିୟୁତ\u001E7:other=00 ନିୟୁତ\u001E8:other=000 ନିୟୁତ\u001E9:other=0 ଶହକୋଟି"

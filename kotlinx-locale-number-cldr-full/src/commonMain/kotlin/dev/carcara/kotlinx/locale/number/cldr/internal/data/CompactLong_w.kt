@@ -3,4 +3,4 @@
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
 internal val COMPACT_LONG_WO: String =
-    "11:other=Vote 000G\u001E3:other=0 thousand\u001E4:other=00 thousand\u001E5:other=000 thousand\u001E7:other=Vote 00M\u001E8:other=Vote 000M"
+    "10:other=00B\u001E11:other=Vote 000G\u001E12:other=0T\u001E13:other=00T\u001E14:other=000T\u001E3:other=0 thousand\u001E4:other=00 thousand\u001E5:other=000 thousand\u001E6:other=0M\u001E7:other=Vote 00M\u001E8:other=Vote 000M\u001E9:other=0B"

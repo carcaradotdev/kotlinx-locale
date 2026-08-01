@@ -3,10 +3,10 @@
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
 internal val COMPACT_LONG_TA: String =
-    "10:one=00 பில்லியன்\u001E10:other=00 பில்லியன்\u001E11:one=000 பில்லியன்\u001E11:other=000 பில்லியன்\u001E12:one=0 டிரில்லியன்\u001E12:other=0 டிரில்லியன்\u001E13:one=00 டிரில்லியன்\u001E13:other=00 டிரில்லியன்\u001E14:one=000 டிரில்லியன்\u001E14:other=000 டிரில்லியன்\u001E3:one=0 ஆயிரம்\u001E3:other=0 ஆயிரம்\u001E4:one=00 ஆயிரம்\u001E4:other=00 ஆயிரம்\u001E5:one=000 ஆயிரம்\u001E5:other=000 ஆயிரம்\u001E6:one=0 மில்லியன்\u001E6:other=0 மில்லியன்\u001E7:one=00 மில்லியன்\u001E7:other=00 மில்லியன்\u001E8:one=000 மில்லியன்\u001E8:other=000 மில்லியன்\u001E9:one=0 பில்லியன்\u001E9:other=0 பில்லியன்"
+    "10:other=00 பில்லியன்\u001E11:other=000 பில்லியன்\u001E12:other=0 டிரில்லியன்\u001E13:other=00 டிரில்லியன்\u001E14:other=000 டிரில்லியன்\u001E3:other=0 ஆயிரம்\u001E4:other=00 ஆயிரம்\u001E5:other=000 ஆயிரம்\u001E6:other=0 மில்லியன்\u001E7:other=00 மில்லியன்\u001E8:other=000 மில்லியன்\u001E9:other=0 பில்லியன்"
 
 internal val COMPACT_LONG_TE: String =
-    "10:one=00 బిలియన్లు\u001E10:other=00 బిలియన్లు\u001E11:one=000 బిలియన్లు\u001E11:other=000 బిలియన్లు\u001E12:one=0 ట్రిలియన్\u001E12:other=0 ట్రిలియన్లు\u001E13:one=00 ట్రిలియన్లు\u001E13:other=00 ట్రిలియన్లు\u001E14:one=000 ట్రిలియన్లు\u001E14:other=000 ట్రిలియన్లు\u001E3:one=0 వేయి\u001E3:other=0 వేలు\u001E4:one=00 వేలు\u001E4:other=00 వేలు\u001E5:one=000 వేలు\u001E5:other=000 వేలు\u001E6:one=0 మిలియన్\u001E6:other=0 మిలియన్లు\u001E7:one=00 మిలియన్లు\u001E7:other=00 మిలియన్లు\u001E8:one=000 మిలియన్లు\u001E8:other=000 మిలియన్లు\u001E9:one=0 బిలియన్\u001E9:other=0 బిలియన్లు"
+    "10:other=00 బిలియన్లు\u001E11:other=000 బిలియన్లు\u001E12:one=0 ట్రిలియన్\u001E12:other=0 ట్రిలియన్లు\u001E13:other=00 ట్రిలియన్లు\u001E14:other=000 ట్రిలియన్లు\u001E3:one=0 వేయి\u001E3:other=0 వేలు\u001E4:other=00 వేలు\u001E5:other=000 వేలు\u001E6:one=0 మిలియన్\u001E6:other=0 మిలియన్లు\u001E7:other=00 మిలియన్లు\u001E8:other=000 మిలియన్లు\u001E9:one=0 బిలియన్\u001E9:other=0 బిలియన్లు"
 
 internal val COMPACT_LONG_TG: String =
     "10:other=00 миллиард\u001E11:other=000 миллиард\u001E12:other=0 триллион\u001E13:other=00 триллион\u001E14:other=000 триллион\u001E3:other=0 ҳазор\u001E4:other=00 ҳазор\u001E5:other=000 ҳазор\u001E6:other=0 миллион\u001E7:other=00 миллион\u001E8:other=000 миллион\u001E9:other=0 миллиард"
@@ -15,13 +15,13 @@ internal val COMPACT_LONG_TH: String =
     "10:other=0 หมื่นล้าน\u001E11:other=0 แสนล้าน\u001E12:other=0 ล้านล้าน\u001E13:other=00 ล้านล้าน\u001E14:other=000 ล้านล้าน\u001E3:other=0 พัน\u001E4:other=0 หมื่น\u001E5:other=0 แสน\u001E6:other=0 ล้าน\u001E7:other=00 ล้าน\u001E8:other=000 ล้าน\u001E9:other=0 พันล้าน"
 
 internal val COMPACT_LONG_TI: String =
-    "10:one=00 ቢልዮን\u001E10:other=00 ቢልዮን\u001E11:one=000 ቢልዮን\u001E11:other=000 ቢልዮን\u001E12:one=0 ትሪልዮን\u001E12:other=0 ትሪልዮን\u001E13:one=00 ትሪልዮን\u001E13:other=00 ትሪልዮን\u001E14:one=000 ትሪልዮን\u001E14:other=000 ትሪልዮን\u001E3:one=0 ሽሕ\u001E3:other=0 ሽሕ\u001E4:one=00 ሽሕ\u001E4:other=00 ሽሕ\u001E5:one=000 ሽሕ\u001E5:other=000 ሽሕ\u001E6:one=0 ሚልዮን\u001E6:other=0 ሚልዮን\u001E7:one=00 ሚልዮን\u001E7:other=00 ሚልዮን\u001E8:one=000 ሚልዮን\u001E8:other=000 ሚልዮን\u001E9:one=0 ቢልዮን\u001E9:other=0 ቢልዮን"
+    "10:other=00 ቢልዮን\u001E11:other=000 ቢልዮን\u001E12:other=0 ትሪልዮን\u001E13:other=00 ትሪልዮን\u001E14:other=000 ትሪልዮን\u001E3:other=0 ሽሕ\u001E4:other=00 ሽሕ\u001E5:other=000 ሽሕ\u001E6:other=0 ሚልዮን\u001E7:other=00 ሚልዮን\u001E8:other=000 ሚልዮን\u001E9:other=0 ቢልዮን"
 
 internal val COMPACT_LONG_TK: String =
-    "10:one=00 milliard\u001E10:other=00 milliard\u001E11:one=000 milliard\u001E11:other=000 milliard\u001E12:one=0 trillion\u001E12:other=0 trillion\u001E13:one=00 trillion\u001E13:other=00 trillion\u001E14:one=000 trillion\u001E14:other=000 trillion\u001E3:one=0 müň\u001E3:other=0 müň\u001E4:one=00 müň\u001E4:other=00 müň\u001E5:one=000 müň\u001E5:other=000 müň\u001E6:one=0 million\u001E6:other=0 million\u001E7:one=00 million\u001E7:other=00 million\u001E8:one=000 million\u001E8:other=000 million\u001E9:one=0 milliard\u001E9:other=0 milliard"
+    "10:other=00 milliard\u001E11:other=000 milliard\u001E12:other=0 trillion\u001E13:other=00 trillion\u001E14:other=000 trillion\u001E3:other=0 müň\u001E4:other=00 müň\u001E5:other=000 müň\u001E6:other=0 million\u001E7:other=00 million\u001E8:other=000 million\u001E9:other=0 milliard"
 
 internal val COMPACT_LONG_TO: String =
     "10:other=00 piliona\u001E11:other=000 piliona\u001E12:other=0 tiliona\u001E13:other=00 tiliona\u001E14:other=000 tiliona\u001E3:other=0 afe\u001E4:other=0 mano\u001E5:other=0 kilu\u001E6:other=0 miliona\u001E7:other=00 miliona\u001E8:other=000 miliona\u001E9:other=0 piliona"
 
 internal val COMPACT_LONG_TR: String =
-    "10:one=00 milyar\u001E10:other=00 milyar\u001E11:one=000 milyar\u001E11:other=000 milyar\u001E12:one=0 trilyon\u001E12:other=0 trilyon\u001E13:one=00 trilyon\u001E13:other=00 trilyon\u001E14:one=000 trilyon\u001E14:other=000 trilyon\u001E3:one=0 bin\u001E3:other=0 bin\u001E4:one=00 bin\u001E4:other=00 bin\u001E5:one=000 bin\u001E5:other=000 bin\u001E6:one=0 milyon\u001E6:other=0 milyon\u001E7:one=00 milyon\u001E7:other=00 milyon\u001E8:one=000 milyon\u001E8:other=000 milyon\u001E9:one=0 milyar\u001E9:other=0 milyar"
+    "10:other=00 milyar\u001E11:other=000 milyar\u001E12:other=0 trilyon\u001E13:other=00 trilyon\u001E14:other=000 trilyon\u001E3:other=0 bin\u001E4:other=00 bin\u001E5:other=000 bin\u001E6:other=0 milyon\u001E7:other=00 milyon\u001E8:other=000 milyon\u001E9:other=0 milyar"
