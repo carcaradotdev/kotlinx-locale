@@ -923,6 +923,185 @@ accounting parentheses. `format` output round trips for every bundled locale.
 Note that the `.platform` package offers only `parseFormattedOrNull`, with no
 throwing variant, because a miss is the expected outcome on most targets.
 
+## Numbers
+
+### Long.format, Double.format and Decimal.format
+
+```kotlin
+1234567L.format(EN)                       // "1,234,567"
+1234567L.format(DE)                       // "1.234.567"
+1234567L.format(CS)                       // "1 234 567", with a no-break space
+1000L.format(PL)                          // "1000", because pl groups from five digits
+3.14159.format(fractionDigits = 2, EN)    // "3.14"
+```
+
+`Decimal` is the exact type the formatters take: a `Long` of unscaled units plus
+a scale. The digit count for a `Double` is required rather than inferred,
+because the targets do not agree on how many digits a `Double` has and a
+formatter that guessed would print different text on each.
+
+### Decimal.formatPercent and Decimal.formatPercentValue
+
+```kotlin
+Decimal.parse("0.125").formatPercent(EN, fractionDigits = 1)   // "12.5%"
+Decimal.parse("0.125").formatPercent(CS, fractionDigits = 1)   // "12,5 %"
+Decimal.parse("0.125").formatPercent(TR, fractionDigits = 1)   // "%12,5"
+Decimal.parse("12.5").formatPercentValue(EN, fractionDigits = 1) // "12.5%"
+```
+
+Two functions because the two readings both have standing and getting it wrong
+is a hundredfold error. `formatPercent` takes a fraction and multiplies, which
+is what a `%` in a CLDR pattern means. `formatPercentValue` takes a value that
+is already a percentage.
+
+The placement is the locale's: Czech and German put a no-break space before the
+sign, Turkish puts the sign in front.
+
+### Long.formatCompact and Decimal.formatCompact
+
+```kotlin
+1200L.formatCompact(EN)                                  // "1.2K"
+12345L.formatCompact(EN)                                 // "12K"
+999999L.formatCompact(EN)                                // "1M"
+1200L.formatCompact(EN, NumberNotation.COMPACT_LONG)     // "1.2 thousand"
+```
+
+The default precision is two significant digits or none, whichever keeps more.
+UTS #35 leaves that open, so this library pins it and holds it with ICU
+goldens. See `kotlinx-locale-number-core/README.md`.
+
+### Long.pluralCategory and Decimal.pluralCategory
+
+```kotlin
+1L.pluralCategory(CS)                              // ONE
+3L.pluralCategory(CS)                              // FEW
+10L.pluralCategory(CS)                             // OTHER
+Decimal.parse("1.0").pluralCategory(1, CS)         // MANY
+```
+
+The fraction digit count is required for a `Decimal` and not for a `Long`. Czech
+puts every value written with a fraction digit in `many`, so the category is a
+property of how the number will be printed rather than of the number.
+
+### Long.formatOrdinal
+
+```kotlin
+1L.formatOrdinal(EN)    // "1st"
+21L.formatOrdinal(EN)   // "21st"
+1L.formatOrdinal(DE)    // "1."
+2L.formatOrdinal(CS)    // "2."
+```
+
+### numberSymbols
+
+```kotlin
+val symbols = numberSymbols(CS)
+symbols.decimal                 // ","
+symbols.group                   // "\u00A0"
+symbols.minimumGroupingDigits   // 1
+symbols.digits                  // ["0", "1", ... "9"]
+```
+
+For building something this library does not format. An amount field that
+formats while someone types cannot round trip through `format`, because that
+would normalise away the half-finished states the caret depends on.
+
+## Languages
+
+### Locale.displayName and Locale.nativeDisplayName
+
+```kotlin
+Locale.of("de").displayName(EN)                    // "German"
+Locale.of("de").displayName(PT)                    // "alemão"
+Locale.of("cs").nativeDisplayName                  // "čeština"
+Locale.forLanguageTag("en-GB").displayName(EN)     // "British English"
+Locale.forLanguageTag("en-GB").displayName(EN, LanguageDisplay.STANDARD)
+                                                   // "English (United Kingdom)"
+Locale.forLanguageTag("sr-Cyrl-BA").displayName(EN)
+                                                   // "Serbian (Cyrillic, Bosnia & Herzegovina)"
+```
+
+`nativeDisplayName` is the same call with the target and the display locale
+equal, which is where CLDR keeps a native name.
+
+CLDR stores these as the language writes them in running text, which is lower
+case in many. Capitalizing for a picker row is a separate call; see
+`Capitalization`.
+
+### Locale.scriptName and Locale.regionName
+
+```kotlin
+EN.scriptName("Latn")   // "Latin"
+EN.regionName("419")    // "Latin America"
+```
+
+Wider than `Country.displayName`: this answers for the macro-regions a locale
+identifier can carry.
+
+## Relative time
+
+### Long.formatRelative
+
+```kotlin
+(-1L).formatRelative(RelativeTimeUnit.DAY, locale = EN)   // "yesterday"
+(-3L).formatRelative(RelativeTimeUnit.DAY, locale = EN)   // "3 days ago"
+(-1L).formatRelative(RelativeTimeUnit.DAY, locale = CS)   // "včera"
+(-3L).formatRelative(RelativeTimeUnit.DAY, locale = CS)   // "před 3 dny"
+10L.formatRelative(RelativeTimeUnit.DAY, locale = CS)     // "za 10 dní"
+(-1L).formatRelative(RelativeTimeUnit.DAY, numbering = RelativeTimeNumbering.ALWAYS, locale = EN)
+                                                          // "1 day ago"
+```
+
+You choose the unit. Whether ninety minutes reads as `in 90 minutes` or
+`in 2 hours` is not standardized by CLDR, ECMA-402 or ICU, all of which take the
+unit from the caller, so this library does not decide it either.
+
+## Time zones
+
+### TimeZone.displayName
+
+```kotlin
+val la = TimeZone.of("America/Los_Angeles")
+la.displayName(TimeZoneNameStyle.GENERIC_LONG, locale = EN)    // "Pacific Time"
+la.displayName(TimeZoneNameStyle.STANDARD_LONG, locale = EN)   // "Pacific Standard Time"
+la.displayName(TimeZoneNameStyle.STANDARD_SHORT, locale = EN)  // "PST"
+```
+
+The offset is a separate argument from the style, so a caller who knows which
+form it wants never has to supply an instant.
+
+### UtcOffset.displayName
+
+```kotlin
+UtcOffset(hours = -8).displayName(EN)                // "GMT-08:00"
+UtcOffset(hours = -8).displayName(EN, short = true)  // "GMT-8"
+UtcOffset(hours = 0).displayName(EN)                 // "GMT"
+```
+
+Locale data rather than a fixed string. The word, the bracket style, the zero
+form and the digits all vary.
+
+### TimeZone.exemplarCity
+
+```kotlin
+TimeZone.of("Europe/Prague").exemplarCity(CS)   // "Praha"
+TimeZone.of("Asia/Dubai").exemplarCity(CS)      // "Dubaj"
+```
+
+From `kotlinx-locale-timezone-cldr-cities`, which is opt in. Without it the
+generic location format uses the identifier's own last part, which is the
+fallback UTS #35 prescribes.
+
+## Country.flagEmoji
+
+```kotlin
+Country.BR.flagEmoji   // 🇧🇷
+```
+
+Derived from the alpha-2 code rather than looked up, and checked at generation
+time against the RGI flag sequences of UTS #51, so it carries no table and needs
+no nullable form.
+
 ## Serialization
 
 Three artifacts, one per domain, each depending on its own `-core` and on

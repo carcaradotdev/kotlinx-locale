@@ -80,9 +80,14 @@ Dates and times:
   `date.format("yMMMd", ptBR)` is "27 de jul. de 2026" and the same call in `ja`
   is "2026年7月27日". The chosen pattern is available on its own, so it can drive
   kotlinx-datetime's `DateTimeFormat`. Opt in through a separate artifact.
-- Localized month and weekday names in wide, abbreviated and narrow widths,
-  taken from CLDR's "format" context, so Russian July is the genitive `июля`
-  that belongs in a sentence rather than the nominative `июль`.
+- Localized month and weekday names in wide, abbreviated and narrow widths, in
+  both of CLDR's contexts. Russian July is the genitive `июля` inside a sentence
+  and the nominative `июль` on a calendar header, and Croatian writes its
+  stand-alone narrow months as numbers.
+- Relative wording: `3 days ago`, `včera`, `za 10 dní`, with the plural rules
+  that pick among a language's forms.
+- Time zone names: `Pacific Standard Time`, `PT`, the localized GMT format, and
+  the exemplar cities behind `Los Angeles Time`.
 - Flexible day periods where a locale's standard patterns use them. zh-Hant
   times render as 凌晨2:05 at two in the morning, 下午3:05 in the afternoon and
   晚上8:05 in the evening.
@@ -93,10 +98,29 @@ Countries:
 - The 249 officially assigned ISO 3166-1 countries as an enum, carrying their
   alpha-2, alpha-3 and numeric codes.
 - Localized names for every CLDR locale, plus reverse lookup by name.
+- The flag emoji, derived from the alpha-2 code and checked against the RGI
+  sequences of UTS #51, so it carries no table.
+
+Numbers:
+
+- Grouped decimals, percentages and compact notation, each with the locale's own
+  separators, digits and placement. Czech percentages read `12,5 %` with a
+  no-break space, Turkish reads `%12,5`, and `1200` compacts to `1.2K`.
+- CLDR plural rules for choosing among translated forms, cardinal and ordinal,
+  selected from the number as it will be printed rather than from its value.
+- Ordinal forms: `1st`, `1.`, `1º`.
+- The raw symbol table, for building what this library does not format.
+
+Languages:
+
+- Language, script and region names in every CLDR locale, plus each language's
+  name in itself, composed through the display name algorithm of UTS #35 Part 2.
 
 Currencies:
 
-- The 178 active ISO 4217 currencies as an enum, carrying both the ISO minor
+- Both ISO 4217 lists as an enum, the 178 active codes and the withdrawn ones,
+  so an amount denominated in a currency that no longer exists still renders.
+- The 178 active ISO 4217 currencies carry both the ISO minor
   units and CLDR's formatting digits. The two disagree on purpose: the Albanian
   lek has 2 ISO minor units and formats with 0. Converters move values between
   the scales.
@@ -166,6 +190,16 @@ locale-country-cldr-full = { module = "dev.carcara:kotlinx-locale-country-cldr-f
 locale-country-platform = { module = "dev.carcara:kotlinx-locale-country-platform", version.ref = "kotlinx-locale" }
 locale-country-serialization = { module = "dev.carcara:kotlinx-locale-country-serialization", version.ref = "kotlinx-locale" }
 
+# Language, script and region names
+locale-language-core = { module = "dev.carcara:kotlinx-locale-language-core", version.ref = "kotlinx-locale" }
+locale-language-cldr-runtime = { module = "dev.carcara:kotlinx-locale-language-cldr-runtime", version.ref = "kotlinx-locale" }
+locale-language-cldr-full = { module = "dev.carcara:kotlinx-locale-language-cldr-full", version.ref = "kotlinx-locale" }
+
+# Numbers, plurals and ordinals
+locale-number-core = { module = "dev.carcara:kotlinx-locale-number-core", version.ref = "kotlinx-locale" }
+locale-number-cldr-runtime = { module = "dev.carcara:kotlinx-locale-number-cldr-runtime", version.ref = "kotlinx-locale" }
+locale-number-cldr-full = { module = "dev.carcara:kotlinx-locale-number-cldr-full", version.ref = "kotlinx-locale" }
+
 # Currency
 locale-currency-types = { module = "dev.carcara:kotlinx-locale-currency-types", version.ref = "kotlinx-locale" }
 locale-currency-core = { module = "dev.carcara:kotlinx-locale-currency-core", version.ref = "kotlinx-locale" }
@@ -180,7 +214,16 @@ locale-datetime-cldr-runtime = { module = "dev.carcara:kotlinx-locale-datetime-c
 locale-datetime-cldr-full = { module = "dev.carcara:kotlinx-locale-datetime-cldr-full", version.ref = "kotlinx-locale" }
 # Skeleton formatting, on top of -cldr-full. Opt in.
 locale-datetime-cldr-skeletons = { module = "dev.carcara:kotlinx-locale-datetime-cldr-skeletons", version.ref = "kotlinx-locale" }
+# Relative wording, on top of -cldr-runtime rather than -cldr-full. Opt in.
+locale-datetime-cldr-relative = { module = "dev.carcara:kotlinx-locale-datetime-cldr-relative", version.ref = "kotlinx-locale" }
 locale-datetime-platform = { module = "dev.carcara:kotlinx-locale-datetime-platform", version.ref = "kotlinx-locale" }
+
+# Time zone names
+locale-timezone-core = { module = "dev.carcara:kotlinx-locale-timezone-core", version.ref = "kotlinx-locale" }
+locale-timezone-cldr-runtime = { module = "dev.carcara:kotlinx-locale-timezone-cldr-runtime", version.ref = "kotlinx-locale" }
+locale-timezone-cldr-full = { module = "dev.carcara:kotlinx-locale-timezone-cldr-full", version.ref = "kotlinx-locale" }
+# The exemplar cities, on top of -cldr-full. Opt in.
+locale-timezone-cldr-cities = { module = "dev.carcara:kotlinx-locale-timezone-cldr-cities", version.ref = "kotlinx-locale" }
 
 [bundles]
 # Bundled CLDR data: the normal choice.
@@ -189,6 +232,13 @@ locale-currency-cldr = ["locale-currency-types", "locale-currency-core", "locale
 locale-datetime-cldr = ["locale-datetime-core", "locale-datetime-cldr-full"]
 # The same, plus skeleton formatting.
 locale-datetime-skeletons = ["locale-datetime-core", "locale-datetime-cldr-full", "locale-datetime-cldr-skeletons"]
+# Relative wording, which needs no date patterns.
+locale-datetime-relative = ["locale-datetime-core", "locale-datetime-cldr-relative"]
+locale-language-cldr = ["locale-language-core", "locale-language-cldr-full"]
+locale-number-cldr = ["locale-number-core", "locale-number-cldr-full"]
+# Zone names. The second adds the exemplar cities, which is the larger half.
+locale-timezone-cldr = ["locale-timezone-core", "locale-timezone-cldr-full"]
+locale-timezone-cities = ["locale-timezone-core", "locale-timezone-cldr-cities"]
 
 # The host's data instead, shipping no tables.
 locale-country-host = ["locale-country-types", "locale-country-core", "locale-country-platform"]
@@ -199,6 +249,9 @@ locale-datetime-host = ["locale-datetime-core", "locale-datetime-platform"]
 locale-country-narrowed = ["locale-country-types", "locale-country-core", "locale-country-cldr-runtime"]
 locale-currency-narrowed = ["locale-currency-types", "locale-currency-core", "locale-currency-cldr-runtime"]
 locale-datetime-narrowed = ["locale-datetime-core", "locale-datetime-cldr-runtime"]
+locale-language-narrowed = ["locale-language-core", "locale-language-cldr-runtime"]
+locale-number-narrowed = ["locale-number-core", "locale-number-cldr-runtime"]
+locale-timezone-narrowed = ["locale-timezone-core", "locale-timezone-cldr-runtime"]
 
 [plugins]
 # Generates a data set narrowed to the locales a build declares.
@@ -300,7 +353,13 @@ layers without touching a call site.
 | `kotlinx-locale-country-cldr-full` | `-cldr-runtime` plus the CLDR name tables for all 1121 locales: `CldrCountry` and `Country.displayName`. |
 | `kotlinx-locale-country-platform` | `PlatformCountry`: country names from `java.util.Locale`, `Intl.DisplayNames` or `NSLocale`. Ships no tables. |
 | `kotlinx-locale-country-serialization` | One `Country` serializer per ISO 3166-1 code (alpha-2, alpha-3, numeric), plus a lenient reader that takes all three and writes alpha-2. |
-| `kotlinx-locale-currency-types` | The `Currency` enum (active ISO 4217 codes, ISO minor units, CLDR fraction and cash-rounding behavior) and the country-to-currency map. |
+| `kotlinx-locale-language-core` | `LanguageNameSource` and the locale display name algorithm of UTS #35 Part 2: how a language name and its unconsumed subtags compose into `Serbian (Cyrillic)`. |
+| `kotlinx-locale-language-cldr-runtime` | The language, script and region name lookup over CLDR-shaped records it does not carry. |
+| `kotlinx-locale-language-cldr-full` | `-cldr-runtime` plus the name tables: `CldrLanguage`, `Locale.displayName` and `Locale.nativeDisplayName`. The largest table in the library, which is the strongest argument for the Gradle plugin. |
+| `kotlinx-locale-number-core` | `Decimal`, `NumberSymbols`, `PluralCategory`, `SignDisplay` and the number, plural and ordinal contracts. Its own README records where each part of the behaviour is defined, because CLDR settles the data and not the option names. |
+| `kotlinx-locale-number-cldr-runtime` | The CLDR pattern engine, the compact algorithm, the plural rule evaluator and the ordinal rule evaluator. The currency domain formats through this one rather than through a copy. |
+| `kotlinx-locale-number-cldr-full` | `-cldr-runtime` plus the symbol, pattern, compact, plural and ordinal tables: `CldrNumber`, `Long.format`, `Decimal.formatPercent`, `Long.formatCompact`, `Long.pluralCategory` and `Long.formatOrdinal`. |
+| `kotlinx-locale-currency-types` | The `Currency` enum (both ISO 4217 lists, ISO minor units, CLDR fraction and cash-rounding behavior, tender windows) and the country-to-currency map. |
 | `kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
 | `kotlinx-locale-currency-cldr-runtime` | The symbol and name lookup plus the pattern-based number formatter and parser, over CLDR-shaped records it does not carry. |
 | `kotlinx-locale-currency-cldr-full` | `-cldr-runtime` plus the CLDR symbol, name and number tables for all 1121 locales: `CldrCurrency`, `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
@@ -310,7 +369,12 @@ layers without touching a call site.
 | `kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. |
 | `kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
 | `kotlinx-locale-datetime-cldr-skeletons` | `-cldr-full` plus the skeleton tables: `CldrDateTimeSkeletons` and `date.format("yMMMd", locale)`, where you name the fields and the locale decides their order. Opt in, at around 60 KB gzipped on top of `-cldr-full`. |
+| `kotlinx-locale-datetime-cldr-relative` | `CldrRelativeTime` and `Long.formatRelative`: `3 days ago` and `včera`, with the plural rules that pick among a language's forms. Its own artifact because it needs no date patterns. |
 | `kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
+| `kotlinx-locale-timezone-core` | `TimeZoneNameSource` and `TimeZoneNameStyle`: the forms UTS #35 Part 4 defines for naming a zone. |
+| `kotlinx-locale-timezone-cldr-runtime` | The localized GMT format, metazone resolution and the naming ladder, over records it does not carry. |
+| `kotlinx-locale-timezone-cldr-full` | `-cldr-runtime` plus the format and name tables: `CldrTimeZone`, `TimeZone.displayName` and `UtcOffset.displayName`. |
+| `kotlinx-locale-timezone-cldr-cities` | `-cldr-full` plus the exemplar cities, for the generic location format. Opt in: this is the largest zone table, and without it the format falls back to the identifier's own last part, which is what the spec prescribes. |
 | `kotlinx-locale-codegen-emitters` | The emitters and the bundle reader: the half of code generation a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
 | `kotlinx-locale-codegen-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
 | `kotlinx-locale-gradle-plugin` | The `dev.carcara.kotlinx-locale` plugin, which generates a data set narrowed to the locales a build declares. |
@@ -677,6 +741,15 @@ fallback applies.
 The bundled modules first, because they are the flat row: pure common Kotlin,
 no expect/actual, the same answer on all 25 targets.
 
+Time zone names are the one place where that flat row meets something the
+platform owns. Naming a zone is pure common Kotlin like everything else here,
+because it works from the identifier and the tables. Constructing a
+`kotlinx.datetime.TimeZone` is not: each target reads whichever copy of the IANA
+time zone database it has, and Kotlin/JS under Node has no full one, so
+`TimeZone.of("America/Los_Angeles")` throws there for an identifier every other
+target accepts. That is a property of the runtime rather than of this library,
+and it is why the zone tests skip where a zone cannot be built.
+
 | Module | JVM, Android | Apple | JS, Wasm-JS | Linux, Windows, Android Native, Wasm-WASI |
 | --- | :-: | :-: | :-: | :-: |
 | `kotlinx-locale-core` | 🟢 | 🟢 | 🟢 | 🟢 |
@@ -800,9 +873,18 @@ everywhere. On the JVM, additional parity tests compare the ISO country and
 currency tables against the JDK's own data, a third independent source.
 
 Currency identity (numeric codes and ISO minor units) is not in CLDR, so the
-official ISO 4217 "list one" XML published by SIX is vendored as a snapshot at
-`codegen/src/main/resources/iso4217/list-one.xml` (published 2026-01-01) and
-parsed during generation. The country set is CLDR's `regular` region validity
+official ISO 4217 XML published by SIX is vendored as a snapshot and parsed
+during generation: `codegen/src/main/resources/iso4217/list-one.xml` for the
+active codes and `list-three.xml` for the withdrawn ones, both published
+2026-01-01. List three omits the minor units field entirely, so a withdrawn
+code takes CLDR's fraction data instead, and the JDK parity test is what
+confirms the two agree for the codes the JDK knows.
+
+Flag emoji are not CLDR either. The RGI flag sequences of UTS #51 are vendored
+the same way at `codegen/src/main/resources/emoji/emoji-sequences.txt` from
+Emoji 17.0, and used only to check at generation time that every country's
+derived sequence is one Unicode recommends. Nothing from that file is compiled
+into an artifact. The country set is CLDR's `regular` region validity
 list restricted to codes with an ISO alpha-3 and numeric assignment, which
 excludes macroregions, exceptionally reserved codes (`AC`, `IC`) and
 user-assigned codes (`XK`).
@@ -882,12 +964,22 @@ all of it before merging.
   `CurrencyAmount.parseFormatted` reads CLDR-formatted values like
   `R$ 1.234,56` or `200 Ft` into ISO minor units, expecting one number with one
   locale's separators rather than free-form text.
-- Relative formatting ("yesterday") and interval formatting are not implemented.
-  Skeletons are, in `kotlinx-locale-datetime-cldr-skeletons`; see
-  [naming the fields](#naming-the-fields-instead-of-picking-a-length).
-- The currency enum covers the active ISO 4217 set. Historic currencies (DEM,
-  the pre-2005 TRL) are not included, and neither is compact notation (`$1.2K`)
-  or plural-aware currency names (`¤¤¤` with a count).
+- Relative wording is implemented in `kotlinx-locale-datetime-cldr-relative`,
+  but you choose the unit. Whether ninety minutes reads as "in 90 minutes" or
+  "in 2 hours" is not standardized by CLDR, ECMA-402 or ICU, all of which take
+  the unit from the caller. Interval formatting is not implemented.
+- Plural-aware currency names (`¤¤¤` with a count) are not implemented, though
+  the plural rules they need are.
+- Time zone names do not take an instant. Pass the style you want, because
+  kotlinx-datetime exposes no way to ask whether a zone is on daylight time and
+  inferring it would be invisible at the call site. Zone name parsing is not
+  implemented either, and ISO 8601 zone formats are kotlinx-datetime's job.
+- Ordinals come in the plain form only. CLDR ships gendered and case-inflected
+  rule sets, and UTS #35 says outright that it supplies no data for choosing
+  between them.
+- Country dialling codes are not implemented and will not be. CLDR removed that
+  data in CLDR 34; see [docs/not-standardized.md](docs/not-standardized.md),
+  which records every boundary of this kind and why it sits where it does.
 - The `-platform` modules do not read locale data on Linux, Windows, Android
   Native or Wasm-WASI yet. The bundled `-cldr-*` modules answer on all of them,
   so this only affects a build that chose the host's data; see
