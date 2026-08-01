@@ -3,7 +3,17 @@
 package dev.carcara.kotlinx.locale.currency
 
 /**
- * The active currencies of ISO 4217, keyed by alphabetic code.
+ * The currencies of ISO 4217, keyed by alphabetic code.
+ *
+ * Both lists: the active codes of list one and the withdrawn codes of list
+ * three. A settlement record older than its currency's withdrawal still has
+ * to render, and a `CurrencyAmount` needs a `Currency` to render against, so
+ * a set of only current codes cannot express history. ICU and
+ * `java.util.Currency` both carry historical codes for the same reason.
+ *
+ * Use `Currency.active` where the question is what a user may choose today,
+ * and `isActive` or `wasTenderOn` to ask about a code in hand. Iterating
+ * `entries` gives you both kinds.
  *
  * Each entry carries the ISO numeric code and minor units together with the
  * CLDR fraction behavior (formatting digits, rounding increments and their
@@ -29,30 +39,72 @@ public enum class Currency(
     /** CLDR cash rounding increment, e.g. 5 for CHF (0.05); 0 means none. */
     public val cldrCashRoundingIncrement: Int,
 ) {
+    /** Andorran Peseta */
+    ADP(20, 0, 0, 0, 0, 0),
     /** UAE Dirham */
     AED(784, 2, 2, 0, 2, 0),
     /** Afghani */
+    AFA(4, 2, 2, 0, 2, 0),
+    /** Afghani */
     AFN(971, 2, 0, 0, 0, 0),
+    /** Old Lek */
+    ALK(8, 2, 2, 0, 2, 0),
     /** Lek */
     ALL(8, 2, 0, 0, 0, 0),
     /** Armenian Dram */
     AMD(51, 2, 2, 0, 0, 0),
+    /** Netherlands Antillean Guilder */
+    ANG(532, 2, 2, 0, 2, 0),
     /** Kwanza */
     AOA(973, 2, 2, 0, 2, 0),
+    /** Kwanza */
+    AOK(24, 2, 2, 0, 2, 0),
+    /** New Kwanza */
+    AON(24, 2, 2, 0, 2, 0),
+    /** Kwanza Reajustado */
+    AOR(982, 2, 2, 0, 2, 0),
+    /** Austral */
+    ARA(32, 2, 2, 0, 2, 0),
+    /** Peso Argentino */
+    ARP(32, 2, 2, 0, 2, 0),
     /** Argentine Peso */
     ARS(32, 2, 2, 0, 2, 0),
+    /** Peso */
+    ARY(32, 2, 2, 0, 2, 0),
+    /** Schilling */
+    ATS(40, 2, 2, 0, 2, 0),
     /** Australian Dollar */
     AUD(36, 2, 2, 0, 2, 0),
     /** Aruban Florin */
     AWG(533, 2, 2, 0, 2, 0),
     /** Azerbaijan Manat */
+    AYM(945, 2, 2, 0, 2, 0),
+    /** Azerbaijanian Manat */
+    AZM(31, 2, 2, 0, 2, 0),
+    /** Azerbaijan Manat */
     AZN(944, 2, 2, 0, 2, 0),
+    /** Dinar */
+    BAD(70, 2, 2, 0, 2, 0),
     /** Convertible Mark */
     BAM(977, 2, 2, 0, 2, 0),
     /** Barbados Dollar */
     BBD(52, 2, 2, 0, 2, 0),
     /** Taka */
     BDT(50, 2, 2, 0, 2, 0),
+    /** Convertible Franc */
+    BEC(993, 2, 2, 0, 2, 0),
+    /** Belgian Franc */
+    BEF(56, 2, 2, 0, 2, 0),
+    /** Financial Franc */
+    BEL(992, 2, 2, 0, 2, 0),
+    /** Lev A/52 */
+    BGJ(100, 2, 2, 0, 2, 0),
+    /** Lev A/62 */
+    BGK(100, 2, 2, 0, 2, 0),
+    /** Lev */
+    BGL(100, 2, 2, 0, 2, 0),
+    /** Bulgarian Lev */
+    BGN(975, 2, 2, 0, 2, 0),
     /** Bahraini Dinar */
     BHD(48, 3, 3, 0, 3, 0),
     /** Burundi Franc */
@@ -63,24 +115,44 @@ public enum class Currency(
     BND(96, 2, 2, 0, 2, 0),
     /** Boliviano */
     BOB(68, 2, 2, 0, 2, 0),
+    /** Peso boliviano */
+    BOP(68, 2, 2, 0, 2, 0),
     /** Mvdol */
     BOV(984, 2, 2, 0, 2, 0),
+    /** Cruzeiro */
+    BRB(76, 2, 2, 0, 2, 0),
+    /** Cruzado */
+    BRC(76, 2, 2, 0, 2, 0),
+    /** Cruzeiro */
+    BRE(76, 2, 2, 0, 2, 0),
     /** Brazilian Real */
     BRL(986, 2, 2, 0, 2, 0),
+    /** New Cruzado */
+    BRN(76, 2, 2, 0, 2, 0),
+    /** Cruzeiro Real */
+    BRR(987, 2, 2, 0, 2, 0),
     /** Bahamian Dollar */
     BSD(44, 2, 2, 0, 2, 0),
     /** Ngultrum */
     BTN(64, 2, 2, 0, 2, 0),
+    /** Kyat */
+    BUK(104, 2, 2, 0, 2, 0),
     /** Pula */
     BWP(72, 2, 2, 0, 2, 0),
     /** Belarusian Ruble */
+    BYB(112, 2, 2, 0, 2, 0),
+    /** Belarusian Ruble */
     BYN(933, 2, 2, 0, 2, 0),
+    /** Belarusian Ruble */
+    BYR(974, 0, 0, 0, 0, 0),
     /** Belize Dollar */
     BZD(84, 2, 2, 0, 2, 0),
     /** Canadian Dollar */
     CAD(124, 2, 2, 0, 2, 5),
     /** Congolese Franc */
     CDF(976, 2, 2, 0, 2, 0),
+    /** WIR Franc (for electronic) */
+    CHC(948, 2, 2, 0, 2, 0),
     /** WIR Euro */
     CHE(947, 2, 2, 0, 2, 0),
     /** Swiss Franc */
@@ -99,12 +171,26 @@ public enum class Currency(
     COU(970, 2, 2, 0, 2, 0),
     /** Costa Rican Colon */
     CRC(188, 2, 2, 0, 0, 0),
+    /** Serbian Dinar */
+    CSD(891, 2, 2, 0, 2, 0),
+    /** Krona A/53 */
+    CSJ(203, 2, 2, 0, 2, 0),
+    /** Koruna */
+    CSK(200, 2, 2, 0, 2, 0),
+    /** Peso Convertible */
+    CUC(931, 2, 2, 0, 2, 0),
     /** Cuban Peso */
     CUP(192, 2, 2, 0, 2, 0),
     /** Cabo Verde Escudo */
     CVE(132, 2, 2, 0, 2, 0),
+    /** Cyprus Pound */
+    CYP(196, 2, 2, 0, 2, 0),
     /** Czech Koruna */
     CZK(203, 2, 2, 0, 0, 0),
+    /** Mark der DDR */
+    DDM(278, 2, 2, 0, 2, 0),
+    /** Deutsche Mark */
+    DEM(276, 2, 2, 0, 2, 0),
     /** Djibouti Franc */
     DJF(262, 0, 0, 0, 0, 0),
     /** Danish Krone */
@@ -113,44 +199,88 @@ public enum class Currency(
     DOP(214, 2, 2, 0, 2, 0),
     /** Algerian Dinar */
     DZD(12, 2, 2, 0, 2, 0),
+    /** Sucre */
+    ECS(218, 2, 2, 0, 2, 0),
+    /** Unidad de Valor Constante (UVC) */
+    ECV(983, 2, 2, 0, 2, 0),
+    /** Kroon */
+    EEK(233, 2, 2, 0, 2, 0),
     /** Egyptian Pound */
     EGP(818, 2, 2, 0, 2, 0),
     /** Nakfa */
     ERN(232, 2, 2, 0, 2, 0),
+    /** Spanish Peseta */
+    ESA(996, 2, 2, 0, 2, 0),
+    /** "A" Account (convertible Peseta Account) */
+    ESB(995, 2, 2, 0, 2, 0),
+    /** Spanish Peseta */
+    ESP(724, 0, 0, 0, 0, 0),
     /** Ethiopian Birr */
     ETB(230, 2, 2, 0, 2, 0),
     /** Euro */
     EUR(978, 2, 2, 0, 2, 0),
+    /** Markka */
+    FIM(246, 2, 2, 0, 2, 0),
     /** Fiji Dollar */
     FJD(242, 2, 2, 0, 2, 0),
     /** Falkland Islands Pound */
     FKP(238, 2, 2, 0, 2, 0),
+    /** French Franc */
+    FRF(250, 2, 2, 0, 2, 0),
     /** Pound Sterling */
     GBP(826, 2, 2, 0, 2, 0),
+    /** Georgian Coupon */
+    GEK(268, 2, 2, 0, 2, 0),
     /** Lari */
     GEL(981, 2, 2, 0, 2, 0),
+    /** Cedi */
+    GHC(288, 2, 2, 0, 2, 0),
+    /** Ghana Cedi */
+    GHP(939, 2, 2, 0, 2, 0),
     /** Ghana Cedi */
     GHS(936, 2, 2, 0, 2, 0),
     /** Gibraltar Pound */
     GIP(292, 2, 2, 0, 2, 0),
     /** Dalasi */
     GMD(270, 2, 2, 0, 2, 0),
+    /** Syli */
+    GNE(324, 2, 2, 0, 2, 0),
     /** Guinean Franc */
     GNF(324, 0, 0, 0, 0, 0),
+    /** Syli */
+    GNS(324, 2, 2, 0, 2, 0),
+    /** Ekwele */
+    GQE(226, 2, 2, 0, 2, 0),
+    /** Drachma */
+    GRD(300, 2, 2, 0, 2, 0),
     /** Quetzal */
     GTQ(320, 2, 2, 0, 2, 0),
+    /** Guinea Escudo */
+    GWE(624, 2, 2, 0, 2, 0),
+    /** Guinea-Bissau Peso */
+    GWP(624, 2, 2, 0, 2, 0),
     /** Guyana Dollar */
     GYD(328, 2, 2, 0, 0, 0),
     /** Hong Kong Dollar */
     HKD(344, 2, 2, 0, 2, 0),
     /** Lempira */
     HNL(340, 2, 2, 0, 2, 0),
+    /** Croatian Dinar */
+    HRD(191, 2, 2, 0, 2, 0),
+    /** Kuna */
+    HRK(191, 2, 2, 0, 2, 0),
     /** Gourde */
     HTG(332, 2, 2, 0, 2, 0),
     /** Forint */
     HUF(348, 2, 0, 0, 0, 5),
     /** Rupiah */
     IDR(360, 2, 0, 0, 0, 0),
+    /** Irish Pound */
+    IEP(372, 2, 2, 0, 2, 0),
+    /** Pound */
+    ILP(376, 2, 2, 0, 2, 0),
+    /** Old Shekel */
+    ILR(376, 2, 2, 0, 2, 0),
     /** New Israeli Sheqel */
     ILS(376, 2, 2, 0, 2, 0),
     /** Indian Rupee */
@@ -159,8 +289,12 @@ public enum class Currency(
     IQD(368, 3, 0, 0, 0, 0),
     /** Iranian Rial */
     IRR(364, 2, 0, 0, 0, 0),
+    /** Old Krona */
+    ISJ(352, 2, 2, 0, 2, 0),
     /** Iceland Krona */
     ISK(352, 0, 0, 0, 0, 0),
+    /** Italian Lira */
+    ITL(380, 0, 0, 0, 0, 0),
     /** Jamaican Dollar */
     JMD(388, 2, 2, 0, 2, 0),
     /** Jordanian Dinar */
@@ -185,6 +319,8 @@ public enum class Currency(
     KYD(136, 2, 2, 0, 2, 0),
     /** Tenge */
     KZT(398, 2, 2, 0, 2, 0),
+    /** Pathet Lao Kip */
+    LAJ(418, 2, 2, 0, 2, 0),
     /** Lao Kip */
     LAK(418, 2, 0, 0, 0, 0),
     /** Lebanese Pound */
@@ -195,6 +331,22 @@ public enum class Currency(
     LRD(430, 2, 2, 0, 2, 0),
     /** Loti */
     LSL(426, 2, 2, 0, 2, 0),
+    /** Loti */
+    LSM(426, 2, 2, 0, 2, 0),
+    /** Lithuanian Litas */
+    LTL(440, 2, 2, 0, 2, 0),
+    /** Talonas */
+    LTT(440, 2, 2, 0, 2, 0),
+    /** Luxembourg Convertible Franc */
+    LUC(989, 2, 2, 0, 2, 0),
+    /** Luxembourg Franc */
+    LUF(442, 0, 0, 0, 0, 0),
+    /** Luxembourg Financial Franc */
+    LUL(988, 2, 2, 0, 2, 0),
+    /** Latvian Lats */
+    LVL(428, 2, 2, 0, 2, 0),
+    /** Latvian Ruble */
+    LVR(428, 2, 2, 0, 2, 0),
     /** Libyan Dinar */
     LYD(434, 3, 3, 0, 3, 0),
     /** Moroccan Dirham */
@@ -203,8 +355,12 @@ public enum class Currency(
     MDL(498, 2, 2, 0, 2, 0),
     /** Malagasy Ariary */
     MGA(969, 2, 0, 0, 0, 0),
+    /** Malagasy Franc */
+    MGF(450, 0, 0, 0, 0, 0),
     /** Denar */
     MKD(807, 2, 2, 0, 2, 0),
+    /** Mali Franc */
+    MLF(466, 2, 2, 0, 2, 0),
     /** Kyat */
     MMK(104, 2, 0, 0, 0, 0),
     /** Tugrik */
@@ -212,27 +368,45 @@ public enum class Currency(
     /** Pataca */
     MOP(446, 2, 2, 0, 2, 0),
     /** Ouguiya */
+    MRO(478, 0, 0, 0, 0, 0),
+    /** Ouguiya */
     MRU(929, 2, 2, 0, 2, 0),
+    /** Maltese Lira */
+    MTL(470, 2, 2, 0, 2, 0),
+    /** Maltese Pound */
+    MTP(470, 2, 2, 0, 2, 0),
     /** Mauritius Rupee */
     MUR(480, 2, 2, 0, 0, 0),
+    /** Maldive Rupee */
+    MVQ(462, 2, 2, 0, 2, 0),
     /** Rufiyaa */
     MVR(462, 2, 2, 0, 2, 0),
     /** Malawi Kwacha */
     MWK(454, 2, 2, 0, 2, 0),
     /** Mexican Peso */
     MXN(484, 2, 2, 0, 2, 0),
+    /** Mexican Peso */
+    MXP(484, 2, 2, 0, 2, 0),
     /** Mexican Unidad de Inversion (UDI) */
     MXV(979, 2, 2, 0, 2, 0),
     /** Malaysian Ringgit */
     MYR(458, 2, 2, 0, 2, 0),
+    /** Mozambique Escudo */
+    MZE(508, 2, 2, 0, 2, 0),
+    /** Mozambique Metical */
+    MZM(508, 2, 2, 0, 2, 0),
     /** Mozambique Metical */
     MZN(943, 2, 2, 0, 2, 0),
     /** Namibia Dollar */
     NAD(516, 2, 2, 0, 2, 0),
     /** Naira */
     NGN(566, 2, 2, 0, 2, 0),
+    /** Cordoba */
+    NIC(558, 2, 2, 0, 2, 0),
     /** Cordoba Oro */
     NIO(558, 2, 2, 0, 2, 0),
+    /** Netherlands Guilder */
+    NLG(528, 2, 2, 0, 2, 0),
     /** Norwegian Krone */
     NOK(578, 2, 2, 0, 0, 0),
     /** Nepalese Rupee */
@@ -244,7 +418,13 @@ public enum class Currency(
     /** Balboa */
     PAB(590, 2, 2, 0, 2, 0),
     /** Sol */
+    PEH(604, 2, 2, 0, 2, 0),
+    /** Inti */
+    PEI(604, 2, 2, 0, 2, 0),
+    /** Sol */
     PEN(604, 2, 2, 0, 2, 0),
+    /** Sol */
+    PES(604, 2, 2, 0, 2, 0),
     /** Kina */
     PGK(598, 2, 2, 0, 2, 0),
     /** Philippine Peso */
@@ -253,16 +433,28 @@ public enum class Currency(
     PKR(586, 2, 0, 0, 0, 0),
     /** Zloty */
     PLN(985, 2, 2, 0, 2, 0),
+    /** Zloty */
+    PLZ(616, 2, 2, 0, 2, 0),
+    /** Portuguese Escudo */
+    PTE(620, 2, 2, 0, 2, 0),
     /** Guarani */
     PYG(600, 0, 0, 0, 0, 0),
     /** Qatari Rial */
     QAR(634, 2, 2, 0, 2, 0),
+    /** Rhodesian Dollar */
+    RHD(716, 2, 2, 0, 2, 0),
+    /** Leu A/52 */
+    ROK(642, 2, 2, 0, 2, 0),
+    /** Old Leu */
+    ROL(642, 2, 2, 0, 2, 0),
     /** Romanian Leu */
     RON(946, 2, 2, 0, 2, 0),
     /** Serbian Dinar */
     RSD(941, 2, 2, 0, 0, 0),
     /** Russian Ruble */
     RUB(643, 2, 2, 0, 2, 0),
+    /** Russian Ruble */
+    RUR(810, 2, 2, 0, 2, 0),
     /** Rwanda Franc */
     RWF(646, 0, 0, 0, 0, 0),
     /** Saudi Riyal */
@@ -271,24 +463,40 @@ public enum class Currency(
     SBD(90, 2, 2, 0, 2, 0),
     /** Seychelles Rupee */
     SCR(690, 2, 2, 0, 2, 0),
+    /** Sudanese Dinar */
+    SDD(736, 2, 2, 0, 2, 0),
     /** Sudanese Pound */
     SDG(938, 2, 2, 0, 2, 0),
+    /** Sudanese Pound */
+    SDP(736, 2, 2, 0, 2, 0),
     /** Swedish Krona */
     SEK(752, 2, 2, 0, 0, 0),
     /** Singapore Dollar */
     SGD(702, 2, 2, 0, 2, 0),
     /** Saint Helena Pound */
     SHP(654, 2, 2, 0, 2, 0),
+    /** Tolar */
+    SIT(705, 2, 2, 0, 2, 0),
+    /** Slovak Koruna */
+    SKK(703, 2, 2, 0, 2, 0),
     /** Leone */
     SLE(925, 2, 2, 0, 2, 0),
+    /** Leone */
+    SLL(694, 0, 0, 0, 0, 0),
     /** Somali Shilling */
     SOS(706, 2, 0, 0, 0, 0),
     /** Surinam Dollar */
     SRD(968, 2, 2, 0, 2, 0),
+    /** Surinam Guilder */
+    SRG(740, 2, 2, 0, 2, 0),
     /** South Sudanese Pound */
     SSP(728, 2, 2, 0, 2, 0),
     /** Dobra */
+    STD(678, 0, 0, 0, 0, 0),
+    /** Dobra */
     STN(930, 2, 2, 0, 2, 0),
+    /** Rouble */
+    SUR(810, 2, 2, 0, 2, 0),
     /** El Salvador Colon */
     SVC(222, 2, 2, 0, 2, 0),
     /** Syrian Pound */
@@ -297,14 +505,22 @@ public enum class Currency(
     SZL(748, 2, 2, 0, 2, 0),
     /** Baht */
     THB(764, 2, 2, 0, 2, 0),
+    /** Tajik Ruble */
+    TJR(762, 2, 2, 0, 2, 0),
     /** Somoni */
     TJS(972, 2, 2, 0, 2, 0),
+    /** Turkmenistan Manat */
+    TMM(795, 0, 0, 0, 0, 0),
     /** Turkmenistan New Manat */
     TMT(934, 2, 2, 0, 2, 0),
     /** Tunisian Dinar */
     TND(788, 3, 3, 0, 3, 0),
     /** Pa’anga */
     TOP(776, 2, 2, 0, 2, 0),
+    /** Timor Escudo */
+    TPE(626, 2, 2, 0, 2, 0),
+    /** Old Turkish Lira */
+    TRL(792, 0, 0, 0, 0, 0),
     /** Turkish Lira */
     TRY(949, 2, 2, 0, 2, 0),
     /** Trinidad and Tobago Dollar */
@@ -315,24 +531,42 @@ public enum class Currency(
     TZS(834, 2, 2, 0, 0, 0),
     /** Hryvnia */
     UAH(980, 2, 2, 0, 2, 0),
+    /** Karbovanet */
+    UAK(804, 2, 2, 0, 2, 0),
+    /** Uganda Shilling */
+    UGS(800, 2, 2, 0, 2, 0),
+    /** Old Shilling */
+    UGW(800, 2, 2, 0, 2, 0),
     /** Uganda Shilling */
     UGX(800, 0, 0, 0, 0, 0),
     /** US Dollar */
     USD(840, 2, 2, 0, 2, 0),
     /** US Dollar (Next day) */
     USN(997, 2, 2, 0, 2, 0),
+    /** US Dollar (Same day) */
+    USS(998, 2, 2, 0, 2, 0),
     /** Uruguay Peso en Unidades Indexadas (UI) */
     UYI(940, 0, 0, 0, 0, 0),
+    /** Old Uruguay Peso */
+    UYN(858, 2, 2, 0, 2, 0),
+    /** Uruguayan Peso */
+    UYP(858, 2, 2, 0, 2, 0),
     /** Peso Uruguayo */
     UYU(858, 2, 2, 0, 2, 0),
     /** Unidad Previsional */
     UYW(927, 4, 4, 0, 4, 0),
     /** Uzbekistan Sum */
     UZS(860, 2, 2, 0, 0, 0),
+    /** Bolivar */
+    VEB(862, 2, 2, 0, 2, 0),
     /** Bolívar Soberano */
     VED(926, 2, 2, 0, 2, 0),
+    /** Bolívar */
+    VEF(937, 2, 2, 0, 0, 0),
     /** Bolívar Soberano */
     VES(928, 2, 2, 0, 2, 0),
+    /** Old Dong */
+    VNC(704, 2, 2, 0, 2, 0),
     /** Dong */
     VND(704, 0, 0, 0, 0, 0),
     /** Vatu */
@@ -361,6 +595,12 @@ public enum class Currency(
     XCG(532, 2, 2, 0, 2, 0),
     /** SDR (Special Drawing Right) */
     XDR(960, -1, 2, 0, 2, 0),
+    /** European Currency Unit (E.C.U) */
+    XEU(954, 2, 2, 0, 2, 0),
+    /** Gold-Franc */
+    XFO(-1, 2, 2, 0, 2, 0),
+    /** UIC-Franc */
+    XFU(-1, 2, 2, 0, 2, 0),
     /** CFA Franc BCEAO */
     XOF(952, 0, 0, 0, 0, 0),
     /** Palladium */
@@ -369,6 +609,8 @@ public enum class Currency(
     XPF(953, 0, 0, 0, 0, 0),
     /** Platinum */
     XPT(962, -1, 2, 0, 2, 0),
+    /** RINET Funds Code */
+    XRE(-1, 2, 2, 0, 2, 0),
     /** Sucre */
     XSU(994, -1, 2, 0, 2, 0),
     /** Codes specifically reserved for testing purposes */
@@ -377,14 +619,40 @@ public enum class Currency(
     XUA(965, -1, 2, 0, 2, 0),
     /** The codes assigned for transactions where no currency is involved */
     XXX(999, -1, 2, 0, 2, 0),
+    /** Yemeni Dinar */
+    YDD(720, 2, 2, 0, 2, 0),
     /** Yemeni Rial */
     YER(886, 2, 0, 0, 0, 0),
+    /** New Yugoslavian Dinar */
+    YUD(890, 2, 2, 0, 2, 0),
+    /** New Dinar */
+    YUM(891, 2, 2, 0, 2, 0),
+    /** Yugoslavian Dinar */
+    YUN(890, 2, 2, 0, 2, 0),
+    /** Financial Rand */
+    ZAL(991, 2, 2, 0, 2, 0),
     /** Rand */
     ZAR(710, 2, 2, 0, 2, 0),
     /** Zambian Kwacha */
+    ZMK(894, 0, 0, 0, 0, 0),
+    /** Zambian Kwacha */
     ZMW(967, 2, 2, 0, 2, 0),
+    /** New Zaire */
+    ZRN(180, 2, 2, 0, 2, 0),
+    /** Zaire */
+    ZRZ(180, 2, 2, 0, 2, 0),
+    /** Rhodesian Dollar */
+    ZWC(716, 2, 2, 0, 2, 0),
+    /** Zimbabwe Dollar */
+    ZWD(716, 0, 0, 0, 0, 0),
     /** Zimbabwe Gold */
     ZWG(924, 2, 2, 0, 2, 0),
+    /** Zimbabwe Dollar */
+    ZWL(932, 2, 2, 0, 2, 0),
+    /** Zimbabwe Dollar (new) */
+    ZWN(942, 2, 2, 0, 2, 0),
+    /** Zimbabwe Dollar */
+    ZWR(935, 2, 2, 0, 2, 0),
     ;
 
     public companion object

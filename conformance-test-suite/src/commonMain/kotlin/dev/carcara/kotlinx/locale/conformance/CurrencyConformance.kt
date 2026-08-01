@@ -14,6 +14,7 @@ import dev.carcara.kotlinx.locale.currency.format
 import dev.carcara.kotlinx.locale.currency.isoToCldrUnits
 import dev.carcara.kotlinx.locale.currency.parseFormattedOrNull
 import dev.carcara.kotlinx.locale.currency.symbol
+import dev.carcara.kotlinx.locale.number.SignDisplay
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -143,10 +144,10 @@ private fun CurrencyFormatSource.assertStylesAndVariantsRender(tier: Conformance
     val currency = Currency.forCodeOrNull("USD") ?: return
     val amount = CurrencyAmount(currency, -123456)
     for (style in CurrencySymbolStyle.entries) {
-        for (accounting in listOf(false, true)) {
+        for (signDisplay in SignDisplay.entries) {
             for (cash in listOf(false, true)) {
-                val formatted = format(amount, locale, style, accounting, cash)
-                assertTrue(formatted.isNotBlank(), "$style accounting=$accounting cash=$cash rendered nothing")
+                val formatted = format(amount, locale, style, signDisplay, cash)
+                assertTrue(formatted.isNotBlank(), "$style $signDisplay cash=$cash rendered nothing")
             }
         }
     }
@@ -154,7 +155,7 @@ private fun CurrencyFormatSource.assertStylesAndVariantsRender(tier: Conformance
     // The accounting pattern in en wraps negatives in parentheses rather than
     // writing a minus, which is the one place the two patterns visibly differ.
     assertTrue(
-        format(amount, locale, CurrencySymbolStyle.SYMBOL, accounting = true, cash = false).startsWith("("),
+        format(amount, locale, CurrencySymbolStyle.SYMBOL, SignDisplay.ACCOUNTING).startsWith("("),
         "en accounting negatives are parenthesized",
     )
 }

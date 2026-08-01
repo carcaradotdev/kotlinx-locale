@@ -42,8 +42,18 @@ public enum class GeneratedTable {
     /** Number symbols and the plain decimal and percent patterns. */
     NUMBER,
 
-    /** The three compact tables: short and long decimal, and short currency. */
+    /** The short and long compact decimal tables. */
     NUMBER_COMPACT,
+
+    /**
+     * The compact currency table.
+     *
+     * Its own table rather than part of [NUMBER_COMPACT] so that it ships in the
+     * currency artifact: a consumer formatting chart labels should not carry
+     * money patterns, and a consumer formatting money should not have to reach
+     * into the number artifact's internals for them.
+     */
+    CURRENCY_COMPACT,
 
     /** Cardinal and ordinal plural rules, shared by id across locales. */
     PLURALS,
@@ -115,6 +125,7 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
                 GeneratedTable.SKELETONS to "dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data",
                 GeneratedTable.NUMBER to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.NUMBER_COMPACT to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
+                GeneratedTable.CURRENCY_COMPACT to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.PLURALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.ORDINALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
             ),
@@ -230,7 +241,7 @@ private val PAYLOAD_TABLES = listOf(
         "compactLongRegistry",
     ),
     PayloadTableSpec(
-        GeneratedTable.NUMBER_COMPACT,
+        GeneratedTable.CURRENCY_COMPACT,
         "currencyCompactShort",
         "CurrencyCompact",
         "CURRENCY_COMPACT",
@@ -339,7 +350,18 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
     }
 
     roots[GeneratedBinding.CURRENCY]?.let { target ->
-        emitCurrencyBinding(target.root, target.spec(packages[GeneratedTable.CURRENCY_NAMES], cldr))
+        val number = roots[GeneratedBinding.NUMBER]
+        emitCurrencyBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.CURRENCY_NAMES], cldr),
+            // Compact money is keyed by plural category, so the table is only
+            // wired in when the plural rules that select from it are there too.
+            numberObject = if (roots[GeneratedTable.CURRENCY_COMPACT] != null && number != null) {
+                number.packageName + "." + number.objectName
+            } else {
+                null
+            },
+        )
     }
 
     roots[GeneratedBinding.DATE_TIME]?.let { target ->

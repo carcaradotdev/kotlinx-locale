@@ -9,6 +9,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(project(":kotlinx-locale-currency-core"))
+            api(project(":kotlinx-locale-number-cldr-runtime"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

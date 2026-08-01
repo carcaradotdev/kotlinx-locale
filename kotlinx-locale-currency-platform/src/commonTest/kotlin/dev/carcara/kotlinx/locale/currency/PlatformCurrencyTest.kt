@@ -6,6 +6,7 @@ import dev.carcara.kotlinx.locale.conformance.assertConformsToCurrencyFormats
 import dev.carcara.kotlinx.locale.conformance.assertConformsToCurrencyNames
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.platform.PlatformCurrency
+import dev.carcara.kotlinx.locale.number.SignDisplay
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -42,7 +43,12 @@ class PlatformCurrencyTest {
         // shape check: CHF 12.34 rounds to the nearest 0.05.
         assertEquals(
             null,
-            PlatformCurrency.formatOrNull(1234, "CHF", en, CurrencySymbolStyle.SYMBOL, accounting = false, cash = true),
+            PlatformCurrency.formatOrNull(
+                1234,
+                "CHF",
+                en,
+                CurrencyFormatOptions(CurrencySymbolStyle.SYMBOL, SignDisplay.AUTO, cash = true),
+            ),
             "a platform started supporting cash rounding, which the composition no longer needs to cover",
         )
         assertEquals("CHF\u00A012.35", formats.format(CurrencyAmount(chf, 1234), en, cash = true))
@@ -75,7 +81,7 @@ class PlatformCurrencyTest {
                     val amount = CurrencyAmount(currency, minorUnits)
                     assertTrue(formats.format(amount, locale).isNotBlank(), "$tag $code $minorUnits rendered nothing")
                     assertTrue(
-                        formats.format(amount, locale, CurrencySymbolStyle.CODE, accounting = true).isNotBlank(),
+                        formats.format(amount, locale, CurrencySymbolStyle.CODE, signDisplay = SignDisplay.ACCOUNTING).isNotBlank(),
                         "$tag $code $minorUnits rendered nothing for the accounting style",
                     )
                 }
@@ -96,7 +102,15 @@ class PlatformCurrencyTest {
 
     @Test
     fun anUnknownCodeMissesRatherThanGuessing() {
-        assertEquals(null, PlatformCurrency.formatOrNull(100, "ZZZ", en, CurrencySymbolStyle.SYMBOL, false, false))
+        assertEquals(
+            null,
+            PlatformCurrency.formatOrNull(
+                100,
+                "ZZZ",
+                en,
+                CurrencyFormatOptions(CurrencySymbolStyle.SYMBOL, SignDisplay.AUTO, cash = false),
+            ),
+        )
         assertEquals(null, PlatformCurrency.parseToMinorUnitsOrNull("1.00", "ZZZ", en))
     }
 
@@ -112,7 +126,12 @@ class PlatformCurrencyTest {
                 assertNotNull(PlatformCurrency.currencySymbolOrNull(code, en), "no English symbol for $code")
             }
             val formatted = assertNotNull(
-                PlatformCurrency.formatOrNull(123456, "USD", en, CurrencySymbolStyle.SYMBOL, false, false),
+                PlatformCurrency.formatOrNull(
+                    123456,
+                    "USD",
+                    en,
+                    CurrencyFormatOptions(CurrencySymbolStyle.SYMBOL, SignDisplay.AUTO, cash = false),
+                ),
             )
             // Not the exact string: the host decides grouping and symbol placement,
             // which is the reason to use it. What must hold is that the value
@@ -123,7 +142,15 @@ class PlatformCurrencyTest {
             // would look like an answer and stop any fallback from firing.
             assertEquals(null, PlatformCurrency.currencySymbolOrNull("USD", en))
             assertEquals(null, PlatformCurrency.currencyNameOrNull("USD", en))
-            assertEquals(null, PlatformCurrency.formatOrNull(123456, "USD", en, CurrencySymbolStyle.SYMBOL, false, false))
+            assertEquals(
+                null,
+                PlatformCurrency.formatOrNull(
+                    123456,
+                    "USD",
+                    en,
+                    CurrencyFormatOptions(CurrencySymbolStyle.SYMBOL, SignDisplay.AUTO, cash = false),
+                ),
+            )
             assertEquals(null, PlatformCurrency.parseToMinorUnitsOrNull("$1,234.56", "USD", en))
             assertTrue(PlatformCurrency.supportedLocales.isEmpty())
         }
@@ -134,7 +161,12 @@ class PlatformCurrencyTest {
         // Past 2^53 minor units, which is where a Double would start rounding. The
         // amount crosses to the platform as a decimal string precisely so this
         // holds.
-        val formatted = PlatformCurrency.formatOrNull(9007199254740993, "USD", en, CurrencySymbolStyle.SYMBOL, false, false)
+        val formatted = PlatformCurrency.formatOrNull(
+            9007199254740993,
+            "USD",
+            en,
+            CurrencyFormatOptions(CurrencySymbolStyle.SYMBOL, SignDisplay.AUTO, cash = false),
+        )
         if (PlatformCurrency.isAvailable) {
             val digits = assertNotNull(formatted).filter { it.isDigit() }
             assertTrue(digits.endsWith("93"), "the last minor units were rounded away: '$formatted'")
@@ -145,7 +177,12 @@ class PlatformCurrencyTest {
 
     @Test
     fun theIsoCodeStyleWritesTheCodeWhereThePlatformFormatsAtAll() {
-        val withCode = PlatformCurrency.formatOrNull(123456, "USD", en, CurrencySymbolStyle.CODE, false, false)
+        val withCode = PlatformCurrency.formatOrNull(
+            123456,
+            "USD",
+            en,
+            CurrencyFormatOptions(CurrencySymbolStyle.CODE, SignDisplay.AUTO, cash = false),
+        )
         if (PlatformCurrency.isAvailable) {
             assertTrue("USD" in assertNotNull(withCode), "the ISO code style did not write the code: '$withCode'")
         } else {

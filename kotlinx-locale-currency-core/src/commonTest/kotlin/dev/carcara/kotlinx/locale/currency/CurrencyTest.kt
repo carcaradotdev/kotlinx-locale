@@ -47,23 +47,35 @@ class CurrencyTest {
     }
 
     @Test
-    fun coversTheActiveIsoSet() {
+    fun coversBothIsoLists() {
         assertTrue(
-            Currency.entries.size > 150,
-            "expected the active ISO 4217 set, got ${Currency.entries.size}",
+            Currency.active.size > 150,
+            "expected the active ISO 4217 set, got ${Currency.active.size}",
+        )
+        assertTrue(
+            Currency.entries.size > Currency.active.size,
+            "entries carries the withdrawn codes as well, so an old record can render",
         )
         for (currency in Currency.entries) {
             assertEquals(3, currency.code.length, "${currency.code} code")
             assertTrue(currency.cldrFractionDigits >= 0, "${currency.code} cldr digits")
         }
-        val numerics = Currency.entries.filter { it.numericCode >= 0 }.map(Currency::numericCode)
-        assertEquals(numerics.size, numerics.toSet().size, "numeric codes must be unique")
+        // ISO reuses a numeric code across generations of the same currency, so
+        // uniqueness only holds within the active set. The lookup by number
+        // resolves the rest to the active entry.
+        val numerics = Currency.active.filter { it.numericCode >= 0 }.map(Currency::numericCode)
+        assertEquals(numerics.size, numerics.toSet().size, "active numeric codes must be unique")
     }
 
     @Test
     fun mapsBetweenRepresentations() {
         for (currency in Currency.entries) {
             assertEquals(currency, Currency.forCode(currency.code))
+        }
+        // Only the active entry owns its number: 8 is both Albanian leks and 191
+        // is both Croatian currencies, so a withdrawn code does not round trip
+        // through its number.
+        for (currency in Currency.active) {
             if (currency.numericCode >= 0) {
                 assertEquals(currency, Currency.forNumericCode(currency.numericCode))
             }

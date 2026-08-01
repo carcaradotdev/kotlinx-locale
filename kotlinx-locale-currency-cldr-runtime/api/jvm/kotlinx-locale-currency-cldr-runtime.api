@@ -11,11 +11,13 @@ public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyNumb
 	public final fun getMinusSign ()Ljava/lang/String;
 	public final fun getStandardAlphaPattern ()Ljava/lang/String;
 	public final fun getStandardPattern ()Ljava/lang/String;
+	public final fun getSymbols ()Ldev/carcara/kotlinx/locale/number/NumberSymbols;
 }
 
 public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/PayloadCurrencyFormats : dev/carcara/kotlinx/locale/currency/CurrencyFormatSource {
-	public fun <init> (Ljava/util/Map;Ljava/util/Map;)V
-	public fun formatOrNull (JLjava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;ZZ)Ljava/lang/String;
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ldev/carcara/kotlinx/locale/number/cldr/runtime/FormattedNumberSelector;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ldev/carcara/kotlinx/locale/number/cldr/runtime/FormattedNumberSelector;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun formatOrNull (JLjava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencyFormatOptions;)Ljava/lang/String;
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public fun parseToMinorUnitsOrNull (Ljava/lang/String;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/Long;
 }

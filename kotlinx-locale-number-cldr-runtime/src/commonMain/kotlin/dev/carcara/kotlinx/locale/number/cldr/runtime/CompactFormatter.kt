@@ -30,6 +30,18 @@ import dev.carcara.kotlinx.locale.number.internal.roundToSignificantDigits
 private const val COMPACT_SIGNIFICANT_DIGITS = 2
 
 /**
+ * Picks the plural category of the divided value, which is step 8 of the compact
+ * algorithm.
+ *
+ * A named interface rather than a bare lambda so the currency domain can hold
+ * one without naming the plural source it came from.
+ */
+@InternalKotlinxLocaleApi
+public fun interface FormattedNumberSelector {
+    public fun categoryOf(number: FormattedNumber): PluralCategory
+}
+
+/**
  * UTS #35's ten-step compact algorithm.
  *
  * Rounding runs before the magnitude is fixed and the magnitude is re-checked
@@ -43,7 +55,7 @@ public fun formatCompact(
     table: CompactPatternTable,
     standardPattern: NumberPattern,
     symbols: NumberSymbols,
-    selectCategory: (FormattedNumber) -> PluralCategory,
+    selectCategory: FormattedNumberSelector,
     options: NumberFormatOptions = NumberFormatOptions.Default,
     fixedFractionDigits: Int? = null,
     useCurrencySeparators: Boolean = false,
@@ -71,7 +83,7 @@ public fun formatCompact(
     }
 
     val interim = renderNumber(divided, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators)
-    val category = selectCategory(interim)
+    val category = selectCategory.categoryOf(interim)
     val pattern = table.patternOrNull(magnitude, category, false)
         ?: return renderNumber(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
 

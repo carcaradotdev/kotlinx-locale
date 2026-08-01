@@ -8,6 +8,34 @@ class TerritoryCodes(val alpha2: String, val alpha3: String?, val numeric: Int?)
 /** CLDR currency fraction info: how many digits CLDR formats and how it rounds. */
 class CurrencyFractions(val digits: Int, val rounding: Int, val cashDigits: Int, val cashRounding: Int)
 
+/**
+ * When a currency code was legal tender somewhere, and whether it ever was.
+ *
+ * "Somewhere" is the honest scope. CLDR records the window per region and a code
+ * can be current in one and withdrawn in another, so a single answer for the
+ * code can only mean "any region", which is what ICU's `Currency.isAvailable`
+ * means too.
+ *
+ * [tender] is a different axis from withdrawal: XXX has never been withdrawn and
+ * has never been tender.
+ */
+class CurrencyTenderWindow(val from: Int, val to: Int, val tender: Boolean)
+
+/** A CLDR `yyyy-MM-dd`, `yyyy-MM` or `yyyy` date as a day number, or null. */
+private fun epochDayOf(text: String): Int? {
+    if (text.isEmpty()) return null
+    val parts = text.split('-')
+    val year = parts.getOrNull(0)?.toIntOrNull() ?: return null
+    val month = parts.getOrNull(1)?.toIntOrNull() ?: 1
+    val day = parts.getOrNull(2)?.toIntOrNull() ?: 1
+    // The proleptic Gregorian day number, computed here rather than taken from
+    // kotlinx-datetime: :codegen holds no dependency on the library it writes.
+    val a = (14 - month) / 12
+    val y = year + 4800 - a
+    val m = month + 12 * a - 3
+    return day + (153 * m + 2) / 5 + 365 * y + y / 4 - y / 100 + y / 400 - 32045 - 2440588
+}
+
 class SupplementalData(
     /** child locale id -> explicit parent locale id (component-less parentLocales only). */
     val parentOverrides: Map<String, String>,
@@ -22,6 +50,8 @@ class SupplementalData(
     val defaultFractions: CurrencyFractions,
     /** region alpha-2 -> current legal-tender currency codes, preferred first. */
     val regionCurrencies: Map<String, List<String>>,
+    /** ISO 4217 code -> the union of its per-region tender windows. */
+    val currencyTender: Map<String, CurrencyTenderWindow>,
     /**
      * `<timeData>` keyed the way it is written: mostly regions, but with locale
      * ids mixed in (`en_IL`, `fr_CA`, `ca_ES`, `it_CH`, `it_IT` and others).
@@ -108,6 +138,7 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
     var defaultFractions = CurrencyFractions(digits = 2, rounding = 0, cashDigits = 2, cashRounding = 0)
     val currencyFractions = LinkedHashMap<String, CurrencyFractions>()
     val regionCurrencies = LinkedHashMap<String, List<String>>()
+    val currencyTender = LinkedHashMap<String, CurrencyTenderWindow>()
     supplementalData.child("currencyData")?.let { currencyData ->
         currencyData.child("fractions")?.let { fractions ->
             for (info in fractions.childElements("info")) {
@@ -131,6 +162,22 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
                 .map { it.getAttribute("iso4217") }
                 .filter(String::isNotEmpty)
             if (current.isNotEmpty()) regionCurrencies[alpha2] = current
+
+            // A different question from the one above, aggregated across every
+            // region rather than filtered to the current ones: when was this
+            // code legal tender anywhere, and is it a tender code at all.
+            for (currency in region.childElements("currency")) {
+                val code = currency.getAttribute("iso4217").takeIf { it.isNotEmpty() } ?: continue
+                val from = epochDayOf(currency.getAttribute("from")) ?: Int.MIN_VALUE
+                val to = epochDayOf(currency.getAttribute("to")) ?: Int.MAX_VALUE
+                val tender = currency.getAttribute("tender") != "false"
+                val existing = currencyTender[code]
+                currencyTender[code] = CurrencyTenderWindow(
+                    from = minOf(existing?.from ?: from, from),
+                    to = maxOf(existing?.to ?: to, to),
+                    tender = (existing?.tender ?: false) || tender,
+                )
+            }
         }
     }
 
@@ -171,6 +218,7 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
         dayPeriodRules = dayPeriodRules,
         territoryCodes = territoryCodes,
         currencyFractions = currencyFractions,
+        currencyTender = currencyTender,
         defaultFractions = defaultFractions,
         regionCurrencies = regionCurrencies,
         hourCycles = hourCycles,

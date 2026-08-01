@@ -5,6 +5,7 @@ import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.cldr.displayName
 import dev.carcara.kotlinx.locale.currency.cldr.format
 import dev.carcara.kotlinx.locale.currency.cldr.symbol
+import dev.carcara.kotlinx.locale.number.SignDisplay
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -23,9 +24,9 @@ class CurrencyFormatTest {
         minorUnits: Long,
         tag: String,
         style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL,
-        accounting: Boolean = false,
+        signDisplay: SignDisplay = SignDisplay.AUTO,
         cash: Boolean = false,
-    ): String = CurrencyAmount(currency, minorUnits).format(locale(tag), style, accounting, cash)
+    ): String = CurrencyAmount(currency, minorUnits).format(locale(tag), style, signDisplay, cash)
 
     @Test
     fun formatsEnglish() {
@@ -37,8 +38,8 @@ class CurrencyFormatTest {
 
     @Test
     fun formatsTheAccountingPattern() {
-        assertEquals("($1,234.56)", format(Currency.USD, -123456, "en", accounting = true))
-        assertEquals("$1,234.56", format(Currency.USD, 123456, "en", accounting = true))
+        assertEquals("($1,234.56)", format(Currency.USD, -123456, "en", signDisplay = SignDisplay.ACCOUNTING))
+        assertEquals("$1,234.56", format(Currency.USD, 123456, "en", signDisplay = SignDisplay.ACCOUNTING))
     }
 
     @Test
@@ -147,7 +148,7 @@ class CurrencyFormatTest {
     @Test
     fun formatsNegativeCashAmounts() {
         assertEquals("-CHF\u00A010.05", format(Currency.CHF, -1003, "en", cash = true))
-        assertEquals("(CHF\u00A010.05)", format(Currency.CHF, -1003, "en", accounting = true, cash = true))
+        assertEquals("(CHF\u00A010.05)", format(Currency.CHF, -1003, "en", signDisplay = SignDisplay.ACCOUNTING, cash = true))
     }
 
     @Test
@@ -188,7 +189,7 @@ class CurrencyFormatTest {
                         )
                     }
                 }
-                assertTrue(amount.format(locale, accounting = true).isNotBlank())
+                assertTrue(amount.format(locale, signDisplay = SignDisplay.ACCOUNTING).isNotBlank())
                 assertTrue(amount.format(locale, cash = true).isNotBlank())
             }
         }

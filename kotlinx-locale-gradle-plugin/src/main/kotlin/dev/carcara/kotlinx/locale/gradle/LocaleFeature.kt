@@ -60,6 +60,74 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
         tables = setOf(GeneratedTable.DATE_TIME, GeneratedTable.SKELETONS),
         bindings = setOf(GeneratedBinding.DATE_TIME, GeneratedBinding.SKELETONS),
     ),
+
+    /**
+     * Number symbols and the plain decimal and percent patterns.
+     *
+     * Includes the plural table, because the source object that carries the
+     * formats carries the plural rules too and a compact call through it would
+     * otherwise pick the wrong pattern.
+     */
+    NUMBER_FORMATS(
+        dslName = "number.formats",
+        tables = setOf(GeneratedTable.NUMBER, GeneratedTable.PLURALS),
+        bindings = setOf(GeneratedBinding.NUMBER),
+    ),
+
+    /**
+     * Compact notation: `1.2K`, `1.2 thousand`.
+     *
+     * Includes the format and plural tables. Compact patterns are keyed by
+     * plural category, so selecting one is a plural selection over the divided
+     * value, and there is no reading under which compact without plurals is a
+     * choice someone meant to make.
+     */
+    NUMBER_COMPACT(
+        dslName = "number.compact",
+        tables = setOf(GeneratedTable.NUMBER, GeneratedTable.NUMBER_COMPACT, GeneratedTable.PLURALS),
+        bindings = setOf(GeneratedBinding.NUMBER),
+    ),
+
+    /**
+     * CLDR plural rules on their own, for a caller choosing between translated
+     * strings rather than formatting a number.
+     */
+    NUMBER_PLURALS(
+        dslName = "number.plurals",
+        tables = setOf(GeneratedTable.NUMBER, GeneratedTable.PLURALS),
+        bindings = setOf(GeneratedBinding.NUMBER),
+    ),
+
+    /**
+     * Ordinal forms: `1st`, `1.`, `1º`.
+     *
+     * Includes the plural table, because eight of CLDR's ordinal rule closures
+     * select their suffix by ordinal plural category. English is the obvious
+     * one: its rule is literally `$(ordinal,one{st}two{nd}few{rd}other{th})$`.
+     */
+    NUMBER_ORDINALS(
+        dslName = "number.ordinals",
+        tables = setOf(GeneratedTable.NUMBER, GeneratedTable.ORDINALS, GeneratedTable.PLURALS),
+        bindings = setOf(GeneratedBinding.NUMBER),
+    ),
+
+    /**
+     * Compact money: `$1.2M`.
+     *
+     * Includes the currency name and pattern tables it formats through, and the
+     * plural table its own patterns are keyed by.
+     */
+    CURRENCY_COMPACT(
+        dslName = "currency.compact",
+        tables = setOf(
+            GeneratedTable.CURRENCY_NAMES,
+            GeneratedTable.CURRENCY_FORMATS,
+            GeneratedTable.CURRENCY_COMPACT,
+            GeneratedTable.NUMBER,
+            GeneratedTable.PLURALS,
+        ),
+        bindings = setOf(GeneratedBinding.CURRENCY, GeneratedBinding.NUMBER),
+    ),
     ;
 
     companion object {

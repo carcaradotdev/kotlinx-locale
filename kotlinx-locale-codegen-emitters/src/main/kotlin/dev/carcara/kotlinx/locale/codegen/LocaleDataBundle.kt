@@ -18,6 +18,27 @@ public class CurrencyEntry(
     public val cldrCashDigits: Int,
     public val cldrCashRounding: Int,
     public val englishName: String,
+    /**
+     * The first and last day any region held this as legal tender, as proleptic
+     * Gregorian day numbers, and whether it is a tender code at all.
+     *
+     * Unbounded ends are [Int.MIN_VALUE] and [Int.MAX_VALUE]. A code that is
+     * still current has an unbounded end, which is what makes "is this active"
+     * a comparison rather than a flag CLDR would have to restate every release.
+     */
+    public val tenderFrom: Int = Int.MIN_VALUE,
+    public val tenderTo: Int = Int.MAX_VALUE,
+    public val isTender: Boolean = true,
+    /**
+     * Whether ISO still lists this code, which is what decides "active".
+     *
+     * List membership rather than the CLDR window, because the two disagree and
+     * ISO owns the question: CLDR closed the Salvadoran colón when El Salvador
+     * adopted the dollar, while ISO still publishes SVC in list one. The window
+     * says when a code was tender somewhere; this says whether the standard
+     * still carries it.
+     */
+    public val isCurrent: Boolean = true,
 )
 
 /**
@@ -244,6 +265,10 @@ public class LocaleDataBundle private constructor(
                 currency.cldrCashDigits.toString(),
                 currency.cldrCashRounding.toString(),
                 currency.englishName,
+                currency.tenderFrom.toString(),
+                currency.tenderTo.toString(),
+                if (currency.isTender) "1" else "0",
+                if (currency.isCurrent) "1" else "0",
             )
         }
 
@@ -371,6 +396,10 @@ public class LocaleDataBundle private constructor(
                         cldrCashDigits = fields[5].toInt(),
                         cldrCashRounding = fields[6].toInt(),
                         englishName = fields[7],
+                        tenderFrom = fields[8].toInt(),
+                        tenderTo = fields[9].toInt(),
+                        isTender = fields[10] == "1",
+                        isCurrent = fields[11] == "1",
                     )
                     "countryCurrencies" -> countryCurrencies[fields[0]] = fields[1]
                     "localeTags" -> localeTags += fields[0]

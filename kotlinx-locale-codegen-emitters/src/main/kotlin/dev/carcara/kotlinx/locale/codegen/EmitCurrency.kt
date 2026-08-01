@@ -11,6 +11,7 @@ private const val CURRENCY_PACKAGE = "dev.carcara.kotlinx.locale.currency"
  * data.
  */
 public fun emitCurrencyEnum(outputFile: File, cldrTag: String, isoPublished: String, currencies: List<CurrencyEntry>) {
+    emitCurrencyTender(outputFile.resolveSibling("internal").resolve("CurrencyTender.kt"), cldrTag, isoPublished, currencies)
     outputFile.parentFile.mkdirs()
     val entries = buildString {
         for (currency in currencies) {
@@ -40,7 +41,17 @@ public fun emitCurrencyEnum(outputFile: File, cldrTag: String, isoPublished: Str
         |package $CURRENCY_PACKAGE
         |
         |/**
-        | * The active currencies of ISO 4217, keyed by alphabetic code.
+        | * The currencies of ISO 4217, keyed by alphabetic code.
+        | *
+        | * Both lists: the active codes of list one and the withdrawn codes of list
+        | * three. A settlement record older than its currency's withdrawal still has
+        | * to render, and a `CurrencyAmount` needs a `Currency` to render against, so
+        | * a set of only current codes cannot express history. ICU and
+        | * `java.util.Currency` both carry historical codes for the same reason.
+        | *
+        | * Use `Currency.active` where the question is what a user may choose today,
+        | * and `isActive` or `wasTenderOn` to ask about a code in hand. Iterating
+        | * `entries` gives you both kinds.
         | *
         | * Each entry carries the ISO numeric code and minor units together with the
         | * CLDR fraction behavior (formatting digits, rounding increments and their
