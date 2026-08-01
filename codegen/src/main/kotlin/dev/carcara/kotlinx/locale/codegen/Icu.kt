@@ -404,3 +404,23 @@ fun emitIcuGolden(outputFile: File, icuTag: String, entries: List<IcuGoldenEntry
     )
     println("[codegen] emitted ${entries.size} ICU golden entries to $outputFile")
 }
+
+/**
+ * Fails generation when the ICU4J on the classpath and the ICU clone disagree.
+ *
+ * They answer different halves of the same question. The clone supplies the
+ * golden fixtures read out of resource bundles; the library supplies the ones
+ * this generator calls directly. A version skew between them would produce a
+ * fixture set that is internally inconsistent and would be read as a bug in this
+ * library rather than in its inputs.
+ */
+fun crossCheckIcuVersion() {
+    val pinned = ICU_REPO.tag.removePrefix("release-").substringBefore('.')
+    val onClasspath = com.ibm.icu.util.VersionInfo.ICU_VERSION.major.toString()
+    check(pinned == onClasspath) {
+        "the pinned ICU clone is ${ICU_REPO.tag} but icu4j on the codegen classpath is major " +
+            "$onClasspath. The goldens read from the clone and the goldens called through the " +
+            "library have to come from one release; align gradle/libs.versions.toml with Repos.kt."
+    }
+    println("[codegen] ICU ${ICU_REPO.tag} clone and icu4j major $onClasspath agree")
+}

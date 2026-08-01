@@ -204,6 +204,8 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         )
     }
 
+    crossCheckIcuVersion()
+
     val iso4217 = parseIso4217()
     crossCheckCurrencyNumericCodes(iso4217, icuDir)
 
