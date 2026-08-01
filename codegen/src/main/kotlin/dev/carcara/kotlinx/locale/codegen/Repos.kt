@@ -48,6 +48,15 @@ val ICU_REPO = RepoSpec(
     ),
 )
 
+/**
+ * The UTS #51 Emoji release the vendored `emoji-sequences.txt` comes from.
+ *
+ * Vendored rather than cloned, the way ISO 4217 list one is: it is one file, and
+ * a whole repository would be fetched for it. The parser checks the file's own
+ * `# Version:` header against this, so the pin and the data cannot drift apart.
+ */
+const val EMOJI_VERSION: String = "17.0"
+
 fun reposDir(rootDir: File): File = rootDir.resolve("codegen/repos")
 
 /**

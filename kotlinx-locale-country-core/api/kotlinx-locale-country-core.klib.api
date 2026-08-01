@@ -21,6 +21,8 @@ final class dev.carcara.kotlinx.locale.country/FallbackCountryNames : dev.carcar
 
 final val dev.carcara.kotlinx.locale.country/alpha2 // dev.carcara.kotlinx.locale.country/alpha2|@dev.carcara.kotlinx.locale.country.Country{}alpha2[0]
     final fun (dev.carcara.kotlinx.locale.country/Country).<get-alpha2>(): kotlin/String // dev.carcara.kotlinx.locale.country/alpha2.<get-alpha2>|<get-alpha2>@dev.carcara.kotlinx.locale.country.Country(){}[0]
+final val dev.carcara.kotlinx.locale.country/flagEmoji // dev.carcara.kotlinx.locale.country/flagEmoji|@dev.carcara.kotlinx.locale.country.Country{}flagEmoji[0]
+    final fun (dev.carcara.kotlinx.locale.country/Country).<get-flagEmoji>(): kotlin/String // dev.carcara.kotlinx.locale.country/flagEmoji.<get-flagEmoji>|<get-flagEmoji>@dev.carcara.kotlinx.locale.country.Country(){}[0]
 
 final fun (dev.carcara.kotlinx.locale.country/Country.Companion).dev.carcara.kotlinx.locale.country/forAlpha2(kotlin/String): dev.carcara.kotlinx.locale.country/Country // dev.carcara.kotlinx.locale.country/forAlpha2|forAlpha2@dev.carcara.kotlinx.locale.country.Country.Companion(kotlin.String){}[0]
 final fun (dev.carcara.kotlinx.locale.country/Country.Companion).dev.carcara.kotlinx.locale.country/forAlpha2OrNull(kotlin/String): dev.carcara.kotlinx.locale.country/Country? // dev.carcara.kotlinx.locale.country/forAlpha2OrNull|forAlpha2OrNull@dev.carcara.kotlinx.locale.country.Country.Companion(kotlin.String){}[0]

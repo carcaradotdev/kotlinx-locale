@@ -10,6 +10,10 @@ public final class dev/carcara/kotlinx/locale/country/CountryCodesKt {
 	public static final fun getAlpha2 (Ldev/carcara/kotlinx/locale/country/Country;)Ljava/lang/String;
 }
 
+public final class dev/carcara/kotlinx/locale/country/CountryFlagKt {
+	public static final fun getFlagEmoji (Ldev/carcara/kotlinx/locale/country/Country;)Ljava/lang/String;
+}
+
 public abstract interface class dev/carcara/kotlinx/locale/country/CountryNameSource : dev/carcara/kotlinx/locale/LocaleDataSource {
 	public abstract fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 }
