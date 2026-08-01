@@ -1,0 +1,134 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-phone-metadata-runtime>
+final class dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter { // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter|null[0]
+    final val nationalDigits // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.nationalDigits|{}nationalDigits[0]
+        final fun <get-nationalDigits>(): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.nationalDigits.<get-nationalDigits>|<get-nationalDigits>(){}[0]
+    final val text // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.text|{}text[0]
+        final fun <get-text>(): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.text.<get-text>|<get-text>(){}[0]
+
+    final fun append(kotlin/Char): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.append|append(kotlin.Char){}[0]
+    final fun append(kotlin/CharSequence): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.append|append(kotlin.CharSequence){}[0]
+    final fun clear() // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.clear|clear(){}[0]
+    final fun digitsBefore(kotlin/Int): kotlin/Int // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.digitsBefore|digitsBefore(kotlin.Int){}[0]
+    final fun removeLast(): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.removeLast|removeLast(){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern { // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern|null[0]
+    final val groupCount // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern.groupCount|{}groupCount[0]
+        final fun <get-groupCount>(): kotlin/Int // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern.groupCount.<get-groupCount>|<get-groupCount>(){}[0]
+
+    final fun capture(kotlin/CharSequence): kotlin.collections/List<kotlin/String?>? // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern.capture|capture(kotlin.CharSequence){}[0]
+    final fun capturePrefix(kotlin/CharSequence): kotlin/Pair<kotlin.collections/List<kotlin/String?>, kotlin/Int>? // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern.capturePrefix|capturePrefix(kotlin.CharSequence){}[0]
+    final fun matches(kotlin/CharSequence): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern.matches|matches(kotlin.CharSequence){}[0]
+    final fun prefixLength(kotlin/CharSequence): kotlin/Int // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern.prefixLength|prefixLength(kotlin.CharSequence){}[0]
+
+    final object Companion { // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern.Companion|null[0]
+        final fun parse(kotlin/String): dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern.Companion.parse|parse(kotlin.String){}[0]
+    }
+}
+
+final class dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers : dev.carcara.kotlinx.locale.phone/PhoneNumberSource { // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String> = ...) // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final val supportedRegions // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.supportedRegions|{}supportedRegions[0]
+        final fun <get-supportedRegions>(): kotlin.collections/Set<dev.carcara.kotlinx.locale.country/Country> // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.supportedRegions.<get-supportedRegions>|<get-supportedRegions>(){}[0]
+
+    final fun asYouTypeFor(kotlin/String): dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.asYouTypeFor|asYouTypeFor(kotlin.String){}[0]
+    final fun callingCodeOrNull(dev.carcara.kotlinx.locale.country/Country): kotlin/Int? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.callingCodeOrNull|callingCodeOrNull(dev.carcara.kotlinx.locale.country.Country){}[0]
+    final fun exampleNumberOrNull(dev.carcara.kotlinx.locale.country/Country, dev.carcara.kotlinx.locale.phone/PhoneNumberType): dev.carcara.kotlinx.locale.phone/PhoneNumber? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.exampleNumberOrNull|exampleNumberOrNull(dev.carcara.kotlinx.locale.country.Country;dev.carcara.kotlinx.locale.phone.PhoneNumberType){}[0]
+    final fun format(dev.carcara.kotlinx.locale.phone/PhoneNumber, dev.carcara.kotlinx.locale.phone/PhoneNumberFormat): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.format|format(dev.carcara.kotlinx.locale.phone.PhoneNumber;dev.carcara.kotlinx.locale.phone.PhoneNumberFormat){}[0]
+    final fun isValid(dev.carcara.kotlinx.locale.phone/PhoneNumber): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.isValid|isValid(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+    final fun parse(kotlin/String, dev.carcara.kotlinx.locale.country/Country?): dev.carcara.kotlinx.locale.phone/PhoneParseResult // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.parse|parse(kotlin.String;dev.carcara.kotlinx.locale.country.Country?){}[0]
+    final fun regionCodeOf(dev.carcara.kotlinx.locale.phone/PhoneNumber): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.regionCodeOf|regionCodeOf(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+    final fun regionOf(dev.carcara.kotlinx.locale.phone/PhoneNumber): dev.carcara.kotlinx.locale.country/Country? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.regionOf|regionOf(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+    final fun typeOf(dev.carcara.kotlinx.locale.phone/PhoneNumber): dev.carcara.kotlinx.locale.phone/PhoneNumberType // dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers.typeOf|typeOf(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription { // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription|null[0]
+    constructor <init>(kotlin/String?, kotlin/String, kotlin/String, kotlin/String) // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.<init>|<init>(kotlin.String?;kotlin.String;kotlin.String;kotlin.String){}[0]
+
+    final val exampleNumber // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.exampleNumber|{}exampleNumber[0]
+        final fun <get-exampleNumber>(): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.exampleNumber.<get-exampleNumber>|<get-exampleNumber>(){}[0]
+    final val hasPattern // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.hasPattern|{}hasPattern[0]
+        final fun <get-hasPattern>(): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.hasPattern.<get-hasPattern>|<get-hasPattern>(){}[0]
+    final val localOnlyLengths // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.localOnlyLengths|{}localOnlyLengths[0]
+        final fun <get-localOnlyLengths>(): kotlin.collections/List<kotlin/Int> // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.localOnlyLengths.<get-localOnlyLengths>|<get-localOnlyLengths>(){}[0]
+    final val possibleLengths // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.possibleLengths|{}possibleLengths[0]
+        final fun <get-possibleLengths>(): kotlin.collections/List<kotlin/Int> // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.possibleLengths.<get-possibleLengths>|<get-possibleLengths>(){}[0]
+
+    final fun acceptsLength(kotlin/Int): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.acceptsLength|acceptsLength(kotlin.Int){}[0]
+    final fun matches(kotlin/String): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription.matches|matches(kotlin.String){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord { // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord|null[0]
+    constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord.<init>|<init>(kotlin.String){}[0]
+
+    final val formats // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord.formats|{}formats[0]
+        final fun <get-formats>(): kotlin.collections/List<dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule> // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord.formats.<get-formats>|<get-formats>(){}[0]
+    final val territoryId // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord.territoryId|{}territoryId[0]
+        final fun <get-territoryId>(): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord.territoryId.<get-territoryId>|<get-territoryId>(){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule { // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule|null[0]
+    constructor <init>(kotlin.collections/List<kotlin/String>) // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.<init>|<init>(kotlin.collections.List<kotlin.String>){}[0]
+
+    final val carrierCodeFormattingRule // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.carrierCodeFormattingRule|{}carrierCodeFormattingRule[0]
+        final fun <get-carrierCodeFormattingRule>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.carrierCodeFormattingRule.<get-carrierCodeFormattingRule>|<get-carrierCodeFormattingRule>(){}[0]
+    final val format // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.format|{}format[0]
+        final fun <get-format>(): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.format.<get-format>|<get-format>(){}[0]
+    final val internationalFormat // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.internationalFormat|{}internationalFormat[0]
+        final fun <get-internationalFormat>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.internationalFormat.<get-internationalFormat>|<get-internationalFormat>(){}[0]
+    final val leadingDigitsCount // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.leadingDigitsCount|{}leadingDigitsCount[0]
+        final fun <get-leadingDigitsCount>(): kotlin/Int // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.leadingDigitsCount.<get-leadingDigitsCount>|<get-leadingDigitsCount>(){}[0]
+    final val nationalPrefixFormattingRule // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.nationalPrefixFormattingRule|{}nationalPrefixFormattingRule[0]
+        final fun <get-nationalPrefixFormattingRule>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.nationalPrefixFormattingRule.<get-nationalPrefixFormattingRule>|<get-nationalPrefixFormattingRule>(){}[0]
+    final val nationalPrefixOptional // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.nationalPrefixOptional|{}nationalPrefixOptional[0]
+        final fun <get-nationalPrefixOptional>(): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.nationalPrefixOptional.<get-nationalPrefixOptional>|<get-nationalPrefixOptional>(){}[0]
+
+    final fun acceptsPrefix(kotlin/String, kotlin/Int): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.acceptsPrefix|acceptsPrefix(kotlin.String;kotlin.Int){}[0]
+    final fun appliesTo(kotlin/String): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.appliesTo|appliesTo(kotlin.String){}[0]
+    final fun pattern(): dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.pattern|pattern(){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord { // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord|null[0]
+    constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.<init>|<init>(kotlin.String){}[0]
+
+    final val callingCode // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.callingCode|{}callingCode[0]
+        final fun <get-callingCode>(): kotlin/Int // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.callingCode.<get-callingCode>|<get-callingCode>(){}[0]
+    final val declaredTypes // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.declaredTypes|{}declaredTypes[0]
+        final fun <get-declaredTypes>(): kotlin.collections/Set<dev.carcara.kotlinx.locale.phone/PhoneNumberType> // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.declaredTypes.<get-declaredTypes>|<get-declaredTypes>(){}[0]
+    final val generalDescription // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.generalDescription|{}generalDescription[0]
+        final fun <get-generalDescription>(): dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.generalDescription.<get-generalDescription>|<get-generalDescription>(){}[0]
+    final val id // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.id|{}id[0]
+        final fun <get-id>(): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.id.<get-id>|<get-id>(){}[0]
+    final val internationalPrefix // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.internationalPrefix|{}internationalPrefix[0]
+        final fun <get-internationalPrefix>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.internationalPrefix.<get-internationalPrefix>|<get-internationalPrefix>(){}[0]
+    final val isMainCountryForCode // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.isMainCountryForCode|{}isMainCountryForCode[0]
+        final fun <get-isMainCountryForCode>(): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.isMainCountryForCode.<get-isMainCountryForCode>|<get-isMainCountryForCode>(){}[0]
+    final val isMobileNumberPortable // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.isMobileNumberPortable|{}isMobileNumberPortable[0]
+        final fun <get-isMobileNumberPortable>(): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.isMobileNumberPortable.<get-isMobileNumberPortable>|<get-isMobileNumberPortable>(){}[0]
+    final val leadingDigits // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.leadingDigits|{}leadingDigits[0]
+        final fun <get-leadingDigits>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.leadingDigits.<get-leadingDigits>|<get-leadingDigits>(){}[0]
+    final val nationalPrefix // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.nationalPrefix|{}nationalPrefix[0]
+        final fun <get-nationalPrefix>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.nationalPrefix.<get-nationalPrefix>|<get-nationalPrefix>(){}[0]
+    final val nationalPrefixForParsing // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.nationalPrefixForParsing|{}nationalPrefixForParsing[0]
+        final fun <get-nationalPrefixForParsing>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.nationalPrefixForParsing.<get-nationalPrefixForParsing>|<get-nationalPrefixForParsing>(){}[0]
+    final val nationalPrefixTransformRule // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.nationalPrefixTransformRule|{}nationalPrefixTransformRule[0]
+        final fun <get-nationalPrefixTransformRule>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.nationalPrefixTransformRule.<get-nationalPrefixTransformRule>|<get-nationalPrefixTransformRule>(){}[0]
+    final val preferredExtensionPrefix // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.preferredExtensionPrefix|{}preferredExtensionPrefix[0]
+        final fun <get-preferredExtensionPrefix>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.preferredExtensionPrefix.<get-preferredExtensionPrefix>|<get-preferredExtensionPrefix>(){}[0]
+    final val preferredInternationalPrefix // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.preferredInternationalPrefix|{}preferredInternationalPrefix[0]
+        final fun <get-preferredInternationalPrefix>(): kotlin/String? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.preferredInternationalPrefix.<get-preferredInternationalPrefix>|<get-preferredInternationalPrefix>(){}[0]
+
+    final fun descriptionOrNull(dev.carcara.kotlinx.locale.phone/PhoneNumberType): dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneDescription? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.descriptionOrNull|descriptionOrNull(dev.carcara.kotlinx.locale.phone.PhoneNumberType){}[0]
+    final fun leadingDigitsPattern(): dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.leadingDigitsPattern|leadingDigitsPattern(){}[0]
+    final fun nationalPrefixPattern(): dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern? // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord.nationalPrefixPattern|nationalPrefixPattern(){}[0]
+}
+
+final fun (dev.carcara.kotlinx.locale.phone.metadata.runtime/PayloadPhoneNumbers).dev.carcara.kotlinx.locale.phone.metadata.runtime/asYouType(dev.carcara.kotlinx.locale.country/Country): dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter // dev.carcara.kotlinx.locale.phone.metadata.runtime/asYouType|asYouType@dev.carcara.kotlinx.locale.phone.metadata.runtime.PayloadPhoneNumbers(dev.carcara.kotlinx.locale.country.Country){}[0]

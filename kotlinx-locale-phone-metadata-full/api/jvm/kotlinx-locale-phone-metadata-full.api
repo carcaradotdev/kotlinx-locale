@@ -1,0 +1,29 @@
+public final class dev/carcara/kotlinx/locale/phone/metadata/PhoneNumbers : dev/carcara/kotlinx/locale/phone/PhoneNumberSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/phone/metadata/PhoneNumbers;
+	public fun callingCodeOrNull (Ldev/carcara/kotlinx/locale/country/Country;)Ljava/lang/Integer;
+	public fun exampleNumberOrNull (Ldev/carcara/kotlinx/locale/country/Country;Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public fun format (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;)Ljava/lang/String;
+	public fun getSupportedRegions ()Ljava/util/Set;
+	public fun isValid (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Z
+	public fun parse (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
+	public fun regionCodeOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ljava/lang/String;
+	public fun regionOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/country/Country;
+	public fun typeOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/PhoneNumbersKt {
+	public static final fun asYouType (Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFormatter;
+	public static final fun format (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;)Ljava/lang/String;
+	public static synthetic fun format$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun isValid (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Z
+	public static final fun isValidPhoneNumber (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Z
+	public static synthetic fun isValidPhoneNumber$default (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;ILjava/lang/Object;)Z
+	public static final fun parsePhoneNumber (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
+	public static synthetic fun parsePhoneNumber$default (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
+	public static final fun phoneNumberOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public static synthetic fun phoneNumberOrNull$default (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public static final fun phoneRegionCandidates (Ljava/lang/String;)Ljava/util/List;
+	public static final fun phoneRegionOrNull (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/country/Country;
+	public static final fun typeOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+}
+

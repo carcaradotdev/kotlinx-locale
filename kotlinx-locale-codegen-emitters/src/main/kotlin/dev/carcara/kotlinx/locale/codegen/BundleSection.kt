@@ -78,5 +78,19 @@ public object BundleTables {
     /** Which metazone a zone uses, which region it is in, and the single-zone regions. */
     public const val TIME_ZONE_METADATA: String = "timeZoneMetadata"
 
-    public val ALL: Set<String> = setOf(TIME_ZONE_METADATA)
+    /**
+     * The numbering plan of every territory libphonenumber describes.
+     *
+     * A table rather than a section because none of it varies by language. A
+     * number is valid or it is not, and it formats the way its own territory
+     * formats it, whoever is reading. Narrowing a build to three locales must
+     * not narrow its phone metadata to three countries, which is exactly what a
+     * section would do.
+     */
+    public const val PHONE_TERRITORIES: String = "phoneTerritories"
+
+    /** The number formats, split out because only formatting reads them. */
+    public const val PHONE_FORMATS: String = "phoneFormats"
+
+    public val ALL: Set<String> = setOf(TIME_ZONE_METADATA, PHONE_TERRITORIES, PHONE_FORMATS)
 }

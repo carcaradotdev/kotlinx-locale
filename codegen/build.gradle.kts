@@ -10,6 +10,7 @@ dependencies {
     // Generates the skeleton goldens and nothing else. This module runs at build
     // time and is never published, so ICU cannot reach a consumer's classpath.
     implementation(libs.icu4j)
+    implementation(libs.libphonenumber)
     testImplementation(libs.kotlin.test)
 }
 

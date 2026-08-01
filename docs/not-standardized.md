@@ -1,40 +1,70 @@
-# What no standard defines
+# Where the line is
 
-This library builds what Unicode defines and leaves alone what it does not. The
-line matters more than it sounds, because a gap and a decision look identical
-from the outside: both are things the API will not do for you. This file says
-which is which.
+This library builds what a standard defines and leaves alone what it does not.
+The line matters more than it sounds, because from the outside a gap and a
+decision look identical: both are things the API will not do for you. This file
+says which is which.
 
-Where something is half defined, the standardized half is here and the rest is
-named below rather than guessed at.
+Mostly that standard is Unicode, and where something is half defined the
+standardized half is built and the rest is named here rather than guessed at.
+Not always, though. Phone numbering is ITU-T E.164 by way of libphonenumber, and
+the entry below on dialling codes is here because this file once got that wrong:
+it recorded "CLDR stopped shipping the data" as "no standard exists" and left a
+whole domain unbuilt on the strength of it. The correction is kept rather than
+deleted, because a scope document that only ever grows is one nobody trusts.
+
+So an entry here says one of three things: this is standardized and built, and
+here is the edge; this is half standardized, and here is the half we chose; or
+this is not standardized, and here is why we declined it.
 
 ## Country dialling codes
 
-Not implemented, and not planned.
+Implemented, in `kotlinx-locale-phone-*`.
 
-CLDR used to carry `telephoneCodeData`. It was deprecated in CLDR 34 and the
-data removed, on the grounds that phone numbering changes far faster than CLDR
-releases, with a pointer to libphonenumber. It is absent from `release-48-2`;
-you can check the supplemental directory.
+An earlier version of this file listed them here as unstandardized. That was
+wrong twice over, and the correction is worth keeping rather than quietly
+deleting.
 
-The underlying standard is ITU-T E.164, published as an Operational Bulletin
-rather than as machine-readable data.
+The first error was treating "CLDR stopped shipping the data" as "no standard
+exists". CLDR did carry `telephoneCodeData` and did deprecate it in CLDR 34,
+pointing at libphonenumber, and it is absent from `release-48-2`. None of that
+says anything about whether a standard exists. The numbering plans are ITU-T
+E.164, and libphonenumber is the machine-readable form of them that the industry
+actually maintains and that every mobile platform already ships. It is
+Apache-2.0. Declining to use it was a decision about effort, described as a
+decision about standards.
 
-libphonenumber itself is Apache-2.0, so licence compatibility is not the
-obstacle. Three other things are. Its metadata releases every week or two
-against CLDR's twice a year, which is a different release model for the whole
-project. Its validation is regular expressions evaluated against
-`java.util.regex`, and Kotlin's `Regex` delegates to a different engine per
-target, so "pure common Kotlin" would mean a behaviour surface that is not
-identical across Android, iOS, JS and Native. And the roughly 240-entry dialling
-table is one attribute of a 400 KB file whose interesting parts are parsing,
-validation by number type, as-you-type formatting, geocoding and carrier
-lookup.
+The second error was the technical one, and it was the load-bearing argument.
+libphonenumber validates with regular expressions; Kotlin's `Regex` delegates to
+a different engine on every target; therefore, the reasoning went, a pure common
+Kotlin port would validate the same number differently on Android and in a
+browser. The premise is true and the conclusion does not follow, because it
+assumes the patterns need a general engine. They do not. Across all 2292
+patterns in the metadata the constructs are alternation, character classes with
+ranges, `\d`, non-capturing groups, bounded repetition, the optional marker, and
+an end anchor that appears only in the national-prefix rules. No backreferences,
+no lookaround, no unbounded quantifiers, not one dot.
 
-A `kotlinx-locale-phone-*` domain would be a separate library decision rather
-than an extension of this one. If you want it today,
-[luca992/libphonenumber-kotlin](https://github.com/luca992/libphonenumber-kotlin)
-and [bayo-code/kphonenumber](https://github.com/bayo-code/kphonenumber) exist.
+So the library evaluates that subset itself, and `:codegen` fails the build
+naming the offending pattern if a libphonenumber release ever steps outside it.
+The behaviour is identical on every target because nothing target-specific is
+involved.
+
+What remains true from the old entry is the release cadence: libphonenumber
+ships every week or two against CLDR's twice a year. That is a reason to pin a
+tag and say which one, which is what `PHONE_REPO` in `codegen/Repos.kt` does, and
+bumping it is a deliberate commit like bumping CLDR.
+
+## Phone number geocoding and carrier lookup
+
+Not implemented yet, and the reason is size rather than standards.
+
+libphonenumber's geocoding data is 11 MB across 30-odd languages and its carrier
+data is 1.3 MB. Both are per-prefix maps that answer a different question from
+the one this domain answers, and both would want to be their own artifacts with
+their own opt-in. They are also the only parts of libphonenumber that are
+locale-keyed, so they would follow the `-cldr-full` shape rather than the phone
+domain's region-keyed one.
 
 ## Choosing the unit for a relative time
 

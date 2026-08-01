@@ -49,6 +49,36 @@ val ICU_REPO = RepoSpec(
 )
 
 /**
+ * Google's libphonenumber, the source of the phone metadata.
+ *
+ * A third upstream alongside CLDR and ICU, and the one whose release model
+ * differs most: libphonenumber ships every week or two where CLDR ships twice a
+ * year, because numbering plans change on the telco's schedule rather than on a
+ * standards body's. That is a reason to pin a tag and say which one, not a
+ * reason to decline the data. The pin is what makes generation reproducible;
+ * bumping it is a deliberate commit like bumping CLDR.
+ *
+ * The numbering plans themselves are ITU-T E.164, published as an Operational
+ * Bulletin rather than as anything a build can read. libphonenumber is the
+ * machine-readable form of it that the industry actually uses, and it is
+ * Apache-2.0.
+ *
+ * The Java sources are checked out for the same reason ICU's are: they are the
+ * reference for behaviour the XML does not describe, and reading them is cheaper
+ * than guessing. Nothing here compiles against them.
+ */
+val PHONE_REPO = RepoSpec(
+    name = "libphonenumber",
+    url = "https://github.com/google/libphonenumber.git",
+    tag = "v9.0.19",
+    sparsePaths = listOf(
+        "resources",
+        "java/libphonenumber/src/com/google/i18n/phonenumbers",
+        "tools/java/common/src/com/google/i18n/phonenumbers",
+    ),
+)
+
+/**
  * The UTS #51 Emoji release the vendored `emoji-sequences.txt` comes from.
  *
  * Vendored rather than cloned, the way ISO 4217 list one is: it is one file, and

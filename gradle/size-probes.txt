@@ -18,5 +18,6 @@ probe-language-full
 probe-number-full
 probe-timezone-full
 probe-timezone-cities
+probe-phone-full
 probe-everything
 probe-everything-platform
