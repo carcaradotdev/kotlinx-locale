@@ -3,10 +3,10 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_JA: String =
-    "時代\u001E年\u001E四半期\u001E月\u001E\u001E\u001E曜日\u001E日\u001E\u001E\u001E午前/午後\u001E時\u001E分\u001E秒\u001E\u001E\u001F第1四半期\u001E第2四半期\u001E第3四半期\u001E第4四半期\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "時代\u001E年\u001E四半期\u001E月\u001E\u001E\u001E曜日\u001E日\u001E\u001E\u001E午前/午後\u001E時\u001E分\u001E秒\u001E\u001E\u001F第1四半期\u001E第2四半期\u001E第3四半期\u001E第4四半期\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F第1四半期\u001E第2四半期\u001E第3四半期\u001E第4四半期"
 
 internal val SKELETON_NAMES_JMC: String =
-    "Kacha\u001EMaka\u001EQuarter\u001EMori\u001E\u001E\u001EDay of the Week\u001EMfiri\u001E\u001E\u001EMfiri o siku\u001ESaa\u001EDakyika\u001ESekunde\u001E\u001E\u001FRobo 1\u001ERobo 2\u001ERobo 3\u001ERobo 4\u001FR1\u001ER2\u001ER3\u001ER4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Kacha\u001EMaka\u001EQuarter\u001EMori\u001E\u001E\u001EDay of the Week\u001EMfiri\u001E\u001E\u001EMfiri o siku\u001ESaa\u001EDakyika\u001ESekunde\u001E\u001E\u001FRobo 1\u001ERobo 2\u001ERobo 3\u001ERobo 4\u001FR1\u001ER2\u001ER3\u001ER4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FRobo 1\u001ERobo 2\u001ERobo 3\u001ERobo 4"
 
 internal val SKELETON_NAMES_JV: String =
-    "era\u001Etaun\u001Etriwulan\u001Esasi\u001E\u001E\u001Edino sepekan\u001Edino\u001E\u001E\u001Eisuk/wengi\u001Ejam\u001Emenit\u001Edetik\u001E\u001E\u001Ftriwulan kaping pisan\u001Etriwulan kaping loro\u001Etriwulan kaping telu\u001Etriwulan kaping papat\u001FTW1\u001ETW2\u001ETW3\u001ETW4\u001FH\u001EH\u001F{1} 'ing' {0}\u001E{1} 'ing' {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "era\u001Etaun\u001Etriwulan\u001Esasi\u001E\u001E\u001Edino sepekan\u001Edino\u001E\u001E\u001Eisuk/wengi\u001Ejam\u001Emenit\u001Edetik\u001E\u001E\u001Ftriwulan kaping pisan\u001Etriwulan kaping loro\u001Etriwulan kaping telu\u001Etriwulan kaping papat\u001FTW1\u001ETW2\u001ETW3\u001ETW4\u001FH\u001EH\u001F{1} 'ing' {0}\u001E{1} 'ing' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Ftriwulan kaping pisan\u001Etriwulan kaping loro\u001Etriwulan kaping telu\u001Etriwulan kaping papat"

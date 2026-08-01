@@ -3,6 +3,8 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.runtime
 
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
+import dev.carcara.kotlinx.locale.datetime.NameContext
+import dev.carcara.kotlinx.locale.datetime.TextStyle
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.isoDayNumber
@@ -197,33 +199,46 @@ private fun formatField(
             }
         }
         'u' -> if (date != null) sb.appendNumber(date.year, count, data.digits)
+        // L is the stand-alone month, M the one that goes inside a date. 110 of
+        // CLDR's availableFormats patterns use L, and the skeleton matcher keeps
+        // the locale's own letter, so these already reach here and used to render
+        // the format name whichever letter was asked for.
         'M', 'L' -> if (date != null) {
             val month = date.month.number
+            val context = if (letter == 'L') NameContext.STANDALONE else NameContext.FORMAT
             when (count) {
                 1, 2 -> sb.appendNumber(month, count, data.digits)
-                3 -> sb.append(data.monthsAbbr[month - 1])
-                4 -> sb.append(data.monthsWide[month - 1])
-                else -> sb.append(data.monthsNarrow[month - 1])
+                3 -> sb.append(data.month(month - 1, TextStyle.ABBREVIATED, context))
+                4 -> sb.append(data.month(month - 1, TextStyle.FULL, context))
+                else -> sb.append(data.month(month - 1, TextStyle.NARROW, context))
             }
         }
-        // Q is the calendar quarter, and q its stand-alone form; CLDR gives the
-        // two the same names for every locale that declares them at all.
+        // Q is the calendar quarter and q its stand-alone form. 41 locales give
+        // the two different wide names and 41 different abbreviated ones.
         'Q', 'q' -> if (date != null && skeletons != null) {
             val quarter = (date.month.number - 1) / 3
+            val standalone = letter == 'q'
             when (count) {
                 1, 2 -> sb.appendNumber(quarter + 1, count, data.digits)
-                3 -> sb.append(skeletons.quartersAbbr[quarter])
-                else -> sb.append(skeletons.quartersWide[quarter])
+                3 -> sb.append(skeletons.quarterAbbr(quarter, standalone))
+                else -> sb.append(skeletons.quarterWide(quarter, standalone))
             }
         }
         'd' -> if (date != null) sb.appendNumber(date.day, count, data.digits)
         'D' -> if (date != null) sb.appendNumber(date.dayOfYear, count, data.digits)
+        // c is the stand-alone weekday, E and e the ones inside a date.
+        //
+        // Note that e and c at counts 1 and 2 are the numeric local day of week
+        // in UTS #35, and this renders a name instead. Fixing that needs each
+        // locale's first day of week from supplemental weekData, which is the
+        // same data the w, W and F fields are unsupported for.
         'E', 'e', 'c' -> if (date != null) {
             val index = date.dayOfWeek.isoDayNumber - 1
+            val context = if (letter == 'c') NameContext.STANDALONE else NameContext.FORMAT
             when {
-                count >= 5 -> sb.append(data.daysNarrow[index])
-                count == 4 -> sb.append(data.daysWide[index])
-                else -> sb.append(data.daysAbbr[index])
+                count >= 5 -> sb.append(data.dayOfWeek(index, TextStyle.NARROW, context))
+                count == 4 -> sb.append(data.dayOfWeek(index, TextStyle.FULL, context))
+                else -> sb.append(data.dayOfWeek(index, TextStyle.ABBREVIATED, context))
             }
         }
         'a' -> if (time != null) sb.append(data.amPm(time))

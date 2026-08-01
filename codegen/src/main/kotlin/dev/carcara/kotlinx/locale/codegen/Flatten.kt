@@ -10,6 +10,20 @@ class ResolvedLocaleData(
     val daysWide: List<String>,
     val daysAbbr: List<String>,
     val daysNarrow: List<String>,
+    /**
+     * The stand-alone names, empty where the locale writes them the same as the
+     * format ones.
+     *
+     * Empty rather than repeated: 838 of CLDR's 1122 locales answer identically
+     * in every width, so storing the difference is twelve thousand characters
+     * against a hundred and twenty-seven thousand.
+     */
+    val monthsStandaloneWide: List<String>,
+    val monthsStandaloneAbbr: List<String>,
+    val monthsStandaloneNarrow: List<String>,
+    val daysStandaloneWide: List<String>,
+    val daysStandaloneAbbr: List<String>,
+    val daysStandaloneNarrow: List<String>,
     val am: String,
     val pm: String,
     /** Flexible day period names ([DAY_PERIOD_TYPES] minus am/pm); "" when the locale has none. */
@@ -40,6 +54,9 @@ class ResolvedSkeletonData(
     val fieldNames: List<String>,
     val quartersWide: List<String>,
     val quartersAbbr: List<String>,
+    /** Stand-alone quarters, empty where they match the format ones. */
+    val quartersStandaloneWide: List<String>,
+    val quartersStandaloneAbbr: List<String>,
     /**
      * The `atTime` date-time glue, in FULL, LONG, MEDIUM, SHORT order.
      *
@@ -117,10 +134,14 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
         val monthsWide = arrayOfNulls<String>(12)
         val monthsAbbr = arrayOfNulls<String>(12)
         val monthsNarrow = arrayOfNulls<String>(12)
+        val monthsStandaloneWide = arrayOfNulls<String>(12)
+        val monthsStandaloneAbbr = arrayOfNulls<String>(12)
         val monthsStandaloneNarrow = arrayOfNulls<String>(12)
         val daysWide = arrayOfNulls<String>(7)
         val daysAbbr = arrayOfNulls<String>(7)
         val daysNarrow = arrayOfNulls<String>(7)
+        val daysStandaloneWide = arrayOfNulls<String>(7)
+        val daysStandaloneAbbr = arrayOfNulls<String>(7)
         val daysStandaloneNarrow = arrayOfNulls<String>(7)
         var am: String? = null
         var pm: String? = null
@@ -141,10 +162,14 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             mergeList(monthsWide, p.monthsWide)
             mergeList(monthsAbbr, p.monthsAbbr)
             mergeList(monthsNarrow, p.monthsNarrow)
+            mergeList(monthsStandaloneWide, p.monthsStandaloneWide)
+            mergeList(monthsStandaloneAbbr, p.monthsStandaloneAbbr)
             mergeList(monthsStandaloneNarrow, p.monthsStandaloneNarrow)
             mergeList(daysWide, p.daysWide)
             mergeList(daysAbbr, p.daysAbbr)
             mergeList(daysNarrow, p.daysNarrow)
+            mergeList(daysStandaloneWide, p.daysStandaloneWide)
+            mergeList(daysStandaloneAbbr, p.daysStandaloneAbbr)
             mergeList(daysStandaloneNarrow, p.daysStandaloneNarrow)
             mergeList(dateFormats, p.dateFormats)
             mergeList(timeFormats, p.timeFormats)
@@ -158,14 +183,25 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
         }
 
         // Emulate root.xml's aliases for any slot still empty after the merge:
-        // format abbreviated -> format wide, format narrow -> stand-alone narrow.
+        // format abbreviated -> format wide, format narrow -> stand-alone narrow,
+        // and stand-alone wide and abbreviated -> their format counterparts.
+        //
+        // Per index rather than per array: cs.xml declares eleven of its
+        // stand-alone wide months and leaves the twelfth to inherit, so merging
+        // whole arrays would drop the eleven or keep an empty slot.
         for (i in 0..11) {
             if (monthsAbbr[i] == null) monthsAbbr[i] = monthsWide[i]
             if (monthsNarrow[i] == null) monthsNarrow[i] = monthsStandaloneNarrow[i] ?: monthsAbbr[i]
+            if (monthsStandaloneWide[i] == null) monthsStandaloneWide[i] = monthsWide[i]
+            if (monthsStandaloneAbbr[i] == null) monthsStandaloneAbbr[i] = monthsStandaloneWide[i]
+            if (monthsStandaloneNarrow[i] == null) monthsStandaloneNarrow[i] = monthsNarrow[i]
         }
         for (i in 0..6) {
             if (daysAbbr[i] == null) daysAbbr[i] = daysWide[i]
             if (daysNarrow[i] == null) daysNarrow[i] = daysStandaloneNarrow[i] ?: daysAbbr[i]
+            if (daysStandaloneWide[i] == null) daysStandaloneWide[i] = daysWide[i]
+            if (daysStandaloneAbbr[i] == null) daysStandaloneAbbr[i] = daysStandaloneWide[i]
+            if (daysStandaloneNarrow[i] == null) daysStandaloneNarrow[i] = daysNarrow[i]
         }
 
         val digits = supplemental.numberingSystemDigits[numberingSystem ?: "latn"]
@@ -178,6 +214,12 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             monthsWide = full("monthsWide", monthsWide),
             monthsAbbr = full("monthsAbbr", monthsAbbr),
             monthsNarrow = full("monthsNarrow", monthsNarrow),
+            monthsStandaloneWide = full("monthsStandaloneWide", monthsStandaloneWide),
+            monthsStandaloneAbbr = full("monthsStandaloneAbbr", monthsStandaloneAbbr),
+            monthsStandaloneNarrow = full("monthsStandaloneNarrow", monthsStandaloneNarrow),
+            daysStandaloneWide = full("daysStandaloneWide", daysStandaloneWide),
+            daysStandaloneAbbr = full("daysStandaloneAbbr", daysStandaloneAbbr),
+            daysStandaloneNarrow = full("daysStandaloneNarrow", daysStandaloneNarrow),
             daysWide = full("daysWide", daysWide),
             daysAbbr = full("daysAbbr", daysAbbr),
             daysNarrow = full("daysNarrow", daysNarrow),
@@ -208,6 +250,8 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
         val fieldNames = arrayOfNulls<String>(DATE_FIELD_TYPES.size)
         val quartersWide = arrayOfNulls<String>(4)
         val quartersAbbr = arrayOfNulls<String>(4)
+        val quartersStandaloneWide = arrayOfNulls<String>(4)
+        val quartersStandaloneAbbr = arrayOfNulls<String>(4)
 
         for (level in dataChain(id)) {
             val p = partial(level)
@@ -219,12 +263,18 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             for (i in 0..3) {
                 if (quartersWide[i] == null) quartersWide[i] = p.quartersWide[i]
                 if (quartersAbbr[i] == null) quartersAbbr[i] = p.quartersAbbr[i]
+                if (quartersStandaloneWide[i] == null) quartersStandaloneWide[i] = p.quartersStandaloneWide[i]
+                if (quartersStandaloneAbbr[i] == null) quartersStandaloneAbbr[i] = p.quartersStandaloneAbbr[i]
             }
         }
 
         // root.xml aliases format abbreviated to format wide, the way it does for
         // months and days.
-        for (i in 0..3) if (quartersAbbr[i] == null) quartersAbbr[i] = quartersWide[i]
+        for (i in 0..3) {
+            if (quartersAbbr[i] == null) quartersAbbr[i] = quartersWide[i]
+            if (quartersStandaloneWide[i] == null) quartersStandaloneWide[i] = quartersWide[i]
+            if (quartersStandaloneAbbr[i] == null) quartersStandaloneAbbr[i] = quartersStandaloneWide[i]
+        }
 
         val glueAtTime = arrayOfNulls<String>(4)
         for (level in dataChain(id)) {
@@ -248,6 +298,8 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             fieldNames = forRenderable(fieldNames),
             quartersWide = quartersWide.mapIndexed { i, v -> checkNotNull(v) { "$id: missing quartersWide[$i]" } },
             quartersAbbr = quartersAbbr.mapIndexed { i, v -> checkNotNull(v) { "$id: missing quartersAbbr[$i]" } },
+            quartersStandaloneWide = quartersStandaloneWide.map { it.orEmpty() },
+            quartersStandaloneAbbr = quartersStandaloneAbbr.map { it.orEmpty() },
             glueAtTimeFormats = List(4) { glueAtTime[it] ?: standardGlue[it] },
             hourPreferred = hourCycle.preferred,
             hourFirstAllowed = hourCycle.firstAllowed,
@@ -365,4 +417,26 @@ fun ResolvedSkeletonData.encodeNames(): String = listOf(
     quartersAbbr.joinToString(LIST_SEPARATOR),
     listOf(hourPreferred.toString(), hourFirstAllowed).joinToString(LIST_SEPARATOR),
     glueAtTimeFormats.joinToString(LIST_SEPARATOR),
+    // Appended rather than inserted, so a record written by an older generator
+    // still decodes: the reader takes these positionally and falls back to the
+    // format names when they are absent.
+    sameAsFormat(quartersStandaloneWide, quartersWide),
+    sameAsFormat(quartersStandaloneAbbr, quartersAbbr),
+).joinToString(FIELD_SEPARATOR)
+
+/** The stand-alone list, or empty when it says nothing the format list does not. */
+private fun sameAsFormat(standalone: List<String>, format: List<String>): String =
+    if (standalone == format) "" else standalone.joinToString(LIST_SEPARATOR)
+
+/**
+ * The stand-alone calendar names for one locale: six lists, each empty where the
+ * locale writes it the same as its format counterpart.
+ */
+fun ResolvedLocaleData.encodeStandalone(): String = listOf(
+    sameAsFormat(monthsStandaloneWide, monthsWide),
+    sameAsFormat(monthsStandaloneAbbr, monthsAbbr),
+    sameAsFormat(monthsStandaloneNarrow, monthsNarrow),
+    sameAsFormat(daysStandaloneWide, daysWide),
+    sameAsFormat(daysStandaloneAbbr, daysAbbr),
+    sameAsFormat(daysStandaloneNarrow, daysNarrow),
 ).joinToString(FIELD_SEPARATOR)

@@ -62,6 +62,7 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.CURRENCY_NAMES, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
     .table(GeneratedTable.DATE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
     .table(GeneratedTable.SKELETONS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"))
+    .table(GeneratedTable.DATE_TIME_STANDALONE, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
     .table(GeneratedTable.NUMBER, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     .table(GeneratedTable.NUMBER_COMPACT, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     .table(GeneratedTable.CURRENCY_COMPACT, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
@@ -136,9 +137,13 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         if (unnamed.isNotEmpty()) dayPeriodGaps[id] = unnamed
         return resolved.encode()
     }
+    val dateTimeStandalone = LinkedHashMap<String, String>()
     dateTime["root"] = encodeChecked("root") // final runtime fallback
+    dateTimeStandalone["root"] = flattener.resolve("root").encodeStandalone()
     for (id in flattener.localeIds) {
-        dateTime[canonicalTag(id)] = encodeChecked(id)
+        val tag = canonicalTag(id)
+        dateTime[tag] = encodeChecked(id)
+        dateTimeStandalone[tag] = flattener.resolve(id).encodeStandalone()
     }
 
     val skeletonFormats = LinkedHashMap<String, String>()
@@ -239,6 +244,7 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
             countryCurrencies = countryCurrencyCodes
         }
         .section("dateTime", dateTime)
+        .section("dateTimeStandalone", dateTimeStandalone)
         .section("countryNames", buildCountryNamePayloads(flattener, extras))
         .section("currencyFormats", buildCurrencyFormatPayloads(flattener, extras))
         .section("currencyNames", buildCurrencyNamePayloads(flattener, extras))

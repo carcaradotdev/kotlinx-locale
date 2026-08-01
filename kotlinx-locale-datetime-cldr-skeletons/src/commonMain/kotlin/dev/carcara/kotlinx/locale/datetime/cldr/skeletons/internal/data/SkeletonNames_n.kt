@@ -3,40 +3,40 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_NAQ: String =
-    "ǁAeǃgâs\u001EKurib\u001EQuarter\u001EǁKhâb\u001E\u001E\u001EWekheb tsees\u001ETsees\u001E\u001E\u001Eǁgoas/ǃuis\u001EIiri\u001EHaib\u001EǀGâub\u001E\u001E\u001F1ro kwartals\u001E2ǁî kwartals\u001E3ǁî kwartals\u001E4ǁî kwartals\u001FKW1\u001EKW2\u001EKW3\u001EKW4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "ǁAeǃgâs\u001EKurib\u001EQuarter\u001EǁKhâb\u001E\u001E\u001EWekheb tsees\u001ETsees\u001E\u001E\u001Eǁgoas/ǃuis\u001EIiri\u001EHaib\u001EǀGâub\u001E\u001E\u001F1ro kwartals\u001E2ǁî kwartals\u001E3ǁî kwartals\u001E4ǁî kwartals\u001FKW1\u001EKW2\u001EKW3\u001EKW4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1ro kwartals\u001E2ǁî kwartals\u001E3ǁî kwartals\u001E4ǁî kwartals"
 
 internal val SKELETON_NAMES_NB: String =
-    "tidsalder\u001Eår\u001Ekvartal\u001Emåned\u001E\u001E\u001Eukedag\u001Edag\u001E\u001E\u001Ea.m./p.m.\u001Etime\u001Eminutt\u001Esekund\u001E\u001E\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'kl'. {0}\u001E{1} 'kl'. {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "tidsalder\u001Eår\u001Ekvartal\u001Emåned\u001E\u001E\u001Eukedag\u001Edag\u001E\u001E\u001Ea.m./p.m.\u001Etime\u001Eminutt\u001Esekund\u001E\u001E\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'kl'. {0}\u001E{1} 'kl'. {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal"
 
 internal val SKELETON_NAMES_ND: String =
-    "Era\u001EUmnyaka\u001EQuarter\u001EInyangacale\u001E\u001E\u001EIlanga leviki\u001EIlanga\u001E\u001E\u001EDayperiod\u001EIhola\u001EUmuzuzu\u001EIsekendi\u001E\u001E\u001FKota 1\u001EKota 2\u001EKota 3\u001EKota 4\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Era\u001EUmnyaka\u001EQuarter\u001EInyangacale\u001E\u001E\u001EIlanga leviki\u001EIlanga\u001E\u001E\u001EDayperiod\u001EIhola\u001EUmuzuzu\u001EIsekendi\u001E\u001E\u001FKota 1\u001EKota 2\u001EKota 3\u001EKota 4\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FKota 1\u001EKota 2\u001EKota 3\u001EKota 4"
 
 internal val SKELETON_NAMES_NDS: String =
-    "Ära\u001EJohr\u001EQuartaal\u001EMaand\u001E\u001E\u001EWekendag\u001EDag\u001E\u001E\u001EHalvdag\u001EStünn\u001EMinuut\u001ESekunn\u001E\u001E\u001F1. Quartaal\u001E2. Quartaal\u001E3. Quartaal\u001E4. Quartaal\u001FQ.1\u001EQ.2\u001EQ.3\u001EQ.4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "Ära\u001EJohr\u001EQuartaal\u001EMaand\u001E\u001E\u001EWekendag\u001EDag\u001E\u001E\u001EHalvdag\u001EStünn\u001EMinuut\u001ESekunn\u001E\u001E\u001F1. Quartaal\u001E2. Quartaal\u001E3. Quartaal\u001E4. Quartaal\u001FQ.1\u001EQ.2\u001EQ.3\u001EQ.4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FQ. I\u001EQ. II\u001EQ. III\u001EQ. IV"
 
 internal val SKELETON_NAMES_NE: String =
-    "काल\u001Eवर्ष\u001Eत्रैमासिक\u001Eमहिना\u001E\u001E\u001Eहप्ताको बार\u001Eबार\u001E\u001E\u001Eपूर्वाह्न / अपराह्न\u001Eघण्टा\u001Eमिनेट\u001Eसेकेन्ड\u001E\u001E\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001FH\u001EH\u001F{1}: {0}\u001E{1}: {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "काल\u001Eवर्ष\u001Eत्रैमासिक\u001Eमहिना\u001E\u001E\u001Eहप्ताको बार\u001Eबार\u001E\u001E\u001Eपूर्वाह्न / अपराह्न\u001Eघण्टा\u001Eमिनेट\u001Eसेकेन्ड\u001E\u001E\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001FH\u001EH\u001F{1}: {0}\u001E{1}: {0}\u001E{1}, {0}\u001E{1}, {0}\u001Fप्रथम त्रैमासिक\u001Eद्वितीय त्रैमासिक\u001Eतृतीय त्रैमासिक\u001Eचतुर्थ त्रैमासिक\u001Fप्रथम त्रैमासिक\u001Eद्वितीय त्रैमासिक\u001Eतृतीय त्रैमासिक\u001Eचतुर्थ त्रैमासिक"
 
 internal val SKELETON_NAMES_NE_IN: String =
-    "काल\u001Eवर्ष\u001Eत्रैमासिक\u001Eमहिना\u001E\u001E\u001Eहप्ताको बार\u001Eबार\u001E\u001E\u001Eपूर्वाह्न / अपराह्न\u001Eघण्टा\u001Eमिनेट\u001Eसेकेन्ड\u001E\u001E\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001Fh\u001Eh\u001F{1}: {0}\u001E{1}: {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "काल\u001Eवर्ष\u001Eत्रैमासिक\u001Eमहिना\u001E\u001E\u001Eहप्ताको बार\u001Eबार\u001E\u001E\u001Eपूर्वाह्न / अपराह्न\u001Eघण्टा\u001Eमिनेट\u001Eसेकेन्ड\u001E\u001E\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001Fh\u001Eh\u001F{1}: {0}\u001E{1}: {0}\u001E{1}, {0}\u001E{1}, {0}\u001Fप्रथम त्रैमासिक\u001Eद्वितीय त्रैमासिक\u001Eतृतीय त्रैमासिक\u001Eचतुर्थ त्रैमासिक\u001Fप्रथम त्रैमासिक\u001Eद्वितीय त्रैमासिक\u001Eतृतीय त्रैमासिक\u001Eचतुर्थ त्रैमासिक"
 
 internal val SKELETON_NAMES_NL: String =
-    "tijdperk\u001Ejaar\u001Ekwartaal\u001Emaand\u001E\u001E\u001Edag van de week\u001Edag\u001E\u001E\u001Ea.m./p.m.\u001Euur\u001Eminuut\u001Eseconde\u001E\u001E\u001F1e kwartaal\u001E2e kwartaal\u001E3e kwartaal\u001E4e kwartaal\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'om' {0}\u001E{1} 'om' {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "tijdperk\u001Ejaar\u001Ekwartaal\u001Emaand\u001E\u001E\u001Edag van de week\u001Edag\u001E\u001E\u001Ea.m./p.m.\u001Euur\u001Eminuut\u001Eseconde\u001E\u001E\u001F1e kwartaal\u001E2e kwartaal\u001E3e kwartaal\u001E4e kwartaal\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'om' {0}\u001E{1} 'om' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1e kwartaal\u001E2e kwartaal\u001E3e kwartaal\u001E4e kwartaal"
 
 internal val SKELETON_NAMES_NMG: String =
-    "Pīl/Lahlɛ̄\u001EMbvu\u001EQuarter\u001ENgwɛn\u001E\u001E\u001EDay of the Week\u001EDuö\u001E\u001E\u001EMáná, Muó, Kugú, Bvul\u001EWulā\u001EMpálâ\u001ENyiɛl\u001E\u001E\u001FTindɛ nvúr\u001ETindɛ ńmba\u001ETindɛ ńlal\u001ETindɛ ńna\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Pīl/Lahlɛ̄\u001EMbvu\u001EQuarter\u001ENgwɛn\u001E\u001E\u001EDay of the Week\u001EDuö\u001E\u001E\u001EMáná, Muó, Kugú, Bvul\u001EWulā\u001EMpálâ\u001ENyiɛl\u001E\u001E\u001FTindɛ nvúr\u001ETindɛ ńmba\u001ETindɛ ńlal\u001ETindɛ ńna\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTindɛ nvúr\u001ETindɛ ńmba\u001ETindɛ ńlal\u001ETindɛ ńna"
 
 internal val SKELETON_NAMES_NN: String =
-    "tidsalder\u001Eår\u001Ekvartal\u001Emånad\u001E\u001E\u001Evekedag\u001Edag\u001E\u001E\u001Ea.m./p.m.\u001Etime\u001Eminutt\u001Esekund\u001E\u001E\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'kl'. {0}\u001E{1} 'kl'. {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "tidsalder\u001Eår\u001Ekvartal\u001Emånad\u001E\u001E\u001Evekedag\u001Edag\u001E\u001E\u001Ea.m./p.m.\u001Etime\u001Eminutt\u001Esekund\u001E\u001E\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'kl'. {0}\u001E{1} 'kl'. {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal"
 
 internal val SKELETON_NAMES_NNH: String =
-    "tsɔ́ fʉ̀ʼ\u001Engùʼ\u001EQuarter\u001EMonth\u001E\u001E\u001Engàba láʼ\u001Elyɛ̌ʼ\u001E\u001E\u001EDayperiod\u001Efʉ̀ʼ nèm\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1},{0}\u001E{1}, {0}\u001E{1} {0}\u001E{1} {0}"
+    "tsɔ́ fʉ̀ʼ\u001Engùʼ\u001EQuarter\u001EMonth\u001E\u001E\u001Engàba láʼ\u001Elyɛ̌ʼ\u001E\u001E\u001EDayperiod\u001Efʉ̀ʼ nèm\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1},{0}\u001E{1}, {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_NQO: String =
-    "ߕߎ߬ߡߊ\u001Eߛߊ߲߭\u001Eߣߊ߯ߣߌ߲ߢߐ߲߮\u001Eߞߊߙߏ\u001E\u001E\u001Eߟߐ߯ߕߍ ߟߏ߲ ߠߎ߬\u001Eߟߏ߲\u001E\u001E\u001Eߛ/ߥ\u001Eߕߎ߬ߡߊ߬ߙߋ߲\u001Eߡߌ߬ߛߍ߲\u001Eߝߌ߬ߟߊ߲\u001E\u001E\u001Fߞߊߙߏߛߓߊ߫ ߁߭\u001Eߞߊߙߏߛߓߊ߫ ߂߲\u001Eߞߊߙߏߛߓߊ߫ ߃߲\u001Eߞߊߙߏߛߓߊ߫ ߄߲\u001Fߞߛ߁\u001Eߞߛ߂\u001Eߞߛ߃\u001Eߞߛ߄\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "ߕߎ߬ߡߊ\u001Eߛߊ߲߭\u001Eߣߊ߯ߣߌ߲ߢߐ߲߮\u001Eߞߊߙߏ\u001E\u001E\u001Eߟߐ߯ߕߍ ߟߏ߲ ߠߎ߬\u001Eߟߏ߲\u001E\u001E\u001Eߛ/ߥ\u001Eߕߎ߬ߡߊ߬ߙߋ߲\u001Eߡߌ߬ߛߍ߲\u001Eߝߌ߬ߟߊ߲\u001E\u001E\u001Fߞߊߙߏߛߓߊ߫ ߁߭\u001Eߞߊߙߏߛߓߊ߫ ߂߲\u001Eߞߊߙߏߛߓߊ߫ ߃߲\u001Eߞߊߙߏߛߓߊ߫ ߄߲\u001Fߞߛ߁\u001Eߞߛ߂\u001Eߞߛ߃\u001Eߞߛ߄\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fߞߊߙߏߛߓߊ߫ ߁߭\u001Eߞߊߙߏߛߓߊ߫ ߂߲\u001Eߞߊߙߏߛߓߊ߫ ߃߲\u001Eߞߊߙߏߛߓߊ߫ ߄߲"
 
 internal val SKELETON_NAMES_NSO: String =
-    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001F1st Kotara\u001E2nd Kotara\u001E3rd Kotara\u001E4th Kotara\u001FKotara 1\u001EKotara 2\u001EKotara 3\u001EKotara 4\u001FH\u001EH\u001F{1} 'ka' {0}\u001E{1} 'ka' {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001F1st Kotara\u001E2nd Kotara\u001E3rd Kotara\u001E4th Kotara\u001FKotara 1\u001EKotara 2\u001EKotara 3\u001EKotara 4\u001FH\u001EH\u001F{1} 'ka' {0}\u001E{1} 'ka' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1st Kotara\u001E2nd Kotara\u001E3rd Kotara\u001E4th Kotara"
 
 internal val SKELETON_NAMES_NUS: String =
-    "Gua̱a̱th Ruëc\u001ERuɔ̱n\u001EQuarter\u001EPay\u001E\u001E\u001ENi̱n jokä\u001ECäŋ\u001E\u001E\u001EDayperiod\u001EThaak\u001EMinit\u001EThɛkɛni\u001E\u001E\u001FPäth diɔk tin nhiam\u001EPäth diɔk tin guurɛ\u001EPäth diɔk tin wä kɔɔriɛn\u001EPäth diɔk tin jiɔakdiɛn\u001FP1\u001EP2\u001EP3\u001EP4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Gua̱a̱th Ruëc\u001ERuɔ̱n\u001EQuarter\u001EPay\u001E\u001E\u001ENi̱n jokä\u001ECäŋ\u001E\u001E\u001EDayperiod\u001EThaak\u001EMinit\u001EThɛkɛni\u001E\u001E\u001FPäth diɔk tin nhiam\u001EPäth diɔk tin guurɛ\u001EPäth diɔk tin wä kɔɔriɛn\u001EPäth diɔk tin jiɔakdiɛn\u001FP1\u001EP2\u001EP3\u001EP4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FPäth diɔk tin nhiam\u001EPäth diɔk tin guurɛ\u001EPäth diɔk tin wä kɔɔriɛn\u001EPäth diɔk tin jiɔakdiɛn"

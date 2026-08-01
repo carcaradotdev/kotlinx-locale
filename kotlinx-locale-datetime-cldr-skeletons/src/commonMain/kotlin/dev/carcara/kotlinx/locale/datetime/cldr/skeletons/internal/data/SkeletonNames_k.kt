@@ -3,97 +3,97 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_KA: String =
-    "ეპოქა\u001Eწელი\u001Eკვარტალი\u001Eთვე\u001E\u001E\u001Eკვირის დღე\u001Eდღე\u001E\u001E\u001Eდღის ნახევარი\u001Eსაათი\u001Eწუთი\u001Eწამი\u001E\u001E\u001FI კვარტალი\u001EII კვარტალი\u001EIII კვარტალი\u001EIV კვარტალი\u001FI კვ.\u001EII კვ.\u001EIII კვ.\u001EIV კვ.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "ეპოქა\u001Eწელი\u001Eკვარტალი\u001Eთვე\u001E\u001E\u001Eკვირის დღე\u001Eდღე\u001E\u001E\u001Eდღის ნახევარი\u001Eსაათი\u001Eწუთი\u001Eწამი\u001E\u001E\u001FI კვარტალი\u001EII კვარტალი\u001EIII კვარტალი\u001EIV კვარტალი\u001FI კვ.\u001EII კვ.\u001EIII კვ.\u001EIV კვ.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FI კვარტალი\u001EII კვარტალი\u001EIII კვარტალი\u001EIV კვარტალი"
 
 internal val SKELETON_NAMES_KAA: String =
-    "эра\u001Eжыл\u001Eшерек\u001Eай\u001E\u001E\u001Eҳәпте күни\u001Eкүн\u001E\u001E\u001EAM/PM\u001Eсаат\u001Eминут\u001Eсекунд\u001E\u001E\u001FI шерек\u001EII шерек\u001EIII шерек\u001EIV шерек\u001FI ш.\u001EII ш.\u001EIII ш.\u001EIV ш.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "эра\u001Eжыл\u001Eшерек\u001Eай\u001E\u001E\u001Eҳәпте күни\u001Eкүн\u001E\u001E\u001EAM/PM\u001Eсаат\u001Eминут\u001Eсекунд\u001E\u001E\u001FI шерек\u001EII шерек\u001EIII шерек\u001EIV шерек\u001FI ш.\u001EII ш.\u001EIII ш.\u001EIV ш.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_KAB: String =
-    "Tallit\u001EAseggas\u001Eakraḍyur\u001EAggur\u001E\u001E\u001EUssan n ddurt\u001EAss\u001E\u001E\u001En tufat / n tmeddit\u001ETamert\u001ETamrect\u001ETasint\u001E\u001E\u001Fakraḍaggur amenzu\u001Eakraḍaggur wis-sin\u001Eakraḍaggur wis-kraḍ\u001Eakraḍaggur wis-kuẓ\u001FKḍg1\u001EKḍg2\u001EKḍg3\u001EKḍg4\u001Fh\u001Eh\u001F{1} 'ɣef' {0}\u001E{1} 'ɣef' {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "Tallit\u001EAseggas\u001Eakraḍyur\u001EAggur\u001E\u001E\u001EUssan n ddurt\u001EAss\u001E\u001E\u001En tufat / n tmeddit\u001ETamert\u001ETamrect\u001ETasint\u001E\u001E\u001Fakraḍaggur amenzu\u001Eakraḍaggur wis-sin\u001Eakraḍaggur wis-kraḍ\u001Eakraḍaggur wis-kuẓ\u001FKḍg1\u001EKḍg2\u001EKḍg3\u001EKḍg4\u001Fh\u001Eh\u001F{1} 'ɣef' {0}\u001E{1} 'ɣef' {0}\u001E{1}, {0}\u001E{1}, {0}\u001Fakraḍyur 1u\u001Eakraḍyur w2\u001Eakraḍyur w3\u001Eakraḍyur w4\u001FKḍy1\u001EKḍy2\u001EKḍy3\u001EKḍy4"
 
 internal val SKELETON_NAMES_KAM: String =
-    "Ĩvinda\u001EMwaka\u001EQuarter\u001EMwai\u001E\u001E\u001EKyumwanĩ\u001EMũthenya\u001E\u001E\u001EĨyakwakya/Ĩyawĩoo\u001ESaa\u001ENdatĩka\u001Esekondi\u001E\u001E\u001FLovo ya mbee\u001ELovo ya kelĩ\u001ELovo ya katatũ\u001ELovo ya kana\u001FL1\u001EL2\u001EL3\u001EL4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Ĩvinda\u001EMwaka\u001EQuarter\u001EMwai\u001E\u001E\u001EKyumwanĩ\u001EMũthenya\u001E\u001E\u001EĨyakwakya/Ĩyawĩoo\u001ESaa\u001ENdatĩka\u001Esekondi\u001E\u001E\u001FLovo ya mbee\u001ELovo ya kelĩ\u001ELovo ya katatũ\u001ELovo ya kana\u001FL1\u001EL2\u001EL3\u001EL4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FLovo ya mbee\u001ELovo ya kelĩ\u001ELovo ya katatũ\u001ELovo ya kana"
 
 internal val SKELETON_NAMES_KDE: String =
-    "Mahiku\u001EMwaka\u001EQuarter\u001EMwedi\u001E\u001E\u001EDisiku dya lijuma\u001ELihiku\u001E\u001E\u001EMuhi/Chilo\u001ESaa\u001EDakika\u001ESekunde\u001E\u001E\u001FLobo 1\u001ELobo 2\u001ELobo 3\u001ELobo 4\u001FL1\u001EL2\u001EL3\u001EL4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Mahiku\u001EMwaka\u001EQuarter\u001EMwedi\u001E\u001E\u001EDisiku dya lijuma\u001ELihiku\u001E\u001E\u001EMuhi/Chilo\u001ESaa\u001EDakika\u001ESekunde\u001E\u001E\u001FLobo 1\u001ELobo 2\u001ELobo 3\u001ELobo 4\u001FL1\u001EL2\u001EL3\u001EL4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FLobo 1\u001ELobo 2\u001ELobo 3\u001ELobo 4"
 
 internal val SKELETON_NAMES_KEA: String =
-    "era\u001Eanu\u001Etrimestri\u001Emes\u001E\u001E\u001Edia di simana\u001Edia\u001E\u001E\u001Eam/pm\u001Eora\u001Eminutu\u001Esigundu\u001E\u001E\u001F1º trimestri\u001E2º trimestri\u001E3º trimestri\u001E4º trimestri\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "era\u001Eanu\u001Etrimestri\u001Emes\u001E\u001E\u001Edia di simana\u001Edia\u001E\u001E\u001Eam/pm\u001Eora\u001Eminutu\u001Esigundu\u001E\u001E\u001F1º trimestri\u001E2º trimestri\u001E3º trimestri\u001E4º trimestri\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1º trimestri\u001E2º trimestri\u001E3º trimestri\u001E4º trimestri"
 
 internal val SKELETON_NAMES_KGP: String =
-    "vãsỹ\u001Eprỹg\u001Ekysã-tẽgtũ\u001Ekysã\u001E\u001E\u001Esimỹnỹ kurã ũ kã\u001Ekurã\u001E\u001E\u001EAM/PM\u001Eóra\u001Emĩnũtu\u001Esegũno\u001E\u001E\u001F1ⁿ kysã-tẽgtũ\u001E2ᵍᵉ kysã-tẽgtũ\u001E3ⁿʰ kysã-tẽgtũ\u001E4ⁿ kysã-tẽgtũ\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "vãsỹ\u001Eprỹg\u001Ekysã-tẽgtũ\u001Ekysã\u001E\u001E\u001Esimỹnỹ kurã ũ kã\u001Ekurã\u001E\u001E\u001EAM/PM\u001Eóra\u001Emĩnũtu\u001Esegũno\u001E\u001E\u001F1ⁿ kysã-tẽgtũ\u001E2ᵍᵉ kysã-tẽgtũ\u001E3ⁿʰ kysã-tẽgtũ\u001E4ⁿ kysã-tẽgtũ\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1ⁿ kysã-tẽgtũ\u001E2ᵍᵉ kysã-tẽgtũ\u001E3ⁿʰ kysã-tẽgtũ\u001E4ⁿ kysã-tẽgtũ"
 
 internal val SKELETON_NAMES_KHQ: String =
-    "Zaman\u001EJiiri\u001EQuarter\u001EHandu\u001E\u001E\u001EDay of the Week\u001EJaari\u001E\u001E\u001EAdduha wala Aluula\u001EGuuru\u001EMiniti\u001EMiti\u001E\u001E\u001FArrubu 1\u001EArrubu 2\u001EArrubu 3\u001EArrubu 4\u001FA1\u001EA2\u001EA3\u001EA4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Zaman\u001EJiiri\u001EQuarter\u001EHandu\u001E\u001E\u001EDay of the Week\u001EJaari\u001E\u001E\u001EAdduha wala Aluula\u001EGuuru\u001EMiniti\u001EMiti\u001E\u001E\u001FArrubu 1\u001EArrubu 2\u001EArrubu 3\u001EArrubu 4\u001FA1\u001EA2\u001EA3\u001EA4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FArrubu 1\u001EArrubu 2\u001EArrubu 3\u001EArrubu 4"
 
 internal val SKELETON_NAMES_KI: String =
-    "Kĩhinda\u001EMwaka\u001EQuarter\u001EMweri\u001E\u001E\u001EMũthenya kiumia-inĩ\u001EMũthenya\u001E\u001E\u001EDayperiod\u001EIthaa\u001ENdagĩka\u001ESekunde\u001E\u001E\u001FRobo ya mbere\u001ERobo ya kerĩ\u001ERobo ya gatatũ\u001ERobo ya kana\u001FR1\u001ER2\u001ER3\u001ER4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Kĩhinda\u001EMwaka\u001EQuarter\u001EMweri\u001E\u001E\u001EMũthenya kiumia-inĩ\u001EMũthenya\u001E\u001E\u001EDayperiod\u001EIthaa\u001ENdagĩka\u001ESekunde\u001E\u001E\u001FRobo ya mbere\u001ERobo ya kerĩ\u001ERobo ya gatatũ\u001ERobo ya kana\u001FR1\u001ER2\u001ER3\u001ER4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FRobo ya mbere\u001ERobo ya kerĩ\u001ERobo ya gatatũ\u001ERobo ya kana"
 
 internal val SKELETON_NAMES_KK: String =
-    "дәуір\u001Eжыл\u001Eширек\u001Eай\u001E\u001E\u001Eапта күні\u001Eкүн\u001E\u001E\u001EАМ/РМ\u001Eсағат\u001Eминут\u001Eсекунд\u001E\u001E\u001FІ тоқсан\u001EІІ тоқсан\u001EІІІ тоқсан\u001EIV тоқсан\u001FІ тқс.\u001EІІ тқс.\u001EІІІ тқс.\u001EIV тқс.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "дәуір\u001Eжыл\u001Eширек\u001Eай\u001E\u001E\u001Eапта күні\u001Eкүн\u001E\u001E\u001EАМ/РМ\u001Eсағат\u001Eминут\u001Eсекунд\u001E\u001E\u001FІ тоқсан\u001EІІ тоқсан\u001EІІІ тоқсан\u001EIV тоқсан\u001FІ тқс.\u001EІІ тқс.\u001EІІІ тқс.\u001EIV тқс.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FІ тоқсан\u001EІІ тоқсан\u001EІІІ тоқсан\u001EIV тоқсан"
 
 internal val SKELETON_NAMES_KK_ARAB: String =
-    "ءداۋىر\u001Eجىل\u001Eشيرەك\u001Eاي\u001E\u001E\u001Eاپتا كۇنى\u001Eكۇن\u001E\u001E\u001Eتۇسكە دەيىن/تۇستەن كەيىن\u001Eساعات\u001Eمينۋت\u001Eسەكۋند\u001E\u001E\u001Fءبىرىنشى توقسان\u001Eەكىنشى توقسان\u001Eءۇشىنشى توقسان\u001Eءتورتىنشى توقسان\u001F1- توقسان\u001E2- توقسان\u001E3- توقسان\u001E4- توقسان\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "ءداۋىر\u001Eجىل\u001Eشيرەك\u001Eاي\u001E\u001E\u001Eاپتا كۇنى\u001Eكۇن\u001E\u001E\u001Eتۇسكە دەيىن/تۇستەن كەيىن\u001Eساعات\u001Eمينۋت\u001Eسەكۋند\u001E\u001E\u001Fءبىرىنشى توقسان\u001Eەكىنشى توقسان\u001Eءۇشىنشى توقسان\u001Eءتورتىنشى توقسان\u001F1- توقسان\u001E2- توقسان\u001E3- توقسان\u001E4- توقسان\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_KL: String =
-    "æra\u001Eukioq\u001EQuarter\u001Eqaammat\u001E\u001E\u001Esapaatip akunnerata ullui\u001Eulloq\u001E\u001E\u001Epiffissaq ulloq\u001Enalunaaquttap-akunnera\u001Eminutsi\u001Esekundi\u001E\u001E\u001Fukiup sisamararterutaa 1\u001Eukiup sisamararterutaa 2\u001Eukiup sisamararterutaa 3\u001Eukiup sisamararterutaa 4\u001FS1\u001ES2\u001ES3\u001ES4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "æra\u001Eukioq\u001EQuarter\u001Eqaammat\u001E\u001E\u001Esapaatip akunnerata ullui\u001Eulloq\u001E\u001E\u001Epiffissaq ulloq\u001Enalunaaquttap-akunnera\u001Eminutsi\u001Esekundi\u001E\u001E\u001Fukiup sisamararterutaa 1\u001Eukiup sisamararterutaa 2\u001Eukiup sisamararterutaa 3\u001Eukiup sisamararterutaa 4\u001FS1\u001ES2\u001ES3\u001ES4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fukiup sisamararterutaa 1\u001Eukiup sisamararterutaa 2\u001Eukiup sisamararterutaa 3\u001Eukiup sisamararterutaa 4"
 
 internal val SKELETON_NAMES_KLN: String =
-    "Ibinta\u001EKenyit\u001EQuarter\u001EArawet\u001E\u001E\u001EBetutab wikit\u001EBetut\u001E\u001E\u001EBE/KE\u001ESait\u001EMinitit\u001ESekondit\u001E\u001E\u001FRobo netai\u001ERobo nebo aeng’\u001ERobo nebo somok\u001ERobo nebo ang’wan\u001FR1\u001ER2\u001ER3\u001ER4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Ibinta\u001EKenyit\u001EQuarter\u001EArawet\u001E\u001E\u001EBetutab wikit\u001EBetut\u001E\u001E\u001EBE/KE\u001ESait\u001EMinitit\u001ESekondit\u001E\u001E\u001FRobo netai\u001ERobo nebo aeng’\u001ERobo nebo somok\u001ERobo nebo ang’wan\u001FR1\u001ER2\u001ER3\u001ER4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FRobo netai\u001ERobo nebo aeng’\u001ERobo nebo somok\u001ERobo nebo ang’wan"
 
 internal val SKELETON_NAMES_KM: String =
-    "សករាជ\u001Eឆ្នាំ\u001Eត្រីមាស\u001Eខែ\u001E\u001E\u001Eថ្ងៃ​នៃ​សប្ដាហ៍\u001Eថ្ងៃ\u001E\u001E\u001Eព្រឹក/ល្ងាច\u001Eម៉ោង\u001Eនាទី\u001Eវិនាទី\u001E\u001E\u001Fត្រីមាសទី 1\u001Eត្រីមាសទី 2\u001Eត្រីមាសទី 3\u001Eត្រីមាសទី 4\u001Fត្រីមាសទី 1\u001Eត្រីមាសទី 2\u001Eត្រីមាសទី 3\u001Eត្រីមាសទី 4\u001Fh\u001EhB\u001F{1} នៅ​ម៉ោង {0}\u001E{1} នៅ​ម៉ោង {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "សករាជ\u001Eឆ្នាំ\u001Eត្រីមាស\u001Eខែ\u001E\u001E\u001Eថ្ងៃ​នៃ​សប្ដាហ៍\u001Eថ្ងៃ\u001E\u001E\u001Eព្រឹក/ល្ងាច\u001Eម៉ោង\u001Eនាទី\u001Eវិនាទី\u001E\u001E\u001Fត្រីមាសទី 1\u001Eត្រីមាសទី 2\u001Eត្រីមាសទី 3\u001Eត្រីមាសទី 4\u001Fត្រីមាសទី 1\u001Eត្រីមាសទី 2\u001Eត្រីមាសទី 3\u001Eត្រីមាសទី 4\u001Fh\u001EhB\u001F{1} នៅ​ម៉ោង {0}\u001E{1} នៅ​ម៉ោង {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_KN: String =
-    "ಯುಗ\u001Eವರ್ಷ\u001Eತ್ರೈಮಾಸಿಕ\u001Eತಿಂಗಳು\u001E\u001E\u001Eವಾರದ ದಿನ\u001Eದಿನ\u001E\u001E\u001EAM/PM\u001Eಗಂಟೆ\u001Eನಿಮಿಷ\u001Eಸೆಕೆಂಡ್\u001E\u001E\u001F1ನೇ ತ್ರೈಮಾಸಿಕ\u001E2ನೇ ತ್ರೈಮಾಸಿಕ\u001E3ನೇ ತ್ರೈಮಾಸಿಕ\u001E4ನೇ ತ್ರೈಮಾಸಿಕ\u001Fತ್ರೈ 1\u001Eತ್ರೈ 2\u001Eತ್ರೈ 3\u001Eತ್ರೈ 4\u001Fh\u001EhB\u001F{1} ರಂದು {0} ಸಮಯಕ್ಕೆ\u001E{1} ರಂದು {0} ಸಮಯಕ್ಕೆ\u001E{1}, {0}\u001E{1}, {0}"
+    "ಯುಗ\u001Eವರ್ಷ\u001Eತ್ರೈಮಾಸಿಕ\u001Eತಿಂಗಳು\u001E\u001E\u001Eವಾರದ ದಿನ\u001Eದಿನ\u001E\u001E\u001EAM/PM\u001Eಗಂಟೆ\u001Eನಿಮಿಷ\u001Eಸೆಕೆಂಡ್\u001E\u001E\u001F1ನೇ ತ್ರೈಮಾಸಿಕ\u001E2ನೇ ತ್ರೈಮಾಸಿಕ\u001E3ನೇ ತ್ರೈಮಾಸಿಕ\u001E4ನೇ ತ್ರೈಮಾಸಿಕ\u001Fತ್ರೈ 1\u001Eತ್ರೈ 2\u001Eತ್ರೈ 3\u001Eತ್ರೈ 4\u001Fh\u001EhB\u001F{1} ರಂದು {0} ಸಮಯಕ್ಕೆ\u001E{1} ರಂದು {0} ಸಮಯಕ್ಕೆ\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1ನೇ ತ್ರೈಮಾಸಿಕ\u001E2ನೇ ತ್ರೈಮಾಸಿಕ\u001E3ನೇ ತ್ರೈಮಾಸಿಕ\u001E4ನೇ ತ್ರೈಮಾಸಿಕ"
 
 internal val SKELETON_NAMES_KO: String =
-    "연호\u001E년\u001E분기\u001E월\u001E\u001E\u001E요일\u001E일\u001E\u001E\u001E오전/오후\u001E시\u001E분\u001E초\u001E\u001E\u001F제 1/4분기\u001E제 2/4분기\u001E제 3/4분기\u001E제 4/4분기\u001F1분기\u001E2분기\u001E3분기\u001E4분기\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "연호\u001E년\u001E분기\u001E월\u001E\u001E\u001E요일\u001E일\u001E\u001E\u001E오전/오후\u001E시\u001E분\u001E초\u001E\u001E\u001F제 1/4분기\u001E제 2/4분기\u001E제 3/4분기\u001E제 4/4분기\u001F1분기\u001E2분기\u001E3분기\u001E4분기\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F제 1/4분기\u001E제 2/4분기\u001E제 3/4분기\u001E제 4/4분기"
 
 internal val SKELETON_NAMES_KOK: String =
-    "शक\u001Eवर्स\u001Eत्रैमासीक\u001Eम्हयनो\u001E\u001E\u001Eसप्तकाचो दीस\u001Eदीस\u001E\u001E\u001EAM/PM\u001Eवर\u001Eमिनीट\u001Eसेकंद\u001E\u001E\u001F1लें त्रैमासीक\u001E2रें त्रैमासीक\u001E3रें त्रैमासीक\u001E4थें त्रैमासीक\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0} वरांचेर\u001E{1} {0} वरांचेर\u001E{1}, {0}\u001E{1}, {0}"
+    "शक\u001Eवर्स\u001Eत्रैमासीक\u001Eम्हयनो\u001E\u001E\u001Eसप्तकाचो दीस\u001Eदीस\u001E\u001E\u001EAM/PM\u001Eवर\u001Eमिनीट\u001Eसेकंद\u001E\u001E\u001F1लें त्रैमासीक\u001E2रें त्रैमासीक\u001E3रें त्रैमासीक\u001E4थें त्रैमासीक\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0} वरांचेर\u001E{1} {0} वरांचेर\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fतिम्ह1\u001Eतिम्ह2\u001Eतिम्ह3\u001Eतिम्ह4"
 
 internal val SKELETON_NAMES_KOK_LATN: String =
-    "yug\u001Evoros\u001Etimhoinallem\u001Emhoino\u001E\u001E\u001Esumanacho dis\u001Edis\u001E\u001E\u001EAM/PM\u001Evor\u001Eminut\u001Esekond\u001E\u001E\u001F1lem timhoinallem\u001E2rem timhoinallem\u001E3rem timhoinallem\u001E4them timhoinallem\u001FTimh1\u001ETimh2\u001ETimh3\u001ETimh4\u001Fh\u001Eh\u001F{1}, {0} 'vaztam'\u001E{1}, {0} 'vaztam'\u001E{1}, {0}\u001E{1}, {0}"
+    "yug\u001Evoros\u001Etimhoinallem\u001Emhoino\u001E\u001E\u001Esumanacho dis\u001Edis\u001E\u001E\u001EAM/PM\u001Evor\u001Eminut\u001Esekond\u001E\u001E\u001F1lem timhoinallem\u001E2rem timhoinallem\u001E3rem timhoinallem\u001E4them timhoinallem\u001FTimh1\u001ETimh2\u001ETimh3\u001ETimh4\u001Fh\u001Eh\u001F{1}, {0} 'vaztam'\u001E{1}, {0} 'vaztam'\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1lem timhoinallem\u001E2rem timhoinallem\u001E3rem timhoinallem\u001E4them timhoinallem"
 
 internal val SKELETON_NAMES_KO_CN: String =
-    "연호\u001E년\u001E분기\u001E월\u001E\u001E\u001E요일\u001E일\u001E\u001E\u001E오전/오후\u001E시\u001E분\u001E초\u001E\u001E\u001F제 1/4분기\u001E제 2/4분기\u001E제 3/4분기\u001E제 4/4분기\u001F1분기\u001E2분기\u001E3분기\u001E4분기\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "연호\u001E년\u001E분기\u001E월\u001E\u001E\u001E요일\u001E일\u001E\u001E\u001E오전/오후\u001E시\u001E분\u001E초\u001E\u001E\u001F제 1/4분기\u001E제 2/4분기\u001E제 3/4분기\u001E제 4/4분기\u001F1분기\u001E2분기\u001E3분기\u001E4분기\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F제 1/4분기\u001E제 2/4분기\u001E제 3/4분기\u001E제 4/4분기"
 
 internal val SKELETON_NAMES_KS: String =
-    "دور\u001Eؤری\u001Eکوارٹر\u001Eرؠتھ\u001E\u001E\u001Eہفتُک دۄہ\u001Eدۄہ\u001E\u001E\u001Eصُبح/راتھ\u001Eگٲنٹہٕ\u001Eمِنَٹ\u001Eسؠکَنڈ\u001E\u001E\u001Fگۄڑنیُک ژۄباگ\u001Eدۆیِم ژۄباگ\u001Eتریِم ژۄباگ\u001Eژوٗرِم ژۄباگ\u001Fکیو 1\u001Eکیو 2\u001Eکیو 3\u001Eکیو 4\u001Fh\u001Eh\u001F{0} پٮ۪ٹھؠ {1}\u001E{0} پٮ۪ٹھؠ {1}\u001E{1}, {0}\u001E{1}, {0}"
+    "دور\u001Eؤری\u001Eکوارٹر\u001Eرؠتھ\u001E\u001E\u001Eہفتُک دۄہ\u001Eدۄہ\u001E\u001E\u001Eصُبح/راتھ\u001Eگٲنٹہٕ\u001Eمِنَٹ\u001Eسؠکَنڈ\u001E\u001E\u001Fگۄڑنیُک ژۄباگ\u001Eدۆیِم ژۄباگ\u001Eتریِم ژۄباگ\u001Eژوٗرِم ژۄباگ\u001Fکیو 1\u001Eکیو 2\u001Eکیو 3\u001Eکیو 4\u001Fh\u001Eh\u001F{0} پٮ۪ٹھؠ {1}\u001E{0} پٮ۪ٹھؠ {1}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fگۄڑنیُک ژۄباگ\u001Eدۆیِم ژۄباگ\u001Eتریِم ژۄباگ\u001Eژوٗرِم ژۄباگ"
 
 internal val SKELETON_NAMES_KSB: String =
-    "Mishi\u001ENg’waka\u001EQuarter\u001ENg’ezi\u001E\u001E\u001EMwesiku za wiki\u001ESiku\u001E\u001E\u001ENamshii\u001ESaa\u001EDakika\u001ESekunde\u001E\u001E\u001FLobo ya bosi\u001ELobo ya mbii\u001ELobo ya nnd’atu\u001ELobo ya nne\u001FL1\u001EL2\u001EL3\u001EL4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Mishi\u001ENg’waka\u001EQuarter\u001ENg’ezi\u001E\u001E\u001EMwesiku za wiki\u001ESiku\u001E\u001E\u001ENamshii\u001ESaa\u001EDakika\u001ESekunde\u001E\u001E\u001FLobo ya bosi\u001ELobo ya mbii\u001ELobo ya nnd’atu\u001ELobo ya nne\u001FL1\u001EL2\u001EL3\u001EL4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FLobo ya bosi\u001ELobo ya mbii\u001ELobo ya nnd’atu\u001ELobo ya nne"
 
 internal val SKELETON_NAMES_KSF: String =
-    "Byámɛɛn\u001EBǝk\u001EQuarter\u001EŊwíí\u001E\u001E\u001EMǝrú mǝ sɔ́ndǝ\u001EŊwós\u001E\u001E\u001ESárúwá / Cɛɛ́nko\u001ECámɛɛn\u001EMǝnít\u001EHáu\u001E\u001E\u001Fid́ɛ́n kǝbǝk kǝ ntɔ́ntɔ́\u001Eidɛ́n kǝbǝk kǝ kǝbɛ́ɛ\u001Eidɛ́n kǝbǝk kǝ kǝráá\u001Eidɛ́n kǝbǝk kǝ kǝnin\u001Fi1\u001Ei2\u001Ei3\u001Ei4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Byámɛɛn\u001EBǝk\u001EQuarter\u001EŊwíí\u001E\u001E\u001EMǝrú mǝ sɔ́ndǝ\u001EŊwós\u001E\u001E\u001ESárúwá / Cɛɛ́nko\u001ECámɛɛn\u001EMǝnít\u001EHáu\u001E\u001E\u001Fid́ɛ́n kǝbǝk kǝ ntɔ́ntɔ́\u001Eidɛ́n kǝbǝk kǝ kǝbɛ́ɛ\u001Eidɛ́n kǝbǝk kǝ kǝráá\u001Eidɛ́n kǝbǝk kǝ kǝnin\u001Fi1\u001Ei2\u001Ei3\u001Ei4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fid́ɛ́n kǝbǝk kǝ ntɔ́ntɔ́\u001Eidɛ́n kǝbǝk kǝ kǝbɛ́ɛ\u001Eidɛ́n kǝbǝk kǝ kǝráá\u001Eidɛ́n kǝbǝk kǝ kǝnin"
 
 internal val SKELETON_NAMES_KSH: String =
-    "Ähra\u001EJohr\u001EQuattahl\u001EMohnd\u001E\u001E\u001EWochedaach\u001EDaach\u001E\u001E\u001EDaachteil\u001ESchtund\u001EMenutt\u001ESekond\u001E\u001E\u001F1. Quattahl\u001E2. Quattahl\u001E3. Quattahl\u001E4. Quattahl\u001F1.Q.\u001E2.Q.\u001E3.Q.\u001E4.Q.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Ähra\u001EJohr\u001EQuattahl\u001EMohnd\u001E\u001E\u001EWochedaach\u001EDaach\u001E\u001E\u001EDaachteil\u001ESchtund\u001EMenutt\u001ESekond\u001E\u001E\u001F1. Quattahl\u001E2. Quattahl\u001E3. Quattahl\u001E4. Quattahl\u001F1.Q.\u001E2.Q.\u001E3.Q.\u001E4.Q.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. Quattahl\u001E2. Quattahl\u001E3. Quattahl\u001E4. Quattahl"
 
 internal val SKELETON_NAMES_KS_DEVA: String =
-    "दोर\u001Eवरीह\u001Eचूरिम\u001Eमाह\u001E\u001E\u001Eहफ़तूक दोह\u001Eदोह\u001E\u001E\u001EAM/PM\u001Eगनटि\u001Eमिनट\u001Eसेकंड\u001E\u001E\u001F1st सह माह\u001E2nd सह माह\u001E3rd सह माह\u001E4th सह माह\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{0} पेठ {1}\u001E{0} पेठ {1}\u001E{1}, {0}\u001E{1}, {0}"
+    "दोर\u001Eवरीह\u001Eचूरिम\u001Eमाह\u001E\u001E\u001Eहफ़तूक दोह\u001Eदोह\u001E\u001E\u001EAM/PM\u001Eगनटि\u001Eमिनट\u001Eसेकंड\u001E\u001E\u001F1st सह माह\u001E2nd सह माह\u001E3rd सह माह\u001E4th सह माह\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{0} पेठ {1}\u001E{0} पेठ {1}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1st सह माह\u001E2nd सह माह\u001E3rd सह माह\u001E4th सह माह"
 
 internal val SKELETON_NAMES_KU: String =
-    "çax\u001Esal\u001Eçaryek\u001Emeh\u001E\u001E\u001Eroja hefteyê\u001Eroj\u001E\u001E\u001EBN/PN\u001Esaet\u001Edeqîqe\u001Esanîye\u001E\u001E\u001Fçaryeka 1ê\u001Eçaryeka 2an\u001Eçaryeka 3an\u001Eçaryeka 4an\u001FÇ1\u001EÇ2\u001EÇ3\u001EÇ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "çax\u001Esal\u001Eçaryek\u001Emeh\u001E\u001E\u001Eroja hefteyê\u001Eroj\u001E\u001E\u001EBN/PN\u001Esaet\u001Edeqîqe\u001Esanîye\u001E\u001E\u001Fçaryeka 1ê\u001Eçaryeka 2an\u001Eçaryeka 3an\u001Eçaryeka 4an\u001FÇ1\u001EÇ2\u001EÇ3\u001EÇ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fçaryeka 1ê\u001Eçaryeka 2an\u001Eçaryeka 3an\u001Eçaryeka 4an"
 
 internal val SKELETON_NAMES_KU_LATN_IQ: String =
-    "çax\u001Esal\u001Eçaryek\u001Emeh\u001E\u001E\u001Eroja hefteyê\u001Eroj\u001E\u001E\u001EBN/PN\u001Esaet\u001Edeqîqe\u001Esanîye\u001E\u001E\u001Fçaryeka 1ê\u001Eçaryeka 2an\u001Eçaryeka 3an\u001Eçaryeka 4an\u001FÇ1\u001EÇ2\u001EÇ3\u001EÇ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "çax\u001Esal\u001Eçaryek\u001Emeh\u001E\u001E\u001Eroja hefteyê\u001Eroj\u001E\u001E\u001EBN/PN\u001Esaet\u001Edeqîqe\u001Esanîye\u001E\u001E\u001Fçaryeka 1ê\u001Eçaryeka 2an\u001Eçaryeka 3an\u001Eçaryeka 4an\u001FÇ1\u001EÇ2\u001EÇ3\u001EÇ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fçaryeka 1ê\u001Eçaryeka 2an\u001Eçaryeka 3an\u001Eçaryeka 4an"
 
 internal val SKELETON_NAMES_KW: String =
-    "Era\u001EBledhen\u001EQuarter\u001EMis\u001E\u001E\u001EDedh an seythun\u001EDedh\u001E\u001E\u001EAM/PM\u001EEur\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Era\u001EBledhen\u001EQuarter\u001EMis\u001E\u001E\u001EDedh an seythun\u001EDedh\u001E\u001E\u001EAM/PM\u001EEur\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_KXV: String =
-    "jug\u001Ebarsa\u001Ekuarṭer\u001Elenju\u001E\u001E\u001Evara ti dina\u001Edina\u001E\u001E\u001Eam/pm\u001Ebelā\u001Eminiṭ\u001Esekenḍ\u001E\u001E\u001F1sṭ kuarṭr\u001E2nḍ kuarṭr\u001E3rḍ kuarṭr\u001E4th kuarṭr\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} 'aã' {0}\u001E{1} 'aã' {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "jug\u001Ebarsa\u001Ekuarṭer\u001Elenju\u001E\u001E\u001Evara ti dina\u001Edina\u001E\u001E\u001Eam/pm\u001Ebelā\u001Eminiṭ\u001Esekenḍ\u001E\u001E\u001F1sṭ kuarṭr\u001E2nḍ kuarṭr\u001E3rḍ kuarṭr\u001E4th kuarṭr\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} 'aã' {0}\u001E{1} 'aã' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1sṭ kuarṭr\u001E2nḍ kuarṭr\u001E3rḍ kuarṭr\u001E4th kuarṭr"
 
 internal val SKELETON_NAMES_KXV_DEVA: String =
-    "जुगाॅ\u001Eबार्सा\u001Eतिनिमासा\u001Eलेञ्जु\u001E\u001E\u001Eवारा ति दिना\u001Eदिना\u001E\u001E\u001Eए-एम/पी-एम\u001Eबेला\u001Eमिनिट\u001Eसेकेन्ड\u001E\u001E\u001F१स्ट क्वाटर\u001E२ क्वाटर\u001E३र्ड क्वाटर\u001E४थ क्वाटर\u001Fक १\u001Eक २\u001Eक ३\u001Eक ४\u001Fh\u001Eh\u001F{1} आँ {0}\u001E{1} आँ {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "जुगाॅ\u001Eबार्सा\u001Eतिनिमासा\u001Eलेञ्जु\u001E\u001E\u001Eवारा ति दिना\u001Eदिना\u001E\u001E\u001Eए-एम/पी-एम\u001Eबेला\u001Eमिनिट\u001Eसेकेन्ड\u001E\u001E\u001F१स्ट क्वाटर\u001E२ क्वाटर\u001E३र्ड क्वाटर\u001E४थ क्वाटर\u001Fक १\u001Eक २\u001Eक ३\u001Eक ४\u001Fh\u001Eh\u001F{1} आँ {0}\u001E{1} आँ {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F१स्ट क्वाटर\u001E२ क्वाटर\u001E३र्ड क्वाटर\u001E४थ क्वाटर"
 
 internal val SKELETON_NAMES_KXV_ORYA: String =
-    "ଜୁଗ\u001Eବାର୍ସା\u001Eକ୍ୱାଟର\u001Eଲେଞ୍ଜୁ\u001E\u001E\u001Eୱାରା ତି ଦିନା\u001Eଦିନା\u001E\u001E\u001EAM/PM\u001Eବେଲା\u001Eମିନିଟ\u001Eସେକେଣ୍ଡ\u001E\u001E\u001F୧ମ କ୍ୱାଟର\u001E୨ୟ କ୍ୱାଟର\u001E୩ୟ କ୍ୱାଟର\u001E୪ର୍ଥ କ୍ୱାଟର\u001Fକ ୧\u001Eକ ୨\u001Eକ ୩\u001Eକ ୪\u001Fh\u001Eh\u001F{1} ଆଁ {0}\u001E{1} ଆଁ {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "ଜୁଗ\u001Eବାର୍ସା\u001Eକ୍ୱାଟର\u001Eଲେଞ୍ଜୁ\u001E\u001E\u001Eୱାରା ତି ଦିନା\u001Eଦିନା\u001E\u001E\u001EAM/PM\u001Eବେଲା\u001Eମିନିଟ\u001Eସେକେଣ୍ଡ\u001E\u001E\u001F୧ମ କ୍ୱାଟର\u001E୨ୟ କ୍ୱାଟର\u001E୩ୟ କ୍ୱାଟର\u001E୪ର୍ଥ କ୍ୱାଟର\u001Fକ ୧\u001Eକ ୨\u001Eକ ୩\u001Eକ ୪\u001Fh\u001Eh\u001F{1} ଆଁ {0}\u001E{1} ଆଁ {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F୧ମ କ୍ୱାଟର\u001E୨ୟ କ୍ୱାଟର\u001E୩ୟ କ୍ୱାଟର\u001E୪ର୍ଥ କ୍ୱାଟର"
 
 internal val SKELETON_NAMES_KXV_TELU: String =
-    "యుగం\u001Eసంవత్సరం\u001Eత్రైమాసికం\u001Eనెల\u001E\u001E\u001Eవారంలో రోజు\u001Eదినం\u001E\u001E\u001EAM/PM\u001Eగంట\u001Eనిమిషము\u001Eసెకను\u001E\u001E\u001F౧వ త్రైమాసికం\u001E౨వ త్రైమాసికర\u001E౩వ త్రైమాసికర\u001E౪వ త్రైమాసికర\u001Fత్రై౧\u001Eత్రై౨\u001Eత్రై౩\u001Eత్రై౪\u001Fh\u001Eh\u001F{1} త {0}\u001E{1} త {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "యుగం\u001Eసంవత్సరం\u001Eత్రైమాసికం\u001Eనెల\u001E\u001E\u001Eవారంలో రోజు\u001Eదినం\u001E\u001E\u001EAM/PM\u001Eగంట\u001Eనిమిషము\u001Eసెకను\u001E\u001E\u001F౧వ త్రైమాసికం\u001E౨వ త్రైమాసికర\u001E౩వ త్రైమాసికర\u001E౪వ త్రైమాసికర\u001Fత్రై౧\u001Eత్రై౨\u001Eత్రై౩\u001Eత్రై౪\u001Fh\u001Eh\u001F{1} త {0}\u001E{1} త {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F౧వ త్రైమాసికం\u001E౨వ త్రైమాసికర\u001E౩వ త్రైమాసికర\u001E౪వ త్రైమాసికర"
 
 internal val SKELETON_NAMES_KY: String =
-    "заман\u001Eжыл\u001Eчейрек\u001Eай\u001E\u001E\u001Eаптанын күнү\u001Eкүн\u001E\u001E\u001EТЧ/ТК\u001Eсаат\u001Eмүнөт\u001Eсекунд\u001E\u001E\u001F1-чейрек\u001E2-чейрек\u001E3-чейрек\u001E4-чейрек\u001F1-чей.\u001E2-чей.\u001E3-чей.\u001E4-чей.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "заман\u001Eжыл\u001Eчейрек\u001Eай\u001E\u001E\u001Eаптанын күнү\u001Eкүн\u001E\u001E\u001EТЧ/ТК\u001Eсаат\u001Eмүнөт\u001Eсекунд\u001E\u001E\u001F1-чейрек\u001E2-чейрек\u001E3-чейрек\u001E4-чейрек\u001F1-чей.\u001E2-чей.\u001E3-чей.\u001E4-чей.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1-ч.\u001E2-ч.\u001E3-ч.\u001E4-ч."

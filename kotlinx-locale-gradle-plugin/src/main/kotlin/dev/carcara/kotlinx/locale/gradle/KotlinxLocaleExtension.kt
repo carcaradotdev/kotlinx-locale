@@ -202,4 +202,13 @@ abstract class DateTimeFeatures @Inject constructor(objects: ObjectFactory) : Fe
      * which is why the shipped build puts them in their own artifact.
      */
     val skeletons: Property<Boolean> = flag(LocaleFeature.DATETIME_SKELETONS)
+
+    /**
+     * Stand-alone month, weekday and quarter names: `červenec` where a date
+     * would read `července`.
+     *
+     * Twelve thousand characters across every locale, because the table stores
+     * only where a locale differs from its format names and 838 of them do not.
+     */
+    val standalone: Property<Boolean> = flag(LocaleFeature.DATETIME_STANDALONE)
 }

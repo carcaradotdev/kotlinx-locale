@@ -39,7 +39,22 @@ public interface DateTimeFormatSource : LocaleDataSource {
 
     public fun monthNameOrNull(month: Int, style: TextStyle, locale: Locale): String?
 
+    /**
+     * The month name in [context], or `null` when this source has none.
+     *
+     * Defaulted to the format names, which is what a source with no stand-alone
+     * table should answer and what CLDR root's own alias says for every locale
+     * that declares no stand-alone form of its own. Defaulted rather than
+     * abstract so that adding the axis breaks no implementor.
+     */
+    public fun monthNameOrNull(month: Int, style: TextStyle, context: NameContext, locale: Locale): String? =
+        monthNameOrNull(month, style, locale)
+
     public fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, locale: Locale): String?
+
+    /** The weekday name in [context]; see [monthNameOrNull]. */
+    public fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, context: NameContext, locale: Locale): String? =
+        dayOfWeekNameOrNull(isoDayNumber, style, locale)
 }
 
 /**
@@ -61,6 +76,14 @@ public fun DateTimeFormatSource.format(time: LocalTime, style: FormatStyle, loca
 /** [dateTime] written for [locale]; falls back to ISO 8601. */
 public fun DateTimeFormatSource.format(dateTime: LocalDateTime, dateStyle: FormatStyle, timeStyle: FormatStyle, locale: Locale): String =
     formatDateTimeOrNull(dateTime, dateStyle, timeStyle, locale) ?: dateTime.toString()
+
+/** The name of [month] in [locale] and [context]; falls back to the English enum name. */
+public fun DateTimeFormatSource.displayName(month: Month, style: TextStyle, context: NameContext, locale: Locale): String =
+    monthNameOrNull(month.number, style, context, locale) ?: month.name
+
+/** The name of [dayOfWeek] in [locale] and [context]; falls back to the English enum name. */
+public fun DateTimeFormatSource.displayName(dayOfWeek: DayOfWeek, style: TextStyle, context: NameContext, locale: Locale): String =
+    dayOfWeekNameOrNull(dayOfWeek.isoDayNumber, style, context, locale) ?: dayOfWeek.name
 
 /** The name of [month] in [locale]; falls back to the English enum name. */
 public fun DateTimeFormatSource.displayName(month: Month, style: TextStyle, locale: Locale): String =
@@ -89,6 +112,13 @@ public class FallbackDateTimeFormats(private val primary: DateTimeFormatSource, 
 
     override fun monthNameOrNull(month: Int, style: TextStyle, locale: Locale): String? =
         primary.monthNameOrNull(month, style, locale) ?: fallback.monthNameOrNull(month, style, locale)
+
+    override fun monthNameOrNull(month: Int, style: TextStyle, context: NameContext, locale: Locale): String? =
+        primary.monthNameOrNull(month, style, context, locale) ?: fallback.monthNameOrNull(month, style, context, locale)
+
+    override fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, context: NameContext, locale: Locale): String? =
+        primary.dayOfWeekNameOrNull(isoDayNumber, style, context, locale)
+            ?: fallback.dayOfWeekNameOrNull(isoDayNumber, style, context, locale)
 
     override fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, locale: Locale): String? =
         primary.dayOfWeekNameOrNull(isoDayNumber, style, locale)

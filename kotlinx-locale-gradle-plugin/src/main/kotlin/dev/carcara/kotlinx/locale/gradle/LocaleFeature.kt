@@ -62,6 +62,18 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
     ),
 
     /**
+     * Stand-alone month, weekday and quarter names.
+     *
+     * Includes the pattern table it reads the format names from, since a
+     * stand-alone table stores only the differences.
+     */
+    DATETIME_STANDALONE(
+        dslName = "datetime.standalone",
+        tables = setOf(GeneratedTable.DATE_TIME, GeneratedTable.DATE_TIME_STANDALONE),
+        bindings = setOf(GeneratedBinding.DATE_TIME),
+    ),
+
+    /**
      * Number symbols and the plain decimal and percent patterns.
      *
      * Includes the plural table, because the source object that carries the

@@ -3,7 +3,7 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_WAE: String =
-    "Epoča\u001EJár\u001EQuarter\u001EMánet\u001E\u001E\u001EWučetag\u001ETag\u001E\u001E\u001EAM/PM\u001ESchtund\u001EMínütta\u001ESekunda\u001E\u001E\u001F1. quartal\u001E2. quartal\u001E3. quartal\u001E4. quartal\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Epoča\u001EJár\u001EQuarter\u001EMánet\u001E\u001E\u001EWučetag\u001ETag\u001E\u001E\u001EAM/PM\u001ESchtund\u001EMínütta\u001ESekunda\u001E\u001E\u001F1. quartal\u001E2. quartal\u001E3. quartal\u001E4. quartal\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. quartal\u001E2. quartal\u001E3. quartal\u001E4. quartal"
 
 internal val SKELETON_NAMES_WO: String =
-    "jamono\u001Eat\u001Eñeenti-weer\u001Eweer\u001E\u001E\u001Ebisu ayu-bis\u001Efan\u001E\u001E\u001ESub/Ngo\u001Ewaxt\u001Esimili\u001Esaa\u001E\u001E\u001F1er Trimestar\u001E2e Trimestar\u001E3e Trimestar\u001E4e Trimestar\u001F1er Tri\u001E2e Tri\u001E3e Tri\u001E4e Tri\u001FH\u001EH\u001F{1} 'ci' {0}\u001E{1} 'ci' {0}\u001E{1} - {0}\u001E{1} - {0}"
+    "jamono\u001Eat\u001Eñeenti-weer\u001Eweer\u001E\u001E\u001Ebisu ayu-bis\u001Efan\u001E\u001E\u001ESub/Ngo\u001Ewaxt\u001Esimili\u001Esaa\u001E\u001E\u001F1er Trimestar\u001E2e Trimestar\u001E3e Trimestar\u001E4e Trimestar\u001F1er Tri\u001E2e Tri\u001E3e Tri\u001E4e Tri\u001FH\u001EH\u001F{1} 'ci' {0}\u001E{1} 'ci' {0}\u001E{1} - {0}\u001E{1} - {0}\u001F\u001F1er Trimestar\u001E2e Trimestar\u001E3e Trimestar\u001E4e Trimestar"

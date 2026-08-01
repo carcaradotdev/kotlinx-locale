@@ -3,22 +3,22 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_OC: String =
-    "èra\u001Eannada\u001Etrimèstre\u001Emes\u001E\u001E\u001Ejorn de la setmana\u001Ejorn\u001E\u001E\u001Edel matin/del vèspre\u001Eora\u001Eminuta\u001Esegonda\u001E\u001E\u001F1èr trimèstre\u001E2nd trimèstre\u001E3en trimèstre\u001E4en trimèstre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} 'a' {0}\u001E{1} 'a' {0}\u001E{1} 'a' {0}\u001E{1} 'a' {0}"
+    "èra\u001Eannada\u001Etrimèstre\u001Emes\u001E\u001E\u001Ejorn de la setmana\u001Ejorn\u001E\u001E\u001Edel matin/del vèspre\u001Eora\u001Eminuta\u001Esegonda\u001E\u001E\u001F1èr trimèstre\u001E2nd trimèstre\u001E3en trimèstre\u001E4en trimèstre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} 'a' {0}\u001E{1} 'a' {0}\u001E{1} 'a' {0}\u001E{1} 'a' {0}\u001F\u001F1èr trimèstre\u001E2nd trimèstre\u001E3en trimèstre\u001E4en trimèstre"
 
 internal val SKELETON_NAMES_OC_ES: String =
-    "èra\u001Ean\u001Etrimèstre\u001Emes\u001E\u001E\u001Edia dera setmana\u001Edia\u001E\u001E\u001Edeth maitin/deth vèspre\u001Eora\u001Eminuta\u001Esegon\u001E\u001E\u001F1èr trimèstre\u001E2au trimèstre\u001E3au trimèstre\u001E4au trimèstre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1} 'a' {0}\u001E{1} 'a' {0}"
+    "èra\u001Ean\u001Etrimèstre\u001Emes\u001E\u001E\u001Edia dera setmana\u001Edia\u001E\u001E\u001Edeth maitin/deth vèspre\u001Eora\u001Eminuta\u001Esegon\u001E\u001E\u001F1èr trimèstre\u001E2au trimèstre\u001E3au trimèstre\u001E4au trimèstre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1} 'a' {0}\u001E{1} 'a' {0}\u001F\u001F1èr trimèstre\u001E2au trimèstre\u001E3au trimèstre\u001E4au trimèstre"
 
 internal val SKELETON_NAMES_OM: String =
-    "bara\u001Ewaggaa\u001Ekurmaana\u001Eji’a\u001E\u001E\u001Eguyyaa kan torbee\u001Eguyyaa\u001E\u001E\u001EWD/WB\u001Esa’aatii\u001Edaqiiqaa\u001Esekoondii\u001E\u001E\u001FKurmaana 1ffaa\u001EKurmaana 2ffaa\u001EKurmaana 3ffaa\u001EKurmaana 4ffaa\u001FK1\u001EK2\u001EK3\u001EK4\u001Fh\u001EhB\u001F{1} {0} 'tti'\u001E{1} {0} 'tti'\u001E{1}, {0}\u001E{1}, {0}"
+    "bara\u001Ewaggaa\u001Ekurmaana\u001Eji’a\u001E\u001E\u001Eguyyaa kan torbee\u001Eguyyaa\u001E\u001E\u001EWD/WB\u001Esa’aatii\u001Edaqiiqaa\u001Esekoondii\u001E\u001E\u001FKurmaana 1ffaa\u001EKurmaana 2ffaa\u001EKurmaana 3ffaa\u001EKurmaana 4ffaa\u001FK1\u001EK2\u001EK3\u001EK4\u001Fh\u001EhB\u001F{1} {0} 'tti'\u001E{1} {0} 'tti'\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FKurmaana 1ffaa\u001EKurmaana 2ffaa\u001EKurmaana 3ffaa\u001EKurmaana 4ffaa"
 
 internal val SKELETON_NAMES_OM_KE: String =
-    "bara\u001Ewaggaa\u001Ekurmaana\u001Eji’a\u001E\u001E\u001Eguyyaa kan torbee\u001Eguyyaa\u001E\u001E\u001EWD/WB\u001Esa’aatii\u001Edaqiiqaa\u001Esekoondii\u001E\u001E\u001FKurmaana 1ffaa\u001EKurmaana 2ffaa\u001EKurmaana 3ffaa\u001EKurmaana 4ffaa\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EhB\u001F{1} {0} 'tti'\u001E{1} {0} 'tti'\u001E{1}, {0}\u001E{1}, {0}"
+    "bara\u001Ewaggaa\u001Ekurmaana\u001Eji’a\u001E\u001E\u001Eguyyaa kan torbee\u001Eguyyaa\u001E\u001E\u001EWD/WB\u001Esa’aatii\u001Edaqiiqaa\u001Esekoondii\u001E\u001E\u001FKurmaana 1ffaa\u001EKurmaana 2ffaa\u001EKurmaana 3ffaa\u001EKurmaana 4ffaa\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EhB\u001F{1} {0} 'tti'\u001E{1} {0} 'tti'\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FKurmaana 1ffaa\u001EKurmaana 2ffaa\u001EKurmaana 3ffaa\u001EKurmaana 4ffaa"
 
 internal val SKELETON_NAMES_OR: String =
-    "ଯୁଗ\u001Eବର୍ଷ\u001Eତ୍ରୟମାସ\u001Eମାସ\u001E\u001E\u001Eସ. ର ଦିନ\u001Eଦିନ\u001E\u001E\u001EAM/PM\u001Eଘଣ୍ଟା\u001Eମିନିଟ୍\u001Eସେକେଣ୍ଡ୍\u001E\u001E\u001F1ମ ତ୍ରୟମାସ\u001E2ୟ ତ୍ରୟମାସ\u001E3ୟ ତ୍ରୟମାସ\u001E4ର୍ଥ ତ୍ରୟମାସ\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{0} ଠାରେ {1}\u001E{0} ଠାରେ {1}\u001E{1}, {0}\u001E{1}, {0}"
+    "ଯୁଗ\u001Eବର୍ଷ\u001Eତ୍ରୟମାସ\u001Eମାସ\u001E\u001E\u001Eସ. ର ଦିନ\u001Eଦିନ\u001E\u001E\u001EAM/PM\u001Eଘଣ୍ଟା\u001Eମିନିଟ୍\u001Eସେକେଣ୍ଡ୍\u001E\u001E\u001F1ମ ତ୍ରୟମାସ\u001E2ୟ ତ୍ରୟମାସ\u001E3ୟ ତ୍ରୟମାସ\u001E4ର୍ଥ ତ୍ରୟମାସ\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{0} ଠାରେ {1}\u001E{0} ଠାରେ {1}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1ମ ତ୍ରୟମାସ\u001E2ୟ ତ୍ରୟମାସ\u001EQ3\u001EQ4"
 
 internal val SKELETON_NAMES_OS: String =
-    "Дуг\u001EАз\u001Eквартал\u001EМӕй\u001E\u001E\u001EКъуырийы бон\u001EБон\u001E\u001E\u001EБоны период\u001EСахат\u001EМинут\u001EСекунд\u001E\u001E\u001F1-аг квартал\u001E2-аг квартал\u001E3-аг квартал\u001E4-ӕм квартал\u001F1-аг кв.\u001E2-аг кв.\u001E3-аг кв.\u001E4-ӕм кв.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "Дуг\u001EАз\u001Eквартал\u001EМӕй\u001E\u001E\u001EКъуырийы бон\u001EБон\u001E\u001E\u001EБоны период\u001EСахат\u001EМинут\u001EСекунд\u001E\u001E\u001F1-аг квартал\u001E2-аг квартал\u001E3-аг квартал\u001E4-ӕм квартал\u001F1-аг кв.\u001E2-аг кв.\u001E3-аг кв.\u001E4-ӕм кв.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1-аг квартал\u001E2-аг квартал\u001E3-аг квартал\u001E4-ӕм квартал"
 
 internal val SKELETON_NAMES_OSA: String =
-    "Era\u001E𐓂𐓨𐓚𐓤𐓘\u001EQuarter\u001E𐓀𐓣͘𐓪͘𐓬𐓘\u001E\u001E\u001EDay of the Week\u001E𐒹𐓘͘𐓬𐓘\u001E\u001E\u001EDayperiod\u001E𐓨𐓣𐓪𐓵𐓘𐓤𐓟 𐓪𐓰𐓘𐓩𐓘͘\u001E𐓰𐓘𐓲𐓟 𐓤𐓯𐓣𐓵𐓟\u001E𐓰𐓘𐓲𐓟 𐓤𐓯𐓣𐓵𐓟 𐓻𐓣͘\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Era\u001E𐓂𐓨𐓚𐓤𐓘\u001EQuarter\u001E𐓀𐓣͘𐓪͘𐓬𐓘\u001E\u001E\u001EDay of the Week\u001E𐒹𐓘͘𐓬𐓘\u001E\u001E\u001EDayperiod\u001E𐓨𐓣𐓪𐓵𐓘𐓤𐓟 𐓪𐓰𐓘𐓩𐓘͘\u001E𐓰𐓘𐓲𐓟 𐓤𐓯𐓣𐓵𐓟\u001E𐓰𐓘𐓲𐓟 𐓤𐓯𐓣𐓵𐓟 𐓻𐓣͘\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"

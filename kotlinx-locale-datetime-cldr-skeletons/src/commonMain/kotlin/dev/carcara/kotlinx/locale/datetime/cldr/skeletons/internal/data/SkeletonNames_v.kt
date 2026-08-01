@@ -3,19 +3,19 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_VAI: String =
-    "Era\u001Eꕢꘋ\u001EQuarter\u001Eꕪꖃ\u001E\u001E\u001Eꔨꕃꕮ ꔎꔒ\u001Eꔎꔒ\u001E\u001E\u001EDayperiod\u001Eꕌꕎ\u001Eꕆꕇ\u001Eꕧꕃꕧꕪ\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Era\u001Eꕢꘋ\u001EQuarter\u001Eꕪꖃ\u001E\u001E\u001Eꔨꕃꕮ ꔎꔒ\u001Eꔎꔒ\u001E\u001E\u001EDayperiod\u001Eꕌꕎ\u001Eꕆꕇ\u001Eꕧꕃꕧꕪ\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_VAI_LATN: String =
-    "Era\u001Esaŋ\u001EQuarter\u001Ekalo\u001E\u001E\u001Ewikiyɛma tele\u001Etele\u001E\u001E\u001EDayperiod\u001Ehawa\u001Emini\u001Ejaki-jaka\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Era\u001Esaŋ\u001EQuarter\u001Ekalo\u001E\u001E\u001Ewikiyɛma tele\u001Etele\u001E\u001E\u001EDayperiod\u001Ehawa\u001Emini\u001Ejaki-jaka\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_VE: String =
-    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001FKotara ya u thoma\u001EKotara ya vhuvhili\u001EKotara ya vhuraru\u001EKotara ya vhuṋa\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001FKotara ya u thoma\u001EKotara ya vhuvhili\u001EKotara ya vhuraru\u001EKotara ya vhuṋa\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FKotara ya u thoma\u001EKotara ya vhuvhili\u001EKotara ya vhuraru\u001EKotara ya vhuṋa"
 
 internal val SKELETON_NAMES_VEC: String =
-    "era\u001Eano\u001Etrimestre\u001Emeze\u001E\u001E\u001Edì de la setemana\u001Edì\u001E\u001E\u001EAM/PM\u001Eora\u001Emenuto\u001Esegondo\u001E\u001E\u001F1º trimestre\u001E2º trimestre\u001E3º trimestre\u001E4º trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "era\u001Eano\u001Etrimestre\u001Emeze\u001E\u001E\u001Edì de la setemana\u001Edì\u001E\u001E\u001EAM/PM\u001Eora\u001Emenuto\u001Esegondo\u001E\u001E\u001F1º trimestre\u001E2º trimestre\u001E3º trimestre\u001E4º trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1º trimestre\u001E2º trimestre\u001E3º trimestre\u001E4º trimestre"
 
 internal val SKELETON_NAMES_VI: String =
-    "thời đại\u001ENăm\u001EQuý\u001ETháng\u001E\u001E\u001Engày trong tuần\u001ENgày\u001E\u001E\u001ESA/CH\u001EGiờ\u001EPhút\u001EGiây\u001E\u001E\u001FQuý 1\u001EQuý 2\u001EQuý 3\u001EQuý 4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F'lúc' {0} {1}\u001E'lúc' {0} {1}\u001E{0} {1}\u001E{0} {1}"
+    "thời đại\u001ENăm\u001EQuý\u001ETháng\u001E\u001E\u001Engày trong tuần\u001ENgày\u001E\u001E\u001ESA/CH\u001EGiờ\u001EPhút\u001EGiây\u001E\u001E\u001FQuý 1\u001EQuý 2\u001EQuý 3\u001EQuý 4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F'lúc' {0} {1}\u001E'lúc' {0} {1}\u001E{0} {1}\u001E{0} {1}\u001Fquý 1\u001Equý 2\u001Equý 3\u001Equý 4\u001Fquý 1\u001Equý 2\u001Equý 3\u001Equý 4"
 
 internal val SKELETON_NAMES_VO: String =
-    "Epoche\u001Eyel\u001EQuarter\u001Emul\u001E\u001E\u001Evodabel\u001ETag\u001E\u001E\u001Edelalaf\u001Edüp\u001Eminut\u001Esekun\u001E\u001E\u001F1id yelafoldil\u001E2id yelafoldil\u001E3id yelafoldil\u001E4id yelafoldil\u001FYf1\u001EYf2\u001EYf3\u001EYf4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Epoche\u001Eyel\u001EQuarter\u001Emul\u001E\u001E\u001Evodabel\u001ETag\u001E\u001E\u001Edelalaf\u001Edüp\u001Eminut\u001Esekun\u001E\u001E\u001F1id yelafoldil\u001E2id yelafoldil\u001E3id yelafoldil\u001E4id yelafoldil\u001FYf1\u001EYf2\u001EYf3\u001EYf4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1id yelafoldil\u001E2id yelafoldil\u001E3id yelafoldil\u001E4id yelafoldil"

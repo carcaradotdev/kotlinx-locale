@@ -6,8 +6,10 @@ import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource
 import dev.carcara.kotlinx.locale.datetime.FormatStyle
+import dev.carcara.kotlinx.locale.datetime.NameContext
 import dev.carcara.kotlinx.locale.datetime.TextStyle
 import dev.carcara.kotlinx.locale.datetime.cldr.internal.data.localeDataRegistry
+import dev.carcara.kotlinx.locale.datetime.cldr.internal.data.localeStandaloneRegistry
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.PayloadDateTimeFormats
 import dev.carcara.kotlinx.locale.datetime.displayName
 import dev.carcara.kotlinx.locale.datetime.format
@@ -23,7 +25,8 @@ import kotlinx.datetime.Month
  * The parser and formatter live in `kotlinx-locale-datetime-cldr-runtime`; all
  * this object contributes is the table.
  */
-public object CldrDateTime : DateTimeFormatSource by PayloadDateTimeFormats(localeDataRegistry) {
+public object CldrDateTime :
+    DateTimeFormatSource by PayloadDateTimeFormats(localeDataRegistry, localeStandaloneRegistry) {
 
     /**
      * The pattern table itself, for an engine layered over this one.
@@ -72,3 +75,16 @@ public fun Month.displayName(style: TextStyle, locale: Locale): String = CldrDat
 /** The localized name of this day of week in the "format" context, e.g. `segunda-feira`. */
 public fun DayOfWeek.displayName(style: TextStyle, locale: Locale): String =
     CldrDateTime.displayName(this, style, locale)
+
+/**
+ * The localized name of this month in [context].
+ *
+ * [NameContext.STANDALONE] is what a calendar header or a month picker
+ * wants: Czech July is `červenec` alone and `července` inside a date.
+ */
+public fun Month.displayName(style: TextStyle, context: NameContext, locale: Locale): String =
+    CldrDateTime.displayName(this, style, context, locale)
+
+/** The localized name of this day of week in [context]; see [Month.displayName]. */
+public fun DayOfWeek.displayName(style: TextStyle, context: NameContext, locale: Locale): String =
+    CldrDateTime.displayName(this, style, context, locale)

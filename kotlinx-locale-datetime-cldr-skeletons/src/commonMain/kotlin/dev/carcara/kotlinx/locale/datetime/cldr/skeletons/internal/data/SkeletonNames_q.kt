@@ -3,4 +3,4 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_QU: String =
-    "Era\u001Ewata\u001Etrimestral nisqa\u001Ekilla\u001E\u001E\u001Esimanamanta punchaw\u001Epunchaw\u001E\u001E\u001Ea. m. / p. m.\u001Eura\u001Eminutu\u001Esegundu\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "Era\u001Ewata\u001Etrimestral nisqa\u001Ekilla\u001E\u001E\u001Esimanamanta punchaw\u001Epunchaw\u001E\u001E\u001Ea. m. / p. m.\u001Eura\u001Eminutu\u001Esegundu\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"
