@@ -1,5 +1,6 @@
 package dev.carcara.kotlinx.locale.language
 
+import dev.carcara.kotlinx.locale.Capitalization
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.LocaleDataSource
 
@@ -71,7 +72,21 @@ public interface LanguageNameSource : LocaleDataSource {
 
     /** The composition patterns for [locale], or `null` when this source has none. */
     public fun displayPatternsOrNull(locale: Locale): LocaleDisplayPatterns?
+
+    /**
+     * [name] capitalized the way [locale] capitalizes a name of [usage] shown in
+     * [capitalization], which for most locales is [name] unchanged.
+     *
+     * CLDR stores a language name as the language writes it in running text,
+     * which is lower case in many. Whether a picker row shows `Čeština` or
+     * `čeština` is a property of the language and CLDR records it, so it is a
+     * lookup rather than a call to uppercase the first letter.
+     */
+    public fun capitalized(name: String, usage: LanguageNameUsage, capitalization: Capitalization, locale: Locale): String = name
 }
+
+/** Which kind of name is being capitalized; CLDR records the answer per usage. */
+public enum class LanguageNameUsage { LANGUAGE, SCRIPT, TERRITORY }
 
 /** Answers from [primary], and from [fallback] wherever primary has nothing. */
 public class FallbackLanguageNames(private val primary: LanguageNameSource, private val fallback: LanguageNameSource) :
@@ -90,4 +105,7 @@ public class FallbackLanguageNames(private val primary: LanguageNameSource, priv
 
     override fun displayPatternsOrNull(locale: Locale): LocaleDisplayPatterns? =
         primary.displayPatternsOrNull(locale) ?: fallback.displayPatternsOrNull(locale)
+
+    override fun capitalized(name: String, usage: LanguageNameUsage, capitalization: Capitalization, locale: Locale): String =
+        primary.capitalized(name, usage, capitalization, locale)
 }

@@ -1,3 +1,16 @@
+public final class dev/carcara/kotlinx/locale/Capitalization : java/lang/Enum {
+	public static final field MIDDLE_OF_SENTENCE Ldev/carcara/kotlinx/locale/Capitalization;
+	public static final field STANDALONE Ldev/carcara/kotlinx/locale/Capitalization;
+	public static final field UI_LIST_OR_MENU Ldev/carcara/kotlinx/locale/Capitalization;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/Capitalization;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/Capitalization;
+}
+
+public final class dev/carcara/kotlinx/locale/CapitalizationKt {
+	public static final fun titlecaseFirstWord (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+}
+
 public abstract interface annotation class dev/carcara/kotlinx/locale/InternalKotlinxLocaleApi : java/lang/annotation/Annotation {
 }
 

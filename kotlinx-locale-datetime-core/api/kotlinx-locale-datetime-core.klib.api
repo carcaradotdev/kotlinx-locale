@@ -6,6 +6,20 @@
 // - Show declarations: true
 
 // Library unique name: <dev.carcara:kotlinx-locale-datetime-core>
+final enum class dev.carcara.kotlinx.locale.datetime/CalendarNameUsage : kotlin/Enum<dev.carcara.kotlinx.locale.datetime/CalendarNameUsage> { // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage|null[0]
+    enum entry DAY_FORMAT // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage.DAY_FORMAT|null[0]
+    enum entry DAY_STANDALONE // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage.DAY_STANDALONE|null[0]
+    enum entry MONTH_FORMAT // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage.MONTH_FORMAT|null[0]
+    enum entry MONTH_STANDALONE // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage.MONTH_STANDALONE|null[0]
+    enum entry RELATIVE // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage.RELATIVE|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.datetime/CalendarNameUsage> // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.datetime/CalendarNameUsage // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.datetime/CalendarNameUsage> // dev.carcara.kotlinx.locale.datetime/CalendarNameUsage.values|values#static(){}[0]
+}
+
 final enum class dev.carcara.kotlinx.locale.datetime/FormatStyle : kotlin/Enum<dev.carcara.kotlinx.locale.datetime/FormatStyle> { // dev.carcara.kotlinx.locale.datetime/FormatStyle|null[0]
     enum entry FULL // dev.carcara.kotlinx.locale.datetime/FormatStyle.FULL|null[0]
     enum entry LONG // dev.carcara.kotlinx.locale.datetime/FormatStyle.LONG|null[0]
@@ -80,6 +94,10 @@ final enum class dev.carcara.kotlinx.locale.datetime/TextStyle : kotlin/Enum<dev
 
     final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.datetime/TextStyle // dev.carcara.kotlinx.locale.datetime/TextStyle.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.datetime/TextStyle> // dev.carcara.kotlinx.locale.datetime/TextStyle.values|values#static(){}[0]
+}
+
+abstract interface dev.carcara.kotlinx.locale.datetime/CalendarCapitalizationSource { // dev.carcara.kotlinx.locale.datetime/CalendarCapitalizationSource|null[0]
+    open fun capitalized(kotlin/String, dev.carcara.kotlinx.locale.datetime/CalendarNameUsage, dev.carcara.kotlinx.locale/Capitalization, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.datetime/CalendarCapitalizationSource.capitalized|capitalized(kotlin.String;dev.carcara.kotlinx.locale.datetime.CalendarNameUsage;dev.carcara.kotlinx.locale.Capitalization;dev.carcara.kotlinx.locale.Locale){}[0]
 }
 
 abstract interface dev.carcara.kotlinx.locale.datetime/DateTimeFormatSource : dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale.datetime/DateTimeFormatSource|null[0]

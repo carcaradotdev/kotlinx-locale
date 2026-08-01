@@ -1,5 +1,6 @@
 public final class dev/carcara/kotlinx/locale/language/cldr/CldrLanguage : dev/carcara/kotlinx/locale/language/LanguageNameSource {
 	public static final field INSTANCE Ldev/carcara/kotlinx/locale/language/cldr/CldrLanguage;
+	public fun capitalized (Ljava/lang/String;Ldev/carcara/kotlinx/locale/language/LanguageNameUsage;Ldev/carcara/kotlinx/locale/Capitalization;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun displayPatternsOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/language/LocaleDisplayPatterns;
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public fun languageNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;

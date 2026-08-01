@@ -432,11 +432,14 @@ private fun sameAsFormat(standalone: List<String>, format: List<String>): String
  * The stand-alone calendar names for one locale: six lists, each empty where the
  * locale writes it the same as its format counterpart.
  */
-fun ResolvedLocaleData.encodeStandalone(): String = listOf(
+fun ResolvedLocaleData.encodeStandalone(capitalization: Int = 0): String = listOf(
     sameAsFormat(monthsStandaloneWide, monthsWide),
     sameAsFormat(monthsStandaloneAbbr, monthsAbbr),
     sameAsFormat(monthsStandaloneNarrow, monthsNarrow),
     sameAsFormat(daysStandaloneWide, daysWide),
     sameAsFormat(daysStandaloneAbbr, daysAbbr),
     sameAsFormat(daysStandaloneNarrow, daysNarrow),
+    // One number for the whole locale, appended so a record written before it
+    // existed still decodes.
+    capitalization.toString(16),
 ).joinToString(FIELD_SEPARATOR)

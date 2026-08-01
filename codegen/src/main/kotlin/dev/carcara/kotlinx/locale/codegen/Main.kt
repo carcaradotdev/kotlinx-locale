@@ -174,13 +174,9 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         if (unnamed.isNotEmpty()) dayPeriodGaps[id] = unnamed
         return resolved.encode()
     }
-    val dateTimeStandalone = LinkedHashMap<String, String>()
     dateTime["root"] = encodeChecked("root") // final runtime fallback
-    dateTimeStandalone["root"] = flattener.resolve("root").encodeStandalone()
     for (id in flattener.localeIds) {
-        val tag = canonicalTag(id)
-        dateTime[tag] = encodeChecked(id)
-        dateTimeStandalone[tag] = flattener.resolve(id).encodeStandalone()
+        dateTime[canonicalTag(id)] = encodeChecked(id)
     }
 
     val skeletonFormats = LinkedHashMap<String, String>()
@@ -232,6 +228,14 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
     val relativeTime = LinkedHashMap<String, String>()
     for (id in listOf("root") + flattener.localeIds) {
         relativeTime[canonicalTag(id)] = flattener.resolveRelativeTime(id, ::relativeFor).encode()
+    }
+
+    // After the extras resolver, because the capitalization bits ride along with
+    // the stand-alone names and come from the same files.
+    val dateTimeStandalone = LinkedHashMap<String, String>()
+    for (id in listOf("root") + flattener.localeIds) {
+        dateTimeStandalone[canonicalTag(id)] =
+            flattener.resolve(id).encodeStandalone(extras.resolveCapitalization(id))
     }
 
     val zoneCache = HashMap<String, PartialTimeZoneNames>()

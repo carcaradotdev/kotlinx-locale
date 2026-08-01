@@ -3,13 +3,13 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
 internal val LOCALE_STANDALONE_ZGH: String =
-    "\u001Fⵉⵏⵏⴰⵢⵔ\u001Eⴱⵕⴰⵢⵕ\u001Eⵎⴰⵕⵚ\u001Eⵉⴱⵔⵉⵔ\u001Eⵎⴰⵢⵢⵓ\u001Eⵢⵓⵏⵢⵓ\u001Eⵢⵓⵍⵢⵓⵣ\u001Eⵖⵓⵛⵜ\u001Eⵛⵓⵜⴰⵏⴱⵉⵔ\u001Eⴽⵜⵓⴱⵔ\u001Eⵏⵓⵡⴰⵏⴱⵉⵔ\u001Eⴷⵓⵊⴰⵏⴱⵉⵔ\u001F\u001F\u001Fⴰⵢⵏⴰⵙ\u001Eⴰⵙⵉⵏⴰⵙ\u001Eⴰⴽⵕⴰⵙ\u001Eⴰⴽⵡⴰⵙ\u001Eⴰⵙⵉⵎⵡⴰⵙ\u001Eⴰⵙⵉⴹⵢⴰⵙ\u001Eⴰⵙⴰⵎⴰⵙ\u001F"
+    "\u001Fⵉⵏⵏⴰⵢⵔ\u001Eⴱⵕⴰⵢⵕ\u001Eⵎⴰⵕⵚ\u001Eⵉⴱⵔⵉⵔ\u001Eⵎⴰⵢⵢⵓ\u001Eⵢⵓⵏⵢⵓ\u001Eⵢⵓⵍⵢⵓⵣ\u001Eⵖⵓⵛⵜ\u001Eⵛⵓⵜⴰⵏⴱⵉⵔ\u001Eⴽⵜⵓⴱⵔ\u001Eⵏⵓⵡⴰⵏⴱⵉⵔ\u001Eⴷⵓⵊⴰⵏⴱⵉⵔ\u001F\u001F\u001Fⴰⵢⵏⴰⵙ\u001Eⴰⵙⵉⵏⴰⵙ\u001Eⴰⴽⵕⴰⵙ\u001Eⴰⴽⵡⴰⵙ\u001Eⴰⵙⵉⵎⵡⴰⵙ\u001Eⴰⵙⵉⴹⵢⴰⵙ\u001Eⴰⵙⴰⵎⴰⵙ\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_ZH: String =
-    "\u001F一月\u001E二月\u001E三月\u001E四月\u001E五月\u001E六月\u001E七月\u001E八月\u001E九月\u001E十月\u001E十一月\u001E十二月\u001F\u001F\u001F星期一\u001E星期二\u001E星期三\u001E星期四\u001E星期五\u001E星期六\u001E星期日\u001F"
+    "\u001F一月\u001E二月\u001E三月\u001E四月\u001E五月\u001E六月\u001E七月\u001E八月\u001E九月\u001E十月\u001E十一月\u001E十二月\u001F\u001F\u001F星期一\u001E星期二\u001E星期三\u001E星期四\u001E星期五\u001E星期六\u001E星期日\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_ZH_HANT: String =
-    "\u001F\u001F\u001F\u001F星期一\u001E星期二\u001E星期三\u001E星期四\u001E星期五\u001E星期六\u001E星期日\u001F"
+    "\u001F\u001F\u001F\u001F星期一\u001E星期二\u001E星期三\u001E星期四\u001E星期五\u001E星期六\u001E星期日\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_ZU: String =
-    "\u001FJanuwari\u001EFebruwari\u001EMashi\u001EEphreli\u001EMeyi\u001EJuni\u001EJulayi\u001EAgasti\u001ESepthemba\u001EOkthoba\u001ENovemba\u001EDisemba\u001FJ\u001EF\u001EM\u001EA\u001EM\u001EJ\u001EJ\u001EA\u001ES\u001EO\u001EN\u001ED\u001F\u001FUMsombuluko\u001EULwesibili\u001EULwesithathu\u001EULwesine\u001EULwesihlanu\u001EUMgqibelo\u001EISonto\u001F"
+    "\u001FJanuwari\u001EFebruwari\u001EMashi\u001EEphreli\u001EMeyi\u001EJuni\u001EJulayi\u001EAgasti\u001ESepthemba\u001EOkthoba\u001ENovemba\u001EDisemba\u001FJ\u001EF\u001EM\u001EA\u001EM\u001EJ\u001EJ\u001EA\u001ES\u001EO\u001EN\u001ED\u001F\u001FUMsombuluko\u001EULwesibili\u001EULwesithathu\u001EULwesine\u001EULwesihlanu\u001EUMgqibelo\u001EISonto\u001F\u001F0"

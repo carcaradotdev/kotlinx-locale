@@ -2,8 +2,11 @@
 
 package dev.carcara.kotlinx.locale.datetime.cldr.runtime
 
+import dev.carcara.kotlinx.locale.Capitalization
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
+import dev.carcara.kotlinx.locale.datetime.CalendarCapitalizationSource
+import dev.carcara.kotlinx.locale.datetime.CalendarNameUsage
 import dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource
 import dev.carcara.kotlinx.locale.datetime.FormatStyle
 import dev.carcara.kotlinx.locale.datetime.NameContext
@@ -11,6 +14,7 @@ import dev.carcara.kotlinx.locale.datetime.TextStyle
 import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.resolvedRecord
 import dev.carcara.kotlinx.locale.internal.supportedLocalesOf
+import dev.carcara.kotlinx.locale.titlecaseFirstWord
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -41,7 +45,8 @@ public class PayloadDateTimeFormats(
      * that declare no stand-alone form.
      */
     private val standaloneRecords: Map<String, String> = emptyMap(),
-) : DateTimeFormatSource {
+) : DateTimeFormatSource,
+    CalendarCapitalizationSource {
 
     override val supportedLocales: Set<Locale> by lazy {
         supportedLocalesOf(records)
@@ -113,6 +118,14 @@ public class PayloadDateTimeFormats(
         return data.dayOfWeek(index, style, context)
     }
 
+    override fun capitalized(name: String, usage: CalendarNameUsage, capitalization: Capitalization, locale: Locale): String {
+        if (name.isEmpty() || capitalization == Capitalization.MIDDLE_OF_SENTENCE) return name
+        val bit = usage.ordinal * 2 + if (capitalization == Capitalization.STANDALONE) 0 else 1
+        val bits = recordFor(locale)?.capitalizationBits ?: return name
+        if ((bits shr bit) and 1 == 0) return name
+        return titlecaseFirstWord(name, locale.language)
+    }
+
     private fun recordFor(locale: Locale): DateTimeRecord? = resolvedRecord(records, locale)
         ?.let { DateTimeRecord(it, resolvedRecord(standaloneRecords, locale)) }
 }
@@ -166,6 +179,15 @@ public class DateTimeRecord(record: String, standaloneRecord: String? = null) {
 
     private fun standaloneOr(field: Int, format: List<String>): List<String> =
         standalone.getOrNull(field)?.takeIf(String::isNotEmpty)?.split(LIST_SEPARATOR) ?: format
+
+    /**
+     * CLDR's `contextTransforms` for this locale, two bits per usage.
+     *
+     * Zero where the locale declares none, which is not the same as "capitalize
+     * anyway": 252 locales write lower-case month names and declare no
+     * transform, and they mean it.
+     */
+    public val capitalizationBits: Int = standalone.getOrNull(6)?.toIntOrNull(16) ?: 0
 
     /** The month at [index] in [style] and [context]. */
     public fun month(index: Int, style: TextStyle, context: NameContext): String {

@@ -3,4 +3,4 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
 internal val LOCALE_STANDALONE_QU: String =
-    "\u001FEnero\u001EFebrero\u001EMarzo\u001EAbril\u001EMayo\u001EJunio\u001EJulio\u001EAgosto\u001ESetiembre\u001EOctubre\u001ENoviembre\u001EDiciembre\u001F\u001F\u001FLunes\u001EMartes\u001EMiércoles\u001EJueves\u001EViernes\u001ESábado\u001EDomingo\u001F"
+    "\u001FEnero\u001EFebrero\u001EMarzo\u001EAbril\u001EMayo\u001EJunio\u001EJulio\u001EAgosto\u001ESetiembre\u001EOctubre\u001ENoviembre\u001EDiciembre\u001F\u001F\u001FLunes\u001EMartes\u001EMiércoles\u001EJueves\u001EViernes\u001ESábado\u001EDomingo\u001F\u001F0"

@@ -3,37 +3,37 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
 internal val LOCALE_STANDALONE_CA: String =
-    "gener\u001Efebrer\u001Emarç\u001Eabril\u001Emaig\u001Ejuny\u001Ejuliol\u001Eagost\u001Esetembre\u001Eoctubre\u001Enovembre\u001Edesembre\u001Fgen.\u001Efebr.\u001Emarç\u001Eabr.\u001Emaig\u001Ejuny\u001Ejul.\u001Eag.\u001Eset.\u001Eoct.\u001Enov.\u001Edes.\u001F\u001F\u001Fdilluns\u001Edimarts\u001Edimecres\u001Edijous\u001Edivendres\u001Edissabte\u001Ediumenge\u001F"
+    "gener\u001Efebrer\u001Emarç\u001Eabril\u001Emaig\u001Ejuny\u001Ejuliol\u001Eagost\u001Esetembre\u001Eoctubre\u001Enovembre\u001Edesembre\u001Fgen.\u001Efebr.\u001Emarç\u001Eabr.\u001Emaig\u001Ejuny\u001Ejul.\u001Eag.\u001Eset.\u001Eoct.\u001Enov.\u001Edes.\u001F\u001F\u001Fdilluns\u001Edimarts\u001Edimecres\u001Edijous\u001Edivendres\u001Edissabte\u001Ediumenge\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CCH: String =
-    "\u001FPen Dyon\u001EPen Baʼa\u001EPen Atat\u001EPen Anas\u001EPen Atyon\u001EPen Achirim\u001EPen Atariba\u001EPen Awurr\u001EPen Shadon\u001EPen Shakur\u001EPen Kur Naba\u001EPen Kur Natat\u001F\u001F\u001FWai Tunga\u001EToki Gitung\u001ETsam Kasuwa\u001EWai Na Nas\u001EWai Na Tiyon\u001EWai Na Chirim\u001EWai Yoka Bawai\u001F"
+    "\u001FPen Dyon\u001EPen Baʼa\u001EPen Atat\u001EPen Anas\u001EPen Atyon\u001EPen Achirim\u001EPen Atariba\u001EPen Awurr\u001EPen Shadon\u001EPen Shakur\u001EPen Kur Naba\u001EPen Kur Natat\u001F\u001F\u001FWai Tunga\u001EToki Gitung\u001ETsam Kasuwa\u001EWai Na Nas\u001EWai Na Tiyon\u001EWai Na Chirim\u001EWai Yoka Bawai\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CCP: String =
-    "𑄎𑄚𑄪𑄠𑄢𑄨\u001E𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\u001E𑄟𑄢𑄴𑄌𑄧\u001E𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\u001E𑄟𑄬\u001E𑄎𑄪𑄚𑄴\u001E𑄎𑄪𑄣𑄭\u001E𑄃𑄉𑄧𑄌𑄴𑄑𑄴\u001E𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001E𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\u001E𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001E𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001F𑄎𑄚𑄪𑄠𑄢𑄨\u001E𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\u001E𑄟𑄢𑄴𑄌𑄧\u001E𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\u001E𑄟𑄬\u001E𑄎𑄪𑄚𑄴\u001E𑄎𑄪𑄣𑄭\u001E𑄃𑄉𑄧𑄌𑄴𑄑𑄴\u001E𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001E𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\u001E𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001E𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001F\u001F\u001F𑄥𑄧𑄟𑄴𑄝𑄢𑄴\u001E𑄟𑄧𑄁𑄉𑄧𑄣𑄴𑄝𑄢𑄴\u001E𑄝𑄪𑄖𑄴𑄝𑄢𑄴\u001E𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴𑄝𑄢𑄴\u001E𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴𑄝𑄢𑄴\u001E𑄥𑄧𑄚𑄨𑄝𑄢𑄴\u001E𑄢𑄧𑄝𑄨𑄝𑄢𑄴\u001F"
+    "𑄎𑄚𑄪𑄠𑄢𑄨\u001E𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\u001E𑄟𑄢𑄴𑄌𑄧\u001E𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\u001E𑄟𑄬\u001E𑄎𑄪𑄚𑄴\u001E𑄎𑄪𑄣𑄭\u001E𑄃𑄉𑄧𑄌𑄴𑄑𑄴\u001E𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001E𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\u001E𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001E𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001F𑄎𑄚𑄪𑄠𑄢𑄨\u001E𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨\u001E𑄟𑄢𑄴𑄌𑄧\u001E𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴\u001E𑄟𑄬\u001E𑄎𑄪𑄚𑄴\u001E𑄎𑄪𑄣𑄭\u001E𑄃𑄉𑄧𑄌𑄴𑄑𑄴\u001E𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001E𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴\u001E𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001E𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴\u001F\u001F\u001F𑄥𑄧𑄟𑄴𑄝𑄢𑄴\u001E𑄟𑄧𑄁𑄉𑄧𑄣𑄴𑄝𑄢𑄴\u001E𑄝𑄪𑄖𑄴𑄝𑄢𑄴\u001E𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴𑄝𑄢𑄴\u001E𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴𑄝𑄢𑄴\u001E𑄥𑄧𑄚𑄨𑄝𑄢𑄴\u001E𑄢𑄧𑄝𑄨𑄝𑄢𑄴\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CE: String =
-    "\u001Fянварь\u001Eфевраль\u001Eмарт\u001Eапрель\u001Eмай\u001Eиюнь\u001Eиюль\u001Eавгуст\u001Eсентябрь\u001Eоктябрь\u001Eноябрь\u001Eдекабрь\u001F\u001F\u001Fоршот\u001Eшинара\u001Eкхаара\u001Eеара\u001EпӀераска\u001Eшуот\u001EкӀира\u001Fо\u001Eш\u001Eкх\u001Eе\u001EпӀ\u001Eш\u001EкӀ"
+    "\u001Fянварь\u001Eфевраль\u001Eмарт\u001Eапрель\u001Eмай\u001Eиюнь\u001Eиюль\u001Eавгуст\u001Eсентябрь\u001Eоктябрь\u001Eноябрь\u001Eдекабрь\u001F\u001F\u001Fоршот\u001Eшинара\u001Eкхаара\u001Eеара\u001EпӀераска\u001Eшуот\u001EкӀира\u001Fо\u001Eш\u001Eкх\u001Eе\u001EпӀ\u001Eш\u001EкӀ\u001F0"
 
 internal val LOCALE_STANDALONE_CEB: String =
-    "\u001FEnero\u001EPebrero\u001EMarso\u001EAbril\u001EMayo\u001EHunyo\u001EHulyo\u001EAgosto\u001ESeptiyembre\u001EOktubre\u001ENobyembre\u001EDisyembre\u001F\u001F\u001FLunes\u001EMartes\u001EMiyerkules\u001EHuwebes\u001EBiyernes\u001ESabado\u001EDomingo\u001F"
+    "\u001FEnero\u001EPebrero\u001EMarso\u001EAbril\u001EMayo\u001EHunyo\u001EHulyo\u001EAgosto\u001ESeptiyembre\u001EOktubre\u001ENobyembre\u001EDisyembre\u001F\u001F\u001FLunes\u001EMartes\u001EMiyerkules\u001EHuwebes\u001EBiyernes\u001ESabado\u001EDomingo\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CGG: String =
-    "\u001FOkwokubanza\u001EOkwakabiri\u001EOkwakashatu\u001EOkwakana\u001EOkwakataana\u001EOkwamukaaga\u001EOkwamushanju\u001EOkwamunaana\u001EOkwamwenda\u001EOkwaikumi\u001EOkwaikumi na kumwe\u001EOkwaikumi na ibiri\u001F\u001F\u001FOrwokubanza\u001EOrwakabiri\u001EOrwakashatu\u001EOrwakana\u001EOrwakataano\u001EOrwamukaaga\u001ESande\u001F"
+    "\u001FOkwokubanza\u001EOkwakabiri\u001EOkwakashatu\u001EOkwakana\u001EOkwakataana\u001EOkwamukaaga\u001EOkwamushanju\u001EOkwamunaana\u001EOkwamwenda\u001EOkwaikumi\u001EOkwaikumi na kumwe\u001EOkwaikumi na ibiri\u001F\u001F\u001FOrwokubanza\u001EOrwakabiri\u001EOrwakashatu\u001EOrwakana\u001EOrwakataano\u001EOrwamukaaga\u001ESande\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CHR: String =
-    "\u001FᎤᏃᎸᏔᏅ\u001EᎧᎦᎵ\u001EᎠᏅᏱ\u001EᎧᏬᏂ\u001EᎠᏂᏍᎬᏘ\u001EᏕᎭᎷᏱ\u001EᎫᏰᏉᏂ\u001EᎦᎶᏂ\u001EᏚᎵᏍᏗ\u001EᏚᏂᏅᏗ\u001EᏅᏓᏕᏆ\u001EᎥᏍᎩᏱ\u001F\u001F\u001FᎤᎾᏙᏓᏉᏅᎯ\u001EᏔᎵᏁᎢᎦ\u001EᏦᎢᏁᎢᎦ\u001EᏅᎩᏁᎢᎦ\u001EᏧᎾᎩᎶᏍᏗ\u001EᎤᎾᏙᏓᏈᏕᎾ\u001EᎤᎾᏙᏓᏆᏍᎬ\u001F"
+    "\u001FᎤᏃᎸᏔᏅ\u001EᎧᎦᎵ\u001EᎠᏅᏱ\u001EᎧᏬᏂ\u001EᎠᏂᏍᎬᏘ\u001EᏕᎭᎷᏱ\u001EᎫᏰᏉᏂ\u001EᎦᎶᏂ\u001EᏚᎵᏍᏗ\u001EᏚᏂᏅᏗ\u001EᏅᏓᏕᏆ\u001EᎥᏍᎩᏱ\u001F\u001F\u001FᎤᎾᏙᏓᏉᏅᎯ\u001EᏔᎵᏁᎢᎦ\u001EᏦᎢᏁᎢᎦ\u001EᏅᎩᏁᎢᎦ\u001EᏧᎾᎩᎶᏍᏗ\u001EᎤᎾᏙᏓᏈᏕᎾ\u001EᎤᎾᏙᏓᏆᏍᎬ\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CO: String =
-    "ghjennaghju\u001Eferraghju\u001Emarzu\u001Eaprile\u001Emaghju\u001Eghjugnu\u001Elugliu\u001Eaostu\u001Esittembre\u001Eottobre\u001Enuvembre\u001Edicembre\u001Fghjennaghju\u001Eferraghju\u001Emarzu\u001Eaprile\u001Emaghju\u001Eghjugnu\u001Elugliu\u001Eaostu\u001Esittembre\u001Eottobre\u001Enuvembre\u001Edicembre\u001F\u001F\u001Fluni\u001Emarti\u001Emercuri\u001Eghjovi\u001Evenneri\u001Esabbatu\u001Edumenica\u001F"
+    "ghjennaghju\u001Eferraghju\u001Emarzu\u001Eaprile\u001Emaghju\u001Eghjugnu\u001Elugliu\u001Eaostu\u001Esittembre\u001Eottobre\u001Enuvembre\u001Edicembre\u001Fghjennaghju\u001Eferraghju\u001Emarzu\u001Eaprile\u001Emaghju\u001Eghjugnu\u001Elugliu\u001Eaostu\u001Esittembre\u001Eottobre\u001Enuvembre\u001Edicembre\u001F\u001F\u001Fluni\u001Emarti\u001Emercuri\u001Eghjovi\u001Evenneri\u001Esabbatu\u001Edumenica\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CS: String =
-    "leden\u001Eúnor\u001Ebřezen\u001Eduben\u001Ekvěten\u001Ečerven\u001Ečervenec\u001Esrpen\u001Ezáří\u001Eříjen\u001Elistopad\u001Eprosinec\u001Fleden\u001Eúnor\u001Ebřezen\u001Eduben\u001Ekvěten\u001Ečerven\u001Ečervenec\u001Esrpen\u001Ezáří\u001Eříjen\u001Elistopad\u001Eprosinec\u001F\u001F\u001Fpondělí\u001Eúterý\u001Estředa\u001Ečtvrtek\u001Epátek\u001Esobota\u001Eneděle\u001F"
+    "leden\u001Eúnor\u001Ebřezen\u001Eduben\u001Ekvěten\u001Ečerven\u001Ečervenec\u001Esrpen\u001Ezáří\u001Eříjen\u001Elistopad\u001Eprosinec\u001Fleden\u001Eúnor\u001Ebřezen\u001Eduben\u001Ekvěten\u001Ečerven\u001Ečervenec\u001Esrpen\u001Ezáří\u001Eříjen\u001Elistopad\u001Eprosinec\u001F\u001F\u001Fpondělí\u001Eúterý\u001Estředa\u001Ečtvrtek\u001Epátek\u001Esobota\u001Eneděle\u001F\u001Fc3aa"
 
 internal val LOCALE_STANDALONE_CU: String =
-    "і҆аннꙋа́рїй\u001Eфеврꙋа́рїй\u001Eма́ртъ\u001Eа҆прі́ллїй\u001Eма́їй\u001Eі҆ꙋ́нїй\u001Eі҆ꙋ́лїй\u001Eа҆́ѵгꙋстъ\u001Eсепте́мврїй\u001Eѻ҆ктѡ́врїй\u001Eное́мврїй\u001Eдеке́мврїй\u001Fі҆аннꙋа́рїй\u001Eфеврꙋа́рїй\u001Eма́ртъ\u001Eа҆прі́ллїй\u001Eма́їй\u001Eі҆ꙋ́нїй\u001Eі҆ꙋ́лїй\u001Eа҆́ѵгꙋстъ\u001Eсепте́мврїй\u001Eѻ҆ктѡ́врїй\u001Eное́мврїй\u001Eдеке́мврїй\u001F\u001F\u001Fпонедѣ́льникъ\u001Eвто́рникъ\u001Eсреда̀\u001Eчетверто́къ\u001Eпѧто́къ\u001Eсꙋббѡ́та\u001Eнедѣ́лѧ\u001F"
+    "і҆аннꙋа́рїй\u001Eфеврꙋа́рїй\u001Eма́ртъ\u001Eа҆прі́ллїй\u001Eма́їй\u001Eі҆ꙋ́нїй\u001Eі҆ꙋ́лїй\u001Eа҆́ѵгꙋстъ\u001Eсепте́мврїй\u001Eѻ҆ктѡ́врїй\u001Eное́мврїй\u001Eдеке́мврїй\u001Fі҆аннꙋа́рїй\u001Eфеврꙋа́рїй\u001Eма́ртъ\u001Eа҆прі́ллїй\u001Eма́їй\u001Eі҆ꙋ́нїй\u001Eі҆ꙋ́лїй\u001Eа҆́ѵгꙋстъ\u001Eсепте́мврїй\u001Eѻ҆ктѡ́врїй\u001Eное́мврїй\u001Eдеке́мврїй\u001F\u001F\u001Fпонедѣ́льникъ\u001Eвто́рникъ\u001Eсреда̀\u001Eчетверто́къ\u001Eпѧто́къ\u001Eсꙋббѡ́та\u001Eнедѣ́лѧ\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CV: String =
-    "\u001Fкӑрлач\u001Eнарӑс\u001Eпуш\u001Eака\u001Eҫу\u001Eҫӗрт.\u001Eутӑ\u001Eҫурла\u001Eавӑн\u001Eюпа\u001Eчӳк\u001Eраштав\u001F\u001F\u001F\u001F"
+    "\u001Fкӑрлач\u001Eнарӑс\u001Eпуш\u001Eака\u001Eҫу\u001Eҫӗрт.\u001Eутӑ\u001Eҫурла\u001Eавӑн\u001Eюпа\u001Eчӳк\u001Eраштав\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CY: String =
-    "\u001FIonawr\u001EChw\u001EMawrth\u001EEbrill\u001EMai\u001EMehefin\u001EGor\u001EAwst\u001EMedi\u001EHydref\u001ETachwedd\u001ERhagfyr\u001F\u001F\u001FDydd Llun\u001EDydd Mawrth\u001EDydd Mercher\u001EDydd Iau\u001EGwe\u001EDydd Sadwrn\u001EDydd Sul\u001F"
+    "\u001FIonawr\u001EChw\u001EMawrth\u001EEbrill\u001EMai\u001EMehefin\u001EGor\u001EAwst\u001EMedi\u001EHydref\u001ETachwedd\u001ERhagfyr\u001F\u001F\u001FDydd Llun\u001EDydd Mawrth\u001EDydd Mercher\u001EDydd Iau\u001EGwe\u001EDydd Sadwrn\u001EDydd Sul\u001F\u001F0"

@@ -1,3 +1,22 @@
+public abstract interface class dev/carcara/kotlinx/locale/datetime/CalendarCapitalizationSource {
+	public fun capitalized (Ljava/lang/String;Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;Ldev/carcara/kotlinx/locale/Capitalization;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/CalendarCapitalizationSource$DefaultImpls {
+	public static fun capitalized (Ldev/carcara/kotlinx/locale/datetime/CalendarCapitalizationSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;Ldev/carcara/kotlinx/locale/Capitalization;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/CalendarNameUsage : java/lang/Enum {
+	public static final field DAY_FORMAT Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;
+	public static final field DAY_STANDALONE Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;
+	public static final field MONTH_FORMAT Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;
+	public static final field MONTH_STANDALONE Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;
+	public static final field RELATIVE Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;
+}
+
 public abstract interface class dev/carcara/kotlinx/locale/datetime/DateTimeFormatSource : dev/carcara/kotlinx/locale/LocaleDataSource {
 	public abstract fun dayOfWeekNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun dayOfWeekNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;

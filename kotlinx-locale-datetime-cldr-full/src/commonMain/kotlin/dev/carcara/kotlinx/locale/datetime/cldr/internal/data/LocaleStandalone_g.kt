@@ -3,25 +3,25 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
 internal val LOCALE_STANDALONE_GA: String =
-    "\u001FEanáir\u001EFeabhra\u001EMárta\u001EAibreán\u001EBealtaine\u001EMeitheamh\u001EIúil\u001ELúnasa\u001EMeán Fómhair\u001EDeireadh Fómhair\u001ESamhain\u001ENollaig\u001F\u001F\u001FDé Luain\u001EDé Máirt\u001EDé Céadaoin\u001EDéardaoin\u001EDé hAoine\u001EDé Sathairn\u001EDé Domhnaigh\u001F"
+    "\u001FEanáir\u001EFeabhra\u001EMárta\u001EAibreán\u001EBealtaine\u001EMeitheamh\u001EIúil\u001ELúnasa\u001EMeán Fómhair\u001EDeireadh Fómhair\u001ESamhain\u001ENollaig\u001F\u001F\u001FDé Luain\u001EDé Máirt\u001EDé Céadaoin\u001EDéardaoin\u001EDé hAoine\u001EDé Sathairn\u001EDé Domhnaigh\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_GAA: String =
-    "Aharabata\u001EOflɔ\u001EOtsokrikri\u001EAbɛibe\u001EAgbiɛnaa\u001EOtukwajan\u001EMaawɛ\u001EManyawale\u001EGbo\u001EAntɔŋ\u001EAlemle\u001EAfuabe\u001FAharabata\u001EOflɔ\u001EOtsokrikri\u001EAbɛibe\u001EAgbiɛnaa\u001EOtukwajan\u001EMaawɛ\u001EManyawale\u001EGbo\u001EAntɔŋ\u001EAlemle\u001EAfuabe\u001F\u001F\u001FJu\u001EJufɔ\u001EShɔ\u001ESoo\u001ESohaa\u001EHɔɔ\u001EHɔgbaa\u001F"
+    "Aharabata\u001EOflɔ\u001EOtsokrikri\u001EAbɛibe\u001EAgbiɛnaa\u001EOtukwajan\u001EMaawɛ\u001EManyawale\u001EGbo\u001EAntɔŋ\u001EAlemle\u001EAfuabe\u001FAharabata\u001EOflɔ\u001EOtsokrikri\u001EAbɛibe\u001EAgbiɛnaa\u001EOtukwajan\u001EMaawɛ\u001EManyawale\u001EGbo\u001EAntɔŋ\u001EAlemle\u001EAfuabe\u001F\u001F\u001FJu\u001EJufɔ\u001EShɔ\u001ESoo\u001ESohaa\u001EHɔɔ\u001EHɔgbaa\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_GD: String =
-    "Am Faoilleach\u001EAn Gearran\u001EAm Màrt\u001EAn Giblean\u001EAn Cèitean\u001EAn t-Ògmhios\u001EAn t-Iuchar\u001EAn Lùnastal\u001EAn t-Sultain\u001EAn Dàmhair\u001EAn t-Samhain\u001EAn Dùbhlachd\u001FAm Faoilleach\u001EAn Gearran\u001EAm Màrt\u001EAn Giblean\u001EAn Cèitean\u001EAn t-Ògmhios\u001EAn t-Iuchar\u001EAn Lùnastal\u001EAn t-Sultain\u001EAn Dàmhair\u001EAn t-Samhain\u001EAn Dùbhlachd\u001F\u001F\u001FDiLuain\u001EDiMàirt\u001EDiCiadain\u001EDiarDaoin\u001EDihAoine\u001EDiSathairne\u001EDiDòmhnaich\u001F"
+    "Am Faoilleach\u001EAn Gearran\u001EAm Màrt\u001EAn Giblean\u001EAn Cèitean\u001EAn t-Ògmhios\u001EAn t-Iuchar\u001EAn Lùnastal\u001EAn t-Sultain\u001EAn Dàmhair\u001EAn t-Samhain\u001EAn Dùbhlachd\u001FAm Faoilleach\u001EAn Gearran\u001EAm Màrt\u001EAn Giblean\u001EAn Cèitean\u001EAn t-Ògmhios\u001EAn t-Iuchar\u001EAn Lùnastal\u001EAn t-Sultain\u001EAn Dàmhair\u001EAn t-Samhain\u001EAn Dùbhlachd\u001F\u001F\u001FDiLuain\u001EDiMàirt\u001EDiCiadain\u001EDiarDaoin\u001EDihAoine\u001EDiSathairne\u001EDiDòmhnaich\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_GL: String =
-    "\u001Fxaneiro\u001Efebreiro\u001Emarzo\u001Eabril\u001Emaio\u001Exuño\u001Exullo\u001Eagosto\u001Esetembro\u001Eoutubro\u001Enovembro\u001Edecembro\u001FX\u001EF\u001EM\u001EA\u001EM\u001EX\u001EX\u001EA\u001ES\u001EO\u001EN\u001ED\u001F\u001Fluns\u001Emartes\u001Emércores\u001Exoves\u001Evenres\u001Esábado\u001Edomingo\u001FL\u001EM\u001EM\u001EX\u001EV\u001ES\u001ED"
+    "\u001Fxaneiro\u001Efebreiro\u001Emarzo\u001Eabril\u001Emaio\u001Exuño\u001Exullo\u001Eagosto\u001Esetembro\u001Eoutubro\u001Enovembro\u001Edecembro\u001FX\u001EF\u001EM\u001EA\u001EM\u001EX\u001EX\u001EA\u001ES\u001EO\u001EN\u001ED\u001F\u001Fluns\u001Emartes\u001Emércores\u001Exoves\u001Evenres\u001Esábado\u001Edomingo\u001FL\u001EM\u001EM\u001EX\u001EV\u001ES\u001ED\u001F0"
 
 internal val LOCALE_STANDALONE_GSW: String =
-    "\u001FJanuar\u001EFebruar\u001EMärz\u001EApril\u001EMai\u001EJuni\u001EJuli\u001EAuguscht\u001ESeptämber\u001EOktoober\u001ENovämber\u001EDezämber\u001F\u001F\u001FMääntig\u001EZiischtig\u001EMittwuch\u001EDunschtig\u001EFriitig\u001ESamschtig\u001ESunntig\u001F"
+    "\u001FJanuar\u001EFebruar\u001EMärz\u001EApril\u001EMai\u001EJuni\u001EJuli\u001EAuguscht\u001ESeptämber\u001EOktoober\u001ENovämber\u001EDezämber\u001F\u001F\u001FMääntig\u001EZiischtig\u001EMittwuch\u001EDunschtig\u001EFriitig\u001ESamschtig\u001ESunntig\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_GU: String =
-    "\u001Fજાન્યુઆરી\u001Eફેબ્રુઆરી\u001Eમાર્ચ\u001Eએપ્રિલ\u001Eમે\u001Eજૂન\u001Eજુલાઈ\u001Eઑગસ્ટ\u001Eસપ્ટેમ્બર\u001Eઑક્ટોબર\u001Eનવેમ્બર\u001Eડિસેમ્બર\u001F\u001F\u001Fસોમવાર\u001Eમંગળવાર\u001Eબુધવાર\u001Eગુરુવાર\u001Eશુક્રવાર\u001Eશનિવાર\u001Eરવિવાર\u001F"
+    "\u001Fજાન્યુઆરી\u001Eફેબ્રુઆરી\u001Eમાર્ચ\u001Eએપ્રિલ\u001Eમે\u001Eજૂન\u001Eજુલાઈ\u001Eઑગસ્ટ\u001Eસપ્ટેમ્બર\u001Eઑક્ટોબર\u001Eનવેમ્બર\u001Eડિસેમ્બર\u001F\u001F\u001Fસોમવાર\u001Eમંગળવાર\u001Eબુધવાર\u001Eગુરુવાર\u001Eશુક્રવાર\u001Eશનિવાર\u001Eરવિવાર\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_GUZ: String =
-    "\u001FChanuari\u001EFeburari\u001EMachi\u001EApiriri\u001EMei\u001EJuni\u001EChulai\u001EAgosti\u001ESeptemba\u001EOkitoba\u001ENobemba\u001EDisemba\u001F\u001F\u001FChumatato\u001EChumaine\u001EChumatano\u001EAramisi\u001EIchuma\u001EEsabato\u001EChumapiri\u001F"
+    "\u001FChanuari\u001EFeburari\u001EMachi\u001EApiriri\u001EMei\u001EJuni\u001EChulai\u001EAgosti\u001ESeptemba\u001EOkitoba\u001ENobemba\u001EDisemba\u001F\u001F\u001FChumatato\u001EChumaine\u001EChumatano\u001EAramisi\u001EIchuma\u001EEsabato\u001EChumapiri\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_GV: String =
-    "\u001FJerrey-geuree\u001EToshiaght-arree\u001EMayrnt\u001EAveril\u001EBoaldyn\u001EMean-souree\u001EJerrey-souree\u001ELuanistyn\u001EMean-fouyir\u001EJerrey-fouyir\u001EMee Houney\u001EMee ny Nollick\u001F\u001F\u001FJelhein\u001EJemayrt\u001EJercean\u001EJerdein\u001EJeheiney\u001EJesarn\u001EJedoonee\u001F"
+    "\u001FJerrey-geuree\u001EToshiaght-arree\u001EMayrnt\u001EAveril\u001EBoaldyn\u001EMean-souree\u001EJerrey-souree\u001ELuanistyn\u001EMean-fouyir\u001EJerrey-fouyir\u001EMee Houney\u001EMee ny Nollick\u001F\u001F\u001FJelhein\u001EJemayrt\u001EJercean\u001EJerdein\u001EJeheiney\u001EJesarn\u001EJedoonee\u001F\u001F0"
