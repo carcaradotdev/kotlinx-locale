@@ -48,6 +48,15 @@ public enum class GeneratedTable {
     /** "3 days ago" and its wording per locale. */
     RELATIVE_TIME,
 
+    /** The nine zone format strings, and the locale-independent zone metadata. */
+    TIME_ZONE_FORMATS,
+
+    /** Zone and metazone display names. */
+    TIME_ZONE_NAMES,
+
+    /** Exemplar cities, which are the largest zone table and ship on their own. */
+    TIME_ZONE_CITIES,
+
     /** Number symbols and the plain decimal and percent patterns. */
     NUMBER,
 
@@ -85,6 +94,8 @@ public enum class GeneratedBinding(public val objectSuffix: String) {
     NUMBER("Number"),
     LANGUAGE("LanguageNames"),
     RELATIVE_TIME("RelativeTime"),
+    TIME_ZONE("TimeZone"),
+    TIME_ZONE_CITIES("TimeZoneCities"),
 }
 
 public class SourceRoots private constructor(
@@ -142,6 +153,9 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
                 GeneratedTable.ORDINALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.LANGUAGE_NAMES to "dev.carcara.kotlinx.locale.language.cldr.internal.data",
                 GeneratedTable.RELATIVE_TIME to "dev.carcara.kotlinx.locale.datetime.cldr.relative.internal.data",
+                GeneratedTable.TIME_ZONE_FORMATS to "dev.carcara.kotlinx.locale.timezone.cldr.internal.data",
+                GeneratedTable.TIME_ZONE_NAMES to "dev.carcara.kotlinx.locale.timezone.cldr.internal.data",
+                GeneratedTable.TIME_ZONE_CITIES to "dev.carcara.kotlinx.locale.timezone.cldr.cities.internal.data",
             ),
         )
 
@@ -231,6 +245,29 @@ private val PAYLOAD_TABLES = listOf(
         "LocaleStandalone",
         "LOCALE_STANDALONE",
         "localeStandaloneRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.TIME_ZONE_FORMATS,
+        "timeZoneFormats",
+        "TimeZoneFormats",
+        "TIME_ZONE_FORMATS",
+        "timeZoneFormatsRegistry",
+        "TIME_ZONE_CLDR_VERSION",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.TIME_ZONE_NAMES,
+        "timeZoneNames",
+        "TimeZoneNames",
+        "TIME_ZONE_NAMES",
+        "timeZoneNamesRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.TIME_ZONE_CITIES,
+        "timeZoneCities",
+        "TimeZoneCities",
+        "TIME_ZONE_CITIES",
+        "timeZoneCitiesRegistry",
+        "TIME_ZONE_CITIES_CLDR_VERSION",
     ),
     PayloadTableSpec(
         GeneratedTable.RELATIVE_TIME,
@@ -430,6 +467,27 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             target.root,
             target.spec(packages[GeneratedTable.RELATIVE_TIME], cldr),
             numberObject = number.packageName + "." + number.objectName,
+        )
+    }
+
+    roots[GeneratedBinding.TIME_ZONE]?.let { target ->
+        emitTimeZoneBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.TIME_ZONE_FORMATS], cldr),
+            metadata = bundle.tables[BundleTables.TIME_ZONE_METADATA].orEmpty(),
+            numberObject = roots[GeneratedBinding.NUMBER]?.let { it.packageName + "." + it.objectName },
+            hasNames = roots[GeneratedTable.TIME_ZONE_NAMES] != null,
+        )
+    }
+
+    roots[GeneratedBinding.TIME_ZONE_CITIES]?.let { target ->
+        val zones = requireNotNull(roots[GeneratedBinding.TIME_ZONE]) {
+            "the exemplar cities layer reads the zone names through the timezone binding, so it needs one"
+        }
+        emitTimeZoneCitiesBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.TIME_ZONE_CITIES], cldr),
+            timeZoneObject = zones.packageName + "." + zones.objectName,
         )
     }
 

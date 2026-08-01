@@ -155,6 +155,54 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
      * Includes the currency name and pattern tables it formats through, and the
      * plural table its own patterns are keyed by.
      */
+    /**
+     * The localized GMT format: `GMT-08:00` in the locale's own word and digits.
+     *
+     * Nine short strings per locale, and the fallback every other zone style
+     * degrades to. Includes the number tables, because the offset is written
+     * with the locale's own digits.
+     */
+    TIMEZONE_FORMATS(
+        dslName = "timezone.formats",
+        tables = setOf(GeneratedTable.TIME_ZONE_FORMATS, GeneratedTable.NUMBER),
+        bindings = setOf(GeneratedBinding.TIME_ZONE, GeneratedBinding.NUMBER),
+    ),
+
+    /**
+     * Zone and metazone display names: `Pacific Standard Time`, `PT`.
+     *
+     * Includes the format table, which every one of them falls back to.
+     */
+    TIMEZONE_NAMES(
+        dslName = "timezone.names",
+        tables = setOf(GeneratedTable.TIME_ZONE_FORMATS, GeneratedTable.TIME_ZONE_NAMES, GeneratedTable.NUMBER),
+        bindings = setOf(GeneratedBinding.TIME_ZONE, GeneratedBinding.NUMBER),
+    ),
+
+    /**
+     * Exemplar cities, for the generic location format: `Los Angeles Time`.
+     *
+     * Worth asking for deliberately. Across all locales this is the largest zone
+     * table by a wide margin, and without it the location format falls back to
+     * the identifier's own last part, which is the degradation UTS #35
+     * prescribes rather than a failure.
+     *
+     * Does not drag in the country names. A zone in a single-zone region is
+     * named for the region, and without those names that reads as the region
+     * code, which is again the spec's own fallback. Whether a spelled-out
+     * country name is worth 400 KB of tables is the consumer's call.
+     */
+    TIMEZONE_EXEMPLAR_CITIES(
+        dslName = "timezone.exemplarCities",
+        tables = setOf(
+            GeneratedTable.TIME_ZONE_FORMATS,
+            GeneratedTable.TIME_ZONE_NAMES,
+            GeneratedTable.TIME_ZONE_CITIES,
+            GeneratedTable.NUMBER,
+        ),
+        bindings = setOf(GeneratedBinding.TIME_ZONE, GeneratedBinding.TIME_ZONE_CITIES, GeneratedBinding.NUMBER),
+    ),
+
     CURRENCY_COMPACT(
         dslName = "currency.compact",
         tables = setOf(

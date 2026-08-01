@@ -69,7 +69,10 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     val language: LanguageFeatures = objects.newInstance(LanguageFeatures::class.java)
 
-    private val blocks: List<FeatureBlock> get() = listOf(country, currency, datetime, number, language)
+    val timezone: TimeZoneFeatures = objects.newInstance(TimeZoneFeatures::class.java)
+
+    private val blocks: List<FeatureBlock>
+        get() = listOf(country, currency, datetime, number, language, timezone)
 
     /** Adds locales by reference, which is the form the compiler checks. */
     fun locales(vararg refs: LocaleRef) {
@@ -107,6 +110,10 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     fun language(action: Action<LanguageFeatures>) {
         action.execute(language)
+    }
+
+    fun timezone(action: Action<TimeZoneFeatures>) {
+        action.execute(timezone)
     }
 
     /**
@@ -176,6 +183,24 @@ abstract class LanguageFeatures @Inject constructor(objects: ObjectFactory) : Fe
      * not eleven hundred locales' worth.
      */
     val names: Property<Boolean> = flag(LocaleFeature.LANGUAGE_NAMES)
+}
+
+abstract class TimeZoneFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
+
+    /** The localized GMT format: `GMT-08:00` in the locale's own word and digits. */
+    val formats: Property<Boolean> = flag(LocaleFeature.TIMEZONE_FORMATS)
+
+    /** Zone and metazone display names: `Pacific Standard Time`, `PT`. */
+    val names: Property<Boolean> = flag(LocaleFeature.TIMEZONE_NAMES)
+
+    /**
+     * Exemplar cities, for the generic location format.
+     *
+     * The largest zone table by a wide margin. Without it the location format
+     * uses the identifier's last part, which is the fallback UTS #35 itself
+     * prescribes.
+     */
+    val exemplarCities: Property<Boolean> = flag(LocaleFeature.TIMEZONE_EXEMPLAR_CITIES)
 }
 
 abstract class NumberFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
