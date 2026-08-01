@@ -78,30 +78,38 @@ public object CldrNumberOrdinals : OrdinalFormatSource by PayloadOrdinalFormats(
     CldrNumberPlurals,
 )
 
-/** This number written for [locale], with its grouping separators. */
-public fun Long.format(
+/**
+ * [value] written for [locale], with its grouping separators.
+ *
+ * Compact notation is this call with [notation] set, so `1200` reads
+ * `1.2K` under [NumberNotation.COMPACT_SHORT].
+ */
+public fun numberFormat(
+    value: Long,
     locale: Locale = Locale.current,
     notation: NumberNotation = NumberNotation.STANDARD,
     signDisplay: SignDisplay = SignDisplay.AUTO,
     grouping: NumberGrouping = NumberGrouping.AUTO,
-): String = CldrNumber.format(this, locale, notation, signDisplay, grouping)
+): String = CldrNumber.format(value, locale, notation, signDisplay, grouping)
 
 /**
- * This number written for [locale] at exactly [fractionDigits] digits.
+ * [value] written for [locale] at exactly [fractionDigits] digits.
  *
  * The digit count is required rather than read off the float, because the
  * targets do not agree on how many digits a `Double` has.
  */
-public fun Double.format(
+public fun numberFormat(
+    value: Double,
     fractionDigits: Int,
     locale: Locale = Locale.current,
     notation: NumberNotation = NumberNotation.STANDARD,
     signDisplay: SignDisplay = SignDisplay.AUTO,
     grouping: NumberGrouping = NumberGrouping.AUTO,
-): String = CldrNumber.format(this, fractionDigits, locale, notation, signDisplay, grouping)
+): String = CldrNumber.format(value, fractionDigits, locale, notation, signDisplay, grouping)
 
-/** This decimal written for [locale], keeping the digits it carries. */
-public fun Decimal.format(
+/** [value] written for [locale], keeping the digits it carries. */
+public fun numberFormat(
+    value: Decimal,
     locale: Locale = Locale.current,
     notation: NumberNotation = NumberNotation.STANDARD,
     signDisplay: SignDisplay = SignDisplay.AUTO,
@@ -109,7 +117,7 @@ public fun Decimal.format(
     minimumFractionDigits: Int? = null,
     maximumFractionDigits: Int? = null,
 ): String = CldrNumber.format(
-    this,
+    value,
     locale,
     notation,
     signDisplay,
@@ -118,37 +126,37 @@ public fun Decimal.format(
     maximumFractionDigits,
 )
 
-/** This number in compact notation: `1200` is `1.2K` in `en`. */
-public fun Long.formatCompact(
-    locale: Locale = Locale.current,
-    notation: NumberNotation = NumberNotation.COMPACT_SHORT,
-): String = CldrNumber.format(this, locale, notation)
-
-/** This decimal in compact notation. */
-public fun Decimal.formatCompact(
-    locale: Locale = Locale.current,
-    notation: NumberNotation = NumberNotation.COMPACT_SHORT,
-): String = CldrNumber.format(this, locale, notation)
-
 /**
- * This fraction written as a percentage: `0.075` in `en` is `7.5%`.
+ * [fraction] written as a percentage: `0.075` in `en` is `7.5%`.
  *
  * Multiplies by 100, which is what a `%` in a CLDR pattern means and what
  * `Intl.NumberFormat` does. For a value that is already scaled, use
- * [formatPercentValue].
+ * [numberFormatPercentValue].
  */
-public fun Decimal.formatPercent(
+public fun numberFormatPercent(
+    fraction: Decimal,
     locale: Locale = Locale.current,
     fractionDigits: Int? = null,
     signDisplay: SignDisplay = SignDisplay.AUTO,
-): String = CldrNumber.formatPercent(this, locale, fractionDigits, signDisplay)
+): String = CldrNumber.formatPercent(fraction, locale, fractionDigits, signDisplay)
 
-/** This already-scaled percentage written for [locale]: `7.5` is `7.5%`. */
-public fun Decimal.formatPercentValue(
+/**
+ * [percent] written for [locale] without scaling it: `7.5` is `7.5%`.
+ *
+ * The counterpart to [numberFormatPercent], which takes a fraction and
+ * multiplies. Reading one as the other is a hundredfold error, so the two
+ * are named for what they take rather than told apart by the argument.
+ */
+public fun numberFormatPercentValue(
+    percent: Decimal,
     locale: Locale = Locale.current,
     fractionDigits: Int? = null,
     signDisplay: SignDisplay = SignDisplay.AUTO,
-): String = CldrNumber.formatPercentValue(this, locale, fractionDigits, signDisplay)
+): String = CldrNumber.formatPercentValue(percent, locale, fractionDigits, signDisplay)
+
+/** [value] as an ordinal in [locale]: `1st`, `1.`, `1\u00BA`. */
+public fun numberOrdinal(value: Long, locale: Locale = Locale.current): String =
+    CldrNumberOrdinals.ordinal(value, locale)
 
 /**
  * [locale]'s number symbols: its digits, separators and signs.
@@ -160,31 +168,29 @@ public fun Decimal.formatPercentValue(
 public fun numberSymbols(locale: Locale = Locale.current): NumberSymbols = CldrNumber.symbols(locale)
 
 /** A formatted number read back, or `null` when [text] does not parse in [locale]. */
-public fun parseNumberOrNull(text: String, locale: Locale = Locale.current): Decimal? =
+public fun numberParseOrNull(text: String, locale: Locale = Locale.current): Decimal? =
     CldrNumber.parseDecimalOrNull(text, locale)
 
 /**
- * The plural category of this count in [locale].
+ * The plural category of [count] in [locale].
  *
  * An integer is the one case where a raw number is enough: it has no visible
  * fraction digits, so nothing a formatting choice could change is left.
  */
-public fun Long.pluralCategory(
+public fun pluralCategory(
+    count: Long,
     locale: Locale = Locale.current,
     type: PluralType = PluralType.CARDINAL,
-): PluralCategory = CldrNumberPlurals.pluralCategory(this, locale, type)
+): PluralCategory = CldrNumberPlurals.pluralCategory(count, locale, type)
 
 /**
- * The plural category of this value shown with [fractionDigits] digits.
+ * The plural category of [value] shown with [fractionDigits] digits.
  *
  * The digit count is required: in Czech `1` is `one` and `1.0` is `many`.
  */
-public fun Decimal.pluralCategory(
+public fun pluralCategory(
+    value: Decimal,
     fractionDigits: Int,
     locale: Locale = Locale.current,
     type: PluralType = PluralType.CARDINAL,
-): PluralCategory = CldrNumberPlurals.pluralCategory(this, fractionDigits, locale, type)
-
-/** This number as an ordinal in [locale]: `1st`, `1.`, `1º`. */
-public fun Long.formatOrdinal(locale: Locale = Locale.current): String =
-    CldrNumberOrdinals.ordinal(this, locale)
+): PluralCategory = CldrNumberPlurals.pluralCategory(value, fractionDigits, locale, type)

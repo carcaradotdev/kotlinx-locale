@@ -925,74 +925,76 @@ throwing variant, because a miss is the expected outcome on most targets.
 
 ## Numbers
 
-### Long.format, Double.format and Decimal.format
+### numberFormat
 
 ```kotlin
-1234567L.format(EN)                       // "1,234,567"
-1234567L.format(DE)                       // "1.234.567"
-1234567L.format(CS)                       // "1 234 567", with a no-break space
-1000L.format(PL)                          // "1000", because pl groups from five digits
-3.14159.format(fractionDigits = 2, EN)    // "3.14"
+numberFormat(1234567L, EN)                     // "1,234,567"
+numberFormat(1234567L, DE)                     // "1.234.567"
+numberFormat(1234567L, CS)                     // "1 234 567", with a no-break space
+numberFormat(1000L, PL)                        // "1000", because pl groups from five digits
+numberFormat(3.14159, fractionDigits = 2, EN)  // "3.14"
+numberFormat(Decimal.parse("1.50"), EN)        // "1.5"
 ```
 
-`Decimal` is the exact type the formatters take: a `Long` of unscaled units plus
-a scale. The digit count for a `Double` is required rather than inferred,
-because the targets do not agree on how many digits a `Double` has and a
-formatter that guessed would print different text on each.
+Overloaded for `Long`, `Double` and `Decimal`. `Decimal` is the exact type the
+formatters take: a `Long` of unscaled units plus a scale. The digit count for a
+`Double` is required rather than inferred, because the targets do not agree on
+how many digits a `Double` has and a formatter that guessed would print
+different text on each.
 
-### Decimal.formatPercent and Decimal.formatPercentValue
+Compact notation is the same call with a `notation`:
 
 ```kotlin
-Decimal.parse("0.125").formatPercent(EN, fractionDigits = 1)   // "12.5%"
-Decimal.parse("0.125").formatPercent(CS, fractionDigits = 1)   // "12,5 %"
-Decimal.parse("0.125").formatPercent(TR, fractionDigits = 1)   // "%12,5"
-Decimal.parse("12.5").formatPercentValue(EN, fractionDigits = 1) // "12.5%"
+numberFormat(1200L, EN, notation = NumberNotation.COMPACT_SHORT)   // "1.2K"
+numberFormat(12345L, EN, notation = NumberNotation.COMPACT_SHORT)  // "12K"
+numberFormat(999999L, EN, notation = NumberNotation.COMPACT_SHORT) // "1M"
+numberFormat(1200L, EN, notation = NumberNotation.COMPACT_LONG)    // "1.2 thousand"
+```
+
+The compact default precision is two significant digits or none, whichever keeps
+more. UTS #35 leaves that open, so this library pins it and holds it with ICU
+goldens. See `kotlinx-locale-number-core/README.md`.
+
+### numberFormatPercent and numberFormatPercentValue
+
+```kotlin
+numberFormatPercent(Decimal.parse("0.125"), EN, fractionDigits = 1)      // "12.5%"
+numberFormatPercent(Decimal.parse("0.125"), CS, fractionDigits = 1)      // "12,5 %"
+numberFormatPercent(Decimal.parse("0.125"), TR, fractionDigits = 1)      // "%12,5"
+numberFormatPercentValue(Decimal.parse("12.5"), EN, fractionDigits = 1)  // "12.5%"
 ```
 
 Two functions because the two readings both have standing and getting it wrong
-is a hundredfold error. `formatPercent` takes a fraction and multiplies, which
-is what a `%` in a CLDR pattern means. `formatPercentValue` takes a value that
-is already a percentage.
+is a hundredfold error. `numberFormatPercent` takes a fraction and multiplies,
+which is what a `%` in a CLDR pattern means. `numberFormatPercentValue` takes a
+value that is already a percentage.
 
 The placement is the locale's: Czech and German put a no-break space before the
 sign, Turkish puts the sign in front.
 
-### Long.formatCompact and Decimal.formatCompact
+### pluralCategory
 
 ```kotlin
-1200L.formatCompact(EN)                                  // "1.2K"
-12345L.formatCompact(EN)                                 // "12K"
-999999L.formatCompact(EN)                                // "1M"
-1200L.formatCompact(EN, NumberNotation.COMPACT_LONG)     // "1.2 thousand"
-```
-
-The default precision is two significant digits or none, whichever keeps more.
-UTS #35 leaves that open, so this library pins it and holds it with ICU
-goldens. See `kotlinx-locale-number-core/README.md`.
-
-### Long.pluralCategory and Decimal.pluralCategory
-
-```kotlin
-1L.pluralCategory(CS)                              // ONE
-3L.pluralCategory(CS)                              // FEW
-10L.pluralCategory(CS)                             // OTHER
-Decimal.parse("1.0").pluralCategory(1, CS)         // MANY
+pluralCategory(1L, CS)                              // ONE
+pluralCategory(3L, CS)                              // FEW
+pluralCategory(10L, CS)                             // OTHER
+pluralCategory(Decimal.parse("1.0"), 1, CS)         // MANY
 ```
 
 The fraction digit count is required for a `Decimal` and not for a `Long`. Czech
 puts every value written with a fraction digit in `many`, so the category is a
 property of how the number will be printed rather than of the number.
 
-### Long.formatOrdinal
+### numberOrdinal
 
 ```kotlin
-1L.formatOrdinal(EN)    // "1st"
-21L.formatOrdinal(EN)   // "21st"
-1L.formatOrdinal(DE)    // "1."
-2L.formatOrdinal(CS)    // "2."
+numberOrdinal(1L, EN)    // "1st"
+numberOrdinal(21L, EN)   // "21st"
+numberOrdinal(1L, DE)    // "1."
+numberOrdinal(2L, CS)    // "2."
 ```
 
-### numberSymbols
+### numberSymbols and numberParseOrNull
 
 ```kotlin
 val symbols = numberSymbols(CS)
@@ -1002,9 +1004,17 @@ symbols.minimumGroupingDigits   // 1
 symbols.digits                  // ["0", "1", ... "9"]
 ```
 
-For building something this library does not format. An amount field that
-formats while someone types cannot round trip through `format`, because that
-would normalise away the half-finished states the caret depends on.
+```kotlin
+numberParseOrNull("1.50", EN)          // Decimal 1.50, scale 2
+numberParseOrNull("1.234,5", DE)       // Decimal 1234.5
+numberParseOrNull("not a number", EN)  // null
+```
+
+`numberSymbols` is for building something this library does not format. An
+amount field that formats while someone types cannot round trip through
+`numberFormat`, because that would normalise away the half-finished states the
+caret depends on. The parse keeps the digits it was given, so a `Decimal` read
+back from `1.50` has scale 2 and the plural rules see two visible digits.
 
 ## Languages
 
@@ -1040,15 +1050,15 @@ identifier can carry.
 
 ## Relative time
 
-### Long.formatRelative
+### relativeTimeFormat
 
 ```kotlin
-(-1L).formatRelative(RelativeTimeUnit.DAY, locale = EN)   // "yesterday"
-(-3L).formatRelative(RelativeTimeUnit.DAY, locale = EN)   // "3 days ago"
-(-1L).formatRelative(RelativeTimeUnit.DAY, locale = CS)   // "včera"
-(-3L).formatRelative(RelativeTimeUnit.DAY, locale = CS)   // "před 3 dny"
-10L.formatRelative(RelativeTimeUnit.DAY, locale = CS)     // "za 10 dní"
-(-1L).formatRelative(RelativeTimeUnit.DAY, numbering = RelativeTimeNumbering.ALWAYS, locale = EN)
+relativeTimeFormat(-1L, RelativeTimeUnit.DAY, locale = EN)   // "yesterday"
+relativeTimeFormat(-3L, RelativeTimeUnit.DAY, locale = EN)   // "3 days ago"
+relativeTimeFormat(-1L, RelativeTimeUnit.DAY, locale = CS)   // "včera"
+relativeTimeFormat(-3L, RelativeTimeUnit.DAY, locale = CS)   // "před 3 dny"
+relativeTimeFormat(10L, RelativeTimeUnit.DAY, locale = CS)   // "za 10 dní"
+relativeTimeFormat(-1L, RelativeTimeUnit.DAY, numbering = RelativeTimeNumbering.ALWAYS, locale = EN)
                                                           // "1 day ago"
 ```
 

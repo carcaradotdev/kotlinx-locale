@@ -108,8 +108,8 @@ is the only thing that distinguishes it from `AUTO`.
 Both readings have standing: `Intl.NumberFormat` multiplies, ICU's newer
 `NumberFormatter.unit(NoUnit.PERCENT)` does not. Guessing wrong is a silently
 hundredfold wrong number in front of a reader, so the two entry points are named
-for what they take rather than one being assumed: `formatPercent` takes a
-fraction, `formatPercentValue` takes an already-scaled value.
+for what they take rather than one being assumed: `numberFormatPercent` takes a
+fraction, `numberFormatPercentValue` takes an already-scaled value.
 
 **Plural rules interpreted rather than compiled.** Every cardinal and ordinal
 condition in CLDR 48.2 is about four kilobytes for all 1122 locales, against an

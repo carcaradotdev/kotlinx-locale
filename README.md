@@ -358,7 +358,7 @@ layers without touching a call site.
 | `kotlinx-locale-language-cldr-full` | `-cldr-runtime` plus the name tables: `CldrLanguage`, `Locale.displayName` and `Locale.nativeDisplayName`. The largest table in the library, which is the strongest argument for the Gradle plugin. |
 | `kotlinx-locale-number-core` | `Decimal`, `NumberSymbols`, `PluralCategory`, `SignDisplay` and the number, plural and ordinal contracts. Its own README records where each part of the behaviour is defined, because CLDR settles the data and not the option names. |
 | `kotlinx-locale-number-cldr-runtime` | The CLDR pattern engine, the compact algorithm, the plural rule evaluator and the ordinal rule evaluator. The currency domain formats through this one rather than through a copy. |
-| `kotlinx-locale-number-cldr-full` | `-cldr-runtime` plus the symbol, pattern, compact, plural and ordinal tables: `CldrNumber`, `Long.format`, `Decimal.formatPercent`, `Long.formatCompact`, `Long.pluralCategory` and `Long.formatOrdinal`. |
+| `kotlinx-locale-number-cldr-full` | `-cldr-runtime` plus the symbol, pattern, compact, plural and ordinal tables: `CldrNumber`, `numberFormat`, `numberFormatPercent`, `numberOrdinal`, `numberSymbols` and `pluralCategory`. |
 | `kotlinx-locale-currency-types` | The `Currency` enum (both ISO 4217 lists, ISO minor units, CLDR fraction and cash-rounding behavior, tender windows) and the country-to-currency map. |
 | `kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
 | `kotlinx-locale-currency-cldr-runtime` | The symbol and name lookup plus the pattern-based number formatter and parser, over CLDR-shaped records it does not carry. |
@@ -369,7 +369,7 @@ layers without touching a call site.
 | `kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. |
 | `kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
 | `kotlinx-locale-datetime-cldr-skeletons` | `-cldr-full` plus the skeleton tables: `CldrDateTimeSkeletons` and `date.format("yMMMd", locale)`, where you name the fields and the locale decides their order. Opt in, at around 60 KB gzipped on top of `-cldr-full`. |
-| `kotlinx-locale-datetime-cldr-relative` | `CldrRelativeTime` and `Long.formatRelative`: `3 days ago` and `včera`, with the plural rules that pick among a language's forms. Its own artifact because it needs no date patterns. |
+| `kotlinx-locale-datetime-cldr-relative` | `CldrRelativeTime` and `relativeTimeFormat`: `3 days ago` and `včera`, with the plural rules that pick among a language's forms. Its own artifact because it needs no date patterns. |
 | `kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
 | `kotlinx-locale-timezone-core` | `TimeZoneNameSource` and `TimeZoneNameStyle`: the forms UTS #35 Part 4 defines for naming a zone. |
 | `kotlinx-locale-timezone-cldr-runtime` | The localized GMT format, metazone resolution and the naming ladder, over records it does not carry. |

@@ -7,8 +7,8 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/relative/CldrRelativ
 }
 
 public final class dev/carcara/kotlinx/locale/datetime/cldr/relative/RelativeTimeKt {
-	public static final fun formatRelative (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
-	public static synthetic fun formatRelative$default (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun relativeTimeFormat (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun relativeTimeFormat$default (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun relativeUnitName (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public static synthetic fun relativeUnitName$default (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
 }
