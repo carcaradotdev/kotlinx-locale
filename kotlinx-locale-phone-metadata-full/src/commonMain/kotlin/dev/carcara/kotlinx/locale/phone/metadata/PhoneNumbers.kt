@@ -11,6 +11,8 @@ import dev.carcara.kotlinx.locale.phone.PhoneNumberFormat
 import dev.carcara.kotlinx.locale.phone.PhoneNumberSource
 import dev.carcara.kotlinx.locale.phone.PhoneNumberType
 import dev.carcara.kotlinx.locale.phone.PhoneParseResult
+import dev.carcara.kotlinx.locale.phone.candidateRegions
+import dev.carcara.kotlinx.locale.phone.detectRegion
 import dev.carcara.kotlinx.locale.phone.metadata.internal.data.phoneFormatRegistry
 import dev.carcara.kotlinx.locale.phone.metadata.internal.data.phoneTerritoryRegistry
 import dev.carcara.kotlinx.locale.phone.metadata.runtime.AsYouTypeFormatter
@@ -31,13 +33,34 @@ internal val PhoneNumbersSource: PayloadPhoneNumbers = PayloadPhoneNumbers(
 
 public object PhoneNumbers : PhoneNumberSource by PhoneNumbersSource
 
-/** [this] read as a phone number for [region], or `null`. */
-public fun String.toPhoneNumberOrNull(region: Country? = null): PhoneNumber? =
-    (PhoneNumbers.parse(this, region) as? PhoneParseResult.Parsed)?.number
+/**
+ * [text] read as a phone number, or `null`.
+ *
+ * [region] supplies the calling code when [text] carries none of its own.
+ * The result knows its own territory, so the country comes back with the
+ * number rather than needing a second call:
+ *
+ * ```
+ * val number = phoneNumberOrNull("+55 11 96123-4567") ?: return
+ * number.region   // Country.BR
+ * ```
+ */
+public fun phoneNumberOrNull(text: String, region: Country? = null): PhoneNumber? =
+    (PhoneNumbers.parse(text, region) as? PhoneParseResult.Parsed)?.number
 
-/** True when [this] is a number that could exist in [region]. */
-public fun String.isValidPhoneNumber(region: Country? = null): Boolean =
-    toPhoneNumberOrNull(region)?.let(PhoneNumbers::isValid) == true
+/** [text] read as a phone number, with the reason when it cannot be. */
+public fun parsePhoneNumber(text: String, region: Country? = null): PhoneParseResult =
+    PhoneNumbers.parse(text, region)
+
+/** True when [text] is a number that could exist in [region]. */
+public fun isValidPhoneNumber(text: String, region: Country? = null): Boolean =
+    phoneNumberOrNull(text, region)?.let(PhoneNumbers::isValid) == true
+
+/** The territory [text] names itself, or `null` when it carries no calling code. */
+public fun phoneRegionOrNull(text: String): Country? = PhoneNumbers.detectRegion(text)
+
+/** Every territory [text] would be valid in, for a number that names none. */
+public fun phoneRegionCandidates(text: String): List<Country> = PhoneNumbers.candidateRegions(text)
 
 /** This number written in [format]. */
 public fun PhoneNumber.format(format: PhoneNumberFormat = PhoneNumberFormat.INTERNATIONAL): String =
@@ -49,8 +72,6 @@ public fun PhoneNumber.isValid(): Boolean = PhoneNumbers.isValid(this)
 /** What kind of number this is, or [PhoneNumberType.UNKNOWN]. */
 public fun PhoneNumber.typeOf(): PhoneNumberType = PhoneNumbers.typeOf(this)
 
-/** The territory this number belongs to, or `null` when its calling code is not geographic. */
-public fun PhoneNumber.region(): Country? = PhoneNumbers.regionOf(this)
 
 /** An as-you-type formatter for this country, for a text field. */
 public fun Country.asYouType(): AsYouTypeFormatter = PhoneNumbersSource.asYouTypeFor(name)

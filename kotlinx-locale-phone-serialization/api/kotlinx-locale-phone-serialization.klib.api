@@ -1,0 +1,65 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-phone-serialization>
+open class dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer|null[0]
+    constructor <init>(dev.carcara.kotlinx.locale.phone/PhoneNumberSource, dev.carcara.kotlinx.locale.country/Country? = ...) // dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer.<init>|<init>(dev.carcara.kotlinx.locale.phone.PhoneNumberSource;dev.carcara.kotlinx.locale.country.Country?){}[0]
+
+    open val descriptor // dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer.descriptor|{}descriptor[0]
+        open fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+}
+
+open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer|null[0]
+    constructor <init>(dev.carcara.kotlinx.locale.phone/PhoneNumberSource) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer.<init>|<init>(dev.carcara.kotlinx.locale.phone.PhoneNumberSource){}[0]
+
+    open val descriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer.descriptor|{}descriptor[0]
+        open fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+}
+
+open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer|null[0]
+    constructor <init>(dev.carcara.kotlinx.locale.phone/PhoneNumberSource) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer.<init>|<init>(dev.carcara.kotlinx.locale.phone.PhoneNumberSource){}[0]
+
+    open val descriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer.descriptor|{}descriptor[0]
+        open fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+}
+
+open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer|null[0]
+    constructor <init>(dev.carcara.kotlinx.locale.phone/PhoneNumberSource, dev.carcara.kotlinx.locale.country/Country) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer.<init>|<init>(dev.carcara.kotlinx.locale.phone.PhoneNumberSource;dev.carcara.kotlinx.locale.country.Country){}[0]
+
+    open val descriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer.descriptor|{}descriptor[0]
+        open fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+}
+
+open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer|null[0]
+    constructor <init>(dev.carcara.kotlinx.locale.phone/PhoneNumberSource) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer.<init>|<init>(dev.carcara.kotlinx.locale.phone.PhoneNumberSource){}[0]
+
+    open val descriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer.descriptor|{}descriptor[0]
+        open fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+}
+
+final object dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberPartsSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberPartsSerializer|null[0]
+    final val descriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberPartsSerializer.descriptor|{}descriptor[0]
+        final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberPartsSerializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+    final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberPartsSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    final fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberPartsSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+}

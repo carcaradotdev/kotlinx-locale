@@ -233,6 +233,7 @@ locale-timezone-cldr-cities = { module = "dev.carcara:kotlinx-locale-timezone-cl
 locale-phone-core = { module = "dev.carcara:kotlinx-locale-phone-core", version.ref = "kotlinx-locale" }
 locale-phone-metadata-runtime = { module = "dev.carcara:kotlinx-locale-phone-metadata-runtime", version.ref = "kotlinx-locale" }
 locale-phone-metadata-full = { module = "dev.carcara:kotlinx-locale-phone-metadata-full", version.ref = "kotlinx-locale" }
+locale-phone-serialization = { module = "dev.carcara:kotlinx-locale-phone-serialization", version.ref = "kotlinx-locale" }
 
 [bundles]
 # Bundled CLDR data: the normal choice.
@@ -390,7 +391,8 @@ layers without touching a call site.
 | `kotlinx-locale-timezone-cldr-cities` | `-cldr-full` plus the exemplar cities, for the generic location format. Opt in: this is the largest zone table, and without it the format falls back to the identifier's own last part, which is what the spec prescribes. |
 | `kotlinx-locale-phone-core` | `PhoneNumber`, `PhoneNumberType`, `PhoneNumberFormat` and `PhoneNumberSource`. Keyed by country rather than by locale, because a number is valid or not whoever is reading it. |
 | `kotlinx-locale-phone-metadata-runtime` | The parser, the validator, the formatters, the as-you-type formatter, and the bounded pattern matcher they all run on. |
-| `kotlinx-locale-phone-metadata-full` | `-metadata-runtime` plus every territory libphonenumber describes: `PhoneNumbers`, `String.toPhoneNumberOrNull` and `Country.asYouType`. |
+| `kotlinx-locale-phone-metadata-full` | `-metadata-runtime` plus every territory libphonenumber describes: `PhoneNumbers`, `phoneNumberOrNull` and `Country.asYouType`. |
+| `kotlinx-locale-phone-serialization` | One serializer per written form, a lenient one that reads all four, and a metadata-free one over the parts. No default: the forms carry different amounts of information. |
 | `kotlinx-locale-codegen-emitters` | The emitters and the bundle reader: the half of code generation a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
 | `kotlinx-locale-codegen-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
 | `kotlinx-locale-gradle-plugin` | The `dev.carcara.kotlinx-locale` plugin, which generates a data set narrowed to the locales a build declares. |

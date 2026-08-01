@@ -1122,8 +1122,15 @@ number.format(PhoneNumberFormat.E164)         // +442071234567
 number.format(PhoneNumberFormat.NATIONAL)     // 020 7123 4567
 number.format(PhoneNumberFormat.INTERNATIONAL)// +44 20 7123 4567
 number.format(PhoneNumberFormat.RFC3966)      // tel:+44-20-7123-4567
-number.region()                               // Country.GB
+number.region                                 // Country.GB
 ```
+
+The number carries its own territory, so the country comes back with it rather
+than needing a second call. `region` is a [Country] and is `null` for the plans
+ISO 3166-1 does not list; `regionCode` is the raw code and answers `AC` for
+Ascension Island where `region` cannot. Use `phoneRegionOrNull(text)` to detect
+without building a number, and `phoneRegionCandidates(text)` for a bare national
+number, which names no country and so gets a list rather than a guess.
 
 Keyed by [Country] rather than by `Locale`, which is the one place this library
 takes a country where everything else takes a locale. A number is valid or it is
@@ -1173,6 +1180,29 @@ half that belongs here and the rest is yours. And unlike parsing, validation and
 the three finished formats, its output is not held to libphonenumber
 character-for-character. Those have a conformance fixture over every territory;
 this has the digit-preservation invariant and the territory's own rules.
+
+### Storing one
+
+```kotlin
+object AppPhone : PhoneNumberE164Serializer(PhoneNumbers)
+
+@Serializable
+class Contact(@Serializable(with = AppPhone::class) val phone: PhoneNumber)
+```
+
+There is no default serializer, for the same reason there is none for a currency
+amount: the four written forms are not four spellings of one thing. E.164
+identifies a number anywhere and is the one to store. The national form does not
+identify one at all, which is why `PhoneNumberNationalSerializer` alone takes the
+country to read it against. The international and RFC 3966 forms do identify a
+number but carry the grouping of the libphonenumber release that wrote them, so a
+column of them stops comparing equal to itself after an upgrade.
+
+`LenientPhoneNumberSerializer` reads any of the four and writes E.164, for the
+boundary where you do not control the producer. `PhoneNumberPartsSerializer`
+writes `{"callingCode":44,"nationalNumber":"2071234567"}` and is the only one
+needing no metadata at all, which also makes it the only one that cannot be
+wrong about a territory a later release reassigns.
 
 ### Where the data comes from
 

@@ -1,4 +1,4 @@
-package dev.carcara.kotlinx.locale.conformance
+package dev.carcara.kotlinx.locale.phone.conformance
 
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.country.forAlpha2OrNull
@@ -69,4 +69,60 @@ public fun PhoneNumberSource.assertConformsToLibPhoneNumber() {
         }
     }
     assertTrue(checked > 900, "expected to check the golden set, checked only $checked ($skippedRegions regions skipped)")
+}
+
+/**
+ * Holds the parser to libphonenumber over inputs that are not well behaved.
+ *
+ * [assertConformsToLibPhoneNumber] asks about each territory's own example
+ * number, which is by construction the easiest input that territory has. Passing
+ * it says the tables were read correctly and little about the parser, because
+ * almost none of its branches are reached.
+ *
+ * This reaches them. Every `parse` literal in libphonenumber's own test suite,
+ * which is what its authors pinned after fifteen years of bug reports, plus each
+ * territory's example number put through the mutations a real input goes
+ * through: punctuation, the international dialling prefix instead of a plus,
+ * the national prefix present and absent, an extension in each spelling that
+ * means one, and the length boundary from both sides.
+ *
+ * A sixth of the cases are rejections, and they are the half that matters most.
+ * A fixture carrying only the inputs that parse would pass for a parser that
+ * accepted everything.
+ */
+public fun PhoneNumberSource.assertParsesLikeLibPhoneNumber() {
+    assertTrue(phoneEdgeCases.size > 2000, "expected the full edge set, got ${phoneEdgeCases.size}")
+    var checked = 0
+    var rejections = 0
+    var skipped = 0
+
+    for (case in phoneEdgeCases) {
+        val region = case.region.takeIf(String::isNotEmpty)?.let { Country.forAlpha2OrNull(it) }
+        if (case.region.isNotEmpty() && (region == null || region !in supportedRegions)) {
+            skipped++
+            continue
+        }
+        val number = (parse(case.input, region) as? PhoneParseResult.Parsed)?.number
+        val where = "'${case.input}' in ${case.region.ifEmpty { "no region" }}"
+
+        if (case.e164 == null) {
+            // libphonenumber refuses it, so this must too. Agreeing about what is
+            // not a number is the half a success-only fixture cannot check.
+            assertTrue(number == null, "$where should not parse, got ${number?.e164}")
+            rejections++
+            continue
+        }
+
+        assertTrue(number != null, "$where should parse to ${case.e164}")
+        assertEquals(case.e164, format(number, PhoneNumberFormat.E164), "$where E164")
+        assertEquals(case.isValid, isValid(number), "$where validity")
+        assertEquals(case.type, typeOf(number).name, "$where type")
+        // The raw code rather than the Country: libphonenumber names
+        // territories ISO 3166-1 does not list, and comparing the narrower of
+        // the two would be skipping the cases where they differ.
+        assertEquals(case.numberRegion, regionCodeOf(number).orEmpty(), "$where region")
+        checked++
+    }
+    assertTrue(checked > 1500, "expected to check the edge set, checked only $checked ($skipped skipped)")
+    assertTrue(rejections > 200, "expected the rejections to be checked too, got $rejections")
 }

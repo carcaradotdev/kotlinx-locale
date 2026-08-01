@@ -58,7 +58,12 @@ public class PayloadPhoneNumbers(
     // ------------------------------------------------------------------
 
     override fun parse(text: String, defaultRegion: Country?): PhoneParseResult {
-        val (body, extension) = splitExtension(text)
+        val (body, extension) = splitExtension(dropSecondNumber(unwrapRfc3966(normalizeWideForms(text))))
+        // A hash that survived extension splitting was never an extension
+        // marker, and a hash is not a digit. `+1123-456-7890 7777777#` has
+        // seven digits after the space where the American form allows six, so
+        // the hash belongs to nothing and the input is not one number.
+        if ('#' in body) return failed(PhoneParseFailure.NOT_A_NUMBER)
         val digitsAndPlus = keepDialable(body)
         if (digitsAndPlus.none(Char::isDigit)) return failed(PhoneParseFailure.NOT_A_NUMBER)
 
@@ -68,8 +73,22 @@ public class PayloadPhoneNumbers(
         var callingCode: Int
         var national: String
         if (stripped.hadPrefix) {
-            callingCode = readCallingCode(stripped.digits) ?: return failed(PhoneParseFailure.UNKNOWN_CALLING_CODE)
-            national = stripped.digits.substring(callingCodeLength(callingCode))
+            var code = readCallingCode(stripped.digits)
+            var rest = stripped.digits
+            if (code == null && digitsAndPlus.startsWith('+')) {
+                // A plus followed by something that is not a calling code, which
+                // in practice means a plus followed by the region's own
+                // international prefix: people paste `+011 64 …` in the United
+                // States. libphonenumber ignores the plus and reads the IDD, and
+                // its own tests say so in as many words.
+                val retry = stripInternationalPrefix(stripped.digits, region)
+                if (retry.hadPrefix) {
+                    code = readCallingCode(retry.digits)
+                    rest = retry.digits
+                }
+            }
+            callingCode = code ?: return failed(PhoneParseFailure.UNKNOWN_CALLING_CODE)
+            national = rest.substring(callingCodeLength(callingCode))
         } else {
             if (region == null) return failed(PhoneParseFailure.MISSING_REGION)
             // No `+` and no international prefix, so the digits are national.
@@ -85,46 +104,208 @@ public class PayloadPhoneNumbers(
         return when {
             national.length < MIN_NATIONAL_LENGTH -> failed(PhoneParseFailure.TOO_SHORT)
             national.length > MAX_NATIONAL_LENGTH -> failed(PhoneParseFailure.TOO_LONG)
-            else -> PhoneParseResult.Parsed(PhoneNumber(callingCode, national, extension))
+            else -> PhoneParseResult.Parsed(
+                PhoneNumber(
+                    callingCode = callingCode,
+                    nationalNumber = national,
+                    extension = extension,
+                    // Already resolved: stripping the national prefix had to
+                    // decide which territory this is before it could know which
+                    // prefix to strip.
+                    region = resolvedRegion(callingCode, national)?.let { Country.forAlpha2OrNull(it.id) },
+                    regionCode = resolvedRegion(callingCode, national)?.id?.takeIf { it.any(Char::isLetter) },
+                ),
+            )
         }
     }
 
     private fun failed(reason: PhoneParseFailure) = PhoneParseResult.Failed(reason)
 
     /**
-     * The input split at its extension marker.
+     * [text] with its wide and non-ASCII forms written the ordinary way.
      *
-     * The markers are the ones people write rather than a specification: RFC
-     * 3966's `;ext=`, the words `ext`, `extn` and `x`, and a bare `#` at the end.
+     * Numbers arrive typed on the input method someone has. A Japanese keyboard
+     * produces fullwidth `ｅｘｔｎ` and `４５６`, and an Arabic one produces
+     * `٤٥٦`; both are the same characters as far as anyone reading them is
+     * concerned. Done first, so everything downstream can look for `x` and `4`
+     * and find them.
      */
-    private fun splitExtension(text: String): Pair<String, String?> {
-        val lower = text.lowercase()
-        for (marker in EXTENSION_MARKERS) {
-            val at = lower.indexOf(marker)
-            if (at < 0) continue
-            val tail = text.substring(at + marker.length).filter(Char::isDigit)
-            if (tail.isNotEmpty()) return text.substring(0, at) to tail
-        }
-        // A trailing `#` is an extension only when digits follow it.
-        val hash = text.lastIndexOf('#')
-        if (hash > 0) {
-            val tail = text.substring(hash + 1).filter(Char::isDigit)
-            if (tail.isNotEmpty()) return text.substring(0, hash) to tail
-        }
-        return text to null
-    }
-
-    /** The input reduced to digits and a leading plus, which is all that carries meaning. */
-    private fun keepDialable(text: String): String = buildString(text.length) {
-        for ((index, ch) in text.withIndex()) {
-            when {
-                ch.isDigit() -> append(ch)
-                (ch == '+' || ch == '＋') && isEmpty() -> append('+')
-                // A plus after the first digit is not a plus; some inputs carry
-                // one from a paste and it is noise.
-                index >= 0 -> Unit
+    private fun normalizeWideForms(text: String): String {
+        // Anything outside ASCII may need rewriting, not only the fullwidth
+        // block: a combining accent is 0x301 and a precomposed one is 0xF3.
+        if (text.all { it.code < ASCII_LIMIT }) return text
+        return buildString(text.length) {
+            for (ch in text) {
+                when {
+                    // The fullwidth block is ASCII shifted by a fixed offset.
+                    ch.code in WIDE_FORM_START..WIDE_FORM_END -> append((ch.code - WIDE_FORM_OFFSET).toChar())
+                    // A combining accent is dropped and a precomposed one is
+                    // written plain, so `extensión` and `extensio` plus a
+                    // combining acute both read as `extension`. Spanish writes
+                    // the label with an accent and Java source can spell that
+                    // either way; the label is the same word.
+                    ch.code in COMBINING_MARK_START..COMBINING_MARK_END -> Unit
+                    ch == 'ó' -> append('o')
+                    ch.isDigit() -> append(ch.digitToIntOrNull()?.digitToChar() ?: ch)
+                    else -> append(ch)
+                }
             }
         }
+    }
+
+    /**
+     * [text] cut at the point a second number starts.
+     *
+     * `(212)123-1234 x508/x1234` is two numbers written together, which is a
+     * thing directories do. The slash before the second extension marker is the
+     * signal, and without cutting there the first number's extension runs into
+     * the second number and neither is read.
+     */
+    private fun dropSecondNumber(text: String): String {
+        var index = 0
+        while (index < text.length) {
+            if (text[index] == '/' || text[index] == '\\') {
+                var after = index + 1
+                while (after < text.length && text[after] == ' ') after++
+                if (after < text.length && (text[after] == 'x' || text[after] == 'X')) return text.substring(0, index)
+            }
+            index++
+        }
+        return text
+    }
+
+    /**
+     * A `tel:` URI reduced to the number inside it.
+     *
+     * `phone-context` is not decoration. RFC 3966 lets a URI carry a local
+     * number plus the prefix that makes it global, so
+     * `tel:331-6005;phone-context=+64-3` is `+64 3 331 6005` and reading only
+     * the part before the semicolon loses a digit of the area code. When the
+     * context is a domain name rather than a prefix it carries no digits and
+     * only the local number is kept.
+     *
+     * `isub` is an ISDN subaddress, which addresses equipment behind the number
+     * rather than the number, so it is dropped.
+     */
+    private fun unwrapRfc3966(text: String): String {
+        val contextAt = text.indexOf(RFC3966_CONTEXT)
+        val body = if (contextAt < 0) {
+            text
+        } else {
+            val context = text.substring(contextAt + RFC3966_CONTEXT.length).substringBefore(';')
+            val start = text.indexOf(RFC3966_PREFIX).let { if (it >= 0) it + RFC3966_PREFIX.length else 0 }
+            val local = text.substring(start, contextAt)
+            if (context.startsWith('+')) context + local else local
+        }
+        val isdnAt = body.indexOf(RFC3966_ISDN)
+        return if (isdnAt > 0) body.substring(0, isdnAt) else body
+    }
+
+    /**
+     * The input split at its extension, which is always the last thing in it.
+     *
+     * Modelled on libphonenumber's own pattern rather than on a list of words,
+     * because the interesting part is not which labels exist but how much each
+     * one is trusted. A label that says `extension` outright can be followed by
+     * twenty digits; a bare `x` by nine; a hyphen and a hash, which is only an
+     * extension by American convention, by six. The limits are what stop two
+     * numbers written side by side from being read as one number with a very
+     * long extension.
+     *
+     * Requiring the extension to end the input is the other half of that. It is
+     * what keeps Poland's `0~0` international prefix from reading as a `~`
+     * extension in `0~01-650-253-0000`.
+     */
+    private fun splitExtension(text: String): Pair<String, String?> {
+        for (rule in EXTENSION_RULES) {
+            var at = if (rule.label.isEmpty()) -1 else text.lowercase().indexOf(rule.label)
+            while (at > 0) {
+                val digits = readExtension(text, at + rule.label.length, rule)
+                if (digits != null) return text.substring(0, at) to digits
+                at = text.lowercase().indexOf(rule.label, at + 1)
+            }
+        }
+        return trailingHashExtension(text) ?: (text to null)
+    }
+
+    /**
+     * The digits of an extension starting after its label, or `null`.
+     *
+     * The label may be followed by a full stop or colon, then separators, then
+     * the digits, then an optional hash that closes it on some systems.
+     */
+    private fun readExtension(text: String, from: Int, rule: ExtensionRule): String? {
+        var index = from
+        if (index < text.length && (text[index] == '.' || text[index] == ':')) index++
+        while (index < text.length && text[index] in EXTENSION_SEPARATORS) index++
+        val start = index
+        while (index < text.length && text[index].isDigit()) index++
+        if (index == start || index - start > rule.maxDigits) return null
+        val digits = text.substring(start, index)
+        if (index < text.length && text[index] == '#') index++
+        while (index < text.length && text[index] == ' ') index++
+        return if (index == text.length) digits else null
+    }
+
+    /**
+     * The American form: a separator, up to six digits, and a required hash.
+     *
+     * `- 503#` is an extension and `- 503` is the end of a phone number, so the
+     * hash is what distinguishes them and cannot be optional here.
+     */
+    private fun trailingHashExtension(text: String): Pair<String, String?>? {
+        if (!text.endsWith('#')) return null
+        var index = text.length - 1
+        val end = index
+        while (index > 0 && text[index - 1].isDigit()) index--
+        if (index == end || end - index > AMERICAN_EXTENSION_DIGITS) return null
+        val digitsStart = index
+        while (index > 0 && (text[index - 1] == '-' || text[index - 1] == ' ')) index--
+        if (index == digitsStart) return null
+        return text.substring(0, index) to text.substring(digitsStart, end)
+    }
+
+    /**
+     * The input reduced to digits and a leading plus, which is all that carries
+     * meaning.
+     *
+     * Letters are dialled digits when there are enough of them to be a word.
+     * `0800 DDA 005` is a real New Zealand number and `1-800-FLOWERS` is a real
+     * American one, and on a keypad both are digits already; three letters is
+     * libphonenumber's threshold for reading them that way rather than as
+     * stray characters in a number someone pasted badly.
+     */
+    private fun keepDialable(text: String): String {
+        // Everything before the first digit or plus is not part of the number.
+        // A `tel:` scheme, a label someone pasted along with it, a currency
+        // symbol. Dropped before the letters are counted, so `tel:` cannot make
+        // an ordinary number look like a word and dial as 835.
+        val start = text.indexOfFirst { it.isDigit() || it == '+' || it == '＋' }
+        if (start < 0) return ""
+        val body = text.substring(start)
+        val mapLetters = body.count { it in 'a'..'z' || it in 'A'..'Z' } >= VANITY_LETTER_THRESHOLD
+        return buildString(body.length) {
+            for (ch in body) {
+                when {
+                    ch.isDigit() -> append(ch)
+                    (ch == '+' || ch == '＋') && isEmpty() -> append('+')
+                    mapLetters && ch.isLetter() -> keypadDigit(ch)?.let(::append)
+                }
+            }
+        }
+    }
+
+    /** The digit [ch] shares a key with, on the ITU E.161 keypad every phone has. */
+    private fun keypadDigit(ch: Char): Char? = when (ch.lowercaseChar()) {
+        in 'a'..'c' -> '2'
+        in 'd'..'f' -> '3'
+        in 'g'..'i' -> '4'
+        in 'j'..'l' -> '5'
+        in 'm'..'o' -> '6'
+        in 'p'..'s' -> '7'
+        in 't'..'v' -> '8'
+        in 'w'..'z' -> '9'
+        else -> null
     }
 
     private class Stripped(val digits: String, val hadPrefix: Boolean)
@@ -170,7 +351,13 @@ public class PayloadPhoneNumbers(
         val general = region.generalDescription
         val keptIsValid = general.matches(digits)
         val strippedIsValid = general.matches(stripNationalPrefix(without, region.callingCode))
-        return if (!keptIsValid && strippedIsValid) without else digits
+        // Or when keeping the code makes the number longer than the territory
+        // has room for. `64(0)64123456` typed in New Zealand is eleven digits
+        // where ten is the most any of its numbers has, so the leading 64 is a
+        // country code however little the rest validates: no reading that keeps
+        // it can be right.
+        val keptIsTooLong = general.possibleLengths.isNotEmpty() && digits.length > general.possibleLengths.last()
+        return if ((!keptIsValid && strippedIsValid) || keptIsTooLong) without else digits
     }
 
     /**
@@ -191,7 +378,13 @@ public class PayloadPhoneNumbers(
 
         val transform = region.nationalPrefixTransformRule
         val candidate = if (transform != null && groups.isNotEmpty() && groups[0] != null) {
-            applyGroups(transform, groups)
+            // The rule rewrites the part the prefix pattern matched, and the
+            // rest of the number follows it unchanged. Argentina is the reason
+            // this exists: dialling `0 343 15 5551212` reaches the same mobile
+            // as `+54 9 343 5551212`, so the rule turns the `0…15` wrapper into
+            // a leading 9, and dropping the subscriber digits along with the
+            // wrapper would leave an area code and nothing to dial.
+            applyGroups(transform, groups) + national.substring(end)
         } else {
             national.substring(end)
         }
@@ -199,7 +392,27 @@ public class PayloadPhoneNumbers(
         // Kept when stripping would make a valid number invalid, which is the
         // check that stops Argentina's `0` being taken off a number that needs it.
         if (general.hasPattern && general.matches(national) && !general.matches(candidate)) return national
+        // And kept when what is left is a length the territory does not have.
+        // `123-456-7890` typed in the United States is not a valid number either
+        // way, but taking the leading 1 off leaves nine digits where every
+        // American number has ten, so the 1 was a digit rather than a prefix.
+        if (!isPlausibleLengthAfterStripping(candidate, general)) return national
         return candidate
+    }
+
+    /**
+     * Whether [candidate] has a length the territory could have.
+     *
+     * Accepts a length the territory declares, and accepts one longer than any
+     * it declares: an over-long number is a number with something extra on it,
+     * which is a different problem from a prefix having been taken off the
+     * front. Everything else, too short or between the declared lengths, means
+     * the digits removed were not a prefix.
+     */
+    private fun isPlausibleLengthAfterStripping(candidate: String, general: PhoneDescription): Boolean {
+        val lengths = general.possibleLengths
+        if (lengths.isEmpty()) return true
+        return candidate.length in lengths || candidate.length > lengths.last()
     }
 
     // ------------------------------------------------------------------
@@ -240,9 +453,28 @@ public class PayloadPhoneNumbers(
         return PhoneNumberType.UNKNOWN
     }
 
-    override fun regionOf(number: PhoneNumber): Country? {
-        val region = regionRecordFor(number.callingCode, number.nationalNumber) ?: return null
-        return Country.forAlpha2OrNull(region.id)
+    override fun regionCodeOf(number: PhoneNumber): String? =
+        resolvedRegion(number.callingCode, number.nationalNumber)?.id?.takeIf { it.any(Char::isLetter) }
+
+    override fun regionOf(number: PhoneNumber): Country? =
+        resolvedRegion(number.callingCode, number.nationalNumber)?.let { Country.forAlpha2OrNull(it.id) }
+
+    /**
+     * The territory a number belongs to, or `null` when none claims it.
+     *
+     * Different from [regionRecordFor] in exactly one case, and it is the case
+     * that matters here. Where several territories share a calling code and none
+     * of them recognises the number, this reports nothing, because nothing is
+     * true: `+1 33669` is five digits and is not a number in the United States
+     * or in any of the twenty-four territories beside it. [regionRecordFor]
+     * falls back to the main country instead, which is right for formatting,
+     * since the alternative is refusing to write out digits somebody has, and
+     * wrong for answering "where is this from".
+     */
+    private fun resolvedRegion(callingCode: Int, nationalNumber: String): PhoneTerritoryRecord? {
+        val candidates = byCallingCode[callingCode] ?: return null
+        if (candidates.size == 1) return candidates[0]
+        return matchingRegion(candidates, nationalNumber)
     }
 
     /**
@@ -257,6 +489,13 @@ public class PayloadPhoneNumbers(
     private fun regionRecordFor(callingCode: Int, nationalNumber: String): PhoneTerritoryRecord? {
         val candidates = byCallingCode[callingCode] ?: return null
         if (candidates.size == 1) return candidates[0]
+        return matchingRegion(candidates, nationalNumber)
+            ?: candidates.firstOrNull { it.isMainCountryForCode }
+            ?: candidates.firstOrNull()
+    }
+
+    /** The first of [candidates] that recognises [nationalNumber], or `null`. */
+    private fun matchingRegion(candidates: List<PhoneTerritoryRecord>, nationalNumber: String): PhoneTerritoryRecord? {
         for (candidate in candidates) {
             val leading = candidate.leadingDigitsPattern()
             if (leading != null) {
@@ -270,13 +509,13 @@ public class PayloadPhoneNumbers(
                 return candidate
             }
         }
-        return candidates.firstOrNull { it.isMainCountryForCode } ?: candidates.firstOrNull()
+        return null
     }
 
     override fun exampleNumberOrNull(region: Country, type: PhoneNumberType): PhoneNumber? {
         val record = byId[region.name] ?: return null
         val example = record.descriptionOrNull(type)?.exampleNumber?.takeIf(String::isNotEmpty) ?: return null
-        return PhoneNumber(record.callingCode, example)
+        return PhoneNumber(record.callingCode, example, region = region)
     }
 
     /**
@@ -363,7 +602,66 @@ public class PayloadPhoneNumbers(
             PhoneNumberType.VOICEMAIL,
         )
 
-        val EXTENSION_MARKERS = listOf(";ext=", "extn", "ext.", "ext", " x", "#")
+        /**
+         * The labels, longest first, with how many digits each is trusted for.
+         *
+         * The lengths are libphonenumber's and they are the point: an explicit
+         * word is worth twenty digits, an auto-dialling separator fifteen, a
+         * single ambiguous character nine.
+         */
+        val EXTENSION_RULES: List<ExtensionRule> = listOf(
+            ExtensionRule(";ext=", 20),
+            // Every form of `e?xt(?:ensi(?:ó)?)?n?`, longest first, with the
+            // accent already normalised to a plain `o`. Enumerated rather than
+            // matched, because a pattern here would be the one place this
+            // library evaluated a regular expression it had not bounded.
+            ExtensionRule("extension", 20),
+            ExtensionRule("extensio", 20),
+            ExtensionRule("extensin", 20),
+            ExtensionRule("extensi", 20),
+            ExtensionRule("xtension", 20),
+            ExtensionRule("xtensio", 20),
+            ExtensionRule("xtensin", 20),
+            ExtensionRule("xtensi", 20),
+            ExtensionRule("extn", 20),
+            ExtensionRule("ext", 20),
+            ExtensionRule("xtn", 20),
+            ExtensionRule("xt", 20),
+            // Russian and Portuguese, which libphonenumber carries alongside the
+            // English ones because the label is what a local user would type.
+            ExtensionRule("\u0434\u043E\u0431", 20),
+            ExtensionRule("anexo", 20),
+            ExtensionRule(";", 15),
+            ExtensionRule(",,", 15),
+            ExtensionRule("int", 9),
+            ExtensionRule("x", 9),
+            ExtensionRule("#", 9),
+            ExtensionRule("~", 9),
+            ExtensionRule(",", 9),
+        )
+
+        const val EXTENSION_SEPARATORS = " \t,-"
+
+        /** The American hyphen-and-hash form, which is trusted least. */
+        const val AMERICAN_EXTENSION_DIGITS = 6
+
+        /** How many letters make an input a word rather than a typo. */
+        const val VANITY_LETTER_THRESHOLD = 3
+
+        const val ASCII_LIMIT = 0x80
+
+        /** Unicode's combining diacritical marks. */
+        const val COMBINING_MARK_START = 0x0300
+        const val COMBINING_MARK_END = 0x036F
+
+        /** The fullwidth ASCII block, and the constant offset back to ASCII. */
+        const val WIDE_FORM_START = 0xFF01
+        const val WIDE_FORM_END = 0xFF5E
+        const val WIDE_FORM_OFFSET = 0xFEE0
+
+        const val RFC3966_PREFIX = "tel:"
+        const val RFC3966_CONTEXT = ";phone-context="
+        const val RFC3966_ISDN = ";isub="
     }
 }
 
@@ -424,3 +722,6 @@ internal fun hyphenate(formatted: String): String = buildString(formatted.length
         }
     }
 }
+
+/** One extension label and how many digits it is trusted to introduce. */
+internal class ExtensionRule(val label: String, val maxDigits: Int)

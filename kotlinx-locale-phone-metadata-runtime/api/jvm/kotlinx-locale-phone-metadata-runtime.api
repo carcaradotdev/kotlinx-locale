@@ -35,6 +35,7 @@ public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PayloadPhon
 	public fun getSupportedRegions ()Ljava/util/Set;
 	public fun isValid (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Z
 	public fun parse (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
+	public fun regionCodeOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ljava/lang/String;
 	public fun regionOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/country/Country;
 	public fun typeOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
 }

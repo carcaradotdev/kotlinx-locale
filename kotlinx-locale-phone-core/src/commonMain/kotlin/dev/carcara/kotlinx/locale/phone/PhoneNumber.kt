@@ -26,6 +26,31 @@ public class PhoneNumber @InternalKotlinxLocaleApi public constructor(
     public val nationalNumber: String,
     /** The extension, when the input carried one. */
     public val extension: String? = null,
+    /**
+     * The territory this number belongs to.
+     *
+     * Carried on the value rather than looked up, because parsing has already
+     * worked it out: deciding where to strip a national prefix means deciding
+     * which of the twenty-five territories on `+1` this is, so asking again
+     * afterwards would repeat the search to reach an answer already known.
+     *
+     * `null` when the calling code is not geographic, which `+800` international
+     * freephone is, when the number was built without metadata to hand, or when
+     * the territory is one ISO 3166-1 does not list. See [regionCode] for the
+     * answer that is always available.
+     */
+    public val region: Country? = null,
+    /**
+     * The territory code libphonenumber uses, which is wider than [region].
+     *
+     * Some numbering plans belong to territories that are not ISO 3166-1
+     * countries: Ascension Island is `AC`, Tristan da Cunha is `TA`. [Country]
+     * models the ISO list and so cannot name them, and returning nothing for a
+     * number that plainly comes from somewhere would be losing an answer this
+     * library has. `null` only for the genuinely non-geographic plans, `+800`
+     * international freephone among them.
+     */
+    public val regionCode: String? = null,
 ) {
 
     /**
@@ -40,6 +65,13 @@ public class PhoneNumber @InternalKotlinxLocaleApi public constructor(
     /** The number of digits in the national number, which is what validation is over. */
     public val nationalNumberLength: Int get() = nationalNumber.length
 
+    /**
+     * Equal when the calling code, the national number and the extension are.
+     *
+     * [region] is left out on purpose. It is a function of the other two under
+     * a given set of metadata rather than an independent fact, so including it
+     * could only ever make two numbers that dial the same phone compare unequal.
+     */
     override fun equals(other: Any?): Boolean = other is PhoneNumber &&
         callingCode == other.callingCode &&
         nationalNumber == other.nationalNumber &&
@@ -207,6 +239,14 @@ public interface PhoneNumberSource {
      */
     public fun regionOf(number: PhoneNumber): Country?
 
+    /**
+     * The territory code [number] belongs to, wider than [regionOf].
+     *
+     * Returns `AC` for Ascension Island where [regionOf] returns nothing,
+     * because [Country] models ISO 3166-1 and that list does not have it.
+     */
+    public fun regionCodeOf(number: PhoneNumber): String?
+
     /** A valid example number of [type] for [region], for tests and placeholders. */
     public fun exampleNumberOrNull(region: Country, type: PhoneNumberType = PhoneNumberType.FIXED_LINE): PhoneNumber?
 
@@ -221,3 +261,34 @@ public fun PhoneNumberSource.parseOrNull(text: String, defaultRegion: Country? =
 /** True when [text] parses to a valid number for [defaultRegion]. */
 public fun PhoneNumberSource.isValid(text: String, defaultRegion: Country? = null): Boolean =
     parseOrNull(text, defaultRegion)?.let(::isValid) == true
+
+/**
+ * The territory [text] names, when it says so itself.
+ *
+ * A number that carries its own calling code, whether as `+44…` or as an
+ * international dialling prefix, identifies its territory exactly, including
+ * which of the twenty-five on `+1` it is. This answers that and nothing else:
+ * `null` means the text is a bare national number, and a bare national number
+ * does not name a country. See [candidateRegions] for what can be said then.
+ */
+public fun PhoneNumberSource.detectRegion(text: String): Country? = parseOrNull(text)?.region
+
+/**
+ * Every territory [text] would be a valid number in.
+ *
+ * The honest answer to "which country is this?" for a number with no calling
+ * code, which is a question with no single answer. `+1` aside, the same nine
+ * digits are a valid subscriber number in more than one country often enough
+ * that guessing would be worse than listing.
+ *
+ * Ordered by calling code so the result is stable, and empty when the digits are
+ * valid nowhere. A caller with a hint worth more than this, a billing address or
+ * a SIM, should pass it to [parse] as the default region instead of asking here.
+ */
+public fun PhoneNumberSource.candidateRegions(text: String): List<Country> {
+    // A number that names its own territory is not a guess; return the one.
+    detectRegion(text)?.let { return listOf(it) }
+    return supportedRegions
+        .filter { region -> parseOrNull(text, region)?.let(::isValid) == true }
+        .sortedBy { callingCodeOrNull(it) ?: Int.MAX_VALUE }
+}

@@ -1,6 +1,7 @@
 package dev.carcara.kotlinx.locale.phone
 
-import dev.carcara.kotlinx.locale.conformance.assertConformsToLibPhoneNumber
+import dev.carcara.kotlinx.locale.phone.conformance.assertConformsToLibPhoneNumber
+import dev.carcara.kotlinx.locale.phone.conformance.assertParsesLikeLibPhoneNumber
 import dev.carcara.kotlinx.locale.phone.metadata.PhoneNumbers
 import kotlin.test.Test
 
@@ -9,4 +10,7 @@ class PhoneConformanceTest {
 
     @Test
     fun agreesWithLibPhoneNumber() = PhoneNumbers.assertConformsToLibPhoneNumber()
+
+    @Test
+    fun parsesTheAwkwardInputsTheSameWay() = PhoneNumbers.assertParsesLikeLibPhoneNumber()
 }

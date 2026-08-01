@@ -9,14 +9,16 @@ public final class dev/carcara/kotlinx/locale/phone/CallingCodeSource : java/lan
 }
 
 public final class dev/carcara/kotlinx/locale/phone/PhoneNumber {
-	public fun <init> (ILjava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/lang/String;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;Ljava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCallingCode ()I
 	public final fun getE164 ()Ljava/lang/String;
 	public final fun getExtension ()Ljava/lang/String;
 	public final fun getNationalNumber ()Ljava/lang/String;
 	public final fun getNationalNumberLength ()I
+	public final fun getRegion ()Ldev/carcara/kotlinx/locale/country/Country;
+	public final fun getRegionCode ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -32,6 +34,8 @@ public final class dev/carcara/kotlinx/locale/phone/PhoneNumberFormat : java/lan
 }
 
 public final class dev/carcara/kotlinx/locale/phone/PhoneNumberKt {
+	public static final fun candidateRegions (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;)Ljava/util/List;
+	public static final fun detectRegion (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;)Ldev/carcara/kotlinx/locale/country/Country;
 	public static final fun isValid (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Z
 	public static synthetic fun isValid$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;ILjava/lang/Object;)Z
 	public static final fun parseOrNull (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
@@ -48,6 +52,7 @@ public abstract interface class dev/carcara/kotlinx/locale/phone/PhoneNumberSour
 	public abstract fun isValid (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Z
 	public abstract fun parse (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
 	public static synthetic fun parse$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
+	public abstract fun regionCodeOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ljava/lang/String;
 	public abstract fun regionOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/country/Country;
 	public abstract fun typeOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
 }

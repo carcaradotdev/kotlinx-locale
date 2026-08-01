@@ -1,0 +1,55 @@
+public class dev/carcara/kotlinx/locale/phone/serialization/LenientPhoneNumberSerializer : kotlinx/serialization/KSerializer {
+	public fun <init> (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ldev/carcara/kotlinx/locale/country/Country;)V
+	public synthetic fun <init> (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ldev/carcara/kotlinx/locale/country/Country;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public class dev/carcara/kotlinx/locale/phone/serialization/PhoneNumberE164Serializer : kotlinx/serialization/KSerializer {
+	public fun <init> (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;)V
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public class dev/carcara/kotlinx/locale/phone/serialization/PhoneNumberInternationalSerializer : kotlinx/serialization/KSerializer {
+	public fun <init> (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;)V
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public class dev/carcara/kotlinx/locale/phone/serialization/PhoneNumberNationalSerializer : kotlinx/serialization/KSerializer {
+	public fun <init> (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ldev/carcara/kotlinx/locale/country/Country;)V
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public final class dev/carcara/kotlinx/locale/phone/serialization/PhoneNumberPartsSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/phone/serialization/PhoneNumberPartsSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+
+public class dev/carcara/kotlinx/locale/phone/serialization/PhoneNumberRfc3966Serializer : kotlinx/serialization/KSerializer {
+	public fun <init> (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;)V
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+}
+

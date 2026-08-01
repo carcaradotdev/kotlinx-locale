@@ -29,6 +29,19 @@ private fun File.sourceRoot(module: String, sourceSet: String = "commonMain"): F
  * tests, so that any source can be checked against them and not just the
  * bundled one.
  */
+/**
+ * Where the phone fixtures go, which is not the shared conformance module.
+ *
+ * They are six thousand cases used by exactly one module, and the shared module
+ * is compiled into every other module's test binary. Putting them there made
+ * `country-cldr-full` carry the phone edge cases on every Kotlin/Native target,
+ * which is waste on its own and was enough to exhaust the Native compiler's
+ * heap while linking.
+ */
+private fun phoneConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-phone-metadata-full", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/phone/conformance")
+
 private fun conformanceDir(rootDir: File): File = rootDir
     .sourceRoot("conformance-test-suite")
     .resolve("dev/carcara/kotlinx/locale/conformance")
@@ -260,8 +273,13 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
     val phoneDir = ensureCloned(rootDir, PHONE_REPO)
     crossCheckPhoneVersion(phoneDir)
     val phoneMetadata = parsePhoneMetadata(phoneDir)
+    emitPhoneEdgeGolden(
+        outputFile = phoneConformanceDir(rootDir).resolve("PhoneEdgeGoldenData.kt"),
+        tag = PHONE_REPO.tag,
+        cases = extractPhoneEdgeGolden(phoneDir, phoneMetadata),
+    )
     emitPhoneGolden(
-        outputFile = conformanceDir(rootDir).resolve("PhoneGoldenData.kt"),
+        outputFile = phoneConformanceDir(rootDir).resolve("PhoneGoldenData.kt"),
         tag = PHONE_REPO.tag,
         entries = extractPhoneGolden(),
     )

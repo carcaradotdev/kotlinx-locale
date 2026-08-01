@@ -74,6 +74,7 @@ val published = listOf(
     "kotlinx-locale-phone-core",
     "kotlinx-locale-phone-metadata-runtime",
     "kotlinx-locale-phone-metadata-full",
+    "kotlinx-locale-phone-serialization",
     "kotlinx-locale-codegen-emitters",
     "kotlinx-locale-codegen-data",
     "kotlinx-locale-gradle-plugin",

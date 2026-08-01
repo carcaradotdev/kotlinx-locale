@@ -98,6 +98,8 @@ public fun emitPhoneBinding(outputRoot: File, spec: BindingSpec, hasFormats: Boo
                 "dev.carcara.kotlinx.locale.phone.PhoneNumberSource",
                 "dev.carcara.kotlinx.locale.phone.PhoneNumberType",
                 "dev.carcara.kotlinx.locale.phone.PhoneParseResult",
+                "dev.carcara.kotlinx.locale.phone.candidateRegions",
+                "dev.carcara.kotlinx.locale.phone.detectRegion",
                 "dev.carcara.kotlinx.locale.phone.metadata.runtime.AsYouTypeFormatter",
                 "dev.carcara.kotlinx.locale.phone.metadata.runtime.PayloadPhoneNumbers",
                 "${spec.registryPackage}.phoneTerritoryRegistry",
@@ -124,13 +126,34 @@ public fun emitPhoneBinding(outputRoot: File, spec: BindingSpec, hasFormats: Boo
         |
         |public object ${spec.objectName} : PhoneNumberSource by ${spec.objectName}Source
         |
-        |/** [this] read as a phone number for [region], or `null`. */
-        |public fun String.toPhoneNumberOrNull(region: Country? = null): PhoneNumber? =
-        |    (${spec.objectName}.parse(this, region) as? PhoneParseResult.Parsed)?.number
+        |/**
+        | * [text] read as a phone number, or `null`.
+        | *
+        | * [region] supplies the calling code when [text] carries none of its own.
+        | * The result knows its own territory, so the country comes back with the
+        | * number rather than needing a second call:
+        | *
+        | * ```
+        | * val number = phoneNumberOrNull("+55 11 96123-4567") ?: return
+        | * number.region   // Country.BR
+        | * ```
+        | */
+        |public fun phoneNumberOrNull(text: String, region: Country? = null): PhoneNumber? =
+        |    (${spec.objectName}.parse(text, region) as? PhoneParseResult.Parsed)?.number
         |
-        |/** True when [this] is a number that could exist in [region]. */
-        |public fun String.isValidPhoneNumber(region: Country? = null): Boolean =
-        |    toPhoneNumberOrNull(region)?.let(${spec.objectName}::isValid) == true
+        |/** [text] read as a phone number, with the reason when it cannot be. */
+        |public fun parsePhoneNumber(text: String, region: Country? = null): PhoneParseResult =
+        |    ${spec.objectName}.parse(text, region)
+        |
+        |/** True when [text] is a number that could exist in [region]. */
+        |public fun isValidPhoneNumber(text: String, region: Country? = null): Boolean =
+        |    phoneNumberOrNull(text, region)?.let(${spec.objectName}::isValid) == true
+        |
+        |/** The territory [text] names itself, or `null` when it carries no calling code. */
+        |public fun phoneRegionOrNull(text: String): Country? = ${spec.objectName}.detectRegion(text)
+        |
+        |/** Every territory [text] would be valid in, for a number that names none. */
+        |public fun phoneRegionCandidates(text: String): List<Country> = ${spec.objectName}.candidateRegions(text)
         |
         |/** This number written in [format]. */
         |public fun PhoneNumber.format(format: PhoneNumberFormat = PhoneNumberFormat.INTERNATIONAL): String =
@@ -142,9 +165,7 @@ public fun emitPhoneBinding(outputRoot: File, spec: BindingSpec, hasFormats: Boo
         |/** What kind of number this is, or [PhoneNumberType.UNKNOWN]. */
         |public fun PhoneNumber.typeOf(): PhoneNumberType = ${spec.objectName}.typeOf(this)
         |
-        |/** The territory this number belongs to, or `null` when its calling code is not geographic. */
-        |public fun PhoneNumber.region(): Country? = ${spec.objectName}.regionOf(this)
-        |
+
         |/** An as-you-type formatter for this country, for a text field. */
         |public fun Country.asYouType(): AsYouTypeFormatter = ${spec.objectName}Source.asYouTypeFor(name)
         |
