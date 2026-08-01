@@ -40,6 +40,24 @@ public class SkeletonRecord(formats: String, appendFormats: String, names: Strin
     public val quartersWide: List<String> = nameFields[1].split(ENTRY_SEPARATOR)
     public val quartersAbbr: List<String> = nameFields[2].split(ENTRY_SEPARATOR)
 
+    /**
+     * The stand-alone quarter names, falling back to the format ones.
+     *
+     * Read positionally from the end of the record, so a record written before
+     * these existed decodes with the fallback rather than failing.
+     */
+    public val quartersStandaloneWide: List<String> = standaloneOr(5, quartersWide)
+    public val quartersStandaloneAbbr: List<String> = standaloneOr(6, quartersAbbr)
+
+    private fun standaloneOr(field: Int, format: List<String>): List<String> =
+        nameFields.getOrNull(field)?.takeIf(String::isNotEmpty)?.split(ENTRY_SEPARATOR) ?: format
+
+    /** The wide quarter at [index], in the stand-alone form when [standalone]. */
+    public fun quarterWide(index: Int, standalone: Boolean): String = if (standalone) quartersStandaloneWide[index] else quartersWide[index]
+
+    /** The abbreviated quarter at [index], in the stand-alone form when [standalone]. */
+    public fun quarterAbbr(index: Int, standalone: Boolean): String = if (standalone) quartersStandaloneAbbr[index] else quartersAbbr[index]
+
     private val hourCycle: List<String> = nameFields[3].split(ENTRY_SEPARATOR)
 
     /** What the `j` skeleton letter resolves to here: one of `h H k K`. */

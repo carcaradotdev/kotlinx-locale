@@ -54,11 +54,25 @@ class PartialLocaleData {
     val monthsAbbr = arrayOfNulls<String>(12)
     val monthsNarrow = arrayOfNulls<String>(12)
 
-    /** Only used to emulate root.xml's narrow -> stand-alone narrow alias. */
+    /**
+     * The stand-alone forms: what a calendar header or a month picker wants,
+     * where the format forms are what goes inside a date.
+     *
+     * In many languages the two differ by grammatical case — Czech July is
+     * `července` in a date and `červenec` alone — and it is not only case:
+     * Croatian writes its stand-alone narrow months as `7.`, a number.
+     *
+     * Narrow is also what emulates root.xml's alias, which runs the other way:
+     * format narrow inherits from stand-alone narrow rather than the reverse.
+     */
+    val monthsStandaloneWide = arrayOfNulls<String>(12)
+    val monthsStandaloneAbbr = arrayOfNulls<String>(12)
     val monthsStandaloneNarrow = arrayOfNulls<String>(12)
     val daysWide = arrayOfNulls<String>(7)
     val daysAbbr = arrayOfNulls<String>(7)
     val daysNarrow = arrayOfNulls<String>(7)
+    val daysStandaloneWide = arrayOfNulls<String>(7)
+    val daysStandaloneAbbr = arrayOfNulls<String>(7)
     val daysStandaloneNarrow = arrayOfNulls<String>(7)
     var am: String? = null
     var pm: String? = null
@@ -88,6 +102,8 @@ class PartialLocaleData {
     val fieldNames = arrayOfNulls<String>(DATE_FIELD_TYPES.size)
     val quartersWide = arrayOfNulls<String>(4)
     val quartersAbbr = arrayOfNulls<String>(4)
+    val quartersStandaloneWide = arrayOfNulls<String>(4)
+    val quartersStandaloneAbbr = arrayOfNulls<String>(4)
 }
 
 fun parseLdml(file: File): PartialLocaleData {
@@ -119,6 +135,8 @@ fun parseLdml(file: File): PartialLocaleData {
             Triple("format", "wide", data.monthsWide),
             Triple("format", "abbreviated", data.monthsAbbr),
             Triple("format", "narrow", data.monthsNarrow),
+            Triple("stand-alone", "wide", data.monthsStandaloneWide),
+            Triple("stand-alone", "abbreviated", data.monthsStandaloneAbbr),
             Triple("stand-alone", "narrow", data.monthsStandaloneNarrow),
         )) {
             val widthEl = months.child("monthContext", "type" to context)
@@ -132,8 +150,13 @@ fun parseLdml(file: File): PartialLocaleData {
     }
 
     gregorian.child("quarters")?.let { quarters ->
-        for ((width, target) in listOf("wide" to data.quartersWide, "abbreviated" to data.quartersAbbr)) {
-            val widthEl = quarters.child("quarterContext", "type" to "format")
+        for ((context, width, target) in listOf(
+            Triple("format", "wide", data.quartersWide),
+            Triple("format", "abbreviated", data.quartersAbbr),
+            Triple("stand-alone", "wide", data.quartersStandaloneWide),
+            Triple("stand-alone", "abbreviated", data.quartersStandaloneAbbr),
+        )) {
+            val widthEl = quarters.child("quarterContext", "type" to context)
                 ?.child("quarterWidth", "type" to width) ?: continue
             for (quarter in widthEl.childElements("quarter")) {
                 if (quarter.hasAttribute("alt")) continue
@@ -148,6 +171,8 @@ fun parseLdml(file: File): PartialLocaleData {
             Triple("format", "wide", data.daysWide),
             Triple("format", "abbreviated", data.daysAbbr),
             Triple("format", "narrow", data.daysNarrow),
+            Triple("stand-alone", "wide", data.daysStandaloneWide),
+            Triple("stand-alone", "abbreviated", data.daysStandaloneAbbr),
             Triple("stand-alone", "narrow", data.daysStandaloneNarrow),
         )) {
             val widthEl = days.child("dayContext", "type" to context)

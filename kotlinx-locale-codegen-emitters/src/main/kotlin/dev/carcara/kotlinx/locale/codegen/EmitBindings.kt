@@ -243,27 +243,34 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
 }
 
 /** `CldrDateTime`-shaped binding: the source object plus the datetime extensions. */
-public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec) {
+public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec, hasStandalone: Boolean = false) {
     val file = outputRoot.packageFile(spec.packageName, "LocalizedFormat.kt")
+    val standaloneArgument = if (hasStandalone) ", localeStandaloneRegistry" else ""
     file.writeText(
         preamble(
             spec,
-            listOf(
-                "dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi",
-                "dev.carcara.kotlinx.locale.Locale",
-                "dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource",
-                "dev.carcara.kotlinx.locale.datetime.FormatStyle",
-                "dev.carcara.kotlinx.locale.datetime.TextStyle",
-                "dev.carcara.kotlinx.locale.datetime.cldr.runtime.PayloadDateTimeFormats",
-                "dev.carcara.kotlinx.locale.datetime.displayName",
-                "dev.carcara.kotlinx.locale.datetime.format",
-                "${spec.registryPackage}.localeDataRegistry",
-                "kotlinx.datetime.DayOfWeek",
-                "kotlinx.datetime.LocalDate",
-                "kotlinx.datetime.LocalDateTime",
-                "kotlinx.datetime.LocalTime",
-                "kotlinx.datetime.Month",
-            ),
+            buildList {
+                addAll(
+                    listOf(
+                        "dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi",
+                        "dev.carcara.kotlinx.locale.Locale",
+                        "dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource",
+                        "dev.carcara.kotlinx.locale.datetime.FormatStyle",
+                        "dev.carcara.kotlinx.locale.datetime.NameContext",
+                        "dev.carcara.kotlinx.locale.datetime.TextStyle",
+                        "dev.carcara.kotlinx.locale.datetime.cldr.runtime.PayloadDateTimeFormats",
+                        "dev.carcara.kotlinx.locale.datetime.displayName",
+                        "dev.carcara.kotlinx.locale.datetime.format",
+                        "${spec.registryPackage}.localeDataRegistry",
+                        "kotlinx.datetime.DayOfWeek",
+                        "kotlinx.datetime.LocalDate",
+                        "kotlinx.datetime.LocalDateTime",
+                        "kotlinx.datetime.LocalTime",
+                        "kotlinx.datetime.Month",
+                    ),
+                )
+                if (hasStandalone) add("${spec.registryPackage}.localeStandaloneRegistry")
+            },
         ) + """
         |
         |/**
@@ -272,7 +279,8 @@ public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec) {
         | * The parser and formatter live in `kotlinx-locale-datetime-cldr-runtime`; all
         | * this object contributes is the table.
         | */
-        |public object ${spec.objectName} : DateTimeFormatSource by PayloadDateTimeFormats(localeDataRegistry) {
+        |public object ${spec.objectName} :
+        |    DateTimeFormatSource by PayloadDateTimeFormats(localeDataRegistry$standaloneArgument) {
         |
         |    /**
         |     * The pattern table itself, for an engine layered over this one.
@@ -321,6 +329,19 @@ public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec) {
         |/** The localized name of this day of week in the "format" context, e.g. `segunda-feira`. */
         |public fun DayOfWeek.displayName(style: TextStyle, locale: Locale): String =
         |    ${spec.objectName}.displayName(this, style, locale)
+        |
+        |/**
+        | * The localized name of this month in [context].
+        | *
+        | * [NameContext.STANDALONE] is what a calendar header or a month picker
+        | * wants: Czech July is `červenec` alone and `července` inside a date.
+        | */
+        |public fun Month.displayName(style: TextStyle, context: NameContext, locale: Locale): String =
+        |    ${spec.objectName}.displayName(this, style, context, locale)
+        |
+        |/** The localized name of this day of week in [context]; see [Month.displayName]. */
+        |public fun DayOfWeek.displayName(style: TextStyle, context: NameContext, locale: Locale): String =
+        |    ${spec.objectName}.displayName(this, style, context, locale)
         |
         """.trimMargin(),
     )

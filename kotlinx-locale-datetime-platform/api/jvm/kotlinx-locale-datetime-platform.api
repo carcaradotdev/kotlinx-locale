@@ -1,12 +1,14 @@
 public final class dev/carcara/kotlinx/locale/datetime/platform/PlatformDateTime : dev/carcara/kotlinx/locale/datetime/DateTimeFormatSource {
 	public static final field INSTANCE Ldev/carcara/kotlinx/locale/datetime/platform/PlatformDateTime;
 	public fun dayOfWeekNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun dayOfWeekNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatDateOrNull (Lkotlinx/datetime/LocalDate;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatDateTimeOrNull (Lkotlinx/datetime/LocalDateTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatTimeOrNull (Lkotlinx/datetime/LocalTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public final fun isAvailable ()Z
 	public fun monthNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun monthNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 }
 
 public final class dev/carcara/kotlinx/locale/datetime/platform/PlatformDateTimeKt {

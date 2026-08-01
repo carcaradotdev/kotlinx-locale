@@ -3,34 +3,34 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_HA: String =
-    "zamani\u001Eshekara\u001Ekwata\u001Ewata\u001E\u001E\u001Eranar mako\u001Ekwana\u001E\u001E\u001ESF/YM\u001Eawa\u001Eminti\u001Edaƙiƙa\u001E\u001E\u001FKwata na ɗaya\u001EKwata na biyu\u001EKwata na uku\u001EKwata na huɗu\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'da' {0}\u001E{1} 'da' {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "zamani\u001Eshekara\u001Ekwata\u001Ewata\u001E\u001E\u001Eranar mako\u001Ekwana\u001E\u001E\u001ESF/YM\u001Eawa\u001Eminti\u001Edaƙiƙa\u001E\u001E\u001FKwata na ɗaya\u001EKwata na biyu\u001EKwata na uku\u001EKwata na huɗu\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'da' {0}\u001E{1} 'da' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FKwata na ɗaya\u001EKwata na biyu\u001EKwata na uku\u001EKwata na huɗu"
 
 internal val SKELETON_NAMES_HA_GH: String =
-    "zamani\u001Eshekara\u001Ekwata\u001Ewata\u001E\u001E\u001Eranar mako\u001Ekwana\u001E\u001E\u001ESF/YM\u001Eawa\u001Eminti\u001Edaƙiƙa\u001E\u001E\u001FKwata na ɗaya\u001EKwata na biyu\u001EKwata na uku\u001EKwata na huɗu\u001FK1\u001EK2\u001EK3\u001EK4\u001Fh\u001Eh\u001F{1} 'da' {0}\u001E{1} 'da' {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "zamani\u001Eshekara\u001Ekwata\u001Ewata\u001E\u001E\u001Eranar mako\u001Ekwana\u001E\u001E\u001ESF/YM\u001Eawa\u001Eminti\u001Edaƙiƙa\u001E\u001E\u001FKwata na ɗaya\u001EKwata na biyu\u001EKwata na uku\u001EKwata na huɗu\u001FK1\u001EK2\u001EK3\u001EK4\u001Fh\u001Eh\u001F{1} 'da' {0}\u001E{1} 'da' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FKwata na ɗaya\u001EKwata na biyu\u001EKwata na uku\u001EKwata na huɗu"
 
 internal val SKELETON_NAMES_HE: String =
-    "תקופה\u001Eשנה\u001Eרבעון\u001Eחודש\u001E\u001E\u001Eיום בשבוע\u001Eיום\u001E\u001E\u001Eלפנה״צ/אחה״צ\u001Eשעה\u001Eדקה\u001Eשנייה\u001E\u001E\u001Fרבעון 1\u001Eרבעון 2\u001Eרבעון 3\u001Eרבעון 4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} בשעה {0}\u001E{1} בשעה {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "תקופה\u001Eשנה\u001Eרבעון\u001Eחודש\u001E\u001E\u001Eיום בשבוע\u001Eיום\u001E\u001E\u001Eלפנה״צ/אחה״צ\u001Eשעה\u001Eדקה\u001Eשנייה\u001E\u001E\u001Fרבעון 1\u001Eרבעון 2\u001Eרבעון 3\u001Eרבעון 4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} בשעה {0}\u001E{1} בשעה {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fרבעון 1\u001Eרבעון 2\u001Eרבעון 3\u001Eרבעון 4"
 
 internal val SKELETON_NAMES_HI: String =
-    "युग\u001Eवर्ष\u001Eतिमाही\u001Eमाह\u001E\u001E\u001Eसप्ताह का दिन\u001Eदिन\u001E\u001E\u001Eपूर्वाह्न/अपराह्न\u001Eघंटा\u001Eमिनट\u001Eसेकंड\u001E\u001E\u001Fपहली तिमाही\u001Eदूसरी तिमाही\u001Eतीसरी तिमाही\u001Eचौथी तिमाही\u001Fति1\u001Eति2\u001Eति3\u001Eति4\u001Fh\u001EhB\u001F{1} को {0} बजे\u001E{1} को {0} बजे\u001E{1}, {0}\u001E{1}, {0}"
+    "युग\u001Eवर्ष\u001Eतिमाही\u001Eमाह\u001E\u001E\u001Eसप्ताह का दिन\u001Eदिन\u001E\u001E\u001Eपूर्वाह्न/अपराह्न\u001Eघंटा\u001Eमिनट\u001Eसेकंड\u001E\u001E\u001Fपहली तिमाही\u001Eदूसरी तिमाही\u001Eतीसरी तिमाही\u001Eचौथी तिमाही\u001Fति1\u001Eति2\u001Eति3\u001Eति4\u001Fh\u001EhB\u001F{1} को {0} बजे\u001E{1} को {0} बजे\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fपहली तिमाही\u001Eदूसरी तिमाही\u001Eतीसरी तिमाही\u001Eचौथी तिमाही"
 
 internal val SKELETON_NAMES_HI_LATN: String =
-    "era\u001Esaal\u001Equarter\u001Emahina\u001E\u001E\u001EWeek kaa din\u001Edin\u001E\u001E\u001Eam/pm\u001Eghanta\u001Eminute\u001Esecond\u001E\u001E\u001F1st quarter\u001E2nd quarter\u001E3rd quarter\u001E4th quarter\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001EhB\u001F{1}, {0} 'par'\u001E{1}, {0} 'par'\u001E{1}, {0}\u001E{1}, {0}"
+    "era\u001Esaal\u001Equarter\u001Emahina\u001E\u001E\u001EWeek kaa din\u001Edin\u001E\u001E\u001Eam/pm\u001Eghanta\u001Eminute\u001Esecond\u001E\u001E\u001F1st quarter\u001E2nd quarter\u001E3rd quarter\u001E4th quarter\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001EhB\u001F{1}, {0} 'par'\u001E{1}, {0} 'par'\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_HNJ: String =
-    "Era\u001E𞄛𞄩\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "Era\u001E𞄛𞄩\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_HR: String =
-    "era\u001Egodina\u001Ekvartal\u001Emjesec\u001E\u001E\u001Edan u tjednu\u001Edan\u001E\u001E\u001EAM/PM\u001Esat\u001Eminuta\u001Esekunda\u001E\u001E\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal\u001F1kv\u001E2kv\u001E3kv\u001E4kv\u001FH\u001EH\u001F{1} 'u' {0}\u001E{1} 'u' {0}\u001E{1} {0}\u001E{1} {0}"
+    "era\u001Egodina\u001Ekvartal\u001Emjesec\u001E\u001E\u001Edan u tjednu\u001Edan\u001E\u001E\u001EAM/PM\u001Esat\u001Eminuta\u001Esekunda\u001E\u001E\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal\u001F1kv\u001E2kv\u001E3kv\u001E4kv\u001FH\u001EH\u001F{1} 'u' {0}\u001E{1} 'u' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. kv.\u001E2. kv.\u001E3. kv.\u001E4. kv."
 
 internal val SKELETON_NAMES_HR_BA: String =
-    "era\u001Egodina\u001Ekvartal\u001Emjesec\u001E\u001E\u001Edan u tjednu\u001Edan\u001E\u001E\u001EAM/PM\u001Esat\u001Eminuta\u001Esekunda\u001E\u001E\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal\u001F1. kv.\u001E2. kv.\u001E3. kv.\u001E4. kv.\u001FH\u001EH\u001F{1} 'u' {0}\u001E{1} 'u' {0}\u001E{1} {0}\u001E{1} {0}"
+    "era\u001Egodina\u001Ekvartal\u001Emjesec\u001E\u001E\u001Edan u tjednu\u001Edan\u001E\u001E\u001EAM/PM\u001Esat\u001Eminuta\u001Esekunda\u001E\u001E\u001F1. kvartal\u001E2. kvartal\u001E3. kvartal\u001E4. kvartal\u001F1. kv.\u001E2. kv.\u001E3. kv.\u001E4. kv.\u001FH\u001EH\u001F{1} 'u' {0}\u001E{1} 'u' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_HSB: String =
-    "doba\u001Elěto\u001Ekwartal\u001Eměsac\u001E\u001E\u001Edźeń tydźenja\u001Edźeń\u001E\u001E\u001Epołojca dnja\u001Ehodźina\u001Eminuta\u001Esekunda\u001E\u001E\u001F1. kwartal\u001E2. kwartal\u001E3. kwartal\u001E4. kwartal\u001Fkw1\u001Ekw2\u001Ekw3\u001Ekw4\u001FH\u001EH\u001F{1} 'w' {0}\u001E{1} 'w' {0}\u001E{1} {0}\u001E{1} {0}"
+    "doba\u001Elěto\u001Ekwartal\u001Eměsac\u001E\u001E\u001Edźeń tydźenja\u001Edźeń\u001E\u001E\u001Epołojca dnja\u001Ehodźina\u001Eminuta\u001Esekunda\u001E\u001E\u001F1. kwartal\u001E2. kwartal\u001E3. kwartal\u001E4. kwartal\u001Fkw1\u001Ekw2\u001Ekw3\u001Ekw4\u001FH\u001EH\u001F{1} 'w' {0}\u001E{1} 'w' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. kwartal\u001E2. kwartal\u001E3. kwartal\u001E4. kwartal"
 
 internal val SKELETON_NAMES_HU: String =
-    "éra\u001Eév\u001Enegyedév\u001Ehónap\u001E\u001E\u001Ehét napja\u001Enap\u001E\u001E\u001Enapszak\u001Eóra\u001Eperc\u001Emásodperc\u001E\u001E\u001FI. negyedév\u001EII. negyedév\u001EIII. negyedév\u001EIV. negyedév\u001FI. n.év\u001EII. n.év\u001EIII. n.év\u001EIV. n.év\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}"
+    "éra\u001Eév\u001Enegyedév\u001Ehónap\u001E\u001E\u001Ehét napja\u001Enap\u001E\u001E\u001Enapszak\u001Eóra\u001Eperc\u001Emásodperc\u001E\u001E\u001FI. negyedév\u001EII. negyedév\u001EIII. negyedév\u001EIV. negyedév\u001FI. n.év\u001EII. n.év\u001EIII. n.év\u001EIV. n.év\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F1. negyedév\u001E2. negyedév\u001E3. negyedév\u001E4. negyedév\u001F1. n.év\u001E2. n.év\u001E3. n.év\u001E4. n.év"
 
 internal val SKELETON_NAMES_HY: String =
-    "թվարկություն\u001Eտարի\u001Eեռամսյակ\u001Eամիս\u001E\u001E\u001Eշաբաթվա օր\u001Eօր\u001E\u001E\u001EԿԱ/ԿՀ\u001Eժամ\u001Eրոպե\u001Eվայրկյան\u001E\u001E\u001F1-ին եռամսյակ\u001E2-րդ եռամսյակ\u001E3-րդ եռամսյակ\u001E4-րդ եռամսյակ\u001F1-ին եռմս.\u001E2-րդ եռմս.\u001E3-րդ եռմս.\u001E4-րդ եռմս.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}"
+    "թվարկություն\u001Eտարի\u001Eեռամսյակ\u001Eամիս\u001E\u001E\u001Eշաբաթվա օր\u001Eօր\u001E\u001E\u001EԿԱ/ԿՀ\u001Eժամ\u001Eրոպե\u001Eվայրկյան\u001E\u001E\u001F1-ին եռամսյակ\u001E2-րդ եռամսյակ\u001E3-րդ եռամսյակ\u001E4-րդ եռամսյակ\u001F1-ին եռմս.\u001E2-րդ եռմս.\u001E3-րդ եռմս.\u001E4-րդ եռմս.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1-ին եռամսյակ\u001E2-րդ եռամսյակ\u001E3-րդ եռամսյակ\u001E4-րդ եռամսյակ"

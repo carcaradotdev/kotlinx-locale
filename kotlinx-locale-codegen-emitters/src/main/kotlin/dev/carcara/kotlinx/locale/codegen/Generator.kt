@@ -39,6 +39,9 @@ public enum class GeneratedTable {
     /** The three skeleton tables, which travel together. */
     SKELETONS,
 
+    /** Stand-alone month, weekday and quarter names, where they differ from the format ones. */
+    DATE_TIME_STANDALONE,
+
     /** Number symbols and the plain decimal and percent patterns. */
     NUMBER,
 
@@ -122,6 +125,7 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
                 GeneratedTable.CURRENCY_FORMATS to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.CURRENCY_NAMES to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.DATE_TIME to "dev.carcara.kotlinx.locale.datetime.cldr.internal.data",
+                GeneratedTable.DATE_TIME_STANDALONE to "dev.carcara.kotlinx.locale.datetime.cldr.internal.data",
                 GeneratedTable.SKELETONS to "dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data",
                 GeneratedTable.NUMBER to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.NUMBER_COMPACT to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
@@ -210,6 +214,13 @@ private val PAYLOAD_TABLES = listOf(
         "SkeletonNames",
         "SKELETON_NAMES",
         "skeletonNamesRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.DATE_TIME_STANDALONE,
+        "dateTimeStandalone",
+        "LocaleStandalone",
+        "LOCALE_STANDALONE",
+        "localeStandaloneRegistry",
     ),
     PayloadTableSpec(
         GeneratedTable.NUMBER,
@@ -365,7 +376,11 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
     }
 
     roots[GeneratedBinding.DATE_TIME]?.let { target ->
-        emitDateTimeBinding(target.root, target.spec(packages[GeneratedTable.DATE_TIME], cldr))
+        emitDateTimeBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.DATE_TIME], cldr),
+            hasStandalone = roots[GeneratedTable.DATE_TIME_STANDALONE] != null,
+        )
     }
 
     roots[GeneratedBinding.NUMBER]?.let { target ->

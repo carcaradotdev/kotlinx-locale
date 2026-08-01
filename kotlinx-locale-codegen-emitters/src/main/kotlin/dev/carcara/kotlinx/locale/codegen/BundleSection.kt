@@ -38,6 +38,7 @@ public class BundleSection(
             BundleSection("skeletonFormats"),
             BundleSection("skeletonAppendFormats"),
             BundleSection("skeletonNames"),
+            BundleSection("dateTimeStandalone"),
             BundleSection("numberSymbols"),
             BundleSection("numberPatterns"),
             BundleSection("numberCompactShort"),

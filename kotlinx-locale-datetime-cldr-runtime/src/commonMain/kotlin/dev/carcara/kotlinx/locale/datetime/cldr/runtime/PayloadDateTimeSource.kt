@@ -6,6 +6,7 @@ import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource
 import dev.carcara.kotlinx.locale.datetime.FormatStyle
+import dev.carcara.kotlinx.locale.datetime.NameContext
 import dev.carcara.kotlinx.locale.datetime.TextStyle
 import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.resolvedRecord
@@ -30,7 +31,17 @@ private const val LIST_SEPARATOR = '\u001E'
  * a locale inherits piecemeal, so each record carries everything its locale
  * needs and a lookup is one map hit.
  */
-public class PayloadDateTimeFormats(private val records: Map<String, String>) : DateTimeFormatSource {
+public class PayloadDateTimeFormats(
+    private val records: Map<String, String>,
+    /**
+     * The stand-alone names, empty when this build did not generate them.
+     *
+     * Empty is not a half-working state: every lookup then answers with the
+     * format names, which is what CLDR root's own alias says for the 838 locales
+     * that declare no stand-alone form.
+     */
+    private val standaloneRecords: Map<String, String> = emptyMap(),
+) : DateTimeFormatSource {
 
     override val supportedLocales: Set<Locale> by lazy {
         supportedLocalesOf(records)
@@ -81,30 +92,29 @@ public class PayloadDateTimeFormats(private val records: Map<String, String>) : 
     }
 
     /** The name in the CLDR "format" context, e.g. `julho` rather than `Julho`. */
-    override fun monthNameOrNull(month: Int, style: TextStyle, locale: Locale): String? {
+    override fun monthNameOrNull(month: Int, style: TextStyle, locale: Locale): String? =
+        monthNameOrNull(month, style, NameContext.FORMAT, locale)
+
+    override fun monthNameOrNull(month: Int, style: TextStyle, context: NameContext, locale: Locale): String? {
         val data = recordFor(locale) ?: return null
         val index = month - 1
         if (index !in data.monthsWide.indices) return null
-        return when (style) {
-            TextStyle.FULL -> data.monthsWide[index]
-            TextStyle.ABBREVIATED -> data.monthsAbbr[index]
-            TextStyle.NARROW -> data.monthsNarrow[index]
-        }
+        return data.month(index, style, context)
     }
 
     /** The name in the CLDR "format" context, e.g. `segunda-feira`. */
-    override fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, locale: Locale): String? {
+    override fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, locale: Locale): String? =
+        dayOfWeekNameOrNull(isoDayNumber, style, NameContext.FORMAT, locale)
+
+    override fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, context: NameContext, locale: Locale): String? {
         val data = recordFor(locale) ?: return null
         val index = isoDayNumber - 1
         if (index !in data.daysWide.indices) return null
-        return when (style) {
-            TextStyle.FULL -> data.daysWide[index]
-            TextStyle.ABBREVIATED -> data.daysAbbr[index]
-            TextStyle.NARROW -> data.daysNarrow[index]
-        }
+        return data.dayOfWeek(index, style, context)
     }
 
-    private fun recordFor(locale: Locale): DateTimeRecord? = resolvedRecord(records, locale)?.let(::DateTimeRecord)
+    private fun recordFor(locale: Locale): DateTimeRecord? = resolvedRecord(records, locale)
+        ?.let { DateTimeRecord(it, resolvedRecord(standaloneRecords, locale)) }
 }
 
 /**
@@ -116,7 +126,7 @@ public class PayloadDateTimeFormats(private val records: Map<String, String>) : 
  * patterns.
  */
 @InternalKotlinxLocaleApi
-public class DateTimeRecord(record: String) {
+public class DateTimeRecord(record: String, standaloneRecord: String? = null) {
     private val fields = record.split(FIELD_SEPARATOR)
 
     public val monthsWide: List<String> = fields[0].split(LIST_SEPARATOR)
@@ -137,6 +147,59 @@ public class DateTimeRecord(record: String) {
     public val dateFormats: List<String> = fields.subList(10, 14)
     public val timeFormats: List<String> = fields.subList(14, 18)
     public val glueFormats: List<String> = fields.subList(18, 22)
+
+    private val standalone: List<String> = standaloneRecord?.split(FIELD_SEPARATOR).orEmpty()
+
+    /**
+     * The stand-alone names, falling back to the format ones.
+     *
+     * A second record rather than more fields on this one, so the existing
+     * twenty-five-field layout does not move and a build generated before the
+     * table existed still decodes.
+     */
+    public val monthsStandaloneWide: List<String> = standaloneOr(0, monthsWide)
+    public val monthsStandaloneAbbr: List<String> = standaloneOr(1, monthsAbbr)
+    public val monthsStandaloneNarrow: List<String> = standaloneOr(2, monthsNarrow)
+    public val daysStandaloneWide: List<String> = standaloneOr(3, daysWide)
+    public val daysStandaloneAbbr: List<String> = standaloneOr(4, daysAbbr)
+    public val daysStandaloneNarrow: List<String> = standaloneOr(5, daysNarrow)
+
+    private fun standaloneOr(field: Int, format: List<String>): List<String> =
+        standalone.getOrNull(field)?.takeIf(String::isNotEmpty)?.split(LIST_SEPARATOR) ?: format
+
+    /** The month at [index] in [style] and [context]. */
+    public fun month(index: Int, style: TextStyle, context: NameContext): String {
+        val names = when (context) {
+            NameContext.FORMAT -> when (style) {
+                TextStyle.FULL -> monthsWide
+                TextStyle.ABBREVIATED -> monthsAbbr
+                TextStyle.NARROW -> monthsNarrow
+            }
+            NameContext.STANDALONE -> when (style) {
+                TextStyle.FULL -> monthsStandaloneWide
+                TextStyle.ABBREVIATED -> monthsStandaloneAbbr
+                TextStyle.NARROW -> monthsStandaloneNarrow
+            }
+        }
+        return names[index]
+    }
+
+    /** The weekday at [index], Monday first, in [style] and [context]. */
+    public fun dayOfWeek(index: Int, style: TextStyle, context: NameContext): String {
+        val names = when (context) {
+            NameContext.FORMAT -> when (style) {
+                TextStyle.FULL -> daysWide
+                TextStyle.ABBREVIATED -> daysAbbr
+                TextStyle.NARROW -> daysNarrow
+            }
+            NameContext.STANDALONE -> when (style) {
+                TextStyle.FULL -> daysStandaloneWide
+                TextStyle.ABBREVIATED -> daysStandaloneAbbr
+                TextStyle.NARROW -> daysStandaloneNarrow
+            }
+        }
+        return names[index]
+    }
 
     /** The ten digits of the locale's default numbering system. */
     public val digits: String = fields[22]
@@ -186,5 +249,11 @@ public class DayPeriodRule(public val code: Int, public val start: Int, public v
 
 /** The pattern record for [locale], for the ICU cross-check. */
 @InternalKotlinxLocaleApi
-public fun dateTimeRecordFor(records: Map<String, String>, locale: Locale): DateTimeRecord =
-    DateTimeRecord(requireNotNull(resolvedRecord(records, locale)) { "no datetime record for $locale and no root" })
+public fun dateTimeRecordFor(
+    records: Map<String, String>,
+    locale: Locale,
+    standaloneRecords: Map<String, String> = emptyMap(),
+): DateTimeRecord = DateTimeRecord(
+    requireNotNull(resolvedRecord(records, locale)) { "no datetime record for $locale and no root" },
+    resolvedRecord(standaloneRecords, locale),
+)
