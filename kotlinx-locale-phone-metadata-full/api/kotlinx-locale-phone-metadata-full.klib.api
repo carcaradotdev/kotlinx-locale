@@ -1,0 +1,28 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-phone-metadata-full>
+final object dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers : dev.carcara.kotlinx.locale.phone/PhoneNumberSource { // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers|null[0]
+    final val supportedRegions // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers.supportedRegions|{}supportedRegions[0]
+        final fun <get-supportedRegions>(): kotlin.collections/Set<dev.carcara.kotlinx.locale.country/Country> // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers.supportedRegions.<get-supportedRegions>|<get-supportedRegions>(){}[0]
+
+    final fun callingCodeOrNull(dev.carcara.kotlinx.locale.country/Country): kotlin/Int? // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers.callingCodeOrNull|callingCodeOrNull(dev.carcara.kotlinx.locale.country.Country){}[0]
+    final fun exampleNumberOrNull(dev.carcara.kotlinx.locale.country/Country, dev.carcara.kotlinx.locale.phone/PhoneNumberType): dev.carcara.kotlinx.locale.phone/PhoneNumber? // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers.exampleNumberOrNull|exampleNumberOrNull(dev.carcara.kotlinx.locale.country.Country;dev.carcara.kotlinx.locale.phone.PhoneNumberType){}[0]
+    final fun format(dev.carcara.kotlinx.locale.phone/PhoneNumber, dev.carcara.kotlinx.locale.phone/PhoneNumberFormat): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers.format|format(dev.carcara.kotlinx.locale.phone.PhoneNumber;dev.carcara.kotlinx.locale.phone.PhoneNumberFormat){}[0]
+    final fun isValid(dev.carcara.kotlinx.locale.phone/PhoneNumber): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers.isValid|isValid(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+    final fun parse(kotlin/String, dev.carcara.kotlinx.locale.country/Country?): dev.carcara.kotlinx.locale.phone/PhoneParseResult // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers.parse|parse(kotlin.String;dev.carcara.kotlinx.locale.country.Country?){}[0]
+    final fun regionOf(dev.carcara.kotlinx.locale.phone/PhoneNumber): dev.carcara.kotlinx.locale.country/Country? // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers.regionOf|regionOf(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+    final fun typeOf(dev.carcara.kotlinx.locale.phone/PhoneNumber): dev.carcara.kotlinx.locale.phone/PhoneNumberType // dev.carcara.kotlinx.locale.phone.metadata/PhoneNumbers.typeOf|typeOf(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+}
+
+final fun (dev.carcara.kotlinx.locale.country/Country).dev.carcara.kotlinx.locale.phone.metadata/asYouType(): dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter // dev.carcara.kotlinx.locale.phone.metadata/asYouType|asYouType@dev.carcara.kotlinx.locale.country.Country(){}[0]
+final fun (dev.carcara.kotlinx.locale.phone/PhoneNumber).dev.carcara.kotlinx.locale.phone.metadata/format(dev.carcara.kotlinx.locale.phone/PhoneNumberFormat = ...): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata/format|format@dev.carcara.kotlinx.locale.phone.PhoneNumber(dev.carcara.kotlinx.locale.phone.PhoneNumberFormat){}[0]
+final fun (dev.carcara.kotlinx.locale.phone/PhoneNumber).dev.carcara.kotlinx.locale.phone.metadata/isValid(): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata/isValid|isValid@dev.carcara.kotlinx.locale.phone.PhoneNumber(){}[0]
+final fun (dev.carcara.kotlinx.locale.phone/PhoneNumber).dev.carcara.kotlinx.locale.phone.metadata/region(): dev.carcara.kotlinx.locale.country/Country? // dev.carcara.kotlinx.locale.phone.metadata/region|region@dev.carcara.kotlinx.locale.phone.PhoneNumber(){}[0]
+final fun (dev.carcara.kotlinx.locale.phone/PhoneNumber).dev.carcara.kotlinx.locale.phone.metadata/typeOf(): dev.carcara.kotlinx.locale.phone/PhoneNumberType // dev.carcara.kotlinx.locale.phone.metadata/typeOf|typeOf@dev.carcara.kotlinx.locale.phone.PhoneNumber(){}[0]
+final fun (kotlin/String).dev.carcara.kotlinx.locale.phone.metadata/isValidPhoneNumber(dev.carcara.kotlinx.locale.country/Country? = ...): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata/isValidPhoneNumber|isValidPhoneNumber@kotlin.String(dev.carcara.kotlinx.locale.country.Country?){}[0]
+final fun (kotlin/String).dev.carcara.kotlinx.locale.phone.metadata/toPhoneNumberOrNull(dev.carcara.kotlinx.locale.country/Country? = ...): dev.carcara.kotlinx.locale.phone/PhoneNumber? // dev.carcara.kotlinx.locale.phone.metadata/toPhoneNumberOrNull|toPhoneNumberOrNull@kotlin.String(dev.carcara.kotlinx.locale.country.Country?){}[0]

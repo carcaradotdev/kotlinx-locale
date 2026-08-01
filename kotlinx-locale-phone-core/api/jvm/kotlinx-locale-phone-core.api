@@ -1,0 +1,103 @@
+public final class dev/carcara/kotlinx/locale/phone/CallingCodeSource : java/lang/Enum {
+	public static final field FROM_BARE_CALLING_CODE Ldev/carcara/kotlinx/locale/phone/CallingCodeSource;
+	public static final field FROM_DEFAULT_REGION Ldev/carcara/kotlinx/locale/phone/CallingCodeSource;
+	public static final field FROM_INTERNATIONAL_PREFIX Ldev/carcara/kotlinx/locale/phone/CallingCodeSource;
+	public static final field FROM_PLUS_SIGN Ldev/carcara/kotlinx/locale/phone/CallingCodeSource;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/phone/CallingCodeSource;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/phone/CallingCodeSource;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/PhoneNumber {
+	public fun <init> (ILjava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCallingCode ()I
+	public final fun getE164 ()Ljava/lang/String;
+	public final fun getExtension ()Ljava/lang/String;
+	public final fun getNationalNumber ()Ljava/lang/String;
+	public final fun getNationalNumberLength ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/PhoneNumberFormat : java/lang/Enum {
+	public static final field E164 Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;
+	public static final field INTERNATIONAL Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;
+	public static final field NATIONAL Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;
+	public static final field RFC3966 Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/PhoneNumberKt {
+	public static final fun isValid (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Z
+	public static synthetic fun isValid$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;ILjava/lang/Object;)Z
+	public static final fun parseOrNull (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public static synthetic fun parseOrNull$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+}
+
+public abstract interface class dev/carcara/kotlinx/locale/phone/PhoneNumberSource {
+	public abstract fun callingCodeOrNull (Ldev/carcara/kotlinx/locale/country/Country;)Ljava/lang/Integer;
+	public abstract fun exampleNumberOrNull (Ldev/carcara/kotlinx/locale/country/Country;Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public static synthetic fun exampleNumberOrNull$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ldev/carcara/kotlinx/locale/country/Country;Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public abstract fun format (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;)Ljava/lang/String;
+	public static synthetic fun format$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ldev/carcara/kotlinx/locale/phone/PhoneNumber;Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;ILjava/lang/Object;)Ljava/lang/String;
+	public abstract fun getSupportedRegions ()Ljava/util/Set;
+	public abstract fun isValid (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Z
+	public abstract fun parse (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
+	public static synthetic fun parse$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
+	public abstract fun regionOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/country/Country;
+	public abstract fun typeOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/PhoneNumberSource$DefaultImpls {
+	public static synthetic fun exampleNumberOrNull$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ldev/carcara/kotlinx/locale/country/Country;Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public static synthetic fun format$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ldev/carcara/kotlinx/locale/phone/PhoneNumber;Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;ILjava/lang/Object;)Ljava/lang/String;
+	public static synthetic fun parse$default (Ldev/carcara/kotlinx/locale/phone/PhoneNumberSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/PhoneNumberType : java/lang/Enum {
+	public static final field FIXED_LINE Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field FIXED_LINE_OR_MOBILE Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field MOBILE Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field PAGER Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field PERSONAL_NUMBER Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field PREMIUM_RATE Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field SHARED_COST Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field TOLL_FREE Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field UAN Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field UNKNOWN Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field VOICEMAIL Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static final field VOIP Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/PhoneParseFailure : java/lang/Enum {
+	public static final field MISSING_REGION Ldev/carcara/kotlinx/locale/phone/PhoneParseFailure;
+	public static final field NOT_A_NUMBER Ldev/carcara/kotlinx/locale/phone/PhoneParseFailure;
+	public static final field TOO_LONG Ldev/carcara/kotlinx/locale/phone/PhoneParseFailure;
+	public static final field TOO_SHORT Ldev/carcara/kotlinx/locale/phone/PhoneParseFailure;
+	public static final field UNKNOWN_CALLING_CODE Ldev/carcara/kotlinx/locale/phone/PhoneParseFailure;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/phone/PhoneParseFailure;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/phone/PhoneParseFailure;
+}
+
+public abstract class dev/carcara/kotlinx/locale/phone/PhoneParseResult {
+	public final fun getNumberOrNull ()Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/PhoneParseResult$Failed : dev/carcara/kotlinx/locale/phone/PhoneParseResult {
+	public fun <init> (Ldev/carcara/kotlinx/locale/phone/PhoneParseFailure;)V
+	public final fun getReason ()Ldev/carcara/kotlinx/locale/phone/PhoneParseFailure;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/PhoneParseResult$Parsed : dev/carcara/kotlinx/locale/phone/PhoneParseResult {
+	public fun <init> (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)V
+	public final fun getNumber ()Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+}
+

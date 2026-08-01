@@ -279,6 +279,17 @@ public class PayloadPhoneNumbers(
         return PhoneNumber(record.callingCode, example)
     }
 
+    /**
+     * An as-you-type formatter for the territory keyed by [territoryKey].
+     *
+     * Takes the key rather than a [Country] so the non-geographic plans can be
+     * reached too; the extension in this module's public surface takes a country.
+     */
+    public fun asYouTypeFor(territoryKey: String): AsYouTypeFormatter {
+        val record = byId[territoryKey]
+        return AsYouTypeFormatter(record, record?.let { formatsById[it.id] }?.formats.orEmpty())
+    }
+
     // ------------------------------------------------------------------
     // Formatting
     // ------------------------------------------------------------------

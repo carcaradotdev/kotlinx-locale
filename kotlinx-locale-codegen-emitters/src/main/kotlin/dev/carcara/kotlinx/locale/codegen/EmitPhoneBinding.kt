@@ -96,7 +96,9 @@ public fun emitPhoneBinding(outputRoot: File, spec: BindingSpec, hasFormats: Boo
                 "dev.carcara.kotlinx.locale.phone.PhoneNumber",
                 "dev.carcara.kotlinx.locale.phone.PhoneNumberFormat",
                 "dev.carcara.kotlinx.locale.phone.PhoneNumberSource",
+                "dev.carcara.kotlinx.locale.phone.PhoneNumberType",
                 "dev.carcara.kotlinx.locale.phone.PhoneParseResult",
+                "dev.carcara.kotlinx.locale.phone.metadata.runtime.AsYouTypeFormatter",
                 "dev.carcara.kotlinx.locale.phone.metadata.runtime.PayloadPhoneNumbers",
                 "${spec.registryPackage}.phoneTerritoryRegistry",
             ),
@@ -115,10 +117,12 @@ public fun emitPhoneBinding(outputRoot: File, spec: BindingSpec, hasFormats: Boo
         | * takes a [Country] where the rest of the library takes a
         | * [dev.carcara.kotlinx.locale.Locale].
         | */
-        |public object ${spec.objectName} : PhoneNumberSource by PayloadPhoneNumbers(
+        |internal val ${spec.objectName}Source: PayloadPhoneNumbers = PayloadPhoneNumbers(
         |    phoneTerritoryRegistry,
         |    $formats,
         |)
+        |
+        |public object ${spec.objectName} : PhoneNumberSource by ${spec.objectName}Source
         |
         |/** [this] read as a phone number for [region], or `null`. */
         |public fun String.toPhoneNumberOrNull(region: Country? = null): PhoneNumber? =
@@ -135,8 +139,14 @@ public fun emitPhoneBinding(outputRoot: File, spec: BindingSpec, hasFormats: Boo
         |/** True when this number could exist in its territory. */
         |public fun PhoneNumber.isValid(): Boolean = ${spec.objectName}.isValid(this)
         |
+        |/** What kind of number this is, or [PhoneNumberType.UNKNOWN]. */
+        |public fun PhoneNumber.typeOf(): PhoneNumberType = ${spec.objectName}.typeOf(this)
+        |
         |/** The territory this number belongs to, or `null` when its calling code is not geographic. */
         |public fun PhoneNumber.region(): Country? = ${spec.objectName}.regionOf(this)
+        |
+        |/** An as-you-type formatter for this country, for a text field. */
+        |public fun Country.asYouType(): AsYouTypeFormatter = ${spec.objectName}Source.asYouTypeFor(name)
         |
         """.trimMargin(),
     )

@@ -170,6 +170,12 @@ public class PhoneFormatRule(parts: List<String>) {
 
     public val carrierCodeFormattingRule: String? = parts[6].takeIf(String::isNotEmpty)
 
+    /** The pattern's source, which the as-you-type formatter reads runs out of. */
+    internal val patternText: String get() = patternSource
+
+    /** Memoised digit runs; empty means "computed, and not usable". */
+    internal var cachedRuns: List<Int>? = null
+
     private var compiled: DigitPattern? = null
     private var leadingDigits: List<DigitPattern>? = null
 

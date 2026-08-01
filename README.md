@@ -88,6 +88,10 @@ Dates and times:
   that pick among a language's forms.
 - Time zone names: `Pacific Standard Time`, `PT`, the localized GMT format, and
   the exemplar cities behind `Los Angeles Time`.
+- Phone numbers over Google's libphonenumber: parsing what people actually type,
+  validation by number type, the E.164, national, international and RFC 3966
+  forms, and an as-you-type formatter for a text field. Every territory it
+  describes, held to its own answers, in 76 KB.
 - Flexible day periods where a locale's standard patterns use them. zh-Hant
   times render as 凌晨2:05 at two in the morning, 下午3:05 in the afternoon and
   晚上8:05 in the evening.
@@ -225,6 +229,11 @@ locale-timezone-cldr-full = { module = "dev.carcara:kotlinx-locale-timezone-cldr
 # The exemplar cities, on top of -cldr-full. Opt in.
 locale-timezone-cldr-cities = { module = "dev.carcara:kotlinx-locale-timezone-cldr-cities", version.ref = "kotlinx-locale" }
 
+# Phone numbers. The data is Google's libphonenumber rather than CLDR.
+locale-phone-core = { module = "dev.carcara:kotlinx-locale-phone-core", version.ref = "kotlinx-locale" }
+locale-phone-metadata-runtime = { module = "dev.carcara:kotlinx-locale-phone-metadata-runtime", version.ref = "kotlinx-locale" }
+locale-phone-metadata-full = { module = "dev.carcara:kotlinx-locale-phone-metadata-full", version.ref = "kotlinx-locale" }
+
 [bundles]
 # Bundled CLDR data: the normal choice.
 locale-country-cldr = ["locale-country-types", "locale-country-core", "locale-country-cldr-full"]
@@ -239,6 +248,7 @@ locale-number-cldr = ["locale-number-core", "locale-number-cldr-full"]
 # Zone names. The second adds the exemplar cities, which is the larger half.
 locale-timezone-cldr = ["locale-timezone-core", "locale-timezone-cldr-full"]
 locale-timezone-cities = ["locale-timezone-core", "locale-timezone-cldr-cities"]
+locale-phone = ["locale-phone-core", "locale-phone-metadata-full"]
 
 # The host's data instead, shipping no tables.
 locale-country-host = ["locale-country-types", "locale-country-core", "locale-country-platform"]
@@ -252,6 +262,9 @@ locale-datetime-narrowed = ["locale-datetime-core", "locale-datetime-cldr-runtim
 locale-language-narrowed = ["locale-language-core", "locale-language-cldr-runtime"]
 locale-number-narrowed = ["locale-number-core", "locale-number-cldr-runtime"]
 locale-timezone-narrowed = ["locale-timezone-core", "locale-timezone-cldr-runtime"]
+# There is no locale-phone-narrowed: the phone metadata is keyed by territory
+# rather than by locale, so declaring three locales narrows nothing about it.
+# Take locale-phone directly, at 76 KB for every territory in the world.
 
 [plugins]
 # Generates a data set narrowed to the locales a build declares.
@@ -375,6 +388,9 @@ layers without touching a call site.
 | `kotlinx-locale-timezone-cldr-runtime` | The localized GMT format, metazone resolution and the naming ladder, over records it does not carry. |
 | `kotlinx-locale-timezone-cldr-full` | `-cldr-runtime` plus the format and name tables: `CldrTimeZone`, `TimeZone.displayName` and `UtcOffset.displayName`. |
 | `kotlinx-locale-timezone-cldr-cities` | `-cldr-full` plus the exemplar cities, for the generic location format. Opt in: this is the largest zone table, and without it the format falls back to the identifier's own last part, which is what the spec prescribes. |
+| `kotlinx-locale-phone-core` | `PhoneNumber`, `PhoneNumberType`, `PhoneNumberFormat` and `PhoneNumberSource`. Keyed by country rather than by locale, because a number is valid or not whoever is reading it. |
+| `kotlinx-locale-phone-metadata-runtime` | The parser, the validator, the formatters, the as-you-type formatter, and the bounded pattern matcher they all run on. |
+| `kotlinx-locale-phone-metadata-full` | `-metadata-runtime` plus every territory libphonenumber describes: `PhoneNumbers`, `String.toPhoneNumberOrNull` and `Country.asYouType`. |
 | `kotlinx-locale-codegen-emitters` | The emitters and the bundle reader: the half of code generation a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
 | `kotlinx-locale-codegen-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
 | `kotlinx-locale-gradle-plugin` | The `dev.carcara.kotlinx-locale` plugin, which generates a data set narrowed to the locales a build declares. |

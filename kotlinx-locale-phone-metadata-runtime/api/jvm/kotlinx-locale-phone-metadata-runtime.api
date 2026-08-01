@@ -1,0 +1,90 @@
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFormatter {
+	public final fun append (C)Ljava/lang/String;
+	public final fun append (Ljava/lang/CharSequence;)Ljava/lang/String;
+	public final fun clear ()V
+	public final fun digitsBefore (I)I
+	public final fun getNationalDigits ()Ljava/lang/String;
+	public final fun getText ()Ljava/lang/String;
+	public final fun removeLast ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFormatterKt {
+	public static final fun asYouType (Ldev/carcara/kotlinx/locale/phone/metadata/runtime/PayloadPhoneNumbers;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFormatter;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/DigitPattern {
+	public static final field Companion Ldev/carcara/kotlinx/locale/phone/metadata/runtime/DigitPattern$Companion;
+	public final fun capture (Ljava/lang/CharSequence;)Ljava/util/List;
+	public final fun capturePrefix (Ljava/lang/CharSequence;)Lkotlin/Pair;
+	public final fun getGroupCount ()I
+	public final fun matches (Ljava/lang/CharSequence;)Z
+	public final fun prefixLength (Ljava/lang/CharSequence;)I
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/DigitPattern$Companion {
+	public final fun parse (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/phone/metadata/runtime/DigitPattern;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PayloadPhoneNumbers : dev/carcara/kotlinx/locale/phone/PhoneNumberSource {
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun asYouTypeFor (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFormatter;
+	public fun callingCodeOrNull (Ldev/carcara/kotlinx/locale/country/Country;)Ljava/lang/Integer;
+	public fun exampleNumberOrNull (Ldev/carcara/kotlinx/locale/country/Country;Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;)Ldev/carcara/kotlinx/locale/phone/PhoneNumber;
+	public fun format (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;Ldev/carcara/kotlinx/locale/phone/PhoneNumberFormat;)Ljava/lang/String;
+	public fun getSupportedRegions ()Ljava/util/Set;
+	public fun isValid (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Z
+	public fun parse (Ljava/lang/String;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/phone/PhoneParseResult;
+	public fun regionOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/country/Country;
+	public fun typeOf (Ldev/carcara/kotlinx/locale/phone/PhoneNumber;)Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneDescription {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun acceptsLength (I)Z
+	public final fun getExampleNumber ()Ljava/lang/String;
+	public final fun getHasPattern ()Z
+	public final fun getLocalOnlyLengths ()Ljava/util/List;
+	public final fun getPossibleLengths ()Ljava/util/List;
+	public final fun matches (Ljava/lang/String;)Z
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneFormatRecord {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getFormats ()Ljava/util/List;
+	public final fun getTerritoryId ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneFormatRule {
+	public fun <init> (Ljava/util/List;)V
+	public final fun acceptsPrefix (Ljava/lang/String;I)Z
+	public final fun appliesTo (Ljava/lang/String;)Z
+	public final fun getCarrierCodeFormattingRule ()Ljava/lang/String;
+	public final fun getFormat ()Ljava/lang/String;
+	public final fun getInternationalFormat ()Ljava/lang/String;
+	public final fun getLeadingDigitsCount ()I
+	public final fun getNationalPrefixFormattingRule ()Ljava/lang/String;
+	public final fun getNationalPrefixOptional ()Z
+	public final fun pattern ()Ldev/carcara/kotlinx/locale/phone/metadata/runtime/DigitPattern;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneTerritoryRecord {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun descriptionOrNull (Ldev/carcara/kotlinx/locale/phone/PhoneNumberType;)Ldev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneDescription;
+	public final fun getCallingCode ()I
+	public final fun getDeclaredTypes ()Ljava/util/Set;
+	public final fun getGeneralDescription ()Ldev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneDescription;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getInternationalPrefix ()Ljava/lang/String;
+	public final fun getLeadingDigits ()Ljava/lang/String;
+	public final fun getNationalPrefix ()Ljava/lang/String;
+	public final fun getNationalPrefixForParsing ()Ljava/lang/String;
+	public final fun getNationalPrefixTransformRule ()Ljava/lang/String;
+	public final fun getPreferredExtensionPrefix ()Ljava/lang/String;
+	public final fun getPreferredInternationalPrefix ()Ljava/lang/String;
+	public final fun isMainCountryForCode ()Z
+	public final fun isMobileNumberPortable ()Z
+	public final fun leadingDigitsPattern ()Ldev/carcara/kotlinx/locale/phone/metadata/runtime/DigitPattern;
+	public final fun nationalPrefixPattern ()Ldev/carcara/kotlinx/locale/phone/metadata/runtime/DigitPattern;
+}
+

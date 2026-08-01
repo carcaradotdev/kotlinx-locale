@@ -1112,6 +1112,81 @@ Derived from the alpha-2 code rather than looked up, and checked at generation
 time against the RGI flag sequences of UTS #51, so it carries no table and needs
 no nullable form.
 
+## Phone numbers
+
+```kotlin
+val number = "020 7123 4567".toPhoneNumberOrNull(Country.GB) ?: return
+number.isValid()                              // true
+number.typeOf()                               // FIXED_LINE
+number.format(PhoneNumberFormat.E164)         // +442071234567
+number.format(PhoneNumberFormat.NATIONAL)     // 020 7123 4567
+number.format(PhoneNumberFormat.INTERNATIONAL)// +44 20 7123 4567
+number.format(PhoneNumberFormat.RFC3966)      // tel:+44-20-7123-4567
+number.region()                               // Country.GB
+```
+
+Keyed by [Country] rather than by `Locale`, which is the one place this library
+takes a country where everything else takes a locale. A number is valid or it is
+not, and it groups the way its own territory groups it, whoever is reading.
+
+Parsing accepts what people type: spaces, dashes, brackets, a leading `+`, the
+territory's international dialling prefix, and an extension after `ext`, `x` or
+`#`. Use `PhoneNumbers.parse` rather than `toPhoneNumberOrNull` when you want to
+know why something failed:
+
+```kotlin
+when (val result = PhoneNumbers.parse(input, Country.BR)) {
+    is PhoneParseResult.Parsed -> save(result.number)
+    is PhoneParseResult.Failed -> when (result.reason) {
+        PhoneParseFailure.TOO_SHORT -> Unit          // still typing
+        else -> showError()
+    }
+}
+```
+
+Storage is E.164 and nothing else: it is the only form that identifies a number
+without also saying where it is being dialled from.
+
+### Formatting as the user types
+
+```kotlin
+val formatter = Country.US.asYouType()
+formatter.append('2')       // "2"
+formatter.append("015")     // "201-5"
+formatter.append("550123")  // "(201) 555-0123"
+formatter.removeLast()      // "(201) 555-012"
+```
+
+An object with `append` and `removeLast` rather than a function over the whole
+prefix, because choosing a grouping means walking the territory's format rules
+and a field that reformatted from scratch would do that once per keystroke.
+
+The grouping can change as digits arrive, as it does above when the fourth digit
+picks a different rule from the tenth. That is inherent: a rule is chosen from
+what has been typed, and more digits can pick a different one. What does not
+change is the digits themselves, which is the invariant a text field depends on
+and the one the tests assert across every territory.
+
+Two things it does not do. It does not place the caret: that mapping depends on
+the editor rather than on the number, so `digitsBefore(offset)` gives you the
+half that belongs here and the rest is yours. And unlike parsing, validation and
+the three finished formats, its output is not held to libphonenumber
+character-for-character. Those have a conformance fixture over every territory;
+this has the digit-preservation invariant and the territory's own rules.
+
+### Where the data comes from
+
+Google's libphonenumber, pinned to a release tag in `codegen/Repos.kt`, over
+ITU-T E.164's numbering plans. Not CLDR, which deprecated its own dialling data
+in CLDR 34 and pointed at libphonenumber.
+
+The whole domain is pure common Kotlin, including the pattern matching that
+validation is. That is deliberate and it is checked: libphonenumber's patterns
+use a bounded subset of regular expressions, this library evaluates that subset
+itself rather than delegating to a per-target engine, and generation fails
+naming the pattern if a release ever steps outside it. `docs/not-standardized.md`
+has the argument in full.
+
 ## Serialization
 
 Three artifacts, one per domain, each depending on its own `-core` and on

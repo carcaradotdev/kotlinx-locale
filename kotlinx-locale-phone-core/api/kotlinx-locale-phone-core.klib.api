@@ -1,0 +1,122 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-phone-core>
+final enum class dev.carcara.kotlinx.locale.phone/CallingCodeSource : kotlin/Enum<dev.carcara.kotlinx.locale.phone/CallingCodeSource> { // dev.carcara.kotlinx.locale.phone/CallingCodeSource|null[0]
+    enum entry FROM_BARE_CALLING_CODE // dev.carcara.kotlinx.locale.phone/CallingCodeSource.FROM_BARE_CALLING_CODE|null[0]
+    enum entry FROM_DEFAULT_REGION // dev.carcara.kotlinx.locale.phone/CallingCodeSource.FROM_DEFAULT_REGION|null[0]
+    enum entry FROM_INTERNATIONAL_PREFIX // dev.carcara.kotlinx.locale.phone/CallingCodeSource.FROM_INTERNATIONAL_PREFIX|null[0]
+    enum entry FROM_PLUS_SIGN // dev.carcara.kotlinx.locale.phone/CallingCodeSource.FROM_PLUS_SIGN|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.phone/CallingCodeSource.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.phone/CallingCodeSource> // dev.carcara.kotlinx.locale.phone/CallingCodeSource.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.phone/CallingCodeSource // dev.carcara.kotlinx.locale.phone/CallingCodeSource.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.phone/CallingCodeSource> // dev.carcara.kotlinx.locale.phone/CallingCodeSource.values|values#static(){}[0]
+}
+
+final enum class dev.carcara.kotlinx.locale.phone/PhoneNumberFormat : kotlin/Enum<dev.carcara.kotlinx.locale.phone/PhoneNumberFormat> { // dev.carcara.kotlinx.locale.phone/PhoneNumberFormat|null[0]
+    enum entry E164 // dev.carcara.kotlinx.locale.phone/PhoneNumberFormat.E164|null[0]
+    enum entry INTERNATIONAL // dev.carcara.kotlinx.locale.phone/PhoneNumberFormat.INTERNATIONAL|null[0]
+    enum entry NATIONAL // dev.carcara.kotlinx.locale.phone/PhoneNumberFormat.NATIONAL|null[0]
+    enum entry RFC3966 // dev.carcara.kotlinx.locale.phone/PhoneNumberFormat.RFC3966|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.phone/PhoneNumberFormat.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.phone/PhoneNumberFormat> // dev.carcara.kotlinx.locale.phone/PhoneNumberFormat.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.phone/PhoneNumberFormat // dev.carcara.kotlinx.locale.phone/PhoneNumberFormat.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.phone/PhoneNumberFormat> // dev.carcara.kotlinx.locale.phone/PhoneNumberFormat.values|values#static(){}[0]
+}
+
+final enum class dev.carcara.kotlinx.locale.phone/PhoneNumberType : kotlin/Enum<dev.carcara.kotlinx.locale.phone/PhoneNumberType> { // dev.carcara.kotlinx.locale.phone/PhoneNumberType|null[0]
+    enum entry FIXED_LINE // dev.carcara.kotlinx.locale.phone/PhoneNumberType.FIXED_LINE|null[0]
+    enum entry FIXED_LINE_OR_MOBILE // dev.carcara.kotlinx.locale.phone/PhoneNumberType.FIXED_LINE_OR_MOBILE|null[0]
+    enum entry MOBILE // dev.carcara.kotlinx.locale.phone/PhoneNumberType.MOBILE|null[0]
+    enum entry PAGER // dev.carcara.kotlinx.locale.phone/PhoneNumberType.PAGER|null[0]
+    enum entry PERSONAL_NUMBER // dev.carcara.kotlinx.locale.phone/PhoneNumberType.PERSONAL_NUMBER|null[0]
+    enum entry PREMIUM_RATE // dev.carcara.kotlinx.locale.phone/PhoneNumberType.PREMIUM_RATE|null[0]
+    enum entry SHARED_COST // dev.carcara.kotlinx.locale.phone/PhoneNumberType.SHARED_COST|null[0]
+    enum entry TOLL_FREE // dev.carcara.kotlinx.locale.phone/PhoneNumberType.TOLL_FREE|null[0]
+    enum entry UAN // dev.carcara.kotlinx.locale.phone/PhoneNumberType.UAN|null[0]
+    enum entry UNKNOWN // dev.carcara.kotlinx.locale.phone/PhoneNumberType.UNKNOWN|null[0]
+    enum entry VOICEMAIL // dev.carcara.kotlinx.locale.phone/PhoneNumberType.VOICEMAIL|null[0]
+    enum entry VOIP // dev.carcara.kotlinx.locale.phone/PhoneNumberType.VOIP|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.phone/PhoneNumberType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.phone/PhoneNumberType> // dev.carcara.kotlinx.locale.phone/PhoneNumberType.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.phone/PhoneNumberType // dev.carcara.kotlinx.locale.phone/PhoneNumberType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.phone/PhoneNumberType> // dev.carcara.kotlinx.locale.phone/PhoneNumberType.values|values#static(){}[0]
+}
+
+final enum class dev.carcara.kotlinx.locale.phone/PhoneParseFailure : kotlin/Enum<dev.carcara.kotlinx.locale.phone/PhoneParseFailure> { // dev.carcara.kotlinx.locale.phone/PhoneParseFailure|null[0]
+    enum entry MISSING_REGION // dev.carcara.kotlinx.locale.phone/PhoneParseFailure.MISSING_REGION|null[0]
+    enum entry NOT_A_NUMBER // dev.carcara.kotlinx.locale.phone/PhoneParseFailure.NOT_A_NUMBER|null[0]
+    enum entry TOO_LONG // dev.carcara.kotlinx.locale.phone/PhoneParseFailure.TOO_LONG|null[0]
+    enum entry TOO_SHORT // dev.carcara.kotlinx.locale.phone/PhoneParseFailure.TOO_SHORT|null[0]
+    enum entry UNKNOWN_CALLING_CODE // dev.carcara.kotlinx.locale.phone/PhoneParseFailure.UNKNOWN_CALLING_CODE|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.phone/PhoneParseFailure.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.phone/PhoneParseFailure> // dev.carcara.kotlinx.locale.phone/PhoneParseFailure.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.phone/PhoneParseFailure // dev.carcara.kotlinx.locale.phone/PhoneParseFailure.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.phone/PhoneParseFailure> // dev.carcara.kotlinx.locale.phone/PhoneParseFailure.values|values#static(){}[0]
+}
+
+abstract interface dev.carcara.kotlinx.locale.phone/PhoneNumberSource { // dev.carcara.kotlinx.locale.phone/PhoneNumberSource|null[0]
+    abstract val supportedRegions // dev.carcara.kotlinx.locale.phone/PhoneNumberSource.supportedRegions|{}supportedRegions[0]
+        abstract fun <get-supportedRegions>(): kotlin.collections/Set<dev.carcara.kotlinx.locale.country/Country> // dev.carcara.kotlinx.locale.phone/PhoneNumberSource.supportedRegions.<get-supportedRegions>|<get-supportedRegions>(){}[0]
+
+    abstract fun callingCodeOrNull(dev.carcara.kotlinx.locale.country/Country): kotlin/Int? // dev.carcara.kotlinx.locale.phone/PhoneNumberSource.callingCodeOrNull|callingCodeOrNull(dev.carcara.kotlinx.locale.country.Country){}[0]
+    abstract fun exampleNumberOrNull(dev.carcara.kotlinx.locale.country/Country, dev.carcara.kotlinx.locale.phone/PhoneNumberType = ...): dev.carcara.kotlinx.locale.phone/PhoneNumber? // dev.carcara.kotlinx.locale.phone/PhoneNumberSource.exampleNumberOrNull|exampleNumberOrNull(dev.carcara.kotlinx.locale.country.Country;dev.carcara.kotlinx.locale.phone.PhoneNumberType){}[0]
+    abstract fun format(dev.carcara.kotlinx.locale.phone/PhoneNumber, dev.carcara.kotlinx.locale.phone/PhoneNumberFormat = ...): kotlin/String // dev.carcara.kotlinx.locale.phone/PhoneNumberSource.format|format(dev.carcara.kotlinx.locale.phone.PhoneNumber;dev.carcara.kotlinx.locale.phone.PhoneNumberFormat){}[0]
+    abstract fun isValid(dev.carcara.kotlinx.locale.phone/PhoneNumber): kotlin/Boolean // dev.carcara.kotlinx.locale.phone/PhoneNumberSource.isValid|isValid(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+    abstract fun parse(kotlin/String, dev.carcara.kotlinx.locale.country/Country? = ...): dev.carcara.kotlinx.locale.phone/PhoneParseResult // dev.carcara.kotlinx.locale.phone/PhoneNumberSource.parse|parse(kotlin.String;dev.carcara.kotlinx.locale.country.Country?){}[0]
+    abstract fun regionOf(dev.carcara.kotlinx.locale.phone/PhoneNumber): dev.carcara.kotlinx.locale.country/Country? // dev.carcara.kotlinx.locale.phone/PhoneNumberSource.regionOf|regionOf(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+    abstract fun typeOf(dev.carcara.kotlinx.locale.phone/PhoneNumber): dev.carcara.kotlinx.locale.phone/PhoneNumberType // dev.carcara.kotlinx.locale.phone/PhoneNumberSource.typeOf|typeOf(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.phone/PhoneNumber { // dev.carcara.kotlinx.locale.phone/PhoneNumber|null[0]
+    constructor <init>(kotlin/Int, kotlin/String, kotlin/String? = ...) // dev.carcara.kotlinx.locale.phone/PhoneNumber.<init>|<init>(kotlin.Int;kotlin.String;kotlin.String?){}[0]
+
+    final val callingCode // dev.carcara.kotlinx.locale.phone/PhoneNumber.callingCode|{}callingCode[0]
+        final fun <get-callingCode>(): kotlin/Int // dev.carcara.kotlinx.locale.phone/PhoneNumber.callingCode.<get-callingCode>|<get-callingCode>(){}[0]
+    final val e164 // dev.carcara.kotlinx.locale.phone/PhoneNumber.e164|{}e164[0]
+        final fun <get-e164>(): kotlin/String // dev.carcara.kotlinx.locale.phone/PhoneNumber.e164.<get-e164>|<get-e164>(){}[0]
+    final val extension // dev.carcara.kotlinx.locale.phone/PhoneNumber.extension|{}extension[0]
+        final fun <get-extension>(): kotlin/String? // dev.carcara.kotlinx.locale.phone/PhoneNumber.extension.<get-extension>|<get-extension>(){}[0]
+    final val nationalNumber // dev.carcara.kotlinx.locale.phone/PhoneNumber.nationalNumber|{}nationalNumber[0]
+        final fun <get-nationalNumber>(): kotlin/String // dev.carcara.kotlinx.locale.phone/PhoneNumber.nationalNumber.<get-nationalNumber>|<get-nationalNumber>(){}[0]
+    final val nationalNumberLength // dev.carcara.kotlinx.locale.phone/PhoneNumber.nationalNumberLength|{}nationalNumberLength[0]
+        final fun <get-nationalNumberLength>(): kotlin/Int // dev.carcara.kotlinx.locale.phone/PhoneNumber.nationalNumberLength.<get-nationalNumberLength>|<get-nationalNumberLength>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.carcara.kotlinx.locale.phone/PhoneNumber.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.carcara.kotlinx.locale.phone/PhoneNumber.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.carcara.kotlinx.locale.phone/PhoneNumber.toString|toString(){}[0]
+}
+
+sealed class dev.carcara.kotlinx.locale.phone/PhoneParseResult { // dev.carcara.kotlinx.locale.phone/PhoneParseResult|null[0]
+    final val numberOrNull // dev.carcara.kotlinx.locale.phone/PhoneParseResult.numberOrNull|{}numberOrNull[0]
+        final fun <get-numberOrNull>(): dev.carcara.kotlinx.locale.phone/PhoneNumber? // dev.carcara.kotlinx.locale.phone/PhoneParseResult.numberOrNull.<get-numberOrNull>|<get-numberOrNull>(){}[0]
+
+    final class Failed : dev.carcara.kotlinx.locale.phone/PhoneParseResult { // dev.carcara.kotlinx.locale.phone/PhoneParseResult.Failed|null[0]
+        constructor <init>(dev.carcara.kotlinx.locale.phone/PhoneParseFailure) // dev.carcara.kotlinx.locale.phone/PhoneParseResult.Failed.<init>|<init>(dev.carcara.kotlinx.locale.phone.PhoneParseFailure){}[0]
+
+        final val reason // dev.carcara.kotlinx.locale.phone/PhoneParseResult.Failed.reason|{}reason[0]
+            final fun <get-reason>(): dev.carcara.kotlinx.locale.phone/PhoneParseFailure // dev.carcara.kotlinx.locale.phone/PhoneParseResult.Failed.reason.<get-reason>|<get-reason>(){}[0]
+    }
+
+    final class Parsed : dev.carcara.kotlinx.locale.phone/PhoneParseResult { // dev.carcara.kotlinx.locale.phone/PhoneParseResult.Parsed|null[0]
+        constructor <init>(dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone/PhoneParseResult.Parsed.<init>|<init>(dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+
+        final val number // dev.carcara.kotlinx.locale.phone/PhoneParseResult.Parsed.number|{}number[0]
+            final fun <get-number>(): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone/PhoneParseResult.Parsed.number.<get-number>|<get-number>(){}[0]
+    }
+}
+
+final fun (dev.carcara.kotlinx.locale.phone/PhoneNumberSource).dev.carcara.kotlinx.locale.phone/isValid(kotlin/String, dev.carcara.kotlinx.locale.country/Country? = ...): kotlin/Boolean // dev.carcara.kotlinx.locale.phone/isValid|isValid@dev.carcara.kotlinx.locale.phone.PhoneNumberSource(kotlin.String;dev.carcara.kotlinx.locale.country.Country?){}[0]
+final fun (dev.carcara.kotlinx.locale.phone/PhoneNumberSource).dev.carcara.kotlinx.locale.phone/parseOrNull(kotlin/String, dev.carcara.kotlinx.locale.country/Country? = ...): dev.carcara.kotlinx.locale.phone/PhoneNumber? // dev.carcara.kotlinx.locale.phone/parseOrNull|parseOrNull@dev.carcara.kotlinx.locale.phone.PhoneNumberSource(kotlin.String;dev.carcara.kotlinx.locale.country.Country?){}[0]
