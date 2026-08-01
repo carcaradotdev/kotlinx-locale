@@ -3,46 +3,49 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
 internal val LOCALE_STANDALONE_EBU: String =
-    "\u001FMweri wa mbere\u001EMweri wa kaĩri\u001EMweri wa kathatũ\u001EMweri wa kana\u001EMweri wa gatano\u001EMweri wa gatantatũ\u001EMweri wa mũgwanja\u001EMweri wa kanana\u001EMweri wa kenda\u001EMweri wa ikũmi\u001EMweri wa ikũmi na ũmwe\u001EMweri wa ikũmi na Kaĩrĩ\u001F\u001F\u001FNjumatatu\u001ENjumaine\u001ENjumatano\u001EAramithi\u001ENjumaa\u001ENJumamothii\u001EKiumia\u001F"
+    "\u001FMweri wa mbere\u001EMweri wa kaĩri\u001EMweri wa kathatũ\u001EMweri wa kana\u001EMweri wa gatano\u001EMweri wa gatantatũ\u001EMweri wa mũgwanja\u001EMweri wa kanana\u001EMweri wa kenda\u001EMweri wa ikũmi\u001EMweri wa ikũmi na ũmwe\u001EMweri wa ikũmi na Kaĩrĩ\u001F\u001F\u001FNjumatatu\u001ENjumaine\u001ENjumatano\u001EAramithi\u001ENjumaa\u001ENJumamothii\u001EKiumia\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_EE: String =
-    "\u001Fdzove\u001Edzodze\u001Etedoxe\u001Eafɔfĩe\u001Edame\u001Emasa\u001Esiamlɔm\u001Edeasiamime\u001Eanyɔnyɔ\u001Ekele\u001Eadeɛmekpɔxe\u001Edzome\u001F\u001F\u001Fdzoɖa\u001Eblaɖa\u001Ekuɖa\u001Eyawoɖa\u001Efiɖa\u001Ememleɖa\u001Ekɔsiɖa\u001F"
+    "\u001Fdzove\u001Edzodze\u001Etedoxe\u001Eafɔfĩe\u001Edame\u001Emasa\u001Esiamlɔm\u001Edeasiamime\u001Eanyɔnyɔ\u001Ekele\u001Eadeɛmekpɔxe\u001Edzome\u001F\u001F\u001Fdzoɖa\u001Eblaɖa\u001Ekuɖa\u001Eyawoɖa\u001Efiɖa\u001Ememleɖa\u001Ekɔsiɖa\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_EL: String =
-    "Ιανουάριος\u001EΦεβρουάριος\u001EΜάρτιος\u001EΑπρίλιος\u001EΜάιος\u001EΙούνιος\u001EΙούλιος\u001EΑύγουστος\u001EΣεπτέμβριος\u001EΟκτώβριος\u001EΝοέμβριος\u001EΔεκέμβριος\u001FΙανουάριος\u001EΦεβρουάριος\u001EΜάρ\u001EΑπρίλιος\u001EΜάι\u001EΙούν\u001EΙούλ\u001EΑύγ\u001EΣεπτέμβριος\u001EΟκτώβριος\u001EΝοέ\u001EΔεκέμβριος\u001F\u001F\u001FΔευτέρα\u001EΤρίτη\u001EΤετάρτη\u001EΠέμπτη\u001EΠαρασκευή\u001EΣάββατο\u001EΚυριακή\u001F"
+    "Ιανουάριος\u001EΦεβρουάριος\u001EΜάρτιος\u001EΑπρίλιος\u001EΜάιος\u001EΙούνιος\u001EΙούλιος\u001EΑύγουστος\u001EΣεπτέμβριος\u001EΟκτώβριος\u001EΝοέμβριος\u001EΔεκέμβριος\u001FΙανουάριος\u001EΦεβρουάριος\u001EΜάρ\u001EΑπρίλιος\u001EΜάι\u001EΙούν\u001EΙούλ\u001EΑύγ\u001EΣεπτέμβριος\u001EΟκτώβριος\u001EΝοέ\u001EΔεκέμβριος\u001F\u001F\u001FΔευτέρα\u001EΤρίτη\u001EΤετάρτη\u001EΠέμπτη\u001EΠαρασκευή\u001EΣάββατο\u001EΚυριακή\u001F\u001Fc000"
 
 internal val LOCALE_STANDALONE_EL_POLYTON: String =
-    "Ιανουάριος\u001EΦεβρουάριος\u001EΜάρτιος\u001EΑπρίλιος\u001EΜάιος\u001EΙούνιος\u001EΙούλιος\u001EΑὔγουστος\u001EΣεπτέμβριος\u001EὈκτώβριος\u001EΝοέμβριος\u001EΔεκέμβριος\u001FΙανουάριος\u001EΦεβρουάριος\u001EΜάρ\u001EΑπρίλιος\u001EΜάι\u001EΙούν\u001EΙούλ\u001EΑύγ\u001EΣεπτέμβριος\u001EὈκτώβριος\u001EΝοέ\u001EΔεκέμβριος\u001F\u001F\u001FΔευτέρα\u001EΤρίτη\u001EΤετάρτη\u001EΠέμπτη\u001EΠαρασκευή\u001EΣάββατο\u001EΚυριακή\u001F"
+    "Ιανουάριος\u001EΦεβρουάριος\u001EΜάρτιος\u001EΑπρίλιος\u001EΜάιος\u001EΙούνιος\u001EΙούλιος\u001EΑὔγουστος\u001EΣεπτέμβριος\u001EὈκτώβριος\u001EΝοέμβριος\u001EΔεκέμβριος\u001FΙανουάριος\u001EΦεβρουάριος\u001EΜάρ\u001EΑπρίλιος\u001EΜάι\u001EΙούν\u001EΙούλ\u001EΑύγ\u001EΣεπτέμβριος\u001EὈκτώβριος\u001EΝοέ\u001EΔεκέμβριος\u001F\u001F\u001FΔευτέρα\u001EΤρίτη\u001EΤετάρτη\u001EΠέμπτη\u001EΠαρασκευή\u001EΣάββατο\u001EΚυριακή\u001F\u001Fc000"
+
+internal val LOCALE_STANDALONE_EN: String =
+    "\u001F\u001F\u001F\u001F\u001F\u001Fc000"
 
 internal val LOCALE_STANDALONE_EN_AU: String =
-    "\u001FJan\u001EFeb\u001EMar\u001EApr\u001EMay\u001EJun\u001EJul\u001EAug\u001ESept\u001EOct\u001ENov\u001EDec\u001F\u001F\u001F\u001FM\u001ET\u001EW\u001ET\u001EF\u001ES\u001ES"
+    "\u001FJan\u001EFeb\u001EMar\u001EApr\u001EMay\u001EJun\u001EJul\u001EAug\u001ESept\u001EOct\u001ENov\u001EDec\u001F\u001F\u001F\u001FM\u001ET\u001EW\u001ET\u001EF\u001ES\u001ES\u001Fc000"
 
 internal val LOCALE_STANDALONE_EN_DSRT: String =
-    "\u001F𐐖𐐰𐑌𐐷𐐭𐐯𐑉𐐨\u001E𐐙𐐯𐐺𐑉𐐭𐐯𐑉𐐨\u001E𐐣𐐪𐑉𐐽\u001E𐐁𐐹𐑉𐐮𐑊\u001E𐐣𐐩\u001E𐐖𐐭𐑌\u001E𐐖𐐭𐑊𐐴\u001E𐐂𐑀𐐲𐑅𐐻\u001E𐐝𐐯𐐹𐐻𐐯𐑋𐐺𐐲𐑉\u001E𐐉𐐿𐐻𐐬𐐺𐐲𐑉\u001E𐐤𐐬𐑂𐐯𐑋𐐺𐐲𐑉\u001E𐐔𐐨𐑅𐐯𐑋𐐺𐐲𐑉\u001F\u001F\u001F𐐣𐐲𐑌𐐼𐐩\u001E𐐓𐐭𐑆𐐼𐐩\u001E𐐎𐐯𐑌𐑆𐐼𐐩\u001E𐐛𐐲𐑉𐑆𐐼𐐩\u001E𐐙𐑉𐐴𐐼𐐩\u001E𐐝𐐰𐐻𐐲𐑉𐐼𐐩\u001E𐐝𐐲𐑌𐐼𐐩\u001F"
+    "\u001F𐐖𐐰𐑌𐐷𐐭𐐯𐑉𐐨\u001E𐐙𐐯𐐺𐑉𐐭𐐯𐑉𐐨\u001E𐐣𐐪𐑉𐐽\u001E𐐁𐐹𐑉𐐮𐑊\u001E𐐣𐐩\u001E𐐖𐐭𐑌\u001E𐐖𐐭𐑊𐐴\u001E𐐂𐑀𐐲𐑅𐐻\u001E𐐝𐐯𐐹𐐻𐐯𐑋𐐺𐐲𐑉\u001E𐐉𐐿𐐻𐐬𐐺𐐲𐑉\u001E𐐤𐐬𐑂𐐯𐑋𐐺𐐲𐑉\u001E𐐔𐐨𐑅𐐯𐑋𐐺𐐲𐑉\u001F\u001F\u001F𐐣𐐲𐑌𐐼𐐩\u001E𐐓𐐭𐑆𐐼𐐩\u001E𐐎𐐯𐑌𐑆𐐼𐐩\u001E𐐛𐐲𐑉𐑆𐐼𐐩\u001E𐐙𐑉𐐴𐐼𐐩\u001E𐐝𐐰𐐻𐐲𐑉𐐼𐐩\u001E𐐝𐐲𐑌𐐼𐐩\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_EN_SHAW: String =
-    "·𐑡𐑨𐑯𐑿𐑼𐑦\u001E·𐑓𐑧𐑚𐑮𐑵𐑼𐑦\u001E·𐑥𐑸𐑗\u001E·𐑱𐑐𐑮𐑩𐑤\u001E·𐑥𐑱\u001E·𐑡𐑵𐑯\u001E·𐑡𐑩𐑤𐑲\u001E·𐑷𐑜𐑩𐑕𐑑\u001E·𐑕𐑧𐑐𐑑𐑧𐑥𐑚𐑼\u001E·𐑪𐑒𐑑𐑴𐑚𐑼\u001E·𐑯𐑴𐑝𐑧𐑥𐑚𐑼\u001E·𐑛𐑦𐑕𐑧𐑥𐑚𐑼\u001F·𐑡𐑨𐑯\u001E·𐑓𐑧𐑚\u001E·𐑥𐑸𐑗\u001E·𐑱𐑐𐑮\u001E·𐑥𐑱\u001E·𐑡𐑵𐑯\u001E·𐑡𐑵𐑤\u001E·𐑷𐑜\u001E·𐑕𐑧𐑐\u001E·𐑪𐑒𐑑\u001E·𐑯𐑴𐑝\u001E·𐑛𐑦𐑕\u001F𐑡\u001E𐑓\u001E𐑥\u001E𐑱\u001E𐑥\u001E𐑡\u001E𐑡\u001E𐑪\u001E𐑕\u001E𐑷\u001E𐑯\u001E𐑛\u001F\u001F·𐑥𐑭𐑙𐑛𐑱\u001E·𐑑𐑵𐑟𐑛𐑱\u001E·𐑢𐑧𐑙𐑟𐑛𐑱\u001E·𐑔𐑻𐑟𐑛𐑱\u001E·𐑓𐑮𐑲𐑛𐑱\u001E·𐑕𐑨𐑛𐑻𐑛𐑱\u001E·𐑕𐑭𐑙𐑛𐑱\u001F"
+    "·𐑡𐑨𐑯𐑿𐑼𐑦\u001E·𐑓𐑧𐑚𐑮𐑵𐑼𐑦\u001E·𐑥𐑸𐑗\u001E·𐑱𐑐𐑮𐑩𐑤\u001E·𐑥𐑱\u001E·𐑡𐑵𐑯\u001E·𐑡𐑩𐑤𐑲\u001E·𐑷𐑜𐑩𐑕𐑑\u001E·𐑕𐑧𐑐𐑑𐑧𐑥𐑚𐑼\u001E·𐑪𐑒𐑑𐑴𐑚𐑼\u001E·𐑯𐑴𐑝𐑧𐑥𐑚𐑼\u001E·𐑛𐑦𐑕𐑧𐑥𐑚𐑼\u001F·𐑡𐑨𐑯\u001E·𐑓𐑧𐑚\u001E·𐑥𐑸𐑗\u001E·𐑱𐑐𐑮\u001E·𐑥𐑱\u001E·𐑡𐑵𐑯\u001E·𐑡𐑵𐑤\u001E·𐑷𐑜\u001E·𐑕𐑧𐑐\u001E·𐑪𐑒𐑑\u001E·𐑯𐑴𐑝\u001E·𐑛𐑦𐑕\u001F𐑡\u001E𐑓\u001E𐑥\u001E𐑱\u001E𐑥\u001E𐑡\u001E𐑡\u001E𐑪\u001E𐑕\u001E𐑷\u001E𐑯\u001E𐑛\u001F\u001F·𐑥𐑭𐑙𐑛𐑱\u001E·𐑑𐑵𐑟𐑛𐑱\u001E·𐑢𐑧𐑙𐑟𐑛𐑱\u001E·𐑔𐑻𐑟𐑛𐑱\u001E·𐑓𐑮𐑲𐑛𐑱\u001E·𐑕𐑨𐑛𐑻𐑛𐑱\u001E·𐑕𐑭𐑙𐑛𐑱\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_EO: String =
-    "\u001FJanuaro\u001EFebruaro\u001EMarto\u001EAprilo\u001EMajo\u001EJunio\u001EJulio\u001EAŭgusto\u001ESeptembro\u001EOktobro\u001ENovembro\u001EDecembro\u001F\u001F\u001Flundo\u001Emardo\u001Emerkredo\u001Eĵaŭdo\u001Evendredo\u001Esabato\u001Edimanĉo\u001F"
+    "\u001FJanuaro\u001EFebruaro\u001EMarto\u001EAprilo\u001EMajo\u001EJunio\u001EJulio\u001EAŭgusto\u001ESeptembro\u001EOktobro\u001ENovembro\u001EDecembro\u001F\u001F\u001Flundo\u001Emardo\u001Emerkredo\u001Eĵaŭdo\u001Evendredo\u001Esabato\u001Edimanĉo\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_ES: String =
-    "\u001Fenero\u001Efebrero\u001Emarzo\u001Eabril\u001Emayo\u001Ejunio\u001Ejulio\u001Eagosto\u001Eseptiembre\u001Eoctubre\u001Enoviembre\u001Ediciembre\u001F\u001F\u001Flunes\u001Emartes\u001Emiércoles\u001Ejueves\u001Eviernes\u001Esábado\u001Edomingo\u001F"
+    "\u001Fenero\u001Efebrero\u001Emarzo\u001Eabril\u001Emayo\u001Ejunio\u001Ejulio\u001Eagosto\u001Eseptiembre\u001Eoctubre\u001Enoviembre\u001Ediciembre\u001F\u001F\u001Flunes\u001Emartes\u001Emiércoles\u001Ejueves\u001Eviernes\u001Esábado\u001Edomingo\u001F\u001F3ff"
 
 internal val LOCALE_STANDALONE_ES_CL: String =
-    "\u001Fene.\u001Efeb.\u001Emar.\u001Eabr.\u001Emay.\u001Ejun.\u001Ejul.\u001Eago.\u001Esept.\u001Eoct.\u001Enov.\u001Edic.\u001F\u001F\u001Flunes\u001Emartes\u001Emiércoles\u001Ejueves\u001Eviernes\u001Esábado\u001Edomingo\u001F"
+    "\u001Fene.\u001Efeb.\u001Emar.\u001Eabr.\u001Emay.\u001Ejun.\u001Ejul.\u001Eago.\u001Esept.\u001Eoct.\u001Enov.\u001Edic.\u001F\u001F\u001Flunes\u001Emartes\u001Emiércoles\u001Ejueves\u001Eviernes\u001Esábado\u001Edomingo\u001F\u001F3ff"
 
 internal val LOCALE_STANDALONE_ES_CO: String =
-    "\u001Fene.\u001Efeb.\u001Emar.\u001Eabr.\u001Emay.\u001Ejun.\u001Ejul.\u001Eago.\u001Esept.\u001Eoct.\u001Enov.\u001Edic.\u001F\u001F\u001Flunes\u001Emartes\u001Emiércoles\u001Ejueves\u001Eviernes\u001Esábado\u001Edomingo\u001Fl\u001Em\u001Em\u001Ej\u001Ev\u001Es\u001Ed"
+    "\u001Fene.\u001Efeb.\u001Emar.\u001Eabr.\u001Emay.\u001Ejun.\u001Ejul.\u001Eago.\u001Esept.\u001Eoct.\u001Enov.\u001Edic.\u001F\u001F\u001Flunes\u001Emartes\u001Emiércoles\u001Ejueves\u001Eviernes\u001Esábado\u001Edomingo\u001Fl\u001Em\u001Em\u001Ej\u001Ev\u001Es\u001Ed\u001F3ff"
 
 internal val LOCALE_STANDALONE_ES_PE: String =
-    "Enero\u001EFebrero\u001EMarzo\u001EAbril\u001EMayo\u001EJunio\u001EJulio\u001EAgosto\u001ESetiembre\u001EOctubre\u001ENoviembre\u001EDiciembre\u001FEne.\u001EFeb.\u001EMar.\u001EAbr.\u001EMay.\u001EJun.\u001EJul.\u001EAgo.\u001ESet.\u001EOct.\u001ENov.\u001EDic.\u001F\u001F\u001Flunes\u001Emartes\u001Emiércoles\u001Ejueves\u001Eviernes\u001Esábado\u001Edomingo\u001F"
+    "Enero\u001EFebrero\u001EMarzo\u001EAbril\u001EMayo\u001EJunio\u001EJulio\u001EAgosto\u001ESetiembre\u001EOctubre\u001ENoviembre\u001EDiciembre\u001FEne.\u001EFeb.\u001EMar.\u001EAbr.\u001EMay.\u001EJun.\u001EJul.\u001EAgo.\u001ESet.\u001EOct.\u001ENov.\u001EDic.\u001F\u001F\u001Flunes\u001Emartes\u001Emiércoles\u001Ejueves\u001Eviernes\u001Esábado\u001Edomingo\u001F\u001F3ff"
 
 internal val LOCALE_STANDALONE_ET: String =
-    "\u001Fjaanuar\u001Eveebruar\u001Emärts\u001Eaprill\u001Emai\u001Ejuuni\u001Ejuuli\u001Eaugust\u001Eseptember\u001Eoktoober\u001Enovember\u001Edetsember\u001F\u001F\u001Fesmaspäev\u001Eteisipäev\u001Ekolmapäev\u001Eneljapäev\u001Ereede\u001Elaupäev\u001Epühapäev\u001F"
+    "\u001Fjaanuar\u001Eveebruar\u001Emärts\u001Eaprill\u001Emai\u001Ejuuni\u001Ejuuli\u001Eaugust\u001Eseptember\u001Eoktoober\u001Enovember\u001Edetsember\u001F\u001F\u001Fesmaspäev\u001Eteisipäev\u001Ekolmapäev\u001Eneljapäev\u001Ereede\u001Elaupäev\u001Epühapäev\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_EU: String =
-    "\u001Furtarrila\u001Eotsaila\u001Emartxoa\u001Eapirila\u001Emaiatza\u001Eekaina\u001Euztaila\u001Eabuztua\u001Eiraila\u001Eurria\u001Eazaroa\u001Eabendua\u001F\u001F\u001Fastelehena\u001Easteartea\u001Easteazkena\u001Eosteguna\u001Eostirala\u001Elarunbata\u001Eigandea\u001F"
+    "\u001Furtarrila\u001Eotsaila\u001Emartxoa\u001Eapirila\u001Emaiatza\u001Eekaina\u001Euztaila\u001Eabuztua\u001Eiraila\u001Eurria\u001Eazaroa\u001Eabendua\u001F\u001F\u001Fastelehena\u001Easteartea\u001Easteazkena\u001Eosteguna\u001Eostirala\u001Elarunbata\u001Eigandea\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_EWO: String =
-    "\u001Fngɔn osú\u001Engɔn bɛ̌\u001Engɔn lála\u001Engɔn nyina\u001Engɔn tána\u001Engɔn saməna\u001Engɔn zamgbála\u001Engɔn mwom\u001Engɔn ebulú\u001Engɔn awóm\u001Engɔn awóm ai dziá\u001Engɔn awóm ai bɛ̌\u001F\u001F\u001Fmɔ́ndi\u001Esɔ́ndɔ məlú mə́bɛ̌\u001Esɔ́ndɔ məlú mə́lɛ́\u001Esɔ́ndɔ məlú mə́nyi\u001Efúladé\u001Eséradé\u001Esɔ́ndɔ\u001F"
+    "\u001Fngɔn osú\u001Engɔn bɛ̌\u001Engɔn lála\u001Engɔn nyina\u001Engɔn tána\u001Engɔn saməna\u001Engɔn zamgbála\u001Engɔn mwom\u001Engɔn ebulú\u001Engɔn awóm\u001Engɔn awóm ai dziá\u001Engɔn awóm ai bɛ̌\u001F\u001F\u001Fmɔ́ndi\u001Esɔ́ndɔ məlú mə́bɛ̌\u001Esɔ́ndɔ məlú mə́lɛ́\u001Esɔ́ndɔ məlú mə́nyi\u001Efúladé\u001Eséradé\u001Esɔ́ndɔ\u001F\u001F0"

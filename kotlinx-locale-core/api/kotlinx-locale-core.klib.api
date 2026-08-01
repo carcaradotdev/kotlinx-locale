@@ -10,6 +10,18 @@ open annotation class dev.carcara.kotlinx.locale/InternalKotlinxLocaleApi : kotl
     constructor <init>() // dev.carcara.kotlinx.locale/InternalKotlinxLocaleApi.<init>|<init>(){}[0]
 }
 
+final enum class dev.carcara.kotlinx.locale/Capitalization : kotlin/Enum<dev.carcara.kotlinx.locale/Capitalization> { // dev.carcara.kotlinx.locale/Capitalization|null[0]
+    enum entry MIDDLE_OF_SENTENCE // dev.carcara.kotlinx.locale/Capitalization.MIDDLE_OF_SENTENCE|null[0]
+    enum entry STANDALONE // dev.carcara.kotlinx.locale/Capitalization.STANDALONE|null[0]
+    enum entry UI_LIST_OR_MENU // dev.carcara.kotlinx.locale/Capitalization.UI_LIST_OR_MENU|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale/Capitalization.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale/Capitalization> // dev.carcara.kotlinx.locale/Capitalization.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale/Capitalization // dev.carcara.kotlinx.locale/Capitalization.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale/Capitalization> // dev.carcara.kotlinx.locale/Capitalization.values|values#static(){}[0]
+}
+
 abstract interface dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale/LocaleDataSource|null[0]
     abstract val supportedLocales // dev.carcara.kotlinx.locale/LocaleDataSource.supportedLocales|{}supportedLocales[0]
         abstract fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale/LocaleDataSource.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
@@ -57,3 +69,4 @@ final fun (dev.carcara.kotlinx.locale/LocaleRef).dev.carcara.kotlinx.locale/toLo
 final fun dev.carcara.kotlinx.locale.internal/resolvedRecord(kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.internal/resolvedRecord|resolvedRecord(kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.Locale){}[0]
 final fun dev.carcara.kotlinx.locale.internal/sparseRecordValue(kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale/Locale, kotlin/Int, kotlin/Int, kotlin/String): kotlin/String? // dev.carcara.kotlinx.locale.internal/sparseRecordValue|sparseRecordValue(kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.Locale;kotlin.Int;kotlin.Int;kotlin.String){}[0]
 final fun dev.carcara.kotlinx.locale.internal/supportedLocalesOf(kotlin.collections/Map<kotlin/String, kotlin/String>): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.internal/supportedLocalesOf|supportedLocalesOf(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+final fun dev.carcara.kotlinx.locale/titlecaseFirstWord(kotlin/String, kotlin/String): kotlin/String // dev.carcara.kotlinx.locale/titlecaseFirstWord|titlecaseFirstWord(kotlin.String;kotlin.String){}[0]

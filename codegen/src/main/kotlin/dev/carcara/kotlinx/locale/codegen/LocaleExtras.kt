@@ -35,6 +35,14 @@ class PartialLocaleExtras {
      */
     val allTerritoryNames = LinkedHashMap<String, String>()
 
+    /**
+     * `contextTransforms` as a bit per usage and context.
+     *
+     * Null where the file declares no transforms at all, which is what lets a
+     * locale inherit its parent's rather than silently declaring none.
+     */
+    var capitalization: Int? = null
+
     var localePattern: String? = null
     var localeSeparator: String? = null
     var localeKeyTypePattern: String? = null
@@ -88,6 +96,24 @@ class PartialCurrencyPatterns {
     var accounting: String? = null
     var accountingAlpha: String? = null
 }
+
+/**
+ * The `contextTransforms` usages this library carries, two bits each.
+ *
+ * The rest of CLDR's usages name things this library does not format:
+ * `keyValue`, `typographicNames`, `number-spellout`, the era fields.
+ */
+val CAPITALIZATION_USAGES: List<String> = listOf(
+    "month-format-except-narrow",
+    "month-standalone-except-narrow",
+    "day-format-except-narrow",
+    "day-standalone-except-narrow",
+    "languages",
+    "script",
+    "territory",
+    "relative",
+    "currencyName",
+)
 
 /** Fully resolved number-formatting data for the currency formatter. */
 class ResolvedCurrencyFormat(
@@ -154,6 +180,26 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
                 extras.localeKeyTypePattern = patterns.child("localeKeyTypePattern")?.textContent?.cleaned()
             }
         }
+    }
+
+    ldml.child("contextTransforms")?.let { transforms ->
+        var bits = 0
+        for (usage in transforms.childElements("contextTransformUsage")) {
+            val index = CAPITALIZATION_USAGES.indexOf(usage.getAttribute("type"))
+            if (index < 0) continue
+            for (transform in usage.childElements("contextTransform")) {
+                if (transform.textContent.cleaned() != "titlecase-firstword") continue
+                when (transform.getAttribute("type")) {
+                    "stand-alone" -> bits = bits or (1 shl (index * 2))
+                    "uiListOrMenu" -> bits = bits or (1 shl (index * 2 + 1))
+                }
+            }
+        }
+        // Recorded even when zero, because a locale that declares the element
+        // and no title-casing means it, and inheriting its parent's would be
+        // wrong. 252 locales write lower-case month names and declare nothing,
+        // which is why "just title-case it" is not an option.
+        extras.capitalization = bits
     }
 
     val numbers = ldml.child("numbers") ?: return extras
@@ -428,6 +474,9 @@ class ExtrasResolver(
             minimumGroupingDigits = partials.firstNotNullOfOrNull { it.minimumGroupingDigits } ?: 1,
         )
     }
+
+    /** The capitalization bit field for [id], zero when nothing in the chain declares one. */
+    fun resolveCapitalization(id: String): Int = flattener.dataChain(id).firstNotNullOfOrNull { partial(it).capitalization } ?: 0
 
     /** The plain decimal and percent patterns for [id]. */
     fun resolveNumberPatterns(id: String): ResolvedNumberPatterns {

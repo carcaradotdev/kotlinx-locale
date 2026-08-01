@@ -3,19 +3,19 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
 internal val LOCALE_STANDALONE_OC: String =
-    "genièr\u001Efebrièr\u001Emarç\u001Eabril\u001Emai\u001Ejunh\u001Ejulhet\u001Eagost\u001Esetembre\u001Eoctòbre\u001Enovembre\u001Edecembre\u001Fgenièr\u001Efebrièr\u001Emarç\u001Eabril\u001Emai\u001Ejunh\u001Ejulhet\u001Eagost\u001Esetembre\u001Eoctòbre\u001Enovembre\u001Edecembre\u001F\u001F\u001F\u001F"
+    "genièr\u001Efebrièr\u001Emarç\u001Eabril\u001Emai\u001Ejunh\u001Ejulhet\u001Eagost\u001Esetembre\u001Eoctòbre\u001Enovembre\u001Edecembre\u001Fgenièr\u001Efebrièr\u001Emarç\u001Eabril\u001Emai\u001Ejunh\u001Ejulhet\u001Eagost\u001Esetembre\u001Eoctòbre\u001Enovembre\u001Edecembre\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_OC_ES: String =
-    "\u001Fgèr\u001Ehereuèr\u001Emarç\u001Eabriu\u001Emai\u001Ejunh\u001Ejuriòl\u001Eagost\u001Eseteme\u001Eoctobre\u001Enoveme\u001Edeseme\u001F\u001F\u001Fdeluns\u001Edimars\u001Edimèrcles\u001Edijaus\u001Ediuendres\u001Edissabte\u001Edimenge\u001F"
+    "\u001Fgèr\u001Ehereuèr\u001Emarç\u001Eabriu\u001Emai\u001Ejunh\u001Ejuriòl\u001Eagost\u001Eseteme\u001Eoctobre\u001Enoveme\u001Edeseme\u001F\u001F\u001Fdeluns\u001Edimars\u001Edimèrcles\u001Edijaus\u001Ediuendres\u001Edissabte\u001Edimenge\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_OM: String =
-    "\u001FAmajjii\u001EGuraandhala\u001EBitootessa\u001EEebila\u001ECaamsaa\u001EWaxabajjii\u001EAdoolessa\u001EHagayya\u001EFulbaana\u001EOnkoloolessa\u001ESadaasa\u001EMudde\u001F\u001F\u001FWiixata\u001EKibxata\u001ERoobii\u001EKamisa\u001EJimaata\u001ESanbata\u001EDilbata\u001F"
+    "\u001FAmajjii\u001EGuraandhala\u001EBitootessa\u001EEebila\u001ECaamsaa\u001EWaxabajjii\u001EAdoolessa\u001EHagayya\u001EFulbaana\u001EOnkoloolessa\u001ESadaasa\u001EMudde\u001F\u001F\u001FWiixata\u001EKibxata\u001ERoobii\u001EKamisa\u001EJimaata\u001ESanbata\u001EDilbata\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_OR: String =
-    "\u001F\u001F\u001F\u001Fସୋମବାର\u001Eମଙ୍ଗଳବାର\u001Eବୁଧବାର\u001Eଗୁରୁବାର\u001Eଶୁକ୍ରବାର\u001Eଶନିବାର\u001Eରବିବାର\u001F"
+    "\u001F\u001F\u001F\u001Fସୋମବାର\u001Eମଙ୍ଗଳବାର\u001Eବୁଧବାର\u001Eଗୁରୁବାର\u001Eଶୁକ୍ରବାର\u001Eଶନିବାର\u001Eରବିବାର\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_OS: String =
-    "Январь\u001EФевраль\u001EМартъи\u001EАпрель\u001EМай\u001EИюнь\u001EИюль\u001EАвгуст\u001EСентябрь\u001EОктябрь\u001EНоябрь\u001EДекабрь\u001FЯнв.\u001EФевр.\u001EМарт.\u001EАпр.\u001EМай\u001EИюнь\u001EИюль\u001EАвг.\u001EСент.\u001EОкт.\u001EНояб.\u001EДек.\u001F\u001FКъуырисӕр\u001EДыццӕг\u001EӔртыццӕг\u001EЦыппӕрӕм\u001EМайрӕмбон\u001EСабат\u001EХуыцаубон\u001FКрс\u001EДцг\u001EӔрт\u001EЦпр\u001EМрб\u001EСбт\u001EХцб\u001F"
+    "Январь\u001EФевраль\u001EМартъи\u001EАпрель\u001EМай\u001EИюнь\u001EИюль\u001EАвгуст\u001EСентябрь\u001EОктябрь\u001EНоябрь\u001EДекабрь\u001FЯнв.\u001EФевр.\u001EМарт.\u001EАпр.\u001EМай\u001EИюнь\u001EИюль\u001EАвг.\u001EСент.\u001EОкт.\u001EНояб.\u001EДек.\u001F\u001FКъуырисӕр\u001EДыццӕг\u001EӔртыццӕг\u001EЦыппӕрӕм\u001EМайрӕмбон\u001EСабат\u001EХуыцаубон\u001FКрс\u001EДцг\u001EӔрт\u001EЦпр\u001EМрб\u001EСбт\u001EХцб\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_OSA: String =
-    "\u001F𐓀𐓣͘𐓪͘𐓬𐓘 𐓄𐓘𐓡𐓛͘𐓧𐓟\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓵𐓪͘𐓬𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓵𐓘𐓜𐓣\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓰𐓪𐓬𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓮𐓘𐓰𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓯𐓘𐓬𐓟\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓄𐓟𐓵𐓪͘𐓬𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒼𐓣𐓟𐓰𐓪𐓬𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒿𐓟𐓜𐓛𐓲𐓟𐓷𐓣͘𐓤𐓟\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒿𐓟𐓜𐓛\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒰𐓧𐓣 𐓏𐓣͘𐓸𐓲𐓣\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒰𐓧𐓣 𐓍𐓪͘𐓬𐓘\u001F\u001F\u001F\u001FM\u001ET\u001EW\u001ET\u001EF\u001ES\u001ES"
+    "\u001F𐓀𐓣͘𐓪͘𐓬𐓘 𐓄𐓘𐓡𐓛͘𐓧𐓟\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓵𐓪͘𐓬𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓵𐓘𐓜𐓣\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓰𐓪𐓬𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓮𐓘𐓰𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓯𐓘𐓬𐓟\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐓄𐓟𐓵𐓪͘𐓬𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒼𐓣𐓟𐓰𐓪𐓬𐓘\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒿𐓟𐓜𐓛𐓲𐓟𐓷𐓣͘𐓤𐓟\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒿𐓟𐓜𐓛\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒰𐓧𐓣 𐓏𐓣͘𐓸𐓲𐓣\u001E𐓀𐓣͘𐓪͘𐓬𐓘 𐒰𐓧𐓣 𐓍𐓪͘𐓬𐓘\u001F\u001F\u001F\u001FM\u001ET\u001EW\u001ET\u001EF\u001ES\u001ES\u001F0"

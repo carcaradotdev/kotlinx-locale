@@ -28,11 +28,24 @@ final enum class dev.carcara.kotlinx.locale.language/LanguageNameStyle : kotlin/
     final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.language/LanguageNameStyle> // dev.carcara.kotlinx.locale.language/LanguageNameStyle.values|values#static(){}[0]
 }
 
+final enum class dev.carcara.kotlinx.locale.language/LanguageNameUsage : kotlin/Enum<dev.carcara.kotlinx.locale.language/LanguageNameUsage> { // dev.carcara.kotlinx.locale.language/LanguageNameUsage|null[0]
+    enum entry LANGUAGE // dev.carcara.kotlinx.locale.language/LanguageNameUsage.LANGUAGE|null[0]
+    enum entry SCRIPT // dev.carcara.kotlinx.locale.language/LanguageNameUsage.SCRIPT|null[0]
+    enum entry TERRITORY // dev.carcara.kotlinx.locale.language/LanguageNameUsage.TERRITORY|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.language/LanguageNameUsage.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.language/LanguageNameUsage> // dev.carcara.kotlinx.locale.language/LanguageNameUsage.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.language/LanguageNameUsage // dev.carcara.kotlinx.locale.language/LanguageNameUsage.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.language/LanguageNameUsage> // dev.carcara.kotlinx.locale.language/LanguageNameUsage.values|values#static(){}[0]
+}
+
 abstract interface dev.carcara.kotlinx.locale.language/LanguageNameSource : dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale.language/LanguageNameSource|null[0]
     abstract fun displayPatternsOrNull(dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.language/LocaleDisplayPatterns? // dev.carcara.kotlinx.locale.language/LanguageNameSource.displayPatternsOrNull|displayPatternsOrNull(dev.carcara.kotlinx.locale.Locale){}[0]
     abstract fun languageNameOrNull(kotlin/String, dev.carcara.kotlinx.locale.language/LanguageNameStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language/LanguageNameSource.languageNameOrNull|languageNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.language.LanguageNameStyle;dev.carcara.kotlinx.locale.Locale){}[0]
     abstract fun regionNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language/LanguageNameSource.regionNameOrNull|regionNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
     abstract fun scriptNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language/LanguageNameSource.scriptNameOrNull|scriptNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    open fun capitalized(kotlin/String, dev.carcara.kotlinx.locale.language/LanguageNameUsage, dev.carcara.kotlinx.locale/Capitalization, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.language/LanguageNameSource.capitalized|capitalized(kotlin.String;dev.carcara.kotlinx.locale.language.LanguageNameUsage;dev.carcara.kotlinx.locale.Capitalization;dev.carcara.kotlinx.locale.Locale){}[0]
 }
 
 final class dev.carcara.kotlinx.locale.language/FallbackLanguageNames : dev.carcara.kotlinx.locale.language/LanguageNameSource { // dev.carcara.kotlinx.locale.language/FallbackLanguageNames|null[0]
@@ -41,6 +54,7 @@ final class dev.carcara.kotlinx.locale.language/FallbackLanguageNames : dev.carc
     final val supportedLocales // dev.carcara.kotlinx.locale.language/FallbackLanguageNames.supportedLocales|{}supportedLocales[0]
         final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.language/FallbackLanguageNames.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
 
+    final fun capitalized(kotlin/String, dev.carcara.kotlinx.locale.language/LanguageNameUsage, dev.carcara.kotlinx.locale/Capitalization, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.language/FallbackLanguageNames.capitalized|capitalized(kotlin.String;dev.carcara.kotlinx.locale.language.LanguageNameUsage;dev.carcara.kotlinx.locale.Capitalization;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun displayPatternsOrNull(dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.language/LocaleDisplayPatterns? // dev.carcara.kotlinx.locale.language/FallbackLanguageNames.displayPatternsOrNull|displayPatternsOrNull(dev.carcara.kotlinx.locale.Locale){}[0]
     final fun languageNameOrNull(kotlin/String, dev.carcara.kotlinx.locale.language/LanguageNameStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language/FallbackLanguageNames.languageNameOrNull|languageNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.language.LanguageNameStyle;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun regionNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language/FallbackLanguageNames.regionNameOrNull|regionNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]

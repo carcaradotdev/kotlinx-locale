@@ -176,7 +176,11 @@ fun buildLocaleDisplayNamePayloads(flattener: Flattener, extras: ExtrasResolver)
             entries(languages) + FIELD_SEPARATOR +
             entries(partial.scriptNames) + FIELD_SEPARATOR +
             entries(partial.allTerritoryNames) + FIELD_SEPARATOR +
-            entries(patterns)
+            entries(patterns) + FIELD_SEPARATOR +
+            // Appended rather than keyed, because it is one number for the whole
+            // locale rather than a value per code. Resolved rather than sparse
+            // for the same reason: there is nothing to walk a chain for.
+            extras.resolveCapitalization(id).toString(16)
     }
     return payloads
 }

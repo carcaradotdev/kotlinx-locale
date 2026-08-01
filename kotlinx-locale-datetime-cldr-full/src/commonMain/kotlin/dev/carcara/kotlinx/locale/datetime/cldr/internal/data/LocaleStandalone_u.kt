@@ -3,16 +3,16 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
 internal val LOCALE_STANDALONE_UG: String =
-    "\u001F\u001F\u001F\u001Fدۈشەنبە\u001Eسەيشەنبە\u001Eچارشەنبە\u001Eپەيشەنبە\u001Eجۈمە\u001Eشەنبە\u001Eيەكشەنبە\u001F"
+    "\u001F\u001F\u001F\u001Fدۈشەنبە\u001Eسەيشەنبە\u001Eچارشەنبە\u001Eپەيشەنبە\u001Eجۈمە\u001Eشەنبە\u001Eيەكشەنبە\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_UK: String =
-    "січень\u001Eлютий\u001Eберезень\u001Eквітень\u001Eтравень\u001Eчервень\u001Eлипень\u001Eсерпень\u001Eвересень\u001Eжовтень\u001Eлистопад\u001Eгрудень\u001Fсічень\u001Eлютий\u001Eберезень\u001Eквітень\u001Eтравень\u001Eчервень\u001Eлипень\u001Eсерпень\u001Eвересень\u001Eжовтень\u001Eлистопад\u001Eгрудень\u001FС\u001EЛ\u001EБ\u001EК\u001EТ\u001EЧ\u001EЛ\u001EС\u001EВ\u001EЖ\u001EЛ\u001EГ\u001F\u001Fпонеділок\u001Eвівторок\u001Eсереда\u001Eчетвер\u001Eпʼятниця\u001Eсубота\u001Eнеділя\u001F"
+    "січень\u001Eлютий\u001Eберезень\u001Eквітень\u001Eтравень\u001Eчервень\u001Eлипень\u001Eсерпень\u001Eвересень\u001Eжовтень\u001Eлистопад\u001Eгрудень\u001Fсічень\u001Eлютий\u001Eберезень\u001Eквітень\u001Eтравень\u001Eчервень\u001Eлипень\u001Eсерпень\u001Eвересень\u001Eжовтень\u001Eлистопад\u001Eгрудень\u001FС\u001EЛ\u001EБ\u001EК\u001EТ\u001EЧ\u001EЛ\u001EС\u001EВ\u001EЖ\u001EЛ\u001EГ\u001F\u001Fпонеділок\u001Eвівторок\u001Eсереда\u001Eчетвер\u001Eпʼятниця\u001Eсубота\u001Eнеділя\u001F\u001Fc3ff"
 
 internal val LOCALE_STANDALONE_UZ: String =
-    "Yanvar\u001EFevral\u001EMart\u001EAprel\u001EMay\u001EIyun\u001EIyul\u001EAvgust\u001ESentabr\u001EOktabr\u001ENoyabr\u001EDekabr\u001FYan\u001EFev\u001EMar\u001EApr\u001EMay\u001EIyn\u001EIyl\u001EAvg\u001ESen\u001EOkt\u001ENoy\u001EDek\u001F\u001F\u001Fdushanba\u001Eseshanba\u001Echorshanba\u001Epayshanba\u001Ejuma\u001Eshanba\u001Eyakshanba\u001F"
+    "Yanvar\u001EFevral\u001EMart\u001EAprel\u001EMay\u001EIyun\u001EIyul\u001EAvgust\u001ESentabr\u001EOktabr\u001ENoyabr\u001EDekabr\u001FYan\u001EFev\u001EMar\u001EApr\u001EMay\u001EIyn\u001EIyl\u001EAvg\u001ESen\u001EOkt\u001ENoy\u001EDek\u001F\u001F\u001Fdushanba\u001Eseshanba\u001Echorshanba\u001Epayshanba\u001Ejuma\u001Eshanba\u001Eyakshanba\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_UZ_ARAB: String =
-    "\u001Fجنوری\u001Eفبروری\u001Eمارچ\u001Eاپریل\u001Eمی\u001Eجون\u001Eجولای\u001Eاگست\u001Eسپتمبر\u001Eاکتوبر\u001Eنومبر\u001Eدسمبر\u001F\u001F\u001Fدوشنبه\u001Eسه‌شنبه\u001Eچهارشنبه\u001Eپنجشنبه\u001Eجمعه\u001Eشنبه\u001Eیکشنبه\u001F"
+    "\u001Fجنوری\u001Eفبروری\u001Eمارچ\u001Eاپریل\u001Eمی\u001Eجون\u001Eجولای\u001Eاگست\u001Eسپتمبر\u001Eاکتوبر\u001Eنومبر\u001Eدسمبر\u001F\u001F\u001Fدوشنبه\u001Eسه‌شنبه\u001Eچهارشنبه\u001Eپنجشنبه\u001Eجمعه\u001Eشنبه\u001Eیکشنبه\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_UZ_CYRL: String =
-    "\u001Fянвар\u001Eфеврал\u001Eмарт\u001Eапрел\u001Eмай\u001Eиюн\u001Eиюл\u001Eавгуст\u001Eсентябр\u001Eоктябр\u001Eноябр\u001Eдекабр\u001F\u001F\u001Fдушанба\u001Eсешанба\u001Eчоршанба\u001Eпайшанба\u001Eжума\u001Eшанба\u001Eякшанба\u001F"
+    "\u001Fянвар\u001Eфеврал\u001Eмарт\u001Eапрел\u001Eмай\u001Eиюн\u001Eиюл\u001Eавгуст\u001Eсентябр\u001Eоктябр\u001Eноябр\u001Eдекабр\u001F\u001F\u001Fдушанба\u001Eсешанба\u001Eчоршанба\u001Eпайшанба\u001Eжума\u001Eшанба\u001Eякшанба\u001F\u001F0"

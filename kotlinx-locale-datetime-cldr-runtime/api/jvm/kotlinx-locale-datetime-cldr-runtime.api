@@ -4,6 +4,7 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/DateTimeReco
 	public final fun dayOfWeek (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;)Ljava/lang/String;
 	public final fun dayPeriodName (I)Ljava/lang/String;
 	public final fun getAm ()Ljava/lang/String;
+	public final fun getCapitalizationBits ()I
 	public final fun getDateFormats ()Ljava/util/List;
 	public final fun getDayPeriodNames ()Ljava/util/List;
 	public final fun getDayPeriodRules ()Ljava/util/List;
@@ -78,9 +79,10 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PatternToken
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadDateTimeFormats : dev/carcara/kotlinx/locale/datetime/DateTimeFormatSource {
+public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadDateTimeFormats : dev/carcara/kotlinx/locale/datetime/CalendarCapitalizationSource, dev/carcara/kotlinx/locale/datetime/DateTimeFormatSource {
 	public fun <init> (Ljava/util/Map;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun capitalized (Ljava/lang/String;Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;Ldev/carcara/kotlinx/locale/Capitalization;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun dayOfWeekNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun dayOfWeekNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatDateOrNull (Lkotlinx/datetime/LocalDate;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;

@@ -49,6 +49,8 @@ final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord { //
 
     final val am // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.am|{}am[0]
         final fun <get-am>(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.am.<get-am>|<get-am>(){}[0]
+    final val capitalizationBits // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.capitalizationBits|{}capitalizationBits[0]
+        final fun <get-capitalizationBits>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.capitalizationBits.<get-capitalizationBits>|<get-capitalizationBits>(){}[0]
     final val dateFormats // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.dateFormats|{}dateFormats[0]
         final fun <get-dateFormats>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.dateFormats.<get-dateFormats>|<get-dateFormats>(){}[0]
     final val dayPeriodNames // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.dayPeriodNames|{}dayPeriodNames[0]
@@ -110,12 +112,13 @@ final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/DayPeriodRule { // 
         final fun <get-start>(): kotlin/Int // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DayPeriodRule.start.<get-start>|<get-start>(){}[0]
 }
 
-final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats : dev.carcara.kotlinx.locale.datetime/DateTimeFormatSource { // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats|null[0]
+final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats : dev.carcara.kotlinx.locale.datetime/CalendarCapitalizationSource, dev.carcara.kotlinx.locale.datetime/DateTimeFormatSource { // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats|null[0]
     constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String> = ...) // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
 
     final val supportedLocales // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats.supportedLocales|{}supportedLocales[0]
         final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
 
+    final fun capitalized(kotlin/String, dev.carcara.kotlinx.locale.datetime/CalendarNameUsage, dev.carcara.kotlinx.locale/Capitalization, dev.carcara.kotlinx.locale/Locale): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats.capitalized|capitalized(kotlin.String;dev.carcara.kotlinx.locale.datetime.CalendarNameUsage;dev.carcara.kotlinx.locale.Capitalization;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun dayOfWeekNameOrNull(kotlin/Int, dev.carcara.kotlinx.locale.datetime/TextStyle, dev.carcara.kotlinx.locale.datetime/NameContext, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats.dayOfWeekNameOrNull|dayOfWeekNameOrNull(kotlin.Int;dev.carcara.kotlinx.locale.datetime.TextStyle;dev.carcara.kotlinx.locale.datetime.NameContext;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun dayOfWeekNameOrNull(kotlin/Int, dev.carcara.kotlinx.locale.datetime/TextStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats.dayOfWeekNameOrNull|dayOfWeekNameOrNull(kotlin.Int;dev.carcara.kotlinx.locale.datetime.TextStyle;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun formatDateOrNull(kotlinx.datetime/LocalDate, dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats.formatDateOrNull|formatDateOrNull(kotlinx.datetime.LocalDate;dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.Locale){}[0]

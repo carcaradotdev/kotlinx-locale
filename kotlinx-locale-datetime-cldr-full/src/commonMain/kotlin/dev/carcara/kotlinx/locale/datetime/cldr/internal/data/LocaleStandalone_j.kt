@@ -3,10 +3,10 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
 internal val LOCALE_STANDALONE_JA: String =
-    "\u001F\u001F\u001F\u001F月曜日\u001E火曜日\u001E水曜日\u001E木曜日\u001E金曜日\u001E土曜日\u001E日曜日\u001F"
+    "\u001F\u001F\u001F\u001F月曜日\u001E火曜日\u001E水曜日\u001E木曜日\u001E金曜日\u001E土曜日\u001E日曜日\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_JMC: String =
-    "\u001FJanuari\u001EFebruari\u001EMachi\u001EAprilyi\u001EMei\u001EJunyi\u001EJulyai\u001EAgusti\u001ESeptemba\u001EOktoba\u001ENovemba\u001EDesemba\u001F\u001F\u001FJumatatuu\u001EJumanne\u001EJumatanu\u001EAlhamisi\u001EIjumaa\u001EJumamosi\u001EJumapilyi\u001F"
+    "\u001FJanuari\u001EFebruari\u001EMachi\u001EAprilyi\u001EMei\u001EJunyi\u001EJulyai\u001EAgusti\u001ESeptemba\u001EOktoba\u001ENovemba\u001EDesemba\u001F\u001F\u001FJumatatuu\u001EJumanne\u001EJumatanu\u001EAlhamisi\u001EIjumaa\u001EJumamosi\u001EJumapilyi\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_JV: String =
-    "\u001FJanuari\u001EFebruari\u001EMaret\u001EApril\u001EMei\u001EJuni\u001EJuli\u001EAgustus\u001ESeptember\u001EOktober\u001ENovember\u001EDesember\u001F\u001F\u001FSenin\u001ESelasa\u001ERabu\u001EKamis\u001EJumat\u001ESabtu\u001EAhad\u001F"
+    "\u001FJanuari\u001EFebruari\u001EMaret\u001EApril\u001EMei\u001EJuni\u001EJuli\u001EAgustus\u001ESeptember\u001EOktober\u001ENovember\u001EDesember\u001F\u001F\u001FSenin\u001ESelasa\u001ERabu\u001EKamis\u001EJumat\u001ESabtu\u001EAhad\u001F\u001F0"
