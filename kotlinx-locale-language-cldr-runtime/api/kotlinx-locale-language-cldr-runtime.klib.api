@@ -1,0 +1,19 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-language-cldr-runtime>
+final class dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames : dev.carcara.kotlinx.locale.language/LanguageNameSource { // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>) // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final val supportedLocales // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun displayPatternsOrNull(dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.language/LocaleDisplayPatterns? // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.displayPatternsOrNull|displayPatternsOrNull(dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun languageNameOrNull(kotlin/String, dev.carcara.kotlinx.locale.language/LanguageNameStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.languageNameOrNull|languageNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.language.LanguageNameStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun regionNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.regionNameOrNull|regionNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun scriptNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.scriptNameOrNull|scriptNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+}

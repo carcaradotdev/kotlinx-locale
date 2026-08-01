@@ -17,6 +17,28 @@ class PartialLocaleExtras {
     /** currency code -> localized display name (count-less form). */
     val currencyNames = LinkedHashMap<String, String>()
 
+    /** language subtag or CLDR locale id -> its name, only what this file declares. */
+    val languageNames = LinkedHashMap<String, String>()
+
+    /** The same, keyed with a `#short` suffix, for CLDR's `alt="short"` spellings. */
+    val languageShortNames = LinkedHashMap<String, String>()
+
+    /** ISO 15924 code -> localized script name. */
+    val scriptNames = LinkedHashMap<String, String>()
+
+    /**
+     * Every territory this file names, macro-regions included.
+     *
+     * Wider than [territoryNames], which is filtered to the ISO 3166-1 countries
+     * the enum carries. A locale identifier can hold `419` or `EU`, and naming
+     * `es-419` needs one.
+     */
+    val allTerritoryNames = LinkedHashMap<String, String>()
+
+    var localePattern: String? = null
+    var localeSeparator: String? = null
+    var localeKeyTypePattern: String? = null
+
     var defaultNumberingSystem: String? = null
     var minimumGroupingDigits: Int? = null
 
@@ -86,13 +108,51 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
     val extras = PartialLocaleExtras()
     val ldml = parseXml(file).documentElement
 
-    ldml.child("localeDisplayNames")?.child("territories")?.let { territories ->
-        for (territory in territories.childElements("territory")) {
-            if (territory.hasAttribute("alt")) continue
-            val type = territory.getAttribute("type")
-            if (type !in countryCodes) continue
-            val name = territory.textContent.cleaned() ?: continue
-            extras.territoryNames.putIfAbsent(type, name)
+    ldml.child("localeDisplayNames")?.let { displayNames ->
+        displayNames.child("territories")?.let { territories ->
+            for (territory in territories.childElements("territory")) {
+                if (territory.hasAttribute("alt")) continue
+                val type = territory.getAttribute("type")
+                val name = territory.textContent.cleaned() ?: continue
+                extras.allTerritoryNames.putIfAbsent(type, name)
+                if (type in countryCodes) extras.territoryNames.putIfAbsent(type, name)
+            }
+        }
+
+        displayNames.child("languages")?.let { languages ->
+            for (language in languages.childElements("language")) {
+                val type = language.getAttribute("type")
+                if (type.isEmpty()) continue
+                // menu= reorders a name for an alphabetical list, which is a
+                // different question from what the name is.
+                if (language.hasAttribute("menu")) continue
+                val name = language.textContent.cleaned() ?: continue
+                when (language.getAttribute("alt")) {
+                    "" -> extras.languageNames.putIfAbsent(type, name)
+                    "short" -> extras.languageShortNames.putIfAbsent(type, name)
+                }
+            }
+        }
+
+        displayNames.child("scripts")?.let { scripts ->
+            for (script in scripts.childElements("script")) {
+                if (script.hasAttribute("alt")) continue
+                val type = script.getAttribute("type")
+                val name = script.textContent.cleaned() ?: continue
+                extras.scriptNames.putIfAbsent(type, name)
+            }
+        }
+
+        displayNames.child("localeDisplayPattern")?.let { patterns ->
+            if (extras.localePattern == null) {
+                extras.localePattern = patterns.child("localePattern")?.textContent?.cleaned()
+            }
+            if (extras.localeSeparator == null) {
+                extras.localeSeparator = patterns.child("localeSeparator")?.textContent?.cleaned()
+            }
+            if (extras.localeKeyTypePattern == null) {
+                extras.localeKeyTypePattern = patterns.child("localeKeyTypePattern")?.textContent?.cleaned()
+            }
         }
     }
 

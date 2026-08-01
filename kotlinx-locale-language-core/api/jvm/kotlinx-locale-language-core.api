@@ -1,0 +1,57 @@
+public final class dev/carcara/kotlinx/locale/language/FallbackLanguageNames : dev/carcara/kotlinx/locale/language/LanguageNameSource {
+	public fun <init> (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ldev/carcara/kotlinx/locale/language/LanguageNameSource;)V
+	public fun displayPatternsOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/language/LocaleDisplayPatterns;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun languageNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun regionNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun scriptNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/language/LanguageDisplay : java/lang/Enum {
+	public static final field DIALECT Ldev/carcara/kotlinx/locale/language/LanguageDisplay;
+	public static final field STANDARD Ldev/carcara/kotlinx/locale/language/LanguageDisplay;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/language/LanguageDisplay;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/language/LanguageDisplay;
+}
+
+public abstract interface class dev/carcara/kotlinx/locale/language/LanguageNameSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public abstract fun displayPatternsOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/language/LocaleDisplayPatterns;
+	public abstract fun languageNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public abstract fun regionNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public abstract fun scriptNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/language/LanguageNameStyle : java/lang/Enum {
+	public static final field SHORT Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;
+	public static final field STANDARD Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;
+}
+
+public final class dev/carcara/kotlinx/locale/language/LocaleDisplayNameKt {
+	public static final fun displayName (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/language/LanguageDisplay;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;)Ljava/lang/String;
+	public static synthetic fun displayName$default (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/language/LanguageDisplay;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun languageName (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;)Ljava/lang/String;
+	public static synthetic fun languageName$default (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun nativeDisplayName (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/language/LanguageDisplay;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;)Ljava/lang/String;
+	public static synthetic fun nativeDisplayName$default (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/language/LanguageDisplay;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun regionName (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun regionName$default (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun scriptName (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun scriptName$default (Ldev/carcara/kotlinx/locale/language/LanguageNameSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/language/LocaleDisplayPatterns {
+	public static final field Companion Ldev/carcara/kotlinx/locale/language/LocaleDisplayPatterns$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getLocaleKeyTypePattern ()Ljava/lang/String;
+	public final fun getLocalePattern ()Ljava/lang/String;
+	public final fun getLocaleSeparator ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/language/LocaleDisplayPatterns$Companion {
+	public final fun getRoot ()Ldev/carcara/kotlinx/locale/language/LocaleDisplayPatterns;
+}
+

@@ -42,6 +42,9 @@ public enum class GeneratedTable {
     /** Stand-alone month, weekday and quarter names, where they differ from the format ones. */
     DATE_TIME_STANDALONE,
 
+    /** Language, script and region names, and the patterns that compose them. */
+    LANGUAGE_NAMES,
+
     /** Number symbols and the plain decimal and percent patterns. */
     NUMBER,
 
@@ -77,6 +80,7 @@ public enum class GeneratedBinding(public val objectSuffix: String) {
      */
     SKELETONS("DateTimeSkeletons"),
     NUMBER("Number"),
+    LANGUAGE("LanguageNames"),
 }
 
 public class SourceRoots private constructor(
@@ -132,6 +136,7 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
                 GeneratedTable.CURRENCY_COMPACT to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.PLURALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.ORDINALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
+                GeneratedTable.LANGUAGE_NAMES to "dev.carcara.kotlinx.locale.language.cldr.internal.data",
             ),
         )
 
@@ -221,6 +226,14 @@ private val PAYLOAD_TABLES = listOf(
         "LocaleStandalone",
         "LOCALE_STANDALONE",
         "localeStandaloneRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.LANGUAGE_NAMES,
+        "localeDisplayNames",
+        "LocaleDisplayNames",
+        "LOCALE_DISPLAY_NAMES",
+        "localeDisplayNamesRegistry",
+        "LANGUAGE_NAMES_CLDR_VERSION",
     ),
     PayloadTableSpec(
         GeneratedTable.NUMBER,
@@ -390,6 +403,10 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             hasCompact = roots[GeneratedTable.NUMBER_COMPACT] != null,
             hasOrdinals = roots[GeneratedTable.ORDINALS] != null,
         )
+    }
+
+    roots[GeneratedBinding.LANGUAGE]?.let { target ->
+        emitLanguageBinding(target.root, target.spec(packages[GeneratedTable.LANGUAGE_NAMES], cldr))
     }
 
     roots[GeneratedBinding.SKELETONS]?.let { target ->

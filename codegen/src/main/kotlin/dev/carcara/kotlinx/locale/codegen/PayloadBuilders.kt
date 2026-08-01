@@ -128,3 +128,55 @@ fun buildCurrencyNamePayloads(flattener: Flattener, extras: ExtrasResolver): Map
     }
     return payloads
 }
+
+/**
+ * Sparse per-locale display-name payloads: the parent tag, then the language,
+ * script and territory names this locale's own file declares, then its three
+ * composition patterns.
+ *
+ * The territory table here is the unfiltered one, macro-regions included,
+ * because naming `es-419` needs `419` and the country enum does not carry it.
+ * That means a build taking both this domain and the country domain holds two
+ * copies of the ISO 3166-1 names. Deliberate: the alternative is a locale name
+ * that cannot name its own region unless the consumer also took the country
+ * artifact, which is a surprising way for the flagship call to fail.
+ */
+fun buildLocaleDisplayNamePayloads(flattener: Flattener, extras: ExtrasResolver): Map<String, String> {
+    fun entries(map: Map<String, String>): String = map.entries
+        .sortedBy { it.key }
+        .joinToString(LIST_SEPARATOR) { (code, value) -> code + KEY_SEPARATOR + value }
+
+    val payloads = LinkedHashMap<String, String>()
+    for (id in listOf("root") + flattener.localeIds) {
+        val partial = extras.partial(id)
+        val parentTag = flattener.dataChain(id).getOrNull(1)?.let(::canonicalTag).orEmpty()
+
+        val languages = LinkedHashMap<String, String>(partial.languageNames)
+        for ((code, name) in partial.languageShortNames) languages["$code#short"] = name
+
+        // The three patterns share one key, so a locale that declares any of
+        // them declares the set and a lookup walks the chain once.
+        val patterns = if (
+            partial.localePattern == null &&
+            partial.localeSeparator == null &&
+            partial.localeKeyTypePattern == null
+        ) {
+            emptyMap()
+        } else {
+            mapOf(
+                "p" to listOf(
+                    partial.localePattern.orEmpty(),
+                    partial.localeSeparator.orEmpty(),
+                    partial.localeKeyTypePattern.orEmpty(),
+                ).joinToString(LIST_SEPARATOR),
+            )
+        }
+
+        payloads[canonicalTag(id)] = parentTag + FIELD_SEPARATOR +
+            entries(languages) + FIELD_SEPARATOR +
+            entries(partial.scriptNames) + FIELD_SEPARATOR +
+            entries(partial.allTerritoryNames) + FIELD_SEPARATOR +
+            entries(patterns)
+    }
+    return payloads
+}

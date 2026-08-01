@@ -74,6 +74,20 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
     ),
 
     /**
+     * Language, script and region names, and `Locale.displayName`.
+     *
+     * One feature rather than three, because the display name algorithm reaches
+     * all of them: naming `sr-Cyrl-BA` needs the language, the script and the
+     * region, and a build that had only the first would compose a name with two
+     * raw subtags in it.
+     */
+    LANGUAGE_NAMES(
+        dslName = "language.names",
+        tables = setOf(GeneratedTable.LANGUAGE_NAMES),
+        bindings = setOf(GeneratedBinding.LANGUAGE),
+    ),
+
+    /**
      * Number symbols and the plain decimal and percent patterns.
      *
      * Includes the plural table, because the source object that carries the
