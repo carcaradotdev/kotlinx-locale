@@ -1,12 +1,21 @@
-# What no standard defines
+# Where the line is
 
-This library builds what Unicode defines and leaves alone what it does not. The
-line matters more than it sounds, because a gap and a decision look identical
-from the outside: both are things the API will not do for you. This file says
-which is which.
+This library builds what a standard defines and leaves alone what it does not.
+The line matters more than it sounds, because from the outside a gap and a
+decision look identical: both are things the API will not do for you. This file
+says which is which.
 
-Where something is half defined, the standardized half is here and the rest is
-named below rather than guessed at.
+Mostly that standard is Unicode, and where something is half defined the
+standardized half is built and the rest is named here rather than guessed at.
+Not always, though. Phone numbering is ITU-T E.164 by way of libphonenumber, and
+the entry below on dialling codes is here because this file once got that wrong:
+it recorded "CLDR stopped shipping the data" as "no standard exists" and left a
+whole domain unbuilt on the strength of it. The correction is kept rather than
+deleted, because a scope document that only ever grows is one nobody trusts.
+
+So an entry here says one of three things: this is standardized and built, and
+here is the edge; this is half standardized, and here is the half we chose; or
+this is not standardized, and here is why we declined it.
 
 ## Country dialling codes
 

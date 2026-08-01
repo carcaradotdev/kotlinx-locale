@@ -91,6 +91,23 @@ class GenerateLocaleSourcesFunctionalTest {
         .withArguments(*arguments, "--stacktrace")
         .forwardOutput()
 
+    /**
+     * A runner with its own TestKit directory.
+     *
+     * The default one is shared by every `GradleRunner` in the JVM, and so is the
+     * daemon and the file-watching state behind it. That is fine for tests that
+     * run one or two builds, and not fine for the feature sweep below, which runs
+     * one per feature: the tests that assert on up-to-date and cache outcomes
+     * depend on that state being quiet, and sixteen builds churning it is how a
+     * deleted output goes unnoticed and a cache hit reads as up to date.
+     */
+    private fun isolatedRunner(testKitDir: File, vararg arguments: String): GradleRunner = GradleRunner.create()
+        .withProjectDir(projectDir)
+        .withPluginClasspath()
+        .withTestKitDir(testKitDir)
+        .withArguments(*arguments, "--stacktrace")
+        .forwardOutput()
+
     private fun generated(path: String) = File(projectDir, "build/generated/kotlinx-locale/$path")
 
     @Test
@@ -175,11 +192,16 @@ class GenerateLocaleSourcesFunctionalTest {
         // Driven off the enum and off the emitter's own file names, so a feature
         // added later is covered without editing this test, and a table renamed
         // later cannot pass by matching a stale string.
+        val testKitDir = File.createTempFile("kotlinx-locale-features", "").apply {
+            delete()
+            mkdirs()
+        }
+        val outerProjectDir = projectDir
         for (feature in LocaleFeature.entries) {
             setUp()
             try {
                 buildFile(features = feature.asBuildScript())
-                val result = run("generateLocaleSources")
+                val result = isolatedRunner(testKitDir, "generateLocaleSources").build()
                 assertEquals(
                     TaskOutcome.SUCCESS,
                     result.task(":generateLocaleSources")?.outcome,
@@ -199,6 +221,10 @@ class GenerateLocaleSourcesFunctionalTest {
                 tearDown()
             }
         }
+        // The directory the lifecycle made for this method, which the loop
+        // replaced on its first pass and so never cleaned up.
+        outerProjectDir.deleteRecursively()
+        testKitDir.deleteRecursively()
     }
 
     @Test

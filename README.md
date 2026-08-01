@@ -1004,9 +1004,13 @@ all of it before merging.
 - Ordinals come in the plain form only. CLDR ships gendered and case-inflected
   rule sets, and UTS #35 says outright that it supplies no data for choosing
   between them.
-- Country dialling codes are not implemented and will not be. CLDR removed that
-  data in CLDR 34; see [docs/not-standardized.md](docs/not-standardized.md),
-  which records every boundary of this kind and why it sits where it does.
+- Phone numbers do not come with geocoding or carrier lookup. That is a size
+  decision: libphonenumber's geocoding data is 11 MB and its carrier data 1.3 MB,
+  and both are locale-keyed where the rest of that domain is region-keyed. The
+  as-you-type formatter is also the one part of the domain not held to
+  libphonenumber character-for-character; see
+  [docs/not-standardized.md](docs/not-standardized.md), which records every
+  boundary of this kind and why it sits where it does.
 - The `-platform` modules do not read locale data on Linux, Windows, Android
   Native or Wasm-WASI yet. The bundled `-cldr-*` modules answer on all of them,
   so this only affects a build that chose the host's data; see
