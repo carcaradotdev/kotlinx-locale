@@ -45,6 +45,9 @@ public enum class GeneratedTable {
     /** Language, script and region names, and the patterns that compose them. */
     LANGUAGE_NAMES,
 
+    /** "3 days ago" and its wording per locale. */
+    RELATIVE_TIME,
+
     /** Number symbols and the plain decimal and percent patterns. */
     NUMBER,
 
@@ -81,6 +84,7 @@ public enum class GeneratedBinding(public val objectSuffix: String) {
     SKELETONS("DateTimeSkeletons"),
     NUMBER("Number"),
     LANGUAGE("LanguageNames"),
+    RELATIVE_TIME("RelativeTime"),
 }
 
 public class SourceRoots private constructor(
@@ -137,6 +141,7 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
                 GeneratedTable.PLURALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.ORDINALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.LANGUAGE_NAMES to "dev.carcara.kotlinx.locale.language.cldr.internal.data",
+                GeneratedTable.RELATIVE_TIME to "dev.carcara.kotlinx.locale.datetime.cldr.relative.internal.data",
             ),
         )
 
@@ -226,6 +231,14 @@ private val PAYLOAD_TABLES = listOf(
         "LocaleStandalone",
         "LOCALE_STANDALONE",
         "localeStandaloneRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.RELATIVE_TIME,
+        "relativeTime",
+        "RelativeTime",
+        "RELATIVE_TIME",
+        "relativeTimeRegistry",
+        "RELATIVE_TIME_CLDR_VERSION",
     ),
     PayloadTableSpec(
         GeneratedTable.LANGUAGE_NAMES,
@@ -407,6 +420,17 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
 
     roots[GeneratedBinding.LANGUAGE]?.let { target ->
         emitLanguageBinding(target.root, target.spec(packages[GeneratedTable.LANGUAGE_NAMES], cldr))
+    }
+
+    roots[GeneratedBinding.RELATIVE_TIME]?.let { target ->
+        val number = requireNotNull(roots[GeneratedBinding.NUMBER]) {
+            "relative wording picks a plural form and renders a count, so it needs the number binding"
+        }
+        emitRelativeTimeBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.RELATIVE_TIME], cldr),
+            numberObject = number.packageName + "." + number.objectName,
+        )
     }
 
     roots[GeneratedBinding.SKELETONS]?.let { target ->

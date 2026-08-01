@@ -74,6 +74,18 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
     ),
 
     /**
+     * Relative wording: `3 days ago`, `yesterday`.
+     *
+     * Includes the number and plural tables, because the wording picks a plural
+     * form and renders its count in the locale's own digits.
+     */
+    DATETIME_RELATIVE_TIME(
+        dslName = "datetime.relativeTime",
+        tables = setOf(GeneratedTable.RELATIVE_TIME, GeneratedTable.NUMBER, GeneratedTable.PLURALS),
+        bindings = setOf(GeneratedBinding.RELATIVE_TIME, GeneratedBinding.NUMBER),
+    ),
+
+    /**
      * Language, script and region names, and `Locale.displayName`.
      *
      * One feature rather than three, because the display name algorithm reaches

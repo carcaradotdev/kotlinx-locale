@@ -35,6 +35,14 @@ public final class dev/carcara/kotlinx/locale/datetime/FallbackDateTimeFormats :
 	public fun monthNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 }
 
+public final class dev/carcara/kotlinx/locale/datetime/FallbackRelativeTimeFormats : dev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource {
+	public fun <init> (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource;)V
+	public fun formatOrNull (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun literalOrNull (ILdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun unitNameOrNull (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
 public final class dev/carcara/kotlinx/locale/datetime/FormatStyle : java/lang/Enum {
 	public static final field FULL Ldev/carcara/kotlinx/locale/datetime/FormatStyle;
 	public static final field LONG Ldev/carcara/kotlinx/locale/datetime/FormatStyle;
@@ -51,6 +59,50 @@ public final class dev/carcara/kotlinx/locale/datetime/NameContext : java/lang/E
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/NameContext;
 	public static fun values ()[Ldev/carcara/kotlinx/locale/datetime/NameContext;
+}
+
+public abstract interface class dev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public abstract fun formatOrNull (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public abstract fun literalOrNull (ILdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public abstract fun unitNameOrNull (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSourceKt {
+	public static final fun format (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource;JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun format$default (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource;JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun unitName (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun unitName$default (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering : java/lang/Enum {
+	public static final field ALWAYS Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;
+	public static final field AUTO Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/RelativeTimeStyle : java/lang/Enum {
+	public static final field FULL Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;
+	public static final field NARROW Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;
+	public static final field SHORT Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/RelativeTimeUnit : java/lang/Enum {
+	public static final field DAY Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
+	public static final field HOUR Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
+	public static final field MINUTE Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
+	public static final field MONTH Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
+	public static final field QUARTER Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
+	public static final field SECOND Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
+	public static final field WEEK Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
+	public static final field YEAR Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;
 }
 
 public final class dev/carcara/kotlinx/locale/datetime/TextStyle : java/lang/Enum {

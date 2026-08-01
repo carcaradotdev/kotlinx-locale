@@ -229,4 +229,13 @@ abstract class DateTimeFeatures @Inject constructor(objects: ObjectFactory) : Fe
      * only where a locale differs from its format names and 838 of them do not.
      */
     val standalone: Property<Boolean> = flag(LocaleFeature.DATETIME_STANDALONE)
+
+    /**
+     * Relative wording: `3 days ago`, `yesterday`, `za 3 dny`.
+     *
+     * Generates the plural rules that choose the wording and the number tables
+     * that render its count, so the four Czech forms come out right rather than
+     * defaulting to one of them.
+     */
+    val relativeTime: Property<Boolean> = flag(LocaleFeature.DATETIME_RELATIVE_TIME)
 }

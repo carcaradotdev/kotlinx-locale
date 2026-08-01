@@ -1,0 +1,15 @@
+public final class dev/carcara/kotlinx/locale/datetime/cldr/relative/CldrRelativeTime : dev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/datetime/cldr/relative/CldrRelativeTime;
+	public fun formatOrNull (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun literalOrNull (ILdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun unitNameOrNull (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/cldr/relative/RelativeTimeKt {
+	public static final fun formatRelative (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun formatRelative$default (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun relativeUnitName (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun relativeUnitName$default (Ldev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+}
+

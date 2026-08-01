@@ -64,6 +64,7 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.SKELETONS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"))
     .table(GeneratedTable.DATE_TIME_STANDALONE, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
     .table(GeneratedTable.LANGUAGE_NAMES, rootDir.sourceRoot("kotlinx-locale-language-cldr-full"))
+    .table(GeneratedTable.RELATIVE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-relative"))
     .table(GeneratedTable.NUMBER, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     .table(GeneratedTable.NUMBER_COMPACT, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     .table(GeneratedTable.CURRENCY_COMPACT, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
@@ -110,6 +111,14 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
             root = rootDir.sourceRoot("kotlinx-locale-language-cldr-full"),
             packageName = "dev.carcara.kotlinx.locale.language.cldr",
             objectName = "CldrLanguage",
+        ),
+    )
+    .binding(
+        GeneratedBinding.RELATIVE_TIME,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-relative"),
+            packageName = "dev.carcara.kotlinx.locale.datetime.cldr.relative",
+            objectName = "CldrRelativeTime",
         ),
     )
     .binding(
@@ -197,6 +206,15 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         extras.resolveValue("en") { it.territoryNames[alpha2] }
     }
 
+    val relativeCache = HashMap<String, PartialRelativeTime>()
+    fun relativeFor(level: String): PartialRelativeTime = relativeCache.getOrPut(level) {
+        parseRelativeTime(cldrDir.resolve("common/main/$level.xml"))
+    }
+    val relativeTime = LinkedHashMap<String, String>()
+    for (id in listOf("root") + flattener.localeIds) {
+        relativeTime[canonicalTag(id)] = flattener.resolveRelativeTime(id, ::relativeFor).encode()
+    }
+
     val plurals = parsePlurals(cldrDir)
     val rbnf = parseRbnfOrdinals(cldrDir, flattener.localeIds, supplemental.parentOverrides)
     emitCldrPluralSamples(
@@ -255,6 +273,7 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .section("dateTime", dateTime)
         .section("dateTimeStandalone", dateTimeStandalone)
         .section("localeDisplayNames", buildLocaleDisplayNamePayloads(flattener, extras))
+        .section("relativeTime", relativeTime)
         .section("countryNames", buildCountryNamePayloads(flattener, extras))
         .section("currencyFormats", buildCurrencyFormatPayloads(flattener, extras))
         .section("currencyNames", buildCurrencyNamePayloads(flattener, extras))

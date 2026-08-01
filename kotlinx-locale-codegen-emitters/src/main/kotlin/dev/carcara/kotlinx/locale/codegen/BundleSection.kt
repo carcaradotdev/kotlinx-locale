@@ -40,6 +40,7 @@ public class BundleSection(
             BundleSection("skeletonNames"),
             BundleSection("dateTimeStandalone"),
             BundleSection("localeDisplayNames", sparseFields = 4),
+            BundleSection("relativeTime"),
             BundleSection("numberSymbols"),
             BundleSection("numberPatterns"),
             BundleSection("numberCompactShort"),

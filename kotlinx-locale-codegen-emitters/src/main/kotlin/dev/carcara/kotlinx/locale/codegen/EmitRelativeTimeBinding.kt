@@ -1,0 +1,67 @@
+package dev.carcara.kotlinx.locale.codegen
+
+import java.io.File
+
+/** `CldrRelativeTime`-shaped binding: the source object plus the wording extension. */
+public fun emitRelativeTimeBinding(outputRoot: File, spec: BindingSpec, numberObject: String) {
+    val file = outputRoot.packageFile(spec.packageName, "RelativeTime.kt")
+    file.writeText(
+        preamble(
+            spec,
+            listOf(
+                "dev.carcara.kotlinx.locale.Locale",
+                "dev.carcara.kotlinx.locale.datetime.RelativeTimeFormatSource",
+                "dev.carcara.kotlinx.locale.datetime.RelativeTimeNumbering",
+                "dev.carcara.kotlinx.locale.datetime.RelativeTimeStyle",
+                "dev.carcara.kotlinx.locale.datetime.RelativeTimeUnit",
+                "dev.carcara.kotlinx.locale.datetime.cldr.runtime.PayloadRelativeTimeFormats",
+                "dev.carcara.kotlinx.locale.datetime.format",
+                "dev.carcara.kotlinx.locale.datetime.unitName",
+                "${spec.registryPackage}.relativeTimeRegistry",
+            ),
+        ) + """
+        |
+        |/**
+        | * The relative-time wording this build carries.
+        | *
+        | * The plural selection and the pattern substitution live in
+        | * `kotlinx-locale-datetime-cldr-runtime`; all this object contributes is the
+        | * table and the two sources it reads through.
+        | */
+        |public object ${spec.objectName} : RelativeTimeFormatSource by PayloadRelativeTimeFormats(
+        |    relativeTimeRegistry,
+        |    ${numberObject}Plurals,
+        |    $numberObject,
+        |)
+        |
+        |/**
+        | * This many [unit]s from now, written for [locale]; negative is the past.
+        | *
+        | * ```
+        | * (-1L).formatRelative(RelativeTimeUnit.DAY, locale = cs)   // "včera"
+        | * (-3L).formatRelative(RelativeTimeUnit.DAY, locale = cs)   // "před 3 dny"
+        | * ```
+        | *
+        | * The unit is yours to choose. Deciding whether ninety minutes reads as
+        | * `in 90 minutes` or `in 2 hours` is not standardized by CLDR, ECMA-402 or
+        | * ICU, all of which take the unit from the caller, so this library does not
+        | * pick one either: the thresholds a chat app wants are not a changelog's.
+        | */
+        |public fun Long.formatRelative(
+        |    unit: RelativeTimeUnit,
+        |    style: RelativeTimeStyle = RelativeTimeStyle.FULL,
+        |    numbering: RelativeTimeNumbering = RelativeTimeNumbering.AUTO,
+        |    locale: Locale = Locale.current,
+        |): String = ${spec.objectName}.format(this, unit, style, numbering, locale)
+        |
+        |/** The locale's own name for [unit]: `month`, `měsíc`. */
+        |public fun relativeUnitName(
+        |    unit: RelativeTimeUnit,
+        |    style: RelativeTimeStyle = RelativeTimeStyle.FULL,
+        |    locale: Locale = Locale.current,
+        |): String = ${spec.objectName}.unitName(unit, style, locale)
+        |
+        """.trimMargin(),
+    )
+    println("[codegen] emitted ${spec.objectName} to $file")
+}

@@ -125,6 +125,17 @@ final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeForm
     final fun monthNameOrNull(kotlin/Int, dev.carcara.kotlinx.locale.datetime/TextStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadDateTimeFormats.monthNameOrNull|monthNameOrNull(kotlin.Int;dev.carcara.kotlinx.locale.datetime.TextStyle;dev.carcara.kotlinx.locale.Locale){}[0]
 }
 
+final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadRelativeTimeFormats : dev.carcara.kotlinx.locale.datetime/RelativeTimeFormatSource { // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadRelativeTimeFormats|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale.number/PluralRuleSource, dev.carcara.kotlinx.locale.number/NumberFormatSource) // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadRelativeTimeFormats.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.number.PluralRuleSource;dev.carcara.kotlinx.locale.number.NumberFormatSource){}[0]
+
+    final val supportedLocales // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadRelativeTimeFormats.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadRelativeTimeFormats.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun formatOrNull(kotlin/Long, dev.carcara.kotlinx.locale.datetime/RelativeTimeUnit, dev.carcara.kotlinx.locale.datetime/RelativeTimeStyle, dev.carcara.kotlinx.locale.datetime/RelativeTimeNumbering, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadRelativeTimeFormats.formatOrNull|formatOrNull(kotlin.Long;dev.carcara.kotlinx.locale.datetime.RelativeTimeUnit;dev.carcara.kotlinx.locale.datetime.RelativeTimeStyle;dev.carcara.kotlinx.locale.datetime.RelativeTimeNumbering;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun literalOrNull(kotlin/Int, dev.carcara.kotlinx.locale.datetime/RelativeTimeUnit, dev.carcara.kotlinx.locale.datetime/RelativeTimeStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadRelativeTimeFormats.literalOrNull|literalOrNull(kotlin.Int;dev.carcara.kotlinx.locale.datetime.RelativeTimeUnit;dev.carcara.kotlinx.locale.datetime.RelativeTimeStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun unitNameOrNull(dev.carcara.kotlinx.locale.datetime/RelativeTimeUnit, dev.carcara.kotlinx.locale.datetime/RelativeTimeStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadRelativeTimeFormats.unitNameOrNull|unitNameOrNull(dev.carcara.kotlinx.locale.datetime.RelativeTimeUnit;dev.carcara.kotlinx.locale.datetime.RelativeTimeStyle;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
 final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadSkeletonFormats : dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonFormatSource { // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadSkeletonFormats|null[0]
     constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String>) // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadSkeletonFormats.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
 
@@ -135,6 +146,14 @@ final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadSkeletonForm
     final fun formatOrNull(kotlinx.datetime/LocalDateTime, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadSkeletonFormats.formatOrNull|formatOrNull(kotlinx.datetime.LocalDateTime;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun formatOrNull(kotlinx.datetime/LocalTime, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadSkeletonFormats.formatOrNull|formatOrNull(kotlinx.datetime.LocalTime;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun skeletonPatternOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadSkeletonFormats.skeletonPatternOrNull|skeletonPatternOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/RelativeTimeRecord { // dev.carcara.kotlinx.locale.datetime.cldr.runtime/RelativeTimeRecord|null[0]
+    constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.datetime.cldr.runtime/RelativeTimeRecord.<init>|<init>(kotlin.String){}[0]
+
+    final fun literal(kotlin/Int, dev.carcara.kotlinx.locale.datetime/RelativeTimeUnit, dev.carcara.kotlinx.locale.datetime/RelativeTimeStyle): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/RelativeTimeRecord.literal|literal(kotlin.Int;dev.carcara.kotlinx.locale.datetime.RelativeTimeUnit;dev.carcara.kotlinx.locale.datetime.RelativeTimeStyle){}[0]
+    final fun pattern(dev.carcara.kotlinx.locale.datetime/RelativeTimeUnit, dev.carcara.kotlinx.locale.datetime/RelativeTimeStyle, kotlin/Boolean, dev.carcara.kotlinx.locale.number/PluralCategory): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/RelativeTimeRecord.pattern|pattern(dev.carcara.kotlinx.locale.datetime.RelativeTimeUnit;dev.carcara.kotlinx.locale.datetime.RelativeTimeStyle;kotlin.Boolean;dev.carcara.kotlinx.locale.number.PluralCategory){}[0]
+    final fun unitName(dev.carcara.kotlinx.locale.datetime/RelativeTimeUnit, dev.carcara.kotlinx.locale.datetime/RelativeTimeStyle): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/RelativeTimeRecord.unitName|unitName(dev.carcara.kotlinx.locale.datetime.RelativeTimeUnit;dev.carcara.kotlinx.locale.datetime.RelativeTimeStyle){}[0]
 }
 
 final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord { // dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord|null[0]
