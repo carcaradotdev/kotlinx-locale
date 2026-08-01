@@ -2,9 +2,6 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal val LOCALE_STANDALONE_YAV: String =
-    "\u001Fpikítíkítie, oólí ú kutúan\u001Esiɛyɛ́, oóli ú kándíɛ\u001Eɔnsúmbɔl, oóli ú kátátúɛ\u001Emesiŋ, oóli ú kénie\u001Eensil, oóli ú kátánuɛ\u001Eɔsɔn\u001Eefute\u001Episuyú\u001Eimɛŋ i puɔs\u001Eimɛŋ i putúk,oóli ú kátíɛ\u001Emakandikɛ\u001Epilɔndɔ́\u001F\u001F\u001Fmóndie\u001Emuányáŋmóndie\u001Emetúkpíápɛ\u001Ekúpélimetúkpiapɛ\u001Efeléte\u001Eséselé\u001Esɔ́ndiɛ\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_YI: String =
     "\u001Fיאַנ\u001Eפֿעב\u001Eמערץ\u001Eאַפּר\u001Eמיי\u001Eיוני\u001Eיולי\u001Eאויג\u001Eסעפּ\u001Eאקט\u001Eנאוו\u001Eדעצ\u001F\u001F\u001F\u001F\u001F0"
 
@@ -13,6 +10,3 @@ internal val LOCALE_STANDALONE_YO: String =
 
 internal val LOCALE_STANDALONE_YO_BJ: String =
     "\u001F\u001F\u001FAjé\u001EÌsɛ́gun\u001EƆjɔ́rú\u001EƆjɔ́bɔ\u001EƐtì\u001EÀbámɛ́ta\u001EÀìkú\u001F\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_YRL: String =
-    "\u001Fyepé\u001Emukũi\u001Emusapíri\u001Eirũdí\u001Epú\u001Epú-yepé\u001Epú-mukũi\u001Epú-musapíri\u001Epú-irũdí\u001Eyepé-putimaã\u001Eyepé-yepé\u001Eyepé-mukũi\u001F\u001F\u001Fmurakipí\u001Emurakí-mukũi\u001Emurakí-musapíri\u001Esupapá\u001Eyukuakú\u001Esaurú\u001Emituú\u001F\u001Fc3f0"

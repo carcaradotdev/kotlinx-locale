@@ -2,95 +2,29 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal val LOCALE_STANDALONE_KA: String =
-    "\u001Fიანვარი\u001Eთებერვალი\u001Eმარტი\u001Eაპრილი\u001Eმაისი\u001Eივნისი\u001Eივლისი\u001Eაგვისტო\u001Eსექტემბერი\u001Eოქტომბერი\u001Eნოემბერი\u001Eდეკემბერი\u001F\u001F\u001Fორშაბათი\u001Eსამშაბათი\u001Eოთხშაბათი\u001Eხუთშაბათი\u001Eპარასკევი\u001Eშაბათი\u001Eკვირა\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_KAA: String =
     "Январь\u001EФевраль\u001EМарт\u001EАпрель\u001EМай\u001EИюнь\u001EИюль\u001EАвгуст\u001EСентябрь\u001EОктябрь\u001EНоябрь\u001EДекабрь\u001FЯнв\u001EФев\u001EМар\u001EАпр\u001EМай\u001EИюн\u001EИюл\u001EАвг\u001EСен\u001EОкт\u001EНоя\u001EДек\u001F\u001F\u001F\u001F\u001F0"
 
-internal val LOCALE_STANDALONE_KAB: String =
-    "\u001FYennayer\u001EFuṛar\u001EMeɣres\u001EYebrir\u001EMayyu\u001EYunyu\u001EYulyu\u001EƔuct\u001ECtembeṛ\u001ETubeṛ\u001ENunembeṛ\u001EDuǧembeṛ\u001F\u001F\u001F\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KAJ: String =
-    "\u001FHywan A̱yrnig\u001EHywan A̱hwa\u001EHywan A̱tat\u001EHywan A̱naai\u001EHywan A̱pfwon\u001EHywan A̱kitat\u001EHywan A̱tyirin\u001EHywan A̱ninai\u001EHywan A̱kumviriyin\u001EHywan Swak\u001EHywan Swak B’a̱yrnig\u001EHywan Swak B’a̱hwa\u001F\u001F\u001FLintani\u001ETalata\u001ELarba\u001ELamit\u001EJuma\u001EAsabar\u001ELadi\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KAM: String =
-    "\u001FMwai wa mbee\u001EMwai wa kelĩ\u001EMwai wa katatũ\u001EMwai wa kana\u001EMwai wa katano\u001EMwai wa thanthatũ\u001EMwai wa muonza\u001EMwai wa nyaanya\u001EMwai wa kenda\u001EMwai wa ĩkumi\u001EMwai wa ĩkumi na ĩmwe\u001EMwai wa ĩkumi na ilĩ\u001F\u001F\u001FWa kwambĩlĩlya\u001EWa kelĩ\u001EWa katatũ\u001EWa kana\u001EWa katano\u001EWa thanthatũ\u001EWa kyumwa\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KCG: String =
-    "\u001FZwat Juwung\u001EZwat Swiyang\u001EZwat Tsat\u001EZwat Nyai\u001EZwat Tswon\u001EZwat Ataah\u001EZwat Anatat\u001EZwat Arinai\u001EZwat Akubunyung\u001EZwat Swag\u001EZwat Mangjuwang\u001EZwat Swag-Ma-Suyang\u001F\u001F\u001FTanii\u001ETalata\u001ELarba\u001ELamit\u001EJuma\u001EAsabat\u001ELadi\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KDE: String =
-    "\u001FMwedi Ntandi\u001EMwedi wa Pili\u001EMwedi wa Tatu\u001EMwedi wa Nchechi\u001EMwedi wa Nnyano\u001EMwedi wa Nnyano na Umo\u001EMwedi wa Nnyano na Mivili\u001EMwedi wa Nnyano na Mitatu\u001EMwedi wa Nnyano na Nchechi\u001EMwedi wa Nnyano na Nnyano\u001EMwedi wa Nnyano na Nnyano na U\u001EMwedi wa Nnyano na Nnyano na M\u001F\u001F\u001FLiduva lyatatu\u001ELiduva lyanchechi\u001ELiduva lyannyano\u001ELiduva lyannyano na linji\u001ELiduva lyannyano na mavili\u001ELiduva litandi\u001ELiduva lyapili\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KEA: String =
-    "\u001FJaneru\u001EFebreru\u001EMarsu\u001EAbril\u001EMaiu\u001EJunhu\u001EJulhu\u001EAgostu\u001ESetenbru\u001EOtubru\u001ENuvenbru\u001EDizenbru\u001F\u001F\u001Fsigunda-fera\u001Etersa-fera\u001Ekuarta-fera\u001Ekinta-fera\u001Esesta-fera\u001Esábadu\u001Edumingu\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_KGP: String =
-    "\u001F1-Kysã\u001E2-Kysã\u001E3-Kysã\u001E4-Kysã\u001E5-Kysã\u001E6-Kysã\u001E7-Kysã\u001E8-Kysã\u001E9-Kysã\u001E10-Kysã\u001E11-Kysã\u001E12-Kysã\u001F\u001F\u001Fpir-kurã-há\u001Erégre-kurã-há\u001Etẽgtũ-kurã-há\u001Evẽnhkãgra-kurã-há\u001Epénkar-kurã-há\u001Esavnu\u001Enumĩggu\u001F\u001Fc3f0"
-
-internal val LOCALE_STANDALONE_KHQ: String =
-    "\u001FŽanwiye\u001EFeewiriye\u001EMarsi\u001EAwiril\u001EMe\u001EŽuweŋ\u001EŽuyye\u001EUt\u001ESektanbur\u001EOktoobur\u001ENoowanbur\u001EDeesanbur\u001F\u001F\u001FAtini\u001EAtalata\u001EAlarba\u001EAlhamiisa\u001EAljuma\u001EAssabdu\u001EAlhadi\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KI: String =
-    "\u001FNjenuarĩ\u001EMwere wa kerĩ\u001EMwere wa gatatũ\u001EMwere wa kana\u001EMwere wa gatano\u001EMwere wa gatandatũ\u001EMwere wa mũgwanja\u001EMwere wa kanana\u001EMwere wa kenda\u001EMwere wa ikũmi\u001EMwere wa ikũmi na ũmwe\u001ENdithemba\u001F\u001F\u001FNjumatatũ\u001ENjumaine\u001ENjumatana\u001EAramithi\u001ENjumaa\u001ENjumamothi\u001EKiumia\u001F\u001F0"
+    "\u001F\u001F\u001F\u001F\u001F\u001Fc3f0"
 
 internal val LOCALE_STANDALONE_KK: String =
-    "Қаңтар\u001EАқпан\u001EНаурыз\u001EСәуір\u001EМамыр\u001EМаусым\u001EШілде\u001EТамыз\u001EҚыркүйек\u001EҚазан\u001EҚараша\u001EЖелтоқсан\u001FҚаңтар\u001EАқпан\u001EНаурыз\u001EСәуір\u001EМамыр\u001EМаусым\u001EШілде\u001EТамыз\u001EҚыркүйек\u001EҚазан\u001EҚараша\u001EЖелтоқсан\u001F\u001F\u001Fдүйсенбі\u001Eсейсенбі\u001Eсәрсенбі\u001Eбейсенбі\u001Eжұма\u001Eсенбі\u001Eжексенбі\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KK_ARAB: String =
-    "\u001F\u001F\u001F\u001Fدۇيسەنبى\u001Eسەيسەنبى\u001Eسارسەنبى\u001Eبەيسەنبى\u001Eجۇما\u001Eسەنبى\u001Eجەكسەنبى\u001F\u001F0"
+    "Қаңтар\u001EАқпан\u001EНаурыз\u001EСәуір\u001EМамыр\u001EМаусым\u001EШілде\u001EТамыз\u001EҚыркүйек\u001EҚазан\u001EҚараша\u001EЖелтоқсан\u001F\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_KL: String =
-    "januaari\u001Efebruaari\u001Emarsi\u001Eapriili\u001Emaaji\u001Ejuuni\u001Ejuuli\u001Eaggusti\u001Eseptembari\u001Eoktobari\u001Enovembari\u001Edecembari\u001Fjanuaari\u001Efebruaari\u001Emarsi\u001Eapriili\u001Emaaji\u001Ejuuni\u001Ejuuli\u001Eaggusti\u001Eseptembari\u001Eoktobari\u001Enovembari\u001Edecembari\u001F\u001F\u001Fataasinngorneq\u001Emarlunngorneq\u001Epingasunngorneq\u001Esisamanngorneq\u001Etallimanngorneq\u001Earfininngorneq\u001Esapaat\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KLN: String =
-    "\u001FMulgul\u001ENg’atyaato\u001EKiptaamo\u001EIwootkuut\u001EMamuut\u001EPaagi\u001ENg’eiyeet\u001ERooptui\u001EBureet\u001EEpeeso\u001EKipsuunde ne taai\u001EKipsuunde nebo aeng’\u001F\u001F\u001FKotaai\u001EKoaeng’\u001EKosomok\u001EKoang’wan\u001EKomuut\u001EKolo\u001EKotisap\u001F\u001F0"
+    "januaari\u001Efebruaari\u001Emarsi\u001Eapriili\u001Emaaji\u001Ejuuni\u001Ejuuli\u001Eaggusti\u001Eseptembari\u001Eoktobari\u001Enovembari\u001Edecembari\u001F\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_KM: String =
-    "\u001F\u001F\u001Fចន្ទ\u001Eអង្គារ\u001Eពុធ\u001Eព្រហស្បតិ៍\u001Eសុក្រ\u001Eសៅរ៍\u001Eអាទិត្យ\u001Fចន្ទ\u001Eអង្គារ\u001Eពុធ\u001Eព្រហស្បតិ៍\u001Eសុក្រ\u001Eសៅរ៍\u001Eអាទិត្យ\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KN: String =
-    "\u001Fಜನವರಿ\u001Eಫೆಬ್ರವರಿ\u001Eಮಾರ್ಚ್\u001Eಏಪ್ರಿಲ್\u001Eಮೇ\u001Eಜೂನ್\u001Eಜುಲೈ\u001Eಆಗಸ್ಟ್\u001Eಸೆಪ್ಟೆಂಬರ್\u001Eಅಕ್ಟೋಬರ್\u001Eನವೆಂಬರ್\u001Eಡಿಸೆಂಬರ್\u001F\u001F\u001Fಸೋಮವಾರ\u001Eಮಂಗಳವಾರ\u001Eಬುಧವಾರ\u001Eಗುರುವಾರ\u001Eಶುಕ್ರವಾರ\u001Eಶನಿವಾರ\u001Eಭಾನುವಾರ\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KO: String =
-    "\u001F\u001F\u001F\u001F월요일\u001E화요일\u001E수요일\u001E목요일\u001E금요일\u001E토요일\u001E일요일\u001F\u001F0"
+    "\u001F\u001F\u001Fចន្ទ\u001Eអង្គារ\u001Eពុធ\u001Eព្រហស្បតិ៍\u001Eសុក្រ\u001Eសៅរ៍\u001Eអាទិត្យ\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_KOK: String =
     "\u001Fजाने\u001Eफेब्रु\u001Eमार्च\u001Eएप्री\u001Eमे\u001Eजून\u001Eजुल\u001Eऑग\u001Eसप्टें\u001Eऑक्टो\u001Eनोव्हें\u001Eडिसे\u001F\u001F\u001F\u001Fसो\u001Eमं\u001Eबु\u001Eब\u001Eशु\u001Eशे\u001Eआ\u001F0"
 
-internal val LOCALE_STANDALONE_KOK_LATN: String =
-    "\u001FJaner\u001EFebrer\u001EMars\u001EAbril\u001EMai\u001EJun\u001EJulai\u001EAgost\u001ESetembr\u001EOtubr\u001ENovembr\u001EDezembr\u001F\u001F\u001FSomar\u001EMongllar\u001EBudhvar\u001EBirestar\u001ESukrar\u001ESonvar\u001EAitar\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_KS: String =
-    "جنؤری\u001Eفرؤری\u001Eمارٕچ\u001Eاپریل\u001Eمئی\u001Eجوٗن\u001Eجوٗلایی\u001Eاگست\u001Eستمبر\u001Eاکتوٗبر\u001Eنومبر\u001Eدسمبر\u001Fجنؤری\u001Eفرؤری\u001Eمارٕچ\u001Eاپریل\u001Eمئی\u001Eجوٗن\u001Eجوٗلایی\u001Eاگست\u001Eستمبر\u001Eاکتوٗبر\u001Eنومبر\u001Eدسمبر\u001F\u001F\u001Fژٔندرٕروار\u001Eبۆموار\u001Eبودوار\u001Eبرؠسوار\u001Eجُمہ\u001Eبٹوار\u001Eاَتھوار\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KSB: String =
-    "\u001FJanuali\u001EFebluali\u001EMachi\u001EAplili\u001EMei\u001EJuni\u001EJulai\u001EAgosti\u001ESeptemba\u001EOktoba\u001ENovemba\u001EDesemba\u001F\u001F\u001FJumaatatu\u001EJumaane\u001EJumaatano\u001EAlhamisi\u001EIjumaa\u001EJumaamosi\u001EJumaapii\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KSF: String =
-    "\u001Fŋwíí a ntɔ́ntɔ\u001Eŋwíí akǝ bɛ́ɛ\u001Eŋwíí akǝ ráá\u001Eŋwíí akǝ nin\u001Eŋwíí akǝ táan\u001Eŋwíí akǝ táafɔk\u001Eŋwíí akǝ táabɛɛ\u001Eŋwíí akǝ táaraa\u001Eŋwíí akǝ táanin\u001Eŋwíí akǝ ntɛk\u001Eŋwíí akǝ ntɛk di bɔ́k\u001Eŋwíí akǝ ntɛk di bɛ́ɛ\u001F\u001F\u001Flǝndí\u001Emaadí\u001Emɛkrɛdí\u001Ejǝǝdí\u001Ejúmbá\u001Esamdí\u001Esɔ́ndǝ\u001F\u001F0"
+    "جنؤری\u001Eفرؤری\u001Eمارٕچ\u001Eاپریل\u001Eمئی\u001Eجوٗن\u001Eجوٗلایی\u001Eاگست\u001Eستمبر\u001Eاکتوٗبر\u001Eنومبر\u001Eدسمبر\u001Fجنؤری\u001Eفرؤری\u001Eمارٕچ\u001Eاپریل\u001Eمئی\u001Eجوٗن\u001Eجوٗلایی\u001Eاگست\u001Eستمبر\u001Eاکتوٗبر\u001Eنومبر\u001Eدسمبر\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_KSH: String =
-    "\u001FJan.\u001EFäb.\u001EMäz.\u001EApr.\u001EMai\u001EJun.\u001EJul.\u001EOuj.\u001ESäp.\u001EOkt.\u001ENov.\u001EDez.\u001F\u001F\u001FMohndaach\u001EDinnsdaach\u001EMetwoch\u001EDunnersdaach\u001EFriidaach\u001ESamsdaach\u001ESunndaach\u001F\u001F0"
+    "\u001FJan.\u001EFäb.\u001EMäz.\u001EApr.\u001EMai\u001EJun.\u001EJul.\u001EOuj.\u001ESäp.\u001EOkt.\u001ENov.\u001EDez.\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_KS_DEVA: String =
-    "जनवरी\u001Eफ़रवरी\u001Eमार्च\u001Eअप्रैल\u001Eमई\u001Eजून\u001Eजुलाई\u001Eअगस्त\u001Eसतुंबर\u001Eअकतुम्बर\u001Eनवूमबर\u001Eदसूमबर\u001Fजनवरी\u001Eफ़रवरी\u001Eमार्च\u001Eअप्रैल\u001Eमई\u001Eजून\u001Eजुलाई\u001Eअगस्त\u001Eसतुंबर\u001Eअकतुम्बर\u001Eनवूमबर\u001Eदसूमबर\u001F\u001Fचंदिरवार\u001Eबुवार\u001Eबोदवार\u001Eब्रेसवार\u001Eजुम्मा\u001Eबटवार\u001Eआथवार\u001Fचंदिरवार\u001Eबुवार\u001Eबोदवार\u001Eब्रेसवार\u001Eजुम्मा\u001Eबटवार\u001Eआथवार\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KU: String =
-    "\u001Frêbendan\u001Esibat\u001Eadar\u001Enîsan\u001Egulan\u001Ehezîran\u001Etîrmeh\u001Etebax\u001Eîlon\u001Ecotmeh\u001Emijdar\u001Eberfanbar\u001F\u001F\u001Fduşem\u001Esêşem\u001Eçarşem\u001Epêncşem\u001Eînî\u001Eşemî\u001Eyekşem\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KW: String =
-    "\u001Fmis Genver\u001Emis Hwevrer\u001Emis Meurth\u001Emis Ebrel\u001Emis Me\u001Emis Metheven\u001Emis Gortheren\u001Emis Est\u001Emis Gwynngala\u001Emis Hedra\u001Emis Du\u001Emis Kevardhu\u001F\u001F\u001Fdy Lun\u001Edy Meurth\u001Edy Merher\u001Edy Yow\u001Edy Gwener\u001Edy Sadorn\u001Edy Sul\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KXV: String =
-    "\u001Fpusu lenju\u001Emaha lenju\u001Epagu lenju\u001Ehire lenju\u001Ebese lenju\u001Ejaṭṭa lenju\u001Eaasaḍi lenju\u001Esrabĩ lenju\u001Ebado lenju\u001Edasara lenju\u001Edivi lenju\u001Epande lenju\u001F\u001F\u001Fsmbara\u001Emangaḍa\u001Epudara\u001Elaki vara\u001Esukru vara\u001Esani vara\u001Eaadi vara\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KXV_DEVA: String =
-    "\u001Fपुसु लेञ्जु\u001Eमाहाका लेञ्जु\u001Eपागुणी लेञ्जु\u001Eहिरे लेञ्जु\u001Eबेसे लेञ्जु\u001Eजाटा लेञ्जु\u001Eआसाड़ी लेञ्जु\u001Eस्राबाँ लेञ्जु\u001Eबोदो लेञ्जु\u001Eदसारा लेञ्जु\u001Eदिवी लेञ्जु\u001Eपान्डे लेञ्जु\u001F\u001F\u001Fसाॅम्वारा\u001Eमंगाड़ा\u001Eपुद्दारा\u001Eलाक्कि वारा\u001Eसुकुरु वारा\u001Eसान्नि वारा\u001Eआदि वारा\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KXV_ORYA: String =
-    "\u001Fପୁସୁ ଲେଞ୍ଜୁ\u001Eମାହାକା ଲେଞ୍ଜୁ\u001Eପାଗୁଣି ଲେଞ୍ଜୁ\u001Eହିରେ ଲେଞ୍ଜୁ\u001Eବେସେ ଲେଞ୍ଜୁ\u001Eଜାଟା ଲେଞ୍ଜୁ\u001Eଆସାଡ଼ି ଲେଞ୍ଜୁ\u001Eସ୍ରାବାଁ ଲେଞ୍ଜୁ\u001Eବଦ ଲେଞ୍ଜୁ\u001Eଦାସାରା ଲେଞ୍ଜୁ\u001Eଦିୱିଡ଼ି ଲେଞ୍ଜୁ\u001Eପାଣ୍ଡେ ଲେଞ୍ଜୁ\u001F\u001F\u001Fସମ୍ବାରା\u001Eମାଙ୍ଗାଡ଼ା\u001Eପୁଦାରା\u001Eଲାକି ୱାରା\u001Eସୁକ୍ରୁ ୱାରା\u001Eସାନି ୱାରା\u001Eଆଦି ୱାରା\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_KY: String =
-    "Январь\u001EФевраль\u001EМарт\u001EАпрель\u001EМай\u001EИюнь\u001EИюль\u001EАвгуст\u001EСентябрь\u001EОктябрь\u001EНоябрь\u001EДекабрь\u001FЯнв\u001EФев\u001EМар\u001EАпр\u001EМай\u001EИюн\u001EИюл\u001EАвг\u001EСен\u001EОкт\u001EНоя\u001EДек\u001F\u001F\u001Fдүйшөмбү\u001Eшейшемби\u001Eшаршемби\u001Eбейшемби\u001Eжума\u001Eишемби\u001Eжекшемби\u001F\u001F0"
+    "जनवरी\u001Eफ़रवरी\u001Eमार्च\u001Eअप्रैल\u001Eमई\u001Eजून\u001Eजुलाई\u001Eअगस्त\u001Eसतुंबर\u001Eअकतुम्बर\u001Eनवूमबर\u001Eदसूमबर\u001Fजनवरी\u001Eफ़रवरी\u001Eमार्च\u001Eअप्रैल\u001Eमई\u001Eजून\u001Eजुलाई\u001Eअगस्त\u001Eसतुंबर\u001Eअकतुम्बर\u001Eनवूमबर\u001Eदसमबर\u001F\u001Fचंदिरवार\u001Eबुवार\u001Eबोदवार\u001Eब्रेसवार\u001Eजुम्मा\u001Eबटवार\u001Eआथवार\u001Fचंदिरवार\u001Eबुवार\u001Eबोदवार\u001Eब्रेसवार\u001Eजुम्मा\u001Eबटवार\u001Eआथवार\u001F\u001F0"

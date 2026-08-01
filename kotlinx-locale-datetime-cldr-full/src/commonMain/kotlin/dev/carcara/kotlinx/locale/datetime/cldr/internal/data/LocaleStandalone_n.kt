@@ -2,41 +2,14 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal val LOCALE_STANDALONE_NAQ: String =
-    "\u001FǃKhanni\u001EǃKhanǀgôab\u001EǀKhuuǁkhâb\u001EǃHôaǂkhaib\u001EǃKhaitsâb\u001EGamaǀaeb\u001EǂKhoesaob\u001EAoǁkhuumûǁkhâb\u001ETaraǀkhuumûǁkhâb\u001EǂNûǁnâiseb\u001EǀHooǂgaeb\u001EHôasoreǁkhâb\u001F\u001F\u001FMantaxtsees\u001EDenstaxtsees\u001EWunstaxtsees\u001EDondertaxtsees\u001EFraitaxtsees\u001ESatertaxtsees\u001ESontaxtsees\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_NB: String =
-    "\u001Fjan\u001Efeb\u001Emar\u001Eapr\u001Emai\u001Ejun\u001Ejul\u001Eaug\u001Esep\u001Eokt\u001Enov\u001Edes\u001F\u001F\u001Fmandag\u001Etirsdag\u001Eonsdag\u001Etorsdag\u001Efredag\u001Elørdag\u001Esøndag\u001F\u001F4000"
-
-internal val LOCALE_STANDALONE_ND: String =
-    "\u001FZibandlela\u001ENhlolanja\u001EMbimbitho\u001EMabasa\u001ENkwenkwezi\u001ENhlangula\u001ENtulikazi\u001ENcwabakazi\u001EMpandula\u001EMfumfu\u001ELwezi\u001EMpalakazi\u001F\u001F\u001FMvulo\u001ESibili\u001ESithathu\u001ESine\u001ESihlanu\u001EMgqibelo\u001ESonto\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_NDS: String =
-    "\u001FJanuaar\u001EFebruaar\u001EMärz\u001EApril\u001EMai\u001EJuni\u001EJuli\u001EAugust\u001ESeptember\u001EOktover\u001ENovember\u001EDezember\u001F\u001F\u001FMaandag\u001EDingsdag\u001EMiddeweken\u001EDunnersdag\u001EFreedag\u001ESünnavend\u001ESünndag\u001F\u001F0"
+    "\u001Fjan\u001Efeb\u001Emar\u001Eapr\u001Emai\u001Ejun\u001Ejul\u001Eaug\u001Esep\u001Eokt\u001Enov\u001Edes\u001F\u001F\u001F\u001F\u001F4000"
 
 internal val LOCALE_STANDALONE_NE: String =
-    "\u001F\u001Fजन\u001Eफेेब\u001Eमार्च\u001Eअप्र\u001Eमे\u001Eजुन\u001Eजुल\u001Eअग\u001Eसेप\u001Eअक्टो\u001Eनोभे\u001Eडिसे\u001F\u001Fसोमबार\u001Eमङ्गलबार\u001Eबुधबार\u001Eबिहिबार\u001Eशुक्रबार\u001Eशनिबार\u001Eआइतबार\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_NL: String =
-    "\u001Fjanuari\u001Efebruari\u001Emaart\u001Eapril\u001Emei\u001Ejuni\u001Ejuli\u001Eaugustus\u001Eseptember\u001Eoktober\u001Enovember\u001Edecember\u001F\u001F\u001Fmaandag\u001Edinsdag\u001Ewoensdag\u001Edonderdag\u001Evrijdag\u001Ezaterdag\u001Ezondag\u001F\u001Fc0ff"
-
-internal val LOCALE_STANDALONE_NMG: String =
-    "\u001Fngwɛn matáhra\u001Engwɛn ńmba\u001Engwɛn ńlal\u001Engwɛn ńna\u001Engwɛn ńtan\u001Engwɛn ńtuó\u001Engwɛn hɛmbuɛrí\u001Engwɛn lɔmbi\u001Engwɛn rɛbvuâ\u001Engwɛn wum\u001Engwɛn wum navǔr\u001Ekrísimin\u001F\u001F\u001Fmɔ́ndɔ\u001Esɔ́ndɔ mafú mába\u001Esɔ́ndɔ mafú málal\u001Esɔ́ndɔ mafú mána\u001Emabágá má sukul\u001Esásadi\u001Esɔ́ndɔ\u001F\u001F0"
+    "\u001F\u001Fजन\u001Eफेेब\u001Eमार्च\u001Eअप्र\u001Eमे\u001Eजुन\u001Eजुल\u001Eअग\u001Eसेप\u001Eअक्टो\u001Eनोभे\u001Eडिसे\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_NN: String =
     "\u001Fjan\u001Efeb\u001Emar\u001Eapr\u001Emai\u001Ejun\u001Ejul\u001Eaug\u001Esep\u001Eokt\u001Enov\u001Edes\u001F\u001F\u001Fmån\u001Etys\u001Eons\u001Etor\u001Efre\u001Elau\u001Esøn\u001F\u001F4000"
 
 internal val LOCALE_STANDALONE_NQO: String =
-    "\u001Fߓߌ߲ߠߊߥߎߟߋ߲\u001Eߞߏ߲ߞߏߜߍ\u001Eߕߙߊߓߊ\u001Eߞߏ߲ߞߏߘߌ߬ߓߌ\u001Eߘߓߊ߬ߕߊ\u001Eߥߊ߬ߛߌ߬ߥߙߊ\u001Eߞߊ߬ߙߌߝߐ߭\u001Eߘߓߊ߬ߓߌߟߊ\u001Eߕߎߟߊߝߌ߲\u001Eߞߏ߲ߓߌߕߌ߮\u001Eߣߍߣߍߓߊ\u001Eߞߏߟߌ߲ߞߏߟߌ߲\u001F\u001F\u001Fߞߐ߬ߓߊ߬ߟߏ߲\u001Eߞߐ߬ߟ\u001Eߞߎߣߎ߲ߟߏ߲\u001Eߓߌߟߏ߲\u001Eߛߌ߬ߣߌ߲߬ߟߏ߲\u001Eߞߍ߲ߘߍߟߏ߲\u001Eߞߊ߯ߙߌߟߏ߲\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_NR: String =
-    "\u001FJanabari\u001EuFeberbari\u001EuMatjhi\u001Eu-Apreli\u001EMeyi\u001EJuni\u001EJulayi\u001EArhostosi\u001ESeptemba\u001EOktoba\u001EUsinyikhaba\u001EDisemba\u001F\u001F\u001FuMvulo\u001EuLesibili\u001ELesithathu\u001EuLesine\u001EngoLesihlanu\u001EumGqibelo\u001EuSonto\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_NSO: String =
-    "\u001FJaneware\u001EFebereware\u001EMatšhe\u001EAporele\u001EMei\u001EJune\u001EJulae\u001EAgosetose\u001ESetemere\u001EOktobore\u001ENofemere\u001EDisemere\u001F\u001F\u001FMošupologo\u001ELabobedi\u001ELaboraro\u001ELabone\u001ELabohlano\u001EMokibelo\u001ELamorena\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_NUS: String =
-    "\u001FTiop thar pɛt\u001EPɛt\u001EDuɔ̱ɔ̱ŋ\u001EGuak\u001EDuät\u001EKornyoot\u001EPay yie̱tni\u001ETho̱o̱r\u001ETɛɛr\u001ELaath\u001EKur\u001ETio̱p in di̱i̱t\u001F\u001F\u001FJiec la̱t\u001ERɛw lätni\u001EDiɔ̱k lätni\u001EŊuaan lätni\u001EDhieec lätni\u001EBäkɛl lätni\u001ECäŋ kuɔth\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_NY: String =
-    "\u001FJanuwale\u001EFebuluwale\u001EMalichi\u001EEpulo\u001EMei\u001EJuni\u001EJulai\u001EOgasiti\u001ESeputemba\u001EOkutoba\u001ENovemba\u001EDisemba\u001F\u001F\u001FLolemba\u001ELachiwiri\u001ELachitatu\u001ELachinayi\u001ELachisanu\u001ELoweruka\u001ELamulungu\u001F\u001F0"
+    "\u001F\u001F\u001F\u001Fߞߐ߬ߓ\u001Eߞߐ߬ߟ\u001Eߞߎߣ\u001Eߓߌߟ\u001Eߛߌ߬ߣ\u001Eߞߍ߲ߘ\u001Eߞߊ߯ߙ\u001F\u001F0"

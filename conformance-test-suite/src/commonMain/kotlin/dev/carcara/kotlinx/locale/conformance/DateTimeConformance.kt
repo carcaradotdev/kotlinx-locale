@@ -3,6 +3,7 @@ package dev.carcara.kotlinx.locale.conformance
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource
 import dev.carcara.kotlinx.locale.datetime.FormatStyle
+import dev.carcara.kotlinx.locale.datetime.NameContext
 import dev.carcara.kotlinx.locale.datetime.TextStyle
 import dev.carcara.kotlinx.locale.datetime.displayName
 import dev.carcara.kotlinx.locale.datetime.format
@@ -55,6 +56,36 @@ private fun DateTimeFormatSource.assertMatchesIcuCalendarNames() {
                 icuName.normalizedSpaces(),
                 displayName(Month(index + 1), TextStyle.ABBREVIATED, locale).normalizedSpaces(),
                 "${golden.tag} monthsAbbr[$index]",
+            )
+        }
+        // The stand-alone context, which ICU stores under the same keys and
+        // which is where a calendar header and a month picker read from.
+        golden.monthsStandaloneWide?.forEachIndexed { index, icuName ->
+            assertEquals(
+                icuName.normalizedSpaces(),
+                displayName(Month(index + 1), TextStyle.FULL, NameContext.STANDALONE, locale).normalizedSpaces(),
+                "${golden.tag} monthsStandaloneWide[$index]",
+            )
+        }
+        golden.monthsStandaloneAbbr?.forEachIndexed { index, icuName ->
+            assertEquals(
+                icuName.normalizedSpaces(),
+                displayName(Month(index + 1), TextStyle.ABBREVIATED, NameContext.STANDALONE, locale).normalizedSpaces(),
+                "${golden.tag} monthsStandaloneAbbr[$index]",
+            )
+        }
+        golden.daysStandaloneWide?.forEachIndexed { index, icuName ->
+            assertEquals(
+                icuName.normalizedSpaces(),
+                displayName(DayOfWeek(index + 1), TextStyle.FULL, NameContext.STANDALONE, locale).normalizedSpaces(),
+                "${golden.tag} daysStandaloneWide[$index]",
+            )
+        }
+        golden.daysStandaloneAbbr?.forEachIndexed { index, icuName ->
+            assertEquals(
+                icuName.normalizedSpaces(),
+                displayName(DayOfWeek(index + 1), TextStyle.ABBREVIATED, NameContext.STANDALONE, locale).normalizedSpaces(),
+                "${golden.tag} daysStandaloneAbbr[$index]",
             )
         }
         golden.daysWide?.forEachIndexed { index, icuName ->
