@@ -11,6 +11,7 @@ import dev.carcara.kotlinx.locale.currency.platform.displayName
 import dev.carcara.kotlinx.locale.currency.platform.format
 import dev.carcara.kotlinx.locale.currency.platform.parseFormattedOrNull
 import dev.carcara.kotlinx.locale.currency.platform.symbol
+import dev.carcara.kotlinx.locale.number.SignDisplay
 
 /**
  * The full currency surface over the host.
@@ -26,7 +27,7 @@ public fun probe(code: String, tag: String, minorUnits: String, text: String): S
     val amount = CurrencyAmount(money, minorUnits.toLong())
     return listOf(
         amount.format(locale),
-        amount.format(locale, CurrencySymbolStyle.CODE, accounting = true, cash = true),
+        amount.format(locale, CurrencySymbolStyle.CODE, signDisplay = SignDisplay.ACCOUNTING, cash = true),
         money.symbol(locale),
         money.displayName(locale),
         CurrencyAmount.parseFormattedOrNull(money, text, locale)?.toDecimalString(),

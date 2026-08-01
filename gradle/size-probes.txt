@@ -13,5 +13,10 @@ probe-currency-platform
 probe-datetime-full
 probe-datetime-skeletons
 probe-datetime-platform
+probe-datetime-relative
+probe-language-full
+probe-number-full
+probe-timezone-full
+probe-timezone-cities
 probe-everything
 probe-everything-platform

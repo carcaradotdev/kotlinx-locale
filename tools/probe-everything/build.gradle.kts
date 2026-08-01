@@ -3,7 +3,12 @@ plugins {
 }
 
 sizeProbe {
-    budgetBytes = 900 * 1024
+    // Measured at 982.8 KB with the country, currency, datetime and locale
+    // catalog artifacts. Deliberately not every artifact in the library: the
+    // language names alone are larger than all of these together, and the
+    // exemplar cities are larger again, so folding them in would make this row
+    // a number nobody's build resembles.
+    budgetBytes = 1100 * 1024
 }
 
 kotlin {
