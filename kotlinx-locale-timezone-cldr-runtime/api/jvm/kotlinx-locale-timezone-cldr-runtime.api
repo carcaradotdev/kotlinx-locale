@@ -22,6 +22,7 @@ public final class dev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneForm
 public final class dev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneMetadata {
 	public static final field Companion Ldev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneMetadata$Companion;
 	public fun <init> (Ljava/lang/String;)V
+	public final fun cldrId (Ljava/lang/String;)Ljava/lang/String;
 	public final fun isPrimaryZone (Ljava/lang/String;)Z
 	public final fun isSingleZoneRegion (Ljava/lang/String;)Z
 	public final fun metazoneOf (Ljava/lang/String;)Ljava/lang/String;

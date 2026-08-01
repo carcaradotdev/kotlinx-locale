@@ -92,6 +92,18 @@ document, which is why it has goldens rather than only a comment.
 half-even and so does `java.text.DecimalFormat`; ECMA-402 rounds half away from
 zero, so `0.125` as a percentage is `12%` here and `13%` in a browser.
 
+**Grouping in compact notation.** Compact raises the locale's
+`minimumGroupingDigits` to two, so German writes 1000 as `1000` and 12000 as
+`12.000` even though its own minimum is one. UTS #35 does not mention this; ICU's
+compact notation defaults to `GroupingStrategy.MIN2` and `Intl.NumberFormat` does
+the same.
+
+**A negative value that rounds to zero.** It keeps its minus: -0.5 at no fraction
+digits is `-0`. Both reference implementations do this, on the grounds that a
+temperature of -0.4 shown to the nearest degree is still below freezing.
+`SignDisplay.NEGATIVE` is the value to pass when you want `0` instead, and that
+is the only thing that distinguishes it from `AUTO`.
+
 **Percent scale.** The engine multiplies, because a `%` in a CLDR pattern does.
 Both readings have standing: `Intl.NumberFormat` multiplies, ICU's newer
 `NumberFormatter.unit(NoUnit.PERCENT)` does not. Guessing wrong is a silently

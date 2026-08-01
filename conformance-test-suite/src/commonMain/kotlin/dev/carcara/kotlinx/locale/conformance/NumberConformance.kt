@@ -149,3 +149,48 @@ private fun NumberFormatSource.formatForGolden(setName: String, value: Decimal, 
         format(value, locale, notation = NumberNotation.COMPACT_SHORT, signDisplay = SignDisplay.ALWAYS)
     else -> error("golden option set '$setName' has no mapping onto NumberFormatSource")
 }
+
+/**
+ * Holds a plural source to ICU's answers, independently of CLDR's samples.
+ *
+ * [assertConformsToCldrPluralSamples] and this one check the same evaluator from
+ * two directions. The samples say what CLDR intended and are parsed by the same
+ * code that parses the rules, so in principle a misreading of the file format
+ * could satisfy both the rules and the samples. ICU compiled its copy from the
+ * same source and has never seen this repository's parser, so agreeing with both
+ * is a stronger statement than agreeing with either.
+ *
+ * The decimals carry their trailing zeros because that is the whole difficulty:
+ * `1` and `1.0` are one quantity and two categories in Czech, and the operands
+ * that tell them apart are counts of visible digits rather than of value.
+ */
+public fun PluralRuleSource.assertConformsToIcuPlurals() {
+    assertTrue(icuPluralGoldenData.size > 100, "expected the full golden set, got ${icuPluralGoldenData.size}")
+    var checked = 0
+
+    for ((tag, expected) in icuPluralGoldenData) {
+        val locale = Locale.forLanguageTagOrNull(tag) ?: continue
+        if (locale !in supportedLocales) continue
+        val (cardinal, ordinal) = expected
+        for ((type, answers) in listOf(PluralType.CARDINAL to cardinal, PluralType.ORDINAL to ordinal)) {
+            for ((index, value) in icuPluralGoldenIntegers.withIndex()) {
+                assertEquals(
+                    answers[index],
+                    pluralCategory(Decimal.of(value), 0, locale, type).cldrName,
+                    "$tag $type $value",
+                )
+                checked++
+            }
+            for ((index, text) in icuPluralGoldenDecimals.withIndex()) {
+                val value = Decimal.parse(text)
+                assertEquals(
+                    answers[icuPluralGoldenIntegers.size + index],
+                    pluralCategory(value, value.scale, locale, type).cldrName,
+                    "$tag $type $text",
+                )
+                checked++
+            }
+        }
+    }
+    assertTrue(checked > 10000, "expected to check the full golden set, checked only $checked")
+}

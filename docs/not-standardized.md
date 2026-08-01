@@ -142,6 +142,33 @@ you got.
 Only the current metazone is carried for the same reason. The full history with
 its date ranges is what naming a zone at a past instant needs.
 
+## A generic zone name for a place that stopped changing its clocks
+
+`GENERIC_LONG` for Phoenix reads `Mountain Time` here and `Mountain Standard
+Time` in ICU. Sao Paulo and Mexico City are the same.
+
+ICU is doing something reasonable: those zones no longer observe daylight
+saving, so a generic name implies a switch that will not happen, and the standard
+name is the more truthful answer. Reaching it means knowing whether a zone
+observes daylight saving at all, which is a tzdb question, and this domain is
+built not to ask tzdb anything. The API takes the style from the caller so that
+the same call gives the same answer on every target, and a name that quietly
+changed because the JDK image shipped a newer tzdb than the browser would undo
+that.
+
+Pass `STANDARD_LONG` when you want the standard name. The conformance fixture
+records this divergence rather than asserting either behaviour.
+
+## A zero offset
+
+`OFFSET_LONG` at zero reads `GMT` here, and `UTC` in French. ICU writes
+`GMT+00:00`.
+
+UTS #35 gives every locale a `gmtZeroFormat` and says it is what a zero offset
+reads as, so this follows the specification. ICU's `TimeZoneFormat` documents
+that it writes the offset whatever the value. Both are defensible and this one is
+written down.
+
 ## Zone name parsing
 
 Not implemented. UTS #35 defines it as eight steps of longest match across four

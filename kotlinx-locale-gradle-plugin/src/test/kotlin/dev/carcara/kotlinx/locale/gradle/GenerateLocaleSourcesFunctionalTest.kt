@@ -1,5 +1,6 @@
 package dev.carcara.kotlinx.locale.gradle
 
+import dev.carcara.kotlinx.locale.codegen.emittedFilePrefixes
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
@@ -68,6 +69,18 @@ class GenerateLocaleSourcesFunctionalTest {
             }
             """.trimIndent(),
         )
+    }
+
+    /**
+     * The DSL block that turns this feature on.
+     *
+     * `country.names` becomes `country { names = true }`, which is what a user
+     * would type, so a failure quotes the configuration rather than the enum.
+     */
+    private fun LocaleFeature.asBuildScript(): String {
+        val block = dslName.substringBefore('.')
+        val property = dslName.substringAfter('.')
+        return "$block { $property = true }"
     }
 
     private fun run(vararg arguments: String): BuildResult = runner(*arguments).build()
@@ -149,6 +162,43 @@ class GenerateLocaleSourcesFunctionalTest {
         // A pattern contains a currency placeholder, so without the symbol table
         // it would render a hole.
         assertTrue(tables.any { it.startsWith("CurrencyNames") }, "the symbols the patterns need are missing")
+    }
+
+    @Test
+    fun `every feature generates the whole closure of tables it declared`() {
+        // The plugin's correctness property in one test. A feature declares the
+        // set of tables it needs rather than pointing at other features, so the
+        // thing to check is that asking for one produces all of them: the
+        // guarantee is that no configuration compiles and then answers wrongly,
+        // and a half-populated source set is exactly how that would happen.
+        //
+        // Driven off the enum and off the emitter's own file names, so a feature
+        // added later is covered without editing this test, and a table renamed
+        // later cannot pass by matching a stale string.
+        for (feature in LocaleFeature.entries) {
+            setUp()
+            try {
+                buildFile(features = feature.asBuildScript())
+                val result = run("generateLocaleSources")
+                assertEquals(
+                    TaskOutcome.SUCCESS,
+                    result.task(":generateLocaleSources")?.outcome,
+                    "${feature.dslName} did not generate",
+                )
+
+                val emitted = generated("com/example/locale/internal/data").list()?.toList().orEmpty()
+                for (table in feature.tables) {
+                    for (prefix in table.emittedFilePrefixes) {
+                        assertTrue(
+                            emitted.any { it.startsWith(prefix) },
+                            "${feature.dslName} declares $table but no $prefix file was written; got $emitted",
+                        )
+                    }
+                }
+            } finally {
+                tearDown()
+            }
+        }
     }
 
     @Test

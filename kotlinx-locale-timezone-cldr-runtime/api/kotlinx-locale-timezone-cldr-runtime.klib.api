@@ -42,6 +42,7 @@ final class dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneFormats { /
 final class dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneMetadata { // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneMetadata|null[0]
     constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneMetadata.<init>|<init>(kotlin.String){}[0]
 
+    final fun cldrId(kotlin/String): kotlin/String // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneMetadata.cldrId|cldrId(kotlin.String){}[0]
     final fun isPrimaryZone(kotlin/String): kotlin/Boolean // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneMetadata.isPrimaryZone|isPrimaryZone(kotlin.String){}[0]
     final fun isSingleZoneRegion(kotlin/String): kotlin/Boolean // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneMetadata.isSingleZoneRegion|isSingleZoneRegion(kotlin.String){}[0]
     final fun metazoneOf(kotlin/String): kotlin/String? // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneMetadata.metazoneOf|metazoneOf(kotlin.String){}[0]
