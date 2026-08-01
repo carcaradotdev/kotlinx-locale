@@ -1,4 +1,4 @@
-#bundle 2
+#bundle 3
 cldr	release-48-2
 iso4217	2026-01-01
 #countries

@@ -35,33 +35,7 @@ class BundleRoundTripTest {
         try {
             generateSources(
                 bundle = bundle,
-                roots = SourceRoots(
-                    localeCatalog = regenerated.resolve("kotlinx-locale-types"),
-                    countryEnum = regenerated.resolve("kotlinx-locale-country-types"),
-                    countryNames = regenerated.resolve("kotlinx-locale-country-cldr-full"),
-                    currencyEnum = regenerated.resolve("kotlinx-locale-currency-types"),
-                    countryCurrencies = regenerated.resolve("kotlinx-locale-currency-types"),
-                    currencyFormats = regenerated.resolve("kotlinx-locale-currency-cldr-full"),
-                    currencyNames = regenerated.resolve("kotlinx-locale-currency-cldr-full"),
-                    dateTime = regenerated.resolve("kotlinx-locale-datetime-cldr-full"),
-                    // The source objects and their extensions come from the same
-                    // emitter the Gradle plugin uses, so they are covered too.
-                    countryBinding = BindingTarget(
-                        root = regenerated.resolve("kotlinx-locale-country-cldr-full"),
-                        packageName = "dev.carcara.kotlinx.locale.country.cldr",
-                        objectName = "CldrCountry",
-                    ),
-                    currencyBinding = BindingTarget(
-                        root = regenerated.resolve("kotlinx-locale-currency-cldr-full"),
-                        packageName = "dev.carcara.kotlinx.locale.currency.cldr",
-                        objectName = "CldrCurrency",
-                    ),
-                    dateTimeBinding = BindingTarget(
-                        root = regenerated.resolve("kotlinx-locale-datetime-cldr-full"),
-                        packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
-                        objectName = "CldrDateTime",
-                    ),
-                ),
+                roots = shippedRoots(regenerated),
             )
 
             var compared = 0
@@ -72,9 +46,10 @@ class BundleRoundTripTest {
                 "kotlinx-locale-currency-types",
                 "kotlinx-locale-currency-cldr-full",
                 "kotlinx-locale-datetime-cldr-full",
+                "kotlinx-locale-datetime-cldr-skeletons",
             )
             for (module in modules) {
-                val fresh = regenerated.resolve(module)
+                val fresh = regenerated.resolve("$module/src/commonMain/kotlin")
                 val shipped = rootDir.resolve("$module/src/commonMain/kotlin")
                 for (file in fresh.walkTopDown().filter(File::isFile)) {
                     val relative = file.relativeTo(fresh).path
@@ -84,7 +59,7 @@ class BundleRoundTripTest {
                     compared++
                 }
             }
-            assertTrue(compared > 350, "expected the whole generated tree, compared only $compared files")
+            assertTrue(compared > 400, "expected the whole generated tree, compared only $compared files")
         } finally {
             regenerated.deleteRecursively()
         }

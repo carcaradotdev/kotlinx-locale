@@ -5,8 +5,6 @@ import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
-import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.Nested
 import javax.inject.Inject
 
 /**
@@ -28,11 +26,15 @@ import javax.inject.Inject
  * tags. The refs are worth preferring: a typo in a tag does not throw, it
  * quietly generates data for one locale fewer than intended, and this is a build
  * script so nothing will fail at runtime either.
+ *
+ * A flag turns on a [LocaleFeature], which carries the set of tables generating
+ * it needs. Turning one on can therefore pull in a table another flag also
+ * names, and that is deliberate: it is what makes a half-configured source set
+ * impossible to express.
  */
 abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory) {
 
     /** The locales to generate, as canonical BCP 47 tags. */
-    @get:Input
     abstract val locales: SetProperty<String>
 
     /**
@@ -43,11 +45,9 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
      * to degrade to the way a country or a currency does, so "no data" would
      * surface as an ISO 8601 timestamp in the middle of a translated screen.
      */
-    @get:Input
     abstract val fallbackLocale: Property<String>
 
     /** The package the generated sources go into. */
-    @get:Input
     abstract val packageName: Property<String>
 
     /**
@@ -57,17 +57,15 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
      * Configurable because a project may want more than one set: a narrow
      * default and a full one behind a lazy load.
      */
-    @get:Input
     abstract val objectPrefix: Property<String>
 
-    @get:Nested
     val country: CountryFeatures = objects.newInstance(CountryFeatures::class.java)
 
-    @get:Nested
     val currency: CurrencyFeatures = objects.newInstance(CurrencyFeatures::class.java)
 
-    @get:Nested
     val datetime: DateTimeFeatures = objects.newInstance(DateTimeFeatures::class.java)
+
+    private val blocks: List<FeatureBlock> get() = listOf(country, currency, datetime)
 
     /** Adds locales by reference, which is the form the compiler checks. */
     fun locales(vararg refs: LocaleRef) {
@@ -99,49 +97,69 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
         action.execute(datetime)
     }
 
+    /**
+     * Everything asked for, in a stable order so the task's input hash does not
+     * depend on the order the DSL happened to be written in.
+     */
+    internal fun requestedFeatures(): Set<LocaleFeature> = blocks
+        .flatMap { block -> block.enabled.filterValues { it.get() }.keys }
+        .toSortedSet(compareBy(LocaleFeature::ordinal))
+
     /** True when nothing at all was asked for, which is worth failing on rather than generating an empty source set. */
-    internal fun generatesNothing(): Boolean = !country.names.get() &&
-        !currency.names.get() &&
-        !currency.formats.get() &&
-        !datetime.patterns.get() &&
-        !datetime.skeletons.get()
+    internal fun generatesNothing(): Boolean = requestedFeatures().isEmpty()
 }
 
-abstract class CountryFeatures {
+/**
+ * One `kotlinxLocale { }` sub-block.
+ *
+ * The flags register themselves as they are declared, so the conventions, the
+ * "generates nothing" check and the task input read the block rather than each
+ * carrying a hand-maintained copy of the same list.
+ */
+abstract class FeatureBlock(private val objects: ObjectFactory) {
+
+    internal val enabled: MutableMap<LocaleFeature, Property<Boolean>> = LinkedHashMap()
+
+    protected fun flag(feature: LocaleFeature): Property<Boolean> = objects.property(Boolean::class.java).also {
+        it.convention(false)
+        enabled[feature] = it
+    }
+}
+
+abstract class CountryFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
+
     /** Localized country names, behind `Country.displayName`. */
-    @get:Input
-    abstract val names: Property<Boolean>
+    val names: Property<Boolean> = flag(LocaleFeature.COUNTRY_NAMES)
 }
 
-abstract class CurrencyFeatures {
+abstract class CurrencyFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
+
     /** Localized currency symbols and display names. */
-    @get:Input
-    abstract val names: Property<Boolean>
+    val names: Property<Boolean> = flag(LocaleFeature.CURRENCY_NAMES)
 
     /**
      * Number patterns, for `CurrencyAmount.format` and `parseFormatted`.
      *
-     * Implies [names], because a pattern substitutes the symbol into itself.
+     * Generates the name tables as well, because a pattern substitutes the
+     * symbol into itself and a pattern without one would render a hole.
      */
-    @get:Input
-    abstract val formats: Property<Boolean>
+    val formats: Property<Boolean> = flag(LocaleFeature.CURRENCY_FORMATS)
 }
 
-abstract class DateTimeFeatures {
+abstract class DateTimeFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
+
     /** Date and time patterns plus month and weekday names. */
-    @get:Input
-    abstract val patterns: Property<Boolean>
+    val patterns: Property<Boolean> = flag(LocaleFeature.DATETIME_PATTERNS)
 
     /**
      * Skeleton formatting: `format(date, "yMMMd", locale)` and the pattern
      * behind it.
      *
-     * Implies [patterns], because matching a skeleton scores against the
-     * locale's standard date and time patterns and rendering the winner needs
-     * its month and weekday names. Worth asking for deliberately: across all
-     * locales the tables are the larger half of the datetime data, which is why
-     * the shipped build puts them in their own artifact.
+     * Generates the pattern tables as well, because matching a skeleton scores
+     * against the locale's standard date and time patterns and rendering the
+     * winner needs its month and weekday names. Worth asking for deliberately:
+     * across all locales the tables are the larger half of the datetime data,
+     * which is why the shipped build puts them in their own artifact.
      */
-    @get:Input
-    abstract val skeletons: Property<Boolean>
+    val skeletons: Property<Boolean> = flag(LocaleFeature.DATETIME_SKELETONS)
 }

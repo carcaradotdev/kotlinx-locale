@@ -18,6 +18,14 @@ val CLDR_REPO = RepoSpec(
         "common/supplemental",
         "common/dtd",
         "common/validity",
+        // Ordinal forms ("1st", "1.") are rule-based rather than table-based, and
+        // the rules live here rather than in the locale files. Only the
+        // digits-ordinal rulesets are read; the spellout ones are out of scope.
+        "common/rbnf",
+        // Time zone identifiers: the canonical-alias map and the region of each
+        // zone, which the metazone resolution needs and metaZones.xml does not
+        // carry.
+        "common/bcp47",
         // CLDR's own datetime cases, a second opinion on the skeleton matcher
         // that is independent of the ICU4J goldens.
         "common/testData/datetime",

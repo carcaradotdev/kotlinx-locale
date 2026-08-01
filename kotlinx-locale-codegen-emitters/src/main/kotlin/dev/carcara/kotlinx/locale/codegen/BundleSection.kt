@@ -1,0 +1,59 @@
+package dev.carcara.kotlinx.locale.codegen
+
+/**
+ * One per-locale payload section of the bundle: what it is called, how its
+ * records reach data they do not declare, and whether narrowing may drop rows.
+ *
+ * [sparseFields] is the load-bearing one. Zero means a record is fully resolved
+ * and can be copied anywhere. Anything else means the record holds only what its
+ * own locale declared and defers the rest to the tag in field 0, so narrowing
+ * has to keep the ancestors and a fallback has to be flattened rather than
+ * copied. That number used to be a literal repeated at each call site in
+ * [LocaleDataBundle.narrowTo]; declaring it next to the name is the only place
+ * it can be checked once.
+ */
+public class BundleSection(
+    public val name: String,
+    public val sparseFields: Int = 0,
+    /**
+     * False for a table that is the same in every locale and has to survive
+     * narrowing whole. Dropping rows from one of those does not save anything
+     * worth having and turns a missing locale into wrong output rather than an
+     * error.
+     */
+    public val narrowed: Boolean = true,
+) {
+
+    public val isSparse: Boolean get() = sparseFields > 0
+
+    override fun toString(): String = name
+
+    public companion object {
+
+        public val ALL: List<BundleSection> = listOf(
+            BundleSection("dateTime"),
+            BundleSection("countryNames", sparseFields = 1),
+            BundleSection("currencyFormats"),
+            BundleSection("currencyNames", sparseFields = 2),
+            BundleSection("skeletonFormats"),
+            BundleSection("skeletonAppendFormats"),
+            BundleSection("skeletonNames"),
+        )
+
+        public val BY_NAME: Map<String, BundleSection> = ALL.associateBy(BundleSection::name)
+    }
+}
+
+/**
+ * The names of the locale-independent tables: data that is the same for every
+ * locale and so rides in the bundle once rather than once per tag.
+ *
+ * Nothing uses this yet. It exists because the alternative for such a table is
+ * to key it by locale and repeat it 1121 times, and having the category named
+ * makes that the obviously wrong choice rather than the path of least
+ * resistance.
+ */
+public object BundleTables {
+
+    public val ALL: Set<String> = emptySet()
+}
