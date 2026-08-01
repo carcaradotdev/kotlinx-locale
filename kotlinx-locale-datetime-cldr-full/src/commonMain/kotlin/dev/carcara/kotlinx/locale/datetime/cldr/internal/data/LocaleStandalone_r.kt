@@ -2,26 +2,11 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal val LOCALE_STANDALONE_RIF: String =
-    "\u001Fyennayer\u001Efebrayer\u001Emars\u001Eyebril\u001Emayyu\u001Eyunyu\u001Eyulyu\u001Eɣuccet\u001Ecutembir\u001Ekṭuber\u001Enuwembir\u001Edujembir\u001F\u001F\u001Fletnayen\u001Ettlat\u001Elarbeɛ\u001Elexmis\u001Ejjemɛa\u001Essebt\u001Elḥed\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_RM: String =
-    "schaner\u001Efavrer\u001Emars\u001Eavrigl\u001Ematg\u001Ezercladur\u001Efanadur\u001Eavust\u001Esettember\u001Eoctober\u001Enovember\u001Edecember\u001Fschaner\u001Efavrer\u001Emars\u001Eavrigl\u001Ematg\u001Ezercladur\u001Efanadur\u001Eavust\u001Esettember\u001Eoctober\u001Enovember\u001Edecember\u001F\u001F\u001Fglindesdi\u001Emardi\u001Emesemna\u001Egievgia\u001Evenderdi\u001Esonda\u001Edumengia\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_RN: String =
-    "\u001FNzero\u001ERuhuhuma\u001ENtwarante\u001ENdamukiza\u001ERusama\u001ERuheshi\u001EMukakaro\u001ENyandagaro\u001ENyakanga\u001EGitugutu\u001EMunyonyo\u001EKigarama\u001F\u001F\u001FKu wa mbere\u001EKu wa kabiri\u001EKu wa gatatu\u001EKu wa kane\u001EKu wa gatanu\u001EKu wa gatandatu\u001EKu w’indwi\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_RO: String =
-    "\u001Fianuarie\u001Efebruarie\u001Emartie\u001Eaprilie\u001Emai\u001Eiunie\u001Eiulie\u001Eaugust\u001Eseptembrie\u001Eoctombrie\u001Enoiembrie\u001Edecembrie\u001F\u001F\u001Fluni\u001Emarți\u001Emiercuri\u001Ejoi\u001Evineri\u001Esâmbătă\u001Eduminică\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_ROF: String =
-    "\u001FMweri wa kwanza\u001EMweri wa kaili\u001EMweri wa katatu\u001EMweri wa kaana\u001EMweri wa tanu\u001EMweri wa sita\u001EMweri wa saba\u001EMweri wa nane\u001EMweri wa tisa\u001EMweri wa ikumi\u001EMweri wa ikumi na moja\u001EMweri wa ikumi na mbili\u001F\u001F\u001FIjumatatu\u001EIjumanne\u001EIjumatano\u001EAlhamisi\u001EIjumaa\u001EIjumamosi\u001EIjumapili\u001F\u001F0"
+    "schaner\u001Efavrer\u001Emars\u001Eavrigl\u001Ematg\u001Ezercladur\u001Efanadur\u001Eavust\u001Esettember\u001Eoctober\u001Enovember\u001Edecember\u001F\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_ROOT: String =
     "\u001F\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_RU: String =
-    "январь\u001Eфевраль\u001Eмарт\u001Eапрель\u001Eмай\u001Eиюнь\u001Eиюль\u001Eавгуст\u001Eсентябрь\u001Eоктябрь\u001Eноябрь\u001Eдекабрь\u001Fянварь\u001Eфевраль\u001Eмарт\u001Eапрель\u001Eмай\u001Eиюнь\u001Eиюль\u001Eавгуст\u001Eсентябрь\u001Eоктябрь\u001Eноябрь\u001Eдекабрь\u001F\u001F\u001Fпонедельник\u001Eвторник\u001Eсреда\u001Eчетверг\u001Eпятница\u001Eсуббота\u001Eвоскресенье\u001F\u001F3cfff"
-
-internal val LOCALE_STANDALONE_RW: String =
-    "\u001FMutarama\u001EGashyantare\u001EWerurwe\u001EMata\u001EGicurasi\u001EKamena\u001ENyakanga\u001EKanama\u001ENzeri\u001EUkwakira\u001EUgushyingo\u001EUkuboza\u001F\u001F\u001FKuwa mbere\u001EKuwa kabiri\u001EKuwa gatatu\u001EKuwa kane\u001EKuwa gatanu\u001EKuwa gatandatu\u001EKu cyumweru\u001F\u001F0"
+    "январь\u001Eфевраль\u001Eмарт\u001Eапрель\u001Eмай\u001Eиюнь\u001Eиюль\u001Eавгуст\u001Eсентябрь\u001Eоктябрь\u001Eноябрь\u001Eдекабрь\u001Fянв.\u001Eфевр.\u001Eмарт\u001Eапр.\u001Eмай\u001Eиюнь\u001Eиюль\u001Eавг.\u001Eсент.\u001Eокт.\u001Eнояб.\u001Eдек.\u001F\u001F\u001F\u001F\u001F3cfff"

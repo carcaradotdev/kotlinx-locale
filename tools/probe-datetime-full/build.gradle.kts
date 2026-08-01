@@ -3,12 +3,12 @@ plugins {
 }
 
 sizeProbe {
-    // Measured at 145.1 KB. It was 112.7 KB before the stand-alone calendar
-    // names landed, and they are here rather than in an artifact of their own
+    // Measured at 124.1 KB, up from 112.7 KB when the stand-alone calendar
+    // names landed. They are here rather than in an artifact of their own
     // because the pattern renderer needs them: 110 of CLDR's availableFormats
     // patterns use the stand-alone month letter, and without the table those
     // render the wrong grammatical case.
-    budgetBytes = 165 * 1024
+    budgetBytes = 140 * 1024
 }
 
 kotlin {

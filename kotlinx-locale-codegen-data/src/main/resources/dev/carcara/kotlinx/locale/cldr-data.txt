@@ -9795,23 +9795,23 @@ zu	IsikhathiUnyakaIkotaInyangaUsuku evikiniUsukuAM/PMIhoraIminithiI
 zu-ZA	IsikhathiUnyakaIkotaInyangaUsuku evikiniUsukuAM/PMIhoraIminithiIsekhondiikota yesi-1ikota yesi-2ikota yesi-3ikota yesi-4Q1Q2Q3Q4HH{1} {0}{1} {0}{1} {0}{1} {0}ikota yesi-1ikota yesi-2ikota yesi-3ikota yesi-4
 #dateTimeStandalone
 root	0
-aa	Qunxa GarabluKudoCiggilta KudoAgda BaxisCaxah AlsaQasa DirriQado DirriLiiqenWaysuDiteliXimoliKaxxa GarabluEtleeniTalaataArbaqaKamiisiGumqataSabtiAcaada0
-aa-DJ	Qunxa GarabluKudoCiggilta KudoAgda BaxisCaxah AlsaQasa DirriQado DirriLeqeeniWaysuDiteliXimoliKaxxa GarabluEtleeniTalaataArbaqaKamiisiGumqataSabtiAcaada0
-aa-ER	Qunxa GarabluKudoCiggilta KudoAgda BaxisCaxah AlsaQasa DirriQado DirriLiiqenWaysuDiteliXimoliKaxxa GarabluEtleeniTalaataArbaqaKamiisiGumqataSabtiAcaada0
-aa-ET	Qunxa GarabluKudoCiggilta KudoAgda BaxisCaxah AlsaQasa DirriQado DirriLiiqenWaysuDiteliXimoliKaxxa GarabluEtleeniTalaataArbaqaKamiisiGumqataSabtiAcaada0
-ab	АжьырныҳəаЖəабранХəажəкыраМшаԥыЛаҵараРашəараԤхынгəыНанҳəаЦəыббраЖьҭаараАбҵараԤхынҷкәынЖьЖəХəМЛРГәНЦәҬБҶАшәахьаАҩашаАхашаАԥшьашаАхәашаАсабшаАмҽыша0
-ab-GE	АжьырныҳəаЖəабранХəажəкыраМшаԥыЛаҵараРашəараԤхынгəыНанҳəаЦəыббраЖьҭаараАбҵараԤхынҷкәынЖьЖəХəМЛРГәНЦәҬБҶАшәахьаАҩашаАхашаАԥшьашаАхәашаАсабшаАмҽыша0
-af	JanuarieFebruarieMaartAprilMeiJunieJulieAugustusSeptemberOktoberNovemberDesemberMaandagDinsdagWoensdagDonderdagVrydagSaterdagSondag0
-af-NA	JanuarieFebruarieMaartAprilMeiJunieJulieAugustusSeptemberOktoberNovemberDesemberMaandagDinsdagWoensdagDonderdagVrydagSaterdagSondag0
-af-ZA	JanuarieFebruarieMaartAprilMeiJunieJulieAugustusSeptemberOktoberNovemberDesemberMaandagDinsdagWoensdagDonderdagVrydagSaterdagSondag0
-agq	ndzɔ̀ŋɔ̀nùmndzɔ̀ŋɔ̀kƗ̀zùʔndzɔ̀ŋɔ̀tƗ̀dʉ̀ghàndzɔ̀ŋɔ̀tǎafʉ̄ghāndzɔ̀ŋèsèendzɔ̀ŋɔ̀nzùghòndzɔ̀ŋɔ̀dùmlondzɔ̀ŋɔ̀kwîfɔ̀endzɔ̀ŋɔ̀tƗ̀fʉ̀ghàdzughùndzɔ̀ŋɔ̀ghǔuwelɔ̀mndzɔ̀ŋɔ̀chwaʔàkaa wondzɔ̀ŋèfwòotsuʔukpàtsuʔughɔetsuʔutɔ̀mlòtsuʔumètsuʔughɨ̂mtsuʔndzɨkɔʔɔtsuʔntsɨ0
-agq-CM	ndzɔ̀ŋɔ̀nùmndzɔ̀ŋɔ̀kƗ̀zùʔndzɔ̀ŋɔ̀tƗ̀dʉ̀ghàndzɔ̀ŋɔ̀tǎafʉ̄ghāndzɔ̀ŋèsèendzɔ̀ŋɔ̀nzùghòndzɔ̀ŋɔ̀dùmlondzɔ̀ŋɔ̀kwîfɔ̀endzɔ̀ŋɔ̀tƗ̀fʉ̀ghàdzughùndzɔ̀ŋɔ̀ghǔuwelɔ̀mndzɔ̀ŋɔ̀chwaʔàkaa wondzɔ̀ŋèfwòotsuʔukpàtsuʔughɔetsuʔutɔ̀mlòtsuʔumètsuʔughɨ̂mtsuʔndzɨkɔʔɔtsuʔntsɨ0
-ak	ƆƆƆOKAKƆƐAOƆDwoadaBenadaWukuadaYawoadaFiadaMemenedaKwa0
-ak-GH	ƆƆƆOKAKƆƐAOƆDwoadaBenadaWukuadaYawoadaFiadaMemenedaKwa0
-am	ጃንዋሪፌብሩዋሪማርችኤፕሪልሜይጁንጁላይኦገስትሴፕቴምበርኦክቶበርኖቬምበርዲሴምበርሰኞማክሰኞረቡዕሐሙስዓርብቅዳሜእሑድ0
-am-ET	ጃንዋሪፌብሩዋሪማርችኤፕሪልሜይጁንጁላይኦገስትሴፕቴምበርኦክቶበርኖቬምበርዲሴምበርሰኞማክሰኞረቡዕሐሙስዓርብቅዳሜእሑድ0
-an	chinerofebreromarzoabrilmayochunyochuliolagostosetiembreoctubrenoviembreavientochinerofebreromarzoabrilmayochunyochuliolagostosetiembreoctubrenoviembreavientolunsmartzmiercreschuevesviernessabadodominche0
-an-ES	chinerofebreromarzoabrilmayochunyochuliolagostosetiembreoctubrenoviembreavientochinerofebreromarzoabrilmayochunyochuliolagostosetiembreoctubrenoviembreavientolunsmartzmiercreschuevesviernessabadodominche0
+aa	0
+aa-DJ	0
+aa-ER	0
+aa-ET	0
+ab	ЖьЖəХəМЛРГәНЦәҬБҶ0
+ab-GE	ЖьЖəХəМЛРГәНЦәҬБҶ0
+af	0
+af-NA	0
+af-ZA	0
+agq	0
+agq-CM	0
+ak	ƆƆƆOKAKƆƐAOƆ0
+ak-GH	ƆƆƆOKAKƆƐAOƆ0
+am	0
+am-ET	0
+an	chinerofebreromarzoabrilmayochunyochuliolagostosetiembreoctubrenoviembreaviento0
+an-ES	chinerofebreromarzoabrilmayochunyochuliolagostosetiembreoctubrenoviembreaviento0
 ann	0
 ann-NG	0
 apc	0
@@ -9847,41 +9847,41 @@ ar-TN	0
 ar-YE	0
 arn	0
 arn-CL	0
-as	জানুৱাৰীফেব্ৰুৱাৰীমাৰ্চএপ্ৰিলমে’জুনজুলাইআগষ্টছেপ্তেম্বৰঅক্টোবৰনৱেম্বৰডিচেম্বৰসোমবাৰমঙ্গলবাৰবুধবাৰবৃহস্পতিবাৰশুক্ৰবাৰশনিবাৰদেওবাৰ0
-as-IN	জানুৱাৰীফেব্ৰুৱাৰীমাৰ্চএপ্ৰিলমে’জুনজুলাইআগষ্টছেপ্তেম্বৰঅক্টোবৰনৱেম্বৰডিচেম্বৰসোমবাৰমঙ্গলবাৰবুধবাৰবৃহস্পতিবাৰশুক্ৰবাৰশনিবাৰদেওবাৰ0
-asa	JanuariFebruariMachiApriliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesembaJumatatuJumanneJumatanoAlhamisiIjumaaJumamosiJumapili0
-asa-TZ	JanuariFebruariMachiApriliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesembaJumatatuJumanneJumatanoAlhamisiIjumaaJumamosiJumapili0
-ast	xinerufebrerumarzuabrilmayuxunuxunetuagostusetiembreochobrepayaresavientuXinFebMarAbrMayXunXntAgoSetOchPayAvillunesmartesmiércolesxuevesvienressábadudomingu0
-ast-ES	xinerufebrerumarzuabrilmayuxunuxunetuagostusetiembreochobrepayaresavientuXinFebMarAbrMayXunXntAgoSetOchPayAvillunesmartesmiércolesxuevesvienressábadudomingu0
-az	yanvarfevralmartaprelmayiyuniyulavqustsentyabroktyabrnoyabrdekabrB.E.Ç.A.çərşənbəC.A.cüməşənbəbazar0
+as	0
+as-IN	0
+asa	0
+asa-TZ	0
+ast	xinerufebrerumarzuabrilmayuxunuxunetuagostusetiembreochobrepayaresavientuXinFebMarAbrMayXunXntAgoSetOchPayAvi0
+ast-ES	xinerufebrerumarzuabrilmayuxunuxunetuagostusetiembreochobrepayaresavientuXinFebMarAbrMayXunXntAgoSetOchPayAvi0
+az	B.E.Ç.A.Ç.C.A.C.Ş.B.0
 az-Arab	0
 az-Arab-IQ	0
 az-Arab-IR	0
 az-Arab-TR	0
-az-Cyrl	ЈанварФевралМартАпрелМайИјунИјулАвгустСентјабрОктјабрНојабрДекабрЈанварФевралМартАпрелМайИјунИјулАвгустСентјабрОктјабрНојабрДекабрбазар ертәсичәршәнбә ахшамычәршәнбәҹүмә ахшамыҹүмәшәнбәбазар0
-az-Cyrl-AZ	ЈанварФевралМартАпрелМайИјунИјулАвгустСентјабрОктјабрНојабрДекабрЈанварФевралМартАпрелМайИјунИјулАвгустСентјабрОктјабрНојабрДекабрбазар ертәсичәршәнбә ахшамычәршәнбәҹүмә ахшамыҹүмәшәнбәбазар0
-az-Latn	yanvarfevralmartaprelmayiyuniyulavqustsentyabroktyabrnoyabrdekabrB.E.Ç.A.çərşənbəC.A.cüməşənbəbazar0
-az-Latn-AZ	yanvarfevralmartaprelmayiyuniyulavqustsentyabroktyabrnoyabrdekabrB.E.Ç.A.çərşənbəC.A.cüməşənbəbazar0
+az-Cyrl	ЈанварФевралМартАпрелМайИјунИјулАвгустСентјабрОктјабрНојабрДекабр0
+az-Cyrl-AZ	ЈанварФевралМартАпрелМайИјунИјулАвгустСентјабрОктјабрНојабрДекабр0
+az-Latn	B.E.Ç.A.Ç.C.A.C.Ş.B.0
+az-Latn-AZ	B.E.Ç.A.Ç.C.A.C.Ş.B.0
 ba	0
 ba-RU	0
-bal	جنوریپروریمارچاپرێلمئییجونجۆلاییاگستستمبراکتوبرنئومبردسمبردوشمبهسئیشمبهچارشمبهپنچشمبهجمهشمبهیکشمبه0
-bal-Arab	جنوریپروریمارچاپرێلمئییجونجۆلاییاگستستمبراکتوبرنئومبردسمبردوشمبهسئیشمبهچارشمبهپنچشمبهجمهشمبهیکشمبه0
-bal-Arab-PK	جنوریپروریمارچاپرێلمئییجونجۆلاییاگستستمبراکتوبرنئومبردسمبردوشمبهسئیشمبهچارشمبهپنچشمبهجمهشمبهیکشمبه0
-bal-Latn	JanwariParwariMárchAprélMaiJunJóláiAgastSatambarAktubarNawambarDasambarDoshambehSayshambehChárshambehPanchshambehJomahShambehYakshambeh0
-bal-Latn-PK	JanwariParwariMárchAprélMaiJunJóláiAgastSatambarAktubarNawambarDasambarDoshambehSayshambehChárshambehPanchshambehJomahShambehYakshambeh0
-bas	KɔndɔŋMàcɛ̂lMàtùmbMàtopM̀puyɛHìlòndɛ̀NjèbàHìkaŋDìpɔ̀sBìòômMàyɛsèpLìbuy li ńyèeŋgwà njaŋgumbaŋgwà ûmŋgwà ŋgêŋgwà mbɔkŋgwà kɔɔŋgwà jônŋgwà nɔ̂y0
-bas-CM	KɔndɔŋMàcɛ̂lMàtùmbMàtopM̀puyɛHìlòndɛ̀NjèbàHìkaŋDìpɔ̀sBìòômMàyɛsèpLìbuy li ńyèeŋgwà njaŋgumbaŋgwà ûmŋgwà ŋgêŋgwà mbɔkŋgwà kɔɔŋgwà jônŋgwà nɔ̂y0
-be	студзеньлютысакавіккрасавікмайчэрвеньліпеньжнівеньверасенькастрычніклістападснежаньстудзеньлютысакавіккрасавікмайчэрвеньліпеньжнівеньверасенькастрычніклістападснежаньпанядзелакаўтораксерадачацверпятніцасуботанядзеля0
-be-BY	студзеньлютысакавіккрасавікмайчэрвеньліпеньжнівеньверасенькастрычніклістападснежаньстудзеньлютысакавіккрасавікмайчэрвеньліпеньжнівеньверасенькастрычніклістападснежаньпанядзелакаўтораксерадачацверпятніцасуботанядзеля0
-be-tarask	студзеньлютысакавіккрасавіктравеньчэрвеньліпеньжнівеньверасенькастрычніклістападсьнежаньстудзеньлютысакавіккрасавіктрачэрвеньліпеньжнівеньверасенькастрычніклістападсьнежаньпанядзелакаўтораксерадачацьверпятніцасуботанядзеля0
-bem	JanuariFebruariMachiEpreoMeiJuniJulaiOgastiSeptembaOktobaNovembaDisemba0
-bem-ZM	JanuariFebruariMachiEpreoMeiJuniJulaiOgastiSeptembaOktobaNovembaDisemba0
-bew	JanuariPèbruariMaretAprilMéiJuniJuliAgustusSèptèmberOktoberNopèmberDésèmberSenènSelasaReboKemisJuma’atSaptuMinggu0
-bew-ID	JanuariPèbruariMaretAprilMéiJuniJuliAgustusSèptèmberOktoberNopèmberDésèmberSenènSelasaReboKemisJuma’atSaptuMinggu0
-bez	pa mwedzi gwa hutalapa mwedzi gwa wuvilipa mwedzi gwa wudatupa mwedzi gwa wutaipa mwedzi gwa wuhanupa mwedzi gwa sitapa mwedzi gwa sabapa mwedzi gwa nanepa mwedzi gwa tisapa mwedzi gwa kumipa mwedzi gwa kumi na mojapa mwedzi gwa kumi na mbilipa shahuviluhapa hivilipa hidatupa hitayipa hihanupa shahulembelapa mulungu0
-bez-TZ	pa mwedzi gwa hutalapa mwedzi gwa wuvilipa mwedzi gwa wudatupa mwedzi gwa wutaipa mwedzi gwa wuhanupa mwedzi gwa sitapa mwedzi gwa sabapa mwedzi gwa nanepa mwedzi gwa tisapa mwedzi gwa kumipa mwedzi gwa kumi na mojapa mwedzi gwa kumi na mbilipa shahuviluhapa hivilipa hidatupa hitayipa hihanupa shahulembelapa mulungu0
-bg	януарифевруаримартаприлмайюниюлиавгустсептемвриоктомвриноемвридекемврипонеделниквторниксрядачетвъртъкпетъксъботанеделя0
-bg-BG	януарифевруаримартаприлмайюниюлиавгустсептемвриоктомвриноемвридекемврипонеделниквторниксрядачетвъртъкпетъксъботанеделя0
+bal	0
+bal-Arab	0
+bal-Arab-PK	0
+bal-Latn	0
+bal-Latn-PK	0
+bas	0
+bas-CM	0
+be	студзеньлютысакавіккрасавікмайчэрвеньліпеньжнівеньверасенькастрычніклістападснежаньстулютсаккрамайчэрліпжніверкасліссне0
+be-BY	студзеньлютысакавіккрасавікмайчэрвеньліпеньжнівеньверасенькастрычніклістападснежаньстулютсаккрамайчэрліпжніверкасліссне0
+be-tarask	студзеньлютысакавіккрасавіктравеньчэрвеньліпеньжнівеньверасенькастрычніклістападсьнежань0
+bem	0
+bem-ZM	0
+bew	0
+bew-ID	0
+bez	0
+bez-TZ	0
+bg	0
+bg-BG	0
 bgc	0
 bgc-IN	0
 bgn	0
@@ -9892,84 +9892,84 @@ bgn-OM	0
 bgn-PK	0
 bho	0
 bho-IN	0
-blo	ɩjikawǝrka kaŋɔrɔɩjikpaka kaŋɔrɔarɛ́cika kaŋɔrɔnjɩbɔ nɖʊka kaŋɔrɔacafʊnɖuka kaŋɔrɔanɔɔɖuka kaŋɔrɔalàlaka kaŋɔrɔɩjikǝuka kaŋɔrɔabofʊmka kaŋɔrɔɩjicimka kaŋɔrɔacapomka kaŋɔrɔanɔɔbʊnka kaŋɔrɔaɖɩtɛnɛɛatalaataalaarbaalaamɩshɩarɩsǝmaasiibialahaɖɩ0
-blo-BJ	ɩjikawǝrka kaŋɔrɔɩjikpaka kaŋɔrɔarɛ́cika kaŋɔrɔnjɩbɔ nɖʊka kaŋɔrɔacafʊnɖuka kaŋɔrɔanɔɔɖuka kaŋɔrɔalàlaka kaŋɔrɔɩjikǝuka kaŋɔrɔabofʊmka kaŋɔrɔɩjicimka kaŋɔrɔacapomka kaŋɔrɔanɔɔbʊnka kaŋɔrɔaɖɩtɛnɛɛatalaataalaarbaalaamɩshɩarɩsǝmaasiibialahaɖɩ0
+blo	0
+blo-BJ	0
 blt	0
 blt-VN	0
-bm	zanwuyefeburuyemarisiawirilimɛzuwɛnzuluyeutisɛtanburuɔkutɔburunowanburudesanburuntɛnɛtarataarabaalamisajumasibirikari0
-bm-ML	zanwuyefeburuyemarisiawirilimɛzuwɛnzuluyeutisɛtanburuɔkutɔburunowanburudesanburuntɛnɛtarataarabaalamisajumasibirikari0
+bm	0
+bm-ML	0
 bm-Nkoo	0
 bm-Nkoo-ML	0
-bn	জানুয়ারিফেব্রুয়ারিমার্চএপ্রিলমেজুনজুলাইআগস্টসেপ্টঅক্টোবরনভেম্বরডিসেম্বরসোমবারমঙ্গলবারবুধবারবৃহস্পতিবারশুক্রবারশনিবাররবিবার0
-bn-BD	জানুয়ারিফেব্রুয়ারিমার্চএপ্রিলমেজুনজুলাইআগস্টসেপ্টঅক্টোবরনভেম্বরডিসেম্বরসোমবারমঙ্গলবারবুধবারবৃহস্পতিবারশুক্রবারশনিবাররবিবার0
-bn-IN	জানুয়ারিফেব্রুয়ারিমার্চএপ্রিলমেজুনজুলাইআগস্টসেপ্টেঃঅক্টোঃনভেঃডিসেঃসোমবারমঙ্গলবারবুধবারবৃহস্পতিবারশুক্রবারশনিবাররবিবার0
-bo	ཟླ་བ་དང་པོ་ཟླ་བ་གཉིས་པ་ཟླ་བ་གསུམ་པ་ཟླ་བ་བཞི་པ་ཟླ་བ་ལྔ་པ་ཟླ་བ་དྲུག་པ་ཟླ་བ་བདུན་པ་ཟླ་བ་བརྒྱད་པ་ཟླ་བ་དགུ་པ་ཟླ་བ་བཅུ་པ་ཟླ་བ་བཅུ་གཅིག་པ་ཟླ་བ་བཅུ་གཉིས་པ་ཟླ་བ་དང་པོ་ཟླ་བ་གཉིས་པ་ཟླ་བ་གསུམ་པ་ཟླ་བ་བཞི་པ་ཟླ་བ་ལྔ་པ་ཟླ་བ་དྲུག་པ་ཟླ་བ་བདུན་པ་ཟླ་བ་བརྒྱད་པ་ཟླ་བ་དགུ་པ་ཟླ་བ་བཅུ་པ་ཟླ་བ་བཅུ་གཅིག་པ་ཟླ་བ་བཅུ་གཉིས་པ་གཟའ་ཟླ་བ་གཟའ་མིག་དམར་གཟའ་ལྷག་པ་གཟའ་ཕུར་བུ་གཟའ་པ་སངས་གཟའ་སྤེན་པ་གཟའ་ཉི་མ་0
-bo-CN	ཟླ་བ་དང་པོ་ཟླ་བ་གཉིས་པ་ཟླ་བ་གསུམ་པ་ཟླ་བ་བཞི་པ་ཟླ་བ་ལྔ་པ་ཟླ་བ་དྲུག་པ་ཟླ་བ་བདུན་པ་ཟླ་བ་བརྒྱད་པ་ཟླ་བ་དགུ་པ་ཟླ་བ་བཅུ་པ་ཟླ་བ་བཅུ་གཅིག་པ་ཟླ་བ་བཅུ་གཉིས་པ་ཟླ་བ་དང་པོ་ཟླ་བ་གཉིས་པ་ཟླ་བ་གསུམ་པ་ཟླ་བ་བཞི་པ་ཟླ་བ་ལྔ་པ་ཟླ་བ་དྲུག་པ་ཟླ་བ་བདུན་པ་ཟླ་བ་བརྒྱད་པ་ཟླ་བ་དགུ་པ་ཟླ་བ་བཅུ་པ་ཟླ་བ་བཅུ་གཅིག་པ་ཟླ་བ་བཅུ་གཉིས་པ་གཟའ་ཟླ་བ་གཟའ་མིག་དམར་གཟའ་ལྷག་པ་གཟའ་ཕུར་བུ་གཟའ་པ་སངས་གཟའ་སྤེན་པ་གཟའ་ཉི་མ་0
-bo-IN	ཟླ་བ་དང་པོ་ཟླ་བ་གཉིས་པ་ཟླ་བ་གསུམ་པ་ཟླ་བ་བཞི་པ་ཟླ་བ་ལྔ་པ་ཟླ་བ་དྲུག་པ་ཟླ་བ་བདུན་པ་ཟླ་བ་བརྒྱད་པ་ཟླ་བ་དགུ་པ་ཟླ་བ་བཅུ་པ་ཟླ་བ་བཅུ་གཅིག་པ་ཟླ་བ་བཅུ་གཉིས་པ་ཟླ་བ་དང་པོ་ཟླ་བ་གཉིས་པ་ཟླ་བ་གསུམ་པ་ཟླ་བ་བཞི་པ་ཟླ་བ་ལྔ་པ་ཟླ་བ་དྲུག་པ་ཟླ་བ་བདུན་པ་ཟླ་བ་བརྒྱད་པ་ཟླ་བ་དགུ་པ་ཟླ་བ་བཅུ་པ་ཟླ་བ་བཅུ་གཅིག་པ་ཟླ་བ་བཅུ་གཉིས་པ་གཟའ་ཟླ་བ་གཟའ་མིག་དམར་གཟའ་ལྷག་པ་གཟའ་ཕུར་བུ་གཟའ་པ་སངས་གཟའ་སྤེན་པ་གཟའ་ཉི་མ་0
+bn	জানুফেবমার্চএপ্রিলমেজুনজুলাইআগস্টসেপ্টঅক্টোনভেম্বরডিসে0
+bn-BD	জানুফেবমার্চএপ্রিলমেজুনজুলাইআগস্টসেপ্টঅক্টোনভেম্বরডিসে0
+bn-IN	জানুফেবমার্চএপ্রিলমেজুনজুলাইআগস্টসেপ্টেঃঅক্টোঃনভেঃডিসেঃ0
+bo	ཟླ་བ་དང་པོ་ཟླ་བ་གཉིས་པ་ཟླ་བ་གསུམ་པ་ཟླ་བ་བཞི་པ་ཟླ་བ་ལྔ་པ་ཟླ་བ་དྲུག་པ་ཟླ་བ་བདུན་པ་ཟླ་བ་བརྒྱད་པ་ཟླ་བ་དགུ་པ་ཟླ་བ་བཅུ་པ་ཟླ་བ་བཅུ་གཅིག་པ་ཟླ་བ་བཅུ་གཉིས་པ་0
+bo-CN	ཟླ་བ་དང་པོ་ཟླ་བ་གཉིས་པ་ཟླ་བ་གསུམ་པ་ཟླ་བ་བཞི་པ་ཟླ་བ་ལྔ་པ་ཟླ་བ་དྲུག་པ་ཟླ་བ་བདུན་པ་ཟླ་བ་བརྒྱད་པ་ཟླ་བ་དགུ་པ་ཟླ་བ་བཅུ་པ་ཟླ་བ་བཅུ་གཅིག་པ་ཟླ་བ་བཅུ་གཉིས་པ་0
+bo-IN	ཟླ་བ་དང་པོ་ཟླ་བ་གཉིས་པ་ཟླ་བ་གསུམ་པ་ཟླ་བ་བཞི་པ་ཟླ་བ་ལྔ་པ་ཟླ་བ་དྲུག་པ་ཟླ་བ་བདུན་པ་ཟླ་བ་བརྒྱད་པ་ཟླ་བ་དགུ་པ་ཟླ་བ་བཅུ་པ་ཟླ་བ་བཅུ་གཅིག་པ་ཟླ་བ་བཅུ་གཉིས་པ་0
 bqi	0
 bqi-IR	0
-br	GenverCʼhwevrerMeurzhEbrelMaeMezhevenGouereEostGwengoloHereDuKerzuLunMeurzhMercʼherYaouGwenerSadornSul0
-br-FR	GenverCʼhwevrerMeurzhEbrelMaeMezhevenGouereEostGwengoloHereDuKerzuLunMeurzhMercʼherYaouGwenerSadornSul0
-brx	जानुवारीफेब्रूवारीमार्चएप्रिलमेजुनजुलाईआगष्टसेप्थेम्बरअक्ट’बरनवेम्बरडिसेम्बरसमबारमंगलबारबुधबारबिस्थिबारसुुखुरबारसनिबाररबिबारसमबारमंगलबारबुधबारबिस्थिबारसुुखुरबारसनिबाररबिबार0
-brx-IN	जानुवारीफेब्रूवारीमार्चएप्रिलमेजुनजुलाईआगष्टसेप्थेम्बरअक्ट’बरनवेम्बरडिसेम्बरसमबारमंगलबारबुधबारबिस्थिबारसुुखुरबारसनिबाररबिबारसमबारमंगलबारबुधबारबिस्थिबारसुुखुरबारसनिबाररबिबार0
-bs	januarfebruarmartaprilmajjunijuliaugustseptembaroktobarnovembardecembarjfmamjjasondponedjeljakutoraksrijedačetvrtakpetaksubotanedjeljapusčpsnc3aa
-bs-Cyrl	јануарфебруармартаприлмајјунијулиаугустсептембароктобарновембардецембарпонедјељакутораксриједачетвртакпетаксуботанедјеља0
-bs-Cyrl-BA	јануарфебруармартаприлмајјунијулиаугустсептембароктобарновембардецембарпонедјељакутораксриједачетвртакпетаксуботанедјеља0
-bs-Latn	januarfebruarmartaprilmajjunijuliaugustseptembaroktobarnovembardecembarjfmamjjasondponedjeljakutoraksrijedačetvrtakpetaksubotanedjeljapusčpsnc3aa
-bs-Latn-BA	januarfebruarmartaprilmajjunijuliaugustseptembaroktobarnovembardecembarjfmamjjasondponedjeljakutoraksrijedačetvrtakpetaksubotanedjeljapusčpsnc3aa
+br	0
+br-FR	0
+brx	समबारमंगलबारबुधबारबिस्थिबारसुुखुरबारसनिबाररबिबार0
+brx-IN	समबारमंगलबारबुधबारबिस्थिबारसुुखुरबारसनिबाररबिबार0
+bs	jfmamjjasondpusčpsnc3aa
+bs-Cyrl	0
+bs-Cyrl-BA	0
+bs-Latn	jfmamjjasondpusčpsnc3aa
+bs-Latn-BA	jfmamjjasondpusčpsnc3aa
 bss	0
 bss-CM	0
 bua	MTWTFSS0
 bua-RU	MTWTFSS0
-byn	ልደትሪካብኽብቲክብላፋጅኺሪክቢቅሪምኪኤል ትጟኒሪኰርኩማርያም ትሪያኸኒ መሳቅለሪመተሉምኪኤል መሽወሪተሕሳስሪሰኑሰሊጝለጓ ወሪ ለብዋኣምድኣርብሰንበር ሽጓዅሰንበር ቅዳዅ0
-byn-ER	ልደትሪካብኽብቲክብላፋጅኺሪክቢቅሪምኪኤል ትጟኒሪኰርኩማርያም ትሪያኸኒ መሳቅለሪመተሉምኪኤል መሽወሪተሕሳስሪሰኑሰሊጝለጓ ወሪ ለብዋኣምድኣርብሰንበር ሽጓዅሰንበር ቅዳዅ0
-ca	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.dillunsdimartsdimecresdijousdivendresdissabtediumenge0
-ca-AD	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.dillunsdimartsdimecresdijousdivendresdissabtediumenge0
-ca-ES	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.dillunsdimartsdimecresdijousdivendresdissabtediumenge0
-ca-ES-valencia	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.dillunsdimartsdimecresdijousdivendresdissabtediumenge0
-ca-FR	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.dillunsdimartsdimecresdijousdivendresdissabtediumenge0
-ca-IT	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.dillunsdimartsdimecresdijousdivendresdissabtediumenge0
+byn	0
+byn-ER	0
+ca	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.0
+ca-AD	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.0
+ca-ES	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.0
+ca-ES-valencia	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.0
+ca-FR	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.0
+ca-IT	generfebrermarçabrilmaigjunyjuliolagostsetembreoctubrenovembredesembregen.febr.marçabr.maigjunyjul.ag.set.oct.nov.des.0
 cad	0
 cad-US	0
-cch	Pen DyonPen BaʼaPen AtatPen AnasPen AtyonPen AchirimPen AtaribaPen AwurrPen ShadonPen ShakurPen Kur NabaPen Kur NatatWai TungaToki GitungTsam KasuwaWai Na NasWai Na TiyonWai Na ChirimWai Yoka Bawai0
-cch-NG	Pen DyonPen BaʼaPen AtatPen AnasPen AtyonPen AchirimPen AtaribaPen AwurrPen ShadonPen ShakurPen Kur NabaPen Kur NatatWai TungaToki GitungTsam KasuwaWai Na NasWai Na TiyonWai Na ChirimWai Yoka Bawai0
-ccp	𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄥𑄧𑄟𑄴𑄝𑄢𑄴𑄟𑄧𑄁𑄉𑄧𑄣𑄴𑄝𑄢𑄴𑄝𑄪𑄖𑄴𑄝𑄢𑄴𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴𑄝𑄢𑄴𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴𑄝𑄢𑄴𑄥𑄧𑄚𑄨𑄝𑄢𑄴𑄢𑄧𑄝𑄨𑄝𑄢𑄴0
-ccp-BD	𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄥𑄧𑄟𑄴𑄝𑄢𑄴𑄟𑄧𑄁𑄉𑄧𑄣𑄴𑄝𑄢𑄴𑄝𑄪𑄖𑄴𑄝𑄢𑄴𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴𑄝𑄢𑄴𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴𑄝𑄢𑄴𑄥𑄧𑄚𑄨𑄝𑄢𑄴𑄢𑄧𑄝𑄨𑄝𑄢𑄴0
-ccp-IN	𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄥𑄧𑄟𑄴𑄝𑄢𑄴𑄟𑄧𑄁𑄉𑄧𑄣𑄴𑄝𑄢𑄴𑄝𑄪𑄖𑄴𑄝𑄢𑄴𑄝𑄳𑄢𑄨𑄥𑄪𑄛𑄴𑄝𑄢𑄴𑄥𑄪𑄇𑄴𑄇𑄮𑄢𑄴𑄝𑄢𑄴𑄥𑄧𑄚𑄨𑄝𑄢𑄴𑄢𑄧𑄝𑄨𑄝𑄢𑄴0
-ce	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьоршотшинаракхаараеарапӀераскашуоткӀираошкхепӀшкӀ0
-ce-RU	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьоршотшинаракхаараеарапӀераскашуоткӀираошкхепӀшкӀ0
-ceb	EneroPebreroMarsoAbrilMayoHunyoHulyoAgostoSeptiyembreOktubreNobyembreDisyembreLunesMartesMiyerkulesHuwebesBiyernesSabadoDomingo0
-ceb-PH	EneroPebreroMarsoAbrilMayoHunyoHulyoAgostoSeptiyembreOktubreNobyembreDisyembreLunesMartesMiyerkulesHuwebesBiyernesSabadoDomingo0
-cgg	OkwokubanzaOkwakabiriOkwakashatuOkwakanaOkwakataanaOkwamukaagaOkwamushanjuOkwamunaanaOkwamwendaOkwaikumiOkwaikumi na kumweOkwaikumi na ibiriOrwokubanzaOrwakabiriOrwakashatuOrwakanaOrwakataanoOrwamukaagaSande0
-cgg-UG	OkwokubanzaOkwakabiriOkwakashatuOkwakanaOkwakataanaOkwamukaagaOkwamushanjuOkwamunaanaOkwamwendaOkwaikumiOkwaikumi na kumweOkwaikumi na ibiriOrwokubanzaOrwakabiriOrwakashatuOrwakanaOrwakataanoOrwamukaagaSande0
+cch	0
+cch-NG	0
+ccp	𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴0
+ccp-BD	𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴0
+ccp-IN	𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄎𑄚𑄪𑄠𑄢𑄨𑄜𑄬𑄛𑄴𑄝𑄳𑄢𑄪𑄠𑄢𑄨𑄟𑄢𑄴𑄌𑄧𑄃𑄬𑄛𑄳𑄢𑄨𑄣𑄴𑄟𑄬𑄎𑄪𑄚𑄴𑄎𑄪𑄣𑄭𑄃𑄉𑄧𑄌𑄴𑄑𑄴𑄥𑄬𑄛𑄴𑄑𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄃𑄧𑄇𑄴𑄑𑄮𑄝𑄧𑄢𑄴𑄚𑄧𑄞𑄬𑄟𑄴𑄝𑄧𑄢𑄴𑄓𑄨𑄥𑄬𑄟𑄴𑄝𑄧𑄢𑄴0
+ce	ошкхепӀшкӀ0
+ce-RU	ошкхепӀшкӀ0
+ceb	0
+ceb-PH	0
+cgg	0
+cgg-UG	0
 cho	0
 cho-US	0
-chr	ᎤᏃᎸᏔᏅᎧᎦᎵᎠᏅᏱᎧᏬᏂᎠᏂᏍᎬᏘᏕᎭᎷᏱᎫᏰᏉᏂᎦᎶᏂᏚᎵᏍᏗᏚᏂᏅᏗᏅᏓᏕᏆᎥᏍᎩᏱᎤᎾᏙᏓᏉᏅᎯᏔᎵᏁᎢᎦᏦᎢᏁᎢᎦᏅᎩᏁᎢᎦᏧᎾᎩᎶᏍᏗᎤᎾᏙᏓᏈᏕᎾᎤᎾᏙᏓᏆᏍᎬ0
-chr-US	ᎤᏃᎸᏔᏅᎧᎦᎵᎠᏅᏱᎧᏬᏂᎠᏂᏍᎬᏘᏕᎭᎷᏱᎫᏰᏉᏂᎦᎶᏂᏚᎵᏍᏗᏚᏂᏅᏗᏅᏓᏕᏆᎥᏍᎩᏱᎤᎾᏙᏓᏉᏅᎯᏔᎵᏁᎢᎦᏦᎢᏁᎢᎦᏅᎩᏁᎢᎦᏧᎾᎩᎶᏍᏗᎤᎾᏙᏓᏈᏕᎾᎤᎾᏙᏓᏆᏍᎬ0
+chr	0
+chr-US	0
 cic	0
 cic-US	0
 ckb	0
 ckb-IQ	0
 ckb-IR	0
-co	ghjennaghjuferraghjumarzuaprilemaghjughjugnulugliuaostusittembreottobrenuvembredicembreghjennaghjuferraghjumarzuaprilemaghjughjugnulugliuaostusittembreottobrenuvembredicembrelunimartimercurighjovivennerisabbatudumenica0
-co-FR	ghjennaghjuferraghjumarzuaprilemaghjughjugnulugliuaostusittembreottobrenuvembredicembreghjennaghjuferraghjumarzuaprilemaghjughjugnulugliuaostusittembreottobrenuvembredicembrelunimartimercurighjovivennerisabbatudumenica0
+co	ghjennaghjuferraghjumarzuaprilemaghjughjugnulugliuaostusittembreottobrenuvembredicembre0
+co-FR	ghjennaghjuferraghjumarzuaprilemaghjughjugnulugliuaostusittembreottobrenuvembredicembre0
 cop	0
 cop-EG	0
-cs	ledenúnorbřezendubenkvětenčervenčervenecsrpenzáříříjenlistopadprosinecledenúnorbřezendubenkvětenčervenčervenecsrpenzáříříjenlistopadprosinecpondělíúterýstředačtvrtekpáteksobotanedělec3aa
-cs-CZ	ledenúnorbřezendubenkvětenčervenčervenecsrpenzáříříjenlistopadprosinecledenúnorbřezendubenkvětenčervenčervenecsrpenzáříříjenlistopadprosinecpondělíúterýstředačtvrtekpáteksobotanedělec3aa
+cs	ledenúnorbřezendubenkvětenčervenčervenecsrpenzáříříjenlistopadprosinecc3aa
+cs-CZ	ledenúnorbřezendubenkvětenčervenčervenecsrpenzáříříjenlistopadprosinecc3aa
 csw	0
 csw-CA	0
-cu	і҆аннꙋа́рїйфеврꙋа́рїйма́ртъа҆прі́ллїйма́їйі҆ꙋ́нїйі҆ꙋ́лїйа҆́ѵгꙋстъсепте́мврїйѻ҆ктѡ́врїйное́мврїйдеке́мврїйі҆аннꙋа́рїйфеврꙋа́рїйма́ртъа҆прі́ллїйма́їйі҆ꙋ́нїйі҆ꙋ́лїйа҆́ѵгꙋстъсепте́мврїйѻ҆ктѡ́врїйное́мврїйдеке́мврїйпонедѣ́льникъвто́рникъсреда̀четверто́къпѧто́късꙋббѡ́танедѣ́лѧ0
-cu-RU	і҆аннꙋа́рїйфеврꙋа́рїйма́ртъа҆прі́ллїйма́їйі҆ꙋ́нїйі҆ꙋ́лїйа҆́ѵгꙋстъсепте́мврїйѻ҆ктѡ́врїйное́мврїйдеке́мврїйі҆аннꙋа́рїйфеврꙋа́рїйма́ртъа҆прі́ллїйма́їйі҆ꙋ́нїйі҆ꙋ́лїйа҆́ѵгꙋстъсепте́мврїйѻ҆ктѡ́врїйное́мврїйдеке́мврїйпонедѣ́льникъвто́рникъсреда̀четверто́къпѧто́късꙋббѡ́танедѣ́лѧ0
-cv	кӑрлачнарӑспушакаҫуҫӗрт.утӑҫурлаавӑнюпачӳкраштав0
-cv-RU	кӑрлачнарӑспушакаҫуҫӗрт.утӑҫурлаавӑнюпачӳкраштав0
-cy	IonawrChwMawrthEbrillMaiMehefinGorAwstMediHydrefTachweddRhagfyrDydd LlunDydd MawrthDydd MercherDydd IauGweDydd SadwrnDydd Sul0
-cy-GB	IonawrChwMawrthEbrillMaiMehefinGorAwstMediHydrefTachweddRhagfyrDydd LlunDydd MawrthDydd MercherDydd IauGweDydd SadwrnDydd Sul0
-da	januarfebruarmartsaprilmajjunijuliaugustseptemberoktobernovemberdecembermandagtirsdagonsdagtorsdagfredaglørdagsøndag200
-da-DK	januarfebruarmartsaprilmajjunijuliaugustseptemberoktobernovemberdecembermandagtirsdagonsdagtorsdagfredaglørdagsøndag200
-da-GL	januarfebruarmartsaprilmajjunijuliaugustseptemberoktobernovemberdecembermandagtirsdagonsdagtorsdagfredaglørdagsøndag200
-dav	Mori ghwa imbiriMori ghwa kawiMori ghwa kadaduMori ghwa kanaMori ghwa kasanuMori ghwa karandaduMori ghwa mfungadeMori ghwa wunyanyaMori ghwa ikendaMori ghwa ikumiMori ghwa ikumi na imweriMori ghwa ikumi na iwiKuramuka jimweriKuramuka kawiKuramuka kadaduKuramuka kanaKuramuka kasanuKifula nguwoItuku ja jumwa0
-dav-KE	Mori ghwa imbiriMori ghwa kawiMori ghwa kadaduMori ghwa kanaMori ghwa kasanuMori ghwa karandaduMori ghwa mfungadeMori ghwa wunyanyaMori ghwa ikendaMori ghwa ikumiMori ghwa ikumi na imweriMori ghwa ikumi na iwiKuramuka jimweriKuramuka kawiKuramuka kadaduKuramuka kanaKuramuka kasanuKifula nguwoItuku ja jumwa0
+cu	і҆аннꙋа́рїйфеврꙋа́рїйма́ртъа҆прі́ллїйма́їйі҆ꙋ́нїйі҆ꙋ́лїйа҆́ѵгꙋстъсепте́мврїйѻ҆ктѡ́врїйное́мврїйдеке́мврїй0
+cu-RU	і҆аннꙋа́рїйфеврꙋа́рїйма́ртъа҆прі́ллїйма́їйі҆ꙋ́нїйі҆ꙋ́лїйа҆́ѵгꙋстъсепте́мврїйѻ҆ктѡ́врїйное́мврїйдеке́мврїй0
+cv	0
+cv-RU	0
+cy	IonChwMawEbrMaiMehGorAwstMediHydTachRhagLlunMawMerIauGweSadSul0
+cy-GB	IonChwMawEbrMaiMehGorAwstMediHydTachRhagLlunMawMerIauGweSadSul0
+da	200
+da-DK	200
+da-GL	200
+dav	0
+dav-KE	0
 de	JanFebMärAprMaiJunJulAugSepOktNovDezMoDiMiDoFrSaSo0
 de-AT	JänFebMärAprMaiJunJulAugSepOktNovDezMoDiMiDoFrSaSo0
 de-BE	JanFebMärAprMaiJunJulAugSepOktNovDezMoDiMiDoFrSaSo0
@@ -9978,29 +9978,29 @@ de-DE	JanFebMärAprMaiJunJulAugSepOktNovDezMoDiMiDoFrSaSo
 de-IT	JänFebMärAprMaiJunJulAugSepOktNovDezMoDiMiDoFrSaSo0
 de-LI	JanFebMärAprMaiJunJulAugSepOktNovDezMoDiMiDoFrSaSo0
 de-LU	JanFebMärAprMaiJunJulAugSepOktNovDezMoDiMiDoFrSaSo0
-dje	ŽanwiyeFeewiriyeMarsiAwirilMeŽuweŋŽuyyeUtSektanburOktooburNoowanburDeesanburAtinniAtalaataAlarbaAlhamisiAlzumaAsibtiAlhadi0
-dje-NE	ŽanwiyeFeewiriyeMarsiAwirilMeŽuweŋŽuyyeUtSektanburOktooburNoowanburDeesanburAtinniAtalaataAlarbaAlhamisiAlzumaAsibtiAlhadi0
-doi	जनवरीफरवरीमार्चअप्रैलमेईजूनजुलाईअगस्तसितंबरअक्तूबरनवंबरदिसंबरसोमबारमंगलबारबुधबारबीरबारशुक्रबारशनिबारऐतबारसोम.बु.बी.शु.श.ऐ0
-doi-IN	जनवरीफरवरीमार्चअप्रैलमेईजूनजुलाईअगस्तसितंबरअक्तूबरनवंबरदिसंबरसोमबारमंगलबारबुधबारबीरबारशुक्रबारशनिबारऐतबारसोम.बु.बी.शु.श.ऐ0
-dsb	januarfebruarměrcaprylmajjunijjulijawgustseptemberoktobernowemberdecemberjanfebměraprmajjunjulawgsepoktnowdecpónjeźelewałtorasrjodastwórtkpětksobotanjeźela0
-dsb-DE	januarfebruarměrcaprylmajjunijjulijawgustseptemberoktobernowemberdecemberjanfebměraprmajjunjulawgsepoktnowdecpónjeźelewałtorasrjodastwórtkpětksobotanjeźela0
-dua	dimɔ́diŋgɔndɛsɔŋɛdiɓáɓáemiaseleesɔpɛsɔpɛmadiɓɛ́díɓɛ́diŋgindinyɛtɛkimayésɛ́tiníníeláŋgɛ́mɔ́súkwasúmukɔ́súŋgisúɗónɛsúesaɓasúéti0
-dua-CM	dimɔ́diŋgɔndɛsɔŋɛdiɓáɓáemiaseleesɔpɛsɔpɛmadiɓɛ́díɓɛ́diŋgindinyɛtɛkimayésɛ́tiníníeláŋgɛ́mɔ́súkwasúmukɔ́súŋgisúɗónɛsúesaɓasúéti0
+dje	0
+dje-NE	0
+doi	सोम.बु.बी.शु.श.ऐ0
+doi-IN	सोम.बु.बी.शु.श.ऐ0
+dsb	januarfebruarměrcaprylmajjunijjulijawgustseptemberoktobernowemberdecemberjanfebměraprmajjunjulawgsepoktnowdec0
+dsb-DE	januarfebruarměrcaprylmajjunijjulijawgustseptemberoktobernowemberdecemberjanfebměraprmajjunjulawgsepoktnowdec0
+dua	0
+dua-CM	0
 dv	0
 dv-MV	0
-dyo	SanvieFébirieMarsAburilMeeSueŋSúuyeeUtSettembarOktobarNovembarDisambarTeneŋTalataAlarbayAramisayArjumaSibitiDimas0
-dyo-SN	SanvieFébirieMarsAburilMeeSueŋSúuyeeUtSettembarOktobarNovembarDisambarTeneŋTalataAlarbayAramisayArjumaSibitiDimas0
-dz	སྤྱི་ཟླ་དངཔ་སྤྱི་ཟླ་གཉིས་པ་སྤྱི་ཟླ་གསུམ་པ་སྤྱི་ཟླ་བཞི་པསྤྱི་ཟླ་ལྔ་པ་སྤྱི་ཟླ་དྲུག་པསྤྱི་ཟླ་བདུན་པ་སྤྱི་ཟླ་བརྒྱད་པ་སྤྱི་ཟླ་དགུ་པ་སྤྱི་ཟླ་བཅུ་པ་སྤྱི་ཟླ་བཅུ་གཅིག་པ་སྤྱི་ཟླ་བཅུ་གཉིས་པ་ཟླ་༡ཟླ་༢ཟླ་༣ཟླ་༤ཟླ་༥ཟླ་༦ཟླ་༧ཟླ་༨ཟླ་༩ཟླ་༡༠ཟླ་༡༡ཟླ་༡༢༡༢༣༤༥༦༧༨༩༡༠༡༡༡༢གཟའ་མིག་དམར་གཟའ་ལྷག་པ་གཟའ་ཕུར་བུ་གཟའ་པ་སངས་གཟའ་སྤེན་པ་གཟའ་ཉི་མ་གཟའ་ཟླ་བ་0
-dz-BT	སྤྱི་ཟླ་དངཔ་སྤྱི་ཟླ་གཉིས་པ་སྤྱི་ཟླ་གསུམ་པ་སྤྱི་ཟླ་བཞི་པསྤྱི་ཟླ་ལྔ་པ་སྤྱི་ཟླ་དྲུག་པསྤྱི་ཟླ་བདུན་པ་སྤྱི་ཟླ་བརྒྱད་པ་སྤྱི་ཟླ་དགུ་པ་སྤྱི་ཟླ་བཅུ་པ་སྤྱི་ཟླ་བཅུ་གཅིག་པ་སྤྱི་ཟླ་བཅུ་གཉིས་པ་ཟླ་༡ཟླ་༢ཟླ་༣ཟླ་༤ཟླ་༥ཟླ་༦ཟླ་༧ཟླ་༨ཟླ་༩ཟླ་༡༠ཟླ་༡༡ཟླ་༡༢༡༢༣༤༥༦༧༨༩༡༠༡༡༡༢གཟའ་མིག་དམར་གཟའ་ལྷག་པ་གཟའ་ཕུར་བུ་གཟའ་པ་སངས་གཟའ་སྤེན་པ་གཟའ་ཉི་མ་གཟའ་ཟླ་བ་0
-ebu	Mweri wa mbereMweri wa kaĩriMweri wa kathatũMweri wa kanaMweri wa gatanoMweri wa gatantatũMweri wa mũgwanjaMweri wa kananaMweri wa kendaMweri wa ikũmiMweri wa ikũmi na ũmweMweri wa ikũmi na KaĩrĩNjumatatuNjumaineNjumatanoAramithiNjumaaNJumamothiiKiumia0
-ebu-KE	Mweri wa mbereMweri wa kaĩriMweri wa kathatũMweri wa kanaMweri wa gatanoMweri wa gatantatũMweri wa mũgwanjaMweri wa kananaMweri wa kendaMweri wa ikũmiMweri wa ikũmi na ũmweMweri wa ikũmi na KaĩrĩNjumatatuNjumaineNjumatanoAramithiNjumaaNJumamothiiKiumia0
-ee	dzovedzodzetedoxeafɔfĩedamemasasiamlɔmdeasiamimeanyɔnyɔkeleadeɛmekpɔxedzomedzoɖablaɖakuɖayawoɖafiɖamemleɖakɔsiɖa0
-ee-GH	dzovedzodzetedoxeafɔfĩedamemasasiamlɔmdeasiamimeanyɔnyɔkeleadeɛmekpɔxedzomedzoɖablaɖakuɖayawoɖafiɖamemleɖakɔsiɖa0
-ee-TG	dzovedzodzetedoxeafɔfĩedamemasasiamlɔmdeasiamimeanyɔnyɔkeleadeɛmekpɔxedzomedzoɖablaɖakuɖayawoɖafiɖamemleɖakɔsiɖa0
-el	ΙανουάριοςΦεβρουάριοςΜάρτιοςΑπρίλιοςΜάιοςΙούνιοςΙούλιοςΑύγουστοςΣεπτέμβριοςΟκτώβριοςΝοέμβριοςΔεκέμβριοςΙανουάριοςΦεβρουάριοςΜάρΑπρίλιοςΜάιΙούνΙούλΑύγΣεπτέμβριοςΟκτώβριοςΝοέΔεκέμβριοςΔευτέραΤρίτηΤετάρτηΠέμπτηΠαρασκευήΣάββατοΚυριακήc000
-el-CY	ΙανουάριοςΦεβρουάριοςΜάρτιοςΑπρίλιοςΜάιοςΙούνιοςΙούλιοςΑύγουστοςΣεπτέμβριοςΟκτώβριοςΝοέμβριοςΔεκέμβριοςΙανουάριοςΦεβρουάριοςΜάρΑπρίλιοςΜάιΙούνΙούλΑύγΣεπτέμβριοςΟκτώβριοςΝοέΔεκέμβριοςΔευτέραΤρίτηΤετάρτηΠέμπτηΠαρασκευήΣάββατοΚυριακήc000
-el-GR	ΙανουάριοςΦεβρουάριοςΜάρτιοςΑπρίλιοςΜάιοςΙούνιοςΙούλιοςΑύγουστοςΣεπτέμβριοςΟκτώβριοςΝοέμβριοςΔεκέμβριοςΙανουάριοςΦεβρουάριοςΜάρΑπρίλιοςΜάιΙούνΙούλΑύγΣεπτέμβριοςΟκτώβριοςΝοέΔεκέμβριοςΔευτέραΤρίτηΤετάρτηΠέμπτηΠαρασκευήΣάββατοΚυριακήc000
-el-polyton	ΙανουάριοςΦεβρουάριοςΜάρτιοςΑπρίλιοςΜάιοςΙούνιοςΙούλιοςΑὔγουστοςΣεπτέμβριοςὈκτώβριοςΝοέμβριοςΔεκέμβριοςΙανουάριοςΦεβρουάριοςΜάρΑπρίλιοςΜάιΙούνΙούλΑύγΣεπτέμβριοςὈκτώβριοςΝοέΔεκέμβριοςΔευτέραΤρίτηΤετάρτηΠέμπτηΠαρασκευήΣάββατοΚυριακήc000
+dyo	0
+dyo-SN	0
+dz	སྤྱི་ཟླ་དངཔ་སྤྱི་ཟླ་གཉིས་པ་སྤྱི་ཟླ་གསུམ་པ་སྤྱི་ཟླ་བཞི་པསྤྱི་ཟླ་ལྔ་པ་སྤྱི་ཟླ་དྲུག་པསྤྱི་ཟླ་བདུན་པ་སྤྱི་ཟླ་བརྒྱད་པ་སྤྱི་ཟླ་དགུ་པ་སྤྱི་ཟླ་བཅུ་པ་སྤྱི་ཟླ་བཅུ་གཅིག་པ་སྤྱི་ཟླ་བཅུ་གཉིས་པ་ཟླ་༡ཟླ་༢ཟླ་༣ཟླ་༤ཟླ་༥ཟླ་༦ཟླ་༧ཟླ་༨ཟླ་༩ཟླ་༡༠ཟླ་༡༡ཟླ་༡༢༡༢༣༤༥༦༧༨༩༡༠༡༡༡༢0
+dz-BT	སྤྱི་ཟླ་དངཔ་སྤྱི་ཟླ་གཉིས་པ་སྤྱི་ཟླ་གསུམ་པ་སྤྱི་ཟླ་བཞི་པསྤྱི་ཟླ་ལྔ་པ་སྤྱི་ཟླ་དྲུག་པསྤྱི་ཟླ་བདུན་པ་སྤྱི་ཟླ་བརྒྱད་པ་སྤྱི་ཟླ་དགུ་པ་སྤྱི་ཟླ་བཅུ་པ་སྤྱི་ཟླ་བཅུ་གཅིག་པ་སྤྱི་ཟླ་བཅུ་གཉིས་པ་ཟླ་༡ཟླ་༢ཟླ་༣ཟླ་༤ཟླ་༥ཟླ་༦ཟླ་༧ཟླ་༨ཟླ་༩ཟླ་༡༠ཟླ་༡༡ཟླ་༡༢༡༢༣༤༥༦༧༨༩༡༠༡༡༡༢0
+ebu	0
+ebu-KE	0
+ee	0
+ee-GH	0
+ee-TG	0
+el	ΙανουάριοςΦεβρουάριοςΜάρτιοςΑπρίλιοςΜάιοςΙούνιοςΙούλιοςΑύγουστοςΣεπτέμβριοςΟκτώβριοςΝοέμβριοςΔεκέμβριοςΙανΦεβΜάρΑπρΜάιΙούνΙούλΑύγΣεπΟκτΝοέΔεκc000
+el-CY	ΙανουάριοςΦεβρουάριοςΜάρτιοςΑπρίλιοςΜάιοςΙούνιοςΙούλιοςΑύγουστοςΣεπτέμβριοςΟκτώβριοςΝοέμβριοςΔεκέμβριοςΙανΦεβΜάρΑπρΜάιΙούνΙούλΑύγΣεπΟκτΝοέΔεκc000
+el-GR	ΙανουάριοςΦεβρουάριοςΜάρτιοςΑπρίλιοςΜάιοςΙούνιοςΙούλιοςΑύγουστοςΣεπτέμβριοςΟκτώβριοςΝοέμβριοςΔεκέμβριοςΙανΦεβΜάρΑπρΜάιΙούνΙούλΑύγΣεπΟκτΝοέΔεκc000
+el-polyton	ΙανουάριοςΦεβρουάριοςΜάρτιοςΑπρίλιοςΜάιοςΙούνιοςΙούλιοςΑὔγουστοςΣεπτέμβριοςὈκτώβριοςΝοέμβριοςΔεκέμβριοςΙανΦεβΜάρΑπρΜάιΙούνΙούλΑύγΣεπὈκτΝοέΔεκc000
 en	c000
 en-001	c000
 en-150	c000
@@ -10029,8 +10029,8 @@ en-DE	c000
 en-DG	c000
 en-DK	c000
 en-DM	c000
-en-Dsrt	𐐖𐐰𐑌𐐷𐐭𐐯𐑉𐐨𐐙𐐯𐐺𐑉𐐭𐐯𐑉𐐨𐐣𐐪𐑉𐐽𐐁𐐹𐑉𐐮𐑊𐐣𐐩𐐖𐐭𐑌𐐖𐐭𐑊𐐴𐐂𐑀𐐲𐑅𐐻𐐝𐐯𐐹𐐻𐐯𐑋𐐺𐐲𐑉𐐉𐐿𐐻𐐬𐐺𐐲𐑉𐐤𐐬𐑂𐐯𐑋𐐺𐐲𐑉𐐔𐐨𐑅𐐯𐑋𐐺𐐲𐑉𐐣𐐲𐑌𐐼𐐩𐐓𐐭𐑆𐐼𐐩𐐎𐐯𐑌𐑆𐐼𐐩𐐛𐐲𐑉𐑆𐐼𐐩𐐙𐑉𐐴𐐼𐐩𐐝𐐰𐐻𐐲𐑉𐐼𐐩𐐝𐐲𐑌𐐼𐐩0
-en-Dsrt-US	𐐖𐐰𐑌𐐷𐐭𐐯𐑉𐐨𐐙𐐯𐐺𐑉𐐭𐐯𐑉𐐨𐐣𐐪𐑉𐐽𐐁𐐹𐑉𐐮𐑊𐐣𐐩𐐖𐐭𐑌𐐖𐐭𐑊𐐴𐐂𐑀𐐲𐑅𐐻𐐝𐐯𐐹𐐻𐐯𐑋𐐺𐐲𐑉𐐉𐐿𐐻𐐬𐐺𐐲𐑉𐐤𐐬𐑂𐐯𐑋𐐺𐐲𐑉𐐔𐐨𐑅𐐯𐑋𐐺𐐲𐑉𐐣𐐲𐑌𐐼𐐩𐐓𐐭𐑆𐐼𐐩𐐎𐐯𐑌𐑆𐐼𐐩𐐛𐐲𐑉𐑆𐐼𐐩𐐙𐑉𐐴𐐼𐐩𐐝𐐰𐐻𐐲𐑉𐐼𐐩𐐝𐐲𐑌𐐼𐐩0
+en-Dsrt	0
+en-Dsrt-US	0
 en-EE	c000
 en-ER	c000
 en-ES	c000
@@ -10110,8 +10110,8 @@ en-SL	c000
 en-SS	c000
 en-SX	c000
 en-SZ	c000
-en-Shaw	·𐑡𐑨𐑯𐑿𐑼𐑦·𐑓𐑧𐑚𐑮𐑵𐑼𐑦·𐑥𐑸𐑗·𐑱𐑐𐑮𐑩𐑤·𐑥𐑱·𐑡𐑵𐑯·𐑡𐑩𐑤𐑲·𐑷𐑜𐑩𐑕𐑑·𐑕𐑧𐑐𐑑𐑧𐑥𐑚𐑼·𐑪𐑒𐑑𐑴𐑚𐑼·𐑯𐑴𐑝𐑧𐑥𐑚𐑼·𐑛𐑦𐑕𐑧𐑥𐑚𐑼·𐑡𐑨𐑯·𐑓𐑧𐑚·𐑥𐑸𐑗·𐑱𐑐𐑮·𐑥𐑱·𐑡𐑵𐑯·𐑡𐑵𐑤·𐑷𐑜·𐑕𐑧𐑐·𐑪𐑒𐑑·𐑯𐑴𐑝·𐑛𐑦𐑕𐑡𐑓𐑥𐑱𐑥𐑡𐑡𐑪𐑕𐑷𐑯𐑛·𐑥𐑭𐑙𐑛𐑱·𐑑𐑵𐑟𐑛𐑱·𐑢𐑧𐑙𐑟𐑛𐑱·𐑔𐑻𐑟𐑛𐑱·𐑓𐑮𐑲𐑛𐑱·𐑕𐑨𐑛𐑻𐑛𐑱·𐑕𐑭𐑙𐑛𐑱0
-en-Shaw-GB	·𐑡𐑨𐑯𐑿𐑼𐑦·𐑓𐑧𐑚𐑮𐑵𐑼𐑦·𐑥𐑸𐑗·𐑱𐑐𐑮𐑩𐑤·𐑥𐑱·𐑡𐑵𐑯·𐑡𐑩𐑤𐑲·𐑷𐑜𐑩𐑕𐑑·𐑕𐑧𐑐𐑑𐑧𐑥𐑚𐑼·𐑪𐑒𐑑𐑴𐑚𐑼·𐑯𐑴𐑝𐑧𐑥𐑚𐑼·𐑛𐑦𐑕𐑧𐑥𐑚𐑼·𐑡𐑨𐑯·𐑓𐑧𐑚·𐑥𐑸𐑗·𐑱𐑐𐑮·𐑥𐑱·𐑡𐑵𐑯·𐑡𐑵𐑤·𐑷𐑜·𐑕𐑧𐑐·𐑪𐑒𐑑·𐑯𐑴𐑝·𐑛𐑦𐑕𐑡𐑓𐑥𐑱𐑥𐑡𐑡𐑪𐑕𐑷𐑯𐑛·𐑥𐑭𐑙𐑛𐑱·𐑑𐑵𐑟𐑛𐑱·𐑢𐑧𐑙𐑟𐑛𐑱·𐑔𐑻𐑟𐑛𐑱·𐑓𐑮𐑲𐑛𐑱·𐑕𐑨𐑛𐑻𐑛𐑱·𐑕𐑭𐑙𐑛𐑱0
+en-Shaw	·𐑡𐑨𐑯𐑿𐑼𐑦·𐑓𐑧𐑚𐑮𐑵𐑼𐑦·𐑥𐑸𐑗·𐑱𐑐𐑮𐑩𐑤·𐑥𐑱·𐑡𐑵𐑯·𐑡𐑩𐑤𐑲·𐑷𐑜𐑩𐑕𐑑·𐑕𐑧𐑐𐑑𐑧𐑥𐑚𐑼·𐑪𐑒𐑑𐑴𐑚𐑼·𐑯𐑴𐑝𐑧𐑥𐑚𐑼·𐑛𐑦𐑕𐑧𐑥𐑚𐑼·𐑡𐑨𐑯·𐑓𐑧𐑚·𐑥𐑸𐑗·𐑱𐑐𐑮·𐑥𐑱·𐑡𐑵𐑯·𐑡𐑵𐑤·𐑷𐑜·𐑕𐑧𐑐·𐑪𐑒𐑑·𐑯𐑴𐑝·𐑛𐑦𐑕𐑡𐑓𐑥𐑱𐑥𐑡𐑡𐑪𐑕𐑷𐑯𐑛0
+en-Shaw-GB	·𐑡𐑨𐑯𐑿𐑼𐑦·𐑓𐑧𐑚𐑮𐑵𐑼𐑦·𐑥𐑸𐑗·𐑱𐑐𐑮𐑩𐑤·𐑥𐑱·𐑡𐑵𐑯·𐑡𐑩𐑤𐑲·𐑷𐑜𐑩𐑕𐑑·𐑕𐑧𐑐𐑑𐑧𐑥𐑚𐑼·𐑪𐑒𐑑𐑴𐑚𐑼·𐑯𐑴𐑝𐑧𐑥𐑚𐑼·𐑛𐑦𐑕𐑧𐑥𐑚𐑼·𐑡𐑨𐑯·𐑓𐑧𐑚·𐑥𐑸𐑗·𐑱𐑐𐑮·𐑥𐑱·𐑡𐑵𐑯·𐑡𐑵𐑤·𐑷𐑜·𐑕𐑧𐑐·𐑪𐑒𐑑·𐑯𐑴𐑝·𐑛𐑦𐑕𐑡𐑓𐑥𐑱𐑥𐑡𐑡𐑪𐑕𐑷𐑯𐑛0
 en-TC	c000
 en-TK	c000
 en-TO	c000
@@ -10131,381 +10131,381 @@ en-WS	c000
 en-ZA	c000
 en-ZM	c000
 en-ZW	c000
-eo	JanuaroFebruaroMartoApriloMajoJunioJulioAŭgustoSeptembroOktobroNovembroDecembrolundomardomerkredoĵaŭdovendredosabatodimanĉo0
-eo-001	JanuaroFebruaroMartoApriloMajoJunioJulioAŭgustoSeptembroOktobroNovembroDecembrolundomardomerkredoĵaŭdovendredosabatodimanĉo0
-es	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-419	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-AR	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-BO	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-BR	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-BZ	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-CL	ene.feb.mar.abr.may.jun.jul.ago.sept.oct.nov.dic.lunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-CO	ene.feb.mar.abr.may.jun.jul.ago.sept.oct.nov.dic.lunesmartesmiércolesjuevesviernessábadodomingolmmjvsd3ff
-es-CR	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-CU	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-DO	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-EA	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-EC	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-ES	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-GQ	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-GT	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-HN	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-IC	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-MX	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-NI	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-PA	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-PE	EneroFebreroMarzoAbrilMayoJunioJulioAgostoSetiembreOctubreNoviembreDiciembreEne.Feb.Mar.Abr.May.Jun.Jul.Ago.Set.Oct.Nov.Dic.lunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-PH	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-PR	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-PY	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-SV	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-US	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-UY	EneroFebreroMarzoAbrilMayoJunioJulioAgostoSetiembreOctubreNoviembreDiciembreEne.Feb.Mar.Abr.May.Jun.Jul.Ago.Set.Oct.Nov.Dic.lunesmartesmiércolesjuevesviernessábadodomingo3ff
-es-VE	enerofebreromarzoabrilmayojuniojulioagostoseptiembreoctubrenoviembrediciembrelunesmartesmiércolesjuevesviernessábadodomingo3ff
-et	jaanuarveebruarmärtsaprillmaijuunijuuliaugustseptemberoktoobernovemberdetsemberesmaspäevteisipäevkolmapäevneljapäevreedelaupäevpühapäev0
-et-EE	jaanuarveebruarmärtsaprillmaijuunijuuliaugustseptemberoktoobernovemberdetsemberesmaspäevteisipäevkolmapäevneljapäevreedelaupäevpühapäev0
-eu	urtarrilaotsailamartxoaapirilamaiatzaekainauztailaabuztuairailaurriaazaroaabenduaastelehenaastearteaasteazkenaostegunaostiralalarunbataigandea0
-eu-ES	urtarrilaotsailamartxoaapirilamaiatzaekainauztailaabuztuairailaurriaazaroaabenduaastelehenaastearteaasteazkenaostegunaostiralalarunbataigandea0
-ewo	ngɔn osúngɔn bɛ̌ngɔn lálangɔn nyinangɔn tánangɔn samənangɔn zamgbálangɔn mwomngɔn ebulúngɔn awómngɔn awóm ai dziángɔn awóm ai bɛ̌mɔ́ndisɔ́ndɔ məlú mə́bɛ̌sɔ́ndɔ məlú mə́lɛ́sɔ́ndɔ məlú mə́nyifúladéséradésɔ́ndɔ0
-ewo-CM	ngɔn osúngɔn bɛ̌ngɔn lálangɔn nyinangɔn tánangɔn samənangɔn zamgbálangɔn mwomngɔn ebulúngɔn awómngɔn awóm ai dziángɔn awóm ai bɛ̌mɔ́ndisɔ́ndɔ məlú mə́bɛ̌sɔ́ndɔ məlú mə́lɛ́sɔ́ndɔ məlú mə́nyifúladéséradésɔ́ndɔ0
+eo	0
+eo-001	0
+es	3ff
+es-419	3ff
+es-AR	3ff
+es-BO	3ff
+es-BR	3ff
+es-BZ	3ff
+es-CL	ene.feb.mar.abr.may.jun.jul.ago.sept.oct.nov.dic.3ff
+es-CO	ene.feb.mar.abr.may.jun.jul.ago.sept.oct.nov.dic.lmmjvsd3ff
+es-CR	3ff
+es-CU	3ff
+es-DO	3ff
+es-EA	3ff
+es-EC	3ff
+es-ES	3ff
+es-GQ	3ff
+es-GT	3ff
+es-HN	3ff
+es-IC	3ff
+es-MX	3ff
+es-NI	3ff
+es-PA	3ff
+es-PE	EneroFebreroMarzoAbrilMayoJunioJulioAgostoSetiembreOctubreNoviembreDiciembreEne.Feb.Mar.Abr.May.Jun.Jul.Ago.Set.Oct.Nov.Dic.3ff
+es-PH	3ff
+es-PR	3ff
+es-PY	3ff
+es-SV	3ff
+es-US	3ff
+es-UY	EneroFebreroMarzoAbrilMayoJunioJulioAgostoSetiembreOctubreNoviembreDiciembreEne.Feb.Mar.Abr.May.Jun.Jul.Ago.Set.Oct.Nov.Dic.3ff
+es-VE	3ff
+et	0
+et-EE	0
+eu	0
+eu-ES	0
+ewo	0
+ewo-CM	0
 fa	ژانویهفوریهمارسآوریلمهژوئنژوئیهاوتسپتامبراکتبرنوامبردسامبر0
 fa-AF	جنوریفبروریمارچاپریلمیجونجولایاگستسپتمبراکتوبرنومبردسمبر0
 fa-IR	ژانویهفوریهمارسآوریلمهژوئنژوئیهاوتسپتامبراکتبرنوامبردسامبر0
-ff	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Adlm	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-BF	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-CM	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-GH	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-GM	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-GN	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-GW	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-LR	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-MR	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-NE	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-NG	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-SL	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Adlm-SN	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫𞤃𞤢𞤱𞤲𞤣𞤫𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫0
-ff-Latn	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-BF	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-CM	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-GH	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-GM	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-GN	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-GW	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-LR	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-MR	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-NE	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-NG	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-SL	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-ff-Latn-SN	siilocoltembooyseeɗtoduujalkorsemorsojukosiiltoyarkomaajolalbowteaaɓndemawbaarenjeslaarenaasaandemawndehoore-biirdewo0
-fi	tammikuuhelmikuumaaliskuuhuhtikuutoukokuukesäkuuheinäkuuelokuusyyskuulokakuumarraskuujoulukuutammikuuhelmikuumaaliskuuhuhtikuutoukokuukesäkuuheinäkuuelokuusyyskuulokakuumarraskuujoulukuumaanantaitiistaikeskiviikkotorstaiperjantailauantaisunnuntaimaanantaitiistaikeskiviikkotorstaiperjantailauantaisunnuntai4200
-fi-FI	tammikuuhelmikuumaaliskuuhuhtikuutoukokuukesäkuuheinäkuuelokuusyyskuulokakuumarraskuujoulukuutammikuuhelmikuumaaliskuuhuhtikuutoukokuukesäkuuheinäkuuelokuusyyskuulokakuumarraskuujoulukuumaanantaitiistaikeskiviikkotorstaiperjantailauantaisunnuntaimaanantaitiistaikeskiviikkotorstaiperjantailauantaisunnuntai4200
-fil	EneroPebreroMarsoAbrilMayoHunyoHulyoAgostoSetyembreOktubreNobyembreDisyembreEPMAMHunHulAgoSetOktNobDisLunesMartesMiyerkulesHuwebesBiyernesSabadoLinggo0
-fil-PH	EneroPebreroMarsoAbrilMayoHunyoHulyoAgostoSetyembreOktubreNobyembreDisyembreEPMAMHunHulAgoSetOktNobDisLunesMartesMiyerkulesHuwebesBiyernesSabadoLinggo0
+ff	0
+ff-Adlm	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-BF	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-CM	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-GH	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-GM	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-GN	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-GW	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-LR	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-MR	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-NE	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-NG	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-SL	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Adlm-SN	𞤅𞤭𞥅𞤤𞤕𞤮𞤤𞤐𞤦𞤮𞥅𞤴𞤅𞤫𞥅𞤼𞤁𞤵𞥅𞤶𞤑𞤮𞤪𞤃𞤮𞤪𞤔𞤵𞤳𞤅𞤭𞤤𞤒𞤢𞤪𞤔𞤮𞤤𞤄𞤮𞤱0
+ff-Latn	0
+ff-Latn-BF	0
+ff-Latn-CM	0
+ff-Latn-GH	0
+ff-Latn-GM	0
+ff-Latn-GN	0
+ff-Latn-GW	0
+ff-Latn-LR	0
+ff-Latn-MR	0
+ff-Latn-NE	0
+ff-Latn-NG	0
+ff-Latn-SL	0
+ff-Latn-SN	0
+fi	tammikuuhelmikuumaaliskuuhuhtikuutoukokuukesäkuuheinäkuuelokuusyyskuulokakuumarraskuujoulukuumaanantaitiistaikeskiviikkotorstaiperjantailauantaisunnuntai4200
+fi-FI	tammikuuhelmikuumaaliskuuhuhtikuutoukokuukesäkuuheinäkuuelokuusyyskuulokakuumarraskuujoulukuumaanantaitiistaikeskiviikkotorstaiperjantailauantaisunnuntai4200
+fil	EPMAMHunHulAgoSetOktNobDis0
+fil-PH	EPMAMHunHulAgoSetOktNobDis0
 fo	janfebmaraprmaijunjulaugsepoktnovdesmántýsmikhósfríleysun0
 fo-DK	janfebmaraprmaijunjulaugsepoktnovdesmántýsmikhósfríleysun0
 fo-FO	janfebmaraprmaijunjulaugsepoktnovdesmántýsmikhósfríleysun0
-fr	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-BE	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-BF	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-BI	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-BJ	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-BL	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-CA	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-CD	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-CF	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-CG	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-CH	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-CI	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-CM	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-DJ	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-DZ	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-FR	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-GA	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-GF	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-GN	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-GP	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-GQ	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-HT	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-KM	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-LU	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-MA	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-MC	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-MF	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-MG	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-ML	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-MQ	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-MR	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-MU	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-NC	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-NE	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-PF	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-PM	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-RE	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-RW	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-SC	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-SN	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-SY	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-TD	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-TG	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-TN	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-VU	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-WF	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-fr-YT	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-frr	JanewooreFebrewooreMaartsAprilMeiJüüneJüüleAugustSeptemberOktuuberNofemberDetsemberMundaiTeisdaiWeedensdaiTüürsdaiFreidaiSaninjSöndai0
-frr-DE	JanewooreFebrewooreMaartsAprilMeiJüüneJüüleAugustSeptemberOktuuberNofemberDetsemberMundaiTeisdaiWeedensdaiTüürsdaiFreidaiSaninjSöndai0
-fur	ZenârFevrârMarçAvrîlMaiJugnLuiAvostSetembarOtubarNovembarDicembarlunismartarsmiercusjoibevinarssabidedomenie0
-fur-IT	ZenârFevrârMarçAvrîlMaiJugnLuiAvostSetembarOtubarNovembarDicembarlunismartarsmiercusjoibevinarssabidedomenie0
-fy	JannewarisFebrewarisMaartAprilMaaieJunyJulyAugustusSeptimberOktoberNovimberDesimbermoandeitiisdeiwoansdeitongersdeifreedsneonsneinc0ff
-fy-NL	JannewarisFebrewarisMaartAprilMaaieJunyJulyAugustusSeptimberOktoberNovimberDesimbermoandeitiisdeiwoansdeitongersdeifreedsneonsneinc0ff
-ga	EanáirFeabhraMártaAibreánBealtaineMeitheamhIúilLúnasaMeán FómhairDeireadh FómhairSamhainNollaigDé LuainDé MáirtDé CéadaoinDéardaoinDé hAoineDé SathairnDé Domhnaigh0
-ga-GB	EanáirFeabhraMártaAibreánBealtaineMeitheamhIúilLúnasaMeán FómhairDeireadh FómhairSamhainNollaigDé LuainDé MáirtDé CéadaoinDéardaoinDé hAoineDé SathairnDé Domhnaigh0
-ga-IE	EanáirFeabhraMártaAibreánBealtaineMeitheamhIúilLúnasaMeán FómhairDeireadh FómhairSamhainNollaigDé LuainDé MáirtDé CéadaoinDéardaoinDé hAoineDé SathairnDé Domhnaigh0
-gaa	AharabataOflɔOtsokrikriAbɛibeAgbiɛnaaOtukwajanMaawɛManyawaleGboAntɔŋAlemleAfuabeAharabataOflɔOtsokrikriAbɛibeAgbiɛnaaOtukwajanMaawɛManyawaleGboAntɔŋAlemleAfuabeJuJufɔShɔSooSohaaHɔɔHɔgbaa0
-gaa-GH	AharabataOflɔOtsokrikriAbɛibeAgbiɛnaaOtukwajanMaawɛManyawaleGboAntɔŋAlemleAfuabeAharabataOflɔOtsokrikriAbɛibeAgbiɛnaaOtukwajanMaawɛManyawaleGboAntɔŋAlemleAfuabeJuJufɔShɔSooSohaaHɔɔHɔgbaa0
-gd	Am FaoilleachAn GearranAm MàrtAn GibleanAn CèiteanAn t-ÒgmhiosAn t-IucharAn LùnastalAn t-SultainAn DàmhairAn t-SamhainAn DùbhlachdAm FaoilleachAn GearranAm MàrtAn GibleanAn CèiteanAn t-ÒgmhiosAn t-IucharAn LùnastalAn t-SultainAn DàmhairAn t-SamhainAn DùbhlachdDiLuainDiMàirtDiCiadainDiarDaoinDihAoineDiSathairneDiDòmhnaich0
-gd-GB	Am FaoilleachAn GearranAm MàrtAn GibleanAn CèiteanAn t-ÒgmhiosAn t-IucharAn LùnastalAn t-SultainAn DàmhairAn t-SamhainAn DùbhlachdAm FaoilleachAn GearranAm MàrtAn GibleanAn CèiteanAn t-ÒgmhiosAn t-IucharAn LùnastalAn t-SultainAn DàmhairAn t-SamhainAn DùbhlachdDiLuainDiMàirtDiCiadainDiarDaoinDihAoineDiSathairneDiDòmhnaich0
+fr	255
+fr-BE	255
+fr-BF	255
+fr-BI	255
+fr-BJ	255
+fr-BL	255
+fr-CA	255
+fr-CD	255
+fr-CF	255
+fr-CG	255
+fr-CH	255
+fr-CI	255
+fr-CM	255
+fr-DJ	255
+fr-DZ	255
+fr-FR	255
+fr-GA	255
+fr-GF	255
+fr-GN	255
+fr-GP	255
+fr-GQ	255
+fr-HT	255
+fr-KM	255
+fr-LU	255
+fr-MA	255
+fr-MC	255
+fr-MF	255
+fr-MG	255
+fr-ML	255
+fr-MQ	255
+fr-MR	255
+fr-MU	255
+fr-NC	255
+fr-NE	255
+fr-PF	255
+fr-PM	255
+fr-RE	255
+fr-RW	255
+fr-SC	255
+fr-SN	255
+fr-SY	255
+fr-TD	255
+fr-TG	255
+fr-TN	255
+fr-VU	255
+fr-WF	255
+fr-YT	255
+frr	0
+frr-DE	0
+fur	0
+fur-IT	0
+fy	c0ff
+fy-NL	c0ff
+ga	0
+ga-GB	0
+ga-IE	0
+gaa	AharabataOflɔOtsokrikriAbɛibeAgbiɛnaaOtukwajanMaawɛManyawaleGboAntɔŋAlemleAfuabe0
+gaa-GH	AharabataOflɔOtsokrikriAbɛibeAgbiɛnaaOtukwajanMaawɛManyawaleGboAntɔŋAlemleAfuabe0
+gd	Am FaoilleachAn GearranAm MàrtAn GibleanAn CèiteanAn t-ÒgmhiosAn t-IucharAn LùnastalAn t-SultainAn DàmhairAn t-SamhainAn Dùbhlachd0
+gd-GB	Am FaoilleachAn GearranAm MàrtAn GibleanAn CèiteanAn t-ÒgmhiosAn t-IucharAn LùnastalAn t-SultainAn DàmhairAn t-SamhainAn Dùbhlachd0
 gez	0
 gez-ER	0
 gez-ET	0
-gl	xaneirofebreiromarzoabrilmaioxuñoxulloagostosetembrooutubronovembrodecembroXFMAMXXASONDlunsmartesmércoresxovesvenressábadodomingoLMMXVSD0
-gl-ES	xaneirofebreiromarzoabrilmaioxuñoxulloagostosetembrooutubronovembrodecembroXFMAMXXASONDlunsmartesmércoresxovesvenressábadodomingoLMMXVSD0
+gl	XFMAMXXASONDLMMXVSD0
+gl-ES	XFMAMXXASONDLMMXVSD0
 gn	0
 gn-PY	0
-gsw	JanuarFebruarMärzAprilMaiJuniJuliAuguschtSeptämberOktooberNovämberDezämberMääntigZiischtigMittwuchDunschtigFriitigSamschtigSunntig0
-gsw-CH	JanuarFebruarMärzAprilMaiJuniJuliAuguschtSeptämberOktooberNovämberDezämberMääntigZiischtigMittwuchDunschtigFriitigSamschtigSunntig0
-gsw-FR	JanuarFebruarMärzAprilMaiJuniJuliAuguschtSeptämberOktooberNovämberDezämberMääntigZiischtigMittwuchDunschtigFriitigSamschtigSunntig0
-gsw-LI	JanuarFebruarMärzAprilMaiJuniJuliAuguschtSeptämberOktooberNovämberDezämberMääntigZiischtigMittwuchDunschtigFriitigSamschtigSunntig0
-gu	જાન્યુઆરીફેબ્રુઆરીમાર્ચએપ્રિલમેજૂનજુલાઈઑગસ્ટસપ્ટેમ્બરઑક્ટોબરનવેમ્બરડિસેમ્બરસોમવારમંગળવારબુધવારગુરુવારશુક્રવારશનિવારરવિવાર0
-gu-IN	જાન્યુઆરીફેબ્રુઆરીમાર્ચએપ્રિલમેજૂનજુલાઈઑગસ્ટસપ્ટેમ્બરઑક્ટોબરનવેમ્બરડિસેમ્બરસોમવારમંગળવારબુધવારગુરુવારશુક્રવારશનિવારરવિવાર0
-guz	ChanuariFeburariMachiApiririMeiJuniChulaiAgostiSeptembaOkitobaNobembaDisembaChumatatoChumaineChumatanoAramisiIchumaEsabatoChumapiri0
-guz-KE	ChanuariFeburariMachiApiririMeiJuniChulaiAgostiSeptembaOkitobaNobembaDisembaChumatatoChumaineChumatanoAramisiIchumaEsabatoChumapiri0
-gv	Jerrey-geureeToshiaght-arreeMayrntAverilBoaldynMean-soureeJerrey-soureeLuanistynMean-fouyirJerrey-fouyirMee HouneyMee ny NollickJelheinJemayrtJerceanJerdeinJeheineyJesarnJedoonee0
-gv-IM	Jerrey-geureeToshiaght-arreeMayrntAverilBoaldynMean-soureeJerrey-soureeLuanistynMean-fouyirJerrey-fouyirMee HouneyMee ny NollickJelheinJemayrtJerceanJerdeinJeheineyJesarnJedoonee0
-ha	JanairuFaburairuMarisAfiriluMayuYuniYuliAgustaSatumbaOktobaNuwambaDisambaLitininTalataLarabaAlhamisJummaʼaAsabarLahadi0
-ha-Arab	جَنَيْرُڢَبْرَيْرُمَرِسْأَڢْرِلُمَيُيُونِيُولِأَغُسْتَسَتُمْبَأُكْتوُبَنُوَمْبَدِسَمْبَلِتِنِنْتَلَتَلَرَبَأَلْحَمِسْجُمَعَأَسَبَرْلَحَدِ0
-ha-Arab-NG	جَنَيْرُڢَبْرَيْرُمَرِسْأَڢْرِلُمَيُيُونِيُولِأَغُسْتَسَتُمْبَأُكْتوُبَنُوَمْبَدِسَمْبَلِتِنِنْتَلَتَلَرَبَأَلْحَمِسْجُمَعَأَسَبَرْلَحَدِ0
-ha-Arab-SD	جَنَيْرُڢَبْرَيْرُمَرِسْأَڢْرِلُمَيُيُونِيُولِأَغُسْتَسَتُمْبَأُكْتوُبَنُوَمْبَدِسَمْبَلِتِنِنْتَلَتَلَرَبَأَلْحَمِسْجُمَعَأَسَبَرْلَحَدِ0
-ha-GH	JanairuFaburairuMarisAfiriluMayuYuniYuliAgustaSatumbaOktobaNuwambaDisambaLitininTalataLarabaAlhamisJummaʼaAsabarLahadi0
-ha-NE	JanairuFaburairuMarisAfiriluMayuYuniYuliAgustaSatumbaOktobaNuwambaDisambaLitininTalataLarabaAlhamisJummaʼaAsabarLahadi0
-ha-NG	JanairuFaburairuMarisAfiriluMayuYuniYuliAgustaSatumbaOktobaNuwambaDisambaLitininTalataLarabaAlhamisJummaʼaAsabarLahadi0
-haw	IanualiPepelualiMalakiʻApelilaMeiIuneIulaiʻAukakeKepakemapaʻOkakopaNowemapaKekemapaPoʻakahiPoʻaluaPoʻakoluPoʻahāPoʻalimaPoʻaonoLāpule0
-haw-US	IanualiPepelualiMalakiʻApelilaMeiIuneIulaiʻAukakeKepakemapaʻOkakopaNowemapaKekemapaPoʻakahiPoʻaluaPoʻakoluPoʻahāPoʻalimaPoʻaonoLāpule0
-he	ינוארפברוארמרץאפרילמאייונייוליאוגוסטספטמבראוקטוברנובמברדצמבריום שנייום שלישייום רביעייום חמישייום שישייום שבתיום ראשון0
-he-IL	ינוארפברוארמרץאפרילמאייונייוליאוגוסטספטמבראוקטוברנובמברדצמבריום שנייום שלישייום רביעייום חמישייום שישייום שבתיום ראשון0
-hi	जनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसितंबरअक्टूबरनवंबरदिसंबरसोमवारमंगलवारबुधवारगुरुवारशुक्रवारशनिवाररविवार0
-hi-IN	जनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसितंबरअक्टूबरनवंबरदिसंबरसोमवारमंगलवारबुधवारगुरुवारशुक्रवारशनिवाररविवार0
+gsw	0
+gsw-CH	0
+gsw-FR	0
+gsw-LI	0
+gu	0
+gu-IN	0
+guz	0
+guz-KE	0
+gv	0
+gv-IM	0
+ha	0
+ha-Arab	0
+ha-Arab-NG	0
+ha-Arab-SD	0
+ha-GH	0
+ha-NE	0
+ha-NG	0
+haw	0
+haw-US	0
+he	0
+he-IL	0
+hi	0
+hi-IN	0
 hi-Latn	JanFebMarAprMayJunJulAugSeptOctNovDecc000
 hi-Latn-IN	JanFebMarAprMayJunJulAugSeptOctNovDecc000
-hnj	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
-hnj-Hmnp	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
-hnj-Hmnp-US	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
-hr	siječanjveljačaožujaktravanjsvibanjlipanjsrpanjkolovozrujanlistopadstudeniprosinacsiječanjveljačaožujaktravanjsvibanjlipanjsrpanjkolovozrujanlistopadstudeniprosinacponedjeljakutoraksrijedačetvrtakpetaksubotanedjeljapusčpsnc3aa
-hr-BA	siječanjveljačaožujaktravanjsvibanjlipanjsrpanjkolovozrujanlistopadstudeniprosinacsiječanjveljačaožujaktravanjsvibanjlipanjsrpanjkolovozrujanlistopadstudeniprosinacponedjeljakutoraksrijedačetvrtakpetaksubotanedjeljac3aa
-hr-HR	siječanjveljačaožujaktravanjsvibanjlipanjsrpanjkolovozrujanlistopadstudeniprosinacsiječanjveljačaožujaktravanjsvibanjlipanjsrpanjkolovozrujanlistopadstudeniprosinacponedjeljakutoraksrijedačetvrtakpetaksubotanedjeljapusčpsnc3aa
-hsb	januarfebruarměrcaprylmejajunijjulijawgustseptemberoktobernowemberdecemberjanfebměraprmejjunjulawgsepoktnowdecpóndźelawutorasrjedaštwórtkpjatksobotanjedźela0
-hsb-DE	januarfebruarměrcaprylmejajunijjulijawgustseptemberoktobernowemberdecemberjanfebměraprmejjunjulawgsepoktnowdecpóndźelawutorasrjedaštwórtkpjatksobotanjedźela0
-ht	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-ht-HT	janvierfévriermarsavrilmaijuinjuilletaoûtseptembreoctobrenovembredécembrelundimardimercredijeudivendredisamedidimanche255
-hu	januárfebruármárciusáprilismájusjúniusjúliusaugusztusszeptemberoktóbernovemberdecemberhétfőkeddszerdacsütörtökpéntekszombatvasárnap0
-hu-HU	januárfebruármárciusáprilismájusjúniusjúliusaugusztusszeptemberoktóbernovemberdecemberhétfőkeddszerdacsütörtökpéntekszombatvasárnap0
-hy	հունվարփետրվարմարտապրիլմայիսհունիսհուլիսօգոստոսսեպտեմբերհոկտեմբերնոյեմբերդեկտեմբերհունվարփետրվարմարտապրիլմայիսհունիսհուլիսօգոստոսսեպտեմբերհոկտեմբերնոյեմբերդեկտեմբերերկուշաբթիերեքշաբթիչորեքշաբթիհինգշաբթիուրբաթշաբաթկիրակի0
-hy-AM	հունվարփետրվարմարտապրիլմայիսհունիսհուլիսօգոստոսսեպտեմբերհոկտեմբերնոյեմբերդեկտեմբերհունվարփետրվարմարտապրիլմայիսհունիսհուլիսօգոստոսսեպտեմբերհոկտեմբերնոյեմբերդեկտեմբերերկուշաբթիերեքշաբթիչորեքշաբթիհինգշաբթիուրբաթշաբաթկիրակի0
-ia	januariofebruariomartioaprilmaiojuniojulioaugustoseptembreoctobrenovembredecembre123456789101112lunedimartedimercuridijovedivenerdisabbatodominica0
-ia-001	januariofebruariomartioaprilmaiojuniojulioaugustoseptembreoctobrenovembredecembre123456789101112lunedimartedimercuridijovedivenerdisabbatodominica0
-id	JanuariFebruariMaretAprilMeiJuniJuliAgustusSeptemberOktoberNovemberDesemberSeninSelasaRabuKamisJumatSabtuMingguc000
-id-ID	JanuariFebruariMaretAprilMeiJuniJuliAgustusSeptemberOktoberNovemberDesemberSeninSelasaRabuKamisJumatSabtuMingguc000
-ie	januarfebruarmarteaprilmayjuniojulíaugustseptembreoctobrenovembredecembrelunedímardímercurdíjovedívenerdísaturdísoledí0
-ie-EE	januarfebruarmarteaprilmayjuniojulíaugustseptembreoctobrenovembredecembrelunedímardímercurdíjovedívenerdísaturdísoledí0
-ig	JenụwarịFebrụwarịMaachịEpreelMeeJunJulaịỌgọọstSeptembaỌktobaNovembaDisembaMọndeTiuzdeeWenezdeeTọọzdeeFraịdeeSatọdeeSọndee0
-ig-NG	JenụwarịFebrụwarịMaachịEpreelMeeJunJulaịỌgọọstSeptembaỌktobaNovembaDisembaMọndeTiuzdeeWenezdeeTọọzdeeFraịdeeSatọdeeSọndee0
-ii	ꆏꊂꋍꆏꊂꑍꆏꊂꌕꆏꊂꇖꆏꊂꉬꆏꊂꃘꑬꆏꑍ0
-ii-CN	ꆏꊂꋍꆏꊂꑍꆏꊂꌕꆏꊂꇖꆏꊂꉬꆏꊂꃘꑬꆏꑍ0
+hnj	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
+hnj-Hmnp	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
+hnj-Hmnp-US	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
+hr	siječanjveljačaožujaktravanjsvibanjlipanjsrpanjkolovozrujanlistopadstudeniprosinacpusčpsnc3aa
+hr-BA	siječanjveljačaožujaktravanjsvibanjlipanjsrpanjkolovozrujanlistopadstudeniprosinacc3aa
+hr-HR	siječanjveljačaožujaktravanjsvibanjlipanjsrpanjkolovozrujanlistopadstudeniprosinacpusčpsnc3aa
+hsb	januarfebruarměrcaprylmejajunijjulijawgustseptemberoktobernowemberdecemberjanfebměraprmejjunjulawgsepoktnowdec0
+hsb-DE	januarfebruarměrcaprylmejajunijjulijawgustseptemberoktobernowemberdecemberjanfebměraprmejjunjulawgsepoktnowdec0
+ht	255
+ht-HT	255
+hu	0
+hu-HU	0
+hy	հունվարփետրվարմարտապրիլմայիսհունիսհուլիսօգոստոսսեպտեմբերհոկտեմբերնոյեմբերդեկտեմբեր0
+hy-AM	հունվարփետրվարմարտապրիլմայիսհունիսհուլիսօգոստոսսեպտեմբերհոկտեմբերնոյեմբերդեկտեմբեր0
+ia	1234567891011120
+ia-001	1234567891011120
+id	c000
+id-ID	c000
+ie	0
+ie-EE	0
+ig	0
+ig-NG	0
+ii	0
+ii-CN	0
 io	0
 io-001	0
-is	janúarfebrúarmarsaprílmaíjúníjúlíágústseptemberoktóbernóvemberdesembermánudagurþriðjudagurmiðvikudagurfimmtudagurföstudagurlaugardagursunnudagur0
-is-IS	janúarfebrúarmarsaprílmaíjúníjúlíágústseptemberoktóbernóvemberdesembermánudagurþriðjudagurmiðvikudagurfimmtudagurföstudagurlaugardagursunnudagur0
-it	gennaiofebbraiomarzoaprilemaggiogiugnoluglioagostosettembreottobrenovembredicembrelunedìmartedìmercoledìgiovedìvenerdìsabatodomenica3ff
-it-CH	gennaiofebbraiomarzoaprilemaggiogiugnoluglioagostosettembreottobrenovembredicembrelunedìmartedìmercoledìgiovedìvenerdìsabatodomenica3ff
-it-IT	gennaiofebbraiomarzoaprilemaggiogiugnoluglioagostosettembreottobrenovembredicembrelunedìmartedìmercoledìgiovedìvenerdìsabatodomenica3ff
-it-SM	gennaiofebbraiomarzoaprilemaggiogiugnoluglioagostosettembreottobrenovembredicembrelunedìmartedìmercoledìgiovedìvenerdìsabatodomenica3ff
-it-VA	gennaiofebbraiomarzoaprilemaggiogiugnoluglioagostosettembreottobrenovembredicembrelunedìmartedìmercoledìgiovedìvenerdìsabatodomenica3ff
+is	0
+is-IS	0
+it	3ff
+it-CH	3ff
+it-IT	3ff
+it-SM	3ff
+it-VA	3ff
 iu	0
 iu-CA	0
 iu-Latn	0
 iu-Latn-CA	0
-ja	月曜日火曜日水曜日木曜日金曜日土曜日日曜日0
-ja-JP	月曜日火曜日水曜日木曜日金曜日土曜日日曜日0
+ja	0
+ja-JP	0
 jbo	0
 jbo-001	0
 jgo	0
 jgo-CM	0
-jmc	JanuariFebruariMachiAprilyiMeiJunyiJulyaiAgustiSeptembaOktobaNovembaDesembaJumatatuuJumanneJumatanuAlhamisiIjumaaJumamosiJumapilyi0
-jmc-TZ	JanuariFebruariMachiAprilyiMeiJunyiJulyaiAgustiSeptembaOktobaNovembaDesembaJumatatuuJumanneJumatanuAlhamisiIjumaaJumamosiJumapilyi0
-jv	JanuariFebruariMaretAprilMeiJuniJuliAgustusSeptemberOktoberNovemberDesemberSeninSelasaRabuKamisJumatSabtuAhad0
-jv-ID	JanuariFebruariMaretAprilMeiJuniJuliAgustusSeptemberOktoberNovemberDesemberSeninSelasaRabuKamisJumatSabtuAhad0
-ka	იანვარითებერვალიმარტიაპრილიმაისიივნისიივლისიაგვისტოსექტემბერიოქტომბერინოემბერიდეკემბერიორშაბათისამშაბათიოთხშაბათიხუთშაბათიპარასკევიშაბათიკვირა0
-ka-GE	იანვარითებერვალიმარტიაპრილიმაისიივნისიივლისიაგვისტოსექტემბერიოქტომბერინოემბერიდეკემბერიორშაბათისამშაბათიოთხშაბათიხუთშაბათიპარასკევიშაბათიკვირა0
+jmc	0
+jmc-TZ	0
+jv	0
+jv-ID	0
+ka	0
+ka-GE	0
 kaa	ЯнварьФевральМартАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнвФевМарАпрМайИюнИюлАвгСенОктНояДек0
 kaa-Cyrl	ЯнварьФевральМартАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнвФевМарАпрМайИюнИюлАвгСенОктНояДек0
 kaa-Cyrl-UZ	ЯнварьФевральМартАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнвФевМарАпрМайИюнИюлАвгСенОктНояДек0
 kaa-Latn	0
 kaa-Latn-UZ	0
-kab	YennayerFuṛarMeɣresYebrirMayyuYunyuYulyuƔuctCtembeṛTubeṛNunembeṛDuǧembeṛ0
-kab-DZ	YennayerFuṛarMeɣresYebrirMayyuYunyuYulyuƔuctCtembeṛTubeṛNunembeṛDuǧembeṛ0
-kaj	Hywan A̱yrnigHywan A̱hwaHywan A̱tatHywan A̱naaiHywan A̱pfwonHywan A̱kitatHywan A̱tyirinHywan A̱ninaiHywan A̱kumviriyinHywan SwakHywan Swak B’a̱yrnigHywan Swak B’a̱hwaLintaniTalataLarbaLamitJumaAsabarLadi0
-kaj-NG	Hywan A̱yrnigHywan A̱hwaHywan A̱tatHywan A̱naaiHywan A̱pfwonHywan A̱kitatHywan A̱tyirinHywan A̱ninaiHywan A̱kumviriyinHywan SwakHywan Swak B’a̱yrnigHywan Swak B’a̱hwaLintaniTalataLarbaLamitJumaAsabarLadi0
-kam	Mwai wa mbeeMwai wa kelĩMwai wa katatũMwai wa kanaMwai wa katanoMwai wa thanthatũMwai wa muonzaMwai wa nyaanyaMwai wa kendaMwai wa ĩkumiMwai wa ĩkumi na ĩmweMwai wa ĩkumi na ilĩWa kwambĩlĩlyaWa kelĩWa katatũWa kanaWa katanoWa thanthatũWa kyumwa0
-kam-KE	Mwai wa mbeeMwai wa kelĩMwai wa katatũMwai wa kanaMwai wa katanoMwai wa thanthatũMwai wa muonzaMwai wa nyaanyaMwai wa kendaMwai wa ĩkumiMwai wa ĩkumi na ĩmweMwai wa ĩkumi na ilĩWa kwambĩlĩlyaWa kelĩWa katatũWa kanaWa katanoWa thanthatũWa kyumwa0
-kcg	Zwat JuwungZwat SwiyangZwat TsatZwat NyaiZwat TswonZwat AtaahZwat AnatatZwat ArinaiZwat AkubunyungZwat SwagZwat MangjuwangZwat Swag-Ma-SuyangTaniiTalataLarbaLamitJumaAsabatLadi0
-kcg-NG	Zwat JuwungZwat SwiyangZwat TsatZwat NyaiZwat TswonZwat AtaahZwat AnatatZwat ArinaiZwat AkubunyungZwat SwagZwat MangjuwangZwat Swag-Ma-SuyangTaniiTalataLarbaLamitJumaAsabatLadi0
-kde	Mwedi NtandiMwedi wa PiliMwedi wa TatuMwedi wa NchechiMwedi wa NnyanoMwedi wa Nnyano na UmoMwedi wa Nnyano na MiviliMwedi wa Nnyano na MitatuMwedi wa Nnyano na NchechiMwedi wa Nnyano na NnyanoMwedi wa Nnyano na Nnyano na UMwedi wa Nnyano na Nnyano na MLiduva lyatatuLiduva lyanchechiLiduva lyannyanoLiduva lyannyano na linjiLiduva lyannyano na maviliLiduva litandiLiduva lyapili0
-kde-TZ	Mwedi NtandiMwedi wa PiliMwedi wa TatuMwedi wa NchechiMwedi wa NnyanoMwedi wa Nnyano na UmoMwedi wa Nnyano na MiviliMwedi wa Nnyano na MitatuMwedi wa Nnyano na NchechiMwedi wa Nnyano na NnyanoMwedi wa Nnyano na Nnyano na UMwedi wa Nnyano na Nnyano na MLiduva lyatatuLiduva lyanchechiLiduva lyannyanoLiduva lyannyano na linjiLiduva lyannyano na maviliLiduva litandiLiduva lyapili0
-kea	JaneruFebreruMarsuAbrilMaiuJunhuJulhuAgostuSetenbruOtubruNuvenbruDizenbrusigunda-feratersa-ferakuarta-ferakinta-ferasesta-ferasábadudumingu0
-kea-CV	JaneruFebreruMarsuAbrilMaiuJunhuJulhuAgostuSetenbruOtubruNuvenbruDizenbrusigunda-feratersa-ferakuarta-ferakinta-ferasesta-ferasábadudumingu0
+kab	0
+kab-DZ	0
+kaj	0
+kaj-NG	0
+kam	0
+kam-KE	0
+kcg	0
+kcg-NG	0
+kde	0
+kde-TZ	0
+kea	0
+kea-CV	0
 kek	0
 kek-GT	0
 ken	0
 ken-CM	0
-kgp	1-Kysã2-Kysã3-Kysã4-Kysã5-Kysã6-Kysã7-Kysã8-Kysã9-Kysã10-Kysã11-Kysã12-Kysãpir-kurã-hárégre-kurã-hátẽgtũ-kurã-hávẽnhkãgra-kurã-hápénkar-kurã-hásavnunumĩgguc3f0
-kgp-BR	1-Kysã2-Kysã3-Kysã4-Kysã5-Kysã6-Kysã7-Kysã8-Kysã9-Kysã10-Kysã11-Kysã12-Kysãpir-kurã-hárégre-kurã-hátẽgtũ-kurã-hávẽnhkãgra-kurã-hápénkar-kurã-hásavnunumĩgguc3f0
-khq	ŽanwiyeFeewiriyeMarsiAwirilMeŽuweŋŽuyyeUtSektanburOktooburNoowanburDeesanburAtiniAtalataAlarbaAlhamiisaAljumaAssabduAlhadi0
-khq-ML	ŽanwiyeFeewiriyeMarsiAwirilMeŽuweŋŽuyyeUtSektanburOktooburNoowanburDeesanburAtiniAtalataAlarbaAlhamiisaAljumaAssabduAlhadi0
-ki	NjenuarĩMwere wa kerĩMwere wa gatatũMwere wa kanaMwere wa gatanoMwere wa gatandatũMwere wa mũgwanjaMwere wa kananaMwere wa kendaMwere wa ikũmiMwere wa ikũmi na ũmweNdithembaNjumatatũNjumaineNjumatanaAramithiNjumaaNjumamothiKiumia0
-ki-KE	NjenuarĩMwere wa kerĩMwere wa gatatũMwere wa kanaMwere wa gatanoMwere wa gatandatũMwere wa mũgwanjaMwere wa kananaMwere wa kendaMwere wa ikũmiMwere wa ikũmi na ũmweNdithembaNjumatatũNjumaineNjumatanaAramithiNjumaaNjumamothiKiumia0
-kk	ҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсанҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсандүйсенбісейсенбісәрсенбібейсенбіжұмасенбіжексенбі0
-kk-Arab	دۇيسەنبىسەيسەنبىسارسەنبىبەيسەنبىجۇماسەنبىجەكسەنبى0
-kk-Arab-CN	دۇيسەنبىسەيسەنبىسارسەنبىبەيسەنبىجۇماسەنبىجەكسەنبى0
-kk-Cyrl	ҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсанҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсандүйсенбісейсенбісәрсенбібейсенбіжұмасенбіжексенбі0
-kk-Cyrl-KZ	ҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсанҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсандүйсенбісейсенбісәрсенбібейсенбіжұмасенбіжексенбі0
-kk-KZ	ҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсанҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсандүйсенбісейсенбісәрсенбібейсенбіжұмасенбіжексенбі0
+kgp	c3f0
+kgp-BR	c3f0
+khq	0
+khq-ML	0
+ki	0
+ki-KE	0
+kk	ҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсан0
+kk-Arab	0
+kk-Arab-CN	0
+kk-Cyrl	ҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсан0
+kk-Cyrl-KZ	ҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсан0
+kk-KZ	ҚаңтарАқпанНаурызСәуірМамырМаусымШілдеТамызҚыркүйекҚазанҚарашаЖелтоқсан0
 kkj	0
 kkj-CM	0
-kl	januaarifebruaarimarsiapriilimaajijuunijuuliaggustiseptembarioktobarinovembaridecembarijanuaarifebruaarimarsiapriilimaajijuunijuuliaggustiseptembarioktobarinovembaridecembariataasinngorneqmarlunngorneqpingasunngorneqsisamanngorneqtallimanngorneqarfininngorneqsapaat0
-kl-GL	januaarifebruaarimarsiapriilimaajijuunijuuliaggustiseptembarioktobarinovembaridecembarijanuaarifebruaarimarsiapriilimaajijuunijuuliaggustiseptembarioktobarinovembaridecembariataasinngorneqmarlunngorneqpingasunngorneqsisamanngorneqtallimanngorneqarfininngorneqsapaat0
-kln	MulgulNg’atyaatoKiptaamoIwootkuutMamuutPaagiNg’eiyeetRooptuiBureetEpeesoKipsuunde ne taaiKipsuunde nebo aeng’KotaaiKoaeng’KosomokKoang’wanKomuutKoloKotisap0
-kln-KE	MulgulNg’atyaatoKiptaamoIwootkuutMamuutPaagiNg’eiyeetRooptuiBureetEpeesoKipsuunde ne taaiKipsuunde nebo aeng’KotaaiKoaeng’KosomokKoang’wanKomuutKoloKotisap0
-km	ចន្ទអង្គារពុធព្រហស្បតិ៍សុក្រសៅរ៍អាទិត្យចន្ទអង្គារពុធព្រហស្បតិ៍សុក្រសៅរ៍អាទិត្យ0
-km-KH	ចន្ទអង្គារពុធព្រហស្បតិ៍សុក្រសៅរ៍អាទិត្យចន្ទអង្គារពុធព្រហស្បតិ៍សុក្រសៅរ៍អាទិត្យ0
-kn	ಜನವರಿಫೆಬ್ರವರಿಮಾರ್ಚ್ಏಪ್ರಿಲ್ಮೇಜೂನ್ಜುಲೈಆಗಸ್ಟ್ಸೆಪ್ಟೆಂಬರ್ಅಕ್ಟೋಬರ್ನವೆಂಬರ್ಡಿಸೆಂಬರ್ಸೋಮವಾರಮಂಗಳವಾರಬುಧವಾರಗುರುವಾರಶುಕ್ರವಾರಶನಿವಾರಭಾನುವಾರ0
-kn-IN	ಜನವರಿಫೆಬ್ರವರಿಮಾರ್ಚ್ಏಪ್ರಿಲ್ಮೇಜೂನ್ಜುಲೈಆಗಸ್ಟ್ಸೆಪ್ಟೆಂಬರ್ಅಕ್ಟೋಬರ್ನವೆಂಬರ್ಡಿಸೆಂಬರ್ಸೋಮವಾರಮಂಗಳವಾರಬುಧವಾರಗುರುವಾರಶುಕ್ರವಾರಶನಿವಾರಭಾನುವಾರ0
-ko	월요일화요일수요일목요일금요일토요일일요일0
-ko-CN	월요일화요일수요일목요일금요일토요일일요일0
-ko-KP	월요일화요일수요일목요일금요일토요일일요일0
-ko-KR	월요일화요일수요일목요일금요일토요일일요일0
+kl	januaarifebruaarimarsiapriilimaajijuunijuuliaggustiseptembarioktobarinovembaridecembari0
+kl-GL	januaarifebruaarimarsiapriilimaajijuunijuuliaggustiseptembarioktobarinovembaridecembari0
+kln	0
+kln-KE	0
+km	ចន្ទអង្គារពុធព្រហស្បតិ៍សុក្រសៅរ៍អាទិត្យ0
+km-KH	ចន្ទអង្គារពុធព្រហស្បតិ៍សុក្រសៅរ៍អាទិត្យ0
+kn	0
+kn-IN	0
+ko	0
+ko-CN	0
+ko-KP	0
+ko-KR	0
 kok	जानेफेब्रुमार्चएप्रीमेजूनजुलऑगसप्टेंऑक्टोनोव्हेंडिसेसोमंबुबशुशेआ0
 kok-Deva	जानेफेब्रुमार्चएप्रीमेजूनजुलऑगसप्टेंऑक्टोनोव्हेंडिसेसोमंबुबशुशेआ0
 kok-Deva-IN	जानेफेब्रुमार्चएप्रीमेजूनजुलऑगसप्टेंऑक्टोनोव्हेंडिसेसोमंबुबशुशेआ0
-kok-Latn	JanerFebrerMarsAbrilMaiJunJulaiAgostSetembrOtubrNovembrDezembrSomarMongllarBudhvarBirestarSukrarSonvarAitar0
-kok-Latn-IN	JanerFebrerMarsAbrilMaiJunJulaiAgostSetembrOtubrNovembrDezembrSomarMongllarBudhvarBirestarSukrarSonvarAitar0
+kok-Latn	0
+kok-Latn-IN	0
 kpe	0
 kpe-GN	0
 kpe-LR	0
-ks	جنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبرجنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبرژٔندرٕرواربۆمواربودواربرؠسوارجُمہبٹواراَتھوار0
-ks-Arab	جنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبرجنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبرژٔندرٕرواربۆمواربودواربرؠسوارجُمہبٹواراَتھوار0
-ks-Arab-IN	جنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبرجنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبرژٔندرٕرواربۆمواربودواربرؠسوارجُمہبٹواراَتھوار0
-ks-Deva	जनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसतुंबरअकतुम्बरनवूमबरदसूमबरजनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसतुंबरअकतुम्बरनवूमबरदसूमबरचंदिरवारबुवारबोदवारब्रेसवारजुम्माबटवारआथवारचंदिरवारबुवारबोदवारब्रेसवारजुम्माबटवारआथवार0
-ks-Deva-IN	जनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसतुंबरअकतुम्बरनवूमबरदसूमबरजनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसतुंबरअकतुम्बरनवूमबरदसूमबरचंदिरवारबुवारबोदवारब्रेसवारजुम्माबटवारआथवारचंदिरवारबुवारबोदवारब्रेसवारजुम्माबटवारआथवार0
-ksb	JanualiFeblualiMachiApliliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesembaJumaatatuJumaaneJumaatanoAlhamisiIjumaaJumaamosiJumaapii0
-ksb-TZ	JanualiFeblualiMachiApliliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesembaJumaatatuJumaaneJumaatanoAlhamisiIjumaaJumaamosiJumaapii0
-ksf	ŋwíí a ntɔ́ntɔŋwíí akǝ bɛ́ɛŋwíí akǝ rááŋwíí akǝ ninŋwíí akǝ táanŋwíí akǝ táafɔkŋwíí akǝ táabɛɛŋwíí akǝ táaraaŋwíí akǝ táaninŋwíí akǝ ntɛkŋwíí akǝ ntɛk di bɔ́kŋwíí akǝ ntɛk di bɛ́ɛlǝndímaadímɛkrɛdíjǝǝdíjúmbásamdísɔ́ndǝ0
-ksf-CM	ŋwíí a ntɔ́ntɔŋwíí akǝ bɛ́ɛŋwíí akǝ rááŋwíí akǝ ninŋwíí akǝ táanŋwíí akǝ táafɔkŋwíí akǝ táabɛɛŋwíí akǝ táaraaŋwíí akǝ táaninŋwíí akǝ ntɛkŋwíí akǝ ntɛk di bɔ́kŋwíí akǝ ntɛk di bɛ́ɛlǝndímaadímɛkrɛdíjǝǝdíjúmbásamdísɔ́ndǝ0
-ksh	Jan.Fäb.Mäz.Apr.MaiJun.Jul.Ouj.Säp.Okt.Nov.Dez.MohndaachDinnsdaachMetwochDunnersdaachFriidaachSamsdaachSunndaach0
-ksh-DE	Jan.Fäb.Mäz.Apr.MaiJun.Jul.Ouj.Säp.Okt.Nov.Dez.MohndaachDinnsdaachMetwochDunnersdaachFriidaachSamsdaachSunndaach0
-ku	rêbendansibatadarnîsangulanhezîrantîrmehtebaxîloncotmehmijdarberfanbarduşemsêşemçarşempêncşemînîşemîyekşem0
+ks	جنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبرجنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبر0
+ks-Arab	جنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبرجنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبر0
+ks-Arab-IN	جنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبرجنؤریفرؤریمارٕچاپریلمئیجوٗنجوٗلاییاگستستمبراکتوٗبرنومبردسمبر0
+ks-Deva	जनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसतुंबरअकतुम्बरनवूमबरदसूमबरजनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसतुंबरअकतुम्बरनवूमबरदसमबरचंदिरवारबुवारबोदवारब्रेसवारजुम्माबटवारआथवारचंदिरवारबुवारबोदवारब्रेसवारजुम्माबटवारआथवार0
+ks-Deva-IN	जनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसतुंबरअकतुम्बरनवूमबरदसूमबरजनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसतुंबरअकतुम्बरनवूमबरदसमबरचंदिरवारबुवारबोदवारब्रेसवारजुम्माबटवारआथवारचंदिरवारबुवारबोदवारब्रेसवारजुम्माबटवारआथवार0
+ksb	0
+ksb-TZ	0
+ksf	0
+ksf-CM	0
+ksh	Jan.Fäb.Mäz.Apr.MaiJun.Jul.Ouj.Säp.Okt.Nov.Dez.0
+ksh-DE	Jan.Fäb.Mäz.Apr.MaiJun.Jul.Ouj.Säp.Okt.Nov.Dez.0
+ku	0
 ku-Arab	0
 ku-Arab-IQ	0
 ku-Arab-IR	0
-ku-Latn	rêbendansibatadarnîsangulanhezîrantîrmehtebaxîloncotmehmijdarberfanbarduşemsêşemçarşempêncşemînîşemîyekşem0
-ku-Latn-IQ	rêbendansibatadarnîsangulanhezîrantîrmehtebaxîloncotmehmijdarberfanbarduşemsêşemçarşempêncşemînîşemîyekşem0
-ku-Latn-SY	rêbendansibatadarnîsangulanhezîrantîrmehtebaxîloncotmehmijdarberfanbarduşemsêşemçarşempêncşemînîşemîyekşem0
-ku-Latn-TR	rêbendansibatadarnîsangulanhezîrantîrmehtebaxîloncotmehmijdarberfanbarduşemsêşemçarşempêncşemînîşemîyekşem0
-ku-TR	rêbendansibatadarnîsangulanhezîrantîrmehtebaxîloncotmehmijdarberfanbarduşemsêşemçarşempêncşemînîşemîyekşem0
-kw	mis Genvermis Hwevrermis Meurthmis Ebrelmis Memis Methevenmis Gortherenmis Estmis Gwynngalamis Hedramis Dumis Kevardhudy Lundy Meurthdy Merherdy Yowdy Gwenerdy Sadorndy Sul0
-kw-GB	mis Genvermis Hwevrermis Meurthmis Ebrelmis Memis Methevenmis Gortherenmis Estmis Gwynngalamis Hedramis Dumis Kevardhudy Lundy Meurthdy Merherdy Yowdy Gwenerdy Sadorndy Sul0
-kxv	pusu lenjumaha lenjupagu lenjuhire lenjubese lenjujaṭṭa lenjuaasaḍi lenjusrabĩ lenjubado lenjudasara lenjudivi lenjupande lenjusmbaramangaḍapudaralaki varasukru varasani varaaadi vara0
-kxv-Deva	पुसु लेञ्जुमाहाका लेञ्जुपागुणी लेञ्जुहिरे लेञ्जुबेसे लेञ्जुजाटा लेञ्जुआसाड़ी लेञ्जुस्राबाँ लेञ्जुबोदो लेञ्जुदसारा लेञ्जुदिवी लेञ्जुपान्डे लेञ्जुसाॅम्वारामंगाड़ापुद्दारालाक्कि वारासुकुरु वारासान्नि वाराआदि वारा0
-kxv-Deva-IN	पुसु लेञ्जुमाहाका लेञ्जुपागुणी लेञ्जुहिरे लेञ्जुबेसे लेञ्जुजाटा लेञ्जुआसाड़ी लेञ्जुस्राबाँ लेञ्जुबोदो लेञ्जुदसारा लेञ्जुदिवी लेञ्जुपान्डे लेञ्जुसाॅम्वारामंगाड़ापुद्दारालाक्कि वारासुकुरु वारासान्नि वाराआदि वारा0
-kxv-Latn	pusu lenjumaha lenjupagu lenjuhire lenjubese lenjujaṭṭa lenjuaasaḍi lenjusrabĩ lenjubado lenjudasara lenjudivi lenjupande lenjusmbaramangaḍapudaralaki varasukru varasani varaaadi vara0
-kxv-Latn-IN	pusu lenjumaha lenjupagu lenjuhire lenjubese lenjujaṭṭa lenjuaasaḍi lenjusrabĩ lenjubado lenjudasara lenjudivi lenjupande lenjusmbaramangaḍapudaralaki varasukru varasani varaaadi vara0
-kxv-Orya	ପୁସୁ ଲେଞ୍ଜୁମାହାକା ଲେଞ୍ଜୁପାଗୁଣି ଲେଞ୍ଜୁହିରେ ଲେଞ୍ଜୁବେସେ ଲେଞ୍ଜୁଜାଟା ଲେଞ୍ଜୁଆସାଡ଼ି ଲେଞ୍ଜୁସ୍ରାବାଁ ଲେଞ୍ଜୁବଦ ଲେଞ୍ଜୁଦାସାରା ଲେଞ୍ଜୁଦିୱିଡ଼ି ଲେଞ୍ଜୁପାଣ୍ଡେ ଲେଞ୍ଜୁସମ୍ବାରାମାଙ୍ଗାଡ଼ାପୁଦାରାଲାକି ୱାରାସୁକ୍ରୁ ୱାରାସାନି ୱାରାଆଦି ୱାରା0
-kxv-Orya-IN	ପୁସୁ ଲେଞ୍ଜୁମାହାକା ଲେଞ୍ଜୁପାଗୁଣି ଲେଞ୍ଜୁହିରେ ଲେଞ୍ଜୁବେସେ ଲେଞ୍ଜୁଜାଟା ଲେଞ୍ଜୁଆସାଡ଼ି ଲେଞ୍ଜୁସ୍ରାବାଁ ଲେଞ୍ଜୁବଦ ଲେଞ୍ଜୁଦାସାରା ଲେଞ୍ଜୁଦିୱିଡ଼ି ଲେଞ୍ଜୁପାଣ୍ଡେ ଲେଞ୍ଜୁସମ୍ବାରାମାଙ୍ଗାଡ଼ାପୁଦାରାଲାକି ୱାରାସୁକ୍ରୁ ୱାରାସାନି ୱାରାଆଦି ୱାରା0
+ku-Latn	0
+ku-Latn-IQ	0
+ku-Latn-SY	0
+ku-Latn-TR	0
+ku-TR	0
+kw	0
+kw-GB	0
+kxv	0
+kxv-Deva	0
+kxv-Deva-IN	0
+kxv-Latn	0
+kxv-Latn-IN	0
+kxv-Orya	0
+kxv-Orya-IN	0
 kxv-Telu	0
 kxv-Telu-IN	0
-ky	ЯнварьФевральМартАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнвФевМарАпрМайИюнИюлАвгСенОктНояДекдүйшөмбүшейшембишаршембибейшембижумаишембижекшемби0
-ky-KG	ЯнварьФевральМартАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнвФевМарАпрМайИюнИюлАвгСенОктНояДекдүйшөмбүшейшембишаршембибейшембижумаишембижекшемби0
-la	IanuariusFebruariusMartiusAprilisMaiusIuniusIuliusAugustusSeptemberOctoberNovemberDecemberIanuariusFebruariusMartiusAprilisMaiusIuniusIuliusAugustusSeptemberOctoberNovemberDecemberdies Lunaedies Martisdies Mercuriidies Iovisdies Venerisdies Saturnidies Solis0
-la-VA	IanuariusFebruariusMartiusAprilisMaiusIuniusIuliusAugustusSeptemberOctoberNovemberDecemberIanuariusFebruariusMartiusAprilisMaiusIuniusIuliusAugustusSeptemberOctoberNovemberDecemberdies Lunaedies Martisdies Mercuriidies Iovisdies Venerisdies Saturnidies Solis0
-lag	KʉfúngatɨKʉnaanɨKʉkeendaKwiikumiKwiinyambálaKwiidwaataKʉmʉʉnchɨKʉvɨɨrɨKʉsaatʉKwiinyiKʉsaanoKʉsasatʉJumatátuJumaíneJumatáanoAlamíisiIjumáaJumamóosiJumapíiri0
-lag-TZ	KʉfúngatɨKʉnaanɨKʉkeendaKwiikumiKwiinyambálaKwiidwaataKʉmʉʉnchɨKʉvɨɨrɨKʉsaatʉKwiinyiKʉsaanoKʉsasatʉJumatátuJumaíneJumatáanoAlamíisiIjumáaJumamóosiJumapíiri0
+ky	ЯнварьФевральМартАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнвФевМарАпрМайИюнИюлАвгСенОктНояДек0
+ky-KG	ЯнварьФевральМартАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнвФевМарАпрМайИюнИюлАвгСенОктНояДек0
+la	IanuariusFebruariusMartiusAprilisMaiusIuniusIuliusAugustusSeptemberOctoberNovemberDecember0
+la-VA	IanuariusFebruariusMartiusAprilisMaiusIuniusIuliusAugustusSeptemberOctoberNovemberDecember0
+lag	0
+lag-TZ	0
 lb	JanFebMäeAbrMeeJunJulAugSepOktNovDezMéiDënMëtDonFreSamSon0
 lb-LU	JanFebMäeAbrMeeJunJulAugSepOktNovDezMéiDënMëtDonFreSamSon0
-lg	JanwaliyoFebwaliyoMarisiApuliMaayiJuuniJulaayiAgusitoSebuttembaOkitobbaNovembaDesembaBalazaLwakubiriLwakusatuLwakunaLwakutaanoLwamukaagaSabbiiti0
-lg-UG	JanwaliyoFebwaliyoMarisiApuliMaayiJuuniJulaayiAgusitoSebuttembaOkitobbaNovembaDesembaBalazaLwakubiriLwakusatuLwakunaLwakutaanoLwamukaagaSabbiiti0
-lij	zenâfrevâmarsoarvîmazzozugnoluggioagostosettembreottobrenovembredexembrezen.fre.mar.arv.maz.zug.lug.ago.set.ott.nov.dex.lunesdìmätesdìmäcordìzeuggiavenardìsabbodomenega0
-lij-IT	zenâfrevâmarsoarvîmazzozugnoluggioagostosettembreottobrenovembredexembrezen.fre.mar.arv.maz.zug.lug.ago.set.ott.nov.dex.lunesdìmätesdìmäcordìzeuggiavenardìsabbodomenega0
+lg	0
+lg-UG	0
+lij	zenâfrevâmarsoarvîmazzozugnoluggioagostosettembreottobrenovembredexembrezen.fre.mar.arv.maz.zug.lug.ago.set.ott.nov.dex.0
+lij-IT	zenâfrevâmarsoarvîmazzozugnoluggioagostosettembreottobrenovembredexembrezen.fre.mar.arv.maz.zug.lug.ago.set.ott.nov.dex.0
 lkt	MTWTFSS0
 lkt-US	MTWTFSS0
-lld	jenáforámerzaurímajügnmesséaostsetëmberotobernovëmberdezëmberjenáforámerzaurímajügnmesséaostsetotonovdezlönescmertescmercuijöbiavëndressabedadomënia0
-lld-IT	jenáforámerzaurímajügnmesséaostsetëmberotobernovëmberdezëmberjenáforámerzaurímajügnmesséaostsetotonovdezlönescmertescmercuijöbiavëndressabedadomënia0
+lld	jenáforámerzaurímajügnmesséaostsetëmberotobernovëmberdezëmberjenáforámerzaurímajügnmesséaostsetotonovdez0
+lld-IT	jenáforámerzaurímajügnmesséaostsetëmberotobernovëmberdezëmberjenáforámerzaurímajügnmesséaostsetotonovdez0
 lmo	0
 lmo-IT	0
-ln	sánzá ya yambosánzá ya míbalésánzá ya mísátosánzá ya míneisánzá ya mítánosánzá ya motóbásánzá ya nsambosánzá ya mwambesánzá ya libwasánzá ya zómisánzá ya zómi na mɔ̌kɔ́sánzá ya zómi na míbalémokɔlɔ mwa yambomokɔlɔ mwa míbalémokɔlɔ mwa mísátomokɔlɔ ya mínéimokɔlɔ ya mítánompɔ́sɔeyenga0
-ln-AO	sánzá ya yambosánzá ya míbalésánzá ya mísátosánzá ya míneisánzá ya mítánosánzá ya motóbásánzá ya nsambosánzá ya mwambesánzá ya libwasánzá ya zómisánzá ya zómi na mɔ̌kɔ́sánzá ya zómi na míbalémokɔlɔ mwa yambomokɔlɔ mwa míbalémokɔlɔ mwa mísátomokɔlɔ ya mínéimokɔlɔ ya mítánompɔ́sɔeyenga0
-ln-CD	sánzá ya yambosánzá ya míbalésánzá ya mísátosánzá ya míneisánzá ya mítánosánzá ya motóbásánzá ya nsambosánzá ya mwambesánzá ya libwasánzá ya zómisánzá ya zómi na mɔ̌kɔ́sánzá ya zómi na míbalémokɔlɔ mwa yambomokɔlɔ mwa míbalémokɔlɔ mwa mísátomokɔlɔ ya mínéimokɔlɔ ya mítánompɔ́sɔeyenga0
-ln-CF	sánzá ya yambosánzá ya míbalésánzá ya mísátosánzá ya míneisánzá ya mítánosánzá ya motóbásánzá ya nsambosánzá ya mwambesánzá ya libwasánzá ya zómisánzá ya zómi na mɔ̌kɔ́sánzá ya zómi na míbalémokɔlɔ mwa yambomokɔlɔ mwa míbalémokɔlɔ mwa mísátomokɔlɔ ya mínéimokɔlɔ ya mítánompɔ́sɔeyenga0
-ln-CG	sánzá ya yambosánzá ya míbalésánzá ya mísátosánzá ya míneisánzá ya mítánosánzá ya motóbásánzá ya nsambosánzá ya mwambesánzá ya libwasánzá ya zómisánzá ya zómi na mɔ̌kɔ́sánzá ya zómi na míbalémokɔlɔ mwa yambomokɔlɔ mwa míbalémokɔlɔ mwa mísátomokɔlɔ ya mínéimokɔlɔ ya mítánompɔ́sɔeyenga0
-lo	ມັງກອນກຸມພາມີນາເມສາພຶດສະພາມິຖຸນາກໍລະກົດສິງຫາກັນຍາຕຸລາພະຈິກທັນວາວັນຈັນວັນອັງຄານວັນພຸດວັນພະຫັດວັນສຸກວັນເສົາວັນອາທິດ0
-lo-LA	ມັງກອນກຸມພາມີນາເມສາພຶດສະພາມິຖຸນາກໍລະກົດສິງຫາກັນຍາຕຸລາພະຈິກທັນວາວັນຈັນວັນອັງຄານວັນພຸດວັນພະຫັດວັນສຸກວັນເສົາວັນອາທິດ0
+ln	0
+ln-AO	0
+ln-CD	0
+ln-CF	0
+ln-CG	0
+lo	0
+lo-LA	0
 lrc	0
 lrc-IQ	0
 lrc-IR	0
-lt	sausisvasariskovasbalandisgegužėbirželislieparugpjūtisrugsėjisspalislapkritisgruodissausisvasariskovasbalandisgegužėbirželislieparugpjūtisrugsėjisspalislapkritisgruodispirmadienisantradienistrečiadienisketvirtadienispenktadienisšeštadienissekmadienis0
-lt-LT	sausisvasariskovasbalandisgegužėbirželislieparugpjūtisrugsėjisspalislapkritisgruodissausisvasariskovasbalandisgegužėbirželislieparugpjūtisrugsėjisspalislapkritisgruodispirmadienisantradienistrečiadienisketvirtadienispenktadienisšeštadienissekmadienis0
+lt	sausisvasariskovasbalandisgegužėbirželislieparugpjūtisrugsėjisspalislapkritisgruodis0
+lt-LT	sausisvasariskovasbalandisgegužėbirželislieparugpjūtisrugsėjisspalislapkritisgruodis0
 ltg	0
 ltg-LV	0
-lu	CiongoLùishiLusòloMùuyàLumùngùlùLufuimiKabàlàshìpùLùshìkàLutongoloLungùdiKaswèkèsèCiswàNkodyaNdàayàNdangùNjòwaNgòvyaLubinguLumingu0
-lu-CD	CiongoLùishiLusòloMùuyàLumùngùlùLufuimiKabàlàshìpùLùshìkàLutongoloLungùdiKaswèkèsèCiswàNkodyaNdàayàNdangùNjòwaNgòvyaLubinguLumingu0
-luo	Dwe mar AchielDwe mar AriyoDwe mar AdekDwe mar Ang’wenDwe mar AbichDwe mar AuchielDwe mar AbiriyoDwe mar AboroDwe mar OchikoDwe mar AparDwe mar gi achielDwe mar Apar gi ariyoWuok TichTich AriyoTich AdekTich Ang’wenTich AbichNgesoJumapil0
-luo-KE	Dwe mar AchielDwe mar AriyoDwe mar AdekDwe mar Ang’wenDwe mar AbichDwe mar AuchielDwe mar AbiriyoDwe mar AboroDwe mar OchikoDwe mar AparDwe mar gi achielDwe mar Apar gi ariyoWuok TichTich AriyoTich AdekTich Ang’wenTich AbichNgesoJumapil0
-luy	JanuariFebruariMachiApriliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesembaJumatatuJumanneJumatanoMurwa wa KanneMurwa wa KatanoJumamosiJumapiri0
-luy-KE	JanuariFebruariMachiApriliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesembaJumatatuJumanneJumatanoMurwa wa KanneMurwa wa KatanoJumamosiJumapiri0
-lv	janvārisfebruārismartsaprīlismaijsjūnijsjūlijsaugustsseptembrisoktobrisnovembrisdecembrisPirmdienaOtrdienaTrešdienaCeturtdienaPiektdienaSestdienaSvētdienaPirmd.Otrd.Trešd.Ceturtd.Piektd.Sestd.Svētd.0
-lv-LV	janvārisfebruārismartsaprīlismaijsjūnijsjūlijsaugustsseptembrisoktobrisnovembrisdecembrisPirmdienaOtrdienaTrešdienaCeturtdienaPiektdienaSestdienaSvētdienaPirmd.Otrd.Trešd.Ceturtd.Piektd.Sestd.Svētd.0
+lu	0
+lu-CD	0
+luo	0
+luo-KE	0
+luy	0
+luy-KE	0
+lv	PirmdienaOtrdienaTrešdienaCeturtdienaPiektdienaSestdienaSvētdienaPirmd.Otrd.Trešd.Ceturtd.Piektd.Sestd.Svētd.0
+lv-LV	PirmdienaOtrdienaTrešdienaCeturtdienaPiektdienaSestdienaSvētdienaPirmd.Otrd.Trešd.Ceturtd.Piektd.Sestd.Svētd.0
 lzz	0
 lzz-TR	0
-mai	जनवरीफर॰मार्चअप्रैलमईजूनजुलाईअगस्तसितंबरअक्तूबरनवंबरदिसंबरसोम दिनमंगल दिनबुध दिनबृहस्पति दिनशुक्र दिनशनि दिनरवि दिन0
-mai-IN	जनवरीफर॰मार्चअप्रैलमईजूनजुलाईअगस्तसितंबरअक्तूबरनवंबरदिसंबरसोम दिनमंगल दिनबुध दिनबृहस्पति दिनशुक्र दिनशनि दिनरवि दिन0
-mas	Oladalʉ́ArátƆɛnɨ́ɔɨŋɔkOlodoyíóríê inkókúâOloilépūnyīē inkókúâKújúɔrɔkMórusásinƆlɔ́ɨ́bɔ́rárɛKúshînOlgísanPʉshʉ́kaNtʉ́ŋʉ́sJumatátuJumaneJumatánɔAlaámisiJumáaJumamósiJumapílí0
-mas-KE	Oladalʉ́ArátƆɛnɨ́ɔɨŋɔkOlodoyíóríê inkókúâOloilépūnyīē inkókúâKújúɔrɔkMórusásinƆlɔ́ɨ́bɔ́rárɛKúshînOlgísanPʉshʉ́kaNtʉ́ŋʉ́sJumatátuJumaneJumatánɔAlaámisiJumáaJumamósiJumapílí0
-mas-TZ	Oladalʉ́ArátƆɛnɨ́ɔɨŋɔkOlodoyíóríê inkókúâOloilépūnyīē inkókúâKújúɔrɔkMórusásinƆlɔ́ɨ́bɔ́rárɛKúshînOlgísanPʉshʉ́kaNtʉ́ŋʉ́sJumatátuJumaneJumatánɔAlaámisiJumáaJumamósiJumapílí0
+mai	जन॰फर॰मार्चअप्रैलमईजूनजुल॰अग॰सित॰अक्तू॰नव॰दिस॰0
+mai-IN	जन॰फर॰मार्चअप्रैलमईजूनजुल॰अग॰सित॰अक्तू॰नव॰दिस॰0
+mas	0
+mas-KE	0
+mas-TZ	0
 mdf	0
 mdf-RU	0
-mer	JanuarĩFeburuarĩMachiĨpurũMĩĩNjuniNjuraĩAgastiSeptembaOktũbaNovembaDicembaMuramukoWairiWethatuWenaWetanoJumamosiKiumia0
-mer-KE	JanuarĩFeburuarĩMachiĨpurũMĩĩNjuniNjuraĩAgastiSeptembaOktũbaNovembaDicembaMuramukoWairiWethatuWenaWetanoJumamosiKiumia0
-mfe	zanviefevriyemarsavrilmezinzilyeoutseptamoktobnovamdesamlindimardimerkredizedivandredisamdidimans0
-mfe-MU	zanviefevriyemarsavrilmezinzilyeoutseptamoktobnovamdesamlindimardimerkredizedivandredisamdidimans0
-mg	JanoaryFebroaryMartsaAprilyMeyJonaJolayAogositraSeptambraOktobraNovambraDesambraAlatsinainyTalataAlarobiaAlakamisyZomaAsabotsyAlahady0
-mg-MG	JanoaryFebroaryMartsaAprilyMeyJonaJolayAogositraSeptambraOktobraNovambraDesambraAlatsinainyTalataAlarobiaAlakamisyZomaAsabotsyAlahady0
-mgh	Mweri wo kwanzaMweri wo unayeliMweri wo uneraruMweri wo unechesheMweri wo unethanuMweri wo thanu na mochaMweri wo sabaMweri wo naneMweri wo tisaMweri wo kumiMweri wo kumi na mojaMweri wo kumi na yel’liJumatatuJumanneJumatanoArahamisiIjumaaJumamosiSabato0
-mgh-MZ	Mweri wo kwanzaMweri wo unayeliMweri wo uneraruMweri wo unechesheMweri wo unethanuMweri wo thanu na mochaMweri wo sabaMweri wo naneMweri wo tisaMweri wo kumiMweri wo kumi na mojaMweri wo kumi na yel’liJumatatuJumanneJumatanoArahamisiIjumaaJumamosiSabato0
-mgo	iməg mbegtugimeg àbùbìimeg mbəŋchubiiməg ngwə̀timəg fogiməg ichiibɔdiməg àdùmbə̀ŋiməg ichikaiməg kudiməg tèsiʼeiməg zòiməg krizmed0
-mgo-CM	iməg mbegtugimeg àbùbìimeg mbəŋchubiiməg ngwə̀timəg fogiməg ichiibɔdiməg àdùmbə̀ŋiməg ichikaiməg kudiməg tèsiʼeiməg zòiməg krizmed0
+mer	0
+mer-KE	0
+mfe	0
+mfe-MU	0
+mg	0
+mg-MG	0
+mgh	0
+mgh-MZ	0
+mgo	0
+mgo-CM	0
 mhn	0
 mhn-IT	0
-mi	HānuerePēpuereMāeheĀperiraMeiHuneHūraeĀkuhataHepetemaOketopaNoemaTīhemaHānuerePēpuereMāeheĀperiraMeiHuneHūraeĀkuhataHepetemaOketopaNoemaTīhemaManeTūreiWenereiTāiteParaireRāhoroiRātapu0
-mi-NZ	HānuerePēpuereMāeheĀperiraMeiHuneHūraeĀkuhataHepetemaOketopaNoemaTīhemaHānuerePēpuereMāeheĀperiraMeiHuneHūraeĀkuhataHepetemaOketopaNoemaTīhemaManeTūreiWenereiTāiteParaireRāhoroiRātapu0
+mi	HānuerePēpuereMāeheĀperiraMeiHuneHūraeĀkuhataHepetemaOketopaNoemaTīhema0
+mi-NZ	HānuerePēpuereMāeheĀperiraMeiHuneHūraeĀkuhataHepetemaOketopaNoemaTīhema0
 mic	0
 mic-CA	0
-mk	јануарифевруаримартаприлмајјунијулиавгустсептемвриоктомвриноемвридекемврипонеделниквторниксредачетвртокпетоксаботанедела0
-mk-MK	јануарифевруаримартаприлмајјунијулиавгустсептемвриоктомвриноемвридекемврипонеделниквторниксредачетвртокпетоксаботанедела0
-ml	ജനുവരിഫെബ്രുവരിമാർച്ച്ഏപ്രിൽമേയ്ജൂൺജൂലൈഓഗസ്റ്റ്സെപ്റ്റംബർഒക്‌ടോബർനവംബർഡിസംബർതിങ്കളാഴ്‌ചചൊവ്വാഴ്‌ചബുധനാഴ്‌ചവ്യാഴാഴ്‌ചവെള്ളിയാഴ്‌ചശനിയാഴ്‌ചഞായറാഴ്‌ചതിങ്കളാഴ്‌ചചൊവ്വാഴ്‌ചബുധനാഴ്‌ചവ്യാഴാഴ്‌ചവെള്ളിയാഴ്‌ചശനിയാഴ്‌ചഞായറാഴ്‌ചതിചൊബുവ്യാവെശഞാ0
-ml-IN	ജനുവരിഫെബ്രുവരിമാർച്ച്ഏപ്രിൽമേയ്ജൂൺജൂലൈഓഗസ്റ്റ്സെപ്റ്റംബർഒക്‌ടോബർനവംബർഡിസംബർതിങ്കളാഴ്‌ചചൊവ്വാഴ്‌ചബുധനാഴ്‌ചവ്യാഴാഴ്‌ചവെള്ളിയാഴ്‌ചശനിയാഴ്‌ചഞായറാഴ്‌ചതിങ്കളാഴ്‌ചചൊവ്വാഴ്‌ചബുധനാഴ്‌ചവ്യാഴാഴ്‌ചവെള്ളിയാഴ്‌ചശനിയാഴ്‌ചഞായറാഴ്‌ചതിചൊബുവ്യാവെശഞാ0
-mn	Нэгдүгээр сарХоёрдугаар сарГуравдугаар сарДөрөвдүгээр сарТавдугаар сарЗургаадугаар сарДолоодугаар сарНаймдугаар сарЕсдүгээр сарАравдугаар сарАрван нэгдүгээр сарАрван хоёрдугаар сарНэгдүгээр сарХоёрдугаар сарГуравдугаар сарДөрөвдүгээр сарТавдугаар сарЗургаадугаар сарДолоодугаар сарНаймдугаар сарЕсдүгээр сарАравдугаар сарАрван нэгдүгээр сарАрван хоёрдугаар сарДавааМягмарЛхагваПүрэвБаасанБямбаНямДавааМягмарЛхагваПүрэвБаасанБямбаНям0
-mn-MN	Нэгдүгээр сарХоёрдугаар сарГуравдугаар сарДөрөвдүгээр сарТавдугаар сарЗургаадугаар сарДолоодугаар сарНаймдугаар сарЕсдүгээр сарАравдугаар сарАрван нэгдүгээр сарАрван хоёрдугаар сарНэгдүгээр сарХоёрдугаар сарГуравдугаар сарДөрөвдүгээр сарТавдугаар сарЗургаадугаар сарДолоодугаар сарНаймдугаар сарЕсдүгээр сарАравдугаар сарАрван нэгдүгээр сарАрван хоёрдугаар сарДавааМягмарЛхагваПүрэвБаасанБямбаНямДавааМягмарЛхагваПүрэвБаасанБямбаНям0
+mk	0
+mk-MK	0
+ml	തിങ്കളാഴ്‌ചചൊവ്വാഴ്‌ചബുധനാഴ്‌ചവ്യാഴാഴ്‌ചവെള്ളിയാഴ്‌ചശനിയാഴ്‌ചഞായറാഴ്‌ചതിചൊബുവ്യാവെശഞാ0
+ml-IN	തിങ്കളാഴ്‌ചചൊവ്വാഴ്‌ചബുധനാഴ്‌ചവ്യാഴാഴ്‌ചവെള്ളിയാഴ്‌ചശനിയാഴ്‌ചഞായറാഴ്‌ചതിചൊബുവ്യാവെശഞാ0
+mn	Нэгдүгээр сарХоёрдугаар сарГуравдугаар сарДөрөвдүгээр сарТавдугаар сарЗургаадугаар сарДолоодугаар сарНаймдугаар сарЕсдүгээр сарАравдугаар сарАрван нэгдүгээр сарАрван хоёрдугаар сарДавааМягмарЛхагваПүрэвБаасанБямбаНям0
+mn-MN	Нэгдүгээр сарХоёрдугаар сарГуравдугаар сарДөрөвдүгээр сарТавдугаар сарЗургаадугаар сарДолоодугаар сарНаймдугаар сарЕсдүгээр сарАравдугаар сарАрван нэгдүгээр сарАрван хоёрдугаар сарДавааМягмарЛхагваПүрэвБаасанБямбаНям0
 mn-Mong	0
 mn-Mong-CN	0
-mn-Mong-MN	ᠨᠢᠭᠡᠳᠥᠭᠡᠷ ᠰᠠᠷ᠎ᠠᠬᠣᠶᠠᠳᠣᠭᠠᠷ ᠰᠠᠷ ᠠᠭᠣᠷᠪᠡᠳᠣᠭᠠᠷ ᠰᠠᠷ ᠠᠳᠥᠷᠪᠡᠳᠥᠭᠡᠷ ᠰᠠᠷ᠎ᠠᠲᠠᠪᠣᠳᠣᠭᠠᠷ ᠰᠠᠷ ᠠᠵᠢᠷᠭᠣᠭᠠᠳᠣᠭᠠᠷ ᠰᠠᠷ᠎ᠠᠲᠣᠯᠣᠭᠠᠳᠣᠭᠠᠷ ᠰᠠᠷ᠎ᠠ8 ᠊ᠷ ᠰᠠᠷ᠎ᠠ9 ᠊ᠷ ᠰᠠᠷ᠎ᠠᠠᠷᠪᠠᠳᠣᠭᠠᠷ ᠰᠠᠷ᠎ᠠ11᠊ᠷ ᠰᠠᠷ᠎ᠠ12᠊ᠷ ᠰᠠᠷ᠎ᠠᠳᠠᠮᠢᠠᠠᠮᠠᠷᡀᠠᠭᠪᠠᠫᠦᠷᠪᠠᠰᠠᠩᠪᠢᠮᠪᠠᠨᠢᠮ᠎ᠠᠳᠠᠮᠢᠭᡀᠠᠫᠥᠷᠪᠠᠪᠢᠮᠨᠢ0
+mn-Mong-MN	1 ᠊ᠷ ᠰᠠᠷ᠎ᠠ2 ᠊ᠷ ᠰᠠᠷ᠎ᠠ3᠊ᠷ ᠰᠠᠷ᠎ᠠ4 ᠊ᠷ ᠰᠠᠷ᠎ᠠ5 ᠊ᠷ ᠰᠠᠷ᠎ᠠ6 ᠊ᠷ ᠰᠠᠷ᠎ᠠ7 ᠊ᠷ ᠰᠠᠷ᠎ᠠ8 ᠊ᠷ ᠰᠠᠷ᠎ᠠ9 ᠊ᠷ ᠰᠠᠷ᠎ᠠ10 ᠊ᠷ ᠰᠠᠷ᠎ᠠ11᠊ᠷ ᠰᠠᠷ᠎ᠠ12᠊ᠷ ᠰᠠᠷ᠎ᠠᠳᠠᠮᠢᠭᡀᠠᠫᠦᠷᠪᠠᠪᠢᠮᠨᠢᠳᠠᠮᠢᠭᡀᠠᠫᠥᠷᠪᠠᠪᠢᠮᠨᠢ0
 mni	জানুৱারিফেব্রুৱারিমার্চএপ্রিলমেজুনজুলাইওগষ্টসেপ্টেম্বরওক্টোবরনবেম্বরডিসেম্বরজানুফেব্রুমারএপ্রিমেজুনজুলাআগসেপ্টওক্টোনভেডিসেজাফেমারএপমেজুনজুলআসেওনবডিনিংলৈয়ুমশগইরাথাংনো0
 mni-Beng	জানুৱারিফেব্রুৱারিমার্চএপ্রিলমেজুনজুলাইওগষ্টসেপ্টেম্বরওক্টোবরনবেম্বরডিসেম্বরজানুফেব্রুমারএপ্রিমেজুনজুলাআগসেপ্টওক্টোনভেডিসেজাফেমারএপমেজুনজুলআসেওনবডিনিংলৈয়ুমশগইরাথাংনো0
 mni-Beng-IN	জানুৱারিফেব্রুৱারিমার্চএপ্রিলমেজুনজুলাইওগষ্টসেপ্টেম্বরওক্টোবরনবেম্বরডিসেম্বরজানুফেব্রুমারএপ্রিমেজুনজুলাআগসেপ্টওক্টোনভেডিসেজাফেমারএপমেজুনজুলআসেওনবডিনিংলৈয়ুমশগইরাথাংনো0
@@ -10513,130 +10513,130 @@ mni-Mtei	0
 mni-Mtei-IN	0
 moh	0
 moh-CA	0
-mr	जानेवारीफेब्रुवारीमार्चएप्रिलमेजूनजुलैऑगस्टसप्टेंबरऑक्टोबरनोव्हेंबरडिसेंबरसोमवारमंगळवारबुधवारगुरुवारशुक्रवारशनिवाररविवार0
-mr-IN	जानेवारीफेब्रुवारीमार्चएप्रिलमेजूनजुलैऑगस्टसप्टेंबरऑक्टोबरनोव्हेंबरडिसेंबरसोमवारमंगळवारबुधवारगुरुवारशुक्रवारशनिवाररविवार0
-ms	JanuariFebruariMacAprilMeiJunJulaiOgosSeptemberOktoberNovemberDisemberIsninSelasaRabuKhamisJumaatSabtuAhad0
+mr	0
+mr-IN	0
+ms	0
 ms-Arab	0
 ms-Arab-BN	0
 ms-Arab-MY	0
-ms-BN	JanuariFebruariMacAprilMeiJunJulaiOgosSeptemberOktoberNovemberDisemberIsninSelasaRabuKhamisJumaatSabtuAhad0
-ms-ID	JanuariFebruariMacAprilMeiJunJulaiOgosSeptemberOktoberNovemberDisemberIsninSelasaRabuKhamisJumaatSabtuAhad0
-ms-MY	JanuariFebruariMacAprilMeiJunJulaiOgosSeptemberOktoberNovemberDisemberIsninSelasaRabuKhamisJumaatSabtuAhad0
-ms-SG	JanuariFebruariMacAprilMeiJunJulaiOgosSeptemberOktoberNovemberDisemberIsninSelasaRabuKhamisJumaatSabtuAhad0
-mt	JannarFrarMarzuAprilMejjuĠunjuLuljuAwwissuSettembruOttubruNovembruDiċembruJnFrMzApMjĠnLjAwStObNvDċIt-TnejnIt-TlietaL-ErbgħaIl-ĦamisIl-ĠimgħaIs-SibtIl-ĦaddTnTlErĦmĠmSbĦd0
-mt-MT	JannarFrarMarzuAprilMejjuĠunjuLuljuAwwissuSettembruOttubruNovembruDiċembruJnFrMzApMjĠnLjAwStObNvDċIt-TnejnIt-TlietaL-ErbgħaIl-ĦamisIl-ĠimgħaIs-SibtIl-ĦaddTnTlErĦmĠmSbĦd0
-mua	Fĩi LooCokcwaklaŋneCokcwakliiFĩi MarfooMadǝǝuutǝbijaŋMamǝŋgwãafahbiiMamǝŋgwãaliiMadǝmbiiFĩi DǝɓliiFĩi MundaŋFĩi GwahlleFĩi YuruComlaaɗiiComzyiiɗiiComkolleComkaldǝɓliiComgaisuuComzyeɓsuuCom’yakke0
-mua-CM	Fĩi LooCokcwaklaŋneCokcwakliiFĩi MarfooMadǝǝuutǝbijaŋMamǝŋgwãafahbiiMamǝŋgwãaliiMadǝmbiiFĩi DǝɓliiFĩi MundaŋFĩi GwahlleFĩi YuruComlaaɗiiComzyiiɗiiComkolleComkaldǝɓliiComgaisuuComzyeɓsuuCom’yakke0
+ms-BN	0
+ms-ID	0
+ms-MY	0
+ms-SG	0
+mt	JnFrMzApMjĠnLjAwStObNvDċTnTlErĦmĠmSbĦd0
+mt-MT	JnFrMzApMjĠnLjAwStObNvDċTnTlErĦmĠmSbĦd0
+mua	0
+mua-CM	0
 mus	0
 mus-US	0
-mww	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
-mww-Hmnp	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
-mww-Hmnp-US	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
-my	ဇန်နဝါရီဖေဖော်ဝါရီမတ်ဧပြီမေဇွန်ဇူလိုင်ဩဂုတ်စက်တင်ဘာအောက်တိုဘာနိုဝင်ဘာဒီဇင်ဘာ0
-my-MM	ဇန်နဝါရီဖေဖော်ဝါရီမတ်ဧပြီမေဇွန်ဇူလိုင်ဩဂုတ်စက်တင်ဘာအောက်တိုဘာနိုဝင်ဘာဒီဇင်ဘာ0
-myv	якшдавэйзчадпанаштмедуматашожосунацаатяньчивастаньчикуншкачикалоньчисюконьчишлямочитаргочиатяньчивастаньчикуншкачикалоньчисюконьчишлямочитаргочи0
-myv-RU	якшдавэйзчадпанаштмедуматашожосунацаатяньчивастаньчикуншкачикалоньчисюконьчишлямочитаргочиатяньчивастаньчикуншкачикалоньчисюконьчишлямочитаргочи0
+mww	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
+mww-Hmnp	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
+mww-Hmnp-US	𞄈𞄦𞄆𞄨𞄰𞄗𞄄𞄤𞄰𞄦𞄙𞄤𞄱𞄨𞄑𞄤𞄱𞄨𞄊𞄧𞄳𞄎𞄤𞄲0
+my	0
+my-MM	0
+myv	якшдавэйзчадпанаштмедуматашожосунацаатяньчивастаньчикуншкачикалоньчисюконьчишлямочитаргочи0
+myv-RU	якшдавэйзчадпанаштмедуматашожосунацаатяньчивастаньчикуншкачикалоньчисюконьчишлямочитаргочи0
 mzn	0
 mzn-IR	0
-naq	ǃKhanniǃKhanǀgôabǀKhuuǁkhâbǃHôaǂkhaibǃKhaitsâbGamaǀaebǂKhoesaobAoǁkhuumûǁkhâbTaraǀkhuumûǁkhâbǂNûǁnâisebǀHooǂgaebHôasoreǁkhâbMantaxtseesDenstaxtseesWunstaxtseesDondertaxtseesFraitaxtseesSatertaxtseesSontaxtsees0
-naq-NA	ǃKhanniǃKhanǀgôabǀKhuuǁkhâbǃHôaǂkhaibǃKhaitsâbGamaǀaebǂKhoesaobAoǁkhuumûǁkhâbTaraǀkhuumûǁkhâbǂNûǁnâisebǀHooǂgaebHôasoreǁkhâbMantaxtseesDenstaxtseesWunstaxtseesDondertaxtseesFraitaxtseesSatertaxtseesSontaxtsees0
-nb	janfebmaraprmaijunjulaugsepoktnovdesmandagtirsdagonsdagtorsdagfredaglørdagsøndag4000
-nb-NO	janfebmaraprmaijunjulaugsepoktnovdesmandagtirsdagonsdagtorsdagfredaglørdagsøndag4000
-nb-SJ	janfebmaraprmaijunjulaugsepoktnovdesmandagtirsdagonsdagtorsdagfredaglørdagsøndag4000
-nd	ZibandlelaNhlolanjaMbimbithoMabasaNkwenkweziNhlangulaNtulikaziNcwabakaziMpandulaMfumfuLweziMpalakaziMvuloSibiliSithathuSineSihlanuMgqibeloSonto0
-nd-ZW	ZibandlelaNhlolanjaMbimbithoMabasaNkwenkweziNhlangulaNtulikaziNcwabakaziMpandulaMfumfuLweziMpalakaziMvuloSibiliSithathuSineSihlanuMgqibeloSonto0
-nds	JanuaarFebruaarMärzAprilMaiJuniJuliAugustSeptemberOktoverNovemberDezemberMaandagDingsdagMiddewekenDunnersdagFreedagSünnavendSünndag0
-nds-DE	JanuaarFebruaarMärzAprilMaiJuniJuliAugustSeptemberOktoverNovemberDezemberMaandagDingsdagMiddewekenDunnersdagFreedagSünnavendSünndag0
-nds-NL	JanuaarFebruaarMärzAprilMaiJuniJuliAugustSeptemberOktoverNovemberDezemberMaandagDingsdagMiddewekenDunnersdagFreedagSünnavendSünndag0
-ne	जनफेेबमार्चअप्रमेजुनजुलअगसेपअक्टोनोभेडिसेसोमबारमङ्गलबारबुधबारबिहिबारशुक्रबारशनिबारआइतबार0
-ne-IN	जनफेेबमार्चअप्रमेजुनजुलअगसेपअक्टोनोभेडिसेसोमबारमङ्गलबारबुधबारबिहिबारशुक्रबारशनिबारआइतबार0
-ne-NP	जनफेेबमार्चअप्रमेजुनजुलअगसेपअक्टोनोभेडिसेसोमबारमङ्गलबारबुधबारबिहिबारशुक्रबारशनिबारआइतबार0
-nl	januarifebruarimaartaprilmeijunijuliaugustusseptemberoktobernovemberdecembermaandagdinsdagwoensdagdonderdagvrijdagzaterdagzondagc0ff
-nl-AW	januarifebruarimaartaprilmeijunijuliaugustusseptemberoktobernovemberdecembermaandagdinsdagwoensdagdonderdagvrijdagzaterdagzondagc0ff
-nl-BE	januarifebruarimaartaprilmeijunijuliaugustusseptemberoktobernovemberdecembermaandagdinsdagwoensdagdonderdagvrijdagzaterdagzondagc0ff
-nl-BQ	januarifebruarimaartaprilmeijunijuliaugustusseptemberoktobernovemberdecembermaandagdinsdagwoensdagdonderdagvrijdagzaterdagzondagc0ff
-nl-CW	januarifebruarimaartaprilmeijunijuliaugustusseptemberoktobernovemberdecembermaandagdinsdagwoensdagdonderdagvrijdagzaterdagzondagc0ff
-nl-NL	januarifebruarimaartaprilmeijunijuliaugustusseptemberoktobernovemberdecembermaandagdinsdagwoensdagdonderdagvrijdagzaterdagzondagc0ff
-nl-SR	januarifebruarimaartaprilmeijunijuliaugustusseptemberoktobernovemberdecembermaandagdinsdagwoensdagdonderdagvrijdagzaterdagzondagc0ff
-nl-SX	januarifebruarimaartaprilmeijunijuliaugustusseptemberoktobernovemberdecembermaandagdinsdagwoensdagdonderdagvrijdagzaterdagzondagc0ff
-nmg	ngwɛn matáhrangwɛn ńmbangwɛn ńlalngwɛn ńnangwɛn ńtanngwɛn ńtuóngwɛn hɛmbuɛríngwɛn lɔmbingwɛn rɛbvuângwɛn wumngwɛn wum navǔrkrísiminmɔ́ndɔsɔ́ndɔ mafú mábasɔ́ndɔ mafú málalsɔ́ndɔ mafú mánamabágá má sukulsásadisɔ́ndɔ0
-nmg-CM	ngwɛn matáhrangwɛn ńmbangwɛn ńlalngwɛn ńnangwɛn ńtanngwɛn ńtuóngwɛn hɛmbuɛríngwɛn lɔmbingwɛn rɛbvuângwɛn wumngwɛn wum navǔrkrísiminmɔ́ndɔsɔ́ndɔ mafú mábasɔ́ndɔ mafú málalsɔ́ndɔ mafú mánamabágá má sukulsásadisɔ́ndɔ0
+naq	0
+naq-NA	0
+nb	janfebmaraprmaijunjulaugsepoktnovdes4000
+nb-NO	janfebmaraprmaijunjulaugsepoktnovdes4000
+nb-SJ	janfebmaraprmaijunjulaugsepoktnovdes4000
+nd	0
+nd-ZW	0
+nds	0
+nds-DE	0
+nds-NL	0
+ne	जनफेेबमार्चअप्रमेजुनजुलअगसेपअक्टोनोभेडिसे0
+ne-IN	जनफेेबमार्चअप्रमेजुनजुलअगसेपअक्टोनोभेडिसे0
+ne-NP	जनफेेबमार्चअप्रमेजुनजुलअगसेपअक्टोनोभेडिसे0
+nl	c0ff
+nl-AW	c0ff
+nl-BE	c0ff
+nl-BQ	c0ff
+nl-CW	c0ff
+nl-NL	c0ff
+nl-SR	c0ff
+nl-SX	c0ff
+nmg	0
+nmg-CM	0
 nn	janfebmaraprmaijunjulaugsepoktnovdesmåntysonstorfrelausøn4000
 nn-NO	janfebmaraprmaijunjulaugsepoktnovdesmåntysonstorfrelausøn4000
 nnh	0
 nnh-CM	0
-no	janfebmaraprmaijunjulaugsepoktnovdesmandagtirsdagonsdagtorsdagfredaglørdagsøndag4000
-nqo	ߓߌ߲ߠߊߥߎߟߋ߲ߞߏ߲ߞߏߜߍߕߙߊߓߊߞߏ߲ߞߏߘߌ߬ߓߌߘߓߊ߬ߕߊߥߊ߬ߛߌ߬ߥߙߊߞߊ߬ߙߌߝߐ߭ߘߓߊ߬ߓߌߟߊߕߎߟߊߝߌ߲ߞߏ߲ߓߌߕߌ߮ߣߍߣߍߓߊߞߏߟߌ߲ߞߏߟߌ߲ߞߐ߬ߓߊ߬ߟߏ߲ߞߐ߬ߟߞߎߣߎ߲ߟߏ߲ߓߌߟߏ߲ߛߌ߬ߣߌ߲߬ߟߏ߲ߞߍ߲ߘߍߟߏ߲ߞߊ߯ߙߌߟߏ߲0
-nqo-GN	ߓߌ߲ߠߊߥߎߟߋ߲ߞߏ߲ߞߏߜߍߕߙߊߓߊߞߏ߲ߞߏߘߌ߬ߓߌߘߓߊ߬ߕߊߥߊ߬ߛߌ߬ߥߙߊߞߊ߬ߙߌߝߐ߭ߘߓߊ߬ߓߌߟߊߕߎߟߊߝߌ߲ߞߏ߲ߓߌߕߌ߮ߣߍߣߍߓߊߞߏߟߌ߲ߞߏߟߌ߲ߞߐ߬ߓߊ߬ߟߏ߲ߞߐ߬ߟߞߎߣߎ߲ߟߏ߲ߓߌߟߏ߲ߛߌ߬ߣߌ߲߬ߟߏ߲ߞߍ߲ߘߍߟߏ߲ߞߊ߯ߙߌߟߏ߲0
-nr	JanabariuFeberbariuMatjhiu-ApreliMeyiJuniJulayiArhostosiSeptembaOktobaUsinyikhabaDisembauMvulouLesibiliLesithathuuLesinengoLesihlanuumGqibelouSonto0
-nr-ZA	JanabariuFeberbariuMatjhiu-ApreliMeyiJuniJulayiArhostosiSeptembaOktobaUsinyikhabaDisembauMvulouLesibiliLesithathuuLesinengoLesihlanuumGqibelouSonto0
-nso	JanewareFeberewareMatšheAporeleMeiJuneJulaeAgosetoseSetemereOktoboreNofemereDisemereMošupologoLabobediLaboraroLaboneLabohlanoMokibeloLamorena0
-nso-ZA	JanewareFeberewareMatšheAporeleMeiJuneJulaeAgosetoseSetemereOktoboreNofemereDisemereMošupologoLabobediLaboraroLaboneLabohlanoMokibeloLamorena0
-nus	Tiop thar pɛtPɛtDuɔ̱ɔ̱ŋGuakDuätKornyootPay yie̱tniTho̱o̱rTɛɛrLaathKurTio̱p in di̱i̱tJiec la̱tRɛw lätniDiɔ̱k lätniŊuaan lätniDhieec lätniBäkɛl lätniCäŋ kuɔth0
-nus-SS	Tiop thar pɛtPɛtDuɔ̱ɔ̱ŋGuakDuätKornyootPay yie̱tniTho̱o̱rTɛɛrLaathKurTio̱p in di̱i̱tJiec la̱tRɛw lätniDiɔ̱k lätniŊuaan lätniDhieec lätniBäkɛl lätniCäŋ kuɔth0
+no	janfebmaraprmaijunjulaugsepoktnovdes4000
+nqo	ߞߐ߬ߓߞߐ߬ߟߞߎߣߓߌߟߛߌ߬ߣߞߍ߲ߘߞߊ߯ߙ0
+nqo-GN	ߞߐ߬ߓߞߐ߬ߟߞߎߣߓߌߟߛߌ߬ߣߞߍ߲ߘߞߊ߯ߙ0
+nr	0
+nr-ZA	0
+nso	0
+nso-ZA	0
+nus	0
+nus-SS	0
 nv	0
 nv-US	0
-ny	JanuwaleFebuluwaleMalichiEpuloMeiJuniJulaiOgasitiSeputembaOkutobaNovembaDisembaLolembaLachiwiriLachitatuLachinayiLachisanuLowerukaLamulungu0
-ny-MW	JanuwaleFebuluwaleMalichiEpuloMeiJuniJulaiOgasitiSeputembaOkutobaNovembaDisembaLolembaLachiwiriLachitatuLachinayiLachisanuLowerukaLamulungu0
-nyn	OkwokubanzaOkwakabiriOkwakashatuOkwakanaOkwakataanaOkwamukaagaOkwamushanjuOkwamunaanaOkwamwendaOkwaikumiOkwaikumi na kumweOkwaikumi na ibiriOrwokubanzaOrwakabiriOrwakashatuOrwakanaOrwakataanoOrwamukaagaSande0
-nyn-UG	OkwokubanzaOkwakabiriOkwakashatuOkwakanaOkwakataanaOkwamukaagaOkwamushanjuOkwamunaanaOkwamwendaOkwaikumiOkwaikumi na kumweOkwaikumi na ibiriOrwokubanzaOrwakabiriOrwakashatuOrwakanaOrwakataanoOrwamukaagaSande0
-oc	genièrfebrièrmarçabrilmaijunhjulhetagostsetembreoctòbrenovembredecembregenièrfebrièrmarçabrilmaijunhjulhetagostsetembreoctòbrenovembredecembre0
-oc-ES	gèrhereuèrmarçabriumaijunhjuriòlagostsetemeoctobrenovemedesemedelunsdimarsdimèrclesdijausdiuendresdissabtedimenge0
-oc-FR	genièrfebrièrmarçabrilmaijunhjulhetagostsetembreoctòbrenovembredecembregenièrfebrièrmarçabrilmaijunhjulhetagostsetembreoctòbrenovembredecembre0
+ny	0
+ny-MW	0
+nyn	0
+nyn-UG	0
+oc	genièrfebrièrmarçabrilmaijunhjulhetagostsetembreoctòbrenovembredecembre0
+oc-ES	0
+oc-FR	genièrfebrièrmarçabrilmaijunhjulhetagostsetembreoctòbrenovembredecembre0
 oka	0
 oka-CA	0
 oka-US	0
-om	AmajjiiGuraandhalaBitootessaEebilaCaamsaaWaxabajjiiAdoolessaHagayyaFulbaanaOnkoloolessaSadaasaMuddeWiixataKibxataRoobiiKamisaJimaataSanbataDilbata0
-om-ET	AmajjiiGuraandhalaBitootessaEebilaCaamsaaWaxabajjiiAdoolessaHagayyaFulbaanaOnkoloolessaSadaasaMuddeWiixataKibxataRoobiiKamisaJimaataSanbataDilbata0
-om-KE	AmajjiiGuraandhalaBitootessaEebilaCaamsaaWaxabajjiiAdoolessaHagayyaFulbaanaOnkoloolessaSadaasaMuddeWiixataKibxataRoobiiKamisaJimaataSanbataDilbata0
-or	ସୋମବାରମଙ୍ଗଳବାରବୁଧବାରଗୁରୁବାରଶୁକ୍ରବାରଶନିବାରରବିବାର0
-or-IN	ସୋମବାରମଙ୍ଗଳବାରବୁଧବାରଗୁରୁବାରଶୁକ୍ରବାରଶନିବାରରବିବାର0
+om	0
+om-ET	0
+om-KE	0
+or	0
+or-IN	0
 os	ЯнварьФевральМартъиАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнв.Февр.Март.Апр.МайИюньИюльАвг.Сент.Окт.Нояб.Дек.КъуырисӕрДыццӕгӔртыццӕгЦыппӕрӕмМайрӕмбонСабатХуыцаубонКрсДцгӔртЦпрМрбСбтХцб0
 os-GE	ЯнварьФевральМартъиАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнв.Февр.Март.Апр.МайИюньИюльАвг.Сент.Окт.Нояб.Дек.КъуырисӕрДыццӕгӔртыццӕгЦыппӕрӕмМайрӕмбонСабатХуыцаубонКрсДцгӔртЦпрМрбСбтХцб0
 os-RU	ЯнварьФевральМартъиАпрельМайИюньИюльАвгустСентябрьОктябрьНоябрьДекабрьЯнв.Февр.Март.Апр.МайИюньИюльАвг.Сент.Окт.Нояб.Дек.КъуырисӕрДыццӕгӔртыццӕгЦыппӕрӕмМайрӕмбонСабатХуыцаубонКрсДцгӔртЦпрМрбСбтХцб0
-osa	𐓀𐓣͘𐓪͘𐓬𐓘 𐓄𐓘𐓡𐓛͘𐓧𐓟𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓵𐓪͘𐓬𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓵𐓘𐓜𐓣𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓰𐓪𐓬𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓮𐓘𐓰𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓯𐓘𐓬𐓟𐓀𐓣͘𐓪͘𐓬𐓘 𐓄𐓟𐓵𐓪͘𐓬𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐒼𐓣𐓟𐓰𐓪𐓬𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐒿𐓟𐓜𐓛𐓲𐓟𐓷𐓣͘𐓤𐓟𐓀𐓣͘𐓪͘𐓬𐓘 𐒿𐓟𐓜𐓛𐓀𐓣͘𐓪͘𐓬𐓘 𐒰𐓧𐓣 𐓏𐓣͘𐓸𐓲𐓣𐓀𐓣͘𐓪͘𐓬𐓘 𐒰𐓧𐓣 𐓍𐓪͘𐓬𐓘MTWTFSS0
-osa-US	𐓀𐓣͘𐓪͘𐓬𐓘 𐓄𐓘𐓡𐓛͘𐓧𐓟𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓵𐓪͘𐓬𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓵𐓘𐓜𐓣𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓰𐓪𐓬𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓮𐓘𐓰𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐓏𐓟𐓯𐓘𐓬𐓟𐓀𐓣͘𐓪͘𐓬𐓘 𐓄𐓟𐓵𐓪͘𐓬𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐒼𐓣𐓟𐓰𐓪𐓬𐓘𐓀𐓣͘𐓪͘𐓬𐓘 𐒿𐓟𐓜𐓛𐓲𐓟𐓷𐓣͘𐓤𐓟𐓀𐓣͘𐓪͘𐓬𐓘 𐒿𐓟𐓜𐓛𐓀𐓣͘𐓪͘𐓬𐓘 𐒰𐓧𐓣 𐓏𐓣͘𐓸𐓲𐓣𐓀𐓣͘𐓪͘𐓬𐓘 𐒰𐓧𐓣 𐓍𐓪͘𐓬𐓘MTWTFSS0
-pa	ਜਨਵਰੀਫ਼ਰਵਰੀਮਾਰਚਅਪ੍ਰੈਲਮਈਜੂਨਜੁਲਾਈਅਗਸਤਸਤੰਬਰਅਕਤੂਬਰਨਵੰਬਰਦਸੰਬਰਸੋਮਵਾਰਮੰਗਲਵਾਰਬੁੱਧਵਾਰਵੀਰਵਾਰਸ਼ੁੱਕਰਵਾਰਸ਼ਨੀਐਤਵਾਰ0
+osa	MTWTFSS0
+osa-US	MTWTFSS0
+pa	0
 pa-Arab	0
 pa-Arab-PK	0
-pa-Guru	ਜਨਵਰੀਫ਼ਰਵਰੀਮਾਰਚਅਪ੍ਰੈਲਮਈਜੂਨਜੁਲਾਈਅਗਸਤਸਤੰਬਰਅਕਤੂਬਰਨਵੰਬਰਦਸੰਬਰਸੋਮਵਾਰਮੰਗਲਵਾਰਬੁੱਧਵਾਰਵੀਰਵਾਰਸ਼ੁੱਕਰਵਾਰਸ਼ਨੀਐਤਵਾਰ0
-pa-Guru-IN	ਜਨਵਰੀਫ਼ਰਵਰੀਮਾਰਚਅਪ੍ਰੈਲਮਈਜੂਨਜੁਲਾਈਅਗਸਤਸਤੰਬਰਅਕਤੂਬਰਨਵੰਬਰਦਸੰਬਰਸੋਮਵਾਰਮੰਗਲਵਾਰਬੁੱਧਵਾਰਵੀਰਵਾਰਸ਼ੁੱਕਰਵਾਰਸ਼ਨੀਐਤਵਾਰ0
+pa-Guru	0
+pa-Guru-IN	0
 pap	yanfebmaraprmeiyünyülougsèpòktnovdes0
 pap-AW	yanfebmaraprmeiyünyülougsèpòktnovdes0
 pap-CW	yanfebmaraprmeiyünyülougsèpòktnovdes0
-pcm	JénúáriFẹ́búáriMachÉprelMeeJunJulaiỌ́gọSẹptẹ́mbaỌktóbaNọvẹ́mbaDisẹ́mbaMọ́ndèTiúzdèWẹ́nẹ́zdèTọ́zdèFraídèSátọdèSọ́ndè0
-pcm-NG	JénúáriFẹ́búáriMachÉprelMeeJunJulaiỌ́gọSẹptẹ́mbaỌktóbaNọvẹ́mbaDisẹ́mbaMọ́ndèTiúzdèWẹ́nẹ́zdèTọ́zdèFraídèSátọdèSọ́ndè0
+pcm	JénFẹ́bMachÉprMeeJunJulỌ́gọSẹpỌktNọvDis0
+pcm-NG	JénFẹ́bMachÉprMeeJunJulỌ́gọSẹpỌktNọvDis0
 pi	0
 pi-Latn	0
 pi-Latn-GB	0
 pis	0
 pis-SB	0
-pl	styczeńlutymarzeckwiecieńmajczerwieclipiecsierpieńwrzesieńpaździerniklistopadgrudzieństyczeńlutymarzeckwiecieńmajczerwieclipiecsierpieńwrzesieńpaździerniklistopadgrudzieńSLMKMCLSWPLGponiedziałekwtorekśrodaczwartekpiąteksobotaniedzielaPWŚCPSNc055
-pl-PL	styczeńlutymarzeckwiecieńmajczerwieclipiecsierpieńwrzesieńpaździerniklistopadgrudzieństyczeńlutymarzeckwiecieńmajczerwieclipiecsierpieńwrzesieńpaździerniklistopadgrudzieńSLMKMCLSWPLGponiedziałekwtorekśrodaczwartekpiąteksobotaniedzielaPWŚCPSNc055
+pl	styczeńlutymarzeckwiecieńmajczerwieclipiecsierpieńwrzesieńpaździerniklistopadgrudzieńSLMKMCLSWPLGPWŚCPSNc055
+pl-PL	styczeńlutymarzeckwiecieńmajczerwieclipiecsierpieńwrzesieńpaździerniklistopadgrudzieńSLMKMCLSWPLGPWŚCPSNc055
 pms	0
 pms-IT	0
-prg	ragswassarinspūlissakkiszallawssīmenislīpadaggissillinsspallinslapkrūtissallawspanadīliwisasīdispussisawaitiketwirtikspēntnikssabattikanadīli0
-prg-PL	ragswassarinspūlissakkiszallawssīmenislīpadaggissillinsspallinslapkrūtissallawspanadīliwisasīdispussisawaitiketwirtikspēntnikssabattikanadīli0
-ps	جنوريفېبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجنوريفېبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجف34567891011120
-ps-AF	جنوريفېبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجنوريفېبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجف34567891011120
-ps-PK	جنوريفېبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجنوريفېبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجف34567891011120
-pt	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingoc3f0
-pt-AO	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-BR	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingoc3f0
-pt-CH	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-CV	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-GQ	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-GW	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-LU	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-MO	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-MZ	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-PT	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-ST	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-pt-TL	janeirofevereiromarçoabrilmaiojunhojulhoagostosetembrooutubronovembrodezembrosegunda-feiraterça-feiraquarta-feiraquinta-feirasexta-feirasábadodomingo0
-qu	EneroFebreroMarzoAbrilMayoJunioJulioAgostoSetiembreOctubreNoviembreDiciembreLunesMartesMiércolesJuevesViernesSábadoDomingo0
-qu-BO	EneroFebreroMarzoAbrilMayoJunioJulioAgostoSetiembreOctubreNoviembreDiciembreLunesMartesMiércolesJuevesViernesSábadoDomingo0
-qu-EC	EneroFebreroMarzoAbrilMayoJunioJulioAgostoSetiembreOctubreNoviembreDiciembreLunesMartesMiércolesJuevesViernesSábadoDomingo0
-qu-PE	EneroFebreroMarzoAbrilMayoJunioJulioAgostoSetiembreOctubreNoviembreDiciembreLunesMartesMiércolesJuevesViernesSábadoDomingo0
+prg	0
+prg-PL	0
+ps	جنوريفېبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجنوريفبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجف34567891011120
+ps-AF	جنوريفېبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجنوريفبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجف34567891011120
+ps-PK	جنوريفېبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجنوريفبروريمارچاپریلمۍجونجولایاګستسپتمبراکتوبرنومبردسمبرجف34567891011120
+pt	c3f0
+pt-AO	0
+pt-BR	c3f0
+pt-CH	0
+pt-CV	0
+pt-GQ	0
+pt-GW	0
+pt-LU	0
+pt-MO	0
+pt-MZ	0
+pt-PT	0
+pt-ST	0
+pt-TL	0
+qu	0
+qu-BO	0
+qu-EC	0
+qu-PE	0
 quc	0
 quc-GT	0
 raj	0
@@ -10645,250 +10645,250 @@ rhg	0
 rhg-Rohg	0
 rhg-Rohg-BD	0
 rhg-Rohg-MM	0
-rif	yennayerfebrayermarsyebrilmayyuyunyuyulyuɣuccetcutembirkṭubernuwembirdujembirletnayenttlatlarbeɛlexmisjjemɛassebtlḥed0
-rif-MA	yennayerfebrayermarsyebrilmayyuyunyuyulyuɣuccetcutembirkṭubernuwembirdujembirletnayenttlatlarbeɛlexmisjjemɛassebtlḥed0
-rm	schanerfavrermarsavriglmatgzercladurfanaduravustsettemberoctobernovemberdecemberschanerfavrermarsavriglmatgzercladurfanaduravustsettemberoctobernovemberdecemberglindesdimardimesemnagievgiavenderdisondadumengia0
-rm-CH	schanerfavrermarsavriglmatgzercladurfanaduravustsettemberoctobernovemberdecemberschanerfavrermarsavriglmatgzercladurfanaduravustsettemberoctobernovemberdecemberglindesdimardimesemnagievgiavenderdisondadumengia0
-rn	NzeroRuhuhumaNtwaranteNdamukizaRusamaRuheshiMukakaroNyandagaroNyakangaGitugutuMunyonyoKigaramaKu wa mbereKu wa kabiriKu wa gatatuKu wa kaneKu wa gatanuKu wa gatandatuKu w’indwi0
-rn-BI	NzeroRuhuhumaNtwaranteNdamukizaRusamaRuheshiMukakaroNyandagaroNyakangaGitugutuMunyonyoKigaramaKu wa mbereKu wa kabiriKu wa gatatuKu wa kaneKu wa gatanuKu wa gatandatuKu w’indwi0
-ro	ianuariefebruariemartieapriliemaiiunieiulieaugustseptembrieoctombrienoiembriedecembrielunimarțimiercurijoivinerisâmbătăduminică0
-ro-MD	ianuariefebruariemartieapriliemaiiunieiulieaugustseptembrieoctombrienoiembriedecembrielunimarțimiercurijoivinerisâmbătăduminică0
-ro-RO	ianuariefebruariemartieapriliemaiiunieiulieaugustseptembrieoctombrienoiembriedecembrielunimarțimiercurijoivinerisâmbătăduminică0
-rof	Mweri wa kwanzaMweri wa kailiMweri wa katatuMweri wa kaanaMweri wa tanuMweri wa sitaMweri wa sabaMweri wa naneMweri wa tisaMweri wa ikumiMweri wa ikumi na mojaMweri wa ikumi na mbiliIjumatatuIjumanneIjumatanoAlhamisiIjumaaIjumamosiIjumapili0
-rof-TZ	Mweri wa kwanzaMweri wa kailiMweri wa katatuMweri wa kaanaMweri wa tanuMweri wa sitaMweri wa sabaMweri wa naneMweri wa tisaMweri wa ikumiMweri wa ikumi na mojaMweri wa ikumi na mbiliIjumatatuIjumanneIjumatanoAlhamisiIjumaaIjumamosiIjumapili0
-ru	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянварьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьпонедельниквторниксредачетвергпятницасубботавоскресенье3cfff
-ru-BY	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянварьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьпонедельниквторниксредачетвергпятницасубботавоскресенье3cfff
-ru-KG	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянварьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьпонедельниквторниксредачетвергпятницасубботавоскресенье3cfff
-ru-KZ	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянварьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьпонедельниквторниксредачетвергпятницасубботавоскресенье3cfff
-ru-MD	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянварьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьпонедельниквторниксредачетвергпятницасубботавоскресенье3cfff
-ru-RU	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянварьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьпонедельниквторниксредачетвергпятницасубботавоскресенье3cfff
-ru-UA	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянварьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьпонедельниквторниксредачетвергпятницасубботавоскресенье3cfff
-rw	MutaramaGashyantareWerurweMataGicurasiKamenaNyakangaKanamaNzeriUkwakiraUgushyingoUkubozaKuwa mbereKuwa kabiriKuwa gatatuKuwa kaneKuwa gatanuKuwa gatandatuKu cyumweru0
-rw-RW	MutaramaGashyantareWerurweMataGicurasiKamenaNyakangaKanamaNzeriUkwakiraUgushyingoUkubozaKuwa mbereKuwa kabiriKuwa gatatuKuwa kaneKuwa gatanuKuwa gatandatuKu cyumweru0
-rwk	JanuariFebruariMachiAprilyiMeiJunyiJulyaiAgustiSeptembaOktobaNovembaDesembaJumatatuuJumanneJumatanuAlhamisiIjumaaJumamosiJumapilyi0
-rwk-TZ	JanuariFebruariMachiAprilyiMeiJunyiJulyaiAgustiSeptembaOktobaNovembaDesembaJumatatuuJumanneJumatanuAlhamisiIjumaaJumamosiJumapilyi0
-sa	जनवरीमासःफरवरीमासःमार्चमासःअप्रैलमासःमईमासःजूनमासःजुलाईमासःअगस्तमासःसितंबरमासःअक्तूबरमासःनवंबरमासःदिसंबरमासः123456789101112सोमवासरःमंगलवासरःबुधवासरःगुरुवासर:शुक्रवासरःशनिवासरःरविवासरः0
-sa-IN	जनवरीमासःफरवरीमासःमार्चमासःअप्रैलमासःमईमासःजूनमासःजुलाईमासःअगस्तमासःसितंबरमासःअक्तूबरमासःनवंबरमासःदिसंबरमासः123456789101112सोमवासरःमंगलवासरःबुधवासरःगुरुवासर:शुक्रवासरःशनिवासरःरविवासरः0
-sah	тохсунньуолунньукулун тутармуус устарыам ыйабэс ыйаот ыйаатырдьых ыйабалаҕан ыйаалтынньысэтинньиахсынньытохсунньуолунньукулун тутармуус устарыам ыйабэс ыйаот ыйаатырдьых ыйабалаҕан ыйаалтынньысэтинньиахсынньыбэнидиэнньикоптуорунньуксэрэдэчэппиэрБээтиҥсэсубуотабаскыһыанньа0
-sah-RU	тохсунньуолунньукулун тутармуус устарыам ыйабэс ыйаот ыйаатырдьых ыйабалаҕан ыйаалтынньысэтинньиахсынньытохсунньуолунньукулун тутармуус устарыам ыйабэс ыйаот ыйаатырдьых ыйабалаҕан ыйаалтынньысэтинньиахсынньыбэнидиэнньикоптуорунньуксэрэдэчэппиэрБээтиҥсэсубуотабаскыһыанньа0
-saq	Lapa le oboLapa le waareLapa le okuniLapa le ong’wanLapa le imetLapa le ileLapa le sapaLapa le isietLapa le saalLapa le tomonLapa le tomon oboLapa le tomon waareMderot ee kuniMderot ee ong’wanMderot ee inetMderot ee ileMderot ee sapaMderot ee kweMderot ee are0
-saq-KE	Lapa le oboLapa le waareLapa le okuniLapa le ong’wanLapa le imetLapa le ileLapa le sapaLapa le isietLapa le saalLapa le tomonLapa le tomon oboLapa le tomon waareMderot ee kuniMderot ee ong’wanMderot ee inetMderot ee ileMderot ee sapaMderot ee kweMderot ee are0
-sat	ᱡᱟᱱᱣᱟᱨᱤᱯᱷᱟᱨᱣᱟᱨᱤᱢᱟᱨᱪᱟᱯᱨᱮᱞᱢᱮᱡᱩᱱᱡᱩᱞᱟᱭᱟᱜᱟᱥᱛᱥᱮᱯᱴᱮᱢᱵᱟᱨᱚᱠᱴᱚᱵᱟᱨᱱᱟᱣᱟᱢᱵᱟᱨᱫᱤᱥᱟᱢᱵᱟᱨᱚᱛᱮᱵᱟᱞᱮᱥᱟᱹᱜᱩᱱᱥᱟᱹᱨᱫᱤᱡᱟᱹᱨᱩᱢᱧᱩᱦᱩᱢᱥᱤᱸᱜᱮ0
+rif	0
+rif-MA	0
+rm	schanerfavrermarsavriglmatgzercladurfanaduravustsettemberoctobernovemberdecember0
+rm-CH	schanerfavrermarsavriglmatgzercladurfanaduravustsettemberoctobernovemberdecember0
+rn	0
+rn-BI	0
+ro	0
+ro-MD	0
+ro-RO	0
+rof	0
+rof-TZ	0
+ru	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянв.февр.мартапр.майиюньиюльавг.сент.окт.нояб.дек.3cfff
+ru-BY	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянв.февр.мартапр.майиюньиюльавг.сент.окт.нояб.дек.3cfff
+ru-KG	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянв.февр.мартапр.майиюньиюльавг.сент.окт.нояб.дек.3cfff
+ru-KZ	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянв.февр.мартапр.майиюньиюльавг.сент.окт.нояб.дек.3cfff
+ru-MD	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянв.февр.мартапр.майиюньиюльавг.сент.окт.нояб.дек.3cfff
+ru-RU	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянв.февр.мартапр.майиюньиюльавг.сент.окт.нояб.дек.3cfff
+ru-UA	январьфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьянв.февр.мартапр.майиюньиюльавг.сент.окт.нояб.дек.3cfff
+rw	0
+rw-RW	0
+rwk	0
+rwk-TZ	0
+sa	1234567891011120
+sa-IN	1234567891011120
+sah	тохсунньуолунньукулун тутармуус устарыам ыйабэс ыйаот ыйаатырдьых ыйабалаҕан ыйаалтынньысэтинньиахсынньы0
+sah-RU	тохсунньуолунньукулун тутармуус устарыам ыйабэс ыйаот ыйаатырдьых ыйабалаҕан ыйаалтынньысэтинньиахсынньы0
+saq	0
+saq-KE	0
+sat	0
 sat-Deva	0
 sat-Deva-IN	0
-sat-Olck	ᱡᱟᱱᱣᱟᱨᱤᱯᱷᱟᱨᱣᱟᱨᱤᱢᱟᱨᱪᱟᱯᱨᱮᱞᱢᱮᱡᱩᱱᱡᱩᱞᱟᱭᱟᱜᱟᱥᱛᱥᱮᱯᱴᱮᱢᱵᱟᱨᱚᱠᱴᱚᱵᱟᱨᱱᱟᱣᱟᱢᱵᱟᱨᱫᱤᱥᱟᱢᱵᱟᱨᱚᱛᱮᱵᱟᱞᱮᱥᱟᱹᱜᱩᱱᱥᱟᱹᱨᱫᱤᱡᱟᱹᱨᱩᱢᱧᱩᱦᱩᱢᱥᱤᱸᱜᱮ0
-sat-Olck-IN	ᱡᱟᱱᱣᱟᱨᱤᱯᱷᱟᱨᱣᱟᱨᱤᱢᱟᱨᱪᱟᱯᱨᱮᱞᱢᱮᱡᱩᱱᱡᱩᱞᱟᱭᱟᱜᱟᱥᱛᱥᱮᱯᱴᱮᱢᱵᱟᱨᱚᱠᱴᱚᱵᱟᱨᱱᱟᱣᱟᱢᱵᱟᱨᱫᱤᱥᱟᱢᱵᱟᱨᱚᱛᱮᱵᱟᱞᱮᱥᱟᱹᱜᱩᱱᱥᱟᱹᱨᱫᱤᱡᱟᱹᱨᱩᱢᱧᱩᱦᱩᱢᱥᱤᱸᱜᱮ0
-sbp	MupalangulwaMwitopeMushendeMunyiMushende MagaliMujimbiMushipepoMupugutoMunyenseMokhuMusongandembweMuhaanoJumatatuJumanneJumatanoAlahamisiIjumaaJumamosiMulungu0
-sbp-TZ	MupalangulwaMwitopeMushendeMunyiMushende MagaliMujimbiMushipepoMupugutoMunyenseMokhuMusongandembweMuhaanoJumatatuJumanneJumatanoAlahamisiIjumaaJumamosiMulungu0
-sc	ghennàrgiufreàrgiumartzuabrilemajulàmpadastrìulasaustucabudannisantugainesantandrianadalelunismartismèrcurisgiòbiachenàburasàbadudomìniga0
-sc-IT	ghennàrgiufreàrgiumartzuabrilemajulàmpadastrìulasaustucabudannisantugainesantandrianadalelunismartismèrcurisgiòbiachenàburasàbadudomìniga0
-scn	jinnarufrivarumarzuaprilimajugiugnugiugnettuagustusittèmmiruuttùvirunuvèmmirudicèmmirulunnidìamartidìamercuridìajovidìavenniridìasàbbatudumìnica0
-scn-IT	jinnarufrivarumarzuaprilimajugiugnugiugnettuagustusittèmmiruuttùvirunuvèmmirudicèmmirulunnidìamartidìamercuridìajovidìavenniridìasàbbatudumìnica0
+sat-Olck	0
+sat-Olck-IN	0
+sbp	0
+sbp-TZ	0
+sc	0
+sc-IT	0
+scn	0
+scn-IT	0
 sd	0
 sd-Arab	0
 sd-Arab-PK	0
-sd-Deva	जनवरीफेबरवरीमार्चुअप्रेलमईजूनजुलाईआगस्टसप्टेंबरऑक्टोबरनवंबरडिसंबरजनवरीफेबरवरीमार्चुअप्रेलमईजूनजुलाआगस्टसप्टेंबरऑक्टोबरनवंबरडिसंबरजफ़मअमाजूजुअगसऑनडिसूमंबु॒धविसजुमछंछआर्तसूमंबुधविसजुछंछआसूमंबु॒विजुछंआ0
-sd-Deva-IN	जनवरीफेबरवरीमार्चुअप्रेलमईजूनजुलाईआगस्टसप्टेंबरऑक्टोबरनवंबरडिसंबरजनवरीफेबरवरीमार्चुअप्रेलमईजूनजुलाआगस्टसप्टेंबरऑक्टोबरनवंबरडिसंबरजफ़मअमाजूजुअगसऑनडिसूमंबु॒धविसजुमछंछआर्तसूमंबुधविसजुछंछआसूमंबु॒विजुछंआ0
+sd-Deva	जनवरीफेबरवरीमार्चुअप्रेलमईजूनजुलाईआगस्टसप्टेंबरऑक्टोबरनवंबरडिसंबरजनफरमार्चअप्रैमईजूनजुलाअगसप्टेऑक्टोनवंडिसंजफ़मअमाजूजुअगसऑनडिसूमंबु॒धविसजुमछंछआर्तसूमंबुधविसजुछंछआसूमंबु॒विजुछंआ0
+sd-Deva-IN	जनवरीफेबरवरीमार्चुअप्रेलमईजूनजुलाईआगस्टसप्टेंबरऑक्टोबरनवंबरडिसंबरजनफरमार्चअप्रैमईजूनजुलाअगसप्टेऑक्टोनवंडिसंजफ़मअमाजूजुअगसऑनडिसूमंबु॒धविसजुमछंछआर्तसूमंबुधविसजुछंछआसूमंबु॒विजुछंआ0
 sdh	0
 sdh-IQ	0
 sdh-IR	0
-se	ođđajagemánnuguovvamánnunjukčamánnucuoŋománnumiessemánnugeassemánnusuoidnemánnuborgemánnučakčamánnugolggotmánnuskábmamánnujuovlamánnuvuossárgamaŋŋebárgagaskavahkkuduorasdatbearjadatlávvardatsotnabeaivi0
-se-FI	ođđajagemánnuguovvamánnunjukčamánnucuoŋmiessemánnugeassemánnusuoidnemánnuborgemánnučakčamánnugolggotmánnuskábmamánnujuovlamánnu0
-se-NO	ođđajagemánnuguovvamánnunjukčamánnucuoŋománnumiessemánnugeassemánnusuoidnemánnuborgemánnučakčamánnugolggotmánnuskábmamánnujuovlamánnuvuossárgamaŋŋebárgagaskavahkkuduorasdatbearjadatlávvardatsotnabeaivi0
-se-SE	ođđajagemánnuguovvamánnunjukčamánnucuoŋománnumiessemánnugeassemánnusuoidnemánnuborgemánnučakčamánnugolggotmánnuskábmamánnujuovlamánnuvuossárgamaŋŋebárgagaskavahkkuduorasdatbearjadatlávvardatsotnabeaivi0
-seh	JaneiroFevreiroMarcoAbrilMaioJunhoJulhoAugustoSetembroOtubroNovembroDecembroChiposiChipiriChitatuChinaiChishanuSabuduDimingu0
-seh-MZ	JaneiroFevreiroMarcoAbrilMaioJunhoJulhoAugustoSetembroOtubroNovembroDecembroChiposiChipiriChitatuChinaiChishanuSabuduDimingu0
-ses	ŽanwiyeFeewiriyeMarsiAwirilMeŽuweŋŽuyyeUtSektanburOktooburNoowanburDeesanburAtinniAtalaataAlarbaAlhamiisaAlzumaAsibtiAlhadi0
-ses-ML	ŽanwiyeFeewiriyeMarsiAwirilMeŽuweŋŽuyyeUtSektanburOktooburNoowanburDeesanburAtinniAtalaataAlarbaAlhamiisaAlzumaAsibtiAlhadi0
-sg	NyenyeFulundïgiMbängüNgubùeBêläwüFöndoLenguaKükürüMvukaNgberereNabändüruKakaukaBïkua-ûseBïkua-ptâBïkua-usïöBïkua-oküLâpôsöLâyengaBikua-ôko0
-sg-CF	NyenyeFulundïgiMbängüNgubùeBêläwüFöndoLenguaKükürüMvukaNgberereNabändüruKakaukaBïkua-ûseBïkua-ptâBïkua-usïöBïkua-oküLâpôsöLâyengaBikua-ôko0
+se	0
+se-FI	0
+se-NO	0
+se-SE	0
+seh	0
+seh-MZ	0
+ses	0
+ses-ML	0
+sg	0
+sg-CF	0
 sgs	0
 sgs-LT	0
-shi	ⵉⵏⵏⴰⵢⵔⴱⵕⴰⵢⵕⵎⴰⵕⵚⵉⴱⵔⵉⵔⵎⴰⵢⵢⵓⵢⵓⵏⵢⵓⵢⵓⵍⵢⵓⵣⵖⵓⵛⵜⵛⵓⵜⴰⵏⴱⵉⵔⴽⵜⵓⴱⵔⵏⵓⵡⴰⵏⴱⵉⵔⴷⵓⵊⴰⵏⴱⵉⵔⴰⵢⵏⴰⵙⴰⵙⵉⵏⴰⵙⴰⴽⵕⴰⵙⴰⴽⵡⴰⵙⵙⵉⵎⵡⴰⵙⴰⵙⵉⴹⵢⴰⵙⴰⵙⴰⵎⴰⵙ0
-shi-Latn	innayrbṛayṛmaṛṣibrirmayyuyunyuyulyuzɣuctcutanbirktubrnuwanbirdujanbiraynasasinasakṛasakwasasimwasasiḍyasasamas0
-shi-Latn-MA	innayrbṛayṛmaṛṣibrirmayyuyunyuyulyuzɣuctcutanbirktubrnuwanbirdujanbiraynasasinasakṛasakwasasimwasasiḍyasasamas0
-shi-Tfng	ⵉⵏⵏⴰⵢⵔⴱⵕⴰⵢⵕⵎⴰⵕⵚⵉⴱⵔⵉⵔⵎⴰⵢⵢⵓⵢⵓⵏⵢⵓⵢⵓⵍⵢⵓⵣⵖⵓⵛⵜⵛⵓⵜⴰⵏⴱⵉⵔⴽⵜⵓⴱⵔⵏⵓⵡⴰⵏⴱⵉⵔⴷⵓⵊⴰⵏⴱⵉⵔⴰⵢⵏⴰⵙⴰⵙⵉⵏⴰⵙⴰⴽⵕⴰⵙⴰⴽⵡⴰⵙⵙⵉⵎⵡⴰⵙⴰⵙⵉⴹⵢⴰⵙⴰⵙⴰⵎⴰⵙ0
-shi-Tfng-MA	ⵉⵏⵏⴰⵢⵔⴱⵕⴰⵢⵕⵎⴰⵕⵚⵉⴱⵔⵉⵔⵎⴰⵢⵢⵓⵢⵓⵏⵢⵓⵢⵓⵍⵢⵓⵣⵖⵓⵛⵜⵛⵓⵜⴰⵏⴱⵉⵔⴽⵜⵓⴱⵔⵏⵓⵡⴰⵏⴱⵉⵔⴷⵓⵊⴰⵏⴱⵉⵔⴰⵢⵏⴰⵙⴰⵙⵉⵏⴰⵙⴰⴽⵕⴰⵙⴰⴽⵡⴰⵙⵙⵉⵎⵡⴰⵙⴰⵙⵉⴹⵢⴰⵙⴰⵙⴰⵎⴰⵙ0
+shi	0
+shi-Latn	0
+shi-Latn-MA	0
+shi-Tfng	0
+shi-Tfng-MA	0
 shn	ၸၼ်ၵၢၼ်းပုတ်ႉၽတ်းသုၵ်းသဝ်တိတ်ႉ0
 shn-MM	ၸၼ်ၵၢၼ်းပုတ်ႉၽတ်းသုၵ်းသဝ်တိတ်ႉ0
 shn-TH	ၸၼ်ၵၢၼ်းပုတ်ႉၽတ်းသုၵ်းသဝ်တိတ်ႉ0
-si	සඳුදාඅඟහරුවාදාබදාදාබ්‍රහස්පතින්දාසිකුරාදාසෙනසුරාදාඉරිදා0
-si-LK	සඳුදාඅඟහරුවාදාබදාදාබ්‍රහස්පතින්දාසිකුරාදාසෙනසුරාදාඉරිදා0
-sid	SanyoMaakisanyoRooweHamuseArbeQidaameSambata0
-sid-ET	SanyoMaakisanyoRooweHamuseArbeQidaameSambata0
-sk	januárfebruármarecaprílmájjúnjúlaugustseptemberoktóbernovemberdecemberjanuárfebruármarecaprílmájjúnjúlaugustseptemberoktóbernovemberdecemberpondelokutorokstredaštvrtokpiatoksobotanedeľa3aa
-sk-SK	januárfebruármarecaprílmájjúnjúlaugustseptemberoktóbernovemberdecemberjanuárfebruármarecaprílmájjúnjúlaugustseptemberoktóbernovemberdecemberpondelokutorokstredaštvrtokpiatoksobotanedeľa3aa
+si	0
+si-LK	0
+sid	0
+sid-ET	0
+sk	januárfebruármarecaprílmájjúnjúlaugustseptemberoktóbernovemberdecember3aa
+sk-SK	januárfebruármarecaprílmájjúnjúlaugustseptemberoktóbernovemberdecember3aa
 skr	0
 skr-PK	0
-sl	januarfebruarmarecaprilmajjunijjulijavgustseptemberoktobernovemberdecemberponedeljektoreksredačetrtekpeteksobotanedelja0
-sl-SI	januarfebruarmarecaprilmajjunijjulijavgustseptemberoktobernovemberdecemberponedeljektoreksredačetrtekpeteksobotanedelja0
+sl	0
+sl-SI	0
 sma	0
 sma-NO	0
 sma-SE	0
 smj	0
 smj-NO	0
 smj-SE	0
-smn	uđđâivemáánukuovâmáánunjuhčâmáánucuáŋuimáánuvyesimáánukesimáánusyeinimáánuporgemáánučohčâmáánuroovvâdmáánuskammâmáánujuovlâmáánuvuossargâmajebargâkoskokkotuorâstâhvástuppeivilávurdâhpasepeivivuossargâmajebargâkoskokkotuorâstâhvástuppeivilávurdâhpasepeiviMTWTFSS0
-smn-FI	uđđâivemáánukuovâmáánunjuhčâmáánucuáŋuimáánuvyesimáánukesimáánusyeinimáánuporgemáánučohčâmáánuroovvâdmáánuskammâmáánujuovlâmáánuvuossargâmajebargâkoskokkotuorâstâhvástuppeivilávurdâhpasepeivivuossargâmajebargâkoskokkotuorâstâhvástuppeivilávurdâhpasepeiviMTWTFSS0
+smn	vuossargâmajebargâkoskokkotuorâstâhvástuppeivilávurdâhpasepeiviMTWTFSS0
+smn-FI	vuossargâmajebargâkoskokkotuorâstâhvástuppeivilávurdâhpasepeiviMTWTFSS0
 sms	0
 sms-FI	0
-sn	NdiraKukadziKurumeKubvumbiChivabvuChikumiChikunguruNyamavhuvhuGunyanaGumiguruMbudziZvitaMuvhuroChipiriChitatuChinaChishanuMugoveraSvondo0
-sn-ZW	NdiraKukadziKurumeKubvumbiChivabvuChikumiChikunguruNyamavhuvhuGunyanaGumiguruMbudziZvitaMuvhuroChipiriChitatuChinaChishanuMugoveraSvondo0
-so	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarJannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarIsniinTalaadoArbacoKhamiisJimcoSabtiAxad0
-so-DJ	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarJannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarIsniinTalaadoArbacoKhamiisJimcoSabtiAxad0
-so-ET	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarJannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarIsniinTalaadoArbacoKhamiisJimcoSabtiAxad0
-so-KE	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarJannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarIsniinTalaadoArbacoKhamiisJimcoSabtiAxad0
-so-SO	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarJannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembarIsniinTalaadoArbacoKhamiisJimcoSabtiAxad0
-sq	janarshkurtmarsprillmajqershorkorrikgushtshtatortetornëntordhjetore hënëe martëe mërkurëe enjtee premtee shtunëe diel0
-sq-AL	janarshkurtmarsprillmajqershorkorrikgushtshtatortetornëntordhjetore hënëe martëe mërkurëe enjtee premtee shtunëe diel0
-sq-MK	janarshkurtmarsprillmajqershorkorrikgushtshtatortetornëntordhjetore hënëe martëe mërkurëe enjtee premtee shtunëe diel0
-sq-XK	janarshkurtmarsprillmajqershorkorrikgushtshtatortetornëntordhjetore hënëe martëe mërkurëe enjtee premtee shtunëe diel0
-sr	јануарфебруармартаприлмајјунјулавгустсептембароктобарновембардецембарпонедељакутораксредачетвртакпетаксуботанедеља0
-sr-Cyrl	јануарфебруармартаприлмајјунјулавгустсептембароктобарновембардецембарпонедељакутораксредачетвртакпетаксуботанедеља0
-sr-Cyrl-BA	јануарфебруармартаприлмајјунјулавгустсептембароктобарновембардецембарпонедјељакутораксриједачетвртакпетаксуботанедјеља0
-sr-Cyrl-ME	јануарфебруармартаприлмајјунјулавгустсептембароктобарновембардецембарпонедељакутораксриједачетвртакпетаксуботанедјеља0
-sr-Cyrl-RS	јануарфебруармартаприлмајјунјулавгустсептембароктобарновембардецембарпонедељакутораксредачетвртакпетаксуботанедеља0
-sr-Cyrl-XK	јануарфебруармартаприлмајјунјулавгустсептембароктобарновембардецембарпонедељакутораксредачетвртакпетаксуботанедеља0
-sr-Latn	januarfebruarmartaprilmajjunjulavgustseptembaroktobarnovembardecembarponedeljakutoraksredačetvrtakpetaksubotanedelja0
-sr-Latn-BA	januarfebruarmartaprilmajjunjulavgustseptembaroktobarnovembardecembarponedjeljakutoraksrijedačetvrtakpetaksubotanedjelja0
-sr-Latn-ME	januarfebruarmartaprilmajjunjulavgustseptembaroktobarnovembardecembarponedeljakutoraksrijedačetvrtakpetaksubotanedjelja0
-sr-Latn-RS	januarfebruarmartaprilmajjunjulavgustseptembaroktobarnovembardecembarponedeljakutoraksredačetvrtakpetaksubotanedelja0
-sr-Latn-XK	januarfebruarmartaprilmajjunjulavgustseptembaroktobarnovembardecembarponedeljakutoraksredačetvrtakpetaksubotanedelja0
-ss	BhimbidvwaneiNdlovanaiNdlovu-lenkhuluMabasaiNkhwekhwetiiNhlabaKholwaneiNgciiNyoniiMphalaLwetiiNgongoniuMsombulukoLesibiliLesitsatfuLesineLesihlanuuMgcibeloLisontfo0
-ss-SZ	BhimbidvwaneiNdlovanaiNdlovu-lenkhuluMabasaiNkhwekhwetiiNhlabaKholwaneiNgciiNyoniiMphalaLwetiiNgongoniuMsombulukoLesibiliLesitsatfuLesineLesihlanuuMgcibeloLisontfo0
-ss-ZA	BhimbidvwaneiNdlovanaiNdlovu-lenkhuluMabasaiNkhwekhwetiiNhlabaKholwaneiNgciiNyoniiMphalaLwetiiNgongoniuMsombulukoLesibiliLesitsatfuLesineLesihlanuuMgcibeloLisontfo0
-ssy	Qunxa GarabluKudoCiggilta KudoAgda BaxisCaxah AlsaQasa DirriQado DirriLiiqenWaysuDiteliXimoliKaxxa GarabluSaniSalusRabuqCamusJumqataQunxa SambatNaba Sambat0
-ssy-ER	Qunxa GarabluKudoCiggilta KudoAgda BaxisCaxah AlsaQasa DirriQado DirriLiiqenWaysuDiteliXimoliKaxxa GarabluSaniSalusRabuqCamusJumqataQunxa SambatNaba Sambat0
-st	PherekgongHlakolaHlakubeleMmesaMotsheanongPhupjanePhupuPhatoLwetseMphalanePudungwanaTshitweMantahaLabobediLaboraroLaboneLabohlanoMoqebeloSontaha0
-st-LS	PherekgongHlakolaHlakubeleMmesaMotsheanongPhupjanePhupuPhatoLwetseMphalanePudungwanaTshitweMantahaLabobediLaboraroLaboneLabohlanoMoqebeloSontaha0
-st-ZA	PherekgongHlakolaHlakubeleMmesaMotsheanongPhupjanePhupuPhatoLwetseMphalanePudungwanaTshitweMantahaLabobediLaboraroLaboneLabohlanoMoqebeloSontaha0
-su	JanuariPébruariMaretAprilMéiJuniJuliAgustusSéptémberOktoberNopémberDésémberSenénSalasaReboKemisJumaahSaptuMinggu0
-su-Latn	JanuariPébruariMaretAprilMéiJuniJuliAgustusSéptémberOktoberNopémberDésémberSenénSalasaReboKemisJumaahSaptuMinggu0
-su-Latn-ID	JanuariPébruariMaretAprilMéiJuniJuliAgustusSéptémberOktoberNopémberDésémberSenénSalasaReboKemisJumaahSaptuMinggu0
+sn	0
+sn-ZW	0
+so	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembar0
+so-DJ	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembar0
+so-ET	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembar0
+so-KE	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembar0
+so-SO	JannaayoFebraayoMaarsoAbriilMaayoJuunLuulyoOgostoSebteembarOktoobarNoofeembarDiseembar0
+sq	0
+sq-AL	0
+sq-MK	0
+sq-XK	0
+sr	0
+sr-Cyrl	0
+sr-Cyrl-BA	0
+sr-Cyrl-ME	0
+sr-Cyrl-RS	0
+sr-Cyrl-XK	0
+sr-Latn	0
+sr-Latn-BA	0
+sr-Latn-ME	0
+sr-Latn-RS	0
+sr-Latn-XK	0
+ss	0
+ss-SZ	0
+ss-ZA	0
+ssy	0
+ssy-ER	0
+st	0
+st-LS	0
+st-ZA	0
+su	0
+su-Latn	0
+su-Latn-ID	0
 suz	0
 suz-Deva	0
 suz-Deva-NP	0
 suz-Sunu	0
 suz-Sunu-NP	0
-sv	januarifebruarimarsaprilmajjunijuliaugustiseptemberoktobernovemberdecembermåndagtisdagonsdagtorsdagfredaglördagsöndag30300
-sv-AX	januarifebruarimarsaprilmajjunijuliaugustiseptemberoktobernovemberdecembermåndagtisdagonsdagtorsdagfredaglördagsöndag30300
-sv-FI	januarifebruarimarsaprilmajjunijuliaugustiseptemberoktobernovemberdecembermåndagtisdagonsdagtorsdagfredaglördagsöndag30300
-sv-SE	januarifebruarimarsaprilmajjunijuliaugustiseptemberoktobernovemberdecembermåndagtisdagonsdagtorsdagfredaglördagsöndag30300
-sw	JanuariFebruariMachiApriliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesemba0
-sw-CD	JanuariFebruariMachiApriliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesemba0
-sw-KE	JanuariFebruariMachiApriliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesemba0
-sw-TZ	JanuariFebruariMachiApriliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesemba0
-sw-UG	JanuariFebruariMachiApriliMeiJuniJulaiAgostiSeptembaOktobaNovembaDesemba0
-syr	ܟܢܘܢ ܐܚܪܝܐܫܒܛܐܕܪܢܝܣܢܐܝܪܚܙܝܪܢܬܡܘܙܐܒܐܝܠܘܠܬܫܪܝܢ ܩܕܡܝܐܬܫܪܝܢ ܐܚܪܝܐܟܢܘܢ ܩܕܡܝܐܬܪܝܢܒܫܒܐܬܠܬܒܫܒܐܐܪܒܥܒܫܒܐܚܡܫܒܫܒܐܥܪܘܒܬܐܫܒܬܐܚܕܒܫܒܐ0
-syr-IQ	ܟܢܘܢ ܐܚܪܝܐܫܒܛܐܕܪܢܝܣܢܐܝܪܚܙܝܪܢܬܡܘܙܐܒܐܝܠܘܠܬܫܪܝܢ ܩܕܡܝܐܬܫܪܝܢ ܐܚܪܝܐܟܢܘܢ ܩܕܡܝܐܬܪܝܢܒܫܒܐܬܠܬܒܫܒܐܐܪܒܥܒܫܒܐܚܡܫܒܫܒܐܥܪܘܒܬܐܫܒܬܐܚܕܒܫܒܐ0
-syr-SY	ܟܢܘܢ ܐܚܪܝܐܫܒܛܐܕܪܢܝܣܢܐܝܪܚܙܝܪܢܬܡܘܙܐܒܐܝܠܘܠܬܫܪܝܢ ܩܕܡܝܐܬܫܪܝܢ ܐܚܪܝܐܟܢܘܢ ܩܕܡܝܐܬܪܝܢܒܫܒܐܬܠܬܒܫܒܐܐܪܒܥܒܫܒܐܚܡܫܒܫܒܐܥܪܘܒܬܐܫܒܬܐܚܕܒܫܒܐ0
-szl	styczyńlutymarzeckwieciyńmojczyrwieclipiecsiyrpiyńwrzesiyńpaździerniklistopadgrudziyństyczyńlutymarzeckwieciyńmojczyrwieclipiecsiyrpiyńwrzesiyńpaździerniklistopadgrudziyńpyńdziałekwtorekstrzodasztwortekpiōnteksobotaniydziela0
-szl-PL	styczyńlutymarzeckwieciyńmojczyrwieclipiecsiyrpiyńwrzesiyńpaździerniklistopadgrudziyństyczyńlutymarzeckwieciyńmojczyrwieclipiecsiyrpiyńwrzesiyńpaździerniklistopadgrudziyńpyńdziałekwtorekstrzodasztwortekpiōnteksobotaniydziela0
-ta	ஜனவரிபிப்ரவரிமார்ச்ஏப்ரல்மேஜூன்ஜூலைஆகஸ்ட்செப்டம்பர்அக்டோபர்நவம்பர்டிசம்பர்திங்கள்செவ்வாய்புதன்வியாழன்வெள்ளிசனிஞாயிறு0
-ta-IN	ஜனவரிபிப்ரவரிமார்ச்ஏப்ரல்மேஜூன்ஜூலைஆகஸ்ட்செப்டம்பர்அக்டோபர்நவம்பர்டிசம்பர்திங்கள்செவ்வாய்புதன்வியாழன்வெள்ளிசனிஞாயிறு0
-ta-LK	ஜனவரிபிப்ரவரிமார்ச்ஏப்ரல்மேஜூன்ஜூலைஆகஸ்ட்செப்டம்பர்அக்டோபர்நவம்பர்டிசம்பர்திங்கள்செவ்வாய்புதன்வியாழன்வெள்ளிசனிஞாயிறு0
-ta-MY	ஜனவரிபிப்ரவரிமார்ச்ஏப்ரல்மேஜூன்ஜூலைஆகஸ்ட்செப்டம்பர்அக்டோபர்நவம்பர்டிசம்பர்திங்கள்செவ்வாய்புதன்வியாழன்வெள்ளிசனிஞாயிறு0
-ta-SG	ஜனவரிபிப்ரவரிமார்ச்ஏப்ரல்மேஜூன்ஜூலைஆகஸ்ட்செப்டம்பர்அக்டோபர்நவம்பர்டிசம்பர்திங்கள்செவ்வாய்புதன்வியாழன்வெள்ளிசனிஞாயிறு0
-te	జనవరిఫిబ్రవరిమార్చిఏప్రిల్మేజూన్జులైఆగస్టుసెప్టెంబర్అక్టోబర్నవంబర్డిసెంబర్సోమవారంమంగళవారంబుధవారంగురువారంశుక్రవారంశనివారంఆదివారం0
-te-IN	జనవరిఫిబ్రవరిమార్చిఏప్రిల్మేజూన్జులైఆగస్టుసెప్టెంబర్అక్టోబర్నవంబర్డిసెంబర్సోమవారంమంగళవారంబుధవారంగురువారంశుక్రవారంశనివారంఆదివారం0
-teo	OraraOmukOkwamg’Odung’elOmarukOmodok’king’olOjolaOpedelOsokosokomaOtibarOlaborOpooNakaebarasaNakaareNakauniNakaung’onNakakanyNakasabitiNakaejuma0
-teo-KE	OraraOmukOkwamg’Odung’elOmarukOmodok’king’olOjolaOpedelOsokosokomaOtibarOlaborOpooNakaebarasaNakaareNakauniNakaung’onNakakanyNakasabitiNakaejuma0
-teo-UG	OraraOmukOkwamg’Odung’elOmarukOmodok’king’olOjolaOpedelOsokosokomaOtibarOlaborOpooNakaebarasaNakaareNakauniNakaung’onNakakanyNakasabitiNakaejuma0
-tg	ЯнварФевралМартАпрелМайИюнИюлАвгустСентябрОктябрНоябрДекабрДушанбеСешанбеЧоршанбеПанҷшанбеҶумъаШанбеЯкшанбе0
-tg-TJ	ЯнварФевралМартАпрелМайИюнИюлАвгустСентябрОктябрНоябрДекабрДушанбеСешанбеЧоршанбеПанҷшанбеҶумъаШанбеЯкшанбе0
-th	มกราคมกุมภาพันธ์มีนาคมเมษายนพฤษภาคมมิถุนายนกรกฎาคมสิงหาคมกันยายนตุลาคมพฤศจิกายนธันวาคม0
-th-TH	มกราคมกุมภาพันธ์มีนาคมเมษายนพฤษภาคมมิถุนายนกรกฎาคมสิงหาคมกันยายนตุลาคมพฤศจิกายนธันวาคม0
-ti	ጥሪለካቲትመጋቢትሚያዝያጉንበትሰነሓምለነሓሰመስከረምጥቅምቲሕዳርታሕሳስሰኑይሰሉስረቡዕሓሙስዓርቢቀዳምሰንበት0
-ti-ER	ጥሪለካቲትመጋቢትሚያዝያጉንበትሰነሓምለነሓሰመስከረምጥቅምቲሕዳርታሕሳስሰኑይሰሉስረቡዕሓሙስዓርቢቀዳምሰንበት0
-ti-ET	ጥሪለካቲትመጋቢትሚያዝያጉንበትሰነሓምለነሓሰመስከረምጥቅምቲሕዳርታሕሳስሰኑይሰሉስረቡዕሓሙስዓርቢቀዳምሰንበት0
-tig	ጃንዩወሪፌብሩወሪማርችኤፕረልሜይጁንጁላይኦገስትሴፕቴምበርኦክተውበርኖቬምበርዲሴምበርሰኖታላሸኖኣረርባዓከሚሽጅምዓትሰንበት ንኢሽሰንበት ዓባይ0
-tig-ER	ጃንዩወሪፌብሩወሪማርችኤፕረልሜይጁንጁላይኦገስትሴፕቴምበርኦክተውበርኖቬምበርዲሴምበርሰኖታላሸኖኣረርባዓከሚሽጅምዓትሰንበት ንኢሽሰንበት ዓባይ0
+sv	30300
+sv-AX	30300
+sv-FI	30300
+sv-SE	30300
+sw	0
+sw-CD	0
+sw-KE	0
+sw-TZ	0
+sw-UG	0
+syr	0
+syr-IQ	0
+syr-SY	0
+szl	styczyńlutymarzeckwieciyńmojczyrwieclipiecsiyrpiyńwrzesiyńpaździerniklistopadgrudziyń0
+szl-PL	styczyńlutymarzeckwieciyńmojczyrwieclipiecsiyrpiyńwrzesiyńpaździerniklistopadgrudziyń0
+ta	0
+ta-IN	0
+ta-LK	0
+ta-MY	0
+ta-SG	0
+te	0
+te-IN	0
+teo	0
+teo-KE	0
+teo-UG	0
+tg	0
+tg-TJ	0
+th	0
+th-TH	0
+ti	0
+ti-ER	0
+ti-ET	0
+tig	0
+tig-ER	0
 tk	ÝanwarFewralMartAprelMaýIýunIýulAwgustSentýabrOktýabrNoýabrDekabrÝanFewMarAprMaýIýunIýulAwgSenOktNoýDekDuşenbeSişenbeÇarşenbePenşenbeAnnaŞenbeÝekşenbeDuşSişÇarPenAnnŞenÝek100
 tk-TM	ÝanwarFewralMartAprelMaýIýunIýulAwgustSentýabrOktýabrNoýabrDekabrÝanFewMarAprMaýIýunIýulAwgSenOktNoýDekDuşenbeSişenbeÇarşenbePenşenbeAnnaŞenbeÝekşenbeDuşSişÇarPenAnnŞenÝek100
-tn	FerikgongTlhakoleMopitloMoranangMotsheganangSeetebosigoPhukwiPhatweLwetseDiphalaneNgwanatseleSedimontholeMosupologoLabobediLaboraroLaboneLabotlhanoMatlhatsoTshipi0
-tn-BW	FerikgongTlhakoleMopitloMoranangMotsheganangSeetebosigoPhukwiPhatweLwetseDiphalaneNgwanatseleSedimontholeMosupologoLabobediLaboraroLaboneLabotlhanoMatlhatsoTshipi0
-tn-ZA	FerikgongTlhakoleMopitloMoranangMotsheganangSeetebosigoPhukwiPhatweLwetseDiphalaneNgwanatseleSedimontholeMosupologoLabobediLaboraroLaboneLabotlhanoMatlhatsoTshipi0
-to	SānualiFēpueliMaʻasiʻEpeleliMēSuneSiulaiʻAokosiSepitemaʻOkatopaNōvemaTīsemaSānualiFēpueliMaʻasiʻEpeleliMēSuneSiulaiʻAokosiSepitemaʻOkatopaNōvemaTīsemaMōniteTūsitePuleluluTuʻapuleluluFalaiteTokonakiSāpate0
-to-TO	SānualiFēpueliMaʻasiʻEpeleliMēSuneSiulaiʻAokosiSepitemaʻOkatopaNōvemaTīsemaSānualiFēpueliMaʻasiʻEpeleliMēSuneSiulaiʻAokosiSepitemaʻOkatopaNōvemaTīsemaMōniteTūsitePuleluluTuʻapuleluluFalaiteTokonakiSāpate0
+tn	0
+tn-BW	0
+tn-ZA	0
+to	SānualiFēpueliMaʻasiʻEpeleliMēSuneSiulaiʻAokosiSepitemaʻOkatopaNōvemaTīsema0
+to-TO	SānualiFēpueliMaʻasiʻEpeleliMēSuneSiulaiʻAokosiSepitemaʻOkatopaNōvemaTīsema0
 tok	0
 tok-001	0
-tpi	JanueriFebrueriMasEprilMeJunJulaiOgasSeptembaOktobaNovembaDesembaMandeTundeTrindeFondeFraideSarereSande0
-tpi-PG	JanueriFebrueriMasEprilMeJunJulaiOgasSeptembaOktobaNovembaDesembaMandeTundeTrindeFondeFraideSarereSande0
-tr	OcakŞubatMartNisanMayısHaziranTemmuzAğustosEylülEkimKasımAralıkPazartesiSalıÇarşambaPerşembeCumaCumartesiPazarc000
-tr-CY	OcakŞubatMartNisanMayısHaziranTemmuzAğustosEylülEkimKasımAralıkPazartesiSalıÇarşambaPerşembeCumaCumartesiPazarc000
-tr-TR	OcakŞubatMartNisanMayısHaziranTemmuzAğustosEylülEkimKasımAralıkPazartesiSalıÇarşambaPerşembeCumaCumartesiPazarc000
-trv	Kingal idasDha idasTru idasSpat idasRima idasMataru idasEmpitu idasMaspat idasMngari idasMaxal idasMaxal kingal idasMaxal dha idastgKingal jiyax iyax sngayantgDha jiyax iyax sngayantgTru jiyax iyax sngayantgSpac jiyax iyax sngayantgRima jiyax iyax sngayantgMataru jiyax iyax sngayanJiyax sngayan0
-trv-TW	Kingal idasDha idasTru idasSpat idasRima idasMataru idasEmpitu idasMaspat idasMngari idasMaxal idasMaxal kingal idasMaxal dha idastgKingal jiyax iyax sngayantgDha jiyax iyax sngayantgTru jiyax iyax sngayantgSpac jiyax iyax sngayantgRima jiyax iyax sngayantgMataru jiyax iyax sngayanJiyax sngayan0
+tpi	0
+tpi-PG	0
+tr	c000
+tr-CY	c000
+tr-TR	c000
+trv	0
+trv-TW	0
 trw	0
 trw-PK	0
-ts	SungutiNyenyenyaniNyenyankuluDzivamisokoMudyaxihiKhotavuxikaMawuwaniMhawuriNdzhatiNhlangulaHukuriN’wendzamhalaMusumbhunukuRavumbirhiRavunharhuRavumuneRavuntlhanuMugqivelaSonta0
-ts-ZA	SungutiNyenyenyaniNyenyankuluDzivamisokoMudyaxihiKhotavuxikaMawuwaniMhawuriNdzhatiNhlangulaHukuriN’wendzamhalaMusumbhunukuRavumbirhiRavunharhuRavumuneRavuntlhanuMugqivelaSonta0
-tt	гыйнварфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьдүшәмбесишәмбечәршәмбепәнҗешәмбеҗомгашимбәякшәмбе0
-tt-RU	гыйнварфевральмартапрельмайиюньиюльавгустсентябрьоктябрьноябрьдекабрьдүшәмбесишәмбечәршәмбепәнҗешәмбеҗомгашимбәякшәмбе0
-twq	ŽanwiyeFeewiriyeMarsiAwirilMeŽuweŋŽuyyeUtSektanburOktooburNoowanburDeesanburAtinniAtalaataAlarbaAlhamiisaAlzumaAsibtiAlhadi0
-twq-NE	ŽanwiyeFeewiriyeMarsiAwirilMeŽuweŋŽuyyeUtSektanburOktooburNoowanburDeesanburAtinniAtalaataAlarbaAlhamiisaAlzumaAsibtiAlhadi0
+ts	0
+ts-ZA	0
+tt	0
+tt-RU	0
+twq	0
+twq-NE	0
 tyv	0
 tyv-RU	0
-tzm	YennayerYebrayerMarsIbrirMayyuYunyuYulyuzƔuctCutanbirKṭuberNwanbirDujanbirAynasAsinasAkrasAkwasAsimwasAsiḍyasAsamas0
-tzm-MA	YennayerYebrayerMarsIbrirMayyuYunyuYulyuzƔuctCutanbirKṭuberNwanbirDujanbirAynasAsinasAkrasAkwasAsimwasAsiḍyasAsamas0
-ug	دۈشەنبەسەيشەنبەچارشەنبەپەيشەنبەجۈمەشەنبەيەكشەنبە0
-ug-CN	دۈشەنبەسەيشەنبەچارشەنبەپەيشەنبەجۈمەشەنبەيەكشەنبە0
-uk	січеньлютийберезеньквітеньтравеньчервеньлипеньсерпеньвересеньжовтеньлистопадгруденьсіченьлютийберезеньквітеньтравеньчервеньлипеньсерпеньвересеньжовтеньлистопадгруденьСЛБКТЧЛСВЖЛГпонеділоквівтороксередачетверпʼятницясуботанеділяc3ff
-uk-UA	січеньлютийберезеньквітеньтравеньчервеньлипеньсерпеньвересеньжовтеньлистопадгруденьсіченьлютийберезеньквітеньтравеньчервеньлипеньсерпеньвересеньжовтеньлистопадгруденьСЛБКТЧЛСВЖЛГпонеділоквівтороксередачетверпʼятницясуботанеділяc3ff
+tzm	0
+tzm-MA	0
+ug	0
+ug-CN	0
+uk	січеньлютийберезеньквітеньтравеньчервеньлипеньсерпеньвересеньжовтеньлистопадгруденьСЛБКТЧЛСВЖЛГc3ff
+uk-UA	січеньлютийберезеньквітеньтравеньчервеньлипеньсерпеньвересеньжовтеньлистопадгруденьСЛБКТЧЛСВЖЛГc3ff
 ur	0
 ur-IN	0
 ur-PK	0
-uz	YanvarFevralMartAprelMayIyunIyulAvgustSentabrOktabrNoyabrDekabrYanFevMarAprMayIynIylAvgSenOktNoyDekdushanbaseshanbachorshanbapayshanbajumashanbayakshanba0
-uz-Arab	جنوریفبروریمارچاپریلمیجونجولایاگستسپتمبراکتوبرنومبردسمبردوشنبهسه‌شنبهچهارشنبهپنجشنبهجمعهشنبهیکشنبه0
-uz-Arab-AF	جنوریفبروریمارچاپریلمیجونجولایاگستسپتمبراکتوبرنومبردسمبردوشنبهسه‌شنبهچهارشنبهپنجشنبهجمعهشنبهیکشنبه0
-uz-Cyrl	январфевралмартапрелмайиюниюлавгустсентяброктябрноябрдекабрдушанбасешанбачоршанбапайшанбажумашанбаякшанба0
-uz-Cyrl-UZ	январфевралмартапрелмайиюниюлавгустсентяброктябрноябрдекабрдушанбасешанбачоршанбапайшанбажумашанбаякшанба0
-uz-Latn	YanvarFevralMartAprelMayIyunIyulAvgustSentabrOktabrNoyabrDekabrYanFevMarAprMayIynIylAvgSenOktNoyDekdushanbaseshanbachorshanbapayshanbajumashanbayakshanba0
-uz-Latn-UZ	YanvarFevralMartAprelMayIyunIyulAvgustSentabrOktabrNoyabrDekabrYanFevMarAprMayIynIylAvgSenOktNoyDekdushanbaseshanbachorshanbapayshanbajumashanbayakshanba0
-vai	ꖨꖕ ꕪꕴ ꔞꔀꕮꕊꕒꕡꖝꖕꕾꖺꖢꖕꖑꕱꖱꘋꖱꕞꔤꗛꔕꕢꕌꕭꖃꔞꘋꕔꕿ ꕸꖃꗏꖨꖕ ꕪꕴ ꗏꖺꕮꕊ0
+uz	YanvarFevralMartAprelMayIyunIyulAvgustSentabrOktabrNoyabrDekabrYanFevMarAprMayIynIylAvgSenOktNoyDek0
+uz-Arab	0
+uz-Arab-AF	0
+uz-Cyrl	0
+uz-Cyrl-UZ	0
+uz-Latn	YanvarFevralMartAprelMayIyunIyulAvgustSentabrOktabrNoyabrDekabrYanFevMarAprMayIynIylAvgSenOktNoyDek0
+uz-Latn-UZ	YanvarFevralMartAprelMayIyunIyulAvgustSentabrOktabrNoyabrDekabrYanFevMarAprMayIynIylAvgSenOktNoyDek0
+vai	0
 vai-Latn	0
 vai-Latn-LR	0
-vai-Vaii	ꖨꖕ ꕪꕴ ꔞꔀꕮꕊꕒꕡꖝꖕꕾꖺꖢꖕꖑꕱꖱꘋꖱꕞꔤꗛꔕꕢꕌꕭꖃꔞꘋꕔꕿ ꕸꖃꗏꖨꖕ ꕪꕴ ꗏꖺꕮꕊ0
-vai-Vaii-LR	ꖨꖕ ꕪꕴ ꔞꔀꕮꕊꕒꕡꖝꖕꕾꖺꖢꖕꖑꕱꖱꘋꖱꕞꔤꗛꔕꕢꕌꕭꖃꔞꘋꕔꕿ ꕸꖃꗏꖨꖕ ꕪꕴ ꗏꖺꕮꕊ0
-ve	PhandoLuhuhiṰhafamuhweLambamaiShundunthuleFulwiFulwanaṰhanguleKhubvumedziTshimedziḼaraNyendavhusikuMusumbuluwoḼavhuvhiliḼavhuraruḼavhuṋaḼavhuṱanuMugivhelaSwondaha0
-ve-ZA	PhandoLuhuhiṰhafamuhweLambamaiShundunthuleFulwiFulwanaṰhanguleKhubvumedziTshimedziḼaraNyendavhusikuMusumbuluwoḼavhuvhiliḼavhuraruḼavhuṋaḼavhuṱanuMugivhelaSwondaha0
-vec	jenarofebraromarsoaprilemajojugnolujoagostosetenbreotobrenovenbredezlunimartimèrcorezobavènaresabodoménega0
-vec-IT	jenarofebraromarsoaprilemajojugnolujoagostosetenbreotobrenovenbredezlunimartimèrcorezobavènaresabodoménega0
-vi	Tháng 1Tháng 2Tháng 3Tháng 4Tháng 5Tháng 6Tháng 7Tháng 8Tháng 9Tháng 10Tháng 11Tháng 12Tháng 1Tháng 2Tháng 3Tháng 4Tháng 5Tháng 6Tháng 7Tháng 8Tháng 9Tháng 10Tháng 11Tháng 12Thứ HaiThứ BaThứ TưThứ NămThứ SáuThứ BảyChủ Nhật0
-vi-VN	Tháng 1Tháng 2Tháng 3Tháng 4Tháng 5Tháng 6Tháng 7Tháng 8Tháng 9Tháng 10Tháng 11Tháng 12Tháng 1Tháng 2Tháng 3Tháng 4Tháng 5Tháng 6Tháng 7Tháng 8Tháng 9Tháng 10Tháng 11Tháng 12Thứ HaiThứ BaThứ TưThứ NămThứ SáuThứ BảyChủ Nhật0
+vai-Vaii	0
+vai-Vaii-LR	0
+ve	0
+ve-ZA	0
+vec	0
+vec-IT	0
+vi	Tháng 1Tháng 2Tháng 3Tháng 4Tháng 5Tháng 6Tháng 7Tháng 8Tháng 9Tháng 10Tháng 11Tháng 12Tháng 1Tháng 2Tháng 3Tháng 4Tháng 5Tháng 6Tháng 7Tháng 8Tháng 9Tháng 10Tháng 11Tháng 120
+vi-VN	Tháng 1Tháng 2Tháng 3Tháng 4Tháng 5Tháng 6Tháng 7Tháng 8Tháng 9Tháng 10Tháng 11Tháng 12Tháng 1Tháng 2Tháng 3Tháng 4Tháng 5Tháng 6Tháng 7Tháng 8Tháng 9Tháng 10Tháng 11Tháng 120
 vmw	0
 vmw-MZ	0
-vo	yanulfebulmäzulprilulmayulyunulyululgustulsetultobnovuldekulMuTuVeDöFrZäSu0
-vo-001	yanulfebulmäzulprilulmayulyunulyululgustulsetultobnovuldekulMuTuVeDöFrZäSu0
-vun	JanuariFebruariMachiAprilyiMeiJunyiJulyaiAgustiSeptembaOktobaNovembaDesembaJumatatuuJumanneJumatanuAlhamisiIjumaaJumamosiJumapilyi0
-vun-TZ	JanuariFebruariMachiAprilyiMeiJunyiJulyaiAgustiSeptembaOktobaNovembaDesembaJumatatuuJumanneJumatanuAlhamisiIjumaaJumamosiJumapilyi0
+vo	yanfebmäzprlmayyunyulgstsettobnovdekMuTuVeDöFrZäSu0
+vo-001	yanfebmäzprlmayyunyulgstsettobnovdekMuTuVeDöFrZäSu0
+vun	0
+vun-TZ	0
 wa	0
 wa-BE	0
-wae	JennerHornigMärzeAbrilleMeijeBráčetHeiwetÖigšteHerbštmánetWímánetWintermánetChrištmánetMäntagZištagMittwučFróntagFritagSamštagSunntag0
-wae-CH	JennerHornigMärzeAbrilleMeijeBráčetHeiwetÖigšteHerbštmánetWímánetWintermánetChrištmánetMäntagZištagMittwučFróntagFritagSamštagSunntag0
-wal	ጃንዩወሪፌብሩወሪማርችኤፕረልሜይጁንጁላይኦገስትሴፕቴምበርኦክተውበርኖቬምበርዲሴምበር0
-wal-ET	ጃንዩወሪፌብሩወሪማርችኤፕረልሜይጁንጁላይኦገስትሴፕቴምበርኦክተውበርኖቬምበርዲሴምበር0
+wae	0
+wae-CH	0
+wal	0
+wal-ET	0
 wbp	0
 wbp-AU	0
-wo	SamwiyeeFewriyeeMarsAwrilMeeSuweSuletUtSàttumbarOktoobarNowàmbarDesàmbarAltineTalaataÀlarbaAlxamisÀjjumaAseerDibéer0
-wo-SN	SamwiyeeFewriyeeMarsAwrilMeeSuweSuletUtSàttumbarOktoobarNowàmbarDesàmbarAltineTalaataÀlarbaAlxamisÀjjumaAseerDibéer0
-xh	JanyuwariFebruwariMatshiEpreliMeyiJuniJulayiAgastiSeptembaOkthobaNovembaDisembaJanyuwariFebruwariMatshiEpreliMeyiJuniJulayiAgastiSepOkthobaNovembaDisembaMvuloBinLwesithathuLwesineLwesihlanuMgqibeloCaweMvSbStSinHlMgC0
-xh-ZA	JanyuwariFebruwariMatshiEpreliMeyiJuniJulayiAgastiSeptembaOkthobaNovembaDisembaJanyuwariFebruwariMatshiEpreliMeyiJuniJulayiAgastiSepOkthobaNovembaDisembaMvuloBinLwesithathuLwesineLwesihlanuMgqibeloCaweMvSbStSinHlMgC0
-xnr	जनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसितंबरअक्तूबरनवंबरदिसंबरसोआरमंगलवारबुधवारवीरवारशुक्करवारशनिच्चरवारतोआर0
-xnr-IN	जनवरीफ़रवरीमार्चअप्रैलमईजूनजुलाईअगस्तसितंबरअक्तूबरनवंबरदिसंबरसोआरमंगलवारबुधवारवीरवारशुक्करवारशनिच्चरवारतोआर0
-xog	JanwaliyoFebwaliyoMarisiApuliMaayiJuuniJulaayiAgusitoSebuttembaOkitobbaNovembaDesembaBalazaOwokubiliOwokusatuOlokunaOlokutaanuOlomukaagaSabiiti0
-xog-UG	JanwaliyoFebwaliyoMarisiApuliMaayiJuuniJulaayiAgusitoSebuttembaOkitobbaNovembaDesembaBalazaOwokubiliOwokusatuOlokunaOlokutaanuOlomukaagaSabiiti0
-yav	pikítíkítie, oólí ú kutúansiɛyɛ́, oóli ú kándíɛɔnsúmbɔl, oóli ú kátátúɛmesiŋ, oóli ú kénieensil, oóli ú kátánuɛɔsɔnefutepisuyúimɛŋ i puɔsimɛŋ i putúk,oóli ú kátíɛmakandikɛpilɔndɔ́móndiemuányáŋmóndiemetúkpíápɛkúpélimetúkpiapɛfeléteséselésɔ́ndiɛ0
-yav-CM	pikítíkítie, oólí ú kutúansiɛyɛ́, oóli ú kándíɛɔnsúmbɔl, oóli ú kátátúɛmesiŋ, oóli ú kénieensil, oóli ú kátánuɛɔsɔnefutepisuyúimɛŋ i puɔsimɛŋ i putúk,oóli ú kátíɛmakandikɛpilɔndɔ́móndiemuányáŋmóndiemetúkpíápɛkúpélimetúkpiapɛfeléteséselésɔ́ndiɛ0
+wo	0
+wo-SN	0
+xh	JanyuwariFebruwariMatshiEpreliMeyiJuniJulayiAgastiSeptembaOkthobaNovembaDisembaJanFebMatEprMeyJunJulAgaSepOktNovDisMvuBinThaSinHlaMgqCawMvSbStSinHlMgC0
+xh-ZA	JanyuwariFebruwariMatshiEpreliMeyiJuniJulayiAgastiSeptembaOkthobaNovembaDisembaJanFebMatEprMeyJunJulAgaSepOktNovDisMvuBinThaSinHlaMgqCawMvSbStSinHlMgC0
+xnr	0
+xnr-IN	0
+xog	0
+xog-UG	0
+yav	0
+yav-CM	0
 yi	יאַנפֿעבמערץאַפּרמיייונייוליאויגסעפּאקטנאוודעצ0
 yi-UA	יאַנפֿעבמערץאַפּרמיייונייוליאויגסעפּאקטנאוודעצ0
 yo	AjéÌsẹ́gunỌjọ́rúỌjọ́bọẸtìÀbámẹ́taÀìkú0
 yo-BJ	AjéÌsɛ́gunƆjɔ́rúƆjɔ́bɔƐtìÀbámɛ́taÀìkú0
 yo-NG	AjéÌsẹ́gunỌjọ́rúỌjọ́bọẸtìÀbámẹ́taÀìkú0
-yrl	yepémukũimusapíriirũdípúpú-yepépú-mukũipú-musapíripú-irũdíyepé-putimaãyepé-yepéyepé-mukũimurakipímurakí-mukũimurakí-musapírisupapáyukuakúsaurúmituúc3f0
-yrl-BR	yepémukũimusapíriirũdípúpú-yepépú-mukũipú-musapíripú-irũdíyepé-putimaãyepé-yepéyepé-mukũimurakipímurakí-mukũimurakí-musapírisupapáyukuakúsaurúmituúc3f0
-yrl-CO	yepémukũimusapíriirũdípúpú-yepépú-mukũipú-musapíripú-irũdíyepé-putimaãyepé-yepéyepé-mukũimurakipímurakí-mukũimurakí-musapírisupapáyukuakúsaurúmituúc3f0
-yrl-VE	yepémukũimusapíriirũdípúpú-yepépú-mukũipú-musapíripú-irũdíyepé-putimaãyepé-yepéyepé-mukũimurakipímurakí-mukũimurakí-musapírisupapáyukuakúsaurúmituúc3f0
+yrl	c3f0
+yrl-BR	c3f0
+yrl-CO	c3f0
+yrl-VE	c3f0
 yue	0
 yue-Hans	0
 yue-Hans-CN	0
@@ -10898,24 +10898,24 @@ yue-Hant-HK	0
 yue-Hant-MO	0
 za	0
 za-CN	0
-zgh	ⵉⵏⵏⴰⵢⵔⴱⵕⴰⵢⵕⵎⴰⵕⵚⵉⴱⵔⵉⵔⵎⴰⵢⵢⵓⵢⵓⵏⵢⵓⵢⵓⵍⵢⵓⵣⵖⵓⵛⵜⵛⵓⵜⴰⵏⴱⵉⵔⴽⵜⵓⴱⵔⵏⵓⵡⴰⵏⴱⵉⵔⴷⵓⵊⴰⵏⴱⵉⵔⴰⵢⵏⴰⵙⴰⵙⵉⵏⴰⵙⴰⴽⵕⴰⵙⴰⴽⵡⴰⵙⴰⵙⵉⵎⵡⴰⵙⴰⵙⵉⴹⵢⴰⵙⴰⵙⴰⵎⴰⵙ0
-zgh-MA	ⵉⵏⵏⴰⵢⵔⴱⵕⴰⵢⵕⵎⴰⵕⵚⵉⴱⵔⵉⵔⵎⴰⵢⵢⵓⵢⵓⵏⵢⵓⵢⵓⵍⵢⵓⵣⵖⵓⵛⵜⵛⵓⵜⴰⵏⴱⵉⵔⴽⵜⵓⴱⵔⵏⵓⵡⴰⵏⴱⵉⵔⴷⵓⵊⴰⵏⴱⵉⵔⴰⵢⵏⴰⵙⴰⵙⵉⵏⴰⵙⴰⴽⵕⴰⵙⴰⴽⵡⴰⵙⴰⵙⵉⵎⵡⴰⵙⴰⵙⵉⴹⵢⴰⵙⴰⵙⴰⵎⴰⵙ0
-zh	一月二月三月四月五月六月七月八月九月十月十一月十二月星期一星期二星期三星期四星期五星期六星期日0
-zh-Hans	一月二月三月四月五月六月七月八月九月十月十一月十二月星期一星期二星期三星期四星期五星期六星期日0
-zh-Hans-CN	一月二月三月四月五月六月七月八月九月十月十一月十二月星期一星期二星期三星期四星期五星期六星期日0
-zh-Hans-HK	一月二月三月四月五月六月七月八月九月十月十一月十二月星期一星期二星期三星期四星期五星期六星期日0
-zh-Hans-MO	一月二月三月四月五月六月七月八月九月十月十一月十二月星期一星期二星期三星期四星期五星期六星期日0
-zh-Hans-MY	一月二月三月四月五月六月七月八月九月十月十一月十二月星期一星期二星期三星期四星期五星期六星期日0
-zh-Hans-SG	一月二月三月四月五月六月七月八月九月十月十一月十二月星期一星期二星期三星期四星期五星期六星期日0
-zh-Hant	星期一星期二星期三星期四星期五星期六星期日0
-zh-Hant-HK	星期一星期二星期三星期四星期五星期六星期日0
-zh-Hant-MO	星期一星期二星期三星期四星期五星期六星期日0
-zh-Hant-MY	星期一星期二星期三星期四星期五星期六星期日0
-zh-Hant-TW	星期一星期二星期三星期四星期五星期六星期日0
-zh-Latn	一月二月三月四月五月六月七月八月九月十月十一月十二月星期一星期二星期三星期四星期五星期六星期日0
-zh-Latn-CN	一月二月三月四月五月六月七月八月九月十月十一月十二月星期一星期二星期三星期四星期五星期六星期日0
-zu	JanuwariFebruwariMashiEphreliMeyiJuniJulayiAgastiSepthembaOkthobaNovembaDisembaJFMAMJJASONDUMsombulukoULwesibiliULwesithathuULwesineULwesihlanuUMgqibeloISonto0
-zu-ZA	JanuwariFebruwariMashiEphreliMeyiJuniJulayiAgastiSepthembaOkthobaNovembaDisembaJFMAMJJASONDUMsombulukoULwesibiliULwesithathuULwesineULwesihlanuUMgqibeloISonto0
+zgh	0
+zgh-MA	0
+zh	0
+zh-Hans	0
+zh-Hans-CN	0
+zh-Hans-HK	0
+zh-Hans-MO	0
+zh-Hans-MY	0
+zh-Hans-SG	0
+zh-Hant	0
+zh-Hant-HK	0
+zh-Hant-MO	0
+zh-Hant-MY	0
+zh-Hant-TW	0
+zh-Latn	0
+zh-Latn-CN	0
+zu	JFMAMJJASOND0
+zu-ZA	JFMAMJJASOND0
 #localeDisplayNames
 root	p{0} ({1}){0}, {1}{0}: {1}0
 aa	rootaaQafarDJYabuutiEREretriaETOtobbia0

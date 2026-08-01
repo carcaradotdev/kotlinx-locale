@@ -8,29 +8,20 @@ internal val LOCALE_STANDALONE_FA: String =
 internal val LOCALE_STANDALONE_FA_AF: String =
     "\u001Fجنوری\u001Eفبروری\u001Eمارچ\u001Eاپریل\u001Eمی\u001Eجون\u001Eجولای\u001Eاگست\u001Eسپتمبر\u001Eاکتوبر\u001Eنومبر\u001Eدسمبر\u001F\u001F\u001F\u001F\u001F0"
 
-internal val LOCALE_STANDALONE_FF: String =
-    "\u001Fsiilo\u001Ecolte\u001Embooy\u001Eseeɗto\u001Eduujal\u001Ekorse\u001Emorso\u001Ejuko\u001Esiilto\u001Eyarkomaa\u001Ejolal\u001Ebowte\u001F\u001F\u001Faaɓnde\u001Emawbaare\u001Enjeslaare\u001Enaasaande\u001Emawnde\u001Ehoore-biir\u001Edewo\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_FF_ADLM: String =
-    "\u001F𞤅𞤭𞥅𞤤\u001E𞤕𞤮𞤤\u001E𞤐𞤦𞤮𞥅𞤴\u001E𞤅𞤫𞥅𞤼\u001E𞤁𞤵𞥅𞤶\u001E𞤑𞤮𞤪\u001E𞤃𞤮𞤪\u001E𞤔𞤵𞤳\u001E𞤅𞤭𞤤\u001E𞤒𞤢𞤪\u001E𞤔𞤮𞤤\u001E𞤄𞤮𞤱\u001F\u001F\u001F𞤀𞥄𞤩𞤵𞤲𞥋𞤣𞤫\u001E𞤃𞤢𞤱𞤦𞤢𞥄𞤪𞤫\u001E𞤐𞤶𞤫𞤧𞤤𞤢𞥄𞤪𞤫\u001E𞤐𞤢𞥄𞤧𞤢𞥄𞤲𞤣𞤫\u001E𞤃𞤢𞤱𞤲𞤣𞤫\u001E𞤖𞤮𞤪𞤦𞤭𞤪𞥆𞤫\u001E𞤈𞤫𞤬𞤦𞤭𞤪𞥆𞤫\u001F\u001F0"
+    "\u001F𞤅𞤭𞥅𞤤\u001E𞤕𞤮𞤤\u001E𞤐𞤦𞤮𞥅𞤴\u001E𞤅𞤫𞥅𞤼\u001E𞤁𞤵𞥅𞤶\u001E𞤑𞤮𞤪\u001E𞤃𞤮𞤪\u001E𞤔𞤵𞤳\u001E𞤅𞤭𞤤\u001E𞤒𞤢𞤪\u001E𞤔𞤮𞤤\u001E𞤄𞤮𞤱\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_FI: String =
-    "tammikuu\u001Ehelmikuu\u001Emaaliskuu\u001Ehuhtikuu\u001Etoukokuu\u001Ekesäkuu\u001Eheinäkuu\u001Eelokuu\u001Esyyskuu\u001Elokakuu\u001Emarraskuu\u001Ejoulukuu\u001Ftammikuu\u001Ehelmikuu\u001Emaaliskuu\u001Ehuhtikuu\u001Etoukokuu\u001Ekesäkuu\u001Eheinäkuu\u001Eelokuu\u001Esyyskuu\u001Elokakuu\u001Emarraskuu\u001Ejoulukuu\u001F\u001Fmaanantai\u001Etiistai\u001Ekeskiviikko\u001Etorstai\u001Eperjantai\u001Elauantai\u001Esunnuntai\u001Fmaanantai\u001Etiistai\u001Ekeskiviikko\u001Etorstai\u001Eperjantai\u001Elauantai\u001Esunnuntai\u001F\u001F4200"
+    "tammikuu\u001Ehelmikuu\u001Emaaliskuu\u001Ehuhtikuu\u001Etoukokuu\u001Ekesäkuu\u001Eheinäkuu\u001Eelokuu\u001Esyyskuu\u001Elokakuu\u001Emarraskuu\u001Ejoulukuu\u001F\u001F\u001Fmaanantai\u001Etiistai\u001Ekeskiviikko\u001Etorstai\u001Eperjantai\u001Elauantai\u001Esunnuntai\u001F\u001F\u001F4200"
 
 internal val LOCALE_STANDALONE_FIL: String =
-    "\u001FEnero\u001EPebrero\u001EMarso\u001EAbril\u001EMayo\u001EHunyo\u001EHulyo\u001EAgosto\u001ESetyembre\u001EOktubre\u001ENobyembre\u001EDisyembre\u001FE\u001EP\u001EM\u001EA\u001EM\u001EHun\u001EHul\u001EAgo\u001ESet\u001EOkt\u001ENob\u001EDis\u001F\u001FLunes\u001EMartes\u001EMiyerkules\u001EHuwebes\u001EBiyernes\u001ESabado\u001ELinggo\u001F\u001F0"
+    "\u001F\u001FE\u001EP\u001EM\u001EA\u001EM\u001EHun\u001EHul\u001EAgo\u001ESet\u001EOkt\u001ENob\u001EDis\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_FO: String =
     "\u001Fjan\u001Efeb\u001Emar\u001Eapr\u001Emai\u001Ejun\u001Ejul\u001Eaug\u001Esep\u001Eokt\u001Enov\u001Edes\u001F\u001F\u001Fmán\u001Etýs\u001Emik\u001Ehós\u001Efrí\u001Eley\u001Esun\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_FR: String =
-    "\u001Fjanvier\u001Efévrier\u001Emars\u001Eavril\u001Emai\u001Ejuin\u001Ejuillet\u001Eaoût\u001Eseptembre\u001Eoctobre\u001Enovembre\u001Edécembre\u001F\u001F\u001Flundi\u001Emardi\u001Emercredi\u001Ejeudi\u001Evendredi\u001Esamedi\u001Edimanche\u001F\u001F255"
-
-internal val LOCALE_STANDALONE_FRR: String =
-    "\u001FJanewoore\u001EFebrewoore\u001EMaarts\u001EApril\u001EMei\u001EJüüne\u001EJüüle\u001EAugust\u001ESeptember\u001EOktuuber\u001ENofember\u001EDetsember\u001F\u001F\u001FMundai\u001ETeisdai\u001EWeedensdai\u001ETüürsdai\u001EFreidai\u001ESaninj\u001ESöndai\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_FUR: String =
-    "\u001FZenâr\u001EFevrâr\u001EMarç\u001EAvrîl\u001EMai\u001EJugn\u001ELui\u001EAvost\u001ESetembar\u001EOtubar\u001ENovembar\u001EDicembar\u001F\u001F\u001Flunis\u001Emartars\u001Emiercus\u001Ejoibe\u001Evinars\u001Esabide\u001Edomenie\u001F\u001F0"
+    "\u001F\u001F\u001F\u001F\u001F\u001F255"
 
 internal val LOCALE_STANDALONE_FY: String =
-    "\u001FJannewaris\u001EFebrewaris\u001EMaart\u001EApril\u001EMaaie\u001EJuny\u001EJuly\u001EAugustus\u001ESeptimber\u001EOktober\u001ENovimber\u001EDesimber\u001F\u001F\u001Fmoandei\u001Etiisdei\u001Ewoansdei\u001Etongersdei\u001Efreed\u001Esneon\u001Esnein\u001F\u001Fc0ff"
+    "\u001F\u001F\u001F\u001F\u001F\u001Fc0ff"

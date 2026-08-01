@@ -21,14 +21,14 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | datetime-platform | 35.3 KB | 112.6 KB | 42.0 KB | 6.6 KB |
 | everything-platform | 49.1 KB | 153.7 KB | 54.0 KB | 4.8 KB |
 | number-full | 77.1 KB | 330.2 KB | 110.0 KB | 32.8 KB |
-| datetime-full | 145.1 KB | 536.4 KB | 165.0 KB | 19.8 KB |
+| datetime-full | 124.1 KB | 478.3 KB | 140.0 KB | 15.8 KB |
 | datetime-relative | 154.9 KB | 907.1 KB | 190.0 KB | 35.0 KB |
-| datetime-skeletons | 206.9 KB | 889.9 KB | 230.0 KB | 23.0 KB |
+| datetime-skeletons | 186.1 KB | 831.8 KB | 205.0 KB | 18.8 KB |
 | country-full | 416.9 KB | 1187.2 KB | 460.0 KB | 43.0 KB |
 | currency-full | 456.1 KB | 1443.4 KB | 500.0 KB | 43.8 KB |
 | timezone-full | 568.7 KB | 3127.4 KB | 700.0 KB | 131.2 KB |
 | timezone-cities | 952.9 KB | 4519.5 KB | 1200.0 KB | 247.0 KB |
-| everything | 982.8 KB | 3057.9 KB | 1100.0 KB | 117.1 KB |
+| everything | 961.8 KB | 2999.8 KB | 1100.0 KB | 138.1 KB |
 | language-full | 1291.1 KB | 3408.8 KB | 1400.0 KB | 108.8 KB |
 
 ## What the platform layer costs
@@ -39,7 +39,7 @@ between the two columns is the data and nothing else.
 
 | domain | platform | CLDR | what survives | saved |
 | --- | ---: | ---: | ---: | ---: |
-| datetime | 35.3 KB | 145.1 KB | 24.3% | 109.7 KB |
+| datetime | 35.3 KB | 124.1 KB | 28.5% | 88.7 KB |
 | country | 20.2 KB | 416.9 KB | 4.8% | 396.7 KB |
 | currency | 24.9 KB | 456.1 KB | 5.5% | 431.1 KB |
-| all three | 49.1 KB | 982.8 KB | 5.0% | 933.6 KB |
+| all three | 49.1 KB | 961.8 KB | 5.1% | 912.7 KB |

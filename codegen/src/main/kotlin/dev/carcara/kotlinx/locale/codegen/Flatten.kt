@@ -182,9 +182,17 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             if (numberingSystem == null) numberingSystem = p.numberingSystem
         }
 
-        // Emulate root.xml's aliases for any slot still empty after the merge:
-        // format abbreviated -> format wide, format narrow -> stand-alone narrow,
-        // and stand-alone wide and abbreviated -> their format counterparts.
+        // Emulate root.xml's alias graph for any slot still empty after the
+        // merge. Each stand-alone width points at its own format counterpart
+        // rather than at the width above it, which is the difference between
+        // Russian stand-alone abbreviated reading `янв.` and `январь`:
+        //
+        //   format abbreviated      -> format wide
+        //   format narrow           -> stand-alone narrow
+        //   stand-alone wide        -> format wide
+        //   stand-alone abbreviated -> format abbreviated
+        //   stand-alone narrow      -> the base, which is why format narrow
+        //                              points at it rather than the reverse
         //
         // Per index rather than per array: cs.xml declares eleven of its
         // stand-alone wide months and leaves the twelfth to inherit, so merging
@@ -193,14 +201,14 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             if (monthsAbbr[i] == null) monthsAbbr[i] = monthsWide[i]
             if (monthsNarrow[i] == null) monthsNarrow[i] = monthsStandaloneNarrow[i] ?: monthsAbbr[i]
             if (monthsStandaloneWide[i] == null) monthsStandaloneWide[i] = monthsWide[i]
-            if (monthsStandaloneAbbr[i] == null) monthsStandaloneAbbr[i] = monthsStandaloneWide[i]
+            if (monthsStandaloneAbbr[i] == null) monthsStandaloneAbbr[i] = monthsAbbr[i]
             if (monthsStandaloneNarrow[i] == null) monthsStandaloneNarrow[i] = monthsNarrow[i]
         }
         for (i in 0..6) {
             if (daysAbbr[i] == null) daysAbbr[i] = daysWide[i]
             if (daysNarrow[i] == null) daysNarrow[i] = daysStandaloneNarrow[i] ?: daysAbbr[i]
             if (daysStandaloneWide[i] == null) daysStandaloneWide[i] = daysWide[i]
-            if (daysStandaloneAbbr[i] == null) daysStandaloneAbbr[i] = daysStandaloneWide[i]
+            if (daysStandaloneAbbr[i] == null) daysStandaloneAbbr[i] = daysAbbr[i]
             if (daysStandaloneNarrow[i] == null) daysStandaloneNarrow[i] = daysNarrow[i]
         }
 

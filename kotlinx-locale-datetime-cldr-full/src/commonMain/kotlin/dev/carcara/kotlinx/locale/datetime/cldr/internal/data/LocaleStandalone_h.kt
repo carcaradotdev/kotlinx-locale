@@ -2,38 +2,20 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal val LOCALE_STANDALONE_HA: String =
-    "\u001FJanairu\u001EFaburairu\u001EMaris\u001EAfirilu\u001EMayu\u001EYuni\u001EYuli\u001EAgusta\u001ESatumba\u001EOktoba\u001ENuwamba\u001EDisamba\u001F\u001F\u001FLitinin\u001ETalata\u001ELaraba\u001EAlhamis\u001EJummaʼa\u001EAsabar\u001ELahadi\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_HAW: String =
-    "\u001FIanuali\u001EPepeluali\u001EMalaki\u001EʻApelila\u001EMei\u001EIune\u001EIulai\u001EʻAukake\u001EKepakemapa\u001EʻOkakopa\u001ENowemapa\u001EKekemapa\u001F\u001F\u001FPoʻakahi\u001EPoʻalua\u001EPoʻakolu\u001EPoʻahā\u001EPoʻalima\u001EPoʻaono\u001ELāpule\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_HA_ARAB: String =
-    "\u001Fجَنَيْرُ\u001Eڢَبْرَيْرُ\u001Eمَرِسْ\u001Eأَڢْرِلُ\u001Eمَيُ\u001Eيُونِ\u001Eيُولِ\u001Eأَغُسْتَ\u001Eسَتُمْبَ\u001Eأُكْتوُبَ\u001Eنُوَمْبَ\u001Eدِسَمْبَ\u001F\u001F\u001Fلِتِنِنْ\u001Eتَلَتَ\u001Eلَرَبَ\u001Eأَلْحَمِسْ\u001Eجُمَعَ\u001Eأَسَبَرْ\u001Eلَحَدِ\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_HE: String =
-    "\u001Fינואר\u001Eפברואר\u001Eמרץ\u001Eאפריל\u001Eמאי\u001Eיוני\u001Eיולי\u001Eאוגוסט\u001Eספטמבר\u001Eאוקטובר\u001Eנובמבר\u001Eדצמבר\u001F\u001F\u001Fיום שני\u001Eיום שלישי\u001Eיום רביעי\u001Eיום חמישי\u001Eיום שישי\u001Eיום שבת\u001Eיום ראשון\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_HI: String =
-    "\u001Fजनवरी\u001Eफ़रवरी\u001Eमार्च\u001Eअप्रैल\u001Eमई\u001Eजून\u001Eजुलाई\u001Eअगस्त\u001Eसितंबर\u001Eअक्टूबर\u001Eनवंबर\u001Eदिसंबर\u001F\u001F\u001Fसोमवार\u001Eमंगलवार\u001Eबुधवार\u001Eगुरुवार\u001Eशुक्रवार\u001Eशनिवार\u001Eरविवार\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_HI_LATN: String =
     "\u001FJan\u001EFeb\u001EMar\u001EApr\u001EMay\u001EJun\u001EJul\u001EAug\u001ESept\u001EOct\u001ENov\u001EDec\u001F\u001F\u001F\u001F\u001Fc000"
 
 internal val LOCALE_STANDALONE_HNJ: String =
-    "\u001F\u001F\u001F𞄈𞄦\u001E𞄆𞄨𞄰\u001E𞄗𞄄𞄤𞄰𞄦\u001E𞄙𞄤𞄱𞄨\u001E𞄑𞄤𞄱𞄨\u001E𞄊𞄧𞄳\u001E𞄎𞄤𞄲\u001F𞄈𞄦\u001E𞄆𞄨𞄰\u001E𞄗𞄄𞄤𞄰𞄦\u001E𞄙𞄤𞄱𞄨\u001E𞄑𞄤𞄱𞄨\u001E𞄊𞄧𞄳\u001E𞄎𞄤𞄲\u001F\u001F0"
+    "\u001F\u001F\u001F𞄈𞄦\u001E𞄆𞄨𞄰\u001E𞄗𞄄𞄤𞄰𞄦\u001E𞄙𞄤𞄱𞄨\u001E𞄑𞄤𞄱𞄨\u001E𞄊𞄧𞄳\u001E𞄎𞄤𞄲\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_HR: String =
-    "siječanj\u001Eveljača\u001Eožujak\u001Etravanj\u001Esvibanj\u001Elipanj\u001Esrpanj\u001Ekolovoz\u001Erujan\u001Elistopad\u001Estudeni\u001Eprosinac\u001Fsiječanj\u001Eveljača\u001Eožujak\u001Etravanj\u001Esvibanj\u001Elipanj\u001Esrpanj\u001Ekolovoz\u001Erujan\u001Elistopad\u001Estudeni\u001Eprosinac\u001F\u001F\u001Fponedjeljak\u001Eutorak\u001Esrijeda\u001Ečetvrtak\u001Epetak\u001Esubota\u001Enedjelja\u001Fp\u001Eu\u001Es\u001Eč\u001Ep\u001Es\u001En\u001Fc3aa"
+    "siječanj\u001Eveljača\u001Eožujak\u001Etravanj\u001Esvibanj\u001Elipanj\u001Esrpanj\u001Ekolovoz\u001Erujan\u001Elistopad\u001Estudeni\u001Eprosinac\u001F\u001F\u001F\u001F\u001Fp\u001Eu\u001Es\u001Eč\u001Ep\u001Es\u001En\u001Fc3aa"
 
 internal val LOCALE_STANDALONE_HR_BA: String =
-    "siječanj\u001Eveljača\u001Eožujak\u001Etravanj\u001Esvibanj\u001Elipanj\u001Esrpanj\u001Ekolovoz\u001Erujan\u001Elistopad\u001Estudeni\u001Eprosinac\u001Fsiječanj\u001Eveljača\u001Eožujak\u001Etravanj\u001Esvibanj\u001Elipanj\u001Esrpanj\u001Ekolovoz\u001Erujan\u001Elistopad\u001Estudeni\u001Eprosinac\u001F\u001F\u001Fponedjeljak\u001Eutorak\u001Esrijeda\u001Ečetvrtak\u001Epetak\u001Esubota\u001Enedjelja\u001F\u001Fc3aa"
+    "siječanj\u001Eveljača\u001Eožujak\u001Etravanj\u001Esvibanj\u001Elipanj\u001Esrpanj\u001Ekolovoz\u001Erujan\u001Elistopad\u001Estudeni\u001Eprosinac\u001F\u001F\u001F\u001F\u001F\u001Fc3aa"
 
 internal val LOCALE_STANDALONE_HSB: String =
-    "januar\u001Efebruar\u001Eměrc\u001Eapryl\u001Emeja\u001Ejunij\u001Ejulij\u001Eawgust\u001Eseptember\u001Eoktober\u001Enowember\u001Edecember\u001Fjan\u001Efeb\u001Eměr\u001Eapr\u001Emej\u001Ejun\u001Ejul\u001Eawg\u001Esep\u001Eokt\u001Enow\u001Edec\u001F\u001F\u001Fpóndźela\u001Ewutora\u001Esrjeda\u001Eštwórtk\u001Epjatk\u001Esobota\u001Enjedźela\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_HU: String =
-    "\u001Fjanuár\u001Efebruár\u001Emárcius\u001Eáprilis\u001Emájus\u001Ejúnius\u001Ejúlius\u001Eaugusztus\u001Eszeptember\u001Eoktóber\u001Enovember\u001Edecember\u001F\u001F\u001Fhétfő\u001Ekedd\u001Eszerda\u001Ecsütörtök\u001Epéntek\u001Eszombat\u001Evasárnap\u001F\u001F0"
+    "januar\u001Efebruar\u001Eměrc\u001Eapryl\u001Emeja\u001Ejunij\u001Ejulij\u001Eawgust\u001Eseptember\u001Eoktober\u001Enowember\u001Edecember\u001Fjan\u001Efeb\u001Eměr\u001Eapr\u001Emej\u001Ejun\u001Ejul\u001Eawg\u001Esep\u001Eokt\u001Enow\u001Edec\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_HY: String =
-    "հունվար\u001Eփետրվար\u001Eմարտ\u001Eապրիլ\u001Eմայիս\u001Eհունիս\u001Eհուլիս\u001Eօգոստոս\u001Eսեպտեմբեր\u001Eհոկտեմբեր\u001Eնոյեմբեր\u001Eդեկտեմբեր\u001Fհունվար\u001Eփետրվար\u001Eմարտ\u001Eապրիլ\u001Eմայիս\u001Eհունիս\u001Eհուլիս\u001Eօգոստոս\u001Eսեպտեմբեր\u001Eհոկտեմբեր\u001Eնոյեմբեր\u001Eդեկտեմբեր\u001F\u001F\u001Fերկուշաբթի\u001Eերեքշաբթի\u001Eչորեքշաբթի\u001Eհինգշաբթի\u001Eուրբաթ\u001Eշաբաթ\u001Eկիրակի\u001F\u001F0"
+    "հունվար\u001Eփետրվար\u001Eմարտ\u001Eապրիլ\u001Eմայիս\u001Eհունիս\u001Eհուլիս\u001Eօգոստոս\u001Eսեպտեմբեր\u001Eհոկտեմբեր\u001Eնոյեմբեր\u001Eդեկտեմբեր\u001F\u001F\u001F\u001F\u001F\u001F0"

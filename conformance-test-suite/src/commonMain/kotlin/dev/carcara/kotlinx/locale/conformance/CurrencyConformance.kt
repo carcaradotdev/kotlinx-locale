@@ -6,6 +6,7 @@ import dev.carcara.kotlinx.locale.currency.CurrencyAmount
 import dev.carcara.kotlinx.locale.currency.CurrencyFormatSource
 import dev.carcara.kotlinx.locale.currency.CurrencyNameSource
 import dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle
+import dev.carcara.kotlinx.locale.currency.active
 import dev.carcara.kotlinx.locale.currency.cldrToIsoUnits
 import dev.carcara.kotlinx.locale.currency.code
 import dev.carcara.kotlinx.locale.currency.displayName
@@ -43,6 +44,18 @@ public fun CurrencyNameSource.assertConformsToCurrencyNames(tier: ConformanceTie
             assertTrue(displayName(currency, locale).isNotBlank(), "$tag ${currency.code} name was blank")
         }
     }
+
+    // CLDR names the currencies people spend, not every code ISO assigns. A
+    // handful of special-purpose codes have no name in any locale and fall back
+    // to the code, which is the right answer for them. What is worth pinning is
+    // that the fallback stays rare, so a table that lost its English names
+    // fails here rather than degrading quietly.
+    val english = Locale.of("en")
+    val unnamed = Currency.active.count { displayName(it, english) == it.code }
+    assertTrue(
+        unnamed < 10,
+        "$unnamed active currencies fell back to their code in en, which suggests the name table is missing rows",
+    )
 }
 
 private fun CurrencyNameSource.assertMatchesIcuCurrencyNames() {
@@ -173,5 +186,8 @@ public fun assertCurrencyNumericCodesMatchIcu() {
         assertEquals(icuNumeric, currency.numericCode, "${currency.code} numeric code")
         checked++
     }
-    assertTrue(checked > 150, "expected to check the active ISO set, checked $checked")
+    // ICU carries the withdrawn codes too, so this checks well past the active
+    // set. The threshold moves with the entry set rather than tracking it
+    // exactly, since ICU and ISO do not carry identical historical tables.
+    assertTrue(checked > 250, "expected to check both ISO lists against ICU, checked $checked")
 }

@@ -279,6 +279,11 @@ class IcuGoldenEntry(
     val monthsAbbr: List<String>?,
     val daysWide: List<String>?,
     val daysAbbr: List<String>?,
+    /** The stand-alone context, which ICU stores under the same keys. */
+    val monthsStandaloneWide: List<String>?,
+    val monthsStandaloneAbbr: List<String>?,
+    val daysStandaloneWide: List<String>?,
+    val daysStandaloneAbbr: List<String>?,
     val am: String?,
     val pm: String?,
     /** Flexible day period names in [DAY_PERIOD_TYPES] order minus am/pm; null when ICU lacks the type. */
@@ -317,6 +322,12 @@ fun extractIcuGolden(icuDir: File): List<IcuGoldenEntry> {
             monthsAbbr = resolver.list(id, "calendar", "gregorian", "monthNames", "format", "abbreviated"),
             daysWide = resolver.list(id, "calendar", "gregorian", "dayNames", "format", "wide")?.sundayFirstToIso(),
             daysAbbr = resolver.list(id, "calendar", "gregorian", "dayNames", "format", "abbreviated")?.sundayFirstToIso(),
+            monthsStandaloneWide = resolver.list(id, "calendar", "gregorian", "monthNames", "stand-alone", "wide"),
+            monthsStandaloneAbbr = resolver.list(id, "calendar", "gregorian", "monthNames", "stand-alone", "abbreviated"),
+            daysStandaloneWide = resolver.list(id, "calendar", "gregorian", "dayNames", "stand-alone", "wide")
+                ?.sundayFirstToIso(),
+            daysStandaloneAbbr = resolver.list(id, "calendar", "gregorian", "dayNames", "stand-alone", "abbreviated")
+                ?.sundayFirstToIso(),
             // AmPmMarkersAbbr is the abbreviated width, which is what the 'a'
             // pattern field (and our runtime data) uses.
             am = resolver.list(id, "calendar", "gregorian", "AmPmMarkersAbbr")?.getOrNull(0),
@@ -360,6 +371,10 @@ fun emitIcuGolden(outputFile: File, icuTag: String, entries: List<IcuGoldenEntry
             append("    public val monthsAbbr: List<String>?,\n")
             append("    public val daysWide: List<String>?,\n")
             append("    public val daysAbbr: List<String>?,\n")
+            append("    public val monthsStandaloneWide: List<String>?,\n")
+            append("    public val monthsStandaloneAbbr: List<String>?,\n")
+            append("    public val daysStandaloneWide: List<String>?,\n")
+            append("    public val daysStandaloneAbbr: List<String>?,\n")
             append("    public val am: String?,\n")
             append("    public val pm: String?,\n")
             append("    public val dayPeriods: List<String?>?,\n")
@@ -375,6 +390,10 @@ fun emitIcuGolden(outputFile: File, icuTag: String, entries: List<IcuGoldenEntry
                 append("        monthsAbbr = ${listOrNull(entry.monthsAbbr)},\n")
                 append("        daysWide = ${listOrNull(entry.daysWide)},\n")
                 append("        daysAbbr = ${listOrNull(entry.daysAbbr)},\n")
+                append("        monthsStandaloneWide = ${listOrNull(entry.monthsStandaloneWide)},\n")
+                append("        monthsStandaloneAbbr = ${listOrNull(entry.monthsStandaloneAbbr)},\n")
+                append("        daysStandaloneWide = ${listOrNull(entry.daysStandaloneWide)},\n")
+                append("        daysStandaloneAbbr = ${listOrNull(entry.daysStandaloneAbbr)},\n")
                 append("        am = ${stringOrNull(entry.am)},\n")
                 append("        pm = ${stringOrNull(entry.pm)},\n")
                 append("        dayPeriods = ${nullableListOrNull(entry.dayPeriods)},\n")
