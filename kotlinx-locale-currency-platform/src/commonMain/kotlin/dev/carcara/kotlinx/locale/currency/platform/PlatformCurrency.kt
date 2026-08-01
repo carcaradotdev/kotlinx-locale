@@ -6,6 +6,7 @@ import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.CurrencyAmount
+import dev.carcara.kotlinx.locale.currency.CurrencyFormatOptions
 import dev.carcara.kotlinx.locale.currency.CurrencyFormatSource
 import dev.carcara.kotlinx.locale.currency.CurrencyNameSource
 import dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle
@@ -14,6 +15,8 @@ import dev.carcara.kotlinx.locale.currency.forCodeOrNull
 import dev.carcara.kotlinx.locale.currency.format
 import dev.carcara.kotlinx.locale.currency.parseFormattedOrNull
 import dev.carcara.kotlinx.locale.currency.symbol
+import dev.carcara.kotlinx.locale.number.NumberNotation
+import dev.carcara.kotlinx.locale.number.SignDisplay
 import dev.carcara.kotlinx.locale.platform.PlatformLocaleData
 
 internal expect fun platformCurrencySymbol(currencyCode: String, localeTag: String): String?
@@ -103,23 +106,20 @@ public object PlatformCurrency : CurrencyNameSource, CurrencyFormatSource {
         platformCurrencyName(currencyCode, locale.toLanguageTag())
             ?.takeIf { it.isNotBlank() && !it.equals(currencyCode, ignoreCase = true) }
 
-    override fun formatOrNull(
-        minorUnits: Long,
-        currencyCode: String,
-        locale: Locale,
-        style: CurrencySymbolStyle,
-        accounting: Boolean,
-        cash: Boolean,
-    ): String? {
-        // No platform formatter knows about CLDR cash rounding.
-        if (cash) return null
+    override fun formatOrNull(minorUnits: Long, currencyCode: String, locale: Locale, options: CurrencyFormatOptions): String? {
+        // No platform formatter knows about CLDR cash rounding, and none takes a
+        // digit count or a compact form through the surface this module has. The
+        // honest answer is nothing, so a fallback composer can reach the bundled
+        // source rather than have this one guess.
+        if (options.cash || options.fractionDigits != null || options.notation != NumberNotation.STANDARD) return null
+        if (options.signDisplay != SignDisplay.AUTO && !options.signDisplay.usesAccountingPattern) return null
         val currency = Currency.forCodeOrNull(currencyCode) ?: return null
         return platformFormatCurrency(
             amount = CurrencyAmount(currency, minorUnits).toDecimalString(),
             currencyCode = currencyCode,
             localeTag = locale.toLanguageTag(),
-            useIsoCode = style == CurrencySymbolStyle.CODE,
-            accounting = accounting,
+            useIsoCode = options.style == CurrencySymbolStyle.CODE,
+            accounting = options.signDisplay.usesAccountingPattern,
         )
     }
 
@@ -142,16 +142,16 @@ public fun Currency.displayName(locale: Locale = Locale.current): String = Platf
  * Formats the amount with the platform's currency format for [locale].
  *
  * Falls back to `USD 12.50`, the ISO code and the plain decimal, when the
- * platform cannot render it, which on JVM and Android includes every
- * [accounting] call and everywhere includes every [cash] call. Compose with a
- * bundled source to avoid that.
+ * platform cannot render it, which on JVM and Android includes every accounting
+ * call and everywhere includes every [cash] call, a fraction-digit override and
+ * compact notation. Compose with a bundled source to avoid that.
  */
 public fun CurrencyAmount.format(
     locale: Locale = Locale.current,
     style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL,
-    accounting: Boolean = false,
+    signDisplay: SignDisplay = SignDisplay.AUTO,
     cash: Boolean = false,
-): String = PlatformCurrency.format(this, locale, style, accounting, cash)
+): String = PlatformCurrency.format(this, locale, style, signDisplay, cash)
 
 /** Reads a formatted amount back, or `null` where the platform has no parser. */
 public fun CurrencyAmount.Companion.parseFormattedOrNull(

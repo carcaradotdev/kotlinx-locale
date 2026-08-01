@@ -98,28 +98,56 @@ public fun emitCountryBinding(outputRoot: File, spec: BindingSpec) {
 }
 
 /** `CldrCurrency`-shaped binding: the source object plus the currency extensions. */
-public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec) {
+public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject: String?) {
     val file = outputRoot.packageFile(spec.packageName, "CurrencyNames.kt")
+    // Built here rather than spliced into the template, so the placeholders are
+    // resolved once at emit time and the generated file carries none of them.
+    val compactArguments = if (numberObject == null) {
+        ""
+    } else {
+        "\n        |        currencyCompactRegistry," +
+            "\n        |        FormattedNumberSelector {" +
+            "\n        |            ${numberObject}Plurals.pluralCategoryOrNull(it, PluralType.CARDINAL, Locale.current)" +
+            "\n        |                ?: PluralCategory.OTHER" +
+            "\n        |        },"
+    }
     file.writeText(
         preamble(
             spec,
-            listOf(
-                "dev.carcara.kotlinx.locale.Locale",
-                "dev.carcara.kotlinx.locale.currency.Currency",
-                "dev.carcara.kotlinx.locale.currency.CurrencyAmount",
-                "dev.carcara.kotlinx.locale.currency.CurrencyFormatSource",
-                "dev.carcara.kotlinx.locale.currency.CurrencyNameSource",
-                "dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle",
-                "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyFormats",
-                "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyNames",
-                "dev.carcara.kotlinx.locale.currency.code",
-                "dev.carcara.kotlinx.locale.currency.displayName",
-                "dev.carcara.kotlinx.locale.currency.format",
-                "dev.carcara.kotlinx.locale.currency.parseFormattedOrNull",
-                "dev.carcara.kotlinx.locale.currency.symbol",
-                "${spec.registryPackage}.currencyFormatsRegistry",
-                "${spec.registryPackage}.currencyNamesRegistry",
-            ),
+            buildList {
+                if (numberObject != null) {
+                    add(spec.registryPackage + ".currencyCompactRegistry")
+                    add("dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi")
+                    add("dev.carcara.kotlinx.locale.number.PluralCategory")
+                    add("dev.carcara.kotlinx.locale.number.PluralType")
+                    add("dev.carcara.kotlinx.locale.number.cldr.runtime.FormattedNumberSelector")
+                }
+                addAll(
+                    listOf(
+                        "dev.carcara.kotlinx.locale.Locale",
+                        "dev.carcara.kotlinx.locale.currency.Currency",
+                        "dev.carcara.kotlinx.locale.currency.CurrencyAmount",
+                        "dev.carcara.kotlinx.locale.currency.CurrencyFormatSource",
+                        "dev.carcara.kotlinx.locale.currency.CurrencyNameSource",
+                        "dev.carcara.kotlinx.locale.currency.CurrencyFormatOptions",
+                        "dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle",
+                        "dev.carcara.kotlinx.locale.number.NumberNotation",
+                        "dev.carcara.kotlinx.locale.number.SignDisplay",
+                        "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyFormats",
+                        "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyNames",
+                        "dev.carcara.kotlinx.locale.currency.code",
+                        "dev.carcara.kotlinx.locale.currency.displayName",
+                        "dev.carcara.kotlinx.locale.currency.format",
+                        "dev.carcara.kotlinx.locale.currency.parseFormattedOrNull",
+                        "dev.carcara.kotlinx.locale.currency.symbol",
+                        "${spec.registryPackage}.currencyFormatsRegistry",
+                        "${spec.registryPackage}.currencyNamesRegistry",
+                    ),
+                )
+            },
+            // Compact money reaches the plural selector, which is marked
+            // internal because it exists for the formatter modules to share.
+            fileAnnotation = if (numberObject == null) null else "@file:OptIn(InternalKotlinxLocaleApi::class)",
         ) + """
         |
         |/**
@@ -132,7 +160,10 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec) {
         |public object ${spec.objectName} : CurrencyNameSource, CurrencyFormatSource {
         |
         |    private val names = PayloadCurrencyNames(currencyNamesRegistry)
-        |    private val formats = PayloadCurrencyFormats(currencyFormatsRegistry, currencyNamesRegistry)
+        |    private val formats = PayloadCurrencyFormats(
+        |        currencyFormatsRegistry,
+        |        currencyNamesRegistry,$compactArguments
+        |    )
         |
         |    // The two tables cover the same locale set, so either answer is the same.
         |    override val supportedLocales: Set<Locale>
@@ -148,10 +179,8 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec) {
         |        minorUnits: Long,
         |        currencyCode: String,
         |        locale: Locale,
-        |        style: CurrencySymbolStyle,
-        |        accounting: Boolean,
-        |        cash: Boolean,
-        |    ): String? = formats.formatOrNull(minorUnits, currencyCode, locale, style, accounting, cash)
+        |        options: CurrencyFormatOptions,
+        |    ): String? = formats.formatOrNull(minorUnits, currencyCode, locale, options)
         |
         |    override fun parseToMinorUnitsOrNull(text: String, currencyCode: String, locale: Locale): Long? =
         |        formats.parseToMinorUnitsOrNull(text, currencyCode, locale)
@@ -166,17 +195,22 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec) {
         |/**
         | * Formats the amount with the pattern and symbols of [locale].
         | *
-        | * The currency is written per [style]; [accounting] selects the accounting
-        | * pattern (e.g. `(${'$'}1,234.56)` for negatives in en); [cash] applies the cash
-        | * fraction digits and cash rounding (e.g. CHF rounds to 0.05). The number of
-        | * fraction digits shown is CLDR's, which can differ from the ISO minor units.
+        | * The currency is written per [style]. [signDisplay] decides whether a sign
+        | * appears and whether CLDR's accounting pattern is used, which is what puts
+        | * `(${'$'}1,234.56)` on a negative in en. [cash] applies the cash fraction digits
+        | * and cash rounding, so a Swiss franc rounds to 0.05. [fractionDigits]
+        | * overrides CLDR's digit count, which is what a headline figure wants when it
+        | * should read `£18,500` rather than `£18,500.00`. [notation] selects compact
+        | * money: `${'$'}1.2M`.
         | */
         |public fun CurrencyAmount.format(
         |    locale: Locale = Locale.current,
         |    style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL,
-        |    accounting: Boolean = false,
+        |    signDisplay: SignDisplay = SignDisplay.AUTO,
         |    cash: Boolean = false,
-        |): String = ${spec.objectName}.format(this, locale, style, accounting, cash)
+        |    fractionDigits: Int? = null,
+        |    notation: NumberNotation = NumberNotation.STANDARD,
+        |): String = ${spec.objectName}.format(this, locale, style, signDisplay, cash, fractionDigits, notation)
         |
         |/**
         | * Parses a formatted string — `R${'$'} 1.234,56`, `(${'$'}1,234.56)`, `200 Ft` — back

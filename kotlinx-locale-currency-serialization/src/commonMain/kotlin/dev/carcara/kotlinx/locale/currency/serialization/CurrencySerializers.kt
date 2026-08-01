@@ -46,12 +46,16 @@ public object CurrencyCodeSerializer : KSerializer<Currency> {
 /**
  * Encodes a [Currency] as its ISO 4217 numeric code, e.g. `840` for `USD`.
  *
- * [Currency.numericCode] is documented as `-1` where ISO assigns no number.
- * Every currency in the bundled data has one today, so nothing hits the guard
- * below, but the field can carry the sentinel and a numeric code is not part of
- * what ISO promises every entry. Writing such a currency throws rather than
- * emitting a `-1` that could never be read back. [CurrencyCodeSerializer] has no
- * such edge and is the safer choice for a field that must hold any currency.
+ * A numeric code identifies a currency only among the ones still in use. ISO
+ * reuses a number across generations of the same currency — 191 is both the 1991
+ * Croatian dinar and the kuna that replaced it, 8 is both Albanian leks — so
+ * reading a number back resolves to the active entry, and a withdrawn currency
+ * does not round trip through this form. Three withdrawn codes have no number at
+ * all.
+ *
+ * Writing an unnumbered currency throws rather than emitting a `-1` that could
+ * never be read back. [CurrencyCodeSerializer] has neither edge and is the safer
+ * choice for a field that must hold any currency, including a historical one.
  */
 public object CurrencyNumericCodeSerializer : KSerializer<Currency> {
 

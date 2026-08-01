@@ -5,6 +5,7 @@ import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.cldr.format
 import dev.carcara.kotlinx.locale.currency.cldr.parseFormatted
 import dev.carcara.kotlinx.locale.currency.cldr.parseFormattedOrNull
+import dev.carcara.kotlinx.locale.number.SignDisplay
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -122,7 +123,7 @@ class CurrencyParseFormattedTest {
         for (tag in listOf("en", "de", "pt-BR", "ja", "ar-EG", "hu", "nl", "de-CH")) {
             val locale = locale(tag)
             for (minorUnits in listOf(-123456L, -1)) {
-                val formatted = CurrencyAmount(Currency.USD, minorUnits).format(locale, accounting = true)
+                val formatted = CurrencyAmount(Currency.USD, minorUnits).format(locale, signDisplay = SignDisplay.ACCOUNTING)
                 assertEquals(
                     minorUnits,
                     CurrencyAmount.parseFormattedOrNull(Currency.USD, formatted, locale)?.minorUnits,

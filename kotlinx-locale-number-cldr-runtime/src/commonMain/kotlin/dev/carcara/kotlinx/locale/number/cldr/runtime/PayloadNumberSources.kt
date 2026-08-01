@@ -76,7 +76,7 @@ public class PayloadNumberFormats(
             numbers.compactShort,
             pattern,
             numbers.symbols,
-            { formatted -> plurals.pluralCategoryOrNull(formatted, PluralType.CARDINAL, locale) ?: PluralCategory.OTHER },
+            FormattedNumberSelector { plurals.pluralCategoryOrNull(it, PluralType.CARDINAL, locale) ?: PluralCategory.OTHER },
             options,
         )
         NumberNotation.COMPACT_LONG -> formatCompact(
@@ -84,7 +84,7 @@ public class PayloadNumberFormats(
             numbers.compactLong,
             pattern,
             numbers.symbols,
-            { formatted -> plurals.pluralCategoryOrNull(formatted, PluralType.CARDINAL, locale) ?: PluralCategory.OTHER },
+            FormattedNumberSelector { plurals.pluralCategoryOrNull(it, PluralType.CARDINAL, locale) ?: PluralCategory.OTHER },
             options,
         )
     }

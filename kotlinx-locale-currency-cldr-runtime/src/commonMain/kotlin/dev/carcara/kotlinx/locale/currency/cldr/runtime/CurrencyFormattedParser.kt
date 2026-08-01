@@ -10,6 +10,7 @@ import dev.carcara.kotlinx.locale.currency.code
 import dev.carcara.kotlinx.locale.currency.displayName
 import dev.carcara.kotlinx.locale.currency.minorUnitDigits
 import dev.carcara.kotlinx.locale.currency.symbol
+import dev.carcara.kotlinx.locale.number.cldr.runtime.digitStringsOf
 
 /** Invisible bidi and zero-width marks that CLDR affixes and symbols carry. */
 private const val INVISIBLE_MARKS = "\u200E\u200F\u061C\u200B\uFEFF"

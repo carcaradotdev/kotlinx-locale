@@ -8,8 +8,8 @@ public final class dev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitut
 }
 
 public final class dev/carcara/kotlinx/locale/number/cldr/runtime/CompactFormatterKt {
-	public static final fun formatCompact (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Lkotlin/jvm/functions/Function1;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLjava/lang/String;Ldev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
-	public static synthetic fun formatCompact$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Lkotlin/jvm/functions/Function1;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLjava/lang/String;Ldev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public static final fun formatCompact (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Ldev/carcara/kotlinx/locale/number/cldr/runtime/FormattedNumberSelector;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLjava/lang/String;Ldev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public static synthetic fun formatCompact$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Ldev/carcara/kotlinx/locale/number/cldr/runtime/FormattedNumberSelector;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLjava/lang/String;Ldev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
 }
 
 public final class dev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable {
@@ -17,6 +17,10 @@ public final class dev/carcara/kotlinx/locale/number/cldr/runtime/CompactPattern
 	public final fun getMaximumMagnitude ()I
 	public final fun isEmpty ()Z
 	public final fun patternOrNull (ILdev/carcara/kotlinx/locale/number/PluralCategory;Z)Ljava/lang/String;
+}
+
+public abstract interface class dev/carcara/kotlinx/locale/number/cldr/runtime/FormattedNumberSelector {
+	public abstract fun categoryOf (Ldev/carcara/kotlinx/locale/number/FormattedNumber;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
 }
 
 public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberParserKt {

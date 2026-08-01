@@ -65,7 +65,9 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     val datetime: DateTimeFeatures = objects.newInstance(DateTimeFeatures::class.java)
 
-    private val blocks: List<FeatureBlock> get() = listOf(country, currency, datetime)
+    val number: NumberFeatures = objects.newInstance(NumberFeatures::class.java)
+
+    private val blocks: List<FeatureBlock> get() = listOf(country, currency, datetime, number)
 
     /** Adds locales by reference, which is the form the compiler checks. */
     fun locales(vararg refs: LocaleRef) {
@@ -95,6 +97,10 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     fun datetime(action: Action<DateTimeFeatures>) {
         action.execute(datetime)
+    }
+
+    fun number(action: Action<NumberFeatures>) {
+        action.execute(number)
     }
 
     /**
@@ -144,6 +150,40 @@ abstract class CurrencyFeatures @Inject constructor(objects: ObjectFactory) : Fe
      * symbol into itself and a pattern without one would render a hole.
      */
     val formats: Property<Boolean> = flag(LocaleFeature.CURRENCY_FORMATS)
+
+    /**
+     * Compact money: `${'$'}1.2M`.
+     *
+     * Generates the name, pattern and plural tables it needs, so it is enough on
+     * its own.
+     */
+    val compact: Property<Boolean> = flag(LocaleFeature.CURRENCY_COMPACT)
+}
+
+abstract class NumberFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
+
+    /** Number symbols and the decimal and percent patterns. */
+    val formats: Property<Boolean> = flag(LocaleFeature.NUMBER_FORMATS)
+
+    /**
+     * Compact notation: `1.2K` and `1.2 thousand`.
+     *
+     * Generates the plural rules its patterns are keyed by, so there is no way
+     * to ask for compact and get the wrong plural form.
+     */
+    val compact: Property<Boolean> = flag(LocaleFeature.NUMBER_COMPACT)
+
+    /**
+     * CLDR plural rules, for choosing between translated strings.
+     *
+     * Carried whole rather than narrowed: four kilobytes covers every locale in
+     * CLDR, so dropping rows would save nothing and would turn an unlisted
+     * locale into wrong grammar rather than an error.
+     */
+    val plurals: Property<Boolean> = flag(LocaleFeature.NUMBER_PLURALS)
+
+    /** Ordinal forms: `1st`, `1.`, `1º`. Generates the plural rules eight of the rule sets read. */
+    val ordinals: Property<Boolean> = flag(LocaleFeature.NUMBER_ORDINALS)
 }
 
 abstract class DateTimeFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {

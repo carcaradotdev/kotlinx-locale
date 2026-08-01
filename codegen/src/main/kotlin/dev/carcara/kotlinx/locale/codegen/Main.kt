@@ -64,6 +64,7 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.SKELETONS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"))
     .table(GeneratedTable.NUMBER, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     .table(GeneratedTable.NUMBER_COMPACT, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
+    .table(GeneratedTable.CURRENCY_COMPACT, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
     .table(GeneratedTable.PLURALS, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     .table(GeneratedTable.ORDINALS, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     // The source objects and their convenience extensions come from the same
@@ -170,7 +171,11 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
 
     val territoryCodes = countryTerritoryCodes(parseRegularRegions(cldrDir), supplemental)
     val countryCodes = territoryCodes.map(TerritoryCodes::alpha2).toSet()
-    val currencyCodes = iso4217.currencies.map(Iso4217Currency::code).toSet()
+    val currencyEntries = buildCurrencyEntries(iso4217, parseIso4217Historic(), supplemental)
+    // The whole entry set, not just the active half. CLDR carries display names
+    // and symbols for the withdrawn codes too, and an old settlement record has
+    // to render in the reader's language rather than as a bare code.
+    val currencyCodes = currencyEntries.mapTo(HashSet(), CurrencyEntry::code)
 
     println("[codegen] extracting country/currency data for ${flattener.localeIds.size} CLDR locales")
     val extras = ExtrasResolver(cldrDir, flattener, supplemental, countryCodes, currencyCodes)
@@ -230,19 +235,7 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
             isoPublished = iso4217.published
             localeTags = flattener.localeIds.map(::canonicalTag)
             countries = countryList
-            currencies = iso4217.currencies.map { iso ->
-                val fractions = supplemental.currencyFractions[iso.code] ?: supplemental.defaultFractions
-                CurrencyEntry(
-                    code = iso.code,
-                    numericCode = iso.numericCode ?: -1,
-                    minorUnits = iso.minorUnits,
-                    cldrDigits = fractions.digits,
-                    cldrRounding = fractions.rounding,
-                    cldrCashDigits = fractions.cashDigits,
-                    cldrCashRounding = fractions.cashRounding,
-                    englishName = iso.name,
-                )
-            }
+            currencies = currencyEntries
             countryCurrencies = countryCurrencyCodes
         }
         .section("dateTime", dateTime)

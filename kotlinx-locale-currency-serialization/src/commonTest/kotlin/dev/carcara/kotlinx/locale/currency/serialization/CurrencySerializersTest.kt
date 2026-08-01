@@ -1,6 +1,7 @@
 package dev.carcara.kotlinx.locale.currency.serialization
 
 import dev.carcara.kotlinx.locale.currency.Currency
+import dev.carcara.kotlinx.locale.currency.active
 import dev.carcara.kotlinx.locale.currency.code
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -33,8 +34,12 @@ class CurrencySerializersTest {
     }
 
     @Test
-    fun roundTripsEveryCurrencyIsoAssignedANumberTo() {
-        val numbered = Currency.entries.filter { it.numericCode >= 0 }
+    fun roundTripsEveryActiveCurrencyIsoAssignedANumberTo() {
+        // The active set, because ISO reuses a numeric code across generations of
+        // the same currency: 191 is both the 1991 Croatian dinar and the kuna. A
+        // number therefore identifies a code only among the currencies still in
+        // use, which is what the numeric serializer's KDoc says.
+        val numbered = Currency.active.filter { it.numericCode >= 0 }
         for (currency in numbered) {
             val encoded = Json.encodeToString(CurrencyNumericCodeSerializer, currency)
             assertEquals(currency, Json.decodeFromString(CurrencyNumericCodeSerializer, encoded), "${currency.code} via $encoded")
@@ -49,13 +54,13 @@ class CurrencySerializersTest {
         // guard today, which is the fact worth pinning: if a regenerated -types
         // ever carries an unnumbered currency, this fails and says so, and the
         // guard stops being unreachable.
-        val unnumbered = Currency.entries.filter { it.numericCode < 0 }
+        val unnumbered = Currency.active.filter { it.numericCode < 0 }
         assertEquals(
             emptyList(),
             unnumbered.map { it.code },
             "these currencies cannot be written as a numeric code",
         )
-        for (currency in Currency.entries) {
+        for (currency in Currency.active) {
             Json.encodeToString(CurrencyNumericCodeSerializer, currency)
         }
     }
@@ -85,7 +90,7 @@ class CurrencySerializersTest {
 
     @Test
     fun theLenientSerializerAlwaysWritesTheAlphabeticCode() {
-        val numbered = Currency.entries.filter { it.numericCode >= 0 }
+        val numbered = Currency.active.filter { it.numericCode >= 0 }
         for (currency in numbered) {
             val fromNumeric = Json.decodeFromString(CurrencyLenientCodeSerializer, "\"${currency.numericCode}\"")
             assertEquals("\"${currency.code}\"", Json.encodeToString(CurrencyLenientCodeSerializer, fromNumeric))
