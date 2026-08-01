@@ -54,6 +54,7 @@ public fun renderNumber(
     useCurrencySeparators: Boolean = false,
     affix: AffixSubstitution = AffixSubstitution.None,
     compactExponent: Int = 0,
+    groupingFloor: Int = 1,
 ): FormattedNumber {
     val scaled = applyMultiplier(value, pattern.multiplier)
 
@@ -69,8 +70,12 @@ public fun renderNumber(
         rendered = Decimal.ofUnscaled(rendered.unscaled / 10, rendered.scale - 1)
     }
 
-    val negative = rendered.unscaled < 0
+    // The sign is read off the value that arrived, not off the rounded result,
+    // so -0.5 at no fraction digits keeps its minus. Both reference
+    // implementations do this, and SignDisplay.NEGATIVE is the value that asks
+    // for the other answer.
     val zero = rendered.unscaled == 0L
+    val negative = scaled.unscaled < 0 && !(zero && options.signDisplay.suppressesNegativeZero)
     val digits = rendered.absoluteDigits()
     val fractionDigits = rendered.scale
     val integerLength = maxOf(digits.length - fractionDigits, 0)
@@ -85,14 +90,14 @@ public fun renderNumber(
     val decimal = if (useCurrencySeparators) symbols.currencyDecimal else symbols.decimal
 
     val body = buildString {
-        appendGrouped(integerPart, pattern, symbols, options.grouping, group, digitStrings)
+        appendGrouped(integerPart, pattern, symbols, options.grouping, group, digitStrings, groupingFloor)
         if (fractionPart.isNotEmpty()) {
             append(decimal)
             for (ch in fractionPart) append(digitStrings[ch - '0'])
         }
     }
 
-    val effective = signPattern(pattern, options.signDisplay, negative, zero)
+    val effective = signPattern(pattern, symbols, options.signDisplay, negative, zero)
     val text = renderAffix(effective.prefix, affix) + body + renderAffix(effective.suffix, affix)
     return FormattedNumber(text, integerPart, fractionPart, compactExponent)
 }
@@ -123,25 +128,43 @@ private fun times(value: Decimal, factor: Int): Decimal {
 
 private class SignedAffixes(val prefix: String, val suffix: String)
 
-private fun signPattern(pattern: NumberPattern, signDisplay: SignDisplay, negative: Boolean, zero: Boolean): SignedAffixes {
+/**
+ * The affixes for one value, with the sign placeholders resolved.
+ *
+ * A pattern carries `-` and `+` as placeholders rather than as text, and UTS #35
+ * says they are replaced by the locale's `minusSign` and `plusSign`. That is not
+ * cosmetic: Arabic's minus sign carries a leading bidi mark, and several locales
+ * write theirs as U+2212 rather than as the ASCII hyphen, so a hard-coded `-`
+ * would be the wrong character rather than a plainer spelling of the right one.
+ * The same holds for `%` and `‰`.
+ */
+private fun signPattern(
+    pattern: NumberPattern,
+    symbols: NumberSymbols,
+    signDisplay: SignDisplay,
+    negative: Boolean,
+    zero: Boolean,
+): SignedAffixes {
+    fun resolved(prefix: String, suffix: String) = SignedAffixes(prefix.withSymbols(symbols), suffix.withSymbols(symbols))
+
     if (signDisplay == SignDisplay.NEVER) {
-        return SignedAffixes(pattern.positivePrefix, pattern.positiveSuffix)
+        return resolved(pattern.positivePrefix, pattern.positiveSuffix)
     }
     if (negative) {
         val negativePrefix = pattern.negativePrefix
         return if (negativePrefix != null) {
-            SignedAffixes(negativePrefix, pattern.negativeSuffix.orEmpty())
+            resolved(negativePrefix, pattern.negativeSuffix.orEmpty())
         } else {
-            SignedAffixes("-" + pattern.positivePrefix, pattern.positiveSuffix)
+            resolved("-" + pattern.positivePrefix, pattern.positiveSuffix)
         }
     }
     val wantsPlus = signDisplay.showsPlus && (!zero || signDisplay.signsZero)
-    if (!wantsPlus) return SignedAffixes(pattern.positivePrefix, pattern.positiveSuffix)
+    if (!wantsPlus) return resolved(pattern.positivePrefix, pattern.positiveSuffix)
     val explicit = pattern.withExplicitPlus()
     return if (explicit !== pattern) {
-        SignedAffixes(explicit.positivePrefix, explicit.positiveSuffix)
+        resolved(explicit.positivePrefix, explicit.positiveSuffix)
     } else {
-        SignedAffixes("+" + pattern.positivePrefix, pattern.positiveSuffix)
+        resolved("+" + pattern.positivePrefix, pattern.positiveSuffix)
     }
 }
 
@@ -152,13 +175,20 @@ private fun StringBuilder.appendGrouped(
     grouping: NumberGrouping,
     separator: String,
     digitStrings: List<String>,
+    /**
+     * A floor on the locale's `minimumGroupingDigits`, which compact notation
+     * raises to two. Both reference implementations do this, and it is what
+     * makes German write a sentinel-magnitude 1000 as `1000` while still
+     * writing 12000 as `12.000`.
+     */
+    groupingFloor: Int,
 ) {
     val length = integerPart.length
     val primary = pattern.primaryGroupSize
     val minimum = when (grouping) {
         NumberGrouping.NEVER -> Int.MAX_VALUE
         NumberGrouping.ALWAYS -> 1
-        NumberGrouping.AUTO -> symbols.minimumGroupingDigits
+        NumberGrouping.AUTO -> maxOf(symbols.minimumGroupingDigits, groupingFloor)
     }
     val applyGrouping = primary > 0 && minimum != Int.MAX_VALUE && length >= primary + minimum
     for (index in 0 until length) {
@@ -173,7 +203,7 @@ private fun StringBuilder.appendGrouped(
     }
 }
 
-private fun renderAffix(affix: String, substitution: AffixSubstitution): String {
+internal fun renderAffix(affix: String, substitution: AffixSubstitution): String {
     if ('¤' !in affix) return affix
     return buildString(affix.length) {
         var index = 0
@@ -227,3 +257,25 @@ private fun digitStringsOf(digits: List<String>): List<String> = digits
 /** Rescales [value] to [digits] fraction digits, half-even. */
 @InternalKotlinxLocaleApi
 public fun Decimal.atFractionDigits(digits: Int): Decimal = Decimal.ofUnscaled(rescaleFraction(unscaled, scale, digits), digits)
+
+/**
+ * The four sign and scale placeholders in an affix, replaced by [symbols].
+ *
+ * One pass rather than four `replace` calls, so a symbol that happens to contain
+ * another placeholder cannot be rewritten a second time. `¤` is left alone: it
+ * is the currency placeholder and belongs to the affix substitution.
+ */
+private fun String.withSymbols(symbols: NumberSymbols): String {
+    if (none { it == '-' || it == '+' || it == '%' || it == '\u2030' }) return this
+    return buildString(length) {
+        for (ch in this@withSymbols) {
+            when (ch) {
+                '-' -> append(symbols.minusSign)
+                '+' -> append(symbols.plusSign)
+                '%' -> append(symbols.percentSign)
+                '\u2030' -> append(symbols.perMille)
+                else -> append(ch)
+            }
+        }
+    }
+}

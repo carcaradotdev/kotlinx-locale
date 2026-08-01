@@ -249,6 +249,11 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         timeZoneFormats[canonicalTag(id)] = flattener.resolveTimeZoneFormats(id, ::zonesFor)
     }
 
+    val numberSymbols = buildNumberSymbolPayloads(flattener, extras)
+    val numberPatterns = buildNumberPatternPayloads(flattener, extras)
+    val numberCompactShort = buildCompactPayloads(flattener, extras) { it.compactShort }
+    val numberCompactLong = buildCompactPayloads(flattener, extras, fallback = { it.compactShort }) { it.compactLong }
+
     val plurals = parsePlurals(cldrDir)
     val rbnf = parseRbnfOrdinals(cldrDir, flattener.localeIds, supplemental.parentOverrides)
     emitCldrPluralSamples(
@@ -288,6 +293,11 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         skeletons = goldenSkeletons,
         entries = extractIcuSkeletonGolden(icuDir, goldenSkeletons, resolvedSkeletons, resolvedDateTime, declaredFormats),
     )
+    emitIcuNumberGolden(
+        outputFile = conformanceDir(rootDir).resolve("IcuNumberGoldenData.kt"),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuNumberGolden(icuDir, numberSymbols, numberPatterns, numberCompactShort, numberCompactLong),
+    )
     emitIcuCurrencyGolden(
         outputFile = conformanceDir(rootDir).resolve("IcuCurrencyGoldenData.kt"),
         icuTag = ICU_REPO.tag,
@@ -318,10 +328,10 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .section("skeletonFormats", skeletonFormats)
         .section("skeletonAppendFormats", skeletonAppendFormats)
         .section("skeletonNames", skeletonNames)
-        .section("numberSymbols", buildNumberSymbolPayloads(flattener, extras))
-        .section("numberPatterns", buildNumberPatternPayloads(flattener, extras))
-        .section("numberCompactShort", buildCompactPayloads(flattener, extras) { it.compactShort })
-        .section("numberCompactLong", buildCompactPayloads(flattener, extras) { it.compactLong })
+        .section("numberSymbols", numberSymbols)
+        .section("numberPatterns", numberPatterns)
+        .section("numberCompactShort", numberCompactShort)
+        .section("numberCompactLong", numberCompactLong)
         .section("currencyCompactShort", buildCompactPayloads(flattener, extras) { it.currencyCompact })
         .section("pluralRuleSets", plurals.ruleSets)
         .section("pluralRuleIndex", plurals.index.mapKeys(::canonicalTagOf))

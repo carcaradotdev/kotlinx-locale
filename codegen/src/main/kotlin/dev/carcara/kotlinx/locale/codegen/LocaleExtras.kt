@@ -321,11 +321,23 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
  * magnitude, use the standard pattern", and ten locales set it deliberately to
  * override a parent that had one.
  */
+/**
+ * The value stored for a pattern a locale writes as the inheritance marker.
+ *
+ * Kept rather than dropped, because the marker is a statement: it says this
+ * locale declines to override this exact count, so the answer comes from the
+ * parent's table. Dropping it would let the locale's own `other` entry answer
+ * instead, which is a different pattern. Welsh writes `1000-count-two` as the
+ * marker and root answers `0K`, where falling through to Welsh's own `other`
+ * would answer `0 mil`.
+ */
+internal const val COMPACT_INHERIT = "\u2191"
+
 private fun readCompact(format: org.w3c.dom.Element, target: MutableMap<String, String>) {
     for (pattern in format.childElements("pattern")) {
         val type = pattern.getAttribute("type").takeIf { it.isNotEmpty() } ?: continue
         val count = pattern.getAttribute("count").takeIf { it.isNotEmpty() } ?: "other"
-        val text = pattern.textContent.cleaned() ?: continue
+        val text = pattern.textContent.cleaned() ?: COMPACT_INHERIT
         val magnitude = type.length - 1
         val alt = if (pattern.getAttribute("alt") == "alphaNextToNumber") ":a" else ""
         target.putIfAbsent("$magnitude:$count$alt", text)
@@ -507,13 +519,38 @@ class ExtrasResolver(
     fun resolveCompact(id: String, select: (PartialLocaleExtras) -> Map<String, MutableMap<String, String>>): Map<String, String> {
         val partials = flattener.dataChain(id).map(::partial)
         val numberingSystem = partials.firstNotNullOfOrNull { it.defaultNumberingSystem } ?: "latn"
-        val merged = LinkedHashMap<String, String>()
-        for (key in listOf(numberingSystem, "latn", "")) {
-            for (partial in partials) {
-                for ((entry, pattern) in select(partial)[key].orEmpty()) merged.putIfAbsent(entry, pattern)
+
+        // The numbering system a locale declares, then latn, then the unkeyed
+        // block. The first that anything in the chain declares wins whole.
+        val levels = listOf(numberingSystem, "latn", "")
+            .map { key -> partials.map { select(it)[key].orEmpty() } }
+            .firstOrNull { tables -> tables.any { it.isNotEmpty() } }
+            ?: return emptyMap()
+
+        val keys = LinkedHashSet<String>()
+        for (table in levels) keys.addAll(table.keys)
+
+        val resolved = LinkedHashMap<String, String>()
+        for (key in keys) {
+            var sawMarker = false
+            var value: String? = null
+            for (table in levels) {
+                val declared = table[key] ?: continue
+                // A marker is not a value, but it is not nothing either: an
+                // ancestor may still declare the real one, which is what makes
+                // de_AT's marker resolve to de's pattern.
+                if (declared == COMPACT_INHERIT) {
+                    sawMarker = true
+                    continue
+                }
+                value = declared
+                break
             }
-            if (merged.isNotEmpty()) break
+            when {
+                value != null -> resolved[key] = value
+                sawMarker -> resolved[key] = COMPACT_INHERIT
+            }
         }
-        return merged
+        return resolved
     }
 }

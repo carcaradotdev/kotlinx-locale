@@ -90,6 +90,8 @@ final enum class dev.carcara.kotlinx.locale.number/SignDisplay : kotlin/Enum<dev
         final fun <get-showsPlus>(): kotlin/Boolean // dev.carcara.kotlinx.locale.number/SignDisplay.showsPlus.<get-showsPlus>|<get-showsPlus>(){}[0]
     final val signsZero // dev.carcara.kotlinx.locale.number/SignDisplay.signsZero|{}signsZero[0]
         final fun <get-signsZero>(): kotlin/Boolean // dev.carcara.kotlinx.locale.number/SignDisplay.signsZero.<get-signsZero>|<get-signsZero>(){}[0]
+    final val suppressesNegativeZero // dev.carcara.kotlinx.locale.number/SignDisplay.suppressesNegativeZero|{}suppressesNegativeZero[0]
+        final fun <get-suppressesNegativeZero>(): kotlin/Boolean // dev.carcara.kotlinx.locale.number/SignDisplay.suppressesNegativeZero.<get-suppressesNegativeZero>|<get-suppressesNegativeZero>(){}[0]
     final val usesAccountingPattern // dev.carcara.kotlinx.locale.number/SignDisplay.usesAccountingPattern|{}usesAccountingPattern[0]
         final fun <get-usesAccountingPattern>(): kotlin/Boolean // dev.carcara.kotlinx.locale.number/SignDisplay.usesAccountingPattern.<get-usesAccountingPattern>|<get-usesAccountingPattern>(){}[0]
 

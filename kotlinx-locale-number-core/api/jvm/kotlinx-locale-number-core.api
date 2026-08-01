@@ -227,6 +227,7 @@ public final class dev/carcara/kotlinx/locale/number/SignDisplay : java/lang/Enu
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getShowsPlus ()Z
 	public final fun getSignsZero ()Z
+	public final fun getSuppressesNegativeZero ()Z
 	public final fun getUsesAccountingPattern ()Z
 	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/number/SignDisplay;
 	public static fun values ()[Ldev/carcara/kotlinx/locale/number/SignDisplay;

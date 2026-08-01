@@ -29,11 +29,13 @@ public enum class SignDisplay {
     EXCEPT_ZERO,
 
     /**
-     * Like [AUTO] but never on negative zero.
+     * Like [AUTO] but never on a value that rounded to zero from below.
      *
-     * Identical to [AUTO] here, because [Decimal] holds no negative zero. It
-     * exists so the enum reads the same as ICU's and so a value parsed from a
-     * skeleton or an option name has somewhere to land.
+     * [Decimal] holds no negative zero, so this is about rounding rather than
+     * about the input: -0.5 at no fraction digits is `-0` under [AUTO] and `0`
+     * here. Both reference implementations keep the sign by default, on the
+     * grounds that a reading of -0.4°C shown to the nearest degree is still
+     * below freezing, so this is the value to reach for when it is not.
      */
     NEGATIVE,
 
@@ -64,6 +66,20 @@ public enum class SignDisplay {
     /** True when zero should carry a sign, which only the two "always" forms ask for. */
     public val signsZero: Boolean
         get() = this == ALWAYS || this == ACCOUNTING_ALWAYS
+
+    /**
+     * True when a negative value that rounded to zero loses its sign.
+     *
+     * The default is to keep it: -0.5 at no fraction digits is `-0`, which is
+     * what ICU and `Intl.NumberFormat` both write. The four values here are the
+     * ones that ask for `0` instead, either by naming negative zero directly or
+     * by declining to sign anything that rounds to zero.
+     */
+    public val suppressesNegativeZero: Boolean
+        get() = this == NEGATIVE ||
+            this == EXCEPT_ZERO ||
+            this == ACCOUNTING_NEGATIVE ||
+            this == ACCOUNTING_EXCEPT_ZERO
 }
 
 /**

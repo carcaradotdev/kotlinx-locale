@@ -125,12 +125,73 @@ public class CompactPatternTable(record: String) {
      * the asked-for category to `other`, which is what CLDR's own inheritance
      * does within a compact block.
      */
-    public fun patternOrNull(magnitude: Int, category: PluralCategory, alphaNextToNumber: Boolean): String? {
+    public fun patternOrNull(
+        magnitude: Int,
+        category: PluralCategory,
+        alphaNextToNumber: Boolean,
+        /**
+         * The divided value when it is a whole number, for CLDR's explicit
+         * count keys.
+         *
+         * A `count` is usually a plural category, but it may also be a literal
+         * integer, and the literal wins when the value matches. French declares
+         * `1000-count-1` as `mille`, which is why one thousand reads `mille`
+         * rather than `1 millier`, and there is no plural category that could
+         * express the difference.
+         */
+        exactValue: Long? = null,
+    ): String? {
+        if (exactValue != null) {
+            if (alphaNextToNumber) patterns["$magnitude:$exactValue:a"]?.let { return it }
+            patterns["$magnitude:$exactValue"]?.let { return it }
+        }
         if (alphaNextToNumber) {
             patterns["$magnitude:${category.cldrName}:a"]?.let { return it }
             patterns["$magnitude:other:a"]?.let { return it }
         }
         patterns["$magnitude:${category.cldrName}"]?.let { return it }
         return patterns["$magnitude:other"]
+    }
+
+    /**
+     * Whether this locale writes a compact form at all at [magnitude].
+     *
+     * False for the `"0"` sentinel, which ten locales use to override a
+     * parent's entry back to the full number. Asked before the divide rather
+     * than after, because rounding 9999 up would otherwise carry it into the
+     * next entry and produce a compact form the locale declined to declare.
+     */
+    public fun hasCompactForm(magnitude: Int): Boolean {
+        val pattern = patterns["$magnitude:other"] ?: return false
+        return pattern != "0"
+    }
+
+    /**
+     * The power of ten to divide by before rendering at [magnitude].
+     *
+     * Read off the pattern rather than assumed, because the entries are not
+     * grouped in threes everywhere. A pattern's zeros say how many integer
+     * digits survive the divide, so English `000K` at 10^5 keeps three and
+     * divides by 10^3, while Bengali `0 লা` at the same magnitude keeps one and
+     * divides by 10^5. Hard-coding the Western grouping writes 99999 as
+     * `100 লা` where the answer is `1 লা`.
+     */
+    public fun divisorExponent(magnitude: Int): Int {
+        val pattern = patterns["$magnitude:other"] ?: return magnitude - (magnitude % 3)
+        var zeros = 0
+        var inQuote = false
+        for (ch in pattern) {
+            when {
+                ch == '\'' -> inQuote = !inQuote
+                inQuote -> Unit
+                // The negative subpattern repeats the zeros, so counting past
+                // the separator doubles them. Swahili writes its thousands as
+                // `elfu 0;elfu -0`, which is one digit and not two.
+                ch == ';' -> return magnitude - (zeros - 1).coerceAtLeast(0)
+                ch == '0' -> zeros++
+            }
+        }
+        if (zeros == 0) return magnitude - (magnitude % 3)
+        return magnitude - (zeros - 1)
     }
 }

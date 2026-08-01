@@ -2,5 +2,8 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
+internal val COMPACT_LONG_JA: String =
+    "10:other=000億\u001E11:other=0000億\u001E12:other=0兆\u001E13:other=00兆\u001E14:other=000兆\u001E15:other=0000兆\u001E16:other=0京\u001E17:other=00京\u001E18:other=000京\u001E19:other=0000京\u001E3:other=0\u001E4:other=0万\u001E5:other=00万\u001E6:other=000万\u001E7:other=0000万\u001E8:other=0億\u001E9:other=00億"
+
 internal val COMPACT_LONG_JV: String =
     "10:other=00 milyar\u001E11:other=000 milyar\u001E12:other=0 trilyun\u001E13:other=00 trilyun\u001E14:other=000 trilyun\u001E3:other=0 èwu\u001E4:other=00 èwu\u001E5:other=000 èwu\u001E6:other=0 yuta\u001E7:other=00 yuta\u001E8:other=000 yuta\u001E9:other=0 milyar"

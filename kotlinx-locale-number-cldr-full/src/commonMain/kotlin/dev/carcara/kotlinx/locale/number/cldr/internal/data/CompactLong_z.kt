@@ -2,5 +2,14 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
+internal val COMPACT_LONG_ZH: String =
+    "10:other=000亿\u001E11:other=0000亿\u001E12:other=0万亿\u001E13:other=00万亿\u001E14:other=000万亿\u001E3:other=0\u001E4:other=0万\u001E5:other=00万\u001E6:other=000万\u001E7:other=0000万\u001E8:other=0亿\u001E9:other=00亿"
+
+internal val COMPACT_LONG_ZH_HANT: String =
+    "10:other=000億\u001E11:other=0000億\u001E12:other=0兆\u001E13:other=00兆\u001E14:other=000兆\u001E3:other=0\u001E4:other=0萬\u001E5:other=00萬\u001E6:other=000萬\u001E7:other=0000萬\u001E8:other=0億\u001E9:other=00億"
+
+internal val COMPACT_LONG_ZH_HANT_HK: String =
+    "10:other=00B\u001E11:other=000B\u001E12:other=0T\u001E13:other=00T\u001E14:other=000T\u001E3:other=0K\u001E4:other=00K\u001E5:other=000K\u001E6:other=0M\u001E7:other=00M\u001E8:other=000M\u001E9:other=0B"
+
 internal val COMPACT_LONG_ZU: String =
-    "10:one=00 isigidi sezigidi\u001E10:other=00 isigidi sezigidi\u001E11:one=000 isigidi sezigidi\u001E11:other=000 isigidi sezigidi\u001E12:one=0 isigidintathu\u001E12:other=0 isigidintathu\u001E13:one=00 isigidintathu\u001E13:other=00 isigidintathu\u001E14:one=000 isigidintathu\u001E14:other=000 isigidintathu\u001E3:one=0 inkulungwane\u001E3:other=0 inkulungwane\u001E4:one=00 inkulungwane\u001E4:other=00 inkulungwane\u001E5:one=000 inkulungwane\u001E5:other=000 inkulungwane\u001E6:one=0 isigidi\u001E6:other=0 isigidi\u001E7:one=00 isigidi\u001E7:other=00 isigidi\u001E8:one=000 isigidi\u001E8:other=000 isigidi\u001E9:one=0 isigidi sezigidi\u001E9:other=0 isigidi sezigidi"
+    "10:other=00 isigidi sezigidi\u001E11:other=000 isigidi sezigidi\u001E12:other=0 isigidintathu\u001E13:other=00 isigidintathu\u001E14:other=000 isigidintathu\u001E3:other=0 inkulungwane\u001E4:other=00 inkulungwane\u001E5:other=000 inkulungwane\u001E6:other=0 isigidi\u001E7:other=00 isigidi\u001E8:other=000 isigidi\u001E9:other=0 isigidi sezigidi"

@@ -1,6 +1,7 @@
 package dev.carcara.kotlinx.locale.number
 
 import dev.carcara.kotlinx.locale.conformance.assertConformsToCldrPluralSamples
+import dev.carcara.kotlinx.locale.conformance.assertConformsToIcuNumbers
 import dev.carcara.kotlinx.locale.conformance.assertNumbersAreWellShaped
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumber
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumberPlurals
@@ -17,4 +18,7 @@ class CldrNumberConformanceTest {
 
     @Test
     fun numbersAreWellShaped() = CldrNumber.assertNumbersAreWellShaped()
+
+    @Test
+    fun formattingAgreesWithIcu() = CldrNumber.assertConformsToIcuNumbers()
 }

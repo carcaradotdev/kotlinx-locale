@@ -14,9 +14,12 @@ public final class dev/carcara/kotlinx/locale/number/cldr/runtime/CompactFormatt
 
 public final class dev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable {
 	public fun <init> (Ljava/lang/String;)V
+	public final fun divisorExponent (I)I
 	public final fun getMaximumMagnitude ()I
+	public final fun hasCompactForm (I)Z
 	public final fun isEmpty ()Z
-	public final fun patternOrNull (ILdev/carcara/kotlinx/locale/number/PluralCategory;Z)Ljava/lang/String;
+	public final fun patternOrNull (ILdev/carcara/kotlinx/locale/number/PluralCategory;ZLjava/lang/Long;)Ljava/lang/String;
+	public static synthetic fun patternOrNull$default (Ldev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable;ILdev/carcara/kotlinx/locale/number/PluralCategory;ZLjava/lang/Long;ILjava/lang/Object;)Ljava/lang/String;
 }
 
 public abstract interface class dev/carcara/kotlinx/locale/number/cldr/runtime/FormattedNumberSelector {
@@ -64,8 +67,8 @@ public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberRenderer
 	public static final fun atFractionDigits (Ldev/carcara/kotlinx/locale/number/Decimal;I)Ldev/carcara/kotlinx/locale/number/Decimal;
 	public static final fun digitStringsOf (Ljava/lang/String;)Ljava/util/List;
 	public static final fun isAlphaAdjacent (Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ljava/lang/String;)Z
-	public static final fun renderNumber (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLdev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;I)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
-	public static synthetic fun renderNumber$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLdev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;IILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public static final fun renderNumber (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLdev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;II)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public static synthetic fun renderNumber$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLdev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;IIILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
 }
 
 public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberSymbolsRecord {
