@@ -26,8 +26,8 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | datetime-skeletons | 186.1 KB | 831.8 KB | 205.0 KB | 18.8 KB |
 | country-full | 416.9 KB | 1187.2 KB | 460.0 KB | 43.0 KB |
 | currency-full | 456.6 KB | 1445.2 KB | 500.0 KB | 43.3 KB |
-| timezone-full | 564.7 KB | 3102.4 KB | 700.0 KB | 135.2 KB |
-| timezone-cities | 949.1 KB | 4494.5 KB | 1200.0 KB | 250.8 KB |
+| timezone-full | 566.5 KB | 3109.0 KB | 700.0 KB | 133.4 KB |
+| timezone-cities | 950.8 KB | 4501.1 KB | 1200.0 KB | 249.1 KB |
 | everything | 962.3 KB | 3001.6 KB | 1100.0 KB | 137.6 KB |
 | language-full | 1291.1 KB | 3408.8 KB | 1400.0 KB | 108.8 KB |
 

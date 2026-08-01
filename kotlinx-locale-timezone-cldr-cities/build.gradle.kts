@@ -15,6 +15,9 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(project(":conformance-test-suite"))
+            implementation(project(":kotlinx-locale-country-cldr-full"))
+            implementation(project(":kotlinx-locale-number-cldr-full"))
         }
     }
 }

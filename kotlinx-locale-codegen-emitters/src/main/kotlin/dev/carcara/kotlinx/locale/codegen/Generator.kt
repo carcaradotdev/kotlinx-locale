@@ -182,6 +182,23 @@ private class PayloadTableSpec(
     val versionConstName: String? = null,
 )
 
+/**
+ * The file name prefixes each table is emitted under.
+ *
+ * Public so a test can assert that asking for a feature produced every table
+ * that feature declared, without keeping a second list of file names that would
+ * drift from this one. The four tables absent here are the enums and the
+ * catalog, which are emitted from their own paths rather than as keyed payloads.
+ */
+public val GeneratedTable.emittedFilePrefixes: List<String>
+    get() = when (this) {
+        GeneratedTable.LOCALE_CATALOG -> listOf("LocaleCatalog")
+        GeneratedTable.COUNTRY_ENUM -> listOf("Country")
+        GeneratedTable.COUNTRY_CURRENCIES -> listOf("CountryCurrencies")
+        GeneratedTable.CURRENCY_ENUM -> listOf("Currency")
+        else -> PAYLOAD_TABLES.filter { it.table == this }.map { it.filePrefix }
+    }
+
 private val PAYLOAD_TABLES = listOf(
     PayloadTableSpec(
         GeneratedTable.DATE_TIME,

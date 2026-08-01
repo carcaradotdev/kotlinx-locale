@@ -60,18 +60,63 @@ fun encodeTimeZoneMetadata(cldrDir: File): String {
     val keyword = parseXml(bcp47).documentElement.child("keyword") ?: error("timezone.xml: no <keyword>")
     for (key in keyword.childElements("key")) {
         for (type in key.childElements("type")) {
-            val alias = type.getAttribute("alias").split(' ').firstOrNull { it.isNotEmpty() } ?: continue
+            val aliases = type.getAttribute("alias").split(' ').filter { it.isNotEmpty() }
+            val canonical = aliases.firstOrNull() ?: continue
             // The bcp47 short id starts with the region in lower case, e.g.
             // `uslax` for America/Los_Angeles, `gblon` for Europe/London.
             val name = type.getAttribute("name")
             if (name.length < 2) continue
-            val region = name.substring(0, 2).uppercase()
+            // The `utc`, `utcw05` and `unk` ids are not region based. Their
+            // first two letters would read as the regions UT and UN, which is
+            // how `Etc/GMT+5` came to have a location name at all when UTS #35
+            // says a zone with no location takes the offset format.
+            if (name.startsWith("utc") || name.startsWith("unk")) continue
+            // The explicit attribute wins over the identifier's prefix. The
+            // prefix is only a convention and it breaks wherever the short id
+            // was named for the city instead: `jeruslm` reads as Jersey, which
+            // put Asia/Jerusalem in a two-zone region and cost it `Israel Time`.
+            val region = type.getAttribute("region").takeIf { it.length == 2 }?.uppercase()
+                ?: name.substring(0, 2).uppercase()
             if (!region.all { it in 'A'..'Z' }) continue
-            regionOfZone[alias] = region
-            zonesPerRegion.getOrPut(region) { LinkedHashSet() } += alias
+            // Every alias, not just the first. A type lists its deprecated
+            // identifier ahead of its current one, so taking the head alone
+            // maps Asia/Calcutta and leaves Asia/Kolkata with no region, and
+            // the generic location format then reads `Kolkata Time` where CLDR
+            // says `India Time`. Europe/Kyiv and Asia/Kathmandu are the same
+            // shape.
+            for (alias in aliases) regionOfZone[alias] = region
+            // Counted once per type, so a region does not look multi-zone
+            // merely because one of its zones was renamed. A deprecated type is
+            // not counted at all, for the same reason.
+            if (type.getAttribute("deprecated") != "true") {
+                zonesPerRegion.getOrPut(region) { LinkedHashSet() } += canonical
+            }
         }
     }
     val singleZoneRegions = zonesPerRegion.filterValues { it.size == 1 }.keys
+
+    // CLDR lists a primary zone under whichever identifier it used when the
+    // entry was written, which for Europe/Kyiv is Europe/Kiev. Adding every
+    // alias of each listed zone is what makes the modern spelling resolve.
+    val aliasGroups = HashMap<String, Set<String>>()
+    for (key in keyword.childElements("key")) {
+        for (type in key.childElements("type")) {
+            val group = type.getAttribute("alias").split(' ').filter { it.isNotEmpty() }.toSet()
+            for (alias in group) aliasGroups[alias] = group
+        }
+    }
+    for (zone in primaryZones.toList()) primaryZones += aliasGroups[zone].orEmpty()
+
+    // CLDR's own tables key a zone by the first alias, which is the identifier
+    // it used when the entry was written, while a platform reports the current
+    // one. `America/Buenos_Aires` against `America/Argentina/Buenos_Aires`, and
+    // `Asia/Calcutta` against `Asia/Kolkata`. Without this map a renamed zone
+    // silently loses its exemplar city and any name of its own.
+    val cldrIdOfZone = LinkedHashMap<String, String>()
+    for ((alias, group) in aliasGroups) {
+        val cldrId = group.firstOrNull() ?: continue
+        if (alias != cldrId) cldrIdOfZone[alias] = cldrId
+    }
 
     check(currentMetazone.size > 300) { "metaZones.xml: implausibly few zones (${currentMetazone.size})" }
     println(
@@ -87,6 +132,7 @@ fun encodeTimeZoneMetadata(cldrDir: File): String {
         entries(regionOfZone),
         singleZoneRegions.sorted().joinToString(LIST_SEPARATOR),
         primaryZones.sorted().joinToString(LIST_SEPARATOR),
+        entries(cldrIdOfZone),
     ).joinToString(FIELD_SEPARATOR)
 }
 

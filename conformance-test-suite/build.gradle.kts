@@ -20,6 +20,7 @@ kotlin {
             // therefore need the runtime module, not just the core one.
             api(project(":kotlinx-locale-datetime-cldr-runtime"))
             api(project(":kotlinx-locale-number-core"))
+            api(project(":kotlinx-locale-timezone-core"))
             // kotlin-test is an api dependency on purpose: the suite reports
             // through assertions, so a caller is already in a test source set.
             api(libs.kotlin.test)

@@ -82,17 +82,18 @@ public class PayloadTimeZoneNames(
     override fun displayNameOrNull(zone: TimeZone, style: TimeZoneNameStyle, offset: UtcOffset?, locale: Locale): String? {
         val formatRecord = resolvedRecord(formats, locale) ?: return null
         val zoneFormats = TimeZoneFormats(formatRecord)
+        val zoneId = metadata.cldrId(zone.id)
 
         return when (style) {
             TimeZoneNameStyle.OFFSET_LONG -> localizedGmt(zoneFormats, offset, locale, short = false)
             TimeZoneNameStyle.OFFSET_SHORT -> localizedGmt(zoneFormats, offset, locale, short = true)
-            TimeZoneNameStyle.LOCATION -> locationName(zone, zoneFormats, locale)
-            else -> metazoneName(zone, style, locale)
+            TimeZoneNameStyle.LOCATION -> locationName(zoneId, zoneFormats, offset, locale)
+            else -> metazoneName(zoneId, style, locale)
         }
     }
 
     override fun exemplarCityOrNull(zone: TimeZone, locale: Locale): String? =
-        sparseRecordValue(cities, locale, field = 1, fieldCount = 2, key = zone.id)
+        sparseRecordValue(cities, locale, field = 1, fieldCount = 2, key = metadata.cldrId(zone.id))
 
     /**
      * The generic location format: the region's name where a region has one
@@ -102,24 +103,27 @@ public class PayloadTimeZoneNames(
      * region's primary, is named for the region rather than the city, which is
      * why Japan reads `Japan Time` and not `Tokyo Time`.
      */
-    private fun locationName(zone: TimeZone, zoneFormats: TimeZoneFormats, locale: Locale): String? {
-        val region = metadata.regionOf(zone.id)
-        if (region != null && (metadata.isSingleZoneRegion(region) || metadata.isPrimaryZone(zone.id))) {
+    private fun locationName(zoneId: String, zoneFormats: TimeZoneFormats, offset: UtcOffset?, locale: Locale): String? {
+        val region = metadata.regionOf(zoneId)
+        // A zone with no location has no location name. UTS #35 sends `Etc/GMT+5`
+        // and `UTC` to the offset format rather than inventing a place for them.
+        if (region == null) return localizedGmt(zoneFormats, offset, locale, short = false)
+        if (metadata.isSingleZoneRegion(region) || metadata.isPrimaryZone(zoneId)) {
             val name = regionName(region, locale) ?: region
             return zoneFormats.regionFormat.replace("{0}", name)
         }
-        val city = exemplarCityOrNull(zone, locale)
-            ?: zone.id.substringAfterLast('/').replace('_', ' ')
+        val city = sparseRecordValue(cities, locale, field = 1, fieldCount = 2, key = zoneId)
+            ?: zoneId.substringAfterLast('/').replace('_', ' ')
         return zoneFormats.regionFormat.replace("{0}", city)
     }
 
-    private fun metazoneName(zone: TimeZone, style: TimeZoneNameStyle, locale: Locale): String? {
+    private fun metazoneName(zoneId: String, style: TimeZoneNameStyle, locale: Locale): String? {
         val key = styleKey(style) ?: return null
         // A zone's own override wins over its metazone's, which is what lets
         // one zone in a metazone carry a different name.
-        sparseRecordValue(names, locale, field = 2, fieldCount = NAME_FIELD_COUNT, key = "${zone.id}#$key")
+        sparseRecordValue(names, locale, field = 2, fieldCount = NAME_FIELD_COUNT, key = "$zoneId#$key")
             ?.let { return it.takeIf(String::isNotEmpty) }
-        val metazone = metadata.metazoneOf(zone.id) ?: return null
+        val metazone = metadata.metazoneOf(zoneId) ?: return null
         val name = sparseRecordValue(names, locale, field = 3, fieldCount = NAME_FIELD_COUNT, key = "$metazone#$key")
         if (name != null) return name.takeIf(String::isNotEmpty)
 
@@ -132,7 +136,7 @@ public class PayloadTimeZoneNames(
             } else {
                 TimeZoneNameStyle.STANDARD_SHORT
             }
-            return metazoneName(zone, standard, locale)
+            return metazoneName(zoneId, standard, locale)
         }
         return null
     }
@@ -192,9 +196,22 @@ public class PayloadTimeZoneNames(
                     run++
                     index++
                 }
-                if (ch == 'm' && short && minutes == 0) continue
+                // The short form ends at the dropped minutes rather than
+                // resuming after them. Hebrew writes its negative hour format
+                // as `-HH:mm` followed by a left-to-right mark, and that mark
+                // goes with the field it was placed to protect.
+                if (ch == 'm' && short && minutes == 0) break
                 val value = if (ch == 'H') hours else minutes
-                val digits = value.toString().padStart(if (short && ch == 'H') 1 else run, '0')
+                // The long form always writes two hour digits. A locale whose
+                // `hourFormat` says `H` rather than `HH`, as Czech's does, is
+                // describing its short form; the spec's own example of the long
+                // one is `GMT-08:00`.
+                val width = when {
+                    ch != 'H' -> run
+                    short -> 1
+                    else -> maxOf(run, 2)
+                }
+                val digits = value.toString().padStart(width, '0')
                 for (digit in digits) append(symbols.digits[digit - '0'])
             }
         }
@@ -214,6 +231,7 @@ public class TimeZoneMetadata(encoded: String) {
     private val regions = HashMap<String, String>()
     private val singleZoneRegions = HashSet<String>()
     private val primaryZones = HashSet<String>()
+    private val cldrIds = HashMap<String, String>()
 
     init {
         val blocks = encoded.split(FIELD_SEPARATOR)
@@ -227,7 +245,21 @@ public class TimeZoneMetadata(encoded: String) {
         }
         blocks.getOrNull(2).orEmpty().split(ENTRY_SEPARATOR).filterTo(singleZoneRegions, String::isNotEmpty)
         blocks.getOrNull(3).orEmpty().split(ENTRY_SEPARATOR).filterTo(primaryZones, String::isNotEmpty)
+        for (entry in blocks.getOrNull(4).orEmpty().split(ENTRY_SEPARATOR)) {
+            val separator = entry.indexOf(KEY_SEPARATOR)
+            if (separator > 0) cldrIds[entry.substring(0, separator)] = entry.substring(separator + 1)
+        }
     }
+
+    /**
+     * [zoneId] under the identifier CLDR's tables use.
+     *
+     * CLDR keys a zone by the name it had when the entry was written, and a
+     * platform reports the name it has now, so `Asia/Kolkata` has to become
+     * `Asia/Calcutta` before any table will answer for it. Returns [zoneId]
+     * unchanged for the zones that were never renamed, which is most of them.
+     */
+    public fun cldrId(zoneId: String): String = cldrIds[zoneId] ?: zoneId
 
     public fun metazoneOf(zoneId: String): String? = metazones[zoneId]
 

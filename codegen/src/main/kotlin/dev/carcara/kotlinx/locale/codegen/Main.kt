@@ -254,6 +254,8 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
     val numberCompactShort = buildCompactPayloads(flattener, extras) { it.compactShort }
     val numberCompactLong = buildCompactPayloads(flattener, extras, fallback = { it.compactShort }) { it.compactLong }
 
+    val timeZoneNames = buildTimeZoneNamePayloads(flattener, ::zonesFor)
+
     val plurals = parsePlurals(cldrDir)
     val rbnf = parseRbnfOrdinals(cldrDir, flattener.localeIds, supplemental.parentOverrides)
     emitCldrPluralSamples(
@@ -293,6 +295,16 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         skeletons = goldenSkeletons,
         entries = extractIcuSkeletonGolden(icuDir, goldenSkeletons, resolvedSkeletons, resolvedDateTime, declaredFormats),
     )
+    emitIcuPluralGolden(
+        outputFile = conformanceDir(rootDir).resolve("IcuPluralGoldenData.kt"),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuPluralGolden(plurals.index.keys.map(::canonicalTag).toSet()),
+    )
+    emitIcuTimeZoneGolden(
+        outputFile = conformanceDir(rootDir).resolve("IcuTimeZoneGoldenData.kt"),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuTimeZoneGolden(timeZoneNames.keys),
+    )
     emitIcuNumberGolden(
         outputFile = conformanceDir(rootDir).resolve("IcuNumberGoldenData.kt"),
         icuTag = ICU_REPO.tag,
@@ -319,7 +331,7 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .section("localeDisplayNames", buildLocaleDisplayNamePayloads(flattener, extras))
         .section("relativeTime", relativeTime)
         .section("timeZoneFormats", timeZoneFormats)
-        .section("timeZoneNames", buildTimeZoneNamePayloads(flattener, ::zonesFor))
+        .section("timeZoneNames", timeZoneNames)
         .section("timeZoneCities", buildTimeZoneCityPayloads(flattener, ::zonesFor))
         .table(BundleTables.TIME_ZONE_METADATA, encodeTimeZoneMetadata(cldrDir))
         .section("countryNames", buildCountryNamePayloads(flattener, extras))
