@@ -29,10 +29,14 @@ public class CurrencyEntry(
  * — there is no network beyond dependency resolution, and the CLDR version is
  * visible in their lock file.
  *
- * The name payloads are sparse and carry their parent tag, so narrowing has to
- * keep a locale's ancestors; see [narrowTo].
+ * The per-locale payloads live in [sections], keyed by the names declared in
+ * [BundleSection.ALL], rather than as one constructor parameter each. A section
+ * that is a constructor parameter has to be named in five places to be added and
+ * carries its sparse-or-resolved nature as a literal at the [narrowTo] call
+ * site; a section that is a map row is declared once, next to the number that
+ * says how narrowing must treat it.
  */
-public class LocaleDataBundle(
+public class LocaleDataBundle private constructor(
     public val cldrVersion: String,
     public val isoPublished: String,
     /** Canonical BCP 47 tags, without root. */
@@ -41,14 +45,27 @@ public class LocaleDataBundle(
     public val currencies: List<CurrencyEntry>,
     /** alpha-2 -> space-separated currency codes, preferred first. */
     public val countryCurrencies: Map<String, String>,
+    /** Locale-independent payloads, keyed by the names in [BundleTables]. */
+    public val tables: Map<String, String>,
+    /** Per-locale payloads, keyed by the names in [BundleSection.ALL]. */
+    public val sections: Map<String, Map<String, String>>,
+) {
+
+    /** The payloads of one section, empty when this bundle carries none. */
+    public fun section(name: String): Map<String, String> = sections[name].orEmpty()
+
     /** Fully resolved datetime records, including `root`. */
-    public val dateTime: Map<String, String>,
+    public val dateTime: Map<String, String> get() = section("dateTime")
+
     /** Sparse country-name records carrying their parent tag, including `root`. */
-    public val countryNames: Map<String, String>,
+    public val countryNames: Map<String, String> get() = section("countryNames")
+
     /** Fully resolved number-format records, including `root`. */
-    public val currencyFormats: Map<String, String>,
+    public val currencyFormats: Map<String, String> get() = section("currencyFormats")
+
     /** Sparse currency symbol and name records carrying their parent tag, including `root`. */
-    public val currencyNames: Map<String, String>,
+    public val currencyNames: Map<String, String> get() = section("currencyNames")
+
     /**
      * Fully resolved skeleton tables, including `root`.
      *
@@ -56,12 +73,13 @@ public class LocaleDataBundle(
      * different scales: almost every locale has its own `availableFormats`,
      * almost none has its own `appendItems`.
      */
-    public val skeletonFormats: Map<String, String> = emptyMap(),
+    public val skeletonFormats: Map<String, String> get() = section("skeletonFormats")
+
     /** Fully resolved `appendItems` patterns, including `root`. */
-    public val skeletonAppendFormats: Map<String, String> = emptyMap(),
+    public val skeletonAppendFormats: Map<String, String> get() = section("skeletonAppendFormats")
+
     /** Fully resolved field display names and quarter names, including `root`. */
-    public val skeletonNames: Map<String, String> = emptyMap(),
-) {
+    public val skeletonNames: Map<String, String> get() = section("skeletonNames")
 
     /**
      * The same bundle carrying only [tags], the locales they inherit from, and
@@ -70,6 +88,12 @@ public class LocaleDataBundle(
      * Ancestors are not optional. A country-name record holds only what that
      * locale's own CLDR file declares and points at its parent for the rest, so
      * a build that kept `pt-BR` and dropped `pt` would resolve almost nothing.
+     * Every sparse section is walked rather than the two that happen to exist
+     * today, so a section added later cannot be forgotten here.
+     *
+     * A section declared `narrowed = false` is copied through whole. Those carry
+     * data that does not vary by locale, where dropping rows saves nothing and
+     * turns an unlisted locale into wrong output instead of an error.
      *
      * [fallbackTag], when given, becomes the record stored under `root`, which is
      * what the runtime reaches for when a locale is not in the set at all. That
@@ -80,16 +104,32 @@ public class LocaleDataBundle(
      */
     public fun narrowTo(tags: Set<String>, fallbackTag: String? = null): LocaleDataBundle {
         require(tags.isNotEmpty()) { "narrowing to no locales would generate nothing" }
+        // localeTags rather than one section's keys: "does CLDR have this locale"
+        // is a question about the locale list, and reading it off a section made
+        // that section quietly load-bearing for every other one.
+        val available = localeTags.toHashSet()
         val kept = LinkedHashSet<String>()
         for (tag in tags.sorted()) {
-            require(tag in dateTime) { "no CLDR data for locale '$tag'" }
+            require(tag in available) { "no CLDR data for locale '$tag'" }
             kept += tag
-            kept += ancestorsOf(tag, countryNames)
-            kept += ancestorsOf(tag, currencyNames)
+            for (declared in BundleSection.ALL) {
+                if (declared.isSparse) kept += ancestorsOf(tag, section(declared.name))
+            }
         }
         kept += "root"
         if (fallbackTag != null) {
             require(fallbackTag in tags) { "the fallback locale '$fallbackTag' is not one of the generated locales" }
+        }
+
+        val narrowed = LinkedHashMap<String, Map<String, String>>(sections.size)
+        for (declared in BundleSection.ALL) {
+            val full = section(declared.name)
+            if (full.isEmpty()) continue
+            narrowed[declared.name] = if (!declared.narrowed) {
+                full
+            } else {
+                withFallback(full.filterKeys { it in kept }, full, fallbackTag, declared.sparseFields)
+            }
         }
 
         return LocaleDataBundle(
@@ -99,19 +139,8 @@ public class LocaleDataBundle(
             countries = countries,
             currencies = currencies,
             countryCurrencies = countryCurrencies,
-            dateTime = withFallback(dateTime.filterKeys { it in kept }, dateTime, fallbackTag, sparseFields = 0),
-            countryNames = withFallback(countryNames.filterKeys { it in kept }, countryNames, fallbackTag, sparseFields = 1),
-            currencyFormats = withFallback(currencyFormats.filterKeys { it in kept }, currencyFormats, fallbackTag, sparseFields = 0),
-            currencyNames = withFallback(currencyNames.filterKeys { it in kept }, currencyNames, fallbackTag, sparseFields = 2),
-            // Resolved rather than sparse, so these copy the way dateTime does.
-            skeletonFormats = withFallback(skeletonFormats.filterKeys { it in kept }, skeletonFormats, fallbackTag, sparseFields = 0),
-            skeletonAppendFormats = withFallback(
-                skeletonAppendFormats.filterKeys { it in kept },
-                skeletonAppendFormats,
-                fallbackTag,
-                sparseFields = 0,
-            ),
-            skeletonNames = withFallback(skeletonNames.filterKeys { it in kept }, skeletonNames, fallbackTag, sparseFields = 0),
+            tables = tables,
+            sections = narrowed,
         )
     }
 
@@ -197,7 +226,7 @@ public class LocaleDataBundle(
             out.write("\n")
         }
 
-        section("bundle 2")
+        section("bundle $FORMAT_VERSION")
         row("cldr", cldrVersion)
         row("iso4217", isoPublished)
 
@@ -224,16 +253,15 @@ public class LocaleDataBundle(
         section("localeTags")
         for (tag in localeTags) row(tag)
 
-        for ((name, payloads) in listOf(
-            "dateTime" to dateTime,
-            "countryNames" to countryNames,
-            "currencyFormats" to currencyFormats,
-            "currencyNames" to currencyNames,
-            "skeletonFormats" to skeletonFormats,
-            "skeletonAppendFormats" to skeletonAppendFormats,
-            "skeletonNames" to skeletonNames,
-        )) {
+        for (name in BundleTables.ALL) {
+            val payload = tables[name] ?: continue
             section(name)
+            row(payload)
+        }
+
+        for (declared in BundleSection.ALL) {
+            val payloads = sections[declared.name] ?: continue
+            section(declared.name)
             for ((tag, payload) in payloads) row(tag, payload)
         }
 
@@ -241,24 +269,73 @@ public class LocaleDataBundle(
         out.flush()
     }
 
+    /**
+     * Collects the parts of a bundle before checking them.
+     *
+     * A builder rather than a constructor because the parts arrive from
+     * different places: the locale-keyed sections come out of the flattener one
+     * at a time, the entity lists out of ISO and CLDR validity data. A
+     * constructor with one parameter per section made adding a section a change
+     * to every caller.
+     */
+    public class Builder {
+        public var cldrVersion: String = ""
+        public var isoPublished: String = ""
+        public var localeTags: List<String> = emptyList()
+        public var countries: List<CountryInfo> = emptyList()
+        public var currencies: List<CurrencyEntry> = emptyList()
+        public var countryCurrencies: Map<String, String> = emptyMap()
+
+        private val tables = LinkedHashMap<String, String>()
+        private val sections = LinkedHashMap<String, Map<String, String>>()
+
+        /** Adds a locale-independent table. The name must be declared in [BundleTables]. */
+        public fun table(name: String, payload: String): Builder = apply {
+            require(name in BundleTables.ALL) { "'$name' is not a declared bundle table" }
+            tables[name] = payload
+        }
+
+        /** Adds a per-locale section. The name must be declared in [BundleSection.ALL]. */
+        public fun section(name: String, payloads: Map<String, String>): Builder = apply {
+            require(name in BundleSection.BY_NAME) { "'$name' is not a declared bundle section" }
+            sections[name] = payloads
+        }
+
+        public fun build(): LocaleDataBundle {
+            check(cldrVersion.isNotEmpty()) { "bundle has no CLDR version" }
+            check(localeTags.isNotEmpty()) { "bundle has no locales" }
+            return LocaleDataBundle(
+                cldrVersion = cldrVersion,
+                isoPublished = isoPublished,
+                localeTags = localeTags,
+                countries = countries,
+                currencies = currencies,
+                countryCurrencies = countryCurrencies,
+                tables = tables,
+                sections = sections,
+            )
+        }
+    }
+
     public companion object {
 
+        /**
+         * The format this build writes and reads.
+         *
+         * Earlier versions are not read. Nothing has published to Maven Central,
+         * so there is no bundle in the wild to migrate. That stops being true at
+         * the first release, and then this check needs a migration path rather
+         * than a rejection.
+         */
+        public const val FORMAT_VERSION: String = "3"
+
         public fun readFrom(reader: Reader): LocaleDataBundle {
-            var cldrVersion = ""
-            var isoPublished = ""
-            val localeTags = ArrayList<String>()
+            val builder = Builder()
             val countries = ArrayList<CountryInfo>()
             val currencies = ArrayList<CurrencyEntry>()
             val countryCurrencies = LinkedHashMap<String, String>()
-            val payloads = mapOf(
-                "dateTime" to LinkedHashMap<String, String>(),
-                "countryNames" to LinkedHashMap(),
-                "currencyFormats" to LinkedHashMap(),
-                "currencyNames" to LinkedHashMap(),
-                "skeletonFormats" to LinkedHashMap(),
-                "skeletonAppendFormats" to LinkedHashMap(),
-                "skeletonNames" to LinkedHashMap(),
-            )
+            val localeTags = ArrayList<String>()
+            val payloads = BundleSection.ALL.associate { it.name to LinkedHashMap<String, String>() }
 
             var section = ""
             reader.forEachLine { line ->
@@ -266,9 +343,13 @@ public class LocaleDataBundle(
                     section = line.removePrefix("#")
                     if (section.startsWith("bundle ")) {
                         val version = section.removePrefix("bundle ")
-                        // Version 1 predates the skeleton sections and is not read:
-                        // nothing has shipped, so there is no bundle in the wild.
-                        check(version == "2") { "unsupported bundle format version '$version'" }
+                        check(version == FORMAT_VERSION) {
+                            "this build reads bundle format $FORMAT_VERSION but the resolved " +
+                                "kotlinx-locale-codegen-data carries format $version. The Gradle plugin pins " +
+                                "the emitters and not the data, so align the kotlinxLocaleCldrData dependency " +
+                                "with the plugin version, or drop the explicit declaration to take the " +
+                                "plugin's default."
+                        }
                         section = "header"
                     }
                     return@forEachLine
@@ -277,8 +358,8 @@ public class LocaleDataBundle(
                 val fields = line.split('\t')
                 when (section) {
                     "header" -> when (fields[0]) {
-                        "cldr" -> cldrVersion = fields[1]
-                        "iso4217" -> isoPublished = fields[1]
+                        "cldr" -> builder.cldrVersion = fields[1]
+                        "iso4217" -> builder.isoPublished = fields[1]
                     }
                     "countries" -> countries += CountryInfo(fields[0], fields[1], fields[2].toInt(), fields[3])
                     "currencies" -> currencies += CurrencyEntry(
@@ -293,27 +374,35 @@ public class LocaleDataBundle(
                     )
                     "countryCurrencies" -> countryCurrencies[fields[0]] = fields[1]
                     "localeTags" -> localeTags += fields[0]
-                    else -> payloads[section]?.put(fields[0], fields.getOrElse(1) { "" })
+                    "end" -> Unit
+                    else -> {
+                        // Strict, because the alternative is silent. A bundle written
+                        // by a newer generator used to lose its unknown sections here,
+                        // and a build narrowed against it compiled and then resolved
+                        // nothing.
+                        val target = payloads[section]
+                        if (target != null) {
+                            target[fields[0]] = fields.getOrElse(1) { "" }
+                        } else if (section in BundleTables.ALL) {
+                            builder.table(section, fields[0])
+                        } else {
+                            error(
+                                "unknown bundle section '$section'. This bundle was written by a newer " +
+                                    "kotlinx-locale-codegen-data than the emitters reading it.",
+                            )
+                        }
+                    }
                 }
             }
 
-            check(cldrVersion.isNotEmpty()) { "bundle has no CLDR version" }
-            check(localeTags.isNotEmpty()) { "bundle has no locales" }
-            return LocaleDataBundle(
-                cldrVersion = cldrVersion,
-                isoPublished = isoPublished,
-                localeTags = localeTags,
-                countries = countries,
-                currencies = currencies,
-                countryCurrencies = countryCurrencies,
-                dateTime = payloads.getValue("dateTime"),
-                countryNames = payloads.getValue("countryNames"),
-                currencyFormats = payloads.getValue("currencyFormats"),
-                currencyNames = payloads.getValue("currencyNames"),
-                skeletonFormats = payloads.getValue("skeletonFormats"),
-                skeletonAppendFormats = payloads.getValue("skeletonAppendFormats"),
-                skeletonNames = payloads.getValue("skeletonNames"),
-            )
+            builder.countries = countries
+            builder.currencies = currencies
+            builder.countryCurrencies = countryCurrencies
+            builder.localeTags = localeTags
+            for ((name, rows) in payloads) {
+                if (rows.isNotEmpty()) builder.section(name, rows)
+            }
+            return builder.build()
         }
     }
 }

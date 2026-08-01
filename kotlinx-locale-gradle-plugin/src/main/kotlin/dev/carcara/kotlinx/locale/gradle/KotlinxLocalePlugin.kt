@@ -39,11 +39,7 @@ class KotlinxLocalePlugin : Plugin<Project> {
         val extension = target.extensions.create("kotlinxLocale", KotlinxLocaleExtension::class.java)
         extension.packageName.convention("kotlinx.locale.generated")
         extension.objectPrefix.convention("Generated")
-        extension.country.names.convention(false)
-        extension.currency.names.convention(false)
-        extension.currency.formats.convention(false)
-        extension.datetime.patterns.convention(false)
-        extension.datetime.skeletons.convention(false)
+        // Feature flags default themselves as they are declared; see FeatureBlock.flag.
 
         val cldrData = declareCldrDataConfiguration(target)
         val generate = registerGenerateTask(target, extension, cldrData)
@@ -92,18 +88,10 @@ class KotlinxLocalePlugin : Plugin<Project> {
         task.features.set(
             target.provider {
                 require(!extension.generatesNothing()) {
-                    "kotlinxLocale generates nothing: enable at least one of country.names, " +
-                        "currency.names, currency.formats, datetime.patterns or datetime.skeletons"
+                    "kotlinxLocale generates nothing: enable at least one of " +
+                        LocaleFeature.entries.joinToString { it.dslName }
                 }
-                target.objects.newInstance(GeneratedFeaturesValue::class.java).apply {
-                    countryNames = extension.country.names.get()
-                    // A pattern substitutes the currency symbol into itself, so
-                    // formats without names would render a pattern with a hole.
-                    currencyNames = extension.currency.names.get() || extension.currency.formats.get()
-                    currencyFormats = extension.currency.formats.get()
-                    dateTimePatterns = extension.datetime.patterns.get()
-                    dateTimeSkeletons = extension.datetime.skeletons.get()
-                }
+                extension.requestedFeatures()
             },
         )
         task.outputDirectory.set(target.layout.buildDirectory.dir("generated/kotlinx-locale"))
@@ -148,13 +136,4 @@ class KotlinxLocalePlugin : Plugin<Project> {
                 ?: error("kotlinx-locale-plugin.properties carries no version")
         }
     }
-}
-
-/** The mutable counterpart of [GeneratedFeatures], for the provider to fill in. */
-internal interface GeneratedFeaturesValue : GeneratedFeatures {
-    override var countryNames: Boolean
-    override var currencyNames: Boolean
-    override var currencyFormats: Boolean
-    override var dateTimePatterns: Boolean
-    override var dateTimeSkeletons: Boolean
 }

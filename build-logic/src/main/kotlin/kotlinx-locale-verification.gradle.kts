@@ -18,19 +18,16 @@ plugins {
 val checkLayeringRule = tasks.register<CheckLayeringRule>("checkLayeringRule") {
     group = "verification"
     description = "Fails when hand-written main sources name a specific Country or Currency entry"
-    // The published layers that carry lookup code, matched by directory name.
-    // These globs and the directory names are one fact stored twice: rename a
-    // module without touching them and the task keeps passing over less than it
-    // used to, which is the failure this rule can least afford. If the source
-    // count it logs moves without a source having moved, a glob is stale.
+    // Every published multiplatform module, matched by the source-set layout only
+    // those modules have. A glob per layer has to be edited for every new layer,
+    // and the layer it misses is silently unchecked, which is the failure this
+    // rule can least afford: the four -platform modules matched none of the six
+    // globs that used to be here and so were exempt without anyone deciding they
+    // should be. The codegen and Gradle plugin modules use src/main/kotlin and
+    // are excluded by the shape rather than by a name list.
     sources.from(
         layout.projectDirectory.asFileTree.matching {
-            include("*-types/src/*Main/**/*.kt")
-            include("*-core/src/*Main/**/*.kt")
-            include("*-cldr-full/src/*Main/**/*.kt")
-            include("*-cldr-runtime/src/*Main/**/*.kt")
-            include("*-cldr-skeletons/src/*Main/**/*.kt")
-            include("*-serialization/src/*Main/**/*.kt")
+            include("kotlinx-locale-*/src/*Main/**/*.kt")
             exclude("**/build/**")
         },
     )

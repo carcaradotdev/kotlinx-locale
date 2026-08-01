@@ -15,12 +15,10 @@ import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFiles
-import org.gradle.api.tasks.Nested
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
-import java.io.File
 import javax.inject.Inject
 
 /**
@@ -60,8 +58,16 @@ abstract class GenerateLocaleSources : DefaultTask() {
     @get:Input
     abstract val objectPrefix: Property<String>
 
-    @get:Nested
-    abstract val features: Property<GeneratedFeatures>
+    /**
+     * What to generate.
+     *
+     * A set of features rather than a boolean per feature: the boolean form
+     * needed a nested object, a mirror interface for the provider to fill in,
+     * and one line per feature in each. Every feature carries the tables it
+     * needs, so this set is the whole input.
+     */
+    @get:Input
+    abstract val features: SetProperty<LocaleFeature>
 
     @get:OutputDirectory
     abstract val outputDirectory: DirectoryProperty
@@ -91,37 +97,30 @@ abstract class GenerateLocaleSources : DefaultTask() {
         val requested = features.get()
         val basePackage = packageName.get()
         val prefix = objectPrefix.get()
-        val registryPackages = RegistryPackages.under(basePackage)
 
-        generateSources(
-            bundle = bundle,
-            roots = SourceRoots(
-                countryNames = root.takeIf { requested.countryNames },
-                currencyNames = root.takeIf { requested.currencyNames || requested.currencyFormats },
-                currencyFormats = root.takeIf { requested.currencyFormats },
-                dateTime = root.takeIf { requested.dateTimePatterns || requested.dateTimeSkeletons },
-                skeletons = root.takeIf { requested.dateTimeSkeletons },
-                countryBinding = binding(root, basePackage, "${prefix}CountryNames", requested.countryNames),
-                currencyBinding = binding(root, basePackage, "${prefix}Currency", requested.currencyNames || requested.currencyFormats),
-                dateTimeBinding = binding(
-                    root,
-                    basePackage,
-                    "${prefix}DateTime",
-                    requested.dateTimePatterns || requested.dateTimeSkeletons,
-                ),
-                skeletonBinding = binding(root, basePackage, "${prefix}DateTimeSkeletons", requested.dateTimeSkeletons),
-            ),
-            packages = registryPackages,
-        )
+        // Every table and binding a requested feature declared, unioned. A
+        // feature that needs another feature's table says so in its own table
+        // set, so there is nothing to resolve here and no combination that
+        // yields a half-populated source set.
+        val builder = SourceRoots.Builder()
+        for (feature in requested) {
+            feature.tables.forEach { table -> builder.table(table, root) }
+            feature.bindings.forEach { binding ->
+                builder.binding(
+                    binding,
+                    BindingTarget(root = root, packageName = basePackage, objectName = prefix + binding.objectSuffix),
+                )
+            }
+        }
+
+        generateSources(bundle = bundle, roots = builder.build(), packages = RegistryPackages.under(basePackage))
 
         logger.lifecycle(
             "[kotlinx-locale] generated ${bundle.localeTags.size} locales " +
-                "(fallback ${fallbackLocale.get()}) into $basePackage",
+                "(fallback ${fallbackLocale.get()}) into $basePackage: " +
+                requested.joinToString { it.dslName },
         )
     }
-
-    private fun binding(root: File, basePackage: String, objectName: String, enabled: Boolean): BindingTarget? =
-        if (enabled) BindingTarget(root = root, packageName = basePackage, objectName = objectName) else null
 
     /**
      * The bundle out of the resolved artifact.
@@ -154,32 +153,4 @@ abstract class GenerateLocaleSources : DefaultTask() {
                 "Is the kotlinxLocaleCldrData dependency the right artifact?",
         )
     }
-}
-
-/**
- * The feature set, as one nested input.
- *
- * Grouped rather than left as four separate task properties so that the task's
- * inputs read the same way the DSL does, and so adding a feature is one field
- * rather than one field plus one wiring line.
- */
-interface GeneratedFeatures {
-    @get:Input
-    val countryNames: Boolean
-
-    @get:Input
-    val currencyNames: Boolean
-
-    @get:Input
-    val currencyFormats: Boolean
-
-    @get:Input
-    val dateTimePatterns: Boolean
-
-    /**
-     * Implies [dateTimePatterns]: matching scores against the standard patterns
-     * and rendering needs the calendar names, so the two tables travel together.
-     */
-    @get:Input
-    val dateTimeSkeletons: Boolean
 }

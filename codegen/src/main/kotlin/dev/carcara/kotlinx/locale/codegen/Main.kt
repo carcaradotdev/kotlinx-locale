@@ -52,40 +52,52 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
 }
 
 /** Every published artifact that carries generated source, and where its package root is. */
-internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots(
-    localeCatalog = rootDir.sourceRoot("kotlinx-locale-types"),
-    countryEnum = rootDir.sourceRoot("kotlinx-locale-country-types"),
-    countryNames = rootDir.sourceRoot("kotlinx-locale-country-cldr-full"),
-    currencyEnum = rootDir.sourceRoot("kotlinx-locale-currency-types"),
-    countryCurrencies = rootDir.sourceRoot("kotlinx-locale-currency-types"),
-    currencyFormats = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
-    currencyNames = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
-    dateTime = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"),
-    skeletons = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"),
+internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
+    .table(GeneratedTable.LOCALE_CATALOG, rootDir.sourceRoot("kotlinx-locale-types"))
+    .table(GeneratedTable.COUNTRY_ENUM, rootDir.sourceRoot("kotlinx-locale-country-types"))
+    .table(GeneratedTable.COUNTRY_NAMES, rootDir.sourceRoot("kotlinx-locale-country-cldr-full"))
+    .table(GeneratedTable.CURRENCY_ENUM, rootDir.sourceRoot("kotlinx-locale-currency-types"))
+    .table(GeneratedTable.COUNTRY_CURRENCIES, rootDir.sourceRoot("kotlinx-locale-currency-types"))
+    .table(GeneratedTable.CURRENCY_FORMATS, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
+    .table(GeneratedTable.CURRENCY_NAMES, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
+    .table(GeneratedTable.DATE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
+    .table(GeneratedTable.SKELETONS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"))
     // The source objects and their convenience extensions come from the same
     // emitter the Gradle plugin uses, so a narrowed build and a full one cannot
     // present a different API.
-    countryBinding = BindingTarget(
-        root = rootDir.sourceRoot("kotlinx-locale-country-cldr-full"),
-        packageName = "dev.carcara.kotlinx.locale.country.cldr",
-        objectName = "CldrCountry",
-    ),
-    currencyBinding = BindingTarget(
-        root = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
-        packageName = "dev.carcara.kotlinx.locale.currency.cldr",
-        objectName = "CldrCurrency",
-    ),
-    dateTimeBinding = BindingTarget(
-        root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"),
-        packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
-        objectName = "CldrDateTime",
-    ),
-    skeletonBinding = BindingTarget(
-        root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"),
-        packageName = "dev.carcara.kotlinx.locale.datetime.cldr.skeletons",
-        objectName = "CldrDateTimeSkeletons",
-    ),
-)
+    .binding(
+        GeneratedBinding.COUNTRY,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-country-cldr-full"),
+            packageName = "dev.carcara.kotlinx.locale.country.cldr",
+            objectName = "CldrCountry",
+        ),
+    )
+    .binding(
+        GeneratedBinding.CURRENCY,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
+            packageName = "dev.carcara.kotlinx.locale.currency.cldr",
+            objectName = "CldrCurrency",
+        ),
+    )
+    .binding(
+        GeneratedBinding.DATE_TIME,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"),
+            packageName = "dev.carcara.kotlinx.locale.datetime.cldr",
+            objectName = "CldrDateTime",
+        ),
+    )
+    .binding(
+        GeneratedBinding.SKELETONS,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"),
+            packageName = "dev.carcara.kotlinx.locale.datetime.cldr.skeletons",
+            objectName = "CldrDateTimeSkeletons",
+        ),
+    )
+    .build()
 
 /**
  * Reads CLDR and ICU once and resolves everything the emitters need.
@@ -150,14 +162,14 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
 
     println("[codegen] extracting country/currency data for ${flattener.localeIds.size} CLDR locales")
     val extras = ExtrasResolver(cldrDir, flattener, supplemental, countryCodes, currencyCodes)
-    val countries = buildCountryList(territoryCodes) { alpha2 ->
+    val countryList = buildCountryList(territoryCodes) { alpha2 ->
         extras.resolveValue("en") { it.territoryNames[alpha2] }
     }
 
-    val countryCurrencies = LinkedHashMap<String, String>()
-    for (country in countries) {
+    val countryCurrencyCodes = LinkedHashMap<String, String>()
+    for (country in countryList) {
         val codes = supplemental.regionCurrencies[country.alpha2]?.filter { it in currencyCodes }.orEmpty()
-        if (codes.isNotEmpty()) countryCurrencies[country.alpha2] = codes.joinToString(" ")
+        if (codes.isNotEmpty()) countryCurrencyCodes[country.alpha2] = codes.joinToString(" ")
     }
 
     emitIcuGolden(
@@ -189,31 +201,33 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         numericCodes = extractIcuNumericCodes(icuDir),
     )
 
-    return LocaleDataBundle(
-        cldrVersion = CLDR_REPO.tag,
-        isoPublished = iso4217.published,
-        localeTags = flattener.localeIds.map(::canonicalTag),
-        countries = countries,
-        currencies = iso4217.currencies.map { iso ->
-            val fractions = supplemental.currencyFractions[iso.code] ?: supplemental.defaultFractions
-            CurrencyEntry(
-                code = iso.code,
-                numericCode = iso.numericCode ?: -1,
-                minorUnits = iso.minorUnits,
-                cldrDigits = fractions.digits,
-                cldrRounding = fractions.rounding,
-                cldrCashDigits = fractions.cashDigits,
-                cldrCashRounding = fractions.cashRounding,
-                englishName = iso.name,
-            )
-        },
-        countryCurrencies = countryCurrencies,
-        dateTime = dateTime,
-        countryNames = buildCountryNamePayloads(flattener, extras),
-        currencyFormats = buildCurrencyFormatPayloads(flattener, extras),
-        currencyNames = buildCurrencyNamePayloads(flattener, extras),
-        skeletonFormats = skeletonFormats,
-        skeletonAppendFormats = skeletonAppendFormats,
-        skeletonNames = skeletonNames,
-    )
+    return LocaleDataBundle.Builder()
+        .apply {
+            cldrVersion = CLDR_REPO.tag
+            isoPublished = iso4217.published
+            localeTags = flattener.localeIds.map(::canonicalTag)
+            countries = countryList
+            currencies = iso4217.currencies.map { iso ->
+                val fractions = supplemental.currencyFractions[iso.code] ?: supplemental.defaultFractions
+                CurrencyEntry(
+                    code = iso.code,
+                    numericCode = iso.numericCode ?: -1,
+                    minorUnits = iso.minorUnits,
+                    cldrDigits = fractions.digits,
+                    cldrRounding = fractions.rounding,
+                    cldrCashDigits = fractions.cashDigits,
+                    cldrCashRounding = fractions.cashRounding,
+                    englishName = iso.name,
+                )
+            }
+            countryCurrencies = countryCurrencyCodes
+        }
+        .section("dateTime", dateTime)
+        .section("countryNames", buildCountryNamePayloads(flattener, extras))
+        .section("currencyFormats", buildCurrencyFormatPayloads(flattener, extras))
+        .section("currencyNames", buildCurrencyNamePayloads(flattener, extras))
+        .section("skeletonFormats", skeletonFormats)
+        .section("skeletonAppendFormats", skeletonAppendFormats)
+        .section("skeletonNames", skeletonNames)
+        .build()
 }
