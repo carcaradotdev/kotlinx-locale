@@ -1,0 +1,49 @@
+public final class dev/carcara/kotlinx/locale/number/cldr/CldrNumber : dev/carcara/kotlinx/locale/number/NumberFormatSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/number/cldr/CldrNumber;
+	public fun formatOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public fun formatPercentOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/PercentScale;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public final fun getSymbolRecords ()Ljava/util/Map;
+	public fun parseDecimalOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/Decimal;
+	public fun symbolsOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/NumberSymbols;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/CldrNumberOrdinals : dev/carcara/kotlinx/locale/number/OrdinalFormatSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/number/cldr/CldrNumberOrdinals;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun ordinalOrNull (JLdev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/CldrNumberPlurals : dev/carcara/kotlinx/locale/number/PluralRuleSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/number/cldr/CldrNumberPlurals;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun pluralCategoryOrNull (Ldev/carcara/kotlinx/locale/number/FormattedNumber;Ldev/carcara/kotlinx/locale/number/PluralType;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/NumberFormatKt {
+	public static final fun format (DILdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;Ldev/carcara/kotlinx/locale/number/SignDisplay;Ldev/carcara/kotlinx/locale/number/NumberGrouping;)Ljava/lang/String;
+	public static final fun format (JLdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;Ldev/carcara/kotlinx/locale/number/SignDisplay;Ldev/carcara/kotlinx/locale/number/NumberGrouping;)Ljava/lang/String;
+	public static final fun format (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;Ldev/carcara/kotlinx/locale/number/SignDisplay;Ldev/carcara/kotlinx/locale/number/NumberGrouping;Ljava/lang/Integer;Ljava/lang/Integer;)Ljava/lang/String;
+	public static synthetic fun format$default (DILdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;Ldev/carcara/kotlinx/locale/number/SignDisplay;Ldev/carcara/kotlinx/locale/number/NumberGrouping;ILjava/lang/Object;)Ljava/lang/String;
+	public static synthetic fun format$default (JLdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;Ldev/carcara/kotlinx/locale/number/SignDisplay;Ldev/carcara/kotlinx/locale/number/NumberGrouping;ILjava/lang/Object;)Ljava/lang/String;
+	public static synthetic fun format$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;Ldev/carcara/kotlinx/locale/number/SignDisplay;Ldev/carcara/kotlinx/locale/number/NumberGrouping;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun formatCompact (JLdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;)Ljava/lang/String;
+	public static final fun formatCompact (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;)Ljava/lang/String;
+	public static synthetic fun formatCompact$default (JLdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;ILjava/lang/Object;)Ljava/lang/String;
+	public static synthetic fun formatCompact$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberNotation;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun formatOrdinal (JLdev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun formatOrdinal$default (JLdev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun formatPercent (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ljava/lang/Integer;Ldev/carcara/kotlinx/locale/number/SignDisplay;)Ljava/lang/String;
+	public static synthetic fun formatPercent$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ljava/lang/Integer;Ldev/carcara/kotlinx/locale/number/SignDisplay;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun formatPercentValue (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ljava/lang/Integer;Ldev/carcara/kotlinx/locale/number/SignDisplay;)Ljava/lang/String;
+	public static synthetic fun formatPercentValue$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ljava/lang/Integer;Ldev/carcara/kotlinx/locale/number/SignDisplay;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun numberSymbols (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/NumberSymbols;
+	public static synthetic fun numberSymbols$default (Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/NumberSymbols;
+	public static final fun parseNumberOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/Decimal;
+	public static synthetic fun parseNumberOrNull$default (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/Decimal;
+	public static final fun pluralCategory (JLdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/PluralType;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
+	public static final fun pluralCategory (Ldev/carcara/kotlinx/locale/number/Decimal;ILdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/PluralType;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
+	public static synthetic fun pluralCategory$default (JLdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/PluralType;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
+	public static synthetic fun pluralCategory$default (Ldev/carcara/kotlinx/locale/number/Decimal;ILdev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/PluralType;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
+}
+

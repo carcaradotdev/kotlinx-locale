@@ -1,0 +1,126 @@
+public abstract interface class dev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution$Companion;
+	public abstract fun currencyText (I)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution$Companion {
+	public final fun getNone ()Ldev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/CompactFormatterKt {
+	public static final fun formatCompact (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Lkotlin/jvm/functions/Function1;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLjava/lang/String;Ldev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public static synthetic fun formatCompact$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Lkotlin/jvm/functions/Function1;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLjava/lang/String;Ldev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/CompactPatternTable {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getMaximumMagnitude ()I
+	public final fun isEmpty ()Z
+	public final fun patternOrNull (ILdev/carcara/kotlinx/locale/number/PluralCategory;Z)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberParserKt {
+	public static final field INVISIBLE_MARKS Ljava/lang/String;
+	public static final field NON_BREAKING_SPACES Ljava/lang/String;
+	public static final fun parseDecimal (Ljava/lang/String;Ldev/carcara/kotlinx/locale/number/NumberSymbols;)Ldev/carcara/kotlinx/locale/number/Decimal;
+	public static final fun toAsciiDigits (Ljava/lang/String;Ljava/util/List;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern$Companion;
+	public final fun getMaximumFractionDigits ()I
+	public final fun getMinimumFractionDigits ()I
+	public final fun getMinimumIntegerDigits ()I
+	public final fun getMultiplier ()I
+	public final fun getNegativePrefix ()Ljava/lang/String;
+	public final fun getNegativeSuffix ()Ljava/lang/String;
+	public final fun getPositivePrefix ()Ljava/lang/String;
+	public final fun getPositiveSuffix ()Ljava/lang/String;
+	public final fun getPrimaryGroupSize ()I
+	public final fun getRoundingIncrement ()J
+	public final fun getSecondaryGroupSize ()I
+	public final fun withExplicitPlus ()Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern$Companion {
+	public final fun parse (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberPatternRecord {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getDecimalPattern ()Ljava/lang/String;
+	public final fun getPercentPattern ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberRecordsKt {
+	public static final fun numberSymbolsRecordFor (Ljava/util/Map;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberSymbolsRecord;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberRendererKt {
+	public static final fun atFractionDigits (Ldev/carcara/kotlinx/locale/number/Decimal;I)Ldev/carcara/kotlinx/locale/number/Decimal;
+	public static final fun digitStringsOf (Ljava/lang/String;)Ljava/util/List;
+	public static final fun isAlphaAdjacent (Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ljava/lang/String;)Z
+	public static final fun renderNumber (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLdev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;I)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public static synthetic fun renderNumber$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/number/cldr/runtime/NumberPattern;Ldev/carcara/kotlinx/locale/number/NumberSymbols;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;Ljava/lang/Integer;ZLdev/carcara/kotlinx/locale/number/cldr/runtime/AffixSubstitution;IILjava/lang/Object;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/NumberSymbolsRecord {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getApproximatelySign ()Ljava/lang/String;
+	public final fun getCurrencyDecimal ()Ljava/lang/String;
+	public final fun getCurrencyGroup ()Ljava/lang/String;
+	public final fun getDecimal ()Ljava/lang/String;
+	public final fun getDigits ()Ljava/lang/String;
+	public final fun getExponential ()Ljava/lang/String;
+	public final fun getGroup ()Ljava/lang/String;
+	public final fun getInfinity ()Ljava/lang/String;
+	public final fun getListSeparator ()Ljava/lang/String;
+	public final fun getMinimumGroupingDigits ()I
+	public final fun getMinusSign ()Ljava/lang/String;
+	public final fun getNan ()Ljava/lang/String;
+	public final fun getNumberingSystem ()Ljava/lang/String;
+	public final fun getPerMille ()Ljava/lang/String;
+	public final fun getPercentSign ()Ljava/lang/String;
+	public final fun getPlusSign ()Ljava/lang/String;
+	public final fun getSuperscriptingExponent ()Ljava/lang/String;
+	public final fun getTimeSeparator ()Ljava/lang/String;
+	public final fun toSymbols ()Ldev/carcara/kotlinx/locale/number/NumberSymbols;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/OrdinalRuleClosure {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun format (JLdev/carcara/kotlinx/locale/number/NumberSymbols;Lkotlin/jvm/functions/Function1;)Ljava/lang/String;
+	public final fun isEmpty ()Z
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/PayloadNumberFormats : dev/carcara/kotlinx/locale/number/NumberFormatSource {
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ldev/carcara/kotlinx/locale/number/PluralRuleSource;)V
+	public fun formatOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public fun formatPercentOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/PercentScale;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun parseDecimalOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/Decimal;
+	public fun symbolsOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/NumberSymbols;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/PayloadOrdinalFormats : dev/carcara/kotlinx/locale/number/OrdinalFormatSource {
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;Ldev/carcara/kotlinx/locale/number/NumberFormatSource;Ldev/carcara/kotlinx/locale/number/PluralRuleSource;)V
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun ordinalOrNull (JLdev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/PayloadPluralRules : dev/carcara/kotlinx/locale/number/PluralRuleSource {
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;)V
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun pluralCategoryOrNull (Ldev/carcara/kotlinx/locale/number/FormattedNumber;Ldev/carcara/kotlinx/locale/number/PluralType;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/PluralRuleSet {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/cldr/runtime/PluralRuleSet$Companion;
+	public final fun select (Ldev/carcara/kotlinx/locale/number/FormattedNumber;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
+}
+
+public final class dev/carcara/kotlinx/locale/number/cldr/runtime/PluralRuleSet$Companion {
+	public final fun getOtherOnly ()Ldev/carcara/kotlinx/locale/number/cldr/runtime/PluralRuleSet;
+	public final fun parse (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/number/cldr/runtime/PluralRuleSet;
+}
+

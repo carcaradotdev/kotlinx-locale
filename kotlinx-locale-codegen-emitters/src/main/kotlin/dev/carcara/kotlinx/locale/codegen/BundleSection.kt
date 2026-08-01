@@ -38,6 +38,20 @@ public class BundleSection(
             BundleSection("skeletonFormats"),
             BundleSection("skeletonAppendFormats"),
             BundleSection("skeletonNames"),
+            BundleSection("numberSymbols"),
+            BundleSection("numberPatterns"),
+            BundleSection("numberCompactShort"),
+            BundleSection("numberCompactLong"),
+            BundleSection("currencyCompactShort"),
+            // Not narrowed. The plural tables are four kilobytes for every locale
+            // in CLDR, so dropping rows saves nothing, and a build that asked for
+            // a locale it did not generate would fall back to root's other-only
+            // rules and produce grammatically wrong text with no error anywhere.
+            BundleSection("pluralRuleSets", narrowed = false),
+            BundleSection("pluralRuleIndex", narrowed = false),
+            // The same reasoning: thirty-three rule closures cover every locale.
+            BundleSection("ordinalRuleSets", narrowed = false),
+            BundleSection("ordinalRuleIndex", narrowed = false),
         )
 
         public val BY_NAME: Map<String, BundleSection> = ALL.associateBy(BundleSection::name)

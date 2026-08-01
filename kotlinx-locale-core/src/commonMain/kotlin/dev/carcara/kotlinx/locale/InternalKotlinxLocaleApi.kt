@@ -15,5 +15,9 @@ package dev.carcara.kotlinx.locale
     AnnotationTarget.CLASS,
     AnnotationTarget.FUNCTION,
     AnnotationTarget.PROPERTY,
+    // A constructor, so a public type can be built only by the modules that own
+    // its invariants: FormattedNumber's operands are trustworthy exactly because
+    // the formatter that printed the digits is what constructed it.
+    AnnotationTarget.CONSTRUCTOR,
 )
 public annotation class InternalKotlinxLocaleApi

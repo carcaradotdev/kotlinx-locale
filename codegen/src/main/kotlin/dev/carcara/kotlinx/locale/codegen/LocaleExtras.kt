@@ -25,6 +25,21 @@ class PartialLocaleExtras {
 
     /** numbering system attribute value ("" when absent) -> declared currency patterns. */
     val currencyPatterns = LinkedHashMap<String, PartialCurrencyPatterns>()
+
+    /** numbering system -> the plain decimal pattern. */
+    val decimalPatterns = LinkedHashMap<String, String>()
+
+    /** numbering system -> the percent pattern. */
+    val percentPatterns = LinkedHashMap<String, String>()
+
+    /** numbering system -> "magnitude:count[:a]" -> compact decimal pattern, short length. */
+    val compactShort = LinkedHashMap<String, MutableMap<String, String>>()
+
+    /** The same for the long length. */
+    val compactLong = LinkedHashMap<String, MutableMap<String, String>>()
+
+    /** The same for compact currency, which CLDR only gives a short length. */
+    val currencyCompact = LinkedHashMap<String, MutableMap<String, String>>()
 }
 
 class PartialNumberSymbols {
@@ -33,6 +48,16 @@ class PartialNumberSymbols {
     var currencyDecimal: String? = null
     var currencyGroup: String? = null
     var minusSign: String? = null
+    var plusSign: String? = null
+    var percentSign: String? = null
+    var perMille: String? = null
+    var approximatelySign: String? = null
+    var exponential: String? = null
+    var superscriptingExponent: String? = null
+    var infinity: String? = null
+    var nan: String? = null
+    var list: String? = null
+    var timeSeparator: String? = null
 }
 
 class PartialCurrencyPatterns {
@@ -109,11 +134,56 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
         if (target.currencyDecimal == null) target.currencyDecimal = read("currencyDecimal")
         if (target.currencyGroup == null) target.currencyGroup = read("currencyGroup")
         if (target.minusSign == null) target.minusSign = read("minusSign")
+        if (target.plusSign == null) target.plusSign = read("plusSign")
+        if (target.percentSign == null) target.percentSign = read("percentSign")
+        if (target.perMille == null) target.perMille = read("perMille")
+        if (target.approximatelySign == null) target.approximatelySign = read("approximatelySign")
+        if (target.exponential == null) target.exponential = read("exponential")
+        if (target.superscriptingExponent == null) target.superscriptingExponent = read("superscriptingExponent")
+        if (target.infinity == null) target.infinity = read("infinity")
+        if (target.nan == null) target.nan = read("nan")
+        if (target.list == null) target.list = read("list")
+        if (target.timeSeparator == null) target.timeSeparator = read("timeSeparator")
+    }
+
+    // The plain decimal and percent patterns, and the compact tables beside them.
+    // A block that only carries an <alias> resolves to nothing here and falls
+    // through to the next numbering system key, which is what root does for the
+    // systems it does not spell out.
+    for (formatsEl in numbers.childElements("decimalFormats")) {
+        val system = formatsEl.getAttribute("numberSystem")
+        for (length in formatsEl.childElements("decimalFormatLength")) {
+            val format = length.childElements("decimalFormat").firstOrNull() ?: continue
+            when (length.getAttribute("type")) {
+                "" -> format.childElements("pattern")
+                    .firstOrNull { !it.hasAttribute("alt") && !it.hasAttribute("type") }
+                    ?.textContent?.cleaned()
+                    ?.let { extras.decimalPatterns.putIfAbsent(system, it) }
+                "short" -> readCompact(format, extras.compactShort.getOrPut(system) { LinkedHashMap() })
+                "long" -> readCompact(format, extras.compactLong.getOrPut(system) { LinkedHashMap() })
+            }
+        }
+    }
+
+    for (formatsEl in numbers.childElements("percentFormats")) {
+        val system = formatsEl.getAttribute("numberSystem")
+        val length = formatsEl.childElements("percentFormatLength")
+            .firstOrNull { !it.hasAttribute("type") } ?: continue
+        length.childElements("percentFormat").firstOrNull()
+            ?.childElements("pattern")?.firstOrNull { !it.hasAttribute("alt") }
+            ?.textContent?.cleaned()
+            ?.let { extras.percentPatterns.putIfAbsent(system, it) }
     }
 
     for (formatsEl in numbers.childElements("currencyFormats")) {
-        val target = extras.currencyPatterns.getOrPut(formatsEl.getAttribute("numberSystem")) { PartialCurrencyPatterns() }
-        // Only the default (type-less) length; type="short" is compact notation.
+        val system = formatsEl.getAttribute("numberSystem")
+        formatsEl.childElements("currencyFormatLength")
+            .firstOrNull { it.getAttribute("type") == "short" }
+            ?.childElements("currencyFormat")
+            ?.firstOrNull { it.getAttribute("type").let { type -> type == "standard" || type.isEmpty() } }
+            ?.let { readCompact(it, extras.currencyCompact.getOrPut(system) { LinkedHashMap() }) }
+
+        val target = extras.currencyPatterns.getOrPut(system) { PartialCurrencyPatterns() }
         val length = formatsEl.childElements("currencyFormatLength")
             .firstOrNull { !it.hasAttribute("type") } ?: continue
         for (format in length.childElements("currencyFormat")) {
@@ -135,6 +205,51 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
 
     return extras
 }
+
+/**
+ * Reads one compact block into `magnitude:count[:a]` keys.
+ *
+ * The `type` attribute is the bucket as a power of ten written out (`10000`),
+ * stored here as the exponent. A pattern whose text is exactly `0` is kept
+ * rather than skipped: UTS #35 uses it to mean "no compact form at this
+ * magnitude, use the standard pattern", and ten locales set it deliberately to
+ * override a parent that had one.
+ */
+private fun readCompact(format: org.w3c.dom.Element, target: MutableMap<String, String>) {
+    for (pattern in format.childElements("pattern")) {
+        val type = pattern.getAttribute("type").takeIf { it.isNotEmpty() } ?: continue
+        val count = pattern.getAttribute("count").takeIf { it.isNotEmpty() } ?: "other"
+        val text = pattern.textContent.cleaned() ?: continue
+        val magnitude = type.length - 1
+        val alt = if (pattern.getAttribute("alt") == "alphaNextToNumber") ":a" else ""
+        target.putIfAbsent("$magnitude:$count$alt", text)
+    }
+}
+
+/** Fully resolved number symbols for one locale. */
+class ResolvedNumberSymbols(
+    val numberingSystem: String,
+    val digits: String,
+    val decimal: String,
+    val group: String,
+    val currencyDecimal: String,
+    val currencyGroup: String,
+    val minusSign: String,
+    val plusSign: String,
+    val percentSign: String,
+    val perMille: String,
+    val approximatelySign: String,
+    val exponential: String,
+    val superscriptingExponent: String,
+    val infinity: String,
+    val nan: String,
+    val listSeparator: String,
+    val timeSeparator: String,
+    val minimumGroupingDigits: Int,
+)
+
+/** The plain decimal and percent patterns for one locale. */
+class ResolvedNumberPatterns(val decimal: String, val percent: String)
 
 /**
  * Parses and caches [PartialLocaleExtras] per locale, resolving values across the
@@ -205,5 +320,91 @@ class ExtrasResolver(
             accountingPattern = accounting,
             accountingAlphaPattern = pattern { it.accountingAlpha } ?: accounting,
         )
+    }
+
+    /**
+     * The whole symbol table for [id].
+     *
+     * The lookup is numbering-system-major and chain-minor, the same ordering
+     * [resolveCurrencyFormat] uses and the one CLDR prescribes: a locale's own
+     * system wins over its parent's, and `latn` is the final fallback because
+     * root declares only that.
+     */
+    fun resolveNumberSymbols(id: String): ResolvedNumberSymbols {
+        val partials = flattener.dataChain(id).map(::partial)
+        val numberingSystem = partials.firstNotNullOfOrNull { it.defaultNumberingSystem } ?: "latn"
+        val systemKeys = listOf(numberingSystem, "latn", "")
+
+        fun symbol(selector: (PartialNumberSymbols) -> String?): String? {
+            for (key in systemKeys) {
+                for (partial in partials) {
+                    partial.symbols[key]?.let(selector)?.let { return it }
+                }
+            }
+            return null
+        }
+
+        val decimal = symbol { it.decimal } ?: "."
+        val group = symbol { it.group } ?: ","
+        return ResolvedNumberSymbols(
+            numberingSystem = numberingSystem,
+            digits = supplemental.numberingSystemDigits[numberingSystem]
+                ?: supplemental.numberingSystemDigits.getValue("latn"),
+            decimal = decimal,
+            group = group,
+            currencyDecimal = symbol { it.currencyDecimal } ?: decimal,
+            currencyGroup = symbol { it.currencyGroup } ?: group,
+            minusSign = symbol { it.minusSign } ?: "-",
+            plusSign = symbol { it.plusSign } ?: "+",
+            percentSign = symbol { it.percentSign } ?: "%",
+            perMille = symbol { it.perMille } ?: "‰",
+            approximatelySign = symbol { it.approximatelySign } ?: "~",
+            exponential = symbol { it.exponential } ?: "E",
+            superscriptingExponent = symbol { it.superscriptingExponent } ?: "×",
+            infinity = symbol { it.infinity } ?: "∞",
+            nan = symbol { it.nan } ?: "NaN",
+            listSeparator = symbol { it.list } ?: ";",
+            timeSeparator = symbol { it.timeSeparator } ?: ":",
+            minimumGroupingDigits = partials.firstNotNullOfOrNull { it.minimumGroupingDigits } ?: 1,
+        )
+    }
+
+    /** The plain decimal and percent patterns for [id]. */
+    fun resolveNumberPatterns(id: String): ResolvedNumberPatterns {
+        val partials = flattener.dataChain(id).map(::partial)
+        val numberingSystem = partials.firstNotNullOfOrNull { it.defaultNumberingSystem } ?: "latn"
+        val systemKeys = listOf(numberingSystem, "latn", "")
+
+        fun lookUp(select: (PartialLocaleExtras) -> Map<String, String>): String? {
+            for (key in systemKeys) {
+                for (partial in partials) {
+                    select(partial)[key]?.let { return it }
+                }
+            }
+            return null
+        }
+
+        val decimal = lookUp { it.decimalPatterns } ?: error("$id: no decimal pattern after resolution")
+        return ResolvedNumberPatterns(decimal, lookUp { it.percentPatterns } ?: "#,##0%")
+    }
+
+    /**
+     * One compact table for [id], merged per key across the chain.
+     *
+     * Per key rather than per block: a locale that declares twelve of the
+     * twenty-four patterns inherits the other twelve rather than replacing the
+     * block wholesale.
+     */
+    fun resolveCompact(id: String, select: (PartialLocaleExtras) -> Map<String, MutableMap<String, String>>): Map<String, String> {
+        val partials = flattener.dataChain(id).map(::partial)
+        val numberingSystem = partials.firstNotNullOfOrNull { it.defaultNumberingSystem } ?: "latn"
+        val merged = LinkedHashMap<String, String>()
+        for (key in listOf(numberingSystem, "latn", "")) {
+            for (partial in partials) {
+                for ((entry, pattern) in select(partial)[key].orEmpty()) merged.putIfAbsent(entry, pattern)
+            }
+            if (merged.isNotEmpty()) break
+        }
+        return merged
     }
 }

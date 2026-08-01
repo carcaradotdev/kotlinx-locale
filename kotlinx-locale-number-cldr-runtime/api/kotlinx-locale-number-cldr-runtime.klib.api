@@ -1,0 +1,174 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-number-cldr-runtime>
+abstract fun interface dev.carcara.kotlinx.locale.number.cldr.runtime/AffixSubstitution { // dev.carcara.kotlinx.locale.number.cldr.runtime/AffixSubstitution|null[0]
+    abstract fun currencyText(kotlin/Int): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/AffixSubstitution.currencyText|currencyText(kotlin.Int){}[0]
+
+    final object Companion { // dev.carcara.kotlinx.locale.number.cldr.runtime/AffixSubstitution.Companion|null[0]
+        final val None // dev.carcara.kotlinx.locale.number.cldr.runtime/AffixSubstitution.Companion.None|{}None[0]
+            final fun <get-None>(): dev.carcara.kotlinx.locale.number.cldr.runtime/AffixSubstitution // dev.carcara.kotlinx.locale.number.cldr.runtime/AffixSubstitution.Companion.None.<get-None>|<get-None>(){}[0]
+    }
+}
+
+final class dev.carcara.kotlinx.locale.number.cldr.runtime/CompactPatternTable { // dev.carcara.kotlinx.locale.number.cldr.runtime/CompactPatternTable|null[0]
+    constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.number.cldr.runtime/CompactPatternTable.<init>|<init>(kotlin.String){}[0]
+
+    final val isEmpty // dev.carcara.kotlinx.locale.number.cldr.runtime/CompactPatternTable.isEmpty|{}isEmpty[0]
+        final fun <get-isEmpty>(): kotlin/Boolean // dev.carcara.kotlinx.locale.number.cldr.runtime/CompactPatternTable.isEmpty.<get-isEmpty>|<get-isEmpty>(){}[0]
+    final val maximumMagnitude // dev.carcara.kotlinx.locale.number.cldr.runtime/CompactPatternTable.maximumMagnitude|{}maximumMagnitude[0]
+        final fun <get-maximumMagnitude>(): kotlin/Int // dev.carcara.kotlinx.locale.number.cldr.runtime/CompactPatternTable.maximumMagnitude.<get-maximumMagnitude>|<get-maximumMagnitude>(){}[0]
+
+    final fun patternOrNull(kotlin/Int, dev.carcara.kotlinx.locale.number/PluralCategory, kotlin/Boolean): kotlin/String? // dev.carcara.kotlinx.locale.number.cldr.runtime/CompactPatternTable.patternOrNull|patternOrNull(kotlin.Int;dev.carcara.kotlinx.locale.number.PluralCategory;kotlin.Boolean){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern { // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern|null[0]
+    final val maximumFractionDigits // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.maximumFractionDigits|{}maximumFractionDigits[0]
+        final fun <get-maximumFractionDigits>(): kotlin/Int // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.maximumFractionDigits.<get-maximumFractionDigits>|<get-maximumFractionDigits>(){}[0]
+    final val minimumFractionDigits // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.minimumFractionDigits|{}minimumFractionDigits[0]
+        final fun <get-minimumFractionDigits>(): kotlin/Int // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.minimumFractionDigits.<get-minimumFractionDigits>|<get-minimumFractionDigits>(){}[0]
+    final val minimumIntegerDigits // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.minimumIntegerDigits|{}minimumIntegerDigits[0]
+        final fun <get-minimumIntegerDigits>(): kotlin/Int // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.minimumIntegerDigits.<get-minimumIntegerDigits>|<get-minimumIntegerDigits>(){}[0]
+    final val multiplier // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.multiplier|{}multiplier[0]
+        final fun <get-multiplier>(): kotlin/Int // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.multiplier.<get-multiplier>|<get-multiplier>(){}[0]
+    final val negativePrefix // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.negativePrefix|{}negativePrefix[0]
+        final fun <get-negativePrefix>(): kotlin/String? // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.negativePrefix.<get-negativePrefix>|<get-negativePrefix>(){}[0]
+    final val negativeSuffix // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.negativeSuffix|{}negativeSuffix[0]
+        final fun <get-negativeSuffix>(): kotlin/String? // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.negativeSuffix.<get-negativeSuffix>|<get-negativeSuffix>(){}[0]
+    final val positivePrefix // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.positivePrefix|{}positivePrefix[0]
+        final fun <get-positivePrefix>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.positivePrefix.<get-positivePrefix>|<get-positivePrefix>(){}[0]
+    final val positiveSuffix // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.positiveSuffix|{}positiveSuffix[0]
+        final fun <get-positiveSuffix>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.positiveSuffix.<get-positiveSuffix>|<get-positiveSuffix>(){}[0]
+    final val primaryGroupSize // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.primaryGroupSize|{}primaryGroupSize[0]
+        final fun <get-primaryGroupSize>(): kotlin/Int // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.primaryGroupSize.<get-primaryGroupSize>|<get-primaryGroupSize>(){}[0]
+    final val roundingIncrement // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.roundingIncrement|{}roundingIncrement[0]
+        final fun <get-roundingIncrement>(): kotlin/Long // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.roundingIncrement.<get-roundingIncrement>|<get-roundingIncrement>(){}[0]
+    final val secondaryGroupSize // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.secondaryGroupSize|{}secondaryGroupSize[0]
+        final fun <get-secondaryGroupSize>(): kotlin/Int // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.secondaryGroupSize.<get-secondaryGroupSize>|<get-secondaryGroupSize>(){}[0]
+
+    final fun withExplicitPlus(): dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.withExplicitPlus|withExplicitPlus(){}[0]
+
+    final object Companion { // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.Companion|null[0]
+        final fun parse(kotlin/String): dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern.Companion.parse|parse(kotlin.String){}[0]
+    }
+}
+
+final class dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPatternRecord { // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPatternRecord|null[0]
+    constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPatternRecord.<init>|<init>(kotlin.String){}[0]
+
+    final val decimalPattern // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPatternRecord.decimalPattern|{}decimalPattern[0]
+        final fun <get-decimalPattern>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPatternRecord.decimalPattern.<get-decimalPattern>|<get-decimalPattern>(){}[0]
+    final val percentPattern // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPatternRecord.percentPattern|{}percentPattern[0]
+        final fun <get-percentPattern>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPatternRecord.percentPattern.<get-percentPattern>|<get-percentPattern>(){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord { // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord|null[0]
+    constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.<init>|<init>(kotlin.String){}[0]
+
+    final val approximatelySign // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.approximatelySign|{}approximatelySign[0]
+        final fun <get-approximatelySign>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.approximatelySign.<get-approximatelySign>|<get-approximatelySign>(){}[0]
+    final val currencyDecimal // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.currencyDecimal|{}currencyDecimal[0]
+        final fun <get-currencyDecimal>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.currencyDecimal.<get-currencyDecimal>|<get-currencyDecimal>(){}[0]
+    final val currencyGroup // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.currencyGroup|{}currencyGroup[0]
+        final fun <get-currencyGroup>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.currencyGroup.<get-currencyGroup>|<get-currencyGroup>(){}[0]
+    final val decimal // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.decimal|{}decimal[0]
+        final fun <get-decimal>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.decimal.<get-decimal>|<get-decimal>(){}[0]
+    final val digits // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.digits|{}digits[0]
+        final fun <get-digits>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.digits.<get-digits>|<get-digits>(){}[0]
+    final val exponential // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.exponential|{}exponential[0]
+        final fun <get-exponential>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.exponential.<get-exponential>|<get-exponential>(){}[0]
+    final val group // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.group|{}group[0]
+        final fun <get-group>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.group.<get-group>|<get-group>(){}[0]
+    final val infinity // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.infinity|{}infinity[0]
+        final fun <get-infinity>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.infinity.<get-infinity>|<get-infinity>(){}[0]
+    final val listSeparator // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.listSeparator|{}listSeparator[0]
+        final fun <get-listSeparator>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.listSeparator.<get-listSeparator>|<get-listSeparator>(){}[0]
+    final val minimumGroupingDigits // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.minimumGroupingDigits|{}minimumGroupingDigits[0]
+        final fun <get-minimumGroupingDigits>(): kotlin/Int // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.minimumGroupingDigits.<get-minimumGroupingDigits>|<get-minimumGroupingDigits>(){}[0]
+    final val minusSign // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.minusSign|{}minusSign[0]
+        final fun <get-minusSign>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.minusSign.<get-minusSign>|<get-minusSign>(){}[0]
+    final val nan // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.nan|{}nan[0]
+        final fun <get-nan>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.nan.<get-nan>|<get-nan>(){}[0]
+    final val numberingSystem // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.numberingSystem|{}numberingSystem[0]
+        final fun <get-numberingSystem>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.numberingSystem.<get-numberingSystem>|<get-numberingSystem>(){}[0]
+    final val perMille // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.perMille|{}perMille[0]
+        final fun <get-perMille>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.perMille.<get-perMille>|<get-perMille>(){}[0]
+    final val percentSign // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.percentSign|{}percentSign[0]
+        final fun <get-percentSign>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.percentSign.<get-percentSign>|<get-percentSign>(){}[0]
+    final val plusSign // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.plusSign|{}plusSign[0]
+        final fun <get-plusSign>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.plusSign.<get-plusSign>|<get-plusSign>(){}[0]
+    final val superscriptingExponent // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.superscriptingExponent|{}superscriptingExponent[0]
+        final fun <get-superscriptingExponent>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.superscriptingExponent.<get-superscriptingExponent>|<get-superscriptingExponent>(){}[0]
+    final val timeSeparator // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.timeSeparator|{}timeSeparator[0]
+        final fun <get-timeSeparator>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.timeSeparator.<get-timeSeparator>|<get-timeSeparator>(){}[0]
+
+    final fun toSymbols(): dev.carcara.kotlinx.locale.number/NumberSymbols // dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord.toSymbols|toSymbols(){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.number.cldr.runtime/OrdinalRuleClosure { // dev.carcara.kotlinx.locale.number.cldr.runtime/OrdinalRuleClosure|null[0]
+    constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.number.cldr.runtime/OrdinalRuleClosure.<init>|<init>(kotlin.String){}[0]
+
+    final val isEmpty // dev.carcara.kotlinx.locale.number.cldr.runtime/OrdinalRuleClosure.isEmpty|{}isEmpty[0]
+        final fun <get-isEmpty>(): kotlin/Boolean // dev.carcara.kotlinx.locale.number.cldr.runtime/OrdinalRuleClosure.isEmpty.<get-isEmpty>|<get-isEmpty>(){}[0]
+
+    final fun format(kotlin/Long, dev.carcara.kotlinx.locale.number/NumberSymbols, kotlin/Function1<kotlin/Long, dev.carcara.kotlinx.locale.number/PluralCategory>): kotlin/String? // dev.carcara.kotlinx.locale.number.cldr.runtime/OrdinalRuleClosure.format|format(kotlin.Long;dev.carcara.kotlinx.locale.number.NumberSymbols;kotlin.Function1<kotlin.Long,dev.carcara.kotlinx.locale.number.PluralCategory>){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadNumberFormats : dev.carcara.kotlinx.locale.number/NumberFormatSource { // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadNumberFormats|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale.number/PluralRuleSource) // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadNumberFormats.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.number.PluralRuleSource){}[0]
+
+    final val supportedLocales // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadNumberFormats.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadNumberFormats.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun formatOrNull(dev.carcara.kotlinx.locale.number/Decimal, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.number/NumberFormatOptions): dev.carcara.kotlinx.locale.number/FormattedNumber? // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadNumberFormats.formatOrNull|formatOrNull(dev.carcara.kotlinx.locale.number.Decimal;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.number.NumberFormatOptions){}[0]
+    final fun formatPercentOrNull(dev.carcara.kotlinx.locale.number/Decimal, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.number/PercentScale, dev.carcara.kotlinx.locale.number/NumberFormatOptions): dev.carcara.kotlinx.locale.number/FormattedNumber? // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadNumberFormats.formatPercentOrNull|formatPercentOrNull(dev.carcara.kotlinx.locale.number.Decimal;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.number.PercentScale;dev.carcara.kotlinx.locale.number.NumberFormatOptions){}[0]
+    final fun parseDecimalOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number/Decimal? // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadNumberFormats.parseDecimalOrNull|parseDecimalOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun symbolsOrNull(dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number/NumberSymbols? // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadNumberFormats.symbolsOrNull|symbolsOrNull(dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadOrdinalFormats : dev.carcara.kotlinx.locale.number/OrdinalFormatSource { // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadOrdinalFormats|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale.number/NumberFormatSource, dev.carcara.kotlinx.locale.number/PluralRuleSource) // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadOrdinalFormats.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.number.NumberFormatSource;dev.carcara.kotlinx.locale.number.PluralRuleSource){}[0]
+
+    final val supportedLocales // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadOrdinalFormats.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadOrdinalFormats.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun ordinalOrNull(kotlin/Long, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadOrdinalFormats.ordinalOrNull|ordinalOrNull(kotlin.Long;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadPluralRules : dev.carcara.kotlinx.locale.number/PluralRuleSource { // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadPluralRules|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin.collections/Map<kotlin/String, kotlin/String>) // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadPluralRules.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final val supportedLocales // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadPluralRules.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadPluralRules.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun pluralCategoryOrNull(dev.carcara.kotlinx.locale.number/FormattedNumber, dev.carcara.kotlinx.locale.number/PluralType, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number/PluralCategory? // dev.carcara.kotlinx.locale.number.cldr.runtime/PayloadPluralRules.pluralCategoryOrNull|pluralCategoryOrNull(dev.carcara.kotlinx.locale.number.FormattedNumber;dev.carcara.kotlinx.locale.number.PluralType;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.number.cldr.runtime/PluralRuleSet { // dev.carcara.kotlinx.locale.number.cldr.runtime/PluralRuleSet|null[0]
+    final fun select(dev.carcara.kotlinx.locale.number/FormattedNumber): dev.carcara.kotlinx.locale.number/PluralCategory // dev.carcara.kotlinx.locale.number.cldr.runtime/PluralRuleSet.select|select(dev.carcara.kotlinx.locale.number.FormattedNumber){}[0]
+
+    final object Companion { // dev.carcara.kotlinx.locale.number.cldr.runtime/PluralRuleSet.Companion|null[0]
+        final val OtherOnly // dev.carcara.kotlinx.locale.number.cldr.runtime/PluralRuleSet.Companion.OtherOnly|{}OtherOnly[0]
+            final fun <get-OtherOnly>(): dev.carcara.kotlinx.locale.number.cldr.runtime/PluralRuleSet // dev.carcara.kotlinx.locale.number.cldr.runtime/PluralRuleSet.Companion.OtherOnly.<get-OtherOnly>|<get-OtherOnly>(){}[0]
+
+        final fun parse(kotlin/String): dev.carcara.kotlinx.locale.number.cldr.runtime/PluralRuleSet // dev.carcara.kotlinx.locale.number.cldr.runtime/PluralRuleSet.Companion.parse|parse(kotlin.String){}[0]
+    }
+}
+
+final const val dev.carcara.kotlinx.locale.number.cldr.runtime/INVISIBLE_MARKS // dev.carcara.kotlinx.locale.number.cldr.runtime/INVISIBLE_MARKS|{}INVISIBLE_MARKS[0]
+    final fun <get-INVISIBLE_MARKS>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/INVISIBLE_MARKS.<get-INVISIBLE_MARKS>|<get-INVISIBLE_MARKS>(){}[0]
+final const val dev.carcara.kotlinx.locale.number.cldr.runtime/NON_BREAKING_SPACES // dev.carcara.kotlinx.locale.number.cldr.runtime/NON_BREAKING_SPACES|{}NON_BREAKING_SPACES[0]
+    final fun <get-NON_BREAKING_SPACES>(): kotlin/String // dev.carcara.kotlinx.locale.number.cldr.runtime/NON_BREAKING_SPACES.<get-NON_BREAKING_SPACES>|<get-NON_BREAKING_SPACES>(){}[0]
+
+final fun (dev.carcara.kotlinx.locale.number/Decimal).dev.carcara.kotlinx.locale.number.cldr.runtime/atFractionDigits(kotlin/Int): dev.carcara.kotlinx.locale.number/Decimal // dev.carcara.kotlinx.locale.number.cldr.runtime/atFractionDigits|atFractionDigits@dev.carcara.kotlinx.locale.number.Decimal(kotlin.Int){}[0]
+final fun dev.carcara.kotlinx.locale.number.cldr.runtime/digitStringsOf(kotlin/String): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.number.cldr.runtime/digitStringsOf|digitStringsOf(kotlin.String){}[0]
+final fun dev.carcara.kotlinx.locale.number.cldr.runtime/formatCompact(dev.carcara.kotlinx.locale.number/Decimal, dev.carcara.kotlinx.locale.number.cldr.runtime/CompactPatternTable, dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern, dev.carcara.kotlinx.locale.number/NumberSymbols, kotlin/Function1<dev.carcara.kotlinx.locale.number/FormattedNumber, dev.carcara.kotlinx.locale.number/PluralCategory>, dev.carcara.kotlinx.locale.number/NumberFormatOptions = ..., kotlin/Int? = ..., kotlin/Boolean = ..., kotlin/String = ..., dev.carcara.kotlinx.locale.number.cldr.runtime/AffixSubstitution = ...): dev.carcara.kotlinx.locale.number/FormattedNumber // dev.carcara.kotlinx.locale.number.cldr.runtime/formatCompact|formatCompact(dev.carcara.kotlinx.locale.number.Decimal;dev.carcara.kotlinx.locale.number.cldr.runtime.CompactPatternTable;dev.carcara.kotlinx.locale.number.cldr.runtime.NumberPattern;dev.carcara.kotlinx.locale.number.NumberSymbols;kotlin.Function1<dev.carcara.kotlinx.locale.number.FormattedNumber,dev.carcara.kotlinx.locale.number.PluralCategory>;dev.carcara.kotlinx.locale.number.NumberFormatOptions;kotlin.Int?;kotlin.Boolean;kotlin.String;dev.carcara.kotlinx.locale.number.cldr.runtime.AffixSubstitution){}[0]
+final fun dev.carcara.kotlinx.locale.number.cldr.runtime/isAlphaAdjacent(dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern, kotlin/String): kotlin/Boolean // dev.carcara.kotlinx.locale.number.cldr.runtime/isAlphaAdjacent|isAlphaAdjacent(dev.carcara.kotlinx.locale.number.cldr.runtime.NumberPattern;kotlin.String){}[0]
+final fun dev.carcara.kotlinx.locale.number.cldr.runtime/numberSymbolsRecordFor(kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number.cldr.runtime/NumberSymbolsRecord // dev.carcara.kotlinx.locale.number.cldr.runtime/numberSymbolsRecordFor|numberSymbolsRecordFor(kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun dev.carcara.kotlinx.locale.number.cldr.runtime/parseDecimal(kotlin/String, dev.carcara.kotlinx.locale.number/NumberSymbols): dev.carcara.kotlinx.locale.number/Decimal? // dev.carcara.kotlinx.locale.number.cldr.runtime/parseDecimal|parseDecimal(kotlin.String;dev.carcara.kotlinx.locale.number.NumberSymbols){}[0]
+final fun dev.carcara.kotlinx.locale.number.cldr.runtime/renderNumber(dev.carcara.kotlinx.locale.number/Decimal, dev.carcara.kotlinx.locale.number.cldr.runtime/NumberPattern, dev.carcara.kotlinx.locale.number/NumberSymbols, dev.carcara.kotlinx.locale.number/NumberFormatOptions = ..., kotlin/Int? = ..., kotlin/Boolean = ..., dev.carcara.kotlinx.locale.number.cldr.runtime/AffixSubstitution = ..., kotlin/Int = ...): dev.carcara.kotlinx.locale.number/FormattedNumber // dev.carcara.kotlinx.locale.number.cldr.runtime/renderNumber|renderNumber(dev.carcara.kotlinx.locale.number.Decimal;dev.carcara.kotlinx.locale.number.cldr.runtime.NumberPattern;dev.carcara.kotlinx.locale.number.NumberSymbols;dev.carcara.kotlinx.locale.number.NumberFormatOptions;kotlin.Int?;kotlin.Boolean;dev.carcara.kotlinx.locale.number.cldr.runtime.AffixSubstitution;kotlin.Int){}[0]
+final fun dev.carcara.kotlinx.locale.number.cldr.runtime/toAsciiDigits(kotlin/String, kotlin.collections/List<kotlin/String>): kotlin/String? // dev.carcara.kotlinx.locale.number.cldr.runtime/toAsciiDigits|toAsciiDigits(kotlin.String;kotlin.collections.List<kotlin.String>){}[0]
