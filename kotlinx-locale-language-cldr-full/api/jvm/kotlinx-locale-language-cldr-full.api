@@ -1,0 +1,19 @@
+public final class dev/carcara/kotlinx/locale/language/cldr/CldrLanguage : dev/carcara/kotlinx/locale/language/LanguageNameSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/language/cldr/CldrLanguage;
+	public fun displayPatternsOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/language/LocaleDisplayPatterns;
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun languageNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun regionNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun scriptNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/language/cldr/LanguageNamesKt {
+	public static final fun displayName (Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/language/LanguageDisplay;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;)Ljava/lang/String;
+	public static synthetic fun displayName$default (Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/language/LanguageDisplay;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun getNativeDisplayName (Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static final fun languageName (Ldev/carcara/kotlinx/locale/Locale;Ljava/lang/String;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;)Ljava/lang/String;
+	public static synthetic fun languageName$default (Ldev/carcara/kotlinx/locale/Locale;Ljava/lang/String;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun regionName (Ldev/carcara/kotlinx/locale/Locale;Ljava/lang/String;)Ljava/lang/String;
+	public static final fun scriptName (Ldev/carcara/kotlinx/locale/Locale;Ljava/lang/String;)Ljava/lang/String;
+}
+

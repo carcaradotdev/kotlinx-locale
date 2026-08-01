@@ -67,7 +67,9 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     val number: NumberFeatures = objects.newInstance(NumberFeatures::class.java)
 
-    private val blocks: List<FeatureBlock> get() = listOf(country, currency, datetime, number)
+    val language: LanguageFeatures = objects.newInstance(LanguageFeatures::class.java)
+
+    private val blocks: List<FeatureBlock> get() = listOf(country, currency, datetime, number, language)
 
     /** Adds locales by reference, which is the form the compiler checks. */
     fun locales(vararg refs: LocaleRef) {
@@ -101,6 +103,10 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     fun number(action: Action<NumberFeatures>) {
         action.execute(number)
+    }
+
+    fun language(action: Action<LanguageFeatures>) {
+        action.execute(language)
     }
 
     /**
@@ -158,6 +164,18 @@ abstract class CurrencyFeatures @Inject constructor(objects: ObjectFactory) : Fe
      * its own.
      */
     val compact: Property<Boolean> = flag(LocaleFeature.CURRENCY_COMPACT)
+}
+
+abstract class LanguageFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
+
+    /**
+     * Language, script and region names, behind `Locale.displayName`.
+     *
+     * The largest table in the library across all locales, and the one the
+     * Gradle plugin pays for most: a language picker needs a handful of names,
+     * not eleven hundred locales' worth.
+     */
+    val names: Property<Boolean> = flag(LocaleFeature.LANGUAGE_NAMES)
 }
 
 abstract class NumberFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {

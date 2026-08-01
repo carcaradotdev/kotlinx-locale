@@ -63,6 +63,7 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.DATE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
     .table(GeneratedTable.SKELETONS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"))
     .table(GeneratedTable.DATE_TIME_STANDALONE, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
+    .table(GeneratedTable.LANGUAGE_NAMES, rootDir.sourceRoot("kotlinx-locale-language-cldr-full"))
     .table(GeneratedTable.NUMBER, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     .table(GeneratedTable.NUMBER_COMPACT, rootDir.sourceRoot("kotlinx-locale-number-cldr-full"))
     .table(GeneratedTable.CURRENCY_COMPACT, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
@@ -101,6 +102,14 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
             root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"),
             packageName = "dev.carcara.kotlinx.locale.datetime.cldr.skeletons",
             objectName = "CldrDateTimeSkeletons",
+        ),
+    )
+    .binding(
+        GeneratedBinding.LANGUAGE,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-language-cldr-full"),
+            packageName = "dev.carcara.kotlinx.locale.language.cldr",
+            objectName = "CldrLanguage",
         ),
     )
     .binding(
@@ -245,6 +254,7 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         }
         .section("dateTime", dateTime)
         .section("dateTimeStandalone", dateTimeStandalone)
+        .section("localeDisplayNames", buildLocaleDisplayNamePayloads(flattener, extras))
         .section("countryNames", buildCountryNamePayloads(flattener, extras))
         .section("currencyFormats", buildCurrencyFormatPayloads(flattener, extras))
         .section("currencyNames", buildCurrencyNamePayloads(flattener, extras))
