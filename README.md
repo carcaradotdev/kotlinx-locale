@@ -397,6 +397,17 @@ Maven Central. `settings.gradle.kts` enforces it at configuration time.
 
 ## Naming the fields instead of picking a length
 
+Where this behaviour is defined is worth saying, because it is two places. The
+vocabulary is normative: the field letters of `yMMMd` are UTS #35's Date Field
+Symbol Table and `availableFormats` is an LDML element. The matching algorithm
+is not. How a missing field is weighed against a wrong width, and which of `M`
+and `L` a locale's own pattern imposes, come from ICU's
+`DateTimePatternGenerator`, which is why `:codegen` checks out ICU's source and
+extracts goldens from it. The number domain has the same split for the same
+reason, and `kotlinx-locale-number-core/README.md` sets out the argument for
+following ICU where LDML is silent.
+
+
 `FormatStyle` offers four fixed lengths. A skeleton instead names the fields you
 want, in no particular order, and the locale decides how to arrange them. This is
 what `DateFormat.getBestDateTimePattern` gives an Android developer and
