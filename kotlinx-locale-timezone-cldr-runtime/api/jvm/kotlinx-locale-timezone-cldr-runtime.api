@@ -1,0 +1,34 @@
+public final class dev/carcara/kotlinx/locale/timezone/cldr/runtime/PayloadTimeZoneNames : dev/carcara/kotlinx/locale/timezone/TimeZoneNameSource {
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ldev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneMetadata;Ldev/carcara/kotlinx/locale/number/NumberFormatSource;Lkotlin/jvm/functions/Function2;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ldev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneMetadata;Ldev/carcara/kotlinx/locale/number/NumberFormatSource;Lkotlin/jvm/functions/Function2;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun displayNameOrNull (Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;Lkotlinx/datetime/UtcOffset;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun exemplarCityOrNull (Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+}
+
+public final class dev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneFormats {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getFallbackFormat ()Ljava/lang/String;
+	public final fun getGmtFormat ()Ljava/lang/String;
+	public final fun getGmtUnknownFormat ()Ljava/lang/String;
+	public final fun getGmtZeroFormat ()Ljava/lang/String;
+	public final fun getHourNegative ()Ljava/lang/String;
+	public final fun getHourPositive ()Ljava/lang/String;
+	public final fun getRegionDaylight ()Ljava/lang/String;
+	public final fun getRegionFormat ()Ljava/lang/String;
+	public final fun getRegionStandard ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneMetadata {
+	public static final field Companion Ldev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneMetadata$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun isPrimaryZone (Ljava/lang/String;)Z
+	public final fun isSingleZoneRegion (Ljava/lang/String;)Z
+	public final fun metazoneOf (Ljava/lang/String;)Ljava/lang/String;
+	public final fun regionOf (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneMetadata$Companion {
+	public final fun getEmpty ()Ldev/carcara/kotlinx/locale/timezone/cldr/runtime/TimeZoneMetadata;
+}
+

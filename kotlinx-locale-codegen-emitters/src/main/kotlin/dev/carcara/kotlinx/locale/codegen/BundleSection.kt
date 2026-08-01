@@ -41,6 +41,9 @@ public class BundleSection(
             BundleSection("dateTimeStandalone"),
             BundleSection("localeDisplayNames", sparseFields = 4),
             BundleSection("relativeTime"),
+            BundleSection("timeZoneFormats"),
+            BundleSection("timeZoneNames", sparseFields = 3),
+            BundleSection("timeZoneCities", sparseFields = 1),
             BundleSection("numberSymbols"),
             BundleSection("numberPatterns"),
             BundleSection("numberCompactShort"),
@@ -72,5 +75,8 @@ public class BundleSection(
  */
 public object BundleTables {
 
-    public val ALL: Set<String> = emptySet()
+    /** Which metazone a zone uses, which region it is in, and the single-zone regions. */
+    public const val TIME_ZONE_METADATA: String = "timeZoneMetadata"
+
+    public val ALL: Set<String> = setOf(TIME_ZONE_METADATA)
 }

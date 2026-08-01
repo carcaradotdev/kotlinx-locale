@@ -1,0 +1,34 @@
+public final class dev/carcara/kotlinx/locale/timezone/FallbackTimeZoneNames : dev/carcara/kotlinx/locale/timezone/TimeZoneNameSource {
+	public fun <init> (Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameSource;Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameSource;)V
+	public fun displayNameOrNull (Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;Lkotlinx/datetime/UtcOffset;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun exemplarCityOrNull (Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+}
+
+public abstract interface class dev/carcara/kotlinx/locale/timezone/TimeZoneNameSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public abstract fun displayNameOrNull (Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;Lkotlinx/datetime/UtcOffset;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public abstract fun exemplarCityOrNull (Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/timezone/TimeZoneNameSourceKt {
+	public static final fun displayName (Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameSource;Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;Lkotlinx/datetime/UtcOffset;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun displayName$default (Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameSource;Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;Lkotlinx/datetime/UtcOffset;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun exemplarCity (Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameSource;Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun exemplarCity$default (Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameSource;Lkotlinx/datetime/TimeZone;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle : java/lang/Enum {
+	public static final field DAYLIGHT_LONG Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static final field DAYLIGHT_SHORT Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static final field GENERIC_LONG Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static final field GENERIC_SHORT Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static final field LOCATION Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static final field OFFSET_LONG Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static final field OFFSET_SHORT Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static final field STANDARD_LONG Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static final field STANDARD_SHORT Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/timezone/TimeZoneNameStyle;
+}
+
