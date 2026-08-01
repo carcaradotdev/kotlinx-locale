@@ -6,10 +6,44 @@ import dev.carcara.kotlinx.locale.country.CountryNameSource
 import dev.carcara.kotlinx.locale.country.alpha2
 import dev.carcara.kotlinx.locale.country.countryForDisplayNameOrNull
 import dev.carcara.kotlinx.locale.country.displayName
+import dev.carcara.kotlinx.locale.country.flagEmoji
 import dev.carcara.kotlinx.locale.country.forAlpha2OrNull
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
+
+/**
+ * Holds `Country.flagEmoji` to the RGI flag sequences of UTS #51.
+ *
+ * Not on a source, because a flag is not locale data: it is arithmetic on the
+ * alpha-2 code. What is worth checking is that the arithmetic lands on a
+ * sequence Unicode recommends, and that the surrogate pair it builds is right on
+ * whichever target this runs on.
+ */
+public fun assertEveryCountryHasAnRgiFlag() {
+    assertTrue(rgiFlagRegionCodes.size > 240, "expected the full RGI flag set, got ${rgiFlagRegionCodes.size}")
+    for (country in Country.entries) {
+        assertTrue(
+            country.alpha2 in rgiFlagRegionCodes,
+            "${country.alpha2} has no RGI flag sequence in Emoji $RGI_EMOJI_VERSION",
+        )
+        val flag = country.flagEmoji
+        // Two astral code points, so four UTF-16 units on every target.
+        assertEquals(4, flag.length, "${country.alpha2} did not build two regional indicators")
+        val codePoints = listOf(flag.codePointAtIndex(0), flag.codePointAtIndex(2))
+        assertEquals(
+            country.alpha2,
+            codePoints.map { 'A' + (it - 0x1F1E6) }.joinToString(""),
+            "${country.alpha2} built a sequence that decodes to something else",
+        )
+    }
+}
+
+private fun String.codePointAtIndex(index: Int): Int {
+    val high = this[index].code
+    val low = this[index + 1].code
+    return 0x10000 + ((high - 0xD800) shl 10) + (low - 0xDC00)
+}
 
 /**
  * Runs this source through the country conformance suite and fails the calling

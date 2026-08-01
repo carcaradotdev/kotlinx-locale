@@ -166,6 +166,9 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         extras.resolveValue("en") { it.territoryNames[alpha2] }
     }
 
+    val emoji = crossCheckCountryFlags(countryList)
+    emitEmojiFlagGolden(conformanceDir(rootDir).resolve("EmojiFlagGoldenData.kt"), emoji)
+
     val countryCurrencyCodes = LinkedHashMap<String, String>()
     for (country in countryList) {
         val codes = supplemental.regionCurrencies[country.alpha2]?.filter { it in currencyCodes }.orEmpty()
