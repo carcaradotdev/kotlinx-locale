@@ -24,7 +24,7 @@ import java.util.zip.GZIPOutputStream
  * the headroom gets large enough to be worth tightening.
  *
  * Sizes are gzip at the default level over the minified bundle, which is what
- * a CDN would serve and what the numbers in PLAN.md were measured at.
+ * a CDN would serve and what the numbers in docs/size.md are measured at.
  */
 @CacheableTask
 abstract class CheckBundleSize : DefaultTask() {
