@@ -71,8 +71,13 @@ jobs:
             :kotlinx-locale-gradle-plugin:publishToMavenLocal \
             :kotlinx-locale-codegen-emitters:publishToMavenLocal \
             :kotlinx-locale-codegen-data:publishToMavenLocal
+          # Every artifact the sample resolves, including the ones it reaches
+          # only transitively: currency-core and datetime-cldr-runtime both
+          # depend on number-core through api, so it is on the sample's compile
+          # classpath without being named in its build file.
           ./gradlew $(for m in core types country-types country-core country-cldr-runtime \
                                 currency-types currency-core currency-cldr-runtime \
+                                number-core number-cldr-runtime \
                                 datetime-core datetime-cldr-runtime; do
             printf ':kotlinx-locale-%s:publishKotlinMultiplatformPublicationToMavenLocal ' "$m"
             printf ':kotlinx-locale-%s:publishJvmPublicationToMavenLocal ' "$m"
@@ -103,13 +108,55 @@ jobs:
         run: ./gradlew checkKotlinAbi
 
   test:
-    name: test (${{ matrix.os }})
+    # One target per job, rather than one host running everything it can.
+    #
+    # `./gradlew build` on three hosts gave three results for twenty-five
+    # targets, so a failure named the host and left the target to be guessed at,
+    # and a Kotlin/Native link that exhausted its heap took the other twenty-four
+    # down with it. Split out, each target passes or fails on its own and the job
+    # name is the answer.
+    #
+    # `task` is what that target can actually be asked for. A target whose tests
+    # this host can execute runs them; the rest compile, which is all a
+    # cross-compiled target can be held to.
+    name: ${{ matrix.target }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          # Runs its own tests on any host.
+          - { target: jvm, os: ubuntu-latest, task: jvmTest }
+          - { target: js, os: ubuntu-latest, task: jsTest }
+          - { target: wasmJs, os: ubuntu-latest, task: wasmJsTest }
+          - { target: wasmWasi, os: ubuntu-latest, task: wasmWasiTest }
+          - { target: androidLibrary, os: ubuntu-latest, task: testAndroidHostTest }
+
+          # Native, host-executable.
+          - { target: linuxX64, os: ubuntu-latest, task: linuxX64Test }
+          - { target: mingwX64, os: windows-latest, task: mingwX64Test }
+          - { target: macosArm64, os: macos-latest, task: macosArm64Test }
+          - { target: iosSimulatorArm64, os: macos-latest, task: iosSimulatorArm64Test }
+          - { target: tvosSimulatorArm64, os: macos-latest, task: tvosSimulatorArm64Test }
+          - { target: watchosSimulatorArm64, os: macos-latest, task: watchosSimulatorArm64Test }
+
+          # Native, cross-compiled: built and linked, never run, because no
+          # runner has the hardware or the simulator.
+          - { target: linuxArm64, os: ubuntu-latest, task: linuxArm64MainKlibrary }
+          - { target: androidNativeArm32, os: ubuntu-latest, task: androidNativeArm32MainKlibrary }
+          - { target: androidNativeArm64, os: ubuntu-latest, task: androidNativeArm64MainKlibrary }
+          - { target: androidNativeX86, os: ubuntu-latest, task: androidNativeX86MainKlibrary }
+          - { target: androidNativeX64, os: ubuntu-latest, task: androidNativeX64MainKlibrary }
+          - { target: iosArm64, os: macos-latest, task: iosArm64MainKlibrary }
+          - { target: iosX64, os: macos-latest, task: iosX64MainKlibrary }
+          - { target: tvosArm64, os: macos-latest, task: tvosArm64MainKlibrary }
+          - { target: tvosX64, os: macos-latest, task: tvosX64MainKlibrary }
+          - { target: watchosArm32, os: macos-latest, task: watchosArm32MainKlibrary }
+          - { target: watchosArm64, os: macos-latest, task: watchosArm64MainKlibrary }
+          - { target: watchosDeviceArm64, os: macos-latest, task: watchosDeviceArm64MainKlibrary }
+          - { target: watchosX64, os: macos-latest, task: watchosX64MainKlibrary }
+          - { target: macosX64, os: macos-latest, task: macosX64MainKlibrary }
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 120
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -123,5 +170,19 @@ jobs:
           path: ~/.konan
           key: konan-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
           restore-keys: konan-${{ runner.os }}-
-      - name: Build and test every target the host can run
-        run: ./gradlew build
+      - name: ${{ matrix.task }}
+        run: ./gradlew ${{ matrix.task }}
+
+  # One name for the branch rule to require, so adding a target to the matrix
+  # does not mean editing the protection settings. It fails when any target
+  # does, including one that was skipped or cancelled.
+  test-matrix:
+    name: test
+    runs-on: ubuntu-latest
+    needs: test
+    if: always()
+    steps:
+      - name: Fail unless every target succeeded
+        run: |
+          echo "result: ${{ needs.test.result }}"
+          [ "${{ needs.test.result }}" = "success" ]
