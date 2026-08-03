@@ -38,20 +38,24 @@ class PersonNameConformanceTest {
     /**
      * Locales whose remaining differences are known but not yet fixed.
      *
-     * Fifty-one cases of thirty-four thousand, and all of them are this
-     * library's rather than the data's.
+     * Fifty-one cases of thirty-four thousand, all of them this library's rather
+     * than the data's, and the cause of each is known.
      *
-     * Catalan, Czech, Sardinian and Slovak are the empty-field rule of UTS #35
-     * Part 8, which is followed here but not yet exactly. What is left is the
-     * corner where the run of empty fields starts the pattern: Catalan's sorting
-     * form opens with a surname prefix, and the comma after the surname is
-     * dropped when it should survive.
+     * Catalan, Czech, Sardinian and Slovak turn on how `{surname-prefix}`
+     * resolves for a surname that has no prefix. ICU answers with the whole
+     * surname there, which was checked by running it, and this returns null, so
+     * a pattern opening with that field looks like it begins with an empty one
+     * and Catalan's sorting form loses its comma. Copying ICU's answer directly
+     * is not the fix: it collides with the mononym rule, which has already moved
+     * a lone given name into the surname, and Afrikaans then prints it twice.
+     * The two rules have to be reconciled, which is a change to both.
      *
      * Assamese and Telugu produce one initial too many or too few in a field
      * with no spaces in it. That is a word boundary question rather than a
-     * cluster one, since the clusters themselves now follow UAX #29, and word
-     * boundaries in those scripts are the same problem the eight locales above
-     * are excluded for.
+     * cluster one, since the clusters now follow UAX #29, and it is the same
+     * problem the eight locales above are excluded for.
+     *
+     * `PersonNamePattern.java` in the ICU checkout is the reference for both.
      */
     private val knownDifferences = setOf("as", "ca", "cs", "sc", "sk", "te")
 

@@ -56,6 +56,10 @@ val ICU_REPO = RepoSpec(
         // is the reference for the corners UTS #35 states tersely, and reading it
         // is cheaper than guessing at them.
         "icu4j/main/core/src/main/java/com/ibm/icu/text",
+        // PersonNamePattern.java is the reference for UTS #35 Part 8's
+        // empty-field steps, which the specification states tersely enough that
+        // reading them alone produced a rule that was wrong for four locales.
+        "icu4j/main/core/src/main/java/com/ibm/icu/impl/personname",
     ),
 )
 
