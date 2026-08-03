@@ -1,0 +1,15 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-personname-cldr-full>
+final object dev.carcara.kotlinx.locale.personname.cldr/CldrPersonName : dev.carcara.kotlinx.locale.personname/PersonNameSource { // dev.carcara.kotlinx.locale.personname.cldr/CldrPersonName|null[0]
+    final fun formatOrNull(dev.carcara.kotlinx.locale.personname/PersonName, dev.carcara.kotlinx.locale.personname/PersonNameLength, dev.carcara.kotlinx.locale.personname/PersonNameUsage, dev.carcara.kotlinx.locale.personname/PersonNameFormality, dev.carcara.kotlinx.locale.personname/PersonNameOrder, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.personname.cldr/CldrPersonName.formatOrNull|formatOrNull(dev.carcara.kotlinx.locale.personname.PersonName;dev.carcara.kotlinx.locale.personname.PersonNameLength;dev.carcara.kotlinx.locale.personname.PersonNameUsage;dev.carcara.kotlinx.locale.personname.PersonNameFormality;dev.carcara.kotlinx.locale.personname.PersonNameOrder;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun orderOrNull(dev.carcara.kotlinx.locale/Locale?, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.personname/PersonNameOrder? // dev.carcara.kotlinx.locale.personname.cldr/CldrPersonName.orderOrNull|orderOrNull(dev.carcara.kotlinx.locale.Locale?;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final fun dev.carcara.kotlinx.locale.personname.cldr/personNameFormat(dev.carcara.kotlinx.locale.personname/PersonName, dev.carcara.kotlinx.locale.personname/PersonNameLength = ..., dev.carcara.kotlinx.locale.personname/PersonNameUsage = ..., dev.carcara.kotlinx.locale.personname/PersonNameFormality = ..., dev.carcara.kotlinx.locale.personname/PersonNameOrder = ..., dev.carcara.kotlinx.locale/Locale = ...): kotlin/String // dev.carcara.kotlinx.locale.personname.cldr/personNameFormat|personNameFormat(dev.carcara.kotlinx.locale.personname.PersonName;dev.carcara.kotlinx.locale.personname.PersonNameLength;dev.carcara.kotlinx.locale.personname.PersonNameUsage;dev.carcara.kotlinx.locale.personname.PersonNameFormality;dev.carcara.kotlinx.locale.personname.PersonNameOrder;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun dev.carcara.kotlinx.locale.personname.cldr/personNameOrder(dev.carcara.kotlinx.locale/Locale?, dev.carcara.kotlinx.locale/Locale = ...): dev.carcara.kotlinx.locale.personname/PersonNameOrder // dev.carcara.kotlinx.locale.personname.cldr/personNameOrder|personNameOrder(dev.carcara.kotlinx.locale.Locale?;dev.carcara.kotlinx.locale.Locale){}[0]

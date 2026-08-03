@@ -1,0 +1,96 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-personname-core>
+final enum class dev.carcara.kotlinx.locale.personname/PersonNameFormality : kotlin/Enum<dev.carcara.kotlinx.locale.personname/PersonNameFormality> { // dev.carcara.kotlinx.locale.personname/PersonNameFormality|null[0]
+    enum entry DEFAULT // dev.carcara.kotlinx.locale.personname/PersonNameFormality.DEFAULT|null[0]
+    enum entry FORMAL // dev.carcara.kotlinx.locale.personname/PersonNameFormality.FORMAL|null[0]
+    enum entry INFORMAL // dev.carcara.kotlinx.locale.personname/PersonNameFormality.INFORMAL|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.personname/PersonNameFormality.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.personname/PersonNameFormality> // dev.carcara.kotlinx.locale.personname/PersonNameFormality.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.personname/PersonNameFormality // dev.carcara.kotlinx.locale.personname/PersonNameFormality.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.personname/PersonNameFormality> // dev.carcara.kotlinx.locale.personname/PersonNameFormality.values|values#static(){}[0]
+}
+
+final enum class dev.carcara.kotlinx.locale.personname/PersonNameLength : kotlin/Enum<dev.carcara.kotlinx.locale.personname/PersonNameLength> { // dev.carcara.kotlinx.locale.personname/PersonNameLength|null[0]
+    enum entry DEFAULT // dev.carcara.kotlinx.locale.personname/PersonNameLength.DEFAULT|null[0]
+    enum entry LONG // dev.carcara.kotlinx.locale.personname/PersonNameLength.LONG|null[0]
+    enum entry MEDIUM // dev.carcara.kotlinx.locale.personname/PersonNameLength.MEDIUM|null[0]
+    enum entry SHORT // dev.carcara.kotlinx.locale.personname/PersonNameLength.SHORT|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.personname/PersonNameLength.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.personname/PersonNameLength> // dev.carcara.kotlinx.locale.personname/PersonNameLength.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.personname/PersonNameLength // dev.carcara.kotlinx.locale.personname/PersonNameLength.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.personname/PersonNameLength> // dev.carcara.kotlinx.locale.personname/PersonNameLength.values|values#static(){}[0]
+}
+
+final enum class dev.carcara.kotlinx.locale.personname/PersonNameOrder : kotlin/Enum<dev.carcara.kotlinx.locale.personname/PersonNameOrder> { // dev.carcara.kotlinx.locale.personname/PersonNameOrder|null[0]
+    enum entry DEFAULT // dev.carcara.kotlinx.locale.personname/PersonNameOrder.DEFAULT|null[0]
+    enum entry GIVEN_FIRST // dev.carcara.kotlinx.locale.personname/PersonNameOrder.GIVEN_FIRST|null[0]
+    enum entry SORTING // dev.carcara.kotlinx.locale.personname/PersonNameOrder.SORTING|null[0]
+    enum entry SURNAME_FIRST // dev.carcara.kotlinx.locale.personname/PersonNameOrder.SURNAME_FIRST|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.personname/PersonNameOrder.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.personname/PersonNameOrder> // dev.carcara.kotlinx.locale.personname/PersonNameOrder.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.personname/PersonNameOrder // dev.carcara.kotlinx.locale.personname/PersonNameOrder.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.personname/PersonNameOrder> // dev.carcara.kotlinx.locale.personname/PersonNameOrder.values|values#static(){}[0]
+}
+
+final enum class dev.carcara.kotlinx.locale.personname/PersonNameUsage : kotlin/Enum<dev.carcara.kotlinx.locale.personname/PersonNameUsage> { // dev.carcara.kotlinx.locale.personname/PersonNameUsage|null[0]
+    enum entry ADDRESSING // dev.carcara.kotlinx.locale.personname/PersonNameUsage.ADDRESSING|null[0]
+    enum entry MONOGRAM // dev.carcara.kotlinx.locale.personname/PersonNameUsage.MONOGRAM|null[0]
+    enum entry REFERRING // dev.carcara.kotlinx.locale.personname/PersonNameUsage.REFERRING|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.personname/PersonNameUsage.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.personname/PersonNameUsage> // dev.carcara.kotlinx.locale.personname/PersonNameUsage.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.personname/PersonNameUsage // dev.carcara.kotlinx.locale.personname/PersonNameUsage.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.personname/PersonNameUsage> // dev.carcara.kotlinx.locale.personname/PersonNameUsage.values|values#static(){}[0]
+}
+
+abstract interface dev.carcara.kotlinx.locale.personname/PersonNameSource { // dev.carcara.kotlinx.locale.personname/PersonNameSource|null[0]
+    abstract fun formatOrNull(dev.carcara.kotlinx.locale.personname/PersonName, dev.carcara.kotlinx.locale.personname/PersonNameLength, dev.carcara.kotlinx.locale.personname/PersonNameUsage, dev.carcara.kotlinx.locale.personname/PersonNameFormality, dev.carcara.kotlinx.locale.personname/PersonNameOrder, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonNameSource.formatOrNull|formatOrNull(dev.carcara.kotlinx.locale.personname.PersonName;dev.carcara.kotlinx.locale.personname.PersonNameLength;dev.carcara.kotlinx.locale.personname.PersonNameUsage;dev.carcara.kotlinx.locale.personname.PersonNameFormality;dev.carcara.kotlinx.locale.personname.PersonNameOrder;dev.carcara.kotlinx.locale.Locale){}[0]
+    abstract fun orderOrNull(dev.carcara.kotlinx.locale/Locale?, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.personname/PersonNameOrder? // dev.carcara.kotlinx.locale.personname/PersonNameSource.orderOrNull|orderOrNull(dev.carcara.kotlinx.locale.Locale?;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.personname/PersonName { // dev.carcara.kotlinx.locale.personname/PersonName|null[0]
+    constructor <init>(kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/String? = ..., dev.carcara.kotlinx.locale/Locale? = ..., dev.carcara.kotlinx.locale.personname/PersonNameOrder = ...) // dev.carcara.kotlinx.locale.personname/PersonName.<init>|<init>(kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;kotlin.String?;dev.carcara.kotlinx.locale.Locale?;dev.carcara.kotlinx.locale.personname.PersonNameOrder){}[0]
+
+    final val credentials // dev.carcara.kotlinx.locale.personname/PersonName.credentials|{}credentials[0]
+        final fun <get-credentials>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.credentials.<get-credentials>|<get-credentials>(){}[0]
+    final val generation // dev.carcara.kotlinx.locale.personname/PersonName.generation|{}generation[0]
+        final fun <get-generation>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.generation.<get-generation>|<get-generation>(){}[0]
+    final val given // dev.carcara.kotlinx.locale.personname/PersonName.given|{}given[0]
+        final fun <get-given>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.given.<get-given>|<get-given>(){}[0]
+    final val given2 // dev.carcara.kotlinx.locale.personname/PersonName.given2|{}given2[0]
+        final fun <get-given2>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.given2.<get-given2>|<get-given2>(){}[0]
+    final val givenInformal // dev.carcara.kotlinx.locale.personname/PersonName.givenInformal|{}givenInformal[0]
+        final fun <get-givenInformal>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.givenInformal.<get-givenInformal>|<get-givenInformal>(){}[0]
+    final val locale // dev.carcara.kotlinx.locale.personname/PersonName.locale|{}locale[0]
+        final fun <get-locale>(): dev.carcara.kotlinx.locale/Locale? // dev.carcara.kotlinx.locale.personname/PersonName.locale.<get-locale>|<get-locale>(){}[0]
+    final val preferredOrder // dev.carcara.kotlinx.locale.personname/PersonName.preferredOrder|{}preferredOrder[0]
+        final fun <get-preferredOrder>(): dev.carcara.kotlinx.locale.personname/PersonNameOrder // dev.carcara.kotlinx.locale.personname/PersonName.preferredOrder.<get-preferredOrder>|<get-preferredOrder>(){}[0]
+    final val surname // dev.carcara.kotlinx.locale.personname/PersonName.surname|{}surname[0]
+        final fun <get-surname>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.surname.<get-surname>|<get-surname>(){}[0]
+    final val surname2 // dev.carcara.kotlinx.locale.personname/PersonName.surname2|{}surname2[0]
+        final fun <get-surname2>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.surname2.<get-surname2>|<get-surname2>(){}[0]
+    final val surnameCore // dev.carcara.kotlinx.locale.personname/PersonName.surnameCore|{}surnameCore[0]
+        final fun <get-surnameCore>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.surnameCore.<get-surnameCore>|<get-surnameCore>(){}[0]
+    final val surnamePrefix // dev.carcara.kotlinx.locale.personname/PersonName.surnamePrefix|{}surnamePrefix[0]
+        final fun <get-surnamePrefix>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.surnamePrefix.<get-surnamePrefix>|<get-surnamePrefix>(){}[0]
+    final val title // dev.carcara.kotlinx.locale.personname/PersonName.title|{}title[0]
+        final fun <get-title>(): kotlin/String? // dev.carcara.kotlinx.locale.personname/PersonName.title.<get-title>|<get-title>(){}[0]
+
+    final fun toString(): kotlin/String // dev.carcara.kotlinx.locale.personname/PersonName.toString|toString(){}[0]
+}
+
+final fun (dev.carcara.kotlinx.locale.personname/PersonNameSource).dev.carcara.kotlinx.locale.personname/format(dev.carcara.kotlinx.locale.personname/PersonName, dev.carcara.kotlinx.locale.personname/PersonNameLength = ..., dev.carcara.kotlinx.locale.personname/PersonNameUsage = ..., dev.carcara.kotlinx.locale.personname/PersonNameFormality = ..., dev.carcara.kotlinx.locale.personname/PersonNameOrder = ..., dev.carcara.kotlinx.locale/Locale = ...): kotlin/String // dev.carcara.kotlinx.locale.personname/format|format@dev.carcara.kotlinx.locale.personname.PersonNameSource(dev.carcara.kotlinx.locale.personname.PersonName;dev.carcara.kotlinx.locale.personname.PersonNameLength;dev.carcara.kotlinx.locale.personname.PersonNameUsage;dev.carcara.kotlinx.locale.personname.PersonNameFormality;dev.carcara.kotlinx.locale.personname.PersonNameOrder;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (dev.carcara.kotlinx.locale.personname/PersonNameSource).dev.carcara.kotlinx.locale.personname/order(dev.carcara.kotlinx.locale/Locale?, dev.carcara.kotlinx.locale/Locale = ...): dev.carcara.kotlinx.locale.personname/PersonNameOrder // dev.carcara.kotlinx.locale.personname/order|order@dev.carcara.kotlinx.locale.personname.PersonNameSource(dev.carcara.kotlinx.locale.Locale?;dev.carcara.kotlinx.locale.Locale){}[0]

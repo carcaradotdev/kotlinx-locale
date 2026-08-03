@@ -220,6 +220,8 @@ locale-datetime-cldr-full = { module = "dev.carcara:kotlinx-locale-datetime-cldr
 locale-datetime-cldr-skeletons = { module = "dev.carcara:kotlinx-locale-datetime-cldr-skeletons", version.ref = "kotlinx-locale" }
 # Relative wording, on top of -cldr-runtime rather than -cldr-full. Opt in.
 locale-datetime-cldr-relative = { module = "dev.carcara:kotlinx-locale-datetime-cldr-relative", version.ref = "kotlinx-locale" }
+# Date and time ranges, on top of the skeletons. Opt in.
+locale-datetime-cldr-intervals = { module = "dev.carcara:kotlinx-locale-datetime-cldr-intervals", version.ref = "kotlinx-locale" }
 locale-datetime-platform = { module = "dev.carcara:kotlinx-locale-datetime-platform", version.ref = "kotlinx-locale" }
 
 # Time zone names
@@ -230,6 +232,9 @@ locale-timezone-cldr-full = { module = "dev.carcara:kotlinx-locale-timezone-cldr
 locale-timezone-cldr-cities = { module = "dev.carcara:kotlinx-locale-timezone-cldr-cities", version.ref = "kotlinx-locale" }
 
 # Phone numbers. The data is Google's libphonenumber rather than CLDR.
+locale-personname-core = { module = "dev.carcara:kotlinx-locale-personname-core", version.ref = "kotlinx-locale" }
+locale-personname-cldr-runtime = { module = "dev.carcara:kotlinx-locale-personname-cldr-runtime", version.ref = "kotlinx-locale" }
+locale-personname-cldr-full = { module = "dev.carcara:kotlinx-locale-personname-cldr-full", version.ref = "kotlinx-locale" }
 locale-phone-core = { module = "dev.carcara:kotlinx-locale-phone-core", version.ref = "kotlinx-locale" }
 locale-phone-metadata-runtime = { module = "dev.carcara:kotlinx-locale-phone-metadata-runtime", version.ref = "kotlinx-locale" }
 locale-phone-metadata-full = { module = "dev.carcara:kotlinx-locale-phone-metadata-full", version.ref = "kotlinx-locale" }
@@ -244,6 +249,9 @@ locale-datetime-cldr = ["locale-datetime-core", "locale-datetime-cldr-full"]
 locale-datetime-skeletons = ["locale-datetime-core", "locale-datetime-cldr-full", "locale-datetime-cldr-skeletons"]
 # Relative wording, which needs no date patterns.
 locale-datetime-relative = ["locale-datetime-core", "locale-datetime-cldr-relative"]
+# Ranges, which pull the skeletons in because an interval is a split of one.
+locale-datetime-intervals = ["locale-datetime-core", "locale-datetime-cldr-full", "locale-datetime-cldr-skeletons", "locale-datetime-cldr-intervals"]
+locale-personname-cldr = ["locale-personname-core", "locale-personname-cldr-full"]
 locale-language-cldr = ["locale-language-core", "locale-language-cldr-full"]
 locale-number-cldr = ["locale-number-core", "locale-number-cldr-full"]
 # Zone names. The second adds the exemplar cities, which is the larger half.
@@ -355,6 +363,15 @@ written the same way. Generated types carry only their per-entry data;
 everything else about them is an extension, so a declaration can move between
 layers without touching a call site.
 
+The `-cldr-full` row is one of three ways to get the tables, not the only one.
+The other two are the Gradle plugin, which generates the same tables and the
+same entry points for the locales a build declares, and the `-platform` layer,
+which answers from the host and ships nothing. The `-core` and `-cldr-runtime`
+layers are common to the first two, so
+[Shipping only the locales you use](#shipping-only-the-locales-you-use) is a
+dependency change rather than a different API. [API.md](API.md) names the
+plugin flag beside the artifact for every domain that has one.
+
 | Module | What it contains |
 | --- | --- |
 | `kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing. |
@@ -382,7 +399,11 @@ layers without touching a call site.
 | `kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
 | `kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. |
 | `kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
-| `kotlinx-locale-datetime-cldr-skeletons` | `-cldr-full` plus the skeleton tables: `CldrDateTimeSkeletons` and `date.format("yMMMd", locale)`, where you name the fields and the locale decides their order. Opt in, at around 60 KB gzipped on top of `-cldr-full`. |
+| `kotlinx-locale-datetime-cldr-skeletons` | `-cldr-full` plus the skeleton tables: `CldrDateTimeSkeletons` and `date.format("yMMMd", locale)`, where you name the fields and the locale decides their order. Opt in, at around 62 KB gzipped on top of `-cldr-full`. |
+| `kotlinx-locale-datetime-cldr-intervals` | `CldrDateTimeIntervals` and `intervalFormat`: `Jul 18 – 22, 2026`, with the parts both ends share written once. Builds on `-cldr-skeletons`, since a range is a split of the pattern the matcher picks, and adds around 31 KB gzipped over it. |
+| `kotlinx-locale-personname-core` | `PersonName` and the option enums, plus `PersonNameSource`. No data. |
+| `kotlinx-locale-personname-cldr-runtime` | Pattern selection, field modifiers and the empty-field cleanup. Carries no records. |
+| `kotlinx-locale-personname-cldr-full` | `CldrPersonName`, `personNameFormat` and `personNameOrder`: a name written the way a locale writes one, and its initials. |
 | `kotlinx-locale-datetime-cldr-relative` | `CldrRelativeTime` and `relativeTimeFormat`: `3 days ago` and `včera`, with the plural rules that pick among a language's forms. Its own artifact because it needs no date patterns. |
 | `kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
 | `kotlinx-locale-timezone-core` | `TimeZoneNameSource` and `TimeZoneNameStyle`: the forms UTS #35 Part 4 defines for naming a zone. |
@@ -480,12 +501,29 @@ delegates to ICU at runtime; the agreement between the two is a test, held to
 patterns generated from ICU4J across 859 locales and 109 skeletons on all eight
 targets, plus CLDR's own datetime cases.
 
-The tables live in their own artifact because they are around 210 KB of raw
-payload against the 435 KB the whole of `-cldr-full` weighs, so folding them in
-would make every consumer of ordinary date formatting pay for skeletons. The
-matcher sits in `-cldr-runtime` instead, for the same reason the pattern
-formatter already does: a build narrowed through the Gradle plugin generates its
-own tables and still needs the algorithm.
+The tables live in their own artifact so that a consumer of ordinary date
+formatting does not pay for skeletons. Measured by the probes in `tools/`, in
+gzipped bundle size:
+
+| take | size | added |
+| --- | ---: | ---: |
+| `-cldr-full` | 135.0 KB | |
+| plus `-cldr-skeletons` | 197.2 KB | 62.2 KB |
+| plus `-cldr-intervals` | 228.5 KB | 31.3 KB |
+
+Each layer builds on the one above it rather than repeating its tables, so
+asking for intervals brings the skeletons and the patterns with it. That is not
+a packaging accident: formatting a range means picking a pattern for the
+requested skeleton and then rendering both halves, which needs the month names,
+weekday names and digits that `-cldr-full` carries.
+
+The algorithms sit in `-cldr-runtime` instead, for the same reason the pattern
+formatter already does. A build narrowed through the Gradle plugin depends on
+`-cldr-runtime` alone and takes none of these three artifacts: it generates its
+own tables, and each feature declares the whole closure it needs, so
+`datetime { intervals = true }` generates the pattern, skeleton and interval
+tables together. The numbers above are the cost of the bundled path, not of the
+narrowed one.
 
 ## Using the host's data instead of ours
 
@@ -508,10 +546,10 @@ calls against each layer:
 
 | domain | platform | CLDR | saved |
 | --- | ---: | ---: | ---: |
-| datetime | 35.3 KB | 112.7 KB | 77.4 KB |
-| currency | 20.7 KB | 329.4 KB | 308.7 KB |
+| datetime | 35.3 KB | 135.0 KB | 99.7 KB |
 | country | 20.2 KB | 416.9 KB | 396.7 KB |
-| all three | 45.0 KB | 823.4 KB | 778.3 KB |
+| currency | 24.9 KB | 456.6 KB | 431.6 KB |
+| all three | 49.1 KB | 973.2 KB | 924.1 KB |
 
 Gzipped over the minified bundle. Datetime saves the least because
 kotlinx-datetime sits in both numbers and only the formatting moved.
@@ -874,6 +912,11 @@ never consult its fallback.
 
 ## Where the data comes from
 
+Which standard each module implements, with a link to the primary source for
+every one, is in [docs/standards.md](docs/standards.md). The standard is the
+source of truth; this library is one reading of it, and where the two disagree
+the standard is right.
+
 The `:codegen` module clones two official Unicode repositories into
 `codegen/repos/` (gitignored, sparse, pinned to release tags).
 
@@ -982,6 +1025,9 @@ all of it before merging.
 
 ## Scope and limitations
 
+What is intended and not yet built is in [ROADMAP.md](ROADMAP.md); where this
+library has decided to stop is in [docs/boundaries.md](docs/boundaries.md).
+
 - Formatting uses each locale's gregorian calendar data. Non-gregorian calendars
   (Buddhist years in Thai, Japanese imperial eras) are not implemented, so Thai
   dates come out as "27 กรกฎาคม ค.ศ. 2026".
@@ -996,7 +1042,22 @@ all of it before merging.
 - Relative wording is implemented in `kotlinx-locale-datetime-cldr-relative`,
   but you choose the unit. Whether ninety minutes reads as "in 90 minutes" or
   "in 2 hours" is not standardized by CLDR, ECMA-402 or ICU, all of which take
-  the unit from the caller. Interval formatting is not implemented.
+  the unit from the caller.
+- Interval formatting agrees with ICU everywhere except thirty-six locales,
+  listed by name in the conformance test. All thirty-six are cases where the
+  requested skeleton has no interval entry of its own, so the answer comes from
+  the pattern the skeleton matcher picked, and ICU reaches that pattern by a
+  different route. Every locale that declares its own entries is exact.
+- Person name formatting agrees with CLDR's own test data on ninety-nine per
+  cent of its thirty-seven thousand cases. Eight locales are excluded because
+  finding where one word ends and the next begins needs a dictionary this
+  library does not ship, and initials cannot be derived without that. Ten more
+  are excluded for differences that are this library's bugs and are named in the
+  test.
+- Week data ships the first day of the week, the minimum days in week one and
+  the weekend, keyed by territory. Week *numbers* are still not implemented: the
+  `w`, `W` and `F` pattern fields and the numeric forms of `e` and `c` need
+  goldens of their own before they can be turned on.
 - Plural-aware currency names (`¤¤¤` with a count) are not implemented, though
   the plural rules they need are.
 - Time zone names do not take an instant. Pass the style you want, because
@@ -1011,8 +1072,8 @@ all of it before merging.
   and both are locale-keyed where the rest of that domain is region-keyed. The
   as-you-type formatter is also the one part of the domain not held to
   libphonenumber character-for-character; see
-  [docs/not-standardized.md](docs/not-standardized.md), which records every
-  boundary of this kind and why it sits where it does.
+  [docs/boundaries.md](docs/boundaries.md), which records every boundary of
+  this kind and why it sits where it does.
 - The `-platform` modules do not read locale data on Linux, Windows, Android
   Native or Wasm-WASI yet. The bundled `-cldr-*` modules answer on all of them,
   so this only affects a build that chose the host's data; see

@@ -15,6 +15,7 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/DateTimeReco
 	public final fun getDaysStandaloneWide ()Ljava/util/List;
 	public final fun getDaysWide ()Ljava/util/List;
 	public final fun getDigits ()Ljava/lang/String;
+	public final fun getDurationPatterns ()Ljava/util/List;
 	public final fun getEra0 ()Ljava/lang/String;
 	public final fun getEra1 ()Ljava/lang/String;
 	public final fun getGlueFormats ()Ljava/util/List;
@@ -43,6 +44,18 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/DayPeriodRul
 	public final fun getEnd ()I
 	public final fun getStart ()I
 	public final fun isPoint ()Z
+}
+
+public abstract interface class dev/carcara/kotlinx/locale/datetime/cldr/runtime/IntervalFormatSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public abstract fun intervalFormatOrNull (Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/LocalDate;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public abstract fun intervalFormatOrNull (Lkotlinx/datetime/LocalDateTime;Lkotlinx/datetime/LocalDateTime;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public abstract fun intervalFormatOrNull (Lkotlinx/datetime/LocalTime;Lkotlinx/datetime/LocalTime;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/IntervalRecord {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getFallback ()Ljava/lang/String;
+	public final fun patternFor (Ljava/lang/String;CLjava/lang/String;)Ljava/lang/String;
 }
 
 public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PatternFormatterKt {
@@ -79,12 +92,13 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PatternToken
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadDateTimeFormats : dev/carcara/kotlinx/locale/datetime/CalendarCapitalizationSource, dev/carcara/kotlinx/locale/datetime/DateTimeFormatSource {
+public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadDateTimeFormats : dev/carcara/kotlinx/locale/datetime/CalendarCapitalizationSource, dev/carcara/kotlinx/locale/datetime/DateTimeFormatSource, dev/carcara/kotlinx/locale/datetime/DurationPatternSource {
 	public fun <init> (Ljava/util/Map;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun capitalized (Ljava/lang/String;Ldev/carcara/kotlinx/locale/datetime/CalendarNameUsage;Ldev/carcara/kotlinx/locale/Capitalization;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun dayOfWeekNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun dayOfWeekNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun durationPatternOrNull (Ldev/carcara/kotlinx/locale/datetime/DurationStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatDateOrNull (Lkotlinx/datetime/LocalDate;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatDateTimeOrNull (Lkotlinx/datetime/LocalDateTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatTimeOrNull (Lkotlinx/datetime/LocalTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
@@ -98,6 +112,14 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadDateT
 	public static synthetic fun dateTimeRecordFor$default (Ljava/util/Map;Ldev/carcara/kotlinx/locale/Locale;Ljava/util/Map;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/DateTimeRecord;
 }
 
+public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadIntervalFormats : dev/carcara/kotlinx/locale/datetime/cldr/runtime/IntervalFormatSource {
+	public fun <init> (Ljava/util/Map;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadSkeletonFormats;)V
+	public fun getSupportedLocales ()Ljava/util/Set;
+	public fun intervalFormatOrNull (Lkotlinx/datetime/LocalDate;Lkotlinx/datetime/LocalDate;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun intervalFormatOrNull (Lkotlinx/datetime/LocalDateTime;Lkotlinx/datetime/LocalDateTime;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun intervalFormatOrNull (Lkotlinx/datetime/LocalTime;Lkotlinx/datetime/LocalTime;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
 public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadRelativeTimeFormats : dev/carcara/kotlinx/locale/datetime/RelativeTimeFormatSource {
 	public fun <init> (Ljava/util/Map;Ldev/carcara/kotlinx/locale/number/PluralRuleSource;Ldev/carcara/kotlinx/locale/number/NumberFormatSource;)V
 	public fun formatOrNull (JLdev/carcara/kotlinx/locale/datetime/RelativeTimeUnit;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeStyle;Ldev/carcara/kotlinx/locale/datetime/RelativeTimeNumbering;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
@@ -107,12 +129,19 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadRelat
 }
 
 public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadSkeletonFormats : dev/carcara/kotlinx/locale/datetime/cldr/runtime/SkeletonFormatSource {
-	public fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)V
+	public fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun formatOrNull (Lkotlinx/datetime/LocalDate;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatOrNull (Lkotlinx/datetime/LocalDateTime;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatOrNull (Lkotlinx/datetime/LocalTime;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public fun skeletonPatternOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadWeekInfo : dev/carcara/kotlinx/locale/datetime/WeekInfoSource {
+	public fun <init> (Ljava/lang/String;)V
+	public fun weekInfoForRegionOrNull (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
+	public fun weekInfoOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
 }
 
 public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/RelativeTimeRecord {

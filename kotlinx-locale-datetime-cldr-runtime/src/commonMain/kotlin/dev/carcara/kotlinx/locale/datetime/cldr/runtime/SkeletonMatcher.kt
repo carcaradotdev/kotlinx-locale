@@ -346,7 +346,7 @@ private fun glueStyleFor(canonical: String): Int {
  * result — where it has to stay, because the result is a pattern rather than
  * finished text.
  */
-private fun substitute(template: String, vararg arguments: String): String = buildString(template.length + 16) {
+internal fun substitute(template: String, vararg arguments: String): String = buildString(template.length + 16) {
     var i = 0
     while (i < template.length) {
         val ch = template[i]
@@ -378,7 +378,7 @@ private fun substitute(template: String, vararg arguments: String): String = bui
  * reader could mistake for fields; CJK and Arabic are left bare, the way
  * `y年M月d日` is written.
  */
-private fun quoteLiteral(text: String): String {
+internal fun quoteLiteral(text: String): String {
     if (text.none(Char::needsQuoting)) return text.replace("'", "''")
     return buildString(text.length + 4) {
         var quoting = false

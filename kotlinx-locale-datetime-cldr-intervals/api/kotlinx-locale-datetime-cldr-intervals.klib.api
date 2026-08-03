@@ -1,0 +1,20 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-datetime-cldr-intervals>
+final object dev.carcara.kotlinx.locale.datetime.cldr.intervals/CldrDateTimeIntervals : dev.carcara.kotlinx.locale.datetime.cldr.runtime/IntervalFormatSource { // dev.carcara.kotlinx.locale.datetime.cldr.intervals/CldrDateTimeIntervals|null[0]
+    final val supportedLocales // dev.carcara.kotlinx.locale.datetime.cldr.intervals/CldrDateTimeIntervals.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.datetime.cldr.intervals/CldrDateTimeIntervals.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun intervalFormatOrNull(kotlinx.datetime/LocalDate, kotlinx.datetime/LocalDate, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.intervals/CldrDateTimeIntervals.intervalFormatOrNull|intervalFormatOrNull(kotlinx.datetime.LocalDate;kotlinx.datetime.LocalDate;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun intervalFormatOrNull(kotlinx.datetime/LocalDateTime, kotlinx.datetime/LocalDateTime, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.intervals/CldrDateTimeIntervals.intervalFormatOrNull|intervalFormatOrNull(kotlinx.datetime.LocalDateTime;kotlinx.datetime.LocalDateTime;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun intervalFormatOrNull(kotlinx.datetime/LocalTime, kotlinx.datetime/LocalTime, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.intervals/CldrDateTimeIntervals.intervalFormatOrNull|intervalFormatOrNull(kotlinx.datetime.LocalTime;kotlinx.datetime.LocalTime;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final fun dev.carcara.kotlinx.locale.datetime.cldr.intervals/intervalFormat(kotlinx.datetime/LocalDate, kotlinx.datetime/LocalDate, kotlin/String, dev.carcara.kotlinx.locale/Locale = ...): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.intervals/intervalFormat|intervalFormat(kotlinx.datetime.LocalDate;kotlinx.datetime.LocalDate;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun dev.carcara.kotlinx.locale.datetime.cldr.intervals/intervalFormat(kotlinx.datetime/LocalDateTime, kotlinx.datetime/LocalDateTime, kotlin/String, dev.carcara.kotlinx.locale/Locale = ...): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.intervals/intervalFormat|intervalFormat(kotlinx.datetime.LocalDateTime;kotlinx.datetime.LocalDateTime;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun dev.carcara.kotlinx.locale.datetime.cldr.intervals/intervalFormat(kotlinx.datetime/LocalTime, kotlinx.datetime/LocalTime, kotlin/String, dev.carcara.kotlinx.locale/Locale = ...): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.intervals/intervalFormat|intervalFormat(kotlinx.datetime.LocalTime;kotlinx.datetime.LocalTime;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]

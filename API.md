@@ -42,15 +42,58 @@ All date and time examples are real output for 2026-07-27, a Monday, at
 
 ## Contents
 
+- [Where the tables come from](#where-the-tables-come-from)
 - [Locale](#locale)
 - [The locale catalog](#the-locale-catalog)
 - [Dates and times](#dates-and-times)
 - [Skeleton formatting](#skeleton-formatting)
+- [Date and time intervals](#date-and-time-intervals)
+- [Week data](#week-data)
+- [Duration patterns](#duration-patterns)
 - [Country](#country)
 - [Currency](#currency)
+- [Numbers](#numbers)
+- [Languages](#languages)
+- [Relative time](#relative-time)
+- [Time zones](#time-zones)
+- [Country.flagEmoji](#countryflagemoji)
+- [Person names](#person-names)
+- [Phone numbers](#phone-numbers)
 - [Serialization](#serialization)
 - [Gradle plugin](#gradle-plugin)
 - [Errors, guarantees and versions](#errors-guarantees-and-versions)
+
+Which standard each of these implements, with a link to the primary source, is
+in [docs/standards.md](docs/standards.md).
+## Where the tables come from
+
+Every domain is three layers, and only the last one differs between builds:
+
+| layer | what it holds | example |
+| --- | --- | --- |
+| `-core` | the types and the contract, no data and no algorithm | `PersonName`, `WeekInfo`, `DurationStyle` |
+| `-cldr-runtime` | the algorithm, with the table as a constructor argument | the pattern engine, the skeleton matcher, the name formatter |
+| the tables | the data | |
+
+The tables reach you one of three ways, and the first two present the same
+functions with the same signatures:
+
+- **The `-cldr-*` artifacts.** Every locale CLDR has, ready to use. This is what
+  the imports above show and what every example in this file was run against.
+- **The Gradle plugin.** You name the locales you ship and it generates the
+  tables and the entry points into your own package, so a narrowed build depends
+  on `-core` and `-cldr-runtime` and takes no `-cldr-*` table artifact at all.
+  This is not a reimplementation: one emitter writes both, which is why
+  `date.format("yMMMd", locale)` means the same thing either way. The heading of
+  each section below names the flag that generates it.
+- **The `-platform` artifacts.** The host's own data, nothing bundled. Fewer
+  domains, and the answers are the host's rather than CLDR's. See the
+  [README](README.md#using-the-hosts-data-instead-of-ours).
+
+So an artifact named below is where the tables are, not where the function is
+defined. Reading `kotlinx-locale-datetime-cldr-full` as the only way to call
+`weekInfo` is the one misreading this file invites, and the plugin flag beside it
+is there to head that off.
 
 ## Locale
 
@@ -228,6 +271,9 @@ intended. Nothing requires it in application code, and `Locale.forLanguageTag`
 stays the zero-cost path for tags built at runtime.
 
 ## Dates and times
+
+From `kotlinx-locale-datetime-cldr-full`, or with `datetime { patterns = true }`.
+Stand-alone month and weekday names are `datetime { standalone = true }`.
 
 ### FormatStyle
 
@@ -462,7 +508,8 @@ Arabic locales.
 
 ## Skeleton formatting
 
-From `kotlinx-locale-datetime-cldr-skeletons`, which is opt in. Instead of
+From `kotlinx-locale-datetime-cldr-skeletons`, which is opt in, or with
+`datetime { skeletons = true }`. Instead of
 picking one of four lengths, you name the fields you want and the locale decides
 how to arrange them.
 
@@ -533,7 +580,96 @@ A pattern naming a month or a weekday does not compose that way.
 locale-dependent, but locales are not supported in Kotlin". Formatting is
 one-way for anything with a name in it.
 
+## Date and time intervals
+
+From `kotlinx-locale-datetime-cldr-intervals`, or with `datetime { intervals = true }`.
+
+```kotlin
+public fun intervalFormat(start: LocalDate, end: LocalDate, skeleton: String, locale: Locale = Locale.current): String
+public fun intervalFormat(start: LocalTime, end: LocalTime, skeleton: String, locale: Locale = Locale.current): String
+public fun intervalFormat(start: LocalDateTime, end: LocalDateTime, skeleton: String, locale: Locale = Locale.current): String
+```
+
+A range is not two formatted dates with a separator between them. The parts both
+ends share are written once, and where the ends first differ decides which
+pattern the locale uses.
+
+```kotlin
+val en = Locale.forLanguageTag("en")
+intervalFormat(LocalDate(2026, 7, 22), LocalDate(2026, 7, 22), "yMMMd", en) // "Jul 22, 2026"
+intervalFormat(LocalDate(2026, 7, 18), LocalDate(2026, 7, 22), "yMMMd", en) // "Jul 18 – 22, 2026"
+intervalFormat(LocalDate(2026, 5, 18), LocalDate(2026, 7, 22), "yMMMd", en) // "May 18 – Jul 22, 2026"
+intervalFormat(LocalDate(2025, 5, 18), LocalDate(2026, 7, 22), "yMMMd", en) // "May 18, 2025 – Jul 22, 2026"
+```
+
+`skeleton` names the fields the way [Skeleton formatting](#skeleton-formatting)
+does. Two values equal in every field the skeleton names format once rather than
+twice with a separator. The values are formatted in the order given: a later
+start is not an error and is not swapped, because several locales write their
+fallback with the arguments reversed.
+
+Falls back to the locale's own `{0} – {1}` over two whole formats, then to ISO
+8601's `<start>/<end>`.
+
+## Week data
+
+From `kotlinx-locale-datetime-cldr-full`, or with `datetime { patterns = true }`.
+
+```kotlin
+public class WeekInfo {
+    public val firstDayOfWeek: DayOfWeek
+    public val minimalDaysInFirstWeek: Int
+    public val weekend: Set<DayOfWeek>
+}
+
+public fun weekInfo(locale: Locale = Locale.current): WeekInfo
+public fun weekInfoForRegion(regionCode: String): WeekInfo
+```
+
+Keyed by territory rather than by language: Portugal starts the week on Sunday
+whether the screen is in Portuguese or English.
+
+```kotlin
+weekInfo(Locale.forLanguageTag("en-GB")).firstDayOfWeek // MONDAY
+weekInfo(Locale.forLanguageTag("en-US")).firstDayOfWeek // SUNDAY
+weekInfoForRegion("PT").firstDayOfWeek                  // SUNDAY
+weekInfoForRegion("PT").minimalDaysInFirstWeek          // 4
+weekInfoForRegion("AF").weekend                         // [THURSDAY, FRIDAY]
+weekInfoForRegion("IR").weekend                         // [FRIDAY]
+```
+
+The two fields vary independently, so neither implies the other. A locale that
+names no region is maximised through likely subtags, so `en` answers for the
+United States. Both calls fall back to the world default: Monday, one day, and a
+Saturday to Sunday weekend.
+
+`weekInfoForRegion` takes an ISO 3166-1 alpha-2 code, for a caller who has a
+country rather than a locale.
+
+## Duration patterns
+
+From `kotlinx-locale-datetime-cldr-full`, or with `datetime { patterns = true }`.
+
+```kotlin
+public enum class DurationStyle { HOUR_MINUTE, HOUR_MINUTE_SECOND, MINUTE_SECOND }
+
+public fun durationPattern(style: DurationStyle, locale: Locale = Locale.current): String
+```
+
+```kotlin
+durationPattern(DurationStyle.MINUTE_SECOND)                              // "m:ss"
+durationPattern(DurationStyle.MINUTE_SECOND, Locale.forLanguageTag("fi")) // "m.ss"
+```
+
+A pattern rather than a formatted string, because whether ninety seconds reads
+as `1:30` or `0:01:30` is the caller's decision and CLDR does not answer it.
+
+Expect almost no variation: across every locale in the release only Finnish and
+Danish differ from root. Falls back to root's `h:mm`, `h:mm:ss` and `m:ss`.
+
 ## Country
+
+From `kotlinx-locale-country-cldr-full`, or with `country { names = true }`.
 
 ```kotlin
 public enum class Country {
@@ -620,6 +756,10 @@ Country.CI.displayName(Locale.forLanguageTag("es-AR"))  // Costa de Marfil
 ```
 
 ## Currency
+
+From `kotlinx-locale-currency-cldr-full`, or with
+`currency { names = true; formats = true }`. Compact money is
+`currency { compact = true }`.
 
 ```kotlin
 public enum class Currency {
@@ -925,6 +1065,10 @@ throwing variant, because a miss is the expected outcome on most targets.
 
 ## Numbers
 
+From `kotlinx-locale-number-cldr-full`, or with `number { formats = true }`.
+Compact notation, plural categories and ordinals are `number { compact = true }`,
+`number { plurals = true }` and `number { ordinals = true }`.
+
 ### numberFormat
 
 ```kotlin
@@ -1018,6 +1162,8 @@ back from `1.50` has scale 2 and the plural rules see two visible digits.
 
 ## Languages
 
+From `kotlinx-locale-language-cldr-full`, or with `language { names = true }`.
+
 ### Locale.displayName and Locale.nativeDisplayName
 
 ```kotlin
@@ -1050,6 +1196,8 @@ identifier can carry.
 
 ## Relative time
 
+From `kotlinx-locale-datetime-cldr-relative`, or with `datetime { relativeTime = true }`.
+
 ### relativeTimeFormat
 
 ```kotlin
@@ -1067,6 +1215,8 @@ You choose the unit. Whether ninety minutes reads as `in 90 minutes` or
 unit from the caller, so this library does not decide it either.
 
 ## Time zones
+
+From `kotlinx-locale-timezone-cldr-full`, or with `timezone { formats = true; names = true }`; exemplar cities are `timezone { exemplarCities = true }`.
 
 ### TimeZone.displayName
 
@@ -1112,7 +1262,71 @@ Derived from the alpha-2 code rather than looked up, and checked at generation
 time against the RGI flag sequences of UTS #51, so it carries no table and needs
 no nullable form.
 
+## Person names
+
+From `kotlinx-locale-personname-cldr-full`, or with `personName { formats = true }`.
+
+```kotlin
+public class PersonName(
+    given: String? = null, given2: String? = null,
+    surname: String? = null, surname2: String? = null,
+    title: String? = null, generation: String? = null, credentials: String? = null,
+    givenInformal: String? = null, surnamePrefix: String? = null, surnameCore: String? = null,
+    locale: Locale? = null,
+    preferredOrder: PersonNameOrder = PersonNameOrder.DEFAULT,
+)
+
+public fun personNameFormat(
+    name: PersonName,
+    length: PersonNameLength = PersonNameLength.DEFAULT,
+    usage: PersonNameUsage = PersonNameUsage.REFERRING,
+    formality: PersonNameFormality = PersonNameFormality.DEFAULT,
+    order: PersonNameOrder = PersonNameOrder.DEFAULT,
+    locale: Locale = Locale.current,
+): String
+
+public fun personNameOrder(nameLocale: Locale?, locale: Locale = Locale.current): PersonNameOrder
+```
+
+```kotlin
+val name = PersonName(given = "Iris", surname = "Adler")
+personNameFormat(name)                                  // "Iris Adler"
+personNameFormat(name, usage = PersonNameUsage.MONOGRAM) // "I"
+personNameFormat(name, order = PersonNameOrder.SORTING)  // "Adler, Iris"
+
+// The length decides how many letters a monogram has. English defaults to
+// medium and informal, which is one; long gives the given name and the surname.
+personNameFormat(name, length = PersonNameLength.LONG, usage = PersonNameUsage.MONOGRAM) // "IA"
+```
+
+The order is not a property of the name or of the reader but of the pair. Pass
+the name's own locale to get it right:
+
+```kotlin
+val hu = Locale.forLanguageTag("hu")
+val hungarian = PersonName(given = "Iris", surname = "Adler", locale = hu)
+personNameOrder(hu, hu)                            // SURNAME_FIRST
+personNameOrder(hu, Locale.forLanguageTag("en"))   // GIVEN_FIRST
+```
+
+Initials are a usage rather than a separate call, matching how CLDR models them,
+and `length` then decides how many letters. They are taken by grapheme cluster
+rather than by character, so a Bengali or Devanagari conjunct stays whole.
+
+Every part is optional. A name with only one part is written out in full rather
+than reduced to an initial or to nothing.
+
+Three fields cannot be derived and must be supplied if the locale asks for them:
+`givenInformal` (the `Bob` that stands in for `Robert`), and `surnamePrefix` with
+`surnameCore` (the `van den` and `Hul` of `van den Hul`).
+
+Falls back to the given name and surname joined by a space.
+
 ## Phone numbers
+
+From `kotlinx-locale-phone-metadata-full`. The plugin has no flag for this one:
+the metadata is keyed by territory rather than by locale, so naming three
+locales would narrow nothing.
 
 ```kotlin
 val number = "020 7123 4567".toPhoneNumberOrNull(Country.GB) ?: return
@@ -1214,7 +1428,7 @@ The whole domain is pure common Kotlin, including the pattern matching that
 validation is. That is deliberate and it is checked: libphonenumber's patterns
 use a bounded subset of regular expressions, this library evaluates that subset
 itself rather than delegating to a per-target engine, and generation fails
-naming the pattern if a release ever steps outside it. `docs/not-standardized.md`
+naming the pattern if a release ever steps outside it. `docs/boundaries.md`
 has the argument in full.
 
 ## Serialization

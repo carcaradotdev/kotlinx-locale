@@ -91,9 +91,12 @@ fun extractPhoneEdgeGolden(repoDir: File, metadata: PhoneMetadata): List<PhoneEd
 /** Every `parse("…", RegionCode.XX)` literal in libphonenumber's own tests. */
 private fun minedCases(repoDir: File): List<Pair<String, String>> {
     val testDir = repoDir.resolve("java/libphonenumber/test/com/google/i18n/phonenumbers")
-    if (!testDir.isDirectory) {
-        println("[codegen] WARNING: libphonenumber tests not checked out; mining no edge cases")
-        return emptyList()
+    // Fail rather than warn. These cases are half the fixture, and the generated
+    // half on its own still clears the size check below, so a warning here buys a
+    // quietly weaker test suite that nothing reports.
+    check(testDir.isDirectory) {
+        "libphonenumber's tests are not checked out at $testDir, so no edge cases can be mined. " +
+            "Add the path to PHONE_REPO.sparsePaths and re-run :codegen:cloneLocaleRepos."
     }
     val pattern = Regex("""parse\(\s*"((?:[^"\\]|\\.)*)"\s*,\s*(?:RegionCode\.([A-Z0-9_]+)|(null))\s*\)""")
     val found = LinkedHashSet<Pair<String, String>>()

@@ -21,3 +21,5 @@ probe-timezone-cities
 probe-phone-full
 probe-everything
 probe-everything-platform
+probe-datetime-intervals
+probe-personname-full

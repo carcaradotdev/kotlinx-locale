@@ -7,6 +7,8 @@
 
 // Library unique name: <dev.carcara:kotlinx-locale-datetime-cldr-skeletons>
 final object dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons : dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonFormatSource { // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons|null[0]
+    final val skeletons // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.skeletons|{}skeletons[0]
+        final fun <get-skeletons>(): dev.carcara.kotlinx.locale.datetime.cldr.runtime/PayloadSkeletonFormats // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.skeletons.<get-skeletons>|<get-skeletons>(){}[0]
     final val supportedLocales // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.supportedLocales|{}supportedLocales[0]
         final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.datetime.cldr.skeletons/CldrDateTimeSkeletons.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
 

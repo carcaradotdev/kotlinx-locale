@@ -13,9 +13,20 @@ it recorded "CLDR stopped shipping the data" as "no standard exists" and left a
 whole domain unbuilt on the strength of it. The correction is kept rather than
 deleted, because a scope document that only ever grows is one nobody trusts.
 
-So an entry here says one of three things: this is standardized and built, and
-here is the edge; this is half standardized, and here is the half we chose; or
-this is not standardized, and here is why we declined it.
+An entry here is a stopping point, not a to-do. Work that is intended and not
+yet built lives in [the roadmap](../ROADMAP.md), and an entry moves between the
+two files when the answer changes.
+
+So an entry here says one of four things: this is standardized and built, and
+here is the edge; this is half standardized, and here is the half we chose; this
+is standardized and not built, and here is what stopped it, which is sometimes
+the size of the data and sometimes its licence; or this is not standardized at
+all, and here is why guessing would be worse than declining.
+
+The third of those is why the file is not called anything with "unstandardized"
+in it. Most of what is written down here is specified perfectly well. The
+question each entry answers is where this library stops, not where Unicode
+does.
 
 ## Country dialling codes
 
@@ -221,3 +232,78 @@ sparse checkout does not fetch. Three constants do not pay for a subdivision
 concept, a new data path and a narrowing story.
 
 Emoji unrelated to the entities this library models are out of scope entirely.
+
+## Formatting a duration
+
+Standardized, and smaller than it sounds. CLDR's `durationUnit` gives three
+patterns, `h:mm`, `h:mm:ss` and `m:ss`. Across all 1122 locale files in
+release-48-2, only Finnish and Danish override them, both writing a full stop
+where root writes a colon. That is the entire worldwide variation.
+
+So `durationPattern` hands back a pattern rather than formatting anything. The
+decision it will not make for you is which components to show: whether 3660
+seconds reads as `1:01` or `1:01:00` is not answered by CLDR, ECMA-402 or ICU,
+all of which take that from the caller. It is the same boundary as choosing the
+unit for a relative time, above.
+
+The name `durationFormat` is deliberately left free. The rich, genuinely
+locale-varying duration data is the `duration-*` measurement units and their
+plural forms, which this library does not carry, and that is what would deserve
+the name.
+
+## Deriving a person's initials without word boundaries
+
+Not implemented for eight locales, and the reason is data rather than a
+standard. UTS #35 Part 8 says an initial is taken from each word of a field. In
+Khmer, Lao, Burmese, Shan and the Chinese locales the words in a field are not
+separated by spaces, so finding them needs the dictionary a word-break iterator
+carries. Those dictionaries are larger than this whole domain.
+
+Guessing would be worse than declining: an initial taken from the wrong place is
+wrong in a way nobody can see without reading the script. The affected locales
+are named in the conformance test and counted rather than silently skipped.
+
+## The script a name is written in
+
+Not implemented. UTS #35 Part 8 infers a name's locale from the script of its
+characters when the caller supplies none, and this library asks for the locale
+instead.
+
+The reason is size. Inferring the script needs the Unicode Script property,
+which is a couple of thousand ranges, larger than the person name tables it
+would support. The two things the inference feeds are cheaper another way: which
+space joins the parts is decided by comparing languages, and the re-locale rule
+it also feeds is exercised by none of CLDR's 36,960 test cases.
+
+## Diacritic-insensitive search
+
+Not implemented, and an approximation would be worse than nothing.
+
+The correct answer is the `search` collation type in UTS #35 Part 5, comparing
+at the primary level of UTS #10. That is out of reach: it needs the default
+collation table, the per-locale tailorings and normalization underneath, which
+together are larger than everything this library currently ships.
+
+The cheap version, decomposing and dropping the combining marks, is not the same
+thing and is wrong in ways that matter. Whether a mark is decoration on a base
+letter or part of a distinct letter is a per-language decision: in German ö is a
+variant of o and should match it, in Swedish it is its own letter near the end
+of the alphabet and should not, and Turkish keeps dotted and dotless i apart.
+One global rule cannot serve all three, and shipping it under a locale-aware
+name would invite callers to trust it for exactly the cases it gets wrong.
+
+## Domestic bank account identifiers
+
+Not implemented, and this one is a decision rather than a gap in the way the
+IBAN entry turned out to be.
+
+Sort codes, BLZ and the rest are in the ISO 13616 registry as a BBAN field
+layout, which says how many digits each part has. It does not say how they are
+written. Nothing in the registry says a British sort code is printed as three
+pairs separated by hyphens; that is a convention people learned from cheque
+books.
+
+So a formatter here would be this library inventing a presentation and
+presenting it as a standard, for every country separately. The IBAN itself is
+different, because its grouping in fours is in the standard, and it is on the
+[roadmap](../ROADMAP.md).

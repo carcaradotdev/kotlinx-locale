@@ -1,0 +1,120 @@
+package dev.carcara.kotlinx.locale.codegen
+
+import java.io.File
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+
+/**
+ * Holds `<weekData>` to what CLDR actually says, against the clone rather than
+ * against the encoded output.
+ *
+ * The encoding is checked by the goldens on the runtime side. What is checked
+ * here is the reading: which rows count, which are skipped, and what a territory
+ * that declares only half its fields inherits. Those are the decisions the XML
+ * does not make obvious, and a wrong one is invisible downstream because every
+ * answer still looks like a plausible week.
+ */
+class WeekDataTest {
+
+    private val rootDir = File(
+        System.getProperty("kotlinx.locale.rootDir") ?: error("kotlinx.locale.rootDir is not set"),
+    )
+
+    private val supplemental: SupplementalData by lazy {
+        parseSupplemental(reposDir(rootDir).resolve("cldr"))
+    }
+
+    private fun row(territory: String) = supplemental.weekData.getValue(territory)
+
+    @Test
+    fun theWorldDefaultIsMondayWithOneMinimumDayAndASaturdayWeekend() {
+        val world = row("001")
+        assertEquals(1, world.firstDay, "001 starts the week on Monday")
+        assertEquals(1, world.minDays)
+        assertEquals(setOf(6, 7), world.weekend, "001 rests Saturday and Sunday")
+    }
+
+    @Test
+    fun theVariantRowDoesNotOverwriteBritain() {
+        // supplementalData.xml carries `<firstDay day="sun" territories="GB"
+        // alt="variant">` after the row that lists GB among the Monday
+        // territories. Reading it would flip every British calendar.
+        assertEquals(1, row("GB").firstDay)
+        assertEquals(4, row("GB").minDays, "GB needs four days in the year for week one")
+    }
+
+    @Test
+    fun theUnitedStatesStartsOnSunday() {
+        assertEquals(7, row("US").firstDay)
+        assertEquals(1, row("US").minDays)
+        assertEquals(setOf(6, 7), row("US").weekend)
+    }
+
+    @Test
+    fun aWeekendCanBeASingleDay() {
+        // Iran declares both a start and an end of Friday, and India declares
+        // only a start, inheriting Sunday as the end from 001. Both collapse to
+        // one day, which a start-and-end pair hides and a set does not.
+        assertEquals(setOf(5), row("IR").weekend)
+        assertEquals(setOf(7), row("IN").weekend)
+        assertEquals(setOf(7), row("UG").weekend)
+    }
+
+    @Test
+    fun aWeekendCanSitMidweek() {
+        assertEquals(setOf(4, 5), row("AF").weekend, "Afghanistan rests Thursday and Friday")
+        assertEquals(setOf(5, 6), row("IL").weekend, "Israel rests Friday and Saturday")
+    }
+
+    @Test
+    fun everyTerritoryResolvesEveryField() {
+        for ((territory, week) in supplemental.weekData) {
+            assertTrue(week.firstDay in 1..7, "$territory has an out-of-range first day")
+            assertTrue(week.minDays in 1..7, "$territory has an out-of-range minimum")
+            assertTrue(week.weekend.isNotEmpty(), "$territory resolved to no weekend at all")
+            assertTrue(week.weekend.all { it in 1..7 }, "$territory has an out-of-range weekend day")
+        }
+    }
+
+    @Test
+    fun theEncodedOverlayAnswersForALocaleWithNoRegion() {
+        val encoded = supplemental.encodeWeekData()
+        val (territories, overlay) = encoded.split(FIELD_SEPARATOR).let { it[0] to it[1] }
+
+        fun lookup(table: String, key: String): String? = table.split(LIST_SEPARATOR)
+            .firstOrNull { it.substringBefore(KEY_SEPARATOR) == key }
+            ?.substringAfter(KEY_SEPARATOR)
+
+        // Four characters: first day, minimum days, then a hex weekend mask.
+        // Sunday is bit 6 and Saturday bit 5, so a Saturday-Sunday weekend is 0x60.
+        assertEquals("7160", lookup(territories, "US"))
+        assertEquals("1460", lookup(territories, "GB"))
+
+        // `en` carries no region, so only likely subtags can reach the United
+        // States. Without the overlay it would answer the world default.
+        assertEquals("7160", lookup(overlay, "en"), "en must maximise to US")
+        assertEquals("1460", lookup(overlay, "de"), "de must maximise to DE")
+
+        // The overlay only carries rows that change an answer, so a language
+        // whose region agrees with what it would otherwise inherit is absent.
+        assertTrue(overlay.isNotEmpty(), "the overlay resolved to nothing")
+    }
+
+    @Test
+    fun aScriptRowSurvivesAgreeingWithTheWorldWhenItsLanguageDoesNot() {
+        val overlay = supplemental.encodeWeekData().split(FIELD_SEPARATOR)[1]
+
+        fun lookup(key: String): String? = overlay.split(LIST_SEPARATOR)
+            .firstOrNull { it.substringBefore(KEY_SEPARATOR) == key }
+            ?.substringAfter(KEY_SEPARATOR)
+
+        // Cantonese is the case that breaks a naive "differs from 001" filter.
+        // `yue` maximises to Hong Kong, which starts the week on Sunday; the
+        // Simplified form maximises to China, which starts on Monday and so
+        // matches the world default. Dropping the row for matching the default
+        // leaves it inheriting Hong Kong's Sunday from the bare language.
+        assertEquals("7160", lookup("yue"), "yue should carry Hong Kong's Sunday")
+        assertEquals("1160", lookup("yue_Hans"), "yue_Hans must override it with China's Monday")
+    }
+}

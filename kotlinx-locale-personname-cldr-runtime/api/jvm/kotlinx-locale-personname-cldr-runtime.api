@@ -1,0 +1,16 @@
+public final class dev/carcara/kotlinx/locale/personname/cldr/runtime/PayloadPersonNames : dev/carcara/kotlinx/locale/personname/PersonNameSource {
+	public fun <init> (Ljava/util/Map;)V
+	public fun formatOrNull (Ldev/carcara/kotlinx/locale/personname/PersonName;Ldev/carcara/kotlinx/locale/personname/PersonNameLength;Ldev/carcara/kotlinx/locale/personname/PersonNameUsage;Ldev/carcara/kotlinx/locale/personname/PersonNameFormality;Ldev/carcara/kotlinx/locale/personname/PersonNameOrder;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun orderOrNull (Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/personname/PersonNameOrder;
+}
+
+public final class dev/carcara/kotlinx/locale/personname/cldr/runtime/PersonNameRecord {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getDefaultFormality ()Ldev/carcara/kotlinx/locale/personname/PersonNameFormality;
+	public final fun getDefaultLength ()Ldev/carcara/kotlinx/locale/personname/PersonNameLength;
+	public final fun getForeignSpace ()Ljava/lang/String;
+	public final fun getInitialPattern ()Ljava/lang/String;
+	public final fun getInitialSequence ()Ljava/lang/String;
+	public final fun getNativeSpace ()Ljava/lang/String;
+}
+

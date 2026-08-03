@@ -38,9 +38,11 @@ public class BundleSection(
             BundleSection("skeletonFormats"),
             BundleSection("skeletonAppendFormats"),
             BundleSection("skeletonNames"),
+            BundleSection("intervalFormats"),
             BundleSection("dateTimeStandalone"),
             BundleSection("localeDisplayNames", sparseFields = 4),
             BundleSection("relativeTime"),
+            BundleSection("personNames"),
             BundleSection("timeZoneFormats"),
             BundleSection("timeZoneNames", sparseFields = 3),
             BundleSection("timeZoneCities", sparseFields = 1),
@@ -92,5 +94,19 @@ public object BundleTables {
     /** The number formats, split out because only formatting reads them. */
     public const val PHONE_FORMATS: String = "phoneFormats"
 
-    public val ALL: Set<String> = setOf(TIME_ZONE_METADATA, PHONE_TERRITORIES, PHONE_FORMATS)
+    /**
+     * Where each territory starts its week, and which days it rests.
+     *
+     * A table rather than a section for the same reason as the phone metadata:
+     * none of it varies by language. Portugal starts the week on Monday whether
+     * the screen is in Portuguese or English, so narrowing a build to three
+     * locales must not narrow its week data to three territories.
+     *
+     * It carries a second field of languages that have no region of their own,
+     * because a `Locale` need not name one and only likely subtags can take `en`
+     * to the United States.
+     */
+    public const val WEEK_DATA: String = "weekData"
+
+    public val ALL: Set<String> = setOf(TIME_ZONE_METADATA, PHONE_TERRITORIES, PHONE_FORMATS, WEEK_DATA)
 }

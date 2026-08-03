@@ -29,6 +29,11 @@ val CLDR_REPO = RepoSpec(
         // CLDR's own datetime cases, a second opinion on the skeleton matcher
         // that is independent of the ICU4J goldens.
         "common/testData/datetime",
+        // The person name cases, which are the conformance fixture for that
+        // domain rather than a second opinion on one. They ship in the same
+        // release as the tables, so unlike an ICU4J golden they carry no
+        // snapshot skew.
+        "common/testData/personNameTest",
     ),
 )
 
@@ -75,6 +80,11 @@ val PHONE_REPO = RepoSpec(
         "resources",
         "java/libphonenumber/src/com/google/i18n/phonenumbers",
         "tools/java/common/src/com/google/i18n/phonenumbers",
+        // The tests, because half the edge-case fixture is the `parse(...)`
+        // literals mined out of them. Without this path the mining silently
+        // yields nothing and the generated cases alone still clear the size
+        // check, so the fixture shrinks without anything failing.
+        "java/libphonenumber/test/com/google/i18n/phonenumbers",
     ),
 )
 

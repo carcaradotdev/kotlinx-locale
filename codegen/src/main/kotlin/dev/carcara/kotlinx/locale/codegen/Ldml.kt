@@ -29,6 +29,14 @@ internal val DATE_FIELD_TYPES = listOf(
  * display names are the larger half of that table — "day of year" and "weekday
  * of the month" are among the longest strings in it.
  */
+/**
+ * The `durationUnit` types, in the order the encoded record carries them.
+ *
+ * CLDR names exactly these three and offers no way to ask for anything else: an
+ * hour and a minute, all three, or a minute and a second.
+ */
+internal val DURATION_UNIT_TYPES = listOf("hm", "hms", "ms")
+
 internal val RENDERABLE_FIELDS = setOf(
     "era", "year", "quarter", "month", "weekday", "day", "dayperiod", "hour", "minute", "second",
 )
@@ -92,11 +100,27 @@ class PartialLocaleData {
     val glueAtTimeFormats = arrayOfNulls<String>(4)
     var numberingSystem: String? = null
 
+    /** `durationUnit` patterns, indexed by [DURATION_UNIT_TYPES]. */
+    val durationPatterns = arrayOfNulls<String>(DURATION_UNIT_TYPES.size)
+
     /** Gregorian `availableFormats`: skeleton id to pattern. */
     val availableFormats = LinkedHashMap<String, String>()
 
     /** `appendItems` patterns, indexed by [DATE_FIELD_TYPES]. */
     val appendItems = arrayOfNulls<String>(DATE_FIELD_TYPES.size)
+
+    /** `{0} – {1}`, the pattern for an interval no specific entry covers. */
+    var intervalFallback: String? = null
+
+    /**
+     * Gregorian `intervalFormats`: skeleton id to greatest-difference field to
+     * pattern.
+     *
+     * Two levels rather than one flat key, because inheritance works per
+     * greatest difference. A locale declaring `yMd` with only a `d` entry still
+     * takes `y` and `M` from its parent.
+     */
+    val intervalFormats = LinkedHashMap<String, LinkedHashMap<String, String>>()
 
     /** Field display names, indexed by [DATE_FIELD_TYPES]; the `{2}` an appendItem writes. */
     val fieldNames = arrayOfNulls<String>(DATE_FIELD_TYPES.size)
@@ -122,6 +146,18 @@ fun parseLdml(file: File): PartialLocaleData {
             if (index < 0 || data.fieldNames[index] != null) continue
             val displayName = field.child("displayName")?.takeIf { !it.hasAttribute("alt") } ?: continue
             data.fieldNames[index] = displayName.textContent.cleaned()
+        }
+    }
+
+    // Duration patterns sit under `units` rather than under a calendar, because
+    // `m:ss` is an elapsed quantity rather than a time of day. Read before the
+    // early return below, since a locale can carry these and no gregorian block.
+    ldml.child("units")?.let { units ->
+        for (unit in units.childElements("durationUnit")) {
+            val index = DURATION_UNIT_TYPES.indexOf(unit.getAttribute("type"))
+            if (index < 0 || data.durationPatterns[index] != null) continue
+            val pattern = unit.childElements("durationUnitPattern").firstOrNull { !it.hasAttribute("alt") } ?: continue
+            data.durationPatterns[index] = pattern.textContent.cleaned()
         }
     }
 
@@ -263,6 +299,25 @@ fun parseLdml(file: File): PartialLocaleData {
                 val index = APPEND_ITEM_REQUESTS.indexOf(request)
                 if (index < 0 || data.appendItems[index] != null) continue
                 data.appendItems[index] = item.textContent.cleaned()
+            }
+        }
+        dateTimeFormats.child("intervalFormats")?.let { intervalFormats ->
+            if (data.intervalFallback == null) {
+                data.intervalFallback = intervalFormats.child("intervalFormatFallback")
+                    ?.takeIf { !it.hasAttribute("alt") }
+                    ?.textContent
+                    ?.cleaned()
+            }
+            for (item in intervalFormats.childElements("intervalFormatItem")) {
+                if (item.hasAttribute("alt")) continue
+                val id = item.getAttribute("id").takeIf(String::isNotEmpty) ?: continue
+                val byDifference = data.intervalFormats.getOrPut(id) { LinkedHashMap() }
+                for (difference in item.childElements("greatestDifference")) {
+                    if (difference.hasAttribute("alt")) continue
+                    val field = difference.getAttribute("id").takeIf(String::isNotEmpty) ?: continue
+                    val pattern = difference.textContent.cleaned() ?: continue
+                    byDifference.putIfAbsent(field, pattern)
+                }
             }
         }
     }
