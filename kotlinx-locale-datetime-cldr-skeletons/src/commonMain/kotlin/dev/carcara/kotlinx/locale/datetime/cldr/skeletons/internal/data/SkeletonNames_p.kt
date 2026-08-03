@@ -5,9 +5,6 @@ package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 internal val SKELETON_NAMES_PA: String =
     "ਸੰਮਤ\u001Eਸਾਲ\u001Eਤਿਮਾਹੀ\u001Eਮਹੀਨਾ\u001E\u001E\u001Eਹਫ਼ਤੇ ਦਾ ਦਿਨ\u001Eਦਿਨ\u001E\u001E\u001EAM/PM\u001Eਘੰਟਾ\u001Eਮਿੰਟ\u001Eਸਕਿੰਟ\u001E\u001E\u001Fਪਹਿਲੀ ਤਿਮਾਹੀ\u001Eਦੂਜੀ ਤਿਮਾਹੀ\u001Eਤੀਜੀ ਤਿਮਾਹੀ\u001Eਚੌਥੀ ਤਿਮਾਹੀ\u001Fਤਿਮਾਹੀ1\u001Eਤਿਮਾਹੀ2\u001Eਤਿਮਾਹੀ3\u001Eਤਿਮਾਹੀ4\u001Fh\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fਪਹਿਲੀ ਤਿਮਾਹੀ\u001Eਦੂਜੀ ਤਿਮਾਹੀ\u001Eਤੀਜੀ ਤਿਮਾਹੀ\u001Eਚੌਥੀ ਤਿਮਾਹੀ"
 
-internal val SKELETON_NAMES_PAP: String =
-    "Era\u001Eaña\u001Ekuartal\u001Eluna\u001E\u001E\u001Edia di siman\u001Edia\u001E\u001E\u001Eperiodo di dia\u001Eora\u001Eminüt\u001Esekònde\u001E\u001E\u001Fdi promé kuartal\u001Edi dos kuartal\u001Edi tres kuartal\u001Edi kuater kuartal\u001F1 kuartal\u001E2 kuartal\u001E3 kuartal\u001E4 kuartal\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fdi promé kuartal\u001Edi dos kuartal\u001Edi tres kuartal\u001Edi kuater kuartal"
-
 internal val SKELETON_NAMES_PA_ARAB: String =
     "Era\u001Eورھا\u001EQuarter\u001Eمہينا\u001E\u001E\u001Eہفتے دا دن\u001Eدئن\u001E\u001E\u001EDayperiod\u001Eگھنٹا\u001Eمنٹ\u001ESecond\u001E\u001E\u001Fچوتھاي پہلاں\u001Eچوتھاي دوجا\u001Eچوتھاي تيجا\u001Eچوتھاي چوتھا\u001Fچوتھاي پہلاں\u001Eچوتھاي دوجا\u001Eچوتھاي تيجا\u001Eچوتھاي چوتھا\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
@@ -16,9 +13,6 @@ internal val SKELETON_NAMES_PCM: String =
 
 internal val SKELETON_NAMES_PL: String =
     "era\u001Erok\u001Ekwartał\u001Emiesiąc\u001E\u001E\u001Edzień tygodnia\u001Edzień\u001E\u001E\u001Erano / po południu / wieczorem\u001Egodzina\u001Eminuta\u001Esekunda\u001E\u001E\u001FI kwartał\u001EII kwartał\u001EIII kwartał\u001EIV kwartał\u001FI kw.\u001EII kw.\u001EIII kw.\u001EIV kw.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FI kwartał\u001EII kwartał\u001EIII kwartał\u001EIV kwartał"
-
-internal val SKELETON_NAMES_PRG: String =
-    "ēra\u001Emettan\u001Eketwirts\u001Emīnss\u001E\u001E\u001Esawaītis deinā\u001Edeinā\u001E\u001E\u001Eankstāinan / pa pussideinan\u001Estūndi\u001Eminūti\u001Esekūndi\u001E\u001E\u001F1. ketwirts\u001E2. ketwirts\u001E3. ketwirts\u001E4. ketwirts\u001F1. k.\u001E2. k.\u001E3. k.\u001E4. k.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. ketw.\u001E2. ketw.\u001E3. ketw.\u001E4. ketw."
 
 internal val SKELETON_NAMES_PS: String =
     "دور\u001Eکال\u001Eڅلورمه برخه\u001Eمياشت\u001E\u001E\u001Eد اونۍ ورځ\u001Eورځ\u001E\u001E\u001Eورځ شېبه\u001Eساعت\u001Eدقيقه\u001Eثانيه\u001E\u001E\u001Fلومړۍ ربعه\u001E۲مه ربعه\u001E۳مه ربعه\u001E۴مه ربعه\u001Fلومړۍ ربعه\u001E۲مه ربعه\u001E۳مه ربعه\u001E۴مه ربعه\u001FH\u001EH\u001F{1} په {0}\u001E{1} په {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"

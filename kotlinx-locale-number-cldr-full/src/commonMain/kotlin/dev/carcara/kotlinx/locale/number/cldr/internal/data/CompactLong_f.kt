@@ -20,9 +20,6 @@ internal val COMPACT_LONG_FO: String =
 internal val COMPACT_LONG_FR: String =
     "10:one=00 milliard\u001E10:other=00 milliards\u001E11:one=000 milliard\u001E11:other=000 milliards\u001E12:one=0 billion\u001E12:other=0 billions\u001E13:one=00 billion\u001E13:other=00 billions\u001E14:one=000 billion\u001E14:other=000 billions\u001E3:1=mille\u001E3:one=0 millier\u001E3:other=0 mille\u001E4:other=00 mille\u001E5:other=000 mille\u001E6:one=0 million\u001E6:other=0 millions\u001E7:one=00 million\u001E7:other=00 millions\u001E8:one=000 million\u001E8:other=000 millions\u001E9:one=0 milliard\u001E9:other=0 milliards"
 
-internal val COMPACT_LONG_FRR: String =
-    "10:other=00 miljaard\u001E11:other=000 miljaard\u001E12:other=0 biljoon\u001E13:other=00 biljoon\u001E14:other=000 biljoon\u001E3:other=0 düüsen\u001E4:other=00 düüsen\u001E5:other=000 düüsen\u001E6:other=0 miljoon\u001E7:other=00 miljoon\u001E8:other=000 miljoon\u001E9:other=0 miljaard"
-
 internal val COMPACT_LONG_FR_CA: String =
     "10:one=00 milliard\u001E10:other=00 milliards\u001E11:one=000 milliard\u001E11:other=000 milliards\u001E12:one=0 billion\u001E12:other=0 billions\u001E13:one=00 billion\u001E13:other=00 billions\u001E14:one=000 billion\u001E14:other=000 billions\u001E3:other=0 mille\u001E4:other=00 mille\u001E5:other=000 mille\u001E6:one=0 million\u001E6:other=0 millions\u001E7:one=00 million\u001E7:other=00 millions\u001E8:one=000 million\u001E8:other=000 millions\u001E9:one=0 milliard\u001E9:other=0 milliards"
 

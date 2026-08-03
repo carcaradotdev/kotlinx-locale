@@ -36,7 +36,7 @@ internal val SKELETON_NAMES_EN_KE: String =
     "era\u001Eyear\u001Equarter\u001Emonth\u001E\u001E\u001Eday of the week\u001Eday\u001E\u001E\u001Eam/pm\u001Ehour\u001Eminute\u001Esecond\u001E\u001E\u001F1st quarter\u001E2nd quarter\u001E3rd quarter\u001E4th quarter\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EhB\u001F{1} 'at' {0}\u001E{1} 'at' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_EN_SHAW: String =
-    "𐑽𐑭\u001E𐑘𐑽\u001EQuarter\u001E𐑥𐑭𐑙𐑔\u001E\u001E\u001E𐑛𐑱 𐑝 𐑞 𐑢𐑰𐑒\u001E𐑛𐑱\u001E\u001E\u001E𐑨𐑥/𐑐𐑥\u001E𐑬𐑮\u001E𐑥𐑦𐑙𐑦𐑑\u001E𐑕𐑧𐑒𐑭𐑙𐑛\u001E\u001E\u001F1𐑕𐑑 𐑒𐑢𐑸𐑛𐑸\u001E2𐑯𐑛 𐑒𐑢𐑸𐑛𐑸\u001E3𐑻𐑛 𐑒𐑢𐑸𐑛𐑸\u001E4𐑹𐑔 𐑒𐑢𐑸𐑛𐑸\u001F𐑒1\u001E𐑒2\u001E𐑒3\u001E𐑒4\u001FH\u001EH\u001F{1} 𐑨𐑑 {0}\u001E{1} 𐑨𐑑 {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1𐑕𐑑 𐑒𐑢𐑸𐑛𐑸\u001E2𐑯𐑛 𐑒𐑢𐑸𐑛𐑸\u001E3𐑻𐑛 𐑒𐑢𐑸𐑛𐑸\u001E4𐑹𐑔 𐑒𐑢𐑸𐑛𐑸"
+    "𐑽𐑭\u001E𐑘𐑽\u001EQuarter\u001E𐑥𐑭𐑙𐑔\u001E\u001E\u001E𐑛𐑱 𐑝 𐑞 𐑢𐑰𐑒\u001E𐑛𐑱\u001E\u001E\u001E𐑨𐑥/𐑐𐑥\u001E𐑬𐑮\u001E𐑥𐑦𐑙𐑦𐑑\u001E𐑕𐑧𐑒𐑭𐑙𐑛\u001E\u001E\u001F1𐑕𐑑 𐑒𐑢𐑸𐑛𐑸\u001E2𐑯𐑛 𐑒𐑢𐑸𐑛𐑸\u001E3𐑻𐑛 𐑒𐑢𐑸𐑛𐑸\u001E4𐑹𐑔 𐑒𐑢𐑸𐑛𐑸\u001F𐑒1\u001E𐑒2\u001E𐑒3\u001E𐑒4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1𐑕𐑑 𐑒𐑢𐑸𐑛𐑸\u001E2𐑯𐑛 𐑒𐑢𐑸𐑛𐑸\u001E3𐑻𐑛 𐑒𐑢𐑸𐑛𐑸\u001E4𐑹𐑔 𐑒𐑢𐑸𐑛𐑸"
 
 internal val SKELETON_NAMES_EO: String =
     "erao\u001Ejaro\u001Ejarkvarono\u001Emonato\u001E\u001E\u001Etago de semajno\u001Etago\u001E\u001E\u001Etagtempo\u001Ehoro\u001Eminuto\u001Esekundo\u001E\u001E\u001F1-a jarkvarono\u001E2-a jarkvarono\u001E3-a jarkvarono\u001E4-a jarkvarono\u001F1. jk.\u001E2. jk.\u001E3. jk.\u001E4. jk.\u001FH\u001EH\u001F{1} 'je' {0}\u001E{1} 'je' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1-a jarkvarono\u001E2-a jarkvarono\u001E3-a jarkvarono\u001E4-a jarkvarono"

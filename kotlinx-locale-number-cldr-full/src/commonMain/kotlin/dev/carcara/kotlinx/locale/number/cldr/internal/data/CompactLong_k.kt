@@ -5,9 +5,6 @@ package dev.carcara.kotlinx.locale.number.cldr.internal.data
 internal val COMPACT_LONG_KA: String =
     "10:other=00 მილიარდი\u001E11:other=000 მილიარდი\u001E12:other=0 ტრილიონი\u001E13:other=00 ტრილიონი\u001E14:other=000 ტრილიონი\u001E3:other=0 ათასი\u001E4:other=00 ათასი\u001E5:other=000 ათასი\u001E6:other=0 მილიონი\u001E7:other=00 მილიონი\u001E8:other=000 მილიონი\u001E9:other=0 მილიარდი"
 
-internal val COMPACT_LONG_KAB: String =
-    "10:other=00 n imelyaṛen\u001E11:other=000 n imelyaṛen\u001E12:one=0 n utrilyun\u001E12:other=0 n itrilyunen\u001E13:other=00 n itrilyunen\u001E14:other=000 n itrilyunen\u001E3:one=0 n wagim\u001E3:other=0 n wagimen\u001E4:other=00 n wagimen\u001E5:other=000 n wagimen\u001E6:one=0 n umilyun\u001E6:other=0 n imelyunen\u001E7:other=00 n imelyunen\u001E8:other=000 n imelyunen\u001E9:one=0 n umelyaṛ\u001E9:other=0 n imelyaṛen"
-
 internal val COMPACT_LONG_KEA: String =
     "10:other=00 mil milhãu\u001E11:other=000 mil milhãu\u001E12:other=0 bilhãu\u001E13:other=00 bilhãu\u001E14:other=000 bilhãu\u001E3:other=0 mil\u001E4:other=00 mil\u001E5:other=000 mil\u001E6:other=0 milhãu\u001E7:other=00 milhãu\u001E8:other=000 milhãu\u001E9:other=0 mil milhãu"
 
@@ -19,9 +16,6 @@ internal val COMPACT_LONG_KK: String =
 
 internal val COMPACT_LONG_KK_ARAB: String =
     "10:other=00 ميلليارد\u001E11:other=000 ميلليارد\u001E12:other=0 تريلليون\u001E13:other=00 تريلليون\u001E14:other=000 تريلليون\u001E3:other=0 مىڭ\u001E4:other=00 مىڭ\u001E5:other=000 مىڭ\u001E6:other=0 ميلليون\u001E7:other=00 ميلليون\u001E8:other=000 ميلليون\u001E9:other=0 ميلليارد"
-
-internal val COMPACT_LONG_KL: String =
-    "10:one=00 milliard\u001E10:other=00 milliarder\u001E11:one=000 milliard\u001E11:other=000 milliarder\u001E12:one=0 billion\u001E12:other=0 billioner\u001E13:one=00 billion\u001E13:other=00 billioner\u001E14:one=000 billion\u001E14:other=000 billioner\u001E3:other=0 tusind\u001E4:other=00 tusind\u001E5:other=000 tusind\u001E6:one=0 million\u001E6:other=0 millioner\u001E7:one=00 million\u001E7:other=00 millioner\u001E8:one=000 million\u001E8:other=000 millioner\u001E9:one=0 milliard\u001E9:other=0 milliarder"
 
 internal val COMPACT_LONG_KM: String =
     "10:other=00 ប៊ីលាន\u001E11:other=000 ប៊ីលាន\u001E12:other=0 ទ្រីលាន\u001E13:other=00 ទ្រីលាន\u001E14:other=000 ទ្រីលាន\u001E3:other=0 ពាន់\u001E4:other=00 ពាន់\u001E5:other=000ពាន់\u001E6:other=0 លាន\u001E7:other=00 លាន\u001E8:other=000 លាន\u001E9:other=0 ប៊ីលាន"

@@ -261,7 +261,7 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
         } else if ("initial" in modifiers) {
             value = initialsOf(value, record, retain = "retain" in modifiers)
         }
-        if ("allCaps" in modifiers) value = value.uppercase()
+        if ("allCaps" in modifiers) value = value.uppercase().withoutGreekTonos()
         if ("initialCap" in modifiers) value = value.replaceFirstChar(Char::uppercaseChar)
         return value
     }
@@ -479,3 +479,27 @@ private val VIRAMAS = charArrayOf(
     '\u103A', '\u17D2', '\u1A60', '\u1B44', '\u1BAA', '\u1BAB', '\u1BF2', '\u1BF3',
     '\u2D7F', '\uA806', '\uA8C4', '\uA953', '\uA9C0', '\uAAF6', '\uABED',
 ).concatToString()
+
+/**
+ * Greek written in capitals drops its accents.
+ *
+ * `uppercase()` maps alpha with tonos to capital alpha with tonos, because that
+ * character exists. Greek orthography does not use it: a name set in capitals is
+ * written without the accent, so a monogram of `Άννα` is `Α` and not `Ά`. The
+ * dialytika stays, since it marks a separate vowel rather than stress.
+ */
+internal fun String.withoutGreekTonos(): String {
+    if (none { it in GREEK_TONOS }) return this
+    return map { GREEK_TONOS[it] ?: it }.joinToString("")
+}
+
+/** The accented Greek capitals `uppercase()` can produce, and what they are written as. */
+private val GREEK_TONOS: Map<Char, Char> = mapOf(
+    '\u0386' to '\u0391', // Ά -> Α
+    '\u0388' to '\u0395', // Έ -> Ε
+    '\u0389' to '\u0397', // Ή -> Η
+    '\u038A' to '\u0399', // Ί -> Ι
+    '\u038C' to '\u039F', // Ό -> Ο
+    '\u038E' to '\u03A5', // Ύ -> Υ
+    '\u038F' to '\u03A9', // Ώ -> Ω
+)

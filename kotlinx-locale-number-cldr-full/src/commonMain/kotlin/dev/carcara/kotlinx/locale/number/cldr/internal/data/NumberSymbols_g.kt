@@ -5,8 +5,5 @@ package dev.carcara.kotlinx.locale.number.cldr.internal.data
 internal val NUMBER_SYMBOLS_GA: String =
     "latn\u001F0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FNuimh\u001F;\u001F:\u001F1"
 
-internal val NUMBER_SYMBOLS_GEZ: String =
-    "latn\u001F0123456789\u001F.\u001Fወ\u001F.\u001Fወ\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FNaN\u001F;\u001F:\u001F1"
-
 internal val NUMBER_SYMBOLS_GSW: String =
     "latn\u001F0123456789\u001F.\u001F'\u001F.\u001F'\u001F−\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FNaN\u001F;\u001F:\u001F1"

@@ -20,8 +20,5 @@ internal val TIME_ZONE_FORMATS_LO: String =
 internal val TIME_ZONE_FORMATS_LT: String =
     "+HH:mm\u001F−HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001FLaikas: {0}\u001FŽiemos laikas: {0}\u001FVasaros laikas: {0}\u001F{1} ({0})"
 
-internal val TIME_ZONE_FORMATS_LTG: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001FLaika jūsla: {0}\u001F{0}: standarta laiks\u001F{0}: vosorys laiks\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_LV: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001FLaika josla: {0}\u001F{0}: standarta laiks\u001F{0}: vasaras laiks\u001F{0} ({1})"

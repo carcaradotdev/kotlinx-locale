@@ -2,9 +2,6 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal val LOCALE_STANDALONE_PAP: String =
-    "\u001Fyan\u001Efeb\u001Emar\u001Eapr\u001Emei\u001Eyün\u001Eyül\u001Eoug\u001Esèp\u001Eòkt\u001Enov\u001Edes\u001F\u001F\u001F\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_PCM: String =
     "\u001FJén\u001EFẹ́b\u001EMach\u001EÉpr\u001EMee\u001EJun\u001EJul\u001EỌ́gọ\u001ESẹp\u001EỌkt\u001ENọv\u001EDis\u001F\u001F\u001F\u001F\u001F0"
 

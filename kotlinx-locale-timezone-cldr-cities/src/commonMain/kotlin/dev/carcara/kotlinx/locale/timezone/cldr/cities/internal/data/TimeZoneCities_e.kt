@@ -44,9 +44,6 @@ internal val TIME_ZONE_CITIES_EN_DSRT: String =
 internal val TIME_ZONE_CITIES_EN_DSRT_US: String =
     "en-Dsrt\u001F"
 
-internal val TIME_ZONE_CITIES_EN_SHAW: String =
-    "root\u001FEtc/Unknown\u001D𐑳𐑯𐑯𐑴𐑯 𐑤𐑴𐑒𐑱𐑖𐑩𐑯"
-
 internal val TIME_ZONE_CITIES_EN_SHAW_GB: String =
     "en-Shaw\u001F"
 

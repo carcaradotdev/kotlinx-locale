@@ -2,9 +2,6 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
-internal val SKELETON_NAMES_ZA: String =
-    "Era\u001Ebi\u001EQuarter\u001Endwen\u001E\u001E\u001EDay of the Week\u001Engoenz\u001E\u001E\u001EDayperiod\u001Ediemj\u001Efaen\u001Emiux\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
-
 internal val SKELETON_NAMES_ZH: String =
     "纪元\u001E年\u001E季度\u001E月\u001E\u001E\u001E星期\u001E日\u001E\u001E\u001E上午/下午\u001E小时\u001E分钟\u001E秒\u001E\u001E\u001F第一季度\u001E第二季度\u001E第三季度\u001E第四季度\u001F1季度\u001E2季度\u001E3季度\u001E4季度\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F第一季度\u001E第二季度\u001E第三季度\u001E第四季度"
 

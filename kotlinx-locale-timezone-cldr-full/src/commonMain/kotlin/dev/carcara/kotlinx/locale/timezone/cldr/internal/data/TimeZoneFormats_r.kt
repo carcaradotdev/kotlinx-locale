@@ -2,9 +2,6 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.timezone.cldr.internal.data
 
-internal val TIME_ZONE_FORMATS_RIF: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001Fakud n {0}\u001Fakud anaway n {0}\u001Fakud unebdu n {0}\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_RM: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} (temp local)\u001F{0} (temp normal)\u001F{0} (temp da stad)\u001F{1} ({0})"
 

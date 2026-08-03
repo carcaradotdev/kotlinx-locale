@@ -20,5 +20,11 @@ internal val CURRENCY_FORMATS_MR: String =
 internal val CURRENCY_FORMATS_MS_ARAB_BN: String =
     "0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F1\u001F¤ #,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00;(¤#,##0.00)\u001F¤ #,##0.00;(¤ #,##0.00)"
 
+internal val CURRENCY_FORMATS_MS_ID: String =
+    "0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F1\u001F¤#,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00\u001F¤ #,##0.00;(¤ #,##0.00)"
+
+internal val CURRENCY_FORMATS_MUA: String =
+    "0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F1\u001F¤#,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00;(¤#,##0.00)\u001F¤#,##0.00;(¤#,##0.00)"
+
 internal val CURRENCY_FORMATS_MY: String =
     "၀၁၂၃၄၅၆၇၈၉\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F¤ #,##0.00\u001F¤ #,##0.00"

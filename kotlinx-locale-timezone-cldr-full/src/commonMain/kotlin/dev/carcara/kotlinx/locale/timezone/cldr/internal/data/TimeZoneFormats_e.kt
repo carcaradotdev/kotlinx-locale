@@ -15,7 +15,7 @@ internal val TIME_ZONE_FORMATS_EN_DSRT: String =
     "+HH:mm\u001F-HH:mm\u001F𐐘𐐣𐐓 {0}\u001F𐐘𐐣𐐓\u001FGMT+?\u001F{0} 𐐓𐐴𐑋\u001F{0} (+0)\u001F{0} (+1)\u001F{1} ({0})"
 
 internal val TIME_ZONE_FORMATS_EN_SHAW: String =
-    "+HH:mm\u001F-HH:mm\u001F·𐑜𐑥𐑑{0}\u001F·𐑜𐑥𐑑\u001F𐑜𐑥𐑑+?\u001F{0} 𐑑𐑲𐑥\u001F{0} 𐑕𐑑𐑨𐑯𐑛𐑼𐑛 𐑑𐑲𐑥\u001F{0} 𐑛𐑱𐑤𐑲𐑑 𐑑𐑲𐑥\u001F{1} ({0})"
+    "+HH:mm\u001F-HH:mm\u001F·𐑜𐑥𐑑{0}\u001F·𐑜𐑥𐑑\u001FGMT+?\u001F{0} 𐑑𐑲𐑥\u001F{0} (+0)\u001F{0} (+1)\u001F{1} ({0})"
 
 internal val TIME_ZONE_FORMATS_EO: String =
     "+HH:mm\u001F-HH:mm\u001FUTC{0}\u001FUTC\u001FUTC+?\u001Ftempo: {0}\u001F{0} (norma tempo)\u001F{0} (somera tempo)\u001F{1} ({0})"

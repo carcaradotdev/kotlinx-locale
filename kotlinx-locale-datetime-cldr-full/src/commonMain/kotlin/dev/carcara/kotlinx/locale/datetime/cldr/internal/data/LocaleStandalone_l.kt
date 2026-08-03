@@ -2,14 +2,8 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal val LOCALE_STANDALONE_LA: String =
-    "Ianuarius\u001EFebruarius\u001EMartius\u001EAprilis\u001EMaius\u001EIunius\u001EIulius\u001EAugustus\u001ESeptember\u001EOctober\u001ENovember\u001EDecember\u001F\u001F\u001F\u001F\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_LB: String =
     "\u001FJan\u001EFeb\u001EMäe\u001EAbr\u001EMee\u001EJun\u001EJul\u001EAug\u001ESep\u001EOkt\u001ENov\u001EDez\u001F\u001F\u001FMéi\u001EDën\u001EMët\u001EDon\u001EFre\u001ESam\u001ESon\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_LIJ: String =
-    "zenâ\u001Efrevâ\u001Emarso\u001Earvî\u001Emazzo\u001Ezugno\u001Eluggio\u001Eagosto\u001Esettembre\u001Eottobre\u001Enovembre\u001Edexembre\u001Fzen.\u001Efre.\u001Emar.\u001Earv.\u001Emaz.\u001Ezug.\u001Elug.\u001Eago.\u001Eset.\u001Eott.\u001Enov.\u001Edex.\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_LLD: String =
     "jená\u001Eforá\u001Emerz\u001Eaurí\u001Ema\u001Ejügn\u001Emessé\u001Eaost\u001Esetëmber\u001Eotober\u001Enovëmber\u001Edezëmber\u001Fjená\u001Eforá\u001Emerz\u001Eaurí\u001Ema\u001Ejügn\u001Emessé\u001Eaost\u001Eset\u001Eoto\u001Enov\u001Edez\u001F\u001F\u001F\u001F\u001F0"

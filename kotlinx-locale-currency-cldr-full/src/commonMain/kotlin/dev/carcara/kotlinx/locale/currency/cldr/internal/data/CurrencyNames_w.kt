@@ -8,9 +8,6 @@ internal val CURRENCY_NAMES_WAE: String =
 internal val CURRENCY_NAMES_WAE_CH: String =
     "wae\u001F\u001F"
 
-internal val CURRENCY_NAMES_WAL: String =
-    "root\u001FETB\u001DBr\u001FBRL\u001Dየብራዚል ሪል\u001ECNY\u001Dየቻይና ዩአን ረንሚንቢ\u001EETB\u001Dየኢትዮጵያ ብር\u001EEUR\u001Dአውሮ\u001EGBP\u001Dየእንግሊዝ ፓውንድ ስተርሊንግ\u001EINR\u001Dየሕንድ ሩፒ\u001EJPY\u001Dየጃፓን የን\u001ERUB\u001Dየራሻ ሩብል\u001EUSD\u001Dየአሜሪካን ዶላር"
-
 internal val CURRENCY_NAMES_WAL_ET: String =
     "wal\u001F\u001F"
 

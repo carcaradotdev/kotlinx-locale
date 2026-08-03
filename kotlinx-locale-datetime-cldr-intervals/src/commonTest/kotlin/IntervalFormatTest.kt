@@ -56,44 +56,11 @@ class IntervalFormatTest {
         assertTrue('–' !in once && '-' !in once, "an identical pair should not be joined: $once")
     }
 
-    /**
-     * Locales where ICU reaches a different base pattern than the skeleton
-     * matcher does.
-     *
-     * These declare few interval entries of their own, so most of their cases
-     * land on the fallback, and there the pattern comes from whatever the
-     * matcher picked for the requested skeleton. ICU resolves that through its
-     * own interval-info fallback, which walks a different chain, so the two can
-     * agree on every declared entry and still differ on the undeclared ones.
-     *
-     * A bug in this library rather than in the data, and one to close before the
-     * artifact is published. Listed by name and counted so the gap stays
-     * visible instead of being hidden behind a loosened comparison.
-     */
-    private val fallbackPatternDiffers = setOf(
-        "ckb", "ckb-IQ", "ckb-IR",
-        "en-BW", "en-BZ", "en-JM", "en-MT", "en-PK", "en-SG", "en-ZA", "en-ZW",
-        "es-EC", "es-HN", "es-PE", "es-PR",
-        "gaa", "gaa-GH", "ie", "ie-EE", "it-CH", "kab", "kab-DZ", "kl", "kl-GL",
-        "lij", "lij-IT", "nds", "nds-DE", "nds-NL", "oc", "oc-ES", "oc-FR",
-        "prg", "prg-PL", "szl", "szl-PL",
-    )
-
-    @Test
-    fun theExclusionsDoNotGrowUnnoticed() {
-        assertEquals(36, fallbackPatternDiffers.size, "the interval exclusions changed; fix or restate them")
-    }
-
     @Test
     fun everyLocaleAgreesWithIcu() {
         val mismatches = ArrayList<String>()
         var compared = 0
-        var excluded = 0
         for ((tag, expected) in icuIntervalGolden) {
-            if (tag in fallbackPatternDiffers) {
-                excluded++
-                continue
-            }
             val locale = Locale.forLanguageTag(tag)
             for ((index, case) in icuIntervalGoldenCases.withIndex()) {
                 val (skeleton, start, end) = case
@@ -104,7 +71,7 @@ class IntervalFormatTest {
                 }
             }
         }
-        assertTrue(compared > 10_000, "the golden shrank to $compared comparisons, with $excluded locales excluded")
+        assertTrue(compared > 10_000, "the golden shrank to $compared comparisons")
         assertTrue(
             mismatches.isEmpty(),
             "${mismatches.size} of $compared disagree with ICU across " +

@@ -8,12 +8,6 @@ internal val TIME_ZONE_FORMATS_BA: String =
 internal val TIME_ZONE_FORMATS_BE: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001FЧас: {0}\u001FСтандартны час: {0}\u001FЛетні час: {0}\u001F{1} ({0})"
 
-internal val TIME_ZONE_FORMATS_BEW: String =
-    "+HH.mm\u001F-HH.mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001FWaktu {0}\u001FWaktu Pakem {0}\u001FWaktu Musim Pentèr {0}\u001F{1} ({0})"
-
-internal val TIME_ZONE_FORMATS_BE_TARASK: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001Fчас: {0}\u001Fзмоўчны час: {0}\u001Fлетні час: {0}\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_BG: String =
     "+HH:mm\u001F-HH:mm\u001FГринуич{0}\u001FГринуич\u001FГринуич+?\u001F{0}\u001F{0} – стандартно време\u001F{0} – лятно часово време\u001F{1} ({0})"
 
@@ -28,9 +22,6 @@ internal val TIME_ZONE_FORMATS_BLO: String =
 
 internal val TIME_ZONE_FORMATS_BN: String =
     "+HH:mm\u001F-HH:mm\u001FGMT {0}\u001FGMT\u001FGMT+?\u001F{0} সময়\u001F{0} মানক সময়\u001F{0} দিবালোক সময়\u001F{1} ({0})"
-
-internal val TIME_ZONE_FORMATS_BQI: String =
-    "‎+HH:mm\u001F‎−HH:mm\u001F{0} گرینویچ\u001Fگرینویچ\u001FGMT+?\u001Fمجال {0}\u001Fمجال عادی {0}\u001Fمجال توستووی {0}\u001F{1} ({0})"
 
 internal val TIME_ZONE_FORMATS_BR: String =
     "+HH:mm\u001F-HH:mm\u001FUTC{0}\u001FUTC\u001FUTC+?\u001Feur {0}\u001Feur cʼhoañv {0}\u001Feur hañv {0}\u001F{1} ({0})"

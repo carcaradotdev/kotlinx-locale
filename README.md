@@ -399,8 +399,8 @@ plugin flag beside the artifact for every domain that has one.
 | `kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
 | `kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. |
 | `kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
-| `kotlinx-locale-datetime-cldr-skeletons` | `-cldr-full` plus the skeleton tables: `CldrDateTimeSkeletons` and `date.format("yMMMd", locale)`, where you name the fields and the locale decides their order. Opt in, at around 62 KB gzipped on top of `-cldr-full`. |
-| `kotlinx-locale-datetime-cldr-intervals` | `CldrDateTimeIntervals` and `intervalFormat`: `Jul 18 – 22, 2026`, with the parts both ends share written once. Builds on `-cldr-skeletons`, since a range is a split of the pattern the matcher picks, and adds around 31 KB gzipped over it. |
+| `kotlinx-locale-datetime-cldr-skeletons` | `-cldr-full` plus the skeleton tables: `CldrDateTimeSkeletons` and `date.format("yMMMd", locale)`, where you name the fields and the locale decides their order. Opt in, at around 58 KB gzipped on top of `-cldr-full`. |
+| `kotlinx-locale-datetime-cldr-intervals` | `CldrDateTimeIntervals` and `intervalFormat`: `Jul 18 – 22, 2026`, with the parts both ends share written once. Builds on `-cldr-skeletons`, since a range is a split of the pattern the matcher picks, and adds around 28 KB gzipped over it. |
 | `kotlinx-locale-personname-core` | `PersonName` and the option enums, plus `PersonNameSource`. No data. |
 | `kotlinx-locale-personname-cldr-runtime` | Pattern selection, field modifiers and the empty-field cleanup. Carries no records. |
 | `kotlinx-locale-personname-cldr-full` | `CldrPersonName`, `personNameFormat` and `personNameOrder`: a name written the way a locale writes one, and its initials. |
@@ -507,9 +507,9 @@ gzipped bundle size:
 
 | take | size | added |
 | --- | ---: | ---: |
-| `-cldr-full` | 135.0 KB | |
-| plus `-cldr-skeletons` | 197.2 KB | 62.2 KB |
-| plus `-cldr-intervals` | 228.5 KB | 31.3 KB |
+| `-cldr-full` | 127.3 KB | |
+| plus `-cldr-skeletons` | 185.8 KB | 58.5 KB |
+| plus `-cldr-intervals` | 213.3 KB | 27.5 KB |
 
 Each layer builds on the one above it rather than repeating its tables, so
 asking for intervals brings the skeletons and the patterns with it. That is not
@@ -546,10 +546,10 @@ calls against each layer:
 
 | domain | platform | CLDR | saved |
 | --- | ---: | ---: | ---: |
-| datetime | 35.3 KB | 135.0 KB | 99.7 KB |
-| country | 20.2 KB | 416.9 KB | 396.7 KB |
-| currency | 24.9 KB | 456.6 KB | 431.6 KB |
-| all three | 49.1 KB | 973.2 KB | 924.1 KB |
+| datetime | 35.3 KB | 127.3 KB | 92.0 KB |
+| country | 20.2 KB | 376.4 KB | 356.2 KB |
+| currency | 24.9 KB | 434.1 KB | 409.2 KB |
+| all three | 49.1 KB | 902.8 KB | 853.7 KB |
 
 Gzipped over the minified bundle. Datetime saves the least because
 kotlinx-datetime sits in both numbers and only the formatting moved.
@@ -1043,17 +1043,14 @@ library has decided to stop is in [docs/boundaries.md](docs/boundaries.md).
   but you choose the unit. Whether ninety minutes reads as "in 90 minutes" or
   "in 2 hours" is not standardized by CLDR, ECMA-402 or ICU, all of which take
   the unit from the caller.
-- Interval formatting agrees with ICU everywhere except thirty-six locales,
-  listed by name in the conformance test. All thirty-six are cases where the
-  requested skeleton has no interval entry of its own, so the answer comes from
-  the pattern the skeleton matcher picked, and ICU reaches that pattern by a
-  different route. Every locale that declares its own entries is exact.
+- Interval formatting agrees with ICU on every one of the 905 locales the two
+  builds share, with nothing excluded.
 - Person name formatting agrees with CLDR's own test data on ninety-nine per
   cent of its thirty-seven thousand cases. Eight locales are excluded because
   finding where one word ends and the next begins needs a dictionary this
-  library does not ship, and initials cannot be derived without that. Ten more
-  are excluded for differences that are this library's bugs and are named in the
-  test.
+  library does not ship, and initials cannot be derived without that. Nine more
+  are excluded for differences that are this library's bugs, named in the test
+  and listed in [ROADMAP.md](ROADMAP.md).
 - Week data ships the first day of the week, the minimum days in week one and
   the weekend, keyed by territory. Week *numbers* are still not implemented: the
   `w`, `W` and `F` pattern fields and the numeric forms of `e` and `c` need

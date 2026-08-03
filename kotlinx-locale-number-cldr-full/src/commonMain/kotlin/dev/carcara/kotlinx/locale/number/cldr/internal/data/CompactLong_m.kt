@@ -17,8 +17,5 @@ internal val COMPACT_LONG_MR: String =
 internal val COMPACT_LONG_MS: String =
     "10:other=00 bilion\u001E11:other=000 bilion\u001E12:other=0 trilion\u001E13:other=00 trilion\u001E14:other=000 trilion\u001E3:other=0 ribu\u001E4:other=00 ribu\u001E5:other=000 ribu\u001E6:other=0 juta\u001E7:other=00 juta\u001E8:other=000 juta\u001E9:other=0 bilion"
 
-internal val COMPACT_LONG_MS_ARAB: String =
-    "10:other=00 بيليون\u001E11:other=000 بيليون\u001E12:other=0 تريليون\u001E13:other=00 تريليون\u001E14:other=000 تريليون\u001E3:other=0 ريبو\u001E4:other=00 ريبو\u001E5:other=000 ريبو\u001E6:other=0 جوتا\u001E7:other=00 جوتا\u001E8:other=000 جوتا\u001E9:other=0 بيليون"
-
 internal val COMPACT_LONG_MY: String =
     "10:other=0000 ကုဋေ\u001E11:other=ကုဋေ 0 သောင်း\u001E12:other=ကုဋေ 0 သိန်း\u001E13:other=ကုဋေ 0 သန်း\u001E14:other=0 ကောဋိ\u001E3:other=0 ထောင်\u001E4:other=0 သောင်း\u001E5:other=0 သိန်း\u001E6:other=0 သန်း\u001E7:other=0 ကုဋေ\u001E8:other=00 ကုဋေ\u001E9:other=000 ကုဋေ"

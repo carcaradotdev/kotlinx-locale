@@ -11,14 +11,8 @@ internal val LOCALE_STANDALONE_CCP: String =
 internal val LOCALE_STANDALONE_CE: String =
     "\u001F\u001F\u001F\u001F\u001Fо\u001Eш\u001Eкх\u001Eе\u001EпӀ\u001Eш\u001EкӀ\u001F0"
 
-internal val LOCALE_STANDALONE_CO: String =
-    "ghjennaghju\u001Eferraghju\u001Emarzu\u001Eaprile\u001Emaghju\u001Eghjugnu\u001Elugliu\u001Eaostu\u001Esittembre\u001Eottobre\u001Enuvembre\u001Edicembre\u001F\u001F\u001F\u001F\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_CS: String =
     "leden\u001Eúnor\u001Ebřezen\u001Eduben\u001Ekvěten\u001Ečerven\u001Ečervenec\u001Esrpen\u001Ezáří\u001Eříjen\u001Elistopad\u001Eprosinec\u001F\u001F\u001F\u001F\u001F\u001Fc3aa"
-
-internal val LOCALE_STANDALONE_CU: String =
-    "і҆аннꙋа́рїй\u001Eфеврꙋа́рїй\u001Eма́ртъ\u001Eа҆прі́ллїй\u001Eма́їй\u001Eі҆ꙋ́нїй\u001Eі҆ꙋ́лїй\u001Eа҆́ѵгꙋстъ\u001Eсепте́мврїй\u001Eѻ҆ктѡ́врїй\u001Eное́мврїй\u001Eдеке́мврїй\u001F\u001F\u001F\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_CY: String =
     "\u001FIon\u001EChw\u001EMaw\u001EEbr\u001EMai\u001EMeh\u001EGor\u001EAwst\u001EMedi\u001EHyd\u001ETach\u001ERhag\u001F\u001F\u001FLlun\u001EMaw\u001EMer\u001EIau\u001EGwe\u001ESad\u001ESul\u001F\u001F0"

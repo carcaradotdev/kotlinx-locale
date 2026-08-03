@@ -14,9 +14,6 @@ internal val COMPACT_LONG_EN: String =
 internal val COMPACT_LONG_EN_IN: String =
     "10:other=0000 crore\u001E11:other=00000 crore\u001E12:other=0 lakh crore\u001E13:other=00 lakh crore\u001E14:other=000 lakh crore\u001E3:other=0 thousand\u001E4:other=00 thousand\u001E5:other=0 lakh\u001E6:other=00 lakh\u001E7:other=0 crore\u001E8:other=00 crore\u001E9:other=000 crore"
 
-internal val COMPACT_LONG_EN_SHAW: String =
-    "10:other=00 𐑚𐑦𐑤𐑘𐑩𐑯\u001E11:other=000 𐑚𐑦𐑤𐑘𐑩𐑯\u001E12:other=0 𐑑𐑮𐑦𐑤𐑾𐑯\u001E13:other=00 𐑑𐑮𐑦𐑤𐑾𐑯\u001E14:other=000 𐑑𐑮𐑦𐑤𐑾𐑯\u001E3:other=0 𐑔𐑬𐑟𐑩𐑯𐑛\u001E4:other=00 𐑔𐑬𐑟𐑩𐑯𐑛\u001E5:other=000 𐑔𐑬𐑟𐑩𐑯𐑛\u001E6:other=0 𐑥𐑦𐑤𐑘𐑩𐑯\u001E7:other=00 𐑥𐑦𐑤𐑘𐑩𐑯\u001E8:other=000 𐑥𐑦𐑤𐑘𐑩𐑯\u001E9:other=0 𐑚𐑦𐑤𐑘𐑩𐑯"
-
 internal val COMPACT_LONG_EO: String =
     "10:other=00 miliardoj\u001E11:other=000 miliardoj\u001E12:one=0 duiliono\u001E12:other=0 duilionoj\u001E13:other=00 duilionoj\u001E14:other=000 duilionoj\u001E3:other=0 mil\u001E4:other=00 mil\u001E5:other=000 mil\u001E6:other=0 miliono\u001E7:other=00 milionoj\u001E8:other=000 milionoj\u001E9:one=0 miliardo\u001E9:other=0 miliardoj"
 

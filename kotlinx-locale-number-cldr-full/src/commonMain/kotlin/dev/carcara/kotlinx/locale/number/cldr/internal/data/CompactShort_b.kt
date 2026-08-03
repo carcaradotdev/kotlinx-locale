@@ -11,9 +11,6 @@ internal val COMPACT_SHORT_BAL_LATN: String =
 internal val COMPACT_SHORT_BE: String =
     "10:other=00 млрд\u001E11:other=000 млрд\u001E12:other=0 трлн\u001E13:other=00 трлн\u001E14:other=000 трлн\u001E3:other=0 тыс'.'\u001E4:other=00 тыс'.'\u001E5:other=000 тыс'.'\u001E6:other=0 млн\u001E7:other=00 млн\u001E8:other=000 млн\u001E9:other=0 млрд"
 
-internal val COMPACT_SHORT_BEW: String =
-    "10:other=00 M\u001E11:other=000 M\u001E12:other=0 T\u001E13:other=00 T\u001E14:other=000 T\u001E3:other=0 rb\u001E4:other=00 rb\u001E5:other=000 rb\u001E6:other=0 jt\u001E7:other=00 jt\u001E8:other=000 jt\u001E9:other=0 M"
-
 internal val COMPACT_SHORT_BG: String =
     "10:other=00 млрд'.'\u001E11:other=000 млрд'.'\u001E12:other=0 трлн'.'\u001E13:other=00 трлн'.'\u001E14:other=000 трлн'.'\u001E3:other=0 хил'.'\u001E4:other=00 хил'.'\u001E5:other=000 хил'.'\u001E6:other=0 млн'.'\u001E7:other=00 млн'.'\u001E8:other=000 млн'.'\u001E9:other=0 млрд'.'"
 

@@ -14,6 +14,13 @@ import kotlin.test.assertTrue
  * that declares only half its fields inherits. Those are the decisions the XML
  * does not make obvious, and a wrong one is invisible downstream because every
  * answer still looks like a plausible week.
+ *
+ * Skipped where the clone is absent, which is every checkout that has not run
+ * `:codegen:cloneLocaleRepos`, CI included: `codegen/repos` is gitignored and
+ * runs to hundreds of megabytes. The runtime side covers the same data from the
+ * committed tables and runs everywhere, so this is a second opinion rather than
+ * the only one. Skipping is stated per test rather than left to fail, because a
+ * test that fails on a missing input says nothing about the code.
  */
 class WeekDataTest {
 
@@ -21,14 +28,18 @@ class WeekDataTest {
         System.getProperty("kotlinx.locale.rootDir") ?: error("kotlinx.locale.rootDir is not set"),
     )
 
-    private val supplemental: SupplementalData by lazy {
-        parseSupplemental(reposDir(rootDir).resolve("cldr"))
-    }
+    private val cldrDir: File = reposDir(rootDir).resolve("cldr")
+
+    /** False on a checkout that has not cloned CLDR, which is what CI looks like. */
+    private val cloned: Boolean get() = cldrDir.resolve("common/supplemental/supplementalData.xml").isFile
+
+    private val supplemental: SupplementalData by lazy { parseSupplemental(cldrDir) }
 
     private fun row(territory: String) = supplemental.weekData.getValue(territory)
 
     @Test
     fun theWorldDefaultIsMondayWithOneMinimumDayAndASaturdayWeekend() {
+        if (!cloned) return
         val world = row("001")
         assertEquals(1, world.firstDay, "001 starts the week on Monday")
         assertEquals(1, world.minDays)
@@ -37,6 +48,7 @@ class WeekDataTest {
 
     @Test
     fun theVariantRowDoesNotOverwriteBritain() {
+        if (!cloned) return
         // supplementalData.xml carries `<firstDay day="sun" territories="GB"
         // alt="variant">` after the row that lists GB among the Monday
         // territories. Reading it would flip every British calendar.
@@ -46,6 +58,7 @@ class WeekDataTest {
 
     @Test
     fun theUnitedStatesStartsOnSunday() {
+        if (!cloned) return
         assertEquals(7, row("US").firstDay)
         assertEquals(1, row("US").minDays)
         assertEquals(setOf(6, 7), row("US").weekend)
@@ -53,6 +66,7 @@ class WeekDataTest {
 
     @Test
     fun aWeekendCanBeASingleDay() {
+        if (!cloned) return
         // Iran declares both a start and an end of Friday, and India declares
         // only a start, inheriting Sunday as the end from 001. Both collapse to
         // one day, which a start-and-end pair hides and a set does not.
@@ -63,12 +77,14 @@ class WeekDataTest {
 
     @Test
     fun aWeekendCanSitMidweek() {
+        if (!cloned) return
         assertEquals(setOf(4, 5), row("AF").weekend, "Afghanistan rests Thursday and Friday")
         assertEquals(setOf(5, 6), row("IL").weekend, "Israel rests Friday and Saturday")
     }
 
     @Test
     fun everyTerritoryResolvesEveryField() {
+        if (!cloned) return
         for ((territory, week) in supplemental.weekData) {
             assertTrue(week.firstDay in 1..7, "$territory has an out-of-range first day")
             assertTrue(week.minDays in 1..7, "$territory has an out-of-range minimum")
@@ -79,6 +95,7 @@ class WeekDataTest {
 
     @Test
     fun theEncodedOverlayAnswersForALocaleWithNoRegion() {
+        if (!cloned) return
         val encoded = supplemental.encodeWeekData()
         val (territories, overlay) = encoded.split(FIELD_SEPARATOR).let { it[0] to it[1] }
 
@@ -103,6 +120,7 @@ class WeekDataTest {
 
     @Test
     fun aScriptRowSurvivesAgreeingWithTheWorldWhenItsLanguageDoesNot() {
+        if (!cloned) return
         val overlay = supplemental.encodeWeekData().split(FIELD_SEPARATOR)[1]
 
         fun lookup(key: String): String? = overlay.split(LIST_SEPARATOR)

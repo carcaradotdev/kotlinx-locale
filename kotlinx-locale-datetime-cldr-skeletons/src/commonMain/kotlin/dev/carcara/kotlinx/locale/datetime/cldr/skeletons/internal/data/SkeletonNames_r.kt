@@ -8,9 +8,6 @@ internal val SKELETON_NAMES_RHG: String =
 internal val SKELETON_NAMES_RHG_ROHG_BD: String =
     "𐴎𐴡𐴁𐴝𐴕𐴝\u001E𐴁𐴡𐴏𐴥𐴡𐴌\u001E𐴉𐴝𐴁𐴝\u001E𐴔𐴝𐴐𐴢\u001E\u001E\u001E𐴇𐴥𐴝𐴉𐴃𐴝𐴌 𐴊𐴞𐴕\u001E𐴊𐴞𐴕\u001E\u001E\u001E𐴊𐴞𐴕 / 𐴌𐴝𐴙𐴃𐴢\u001E𐴒𐴤𐴡𐴕𐴄𐴤𐴝\u001E𐴔𐴞𐴕𐴥𐴡𐴄𐴢\u001E𐴏𐴠𐴑𐴤𐴠𐴕\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
-internal val SKELETON_NAMES_RIF: String =
-    "akud\u001Easeggʷas\u001Erbeɛ\u001Eayur\u001E\u001E\u001Eass n simana\u001Eass\u001E\u001E\u001EAM/PM\u001Etiseɛɛet\u001Etminut\u001Etsigunt\u001E\u001E\u001Frrbeɛ wis 1\u001Errbeɛ wis 2\u001Errbeɛ wis 3\u001Errbeɛ wis 4\u001Fr1\u001Er2\u001Er3\u001Er4\u001FH\u001EH\u001F{1} 'ɣer' {0}\u001E{1} 'ɣer' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Frrbeɛ wis 1\u001Errbeɛ wis 2\u001Errbeɛ wis 3\u001Errbeɛ wis 4"
-
 internal val SKELETON_NAMES_RM: String =
     "èra\u001Eonn\u001Equartal\u001Emais\u001E\u001E\u001Edi da l’emna\u001Edi\u001E\u001E\u001EAM/PM\u001Eura\u001Eminuta\u001Esecunda\u001E\u001E\u001F1. quartal\u001E2. quartal\u001E3. quartal\u001E4. quartal\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} 'a' 'las' {0}\u001E{1} 'a' 'las' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1. quartal\u001E2. quartal\u001E3. quartal\u001E4. quartal"
 

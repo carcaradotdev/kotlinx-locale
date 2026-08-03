@@ -4,6 +4,3 @@ package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
 internal val LOCALE_STANDALONE_VI: String =
     "Tháng 1\u001ETháng 2\u001ETháng 3\u001ETháng 4\u001ETháng 5\u001ETháng 6\u001ETháng 7\u001ETháng 8\u001ETháng 9\u001ETháng 10\u001ETháng 11\u001ETháng 12\u001FTháng 1\u001ETháng 2\u001ETháng 3\u001ETháng 4\u001ETháng 5\u001ETháng 6\u001ETháng 7\u001ETháng 8\u001ETháng 9\u001ETháng 10\u001ETháng 11\u001ETháng 12\u001F\u001F\u001F\u001F\u001F0"
-
-internal val LOCALE_STANDALONE_VO: String =
-    "\u001Fyan\u001Efeb\u001Emäz\u001Eprl\u001Emay\u001Eyun\u001Eyul\u001Egst\u001Eset\u001Etob\u001Enov\u001Edek\u001F\u001F\u001FMu\u001ETu\u001EVe\u001EDö\u001EFr\u001EZä\u001ESu\u001F\u001F0"

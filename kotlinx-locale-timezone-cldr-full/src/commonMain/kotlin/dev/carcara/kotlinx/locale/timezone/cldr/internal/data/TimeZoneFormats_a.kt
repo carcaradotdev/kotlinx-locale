@@ -2,9 +2,6 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.timezone.cldr.internal.data
 
-internal val TIME_ZONE_FORMATS_AB: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} Аамҭа\u001F{0} Астандартә Аамҭа\u001F{0} Аԥхынтәи Аамҭа\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_AF: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0}-tyd\u001F{0}-standaardtyd\u001F{0}-dagligtyd\u001F{1} ({0})"
 
@@ -13,9 +10,6 @@ internal val TIME_ZONE_FORMATS_AK: String =
 
 internal val TIME_ZONE_FORMATS_AM: String =
     "+HHmm\u001F-HHmm\u001Fጂ ኤም ቲ{0}\u001Fጂ ኤም ቲ\u001Fጂ ኤም ቲ+\u001F{0} ሰዓት\u001F{0} መደበኛ ሰዓት\u001F{0} የቀን ብርሃን ሰዓት\u001F{1} ({0})"
-
-internal val TIME_ZONE_FORMATS_AN: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001FHora de {0}\u001FHora standard de {0}\u001FHora de verano de {0}\u001F{1} ({0})"
 
 internal val TIME_ZONE_FORMATS_AR: String =
     "+HH:mm\u001F-HH:mm\u001Fغرينتش{0}\u001Fغرينتش\u001Fغرينتش+?\u001Fتوقيت {0}\u001Fتوقيت {0} الرسمي\u001Fتوقيت {0} الصيفي\u001F{1} ({0})"

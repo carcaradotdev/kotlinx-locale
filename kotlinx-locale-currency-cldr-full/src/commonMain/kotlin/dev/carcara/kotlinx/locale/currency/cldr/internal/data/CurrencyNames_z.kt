@@ -2,9 +2,6 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.currency.cldr.internal.data
 
-internal val CURRENCY_NAMES_ZA: String =
-    "root\u001FCNY\u001D¥\u001EUSD\u001D\$\u001FCNY\u001Dyinzminzbi\u001EUSD\u001Dmeijyenz"
-
 internal val CURRENCY_NAMES_ZA_CN: String =
     "za\u001F\u001F"
 
@@ -30,7 +27,7 @@ internal val CURRENCY_NAMES_ZH_HANS_MO: String =
     "zh-Hans\u001FCNY\u001DCN¥\u001EMOP\u001DMOP\$\u001FXAG\u001D白银"
 
 internal val CURRENCY_NAMES_ZH_HANS_MY: String =
-    "zh-Hans\u001F\u001FBND\u001D汶莱元\u001EIDR\u001D印度尼西亚盾\u001ELAK\u001D寮国基普\u001EMYR\u001D马来西亚令吉"
+    "zh-Hans\u001F\u001FMYR\u001D马来西亚令吉"
 
 internal val CURRENCY_NAMES_ZH_HANS_SG: String =
     "zh-Hans\u001FCNY\u001DCN¥\u001ESGD\u001D\$\u001FXAG\u001D白银"

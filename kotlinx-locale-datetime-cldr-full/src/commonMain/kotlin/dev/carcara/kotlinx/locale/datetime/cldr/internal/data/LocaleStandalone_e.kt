@@ -14,9 +14,6 @@ internal val LOCALE_STANDALONE_EN: String =
 internal val LOCALE_STANDALONE_EN_AU: String =
     "\u001FJan\u001EFeb\u001EMar\u001EApr\u001EMay\u001EJun\u001EJul\u001EAug\u001ESept\u001EOct\u001ENov\u001EDec\u001F\u001F\u001F\u001FM\u001ET\u001EW\u001ET\u001EF\u001ES\u001ES\u001Fc000"
 
-internal val LOCALE_STANDALONE_EN_SHAW: String =
-    "·𐑡𐑨𐑯𐑿𐑼𐑦\u001E·𐑓𐑧𐑚𐑮𐑵𐑼𐑦\u001E·𐑥𐑸𐑗\u001E·𐑱𐑐𐑮𐑩𐑤\u001E·𐑥𐑱\u001E·𐑡𐑵𐑯\u001E·𐑡𐑩𐑤𐑲\u001E·𐑷𐑜𐑩𐑕𐑑\u001E·𐑕𐑧𐑐𐑑𐑧𐑥𐑚𐑼\u001E·𐑪𐑒𐑑𐑴𐑚𐑼\u001E·𐑯𐑴𐑝𐑧𐑥𐑚𐑼\u001E·𐑛𐑦𐑕𐑧𐑥𐑚𐑼\u001F·𐑡𐑨𐑯\u001E·𐑓𐑧𐑚\u001E·𐑥𐑸𐑗\u001E·𐑱𐑐𐑮\u001E·𐑥𐑱\u001E·𐑡𐑵𐑯\u001E·𐑡𐑵𐑤\u001E·𐑷𐑜\u001E·𐑕𐑧𐑐\u001E·𐑪𐑒𐑑\u001E·𐑯𐑴𐑝\u001E·𐑛𐑦𐑕\u001F𐑡\u001E𐑓\u001E𐑥\u001E𐑱\u001E𐑥\u001E𐑡\u001E𐑡\u001E𐑪\u001E𐑕\u001E𐑷\u001E𐑯\u001E𐑛\u001F\u001F\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_ES: String =
     "\u001F\u001F\u001F\u001F\u001F\u001F3ff"
 

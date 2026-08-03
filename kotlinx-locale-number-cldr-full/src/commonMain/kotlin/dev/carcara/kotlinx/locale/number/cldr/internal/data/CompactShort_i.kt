@@ -5,6 +5,9 @@ package dev.carcara.kotlinx.locale.number.cldr.internal.data
 internal val COMPACT_SHORT_IA: String =
     "10:other=00 mld\u001E11:other=000 mld\u001E12:other=0 bln\u001E13:other=00 bln\u001E14:other=000 bln\u001E3:other=0 mil\u001E4:other=00 mil\u001E5:other=000 mil\u001E6:other=0 mln\u001E7:other=00 mln\u001E8:other=000 mln\u001E9:other=0 mld"
 
+internal val COMPACT_SHORT_ID: String =
+    "10:other=00 M\u001E11:other=000 M\u001E12:other=0 T\u001E13:other=00 T\u001E14:other=000 T\u001E3:other=0 rb\u001E4:other=00 rb\u001E5:other=000 rb\u001E6:other=0 jt\u001E7:other=00 jt\u001E8:other=000 jt\u001E9:other=0 M"
+
 internal val COMPACT_SHORT_IS: String =
     "10:other=00 ma'.'\u001E11:other=000 ma'.'\u001E12:other=0 bn\u001E13:other=00 bn\u001E14:other=000 bn\u001E3:other=0 þ'.'\u001E4:other=00 þ'.'\u001E5:other=000 þ'.'\u001E6:other=0 m'.'\u001E7:other=00 m'.'\u001E8:other=000 m'.'\u001E9:other=0 ma'.'"
 

@@ -6,7 +6,7 @@ internal val SKELETON_NAMES_AA: String =
     "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_AB: String =
-    "аера\u001Eашықәс\u001Eаквартал\u001Eамза\u001E\u001E\u001EDay of the Week\u001Eамш\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001F1-тәи аквартал\u001E2-тәи аквартал\u001E3-тәи аквартал\u001E4-тәи аквартал\u001F1-тәи акв.\u001E2-тәи акв.\u001E3-тәи акв.\u001E4-тәи акв.\u001FH\u001EH\u001F{1}, {0} 'аҿы'\u001E{1}, {0} 'аҿы'\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1-тәи аквартал\u001E2-тәи аквартал\u001E3-тәи аквартал\u001E4-тәи аквартал"
+    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_AF: String =
     "era\u001Ejaar\u001Ekwartaal\u001Emaand\u001E\u001E\u001Edag van die week\u001Edag\u001E\u001E\u001Evm./nm.\u001Euur\u001Eminuut\u001Esekonde\u001E\u001E\u001F1ste kwartaal\u001E2de kwartaal\u001E3de kwartaal\u001E4de kwartaal\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'om' {0}\u001E{1} 'om' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1ste kwartaal\u001E2de kwartaal\u001E3de kwartaal\u001E4de kwartaal"
@@ -22,12 +22,6 @@ internal val SKELETON_NAMES_AK: String =
 
 internal val SKELETON_NAMES_AM: String =
     "ዘመን\u001Eዓመት\u001Eሩብ\u001Eወር\u001E\u001E\u001Eአዘቦት\u001Eቀን\u001E\u001E\u001Eጥዋት/ከሰዓት\u001Eሰዓት\u001Eደቂቃ\u001Eሰከንድ\u001E\u001E\u001F1ኛው ሩብ\u001E2ኛው ሩብ\u001E3ኛው ሩብ\u001E4ኛው ሩብ\u001Fሩብ1\u001Eሩብ2\u001Eሩብ3\u001Eሩብ4\u001Fh\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1ኛው ሩብ\u001E2ኛው ሩብ\u001E3ኛው ሩብ\u001E4ኛው ሩብ"
-
-internal val SKELETON_NAMES_AN: String =
-    "era\u001Eanyo\u001Etrimestre\u001Emes\u001E\u001E\u001Edía d’a semana\u001Edía\u001E\u001E\u001Ea.m./p.m.\u001Ehora\u001Eminuto\u001Esegundo\u001E\u001E\u001F1r trimestre\u001E2o trimestre\u001E3r trimestre\u001E4o trimestre\u001F1T\u001E2T\u001E3T\u001E4T\u001FH\u001EH\u001F{1} 'a' 'las' {0}\u001E{1} 'a' 'las' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1r trimestre\u001E2o trimestre\u001E3r trimestre\u001E4o trimestre"
-
-internal val SKELETON_NAMES_ANN: String =
-    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_AR: String =
     "العصر\u001Eالسنة\u001Eربع السنة\u001Eالشهر\u001E\u001E\u001Eاليوم\u001Eيوم\u001E\u001E\u001Eص/م\u001Eالساعات\u001Eالدقائق\u001Eالثواني\u001E\u001E\u001Fالربع الأول\u001Eالربع الثاني\u001Eالربع الثالث\u001Eالربع الرابع\u001Fالربع الأول\u001Eالربع الثاني\u001Eالربع الثالث\u001Eالربع الرابع\u001Fh\u001Eh\u001F{1} في {0}\u001E{1} في {0}\u001E{1}، {0}\u001E{1}، {0}\u001F\u001F"

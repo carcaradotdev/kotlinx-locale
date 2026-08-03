@@ -22,6 +22,3 @@ internal val LOCALE_STANDALONE_SO: String =
 
 internal val LOCALE_STANDALONE_SV: String =
     "\u001F\u001F\u001F\u001F\u001F\u001F30300"
-
-internal val LOCALE_STANDALONE_SZL: String =
-    "styczyń\u001Eluty\u001Emarzec\u001Ekwieciyń\u001Emoj\u001Eczyrwiec\u001Elipiec\u001Esiyrpiyń\u001Ewrzesiyń\u001Epaździernik\u001Elistopad\u001Egrudziyń\u001F\u001F\u001F\u001F\u001F\u001F0"

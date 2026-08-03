@@ -5,9 +5,6 @@ package dev.carcara.kotlinx.locale.number.cldr.internal.data
 internal val COMPACT_LONG_PA: String =
     "10:other=00 ਅਰਬ\u001E11:other=0 ਖਰਬ\u001E12:other=00 ਖਰਬ\u001E13:other=0 ਨੀਲ\u001E14:other=00 ਨੀਲ\u001E3:other=0 ਹਜ਼ਾਰ\u001E4:other=00 ਹਜ਼ਾਰ\u001E5:other=0 ਲੱਖ\u001E6:other=00 ਲੱਖ\u001E7:other=0 ਕਰੋੜ\u001E8:other=00 ਕਰੋੜ\u001E9:other=0 ਅਰਬ"
 
-internal val COMPACT_LONG_PAP: String =
-    "10:other=00 bion\u001E11:other=000 bion\u001E12:other=0 trion\u001E13:other=00 trion\u001E14:other=000 trion\u001E3:other=0 mil\u001E4:other=00 mil\u001E5:other=000 mil\u001E6:other=0 mion\u001E7:other=00 mion\u001E8:other=000 mion\u001E9:other=0 bion"
-
 internal val COMPACT_LONG_PCM: String =
     "10:other=00 Bíliọn\u001E11:other=000 Bíliọn\u001E12:other=0 Tríliọn\u001E13:other=00 Tríliọn\u001E14:other=000 Tríliọn\u001E3:other=0 Taúzan\u001E4:other=00 Taúzan\u001E5:other=000 Taúzan\u001E6:other=0 Míliọn\u001E7:other=00 Míliọn\u001E8:other=000 Míliọn\u001E9:other=0 Bíliọn"
 

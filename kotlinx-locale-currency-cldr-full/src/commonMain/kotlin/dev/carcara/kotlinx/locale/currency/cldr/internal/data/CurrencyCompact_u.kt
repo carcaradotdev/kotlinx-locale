@@ -2,9 +2,6 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.currency.cldr.internal.data
 
-internal val CURRENCY_COMPACT_UG: String =
-    "10:one:a=¤ 00مىليارد\u001E10:other=¤00مىليارد\u001E10:other:a=¤ 00مىليارد\u001E11:one:a=¤ 000مىليارد\u001E11:other=¤000مىليارد\u001E11:other:a=¤ 000مىليارد\u001E12:one:a=¤ 0T\u001E12:other=¤0T\u001E12:other:a=¤ 0T\u001E13:one:a=¤ 00T\u001E13:other=¤00T\u001E13:other:a=¤ 00T\u001E14:one:a=¤ 000T\u001E14:other=¤000T\u001E14:other:a=¤ 000T\u001E3:one:a=¤ 0مىڭ\u001E3:other=¤0مىڭ\u001E3:other:a=¤ 0مىڭ\u001E4:one:a=¤ 00مىڭ\u001E4:other=¤00مىڭ\u001E4:other:a=¤ 00مىڭ\u001E5:one:a=¤ 000مىڭ\u001E5:other=¤000مىڭ\u001E5:other:a=¤ 000مىڭ\u001E6:one:a=¤ 0مىليون\u001E6:other=¤0مىليون\u001E6:other:a=¤ 0مىليون\u001E7:one:a=¤ 00مىليون\u001E7:other=¤00مىليون\u001E7:other:a=¤ 00مىليون\u001E8:one:a=¤ 000مىليون\u001E8:other=¤000مىليون\u001E8:other:a=¤ 000مىليون\u001E9:one:a=¤ 0مىليارد\u001E9:other=¤0مىليارد\u001E9:other:a=¤ 0مىليارد"
-
 internal val CURRENCY_COMPACT_UK: String =
     "10:other=00 млрд ¤\u001E11:other=000 млрд ¤\u001E12:other=0 трлн ¤\u001E13:other=00 трлн ¤\u001E14:other=000 трлн ¤\u001E3:other=0 тис'.' ¤\u001E4:other=00 тис'.' ¤\u001E5:other=000 тис'.' ¤\u001E6:other=0 млн ¤\u001E7:other=00 млн ¤\u001E8:other=000 млн ¤\u001E9:other=0 млрд ¤"
 

@@ -2,14 +2,8 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
-internal val COMPACT_LONG_LA: String =
-    "10:other=00 miliarda\u001E11:other=000 miliarda\u001E12:one=0 milies miliardum\u001E12:other=0 milies miliarda\u001E13:other=00 milies miliarda\u001E14:other=000 milies miliarda\u001E3:one=0 mille\u001E3:other=0 millia\u001E4:other=00 millia\u001E5:other=000 millia\u001E6:one=0 milio\u001E6:other=0 miliones\u001E7:other=00 miliones\u001E8:other=000 miliones\u001E9:one=0 miliardum\u001E9:other=0 miliarda"
-
 internal val COMPACT_LONG_LB: String =
     "10:other=00 Milliarden\u001E11:other=000 Milliarden\u001E12:one=0 Billioun\u001E12:other=0 Billiounen\u001E13:other=00 Billiounen\u001E14:other=000 Billiounen\u001E3:other=0 Dausend\u001E4:other=00 Dausend\u001E5:other=000 Dausend\u001E6:one=0 Millioun\u001E6:other=0 Milliounen\u001E7:other=00 Milliounen\u001E8:other=000 Milliounen\u001E9:one=0 Milliard\u001E9:other=0 Milliarden"
-
-internal val COMPACT_LONG_LIJ: String =
-    "10:other=00 miliardi\u001E11:other=000 miliardi\u001E12:one=mille miliardi\u001E12:other=0 mia miliardi\u001E13:other=00 mia miliardi\u001E14:other=000 mia miliardi\u001E3:one=mille\u001E3:other=0 mia\u001E4:other=00 mia\u001E5:other=000 mia\u001E6:one=0 mion\u001E6:other=0 mioin\u001E7:other=00 mioin\u001E8:other=000 mioin\u001E9:one=0 miliardo\u001E9:other=0 miliardi"
 
 internal val COMPACT_LONG_LLD: String =
     "10:other=00 miliarg\u001E11:other=000 miliarg\u001E12:one=0 biliun\u001E12:other=0 biliuns\u001E13:other=00 biliuns\u001E14:other=000 biliuns\u001E3:one=mile\u001E3:other=0 mile\u001E4:other=00 mile\u001E5:other=000 mile\u001E6:one=0 miliun\u001E6:other=0 miliuns\u001E7:other=00 miliuns\u001E8:other=000 miliuns\u001E9:one=0 miliard\u001E9:other=0 miliarg"

@@ -29,12 +29,6 @@ internal val TIME_ZONE_FORMATS_TOK: String =
 internal val TIME_ZONE_FORMATS_TR: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} Saati\u001F{0} Standart Saati\u001F{0} Yaz Saati\u001F{1} ({0})"
 
-internal val TIME_ZONE_FORMATS_TRV: String =
-    "+HH:mm\u001F-HH:mm\u001FJQG{0}\u001FGMT\u001FGMT+?\u001FJikan {0}\u001F{0} (+0)\u001F{0} (+1)\u001F{1} ({0})"
-
-internal val TIME_ZONE_FORMATS_TRW: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} وَخ\u001F{0} معیاری وَخ\u001F{0} دھات\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_TT: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} вакыты\u001F{0} гадәти вакыты\u001F{0} җәйге вакыты\u001F{1} ({0})"
 

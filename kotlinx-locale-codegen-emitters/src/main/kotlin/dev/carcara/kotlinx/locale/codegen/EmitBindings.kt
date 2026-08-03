@@ -115,9 +115,9 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
         preamble(
             spec,
             buildList {
+                add("dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi")
                 if (numberObject != null) {
                     add(spec.registryPackage + ".currencyCompactRegistry")
-                    add("dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi")
                     add("dev.carcara.kotlinx.locale.number.PluralCategory")
                     add("dev.carcara.kotlinx.locale.number.PluralType")
                     add("dev.carcara.kotlinx.locale.number.cldr.runtime.FormattedNumberSelector")
@@ -145,9 +145,14 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
                     ),
                 )
             },
-            // Compact money reaches the plural selector, which is marked
-            // internal because it exists for the formatter modules to share.
-            fileAnnotation = if (numberObject == null) null else "@file:OptIn(InternalKotlinxLocaleApi::class)",
+            // Unconditional, and not only for the compact build. Constructing
+            // PayloadCurrencyFormats at all resolves its default arguments, and
+            // one of them is a FormattedNumberSelector, which is marked internal
+            // because it exists for the formatter modules to share. A build
+            // without compact money never mentions the type and still needs the
+            // opt-in; leaving it out compiled here and failed in the sample,
+            // which is the only build that compiles what the plugin generates.
+            fileAnnotation = "@file:OptIn(InternalKotlinxLocaleApi::class)",
         ) + """
         |
         |/**

@@ -29,9 +29,6 @@ internal val TIME_ZONE_FORMATS_MR: String =
 internal val TIME_ZONE_FORMATS_MS: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001FWaktu {0}\u001FWaktu Piawai {0}\u001FWaktu Siang {0}\u001F{1} ({0})"
 
-internal val TIME_ZONE_FORMATS_MS_ARAB: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001Fوقتو {0}\u001F{0} (+0)\u001F{0} (+1)\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_MS_ID: String =
     "+HH.mm\u001F-HH.mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001FWaktu {0}\u001FWaktu Piawai {0}\u001FWaktu Siang {0}\u001F{1} ({0})"
 

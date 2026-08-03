@@ -17,20 +17,11 @@ internal val TIME_ZONE_FORMATS_CHR: String =
 internal val TIME_ZONE_FORMATS_CKB: String =
     "+HH:mm\u001F-HH:mm\u001Fگرینیچ {0}\u001Fگرینیچ\u001FGMT+?\u001Fبەکاتی {0}\u001Fکاتی {0} فەرمی\u001Fکاتی {0} هاوینە\u001F{1} ({0})"
 
-internal val TIME_ZONE_FORMATS_CO: String =
-    "+HH:mm\u001F-HH:mm\u001FUTC{0}\u001FUTC\u001FGMT+?\u001Fora : {0}\u001F{0} (ora usuale)\u001F{0} (ora d’estate)\u001F{1} ({0})"
-
-internal val TIME_ZONE_FORMATS_COP: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001Fⲡ̀ⲥⲏⲟⲩ {0}\u001Fⲡ̀ⲥⲏⲟⲩ ⲛ̀ϩⲟⲣⲟⲥ {0}\u001Fⲡ̀ⲥⲏⲟⲩ ⲛ̀ⲧⲟⲟⲩⲓ {0}\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_CS: String =
     "+H:mm\u001F-H:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001Fčasové pásmo {0}\u001F{0} (+0)\u001F{0} (+1)\u001F{1} ({0})"
 
 internal val TIME_ZONE_FORMATS_CSW: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} ᐁᐃᐢᐸᓂᐠ\u001F{0} ᐯᔭᑯᐦᑖᐏᐣ ᐁᐃᐢᐸᓂᐠ\u001F{0} ᑮᓯᑳᐤ ᐁᐃᐢᐸᓂᐠ\u001F{1} ({0})"
-
-internal val TIME_ZONE_FORMATS_CU: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} (вре́мѧ)\u001F{0} (зи́мнее вре́мѧ)\u001F{0} (лѣ́тнее вре́мѧ)\u001F{1} ({0})"
 
 internal val TIME_ZONE_FORMATS_CV: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} вӑхӑчӗ\u001F{0} стандартлӑ вӑхӑчӗ\u001F{0} ҫуллахи вӑхӑчӗ\u001F{1} ({0})"
