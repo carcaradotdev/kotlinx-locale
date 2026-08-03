@@ -38,19 +38,17 @@ class PersonNameConformanceTest {
     /**
      * Locales whose remaining differences are known but not yet fixed.
      *
-     * Two causes, both this library's rather than the data's.
-     *
-     * Assamese, Kannada, Malayalam, Sinhala and Telugu want a grapheme rule finer
-     * than the virama join implemented here. That join reaches the common
-     * conjuncts and stops at some of the longer ones, so an initial comes out a
-     * cluster short or a cluster long.
+     * Assamese and Telugu produce one initial too many or too few in a field
+     * that has no spaces in it, which is a word boundary question rather than a
+     * cluster one: the clusters themselves are now right.
      *
      * Catalan, Czech, Sardinian and Slovak differ over which literal survives
      * when the field between two of them is empty. The rule here keeps the first
      * separator, and these patterns want the bracketing one, so a comma or an
-     * opening parenthesis goes missing.
+     * opening parenthesis goes missing. That is UTS #35 Part 8's empty-field
+     * rule, and ICU's PersonNameFormatterImpl is the reference for it.
      */
-    private val knownDifferences = setOf("as", "ca", "cs", "kn", "ml", "sc", "si", "sk", "te")
+    private val knownDifferences = setOf("as", "ca", "cs", "sc", "sk", "te")
 
     private fun buildName(fields: String, nameLocale: String): PersonName {
         val values = HashMap<String, String>()
@@ -84,7 +82,7 @@ class PersonNameConformanceTest {
     @Test
     fun theExclusionsDoNotGrowUnnoticed() {
         assertEquals(8, wordSegmentation.size, "the word segmentation exclusions changed")
-        assertEquals(9, knownDifferences.size, "the known differences changed; fix them or restate them")
+        assertEquals(6, knownDifferences.size, "the known differences changed; fix them or restate them")
     }
 
     @Test

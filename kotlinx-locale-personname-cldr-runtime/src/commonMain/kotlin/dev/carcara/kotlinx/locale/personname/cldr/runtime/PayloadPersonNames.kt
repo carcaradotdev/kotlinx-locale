@@ -6,6 +6,7 @@ import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.internal.ENTRY_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
+import dev.carcara.kotlinx.locale.internal.GraphemeClusters
 import dev.carcara.kotlinx.locale.internal.KEY_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.resolvedRecord
 import dev.carcara.kotlinx.locale.personname.PersonName
@@ -279,11 +280,19 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
         // Split on anything that is not a letter, not only on spaces. A
         // hyphenated given name is two words for this purpose: it initializes to
         // two letters, not one, in every locale CLDR has data for.
+        //
+        // Walked by grapheme cluster rather than by char, so a cluster is never
+        // split down the middle. That is what a format character inside a word
+        // needs: Malayalam writes a zero-width non-joiner inside `സ്‌റ്റോബർ`,
+        // which UAX #29 classes as Extend, so it belongs to the cluster and not
+        // between two words. Taking it for a separator produced two initials
+        // where CLDR produces one.
         val words = ArrayList<String>()
         val separators = ArrayList<String>()
         val word = StringBuilder()
         val separator = StringBuilder()
-        for (ch in value) {
+        for (cluster in GraphemeClusters.clusters(value)) {
+            val ch = cluster[0]
             if (ch.isLetterOrDigit() || ch.isMark()) {
                 if (separator.isNotEmpty()) {
                     if (word.isNotEmpty()) {
@@ -293,9 +302,9 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
                     }
                     separator.clear()
                 }
-                word.append(ch)
+                word.append(cluster)
             } else {
-                separator.append(ch)
+                separator.append(cluster)
             }
         }
         if (word.isNotEmpty()) words.add(word.toString())
@@ -443,42 +452,15 @@ internal fun Char.isMark(): Boolean = when (category) {
 }
 
 /**
- * The first grapheme cluster of a value, which is not the first character.
+ * The first grapheme cluster of a value, per UAX #29.
  *
  * A monogram is one written unit, and in Bengali or Devanagari that unit is a
- * consonant plus its vowel sign: three hundred and sixty-four of the values in
- * CLDR's own test data start with a cluster longer than one code point, and
- * taking `first()` answers with half a letter. Surrogate pairs count for the
- * same reason.
+ * consonant bound to the next by a virama. This used to be a hand-written rule
+ * that joined across any virama, which was wrong in both directions: it took a
+ * cluster too many in Kannada and one too few in Telugu. It now defers to the
+ * algorithm, which is held to Unicode's own conformance file.
  */
-internal fun firstGrapheme(value: String): String {
-    if (value.isEmpty()) return ""
-    var end = if (value[0].isHighSurrogate() && value.length > 1) 2 else 1
-    while (end < value.length) {
-        val previous = value[end - 1]
-        val ch = value[end]
-        val joined = ch.isMark() ||
-            ch == ZERO_WIDTH_JOINER ||
-            previous == ZERO_WIDTH_JOINER ||
-            // A virama binds the consonant after it into the same written unit,
-            // so a Bengali or Devanagari conjunct is one cluster rather than two.
-            // Stopping at the virama answers with half a letter.
-            previous in VIRAMAS
-        if (!joined) break
-        end += if (ch.isHighSurrogate() && end + 1 < value.length) 2 else 1
-    }
-    return value.substring(0, end)
-}
-
-private const val ZERO_WIDTH_JOINER = '\u200D'
-
-/** The viramas of the Indic and South-East Asian blocks CLDR's names reach. */
-private val VIRAMAS = charArrayOf(
-    '\u094D', '\u09CD', '\u0A4D', '\u0ACD', '\u0B4D', '\u0BCD', '\u0C4D', '\u0CCD',
-    '\u0D3B', '\u0D3C', '\u0D4D', '\u0DCA', '\u0E3A', '\u0EBA', '\u0F84', '\u1039',
-    '\u103A', '\u17D2', '\u1A60', '\u1B44', '\u1BAA', '\u1BAB', '\u1BF2', '\u1BF3',
-    '\u2D7F', '\uA806', '\uA8C4', '\uA953', '\uA9C0', '\uAAF6', '\uABED',
-).concatToString()
+internal fun firstGrapheme(value: String): String = GraphemeClusters.firstCluster(value)
 
 /**
  * Greek written in capitals drops its accents.

@@ -380,6 +380,12 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         icuTag = ICU_REPO.tag,
         entries = extractIcuTimeZoneGolden(timeZoneNames.keys),
     )
+    emitGraphemeBreakCases(
+        outputFile = conformanceDir(rootDir).resolve("GraphemeBreakCaseData.kt"),
+        ucdVersion = UCD_VERSION,
+        cases = parseGraphemeBreakCases(cldrDir),
+        table = encodeGraphemeBreakRanges(parseGraphemeBreakRanges()),
+    )
     emitPersonNameCases(
         outputFile = personNameConformanceDir(rootDir).resolve("PersonNameCaseData.kt"),
         cldrTag = CLDR_REPO.tag,
@@ -448,6 +454,7 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .table(BundleTables.PHONE_TERRITORIES, phoneTerritoryTable)
         .table(BundleTables.PHONE_FORMATS, phoneFormatTable)
         .table(BundleTables.WEEK_DATA, supplemental.encodeWeekData())
+        .table(BundleTables.GRAPHEME_BREAK, encodeGraphemeBreakRanges(parseGraphemeBreakRanges()))
         .section("countryNames", buildCountryNamePayloads(flattener, extras))
         .section("currencyFormats", buildCurrencyFormatPayloads(flattener, extras))
         .section("currencyNames", buildCurrencyNamePayloads(flattener, extras))

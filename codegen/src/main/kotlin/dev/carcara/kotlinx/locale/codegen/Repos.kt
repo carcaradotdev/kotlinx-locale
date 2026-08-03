@@ -29,6 +29,12 @@ val CLDR_REPO = RepoSpec(
         // CLDR's own datetime cases, a second opinion on the skeleton matcher
         // that is independent of the ICU4J goldens.
         "common/testData/datetime",
+        // UAX #29's segmentation rules, and the character properties they are
+        // written in terms of. The grapheme cluster rules are what an initial and
+        // a monogram are taken with: a written unit is not a code point, and in
+        // the Indic scripts it is not one character either.
+        "common/segments",
+        "common/properties",
         // The person name cases, which are the conformance fixture for that
         // domain rather than a second opinion on one. They ship in the same
         // release as the tables, so unlike an ICU4J golden they carry no
@@ -96,6 +102,21 @@ val PHONE_REPO = RepoSpec(
  * `# Version:` header against this, so the pin and the data cannot drift apart.
  */
 const val EMOJI_VERSION: String = "17.0"
+
+/**
+ * The Unicode release the vendored grapheme cluster properties come from.
+ *
+ * Not the newest, and deliberately so: it is the one CLDR `release-48-2` was
+ * built against, which is what makes its `GraphemeBreakTest.txt` the right
+ * conformance file to hold the implementation to. The two versions disagree
+ * about roughly ninety cases, so taking the properties from a later release and
+ * the tests from the pinned CLDR would fail for a reason that has nothing to do
+ * with the code.
+ *
+ * Checked rather than trusted: each vendored file carries its own version in its
+ * header, and parsing fails if it is not this one.
+ */
+const val UCD_VERSION: String = "15.1.0"
 
 fun reposDir(rootDir: File): File = rootDir.resolve("codegen/repos")
 

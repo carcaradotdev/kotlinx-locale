@@ -1048,7 +1048,7 @@ library has decided to stop is in [docs/boundaries.md](docs/boundaries.md).
 - Person name formatting agrees with CLDR's own test data on ninety-nine per
   cent of its thirty-seven thousand cases. Eight locales are excluded because
   finding where one word ends and the next begins needs a dictionary this
-  library does not ship, and initials cannot be derived without that. Nine more
+  library does not ship, and initials cannot be derived without that. Six more
   are excluded for differences that are this library's bugs, named in the test
   and listed in [ROADMAP.md](ROADMAP.md).
 - Week data ships the first day of the week, the minimum days in week one and
