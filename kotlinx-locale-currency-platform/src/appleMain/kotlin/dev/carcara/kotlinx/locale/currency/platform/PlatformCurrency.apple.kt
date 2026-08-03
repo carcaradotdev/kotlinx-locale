@@ -3,12 +3,20 @@ package dev.carcara.kotlinx.locale.currency.platform
 import platform.Foundation.NSDecimalNumber
 import platform.Foundation.NSLocale
 import platform.Foundation.NSNumberFormatter
-import platform.Foundation.NSNumberFormatterCurrencyAccountingStyle
-import platform.Foundation.NSNumberFormatterCurrencyStyle
 import platform.Foundation.localizedStringForCurrencyCode
 
+/**
+ * Selects the currency style, which cannot be done here.
+ *
+ * `numberStyle` is an `NSNumberFormatterStyle`, which is an `NSUInteger`, which
+ * is 32 bits wide on watchosArm32 and watchosArm64 and 64 elsewhere. Kotlin refuses a type
+ * of varying width in a source set spanning both, so the one line that names it
+ * lives in `appleIlp32Main` and `appleLp64Main` instead.
+ */
+internal expect fun NSNumberFormatter.applyCurrencyStyle(accounting: Boolean)
+
 private fun currencyFormatter(currencyCode: String, localeTag: String, accounting: Boolean): NSNumberFormatter = NSNumberFormatter().apply {
-    numberStyle = if (accounting) NSNumberFormatterCurrencyAccountingStyle else NSNumberFormatterCurrencyStyle
+    applyCurrencyStyle(accounting)
     locale = NSLocale(localeIdentifier = localeTag)
     setCurrencyCode(currencyCode)
 }

@@ -91,6 +91,35 @@ kotlin {
         watchosX64()
         tvosX64()
     }
+
+    // Materialise the default hierarchy now, so the Apple source sets the two
+    // sets below hang off exist while this block is still configuring.
+    applyDefaultHierarchyTemplate()
+
+    // Apple's NSUInteger, and so every Foundation enum typed by it, is 32 bits
+    // wide on two watch targets and 64 everywhere else. watchosArm32 is armv7k,
+    // and watchosArm64 is arm64_32, a 64-bit instruction set with 32-bit
+    // pointers. watchosDeviceArm64 is plain arm64 and belongs with the rest
+    // despite the name, which is the trap here. Kotlin refuses a type of varying
+    // width in a source set that spans both, which appleMain does, so the
+    // Foundation calls that name one live in these two instead.
+    //
+    // Both sets are children of appleMain rather than replacements for it: the
+    // shared Apple code stays in one place, and only the handful of declarations
+    // that mention a varying width are written twice.
+    val appleIlp32Main by sourceSets.creating { dependsOn(sourceSets.getByName("appleMain")) }
+    val appleLp64Main by sourceSets.creating { dependsOn(sourceSets.getByName("appleMain")) }
+    for (name in listOf("watchosArm32Main", "watchosArm64Main")) {
+        sourceSets.getByName(name).dependsOn(appleIlp32Main)
+    }
+    for (name in listOf(
+        "macosArm64Main", "macosX64Main",
+        "iosArm64Main", "iosSimulatorArm64Main", "iosX64Main",
+        "tvosArm64Main", "tvosSimulatorArm64Main", "tvosX64Main",
+        "watchosSimulatorArm64Main", "watchosX64Main", "watchosDeviceArm64Main",
+    )) {
+        sourceSets.getByName(name).dependsOn(appleLp64Main)
+    }
 }
 
 // Skip Apple simulator tests whose runtime is not installed in the local Xcode
