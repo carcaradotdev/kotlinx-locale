@@ -205,38 +205,79 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
      * with a leading space, and what leaves no trailing comma when the last
      * field is missing.
      */
+    /**
+     * Renders a pattern, dropping what UTS #35 Part 8 says an absent field takes
+     * with it.
+     *
+     * The specification gives this as numbered steps and they are followed in
+     * its order rather than approximated. Getting it wrong is not subtle in its
+     * effect but is very subtle in its cause: the earlier version kept the first
+     * literal after an empty field, which lost a comma in Catalan and left an
+     * unbalanced parenthesis in Czech.
+     *
+     * 1. Everything before the first populated field is dropped, and everything
+     *    after the last one.
+     * 2. A run of two or more empty fields separated only by literals loses the
+     *    fields and the literals between them. A single empty field is removed.
+     *    What survives is the literal before the run and the literal after it.
+     * 3. The two literals now adjacent are coalesced: if either is empty the
+     *    answer is the other, and if the second matches the end of the first the
+     *    answer is the first. That is what turns a space and a space into one
+     *    space rather than two.
+     */
     private fun renderPattern(pattern: String, name: PersonName, record: PersonNameRecord): String {
+        val elements = parsePattern(pattern)
+
+        // Step 1: the span between the first and last populated fields.
+        val populated = elements.indices.filter { index ->
+            val element = elements[index]
+            element is PatternElement.Field && !resolveField(element, name, record).isNullOrEmpty()
+        }
+        if (populated.isEmpty()) return ""
+
         val result = StringBuilder()
-        var pending = StringBuilder()
-        var skipLiterals = false
-        for (element in parsePattern(pattern)) {
-            when (element) {
-                is PatternElement.Literal -> if (!skipLiterals) pending.append(element.text)
+        // The literal run waiting to be written, and whether an empty field has
+        // been seen since it was collected.
+        //
+        // Step 2 drops a literal that sits between two empty fields, and the
+        // qualifier matters: only when a literal was already collected. An empty
+        // field with no literal before it, which is what `{given-initial}` and
+        // `{given2-initial}` are in English, must still let the space that
+        // follows through, or the surname joins the initial.
+        var pending: String? = null
+        var sawEmptyField = false
+
+        for (index in populated.first() until elements.size) {
+            when (val element = elements[index]) {
+                is PatternElement.Literal -> {
+                    if (sawEmptyField && pending != null) continue
+                    pending = if (pending == null) element.text else coalesce(pending, element.text)
+                    sawEmptyField = false
+                }
                 is PatternElement.Field -> {
                     val value = resolveField(element, name, record)
                     if (value.isNullOrEmpty()) {
-                        // Two populated fields either side of a missing one are
-                        // joined by one separator, and it is the first one that
-                        // exists. A missing second surname must not turn a space
-                        // into a comma; a missing middle initial, which has no
-                        // separator before it at all, must still leave the space
-                        // that followed it.
-                        skipLiterals = pending.isNotEmpty()
+                        sawEmptyField = true
                     } else {
-                        if (result.isNotEmpty()) result.append(pending)
+                        pending?.let(result::append)
+                        pending = null
+                        sawEmptyField = false
                         result.append(value)
-                        pending = StringBuilder()
-                        skipLiterals = false
                     }
                 }
             }
         }
-        // The tail is kept when nothing was dropped after the last populated
-        // field, which is what closes a parenthesis the pattern opened, and
-        // dropped otherwise, which is what stops a missing last field leaving a
-        // dangling comma.
-        if (!skipLiterals) result.append(pending)
+        // The literal after the last populated field closes a bracket the
+        // pattern opened, so it is kept unless an empty field swallowed it.
+        if (!sawEmptyField || pending == null) pending?.let(result::append)
         return result.toString()
+    }
+
+    /** Step 3 of the pattern process: two adjacent literals become one. */
+    private fun coalesce(first: String?, second: String): String {
+        if (first.isNullOrEmpty()) return second
+        if (second.isEmpty()) return first
+        return if (first.endsWith(second)) first else first + second
     }
 
     private fun resolveField(field: PatternElement.Field, name: PersonName, record: PersonNameRecord): String? {

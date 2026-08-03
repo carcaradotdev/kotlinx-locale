@@ -38,15 +38,20 @@ class PersonNameConformanceTest {
     /**
      * Locales whose remaining differences are known but not yet fixed.
      *
-     * Assamese and Telugu produce one initial too many or too few in a field
-     * that has no spaces in it, which is a word boundary question rather than a
-     * cluster one: the clusters themselves are now right.
+     * Fifty-one cases of thirty-four thousand, and all of them are this
+     * library's rather than the data's.
      *
-     * Catalan, Czech, Sardinian and Slovak differ over which literal survives
-     * when the field between two of them is empty. The rule here keeps the first
-     * separator, and these patterns want the bracketing one, so a comma or an
-     * opening parenthesis goes missing. That is UTS #35 Part 8's empty-field
-     * rule, and ICU's PersonNameFormatterImpl is the reference for it.
+     * Catalan, Czech, Sardinian and Slovak are the empty-field rule of UTS #35
+     * Part 8, which is followed here but not yet exactly. What is left is the
+     * corner where the run of empty fields starts the pattern: Catalan's sorting
+     * form opens with a surname prefix, and the comma after the surname is
+     * dropped when it should survive.
+     *
+     * Assamese and Telugu produce one initial too many or too few in a field
+     * with no spaces in it. That is a word boundary question rather than a
+     * cluster one, since the clusters themselves now follow UAX #29, and word
+     * boundaries in those scripts are the same problem the eight locales above
+     * are excluded for.
      */
     private val knownDifferences = setOf("as", "ca", "cs", "sc", "sk", "te")
 
