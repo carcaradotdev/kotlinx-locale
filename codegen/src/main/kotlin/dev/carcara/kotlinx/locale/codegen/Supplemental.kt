@@ -1,5 +1,6 @@
 package dev.carcara.kotlinx.locale.codegen
 
+import org.w3c.dom.Element
 import java.io.File
 
 /** ISO 3166-1 code mappings for one territory. */
@@ -59,7 +60,24 @@ class SupplementalData(
     val hourCycles: Map<String, HourCycle>,
     /** language, or language_script, -> the region likely subtags maximises it to. */
     val likelyRegions: Map<String, String>,
+    /** territory -> where its week starts, its minimum days, and its weekend. */
+    val weekData: Map<String, WeekDataRow>,
 )
+
+/**
+ * A `<weekData>` row: where the week starts, how many of its days must fall in
+ * the new year for that to count as week one, and which days are the weekend.
+ *
+ * Days are ISO numbers, Monday 1 through Sunday 7, matching `DayOfWeek`. CLDR
+ * writes the weekend as an inclusive start day and end day; the run between them
+ * is walked out here so the runtime carries a set and no caller has to re-derive
+ * it. The run is always contiguous but not always more than one day: Iran starts
+ * and ends its weekend on Friday.
+ */
+class WeekDataRow(val firstDay: Int, val minDays: Int, val weekend: Set<Int>)
+
+/** CLDR's day codes, as ISO day numbers. */
+private val CLDR_DAYS = mapOf("mon" to 1, "tue" to 2, "wed" to 3, "thu" to 4, "fri" to 5, "sat" to 6, "sun" to 7)
 
 /**
  * A `<timeData>` row: which hour field a locale prefers, and which one the `C`
@@ -223,6 +241,7 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
         regionCurrencies = regionCurrencies,
         hourCycles = hourCycles,
         likelyRegions = likelyRegions,
+        weekData = parseWeekData(supplementalData),
     )
 }
 
@@ -247,6 +266,125 @@ fun SupplementalData.hourCycleFor(cldrId: String): HourCycle {
     return hourCycles["${language}_$region"]
         ?: hourCycles[region]
         ?: hourCycles.getValue("001")
+}
+
+/**
+ * `<weekData>`, resolved to one row per territory CLDR names.
+ *
+ * Every element fans a single value out over a space-separated territory list,
+ * so the four tables are read the same way and then joined. A territory that
+ * declares only some of the four inherits the rest from `001`, which is why the
+ * rows are assembled here rather than left as four maps.
+ */
+private fun parseWeekData(supplementalData: Element): Map<String, WeekDataRow> {
+    val weekData = supplementalData.child("weekData") ?: error("supplementalData.xml has no weekData block")
+
+    // `alt` marks a value CLDR records without meaning it. release-48-2 carries
+    // exactly one, a Sunday first day for GB sourced from a dictionary, and it is
+    // written after the row that puts GB in the Monday list, so taking it would
+    // silently overwrite the real answer. Nothing else in this file filters
+    // `alt`, so the skip is spelled out rather than assumed.
+    fun rows(tag: String, attribute: String): Map<String, String> {
+        val values = LinkedHashMap<String, String>()
+        for (row in weekData.childElements(tag)) {
+            if (row.hasAttribute("alt")) continue
+            val value = row.getAttribute(attribute).takeIf(String::isNotEmpty) ?: continue
+            for (territory in row.getAttribute("territories").split(' ')) {
+                if (territory.isNotBlank()) values[territory] = value
+            }
+        }
+        return values
+    }
+
+    val firstDay = rows("firstDay", "day")
+    val minDays = rows("minDays", "count")
+    val weekendStart = rows("weekendStart", "day")
+    val weekendEnd = rows("weekendEnd", "day")
+
+    for ((name, table) in listOf(
+        "firstDay" to firstDay,
+        "minDays" to minDays,
+        "weekendStart" to weekendStart,
+        "weekendEnd" to weekendEnd,
+    )) {
+        check("001" in table) { "weekData: $name has no 001 row to fall back to" }
+    }
+    // The canary for the skip above: GB is declared Monday and only the variant
+    // row says otherwise, so this fails the build if that filter ever comes out.
+    check(firstDay["GB"] == "mon") { "weekData: the alt=\"variant\" row overwrote GB's first day" }
+
+    fun dayOf(table: Map<String, String>, territory: String): Int {
+        val code = table[territory] ?: table.getValue("001")
+        return CLDR_DAYS[code] ?: error("weekData: unknown day code '$code'")
+    }
+
+    val territories = (firstDay.keys + minDays.keys + weekendStart.keys + weekendEnd.keys).toSortedSet()
+    return territories.associateWithTo(LinkedHashMap()) { territory ->
+        val start = dayOf(weekendStart, territory)
+        val end = dayOf(weekendEnd, territory)
+        val weekend = LinkedHashSet<Int>()
+        var day = start
+        while (true) {
+            weekend.add(day)
+            if (day == end) break
+            day = day % 7 + 1
+        }
+        WeekDataRow(
+            firstDay = dayOf(firstDay, territory),
+            minDays = (minDays[territory] ?: minDays.getValue("001")).toInt(),
+            weekend = weekend,
+        )
+    }
+}
+
+/**
+ * The week data as two flat fields: every territory CLDR names, then the
+ * languages whose likely region answers something other than the world default.
+ *
+ * The overlay is there because a `Locale` need not carry a region, and resolving
+ * `en` to the United States takes likely subtags, a table none of the shipped
+ * artifacts read. Restricting it to languages that differ from `001` keeps it to
+ * the rows that change an answer.
+ *
+ * Each value packs into four characters: the first day, the minimum days, and a
+ * two-digit hex weekend mask over the same ISO day numbers.
+ */
+fun SupplementalData.encodeWeekData(): String {
+    fun pack(row: WeekDataRow): String {
+        val mask = row.weekend.fold(0) { acc, day -> acc or (1 shl (day - 1)) }
+        return "${row.firstDay}${row.minDays}" + mask.toString(16).padStart(2, '0')
+    }
+
+    val world = pack(weekData.getValue("001"))
+    val territories = weekData.entries.joinToString(LIST_SEPARATOR) { (territory, row) ->
+        territory + KEY_SEPARATOR + pack(row)
+    }
+
+    fun packedFor(key: String): String? = likelyRegions[key]?.let { weekData[it] }?.let(::pack)
+
+    // A row is worth carrying when it differs from what the lookup would
+    // otherwise land on, which is not the same as differing from the world.
+    // The runtime tries `language_script`, then `language`, then `001`, so a
+    // script-qualified row has to be compared against its own language rather
+    // than against the default. Cantonese is the case that proves it: `yue_Hans`
+    // maximises to China and agrees with the world, while bare `yue` maximises to
+    // Hong Kong and does not, so dropping the first for agreeing with `001`
+    // leaves it inheriting a Sunday it never asked for.
+    val overlay = LinkedHashMap<String, String>()
+    for (key in likelyRegions.keys.filter { '_' !in it }.sorted()) {
+        val packed = packedFor(key) ?: continue
+        if (packed != world) overlay[key] = packed
+    }
+    for (key in likelyRegions.keys.filter { '_' in it }.sorted()) {
+        val packed = packedFor(key) ?: continue
+        if (packed != (overlay[key.substringBefore('_')] ?: world)) overlay[key] = packed
+    }
+
+    val encoded = overlay.entries
+        .sortedBy { it.key }
+        .joinToString(LIST_SEPARATOR) { (key, packed) -> key + KEY_SEPARATOR + packed }
+
+    return territories + FIELD_SEPARATOR + encoded
 }
 
 private fun parseDayPeriodRules(file: File): Map<String, List<DayPeriodRule>> {

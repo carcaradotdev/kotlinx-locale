@@ -42,6 +42,27 @@ private fun phoneConformanceDir(rootDir: File): File = rootDir
     .sourceRoot("kotlinx-locale-phone-metadata-full", "commonTest")
     .resolve("dev/carcara/kotlinx/locale/phone/conformance")
 
+/** Where the person name fixture goes, which is this domain's own tests for the phone reason. */
+private fun personNameConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-personname-cldr-full", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/personname/conformance")
+
+/**
+ * Where the interval and week goldens go, which is not the shared module.
+ *
+ * The same reason the phone fixtures moved: `conformance-test-suite` is compiled
+ * into every other module's test binary, and the interval golden alone is 486 KB
+ * of source across 905 locales. Adding it there was enough to exhaust the
+ * Kotlin/Native linker while linking the shared module for Linux.
+ */
+private fun intervalConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-datetime-cldr-intervals", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/datetime/cldr/intervals/conformance")
+
+private fun weekConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-datetime-cldr-full", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/datetime/cldr/conformance")
+
 private fun conformanceDir(rootDir: File): File = rootDir
     .sourceRoot("conformance-test-suite")
     .resolve("dev/carcara/kotlinx/locale/conformance")
@@ -76,9 +97,11 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.CURRENCY_NAMES, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
     .table(GeneratedTable.DATE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
     .table(GeneratedTable.SKELETONS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"))
+    .table(GeneratedTable.INTERVAL_FORMATS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-intervals"))
     .table(GeneratedTable.DATE_TIME_STANDALONE, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
     .table(GeneratedTable.LANGUAGE_NAMES, rootDir.sourceRoot("kotlinx-locale-language-cldr-full"))
     .table(GeneratedTable.RELATIVE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-relative"))
+    .table(GeneratedTable.PERSON_NAMES, rootDir.sourceRoot("kotlinx-locale-personname-cldr-full"))
     .table(GeneratedTable.TIME_ZONE_FORMATS, rootDir.sourceRoot("kotlinx-locale-timezone-cldr-full"))
     .table(GeneratedTable.TIME_ZONE_NAMES, rootDir.sourceRoot("kotlinx-locale-timezone-cldr-full"))
     .table(GeneratedTable.TIME_ZONE_CITIES, rootDir.sourceRoot("kotlinx-locale-timezone-cldr-cities"))
@@ -123,6 +146,14 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
         ),
     )
     .binding(
+        GeneratedBinding.INTERVALS,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-intervals"),
+            packageName = "dev.carcara.kotlinx.locale.datetime.cldr.intervals",
+            objectName = "CldrDateTimeIntervals",
+        ),
+    )
+    .binding(
         GeneratedBinding.LANGUAGE,
         BindingTarget(
             root = rootDir.sourceRoot("kotlinx-locale-language-cldr-full"),
@@ -152,6 +183,14 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
             root = rootDir.sourceRoot("kotlinx-locale-timezone-cldr-cities"),
             packageName = "dev.carcara.kotlinx.locale.timezone.cldr.cities",
             objectName = "CldrTimeZoneCities",
+        ),
+    )
+    .binding(
+        GeneratedBinding.PERSON_NAME,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-personname-cldr-full"),
+            packageName = "dev.carcara.kotlinx.locale.personname.cldr",
+            objectName = "CldrPersonName",
         ),
     )
     .binding(
@@ -196,6 +235,12 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
     val skeletonFormats = LinkedHashMap<String, String>()
     val skeletonAppendFormats = LinkedHashMap<String, String>()
     val skeletonNames = LinkedHashMap<String, String>()
+    val intervalFormats = LinkedHashMap<String, String>()
+    val personNames = LinkedHashMap<String, String>()
+    val personNameCache = HashMap<String, PartialPersonNames>()
+    fun personNamesFor(level: String): PartialPersonNames = personNameCache.getOrPut(level) {
+        parsePersonNames(cldrDir.resolve("common/main/$level.xml"))
+    }
     val resolvedSkeletons = LinkedHashMap<String, ResolvedSkeletonData>()
     val resolvedDateTime = LinkedHashMap<String, ResolvedLocaleData>()
     val declaredFormats = LinkedHashMap<String, Map<String, String>>()
@@ -205,6 +250,8 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         skeletonFormats[tag] = skeletons.encodeFormats()
         skeletonAppendFormats[tag] = skeletons.encodeAppendFormats()
         skeletonNames[tag] = skeletons.encodeNames()
+        intervalFormats[tag] = flattener.resolveIntervals(id).encode()
+        personNames[tag] = flattener.resolvePersonNames(id, ::personNamesFor).encode()
         if (id != "root") {
             resolvedSkeletons[id] = skeletons
             resolvedDateTime[id] = flattener.resolve(id)
@@ -333,6 +380,21 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         icuTag = ICU_REPO.tag,
         entries = extractIcuTimeZoneGolden(timeZoneNames.keys),
     )
+    emitPersonNameCases(
+        outputFile = personNameConformanceDir(rootDir).resolve("PersonNameCaseData.kt"),
+        cldrTag = CLDR_REPO.tag,
+        cases = parsePersonNameCases(cldrDir),
+    )
+    emitIcuIntervalGolden(
+        outputFile = intervalConformanceDir(rootDir).resolve("IcuIntervalGoldenData.kt"),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuIntervalGolden(intervalFormats.keys),
+    )
+    emitIcuWeekDataGolden(
+        outputFile = weekConformanceDir(rootDir).resolve("IcuWeekDataGoldenData.kt"),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuWeekDataGolden(relativeTime.keys),
+    )
     emitIcuNumberGolden(
         outputFile = conformanceDir(rootDir).resolve("IcuNumberGoldenData.kt"),
         icuTag = ICU_REPO.tag,
@@ -385,12 +447,15 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .table(BundleTables.TIME_ZONE_METADATA, encodeTimeZoneMetadata(cldrDir))
         .table(BundleTables.PHONE_TERRITORIES, phoneTerritoryTable)
         .table(BundleTables.PHONE_FORMATS, phoneFormatTable)
+        .table(BundleTables.WEEK_DATA, supplemental.encodeWeekData())
         .section("countryNames", buildCountryNamePayloads(flattener, extras))
         .section("currencyFormats", buildCurrencyFormatPayloads(flattener, extras))
         .section("currencyNames", buildCurrencyNamePayloads(flattener, extras))
         .section("skeletonFormats", skeletonFormats)
         .section("skeletonAppendFormats", skeletonAppendFormats)
         .section("skeletonNames", skeletonNames)
+        .section("intervalFormats", intervalFormats)
+        .section("personNames", personNames)
         .section("numberSymbols", numberSymbols)
         .section("numberPatterns", numberPatterns)
         .section("numberCompactShort", numberCompactShort)

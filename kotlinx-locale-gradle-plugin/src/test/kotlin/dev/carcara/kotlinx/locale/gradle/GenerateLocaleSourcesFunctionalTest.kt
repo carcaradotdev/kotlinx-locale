@@ -228,6 +228,28 @@ class GenerateLocaleSourcesFunctionalTest {
     }
 
     @Test
+    fun `a narrowed build gets the same entry points as the bundled artifacts`() {
+        // The property that matters to a reader of API.md: an entry point is not
+        // a property of the -cldr-full artifact, it is a property of the emitter,
+        // and the plugin calls the same one. If these drift, the documentation
+        // sends narrowed builds looking for functions they do not have.
+        buildFile(features = "datetime { patterns = true; skeletons = true; intervals = true }\npersonName { formats = true }")
+        run("generateLocaleSources")
+
+        val dateTime = generated("com/example/locale/LocalizedFormat.kt").readText()
+        assertContains(dateTime, "public fun durationPattern(")
+        assertContains(dateTime, "public fun weekInfo(")
+        assertContains(dateTime, "public fun weekInfoForRegion(")
+
+        val intervals = generated("com/example/locale/IntervalFormat.kt").readText()
+        assertContains(intervals, "public fun intervalFormat(")
+
+        val names = generated("com/example/locale/PersonNameFormat.kt").readText()
+        assertContains(names, "public fun personNameFormat(")
+        assertContains(names, "public fun personNameOrder(")
+    }
+
+    @Test
     fun `is up to date on a second run and reruns when the locale set changes`() {
         buildFile()
         assertEquals(TaskOutcome.SUCCESS, run("generateLocaleSources").task(":generateLocaleSources")?.outcome)

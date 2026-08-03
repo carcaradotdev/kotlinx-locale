@@ -229,9 +229,10 @@ private fun formatField(
         // c is the stand-alone weekday, E and e the ones inside a date.
         //
         // Note that e and c at counts 1 and 2 are the numeric local day of week
-        // in UTS #35, and this renders a name instead. Fixing that needs each
-        // locale's first day of week from supplemental weekData, which is the
-        // same data the w, W and F fields are unsupported for.
+        // in UTS #35, and this renders a name instead. The first day of week that
+        // numbering counts from now ships, as `WeekInfo`, so this is a gap rather
+        // than a missing table. It wants its own goldens, and so does lifting w,
+        // W and F out of the unsupported letters, which need the same data.
         'E', 'e', 'c' -> if (date != null) {
             val index = date.dayOfWeek.isoDayNumber - 1
             val context = if (letter == 'c') NameContext.STANDALONE else NameContext.FORMAT
@@ -296,8 +297,20 @@ private fun StringBuilder.appendNumber(value: Int, minWidth: Int, digits: String
         return
     }
     val text = value.toString()
-    repeat(minWidth - text.length) { append(digits[0]) }
-    for (ch in text) append(digits[ch - '0'])
+    repeat(minWidth - text.length) { appendDigit(0, digits) }
+    for (ch in text) appendDigit(ch - '0', digits)
+}
+
+/**
+ * Appends one digit of a numbering system.
+ *
+ * Not `digits[index]`. Chakma, and every other numbering system whose digits sit
+ * outside the basic plane, stores each digit as a surrogate pair, so its ten
+ * digits are twenty characters and indexing by one lands halfway through a pair.
+ * The result is a replacement character wherever a number should be.
+ */
+private fun StringBuilder.appendDigit(index: Int, digits: String) {
+    if (digits.length == 20) append(digits, index * 2, index * 2 + 2) else append(digits[index])
 }
 
 private fun Char.isAsciiLetter(): Boolean = this in 'a'..'z' || this in 'A'..'Z'

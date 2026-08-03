@@ -42,6 +42,23 @@ public final class dev/carcara/kotlinx/locale/datetime/DateTimeFormatSourceKt {
 	public static final fun format (Ldev/carcara/kotlinx/locale/datetime/DateTimeFormatSource;Lkotlinx/datetime/LocalTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 }
 
+public abstract interface class dev/carcara/kotlinx/locale/datetime/DurationPatternSource {
+	public abstract fun durationPatternOrNull (Ldev/carcara/kotlinx/locale/datetime/DurationStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/DurationStyle : java/lang/Enum {
+	public static final field HOUR_MINUTE Ldev/carcara/kotlinx/locale/datetime/DurationStyle;
+	public static final field HOUR_MINUTE_SECOND Ldev/carcara/kotlinx/locale/datetime/DurationStyle;
+	public static final field MINUTE_SECOND Ldev/carcara/kotlinx/locale/datetime/DurationStyle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/DurationStyle;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/datetime/DurationStyle;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/DurationStyleKt {
+	public static final fun durationPattern (Ldev/carcara/kotlinx/locale/datetime/DurationPatternSource;Ldev/carcara/kotlinx/locale/datetime/DurationStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
 public final class dev/carcara/kotlinx/locale/datetime/FallbackDateTimeFormats : dev/carcara/kotlinx/locale/datetime/DateTimeFormatSource {
 	public fun <init> (Ldev/carcara/kotlinx/locale/datetime/DateTimeFormatSource;Ldev/carcara/kotlinx/locale/datetime/DateTimeFormatSource;)V
 	public fun dayOfWeekNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
@@ -131,5 +148,28 @@ public final class dev/carcara/kotlinx/locale/datetime/TextStyle : java/lang/Enu
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/TextStyle;
 	public static fun values ()[Ldev/carcara/kotlinx/locale/datetime/TextStyle;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/WeekInfo {
+	public static final field Companion Ldev/carcara/kotlinx/locale/datetime/WeekInfo$Companion;
+	public fun <init> (Lkotlinx/datetime/DayOfWeek;ILjava/util/Set;)V
+	public final fun getFirstDayOfWeek ()Lkotlinx/datetime/DayOfWeek;
+	public final fun getMinimalDaysInFirstWeek ()I
+	public final fun getWeekend ()Ljava/util/Set;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/WeekInfo$Companion {
+	public final fun getWORLD ()Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/WeekInfoKt {
+	public static final fun weekInfo (Ldev/carcara/kotlinx/locale/datetime/WeekInfoSource;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
+	public static final fun weekInfoForRegion (Ldev/carcara/kotlinx/locale/datetime/WeekInfoSource;Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
+}
+
+public abstract interface class dev/carcara/kotlinx/locale/datetime/WeekInfoSource {
+	public abstract fun weekInfoForRegionOrNull (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
+	public abstract fun weekInfoOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
 }
 

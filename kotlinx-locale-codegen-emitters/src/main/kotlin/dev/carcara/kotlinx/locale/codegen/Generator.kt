@@ -39,6 +39,9 @@ public enum class GeneratedTable {
     /** The three skeleton tables, which travel together. */
     SKELETONS,
 
+    /** Interval patterns, keyed by skeleton id and greatest-difference field. */
+    INTERVAL_FORMATS,
+
     /** Stand-alone month, weekday and quarter names, where they differ from the format ones. */
     DATE_TIME_STANDALONE,
 
@@ -73,6 +76,9 @@ public enum class GeneratedTable {
      */
     CURRENCY_COMPACT,
 
+    /** Person name patterns: the forty-two cells of UTS #35 Part 8. */
+    PERSON_NAMES,
+
     /** Cardinal and ordinal plural rules, shared by id across locales. */
     PLURALS,
 
@@ -91,11 +97,18 @@ public enum class GeneratedBinding(public val objectSuffix: String) {
      * it rather than carrying a copy.
      */
     SKELETONS("DateTimeSkeletons"),
+
+    /**
+     * Needs [SKELETONS] too: an interval has to be given a pattern for the
+     * requested skeleton before it can be split, and the matcher is shared.
+     */
+    INTERVALS("DateTimeIntervals"),
     NUMBER("Number"),
     LANGUAGE("LanguageNames"),
     RELATIVE_TIME("RelativeTime"),
     TIME_ZONE("TimeZone"),
     TIME_ZONE_CITIES("TimeZoneCities"),
+    PERSON_NAME("PersonName"),
 }
 
 public class SourceRoots private constructor(
@@ -146,9 +159,11 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
                 GeneratedTable.DATE_TIME to "dev.carcara.kotlinx.locale.datetime.cldr.internal.data",
                 GeneratedTable.DATE_TIME_STANDALONE to "dev.carcara.kotlinx.locale.datetime.cldr.internal.data",
                 GeneratedTable.SKELETONS to "dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data",
+                GeneratedTable.INTERVAL_FORMATS to "dev.carcara.kotlinx.locale.datetime.cldr.intervals.internal.data",
                 GeneratedTable.NUMBER to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.NUMBER_COMPACT to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.CURRENCY_COMPACT to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
+                GeneratedTable.PERSON_NAMES to "dev.carcara.kotlinx.locale.personname.cldr.internal.data",
                 GeneratedTable.PLURALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.ORDINALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.LANGUAGE_NAMES to "dev.carcara.kotlinx.locale.language.cldr.internal.data",
@@ -255,6 +270,20 @@ private val PAYLOAD_TABLES = listOf(
         "SkeletonNames",
         "SKELETON_NAMES",
         "skeletonNamesRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.PERSON_NAMES,
+        "personNames",
+        "PersonNames",
+        "PERSON_NAMES",
+        "personNamesRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.INTERVAL_FORMATS,
+        "intervalFormats",
+        "IntervalFormats",
+        "INTERVAL_FORMATS",
+        "intervalFormatsRegistry",
     ),
     PayloadTableSpec(
         GeneratedTable.DATE_TIME_STANDALONE,
@@ -460,6 +489,7 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             target.root,
             target.spec(packages[GeneratedTable.DATE_TIME], cldr),
             hasStandalone = roots[GeneratedTable.DATE_TIME_STANDALONE] != null,
+            weekData = bundle.tables[BundleTables.WEEK_DATA].orEmpty(),
         )
     }
 
@@ -516,6 +546,21 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             target.root,
             target.spec(packages[GeneratedTable.SKELETONS], cldr),
             dateTimeObject = "${dateTime.packageName}.${dateTime.objectName}",
+        )
+    }
+
+    roots[GeneratedBinding.PERSON_NAME]?.let { target ->
+        emitPersonNameBinding(target.root, target.spec(packages[GeneratedTable.PERSON_NAMES], cldr))
+    }
+
+    roots[GeneratedBinding.INTERVALS]?.let { target ->
+        val skeletons = requireNotNull(roots[GeneratedBinding.SKELETONS]) {
+            "an interval is a split of the pattern the skeleton matcher picks, so it needs that binding"
+        }
+        emitIntervalBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.INTERVAL_FORMATS], cldr),
+            skeletonObject = "${skeletons.packageName}.${skeletons.objectName}",
         )
     }
 }

@@ -35,6 +35,8 @@ class ResolvedLocaleData(
     val timeFormats: List<String>,
     val glueFormats: List<String>,
     val digits: String,
+    /** `durationUnit` patterns indexed by [DURATION_UNIT_TYPES]; root answers for almost every locale. */
+    val durationPatterns: List<String>,
 )
 
 /**
@@ -83,7 +85,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
 
     private val available = localeIds.toHashSet()
 
-    private fun partial(id: String): PartialLocaleData = partialCache.getOrPut(id) { parseLdml(mainDir.resolve("$id.xml")) }
+    internal fun partial(id: String): PartialLocaleData = partialCache.getOrPut(id) { parseLdml(mainDir.resolve("$id.xml")) }
 
     /**
      * Day period rules for [id], resolved by plain truncation of the locale id
@@ -151,6 +153,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
         val dateFormats = arrayOfNulls<String>(4)
         val timeFormats = arrayOfNulls<String>(4)
         val glueFormats = arrayOfNulls<String>(4)
+        val durationPatterns = arrayOfNulls<String>(DURATION_UNIT_TYPES.size)
         var numberingSystem: String? = null
 
         fun mergeList(target: Array<String?>, source: Array<String?>) {
@@ -174,6 +177,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             mergeList(dateFormats, p.dateFormats)
             mergeList(timeFormats, p.timeFormats)
             mergeList(glueFormats, p.glueFormats)
+            mergeList(durationPatterns, p.durationPatterns)
             mergeList(dayPeriods, p.dayPeriods)
             if (am == null) am = p.am
             if (pm == null) pm = p.pm
@@ -241,6 +245,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             timeFormats = full("timeFormats", timeFormats),
             glueFormats = full("glueFormats", glueFormats),
             digits = digits,
+            durationPatterns = full("durationPatterns", durationPatterns),
         )
     }
 
@@ -339,6 +344,10 @@ fun ResolvedLocaleData.encode(): String {
     list(dayPeriods)
     // Each rule as "typeCode,start,end" minutes; start == end marks a point rule.
     list(dayPeriodRules.map { "${DAY_PERIOD_TYPES.indexOf(it.type)},${it.start},${it.end}" })
+    // Appended rather than inserted, so a record written by an older generator
+    // still decodes: the reader takes this positionally and falls back to root's
+    // patterns when it is absent.
+    list(durationPatterns)
     return fields.joinToString("\u001F")
 }
 
@@ -350,9 +359,9 @@ fun ResolvedLocaleData.encode(): String {
  * `LocalDate` or `LocalTime` does not carry — the same reason
  * `withoutZoneFields()` exists and FULL and LONG times already collapse to
  * MEDIUM. `w W F` are week numbering, which needs each locale's first day of
- * week and minimum days, a supplemental data set nothing here reads yet. `g S A`
- * are a Julian day number and sub-second precision, which no standard id asks
- * for.
+ * week and minimum days; that data now ships as `WeekInfo`, so these are a gap
+ * waiting on goldens rather than on a table. `g S A` are a Julian day number and
+ * sub-second precision, which no standard id asks for.
  *
  * Across CLDR 48.2 this drops thirteen ids, all of them zone or week:
  * `Hv Hmv Hmsv hv hmv hmsv` and their `vvvv` forms, `HHmmZ`, `MMMMW` and `yw`.
@@ -435,6 +444,63 @@ fun ResolvedSkeletonData.encodeNames(): String = listOf(
 /** The stand-alone list, or empty when it says nothing the format list does not. */
 private fun sameAsFormat(standalone: List<String>, format: List<String>): String =
     if (standalone == format) "" else standalone.joinToString(LIST_SEPARATOR)
+
+/** One locale's interval patterns, resolved through its inheritance chain. */
+class ResolvedIntervalData(
+    /** `{0} – {1}`, used when no entry covers the pair. */
+    val fallback: String,
+    /** Skeleton id to greatest-difference field to pattern. */
+    val formats: Map<String, Map<String, String>>,
+)
+
+/**
+ * Interval patterns for one locale.
+ *
+ * Merged per greatest difference rather than per item, which is the whole
+ * subtlety: a locale declaring `intervalFormatItem id="yMd"` with only a `d`
+ * entry is saying one thing about days, not that it has nothing to say about
+ * years and months. Merging whole items would drop the rest.
+ */
+fun Flattener.resolveIntervals(id: String): ResolvedIntervalData {
+    val formats = LinkedHashMap<String, LinkedHashMap<String, String>>()
+    var fallback: String? = null
+
+    for (level in dataChain(id)) {
+        val p = partial(level)
+        if (fallback == null) fallback = p.intervalFallback
+        for ((skeleton, byDifference) in p.intervalFormats) {
+            val target = formats.getOrPut(skeleton) { LinkedHashMap() }
+            for ((field, pattern) in byDifference) target.putIfAbsent(field, pattern)
+        }
+    }
+
+    return ResolvedIntervalData(
+        fallback = checkNotNull(fallback) { "$id: missing intervalFormatFallback" },
+        // The same filter the skeleton table uses, so the two stay in step: an id
+        // this build will not offer a pattern for must not carry an interval
+        // pattern either.
+        formats = formats
+            .filterKeys { skeleton -> skeleton.none { it in UNSUPPORTED_FIELD_LETTERS } }
+            .mapValues { (_, byDifference) ->
+                byDifference.filterValues { patternFieldLetters(it).none { letter -> letter in UNSUPPORTED_FIELD_LETTERS } }
+            }
+            .filterValues { it.isNotEmpty() }
+            .toSortedMap(),
+    )
+}
+
+/**
+ * Two fields: the fallback, then the entries as `id.difference` to pattern.
+ *
+ * The greatest-difference field is always one letter, so `.` cannot collide with
+ * anything in a skeleton id, which is letters only.
+ */
+fun ResolvedIntervalData.encode(): String = listOf(
+    fallback,
+    formats.entries.flatMap { (skeleton, byDifference) ->
+        byDifference.entries.map { (field, pattern) -> "$skeleton.$field" + KEY_SEPARATOR + pattern }
+    }.joinToString(LIST_SEPARATOR),
+).joinToString(FIELD_SEPARATOR)
 
 /**
  * The stand-alone calendar names for one locale: six lists, each empty where the

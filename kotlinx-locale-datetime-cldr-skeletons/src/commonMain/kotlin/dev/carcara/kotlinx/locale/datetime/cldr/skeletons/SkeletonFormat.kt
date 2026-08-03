@@ -24,12 +24,27 @@ import kotlinx.datetime.LocalTime
  * object contributes is the tables, plus the pattern table it borrows from
  * [CldrDateTime] rather than carrying twice.
  */
-public object CldrDateTimeSkeletons : SkeletonFormatSource by PayloadSkeletonFormats(
+internal val skeletonSource: PayloadSkeletonFormats = PayloadSkeletonFormats(
     skeletonFormatsRegistry,
     skeletonAppendFormatsRegistry,
     skeletonNamesRegistry,
     CldrDateTime.records,
+    CldrDateTime.standaloneRecords,
 )
+
+public object CldrDateTimeSkeletons : SkeletonFormatSource by skeletonSource {
+
+    /**
+     * The source itself, for the interval layer.
+     *
+     * `kotlinx-locale-datetime-cldr-intervals` has to pick a pattern for the
+     * requested skeleton before it can split one, and building a matcher
+     * sorts a locale's whole candidate pool. Handing over this object lets
+     * the two share one pool per locale instead of building two.
+     */
+    @InternalKotlinxLocaleApi
+    public val skeletons: PayloadSkeletonFormats get() = skeletonSource
+}
 
 /**
  * Formats this date with the fields [skeleton] names, arranged the way

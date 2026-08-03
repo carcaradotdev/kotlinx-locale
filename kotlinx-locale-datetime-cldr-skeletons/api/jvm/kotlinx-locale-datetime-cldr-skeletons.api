@@ -3,6 +3,7 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/skeletons/CldrDateTi
 	public fun formatOrNull (Lkotlinx/datetime/LocalDate;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatOrNull (Lkotlinx/datetime/LocalDateTime;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatOrNull (Lkotlinx/datetime/LocalTime;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public final fun getSkeletons ()Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/PayloadSkeletonFormats;
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public fun skeletonPatternOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 }

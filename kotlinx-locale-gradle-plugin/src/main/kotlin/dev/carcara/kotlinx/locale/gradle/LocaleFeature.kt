@@ -62,6 +62,32 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
     ),
 
     /**
+     * Person names, and the initials derived from them.
+     *
+     * One table and nothing else: the patterns say where each part of a name
+     * goes, and nothing in them needs a number, a date or another locale's
+     * names.
+     */
+    PERSONNAME_FORMATS(
+        dslName = "personName.formats",
+        tables = setOf(GeneratedTable.PERSON_NAMES),
+        bindings = setOf(GeneratedBinding.PERSON_NAME),
+    ),
+
+    /**
+     * Date and time intervals: `Jul 18 – 22, 2026`.
+     *
+     * Includes the skeleton tables, because an interval is a split of the
+     * pattern the skeleton matcher picks, and the pattern tables the matcher
+     * scores against.
+     */
+    DATETIME_INTERVALS(
+        dslName = "datetime.intervals",
+        tables = setOf(GeneratedTable.DATE_TIME, GeneratedTable.SKELETONS, GeneratedTable.INTERVAL_FORMATS),
+        bindings = setOf(GeneratedBinding.DATE_TIME, GeneratedBinding.SKELETONS, GeneratedBinding.INTERVALS),
+    ),
+
+    /**
      * Stand-alone month, weekday and quarter names.
      *
      * Includes the pattern table it reads the format names from, since a

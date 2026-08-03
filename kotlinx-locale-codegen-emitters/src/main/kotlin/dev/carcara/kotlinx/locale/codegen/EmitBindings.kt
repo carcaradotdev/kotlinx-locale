@@ -243,9 +243,10 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
 }
 
 /** `CldrDateTime`-shaped binding: the source object plus the datetime extensions. */
-public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec, hasStandalone: Boolean = false) {
+public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec, hasStandalone: Boolean = false, weekData: String = "") {
     val file = outputRoot.packageFile(spec.packageName, "LocalizedFormat.kt")
     val standaloneArgument = if (hasStandalone) ", localeStandaloneRegistry" else ""
+    val standaloneAccessor = if (hasStandalone) "localeStandaloneRegistry" else "emptyMap()"
     file.writeText(
         preamble(
             spec,
@@ -255,11 +256,13 @@ public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec, hasStandalon
                         "dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi",
                         "dev.carcara.kotlinx.locale.Locale",
                         "dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource",
+                        "dev.carcara.kotlinx.locale.datetime.DurationStyle",
                         "dev.carcara.kotlinx.locale.datetime.FormatStyle",
                         "dev.carcara.kotlinx.locale.datetime.NameContext",
                         "dev.carcara.kotlinx.locale.datetime.TextStyle",
                         "dev.carcara.kotlinx.locale.datetime.cldr.runtime.PayloadDateTimeFormats",
                         "dev.carcara.kotlinx.locale.datetime.displayName",
+                        "dev.carcara.kotlinx.locale.datetime.durationPattern",
                         "dev.carcara.kotlinx.locale.datetime.format",
                         "${spec.registryPackage}.localeDataRegistry",
                         "kotlinx.datetime.DayOfWeek",
@@ -270,8 +273,25 @@ public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec, hasStandalon
                     ),
                 )
                 if (hasStandalone) add("${spec.registryPackage}.localeStandaloneRegistry")
+                if (weekData.isNotEmpty()) {
+                    addAll(
+                        listOf(
+                            "dev.carcara.kotlinx.locale.datetime.WeekInfo",
+                            "dev.carcara.kotlinx.locale.datetime.cldr.runtime.PayloadWeekInfo",
+                            "dev.carcara.kotlinx.locale.datetime.weekInfo",
+                            "dev.carcara.kotlinx.locale.datetime.weekInfoForRegion",
+                        ),
+                    )
+                }
             },
+            // Only when the week data is here: the table's type is internal API,
+            // and the two entry points over it are not. A build without the table
+            // has nothing to opt into and should not carry a stray annotation.
+            fileAnnotation = "@file:OptIn(InternalKotlinxLocaleApi::class)".takeIf { weekData.isNotEmpty() },
         ) + """
+        |
+        |internal val dateTimeSource: PayloadDateTimeFormats =
+        |    PayloadDateTimeFormats(localeDataRegistry$standaloneArgument)
         |
         |/**
         | * The date and time patterns this build carries.
@@ -279,8 +299,7 @@ public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec, hasStandalon
         | * The parser and formatter live in `kotlinx-locale-datetime-cldr-runtime`; all
         | * this object contributes is the table.
         | */
-        |public object ${spec.objectName} :
-        |    DateTimeFormatSource by PayloadDateTimeFormats(localeDataRegistry$standaloneArgument) {
+        |public object ${spec.objectName} : DateTimeFormatSource by dateTimeSource {
         |
         |    /**
         |     * The pattern table itself, for an engine layered over this one.
@@ -293,6 +312,16 @@ public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec, hasStandalon
         |     */
         |    @InternalKotlinxLocaleApi
         |    public val records: Map<String, String> get() = localeDataRegistry
+        |
+        |    /**
+        |     * The stand-alone names, for the same engine.
+        |     *
+        |     * A skeleton pattern can name them directly: Catalan's `yMMM` is
+        |     * `LLL 'del' y`, and rendering `L` from the format names gives
+        |     * `de maig` where CLDR means `maig`.
+        |     */
+        |    @InternalKotlinxLocaleApi
+        |    public val standaloneRecords: Map<String, String> get() = $standaloneAccessor
         |}
         |
         |/**
@@ -343,9 +372,86 @@ public fun emitDateTimeBinding(outputRoot: File, spec: BindingSpec, hasStandalon
         |public fun DayOfWeek.displayName(style: TextStyle, context: NameContext, locale: Locale): String =
         |    ${spec.objectName}.displayName(this, style, context, locale)
         |
-        """.trimMargin(),
+        |/**
+        | * The separator pattern [locale] writes an elapsed duration with.
+        | *
+        | * ```
+        | * durationPattern(DurationStyle.MINUTE_SECOND)                              // "m:ss"
+        | * durationPattern(DurationStyle.MINUTE_SECOND, Locale.forLanguageTag("fi")) // "m.ss"
+        | * ```
+        | *
+        | * A pattern rather than a formatted string, because whether ninety seconds
+        | * reads as `1:30` or `0:01:30` is the caller's decision. CLDR does not answer
+        | * it and neither do ECMA-402 or ICU, all of which take the components from
+        | * the caller, the same way relative wording takes its unit.
+        | *
+        | * Expect almost no variation. In the CLDR release this build carries, only
+        | * Finnish and Danish differ from root, both writing a full stop where root
+        | * writes a colon. What does vary is the digits, which the numbering system
+        | * already decides.
+        | *
+        | * Falls back to root's `h:mm`, `h:mm:ss` and `m:ss`.
+        | */
+        |public fun durationPattern(style: DurationStyle, locale: Locale = Locale.current): String =
+        |    dateTimeSource.durationPattern(style, locale)
+        |
+        """.trimMargin() + weekDataSection(spec, weekData),
     )
     println("[codegen] emitted ${spec.objectName} to $file")
+}
+
+/**
+ * The week data half of the date-time binding.
+ *
+ * A constant rather than a table, the way the time zone metadata is: none of it
+ * varies by language, so there is nothing to key it by and nothing for narrowing
+ * to drop. Empty when the build carries no week data, which is what a narrowed
+ * source set that did not ask for it looks like.
+ */
+private fun weekDataSection(spec: BindingSpec, weekData: String): String {
+    if (weekData.isEmpty()) return ""
+    return """
+        |
+        |/**
+        | * Where each territory starts its week, how many days of it must fall in the
+        | * new year for that to count as week one, and which days it rests.
+        | *
+        | * A constant rather than a table: CLDR keys this by territory, not by
+        | * language, so there is nothing per-locale to key it by.
+        | */
+        |@InternalKotlinxLocaleApi
+        |internal val weekInfoTable: PayloadWeekInfo = PayloadWeekInfo(
+        |    "${kotlinEscape(weekData)}",
+        |)
+        |
+        |/**
+        | * Where [locale]'s territory starts its week, and which days it rests.
+        | *
+        | * ```
+        | * weekInfo(Locale.forLanguageTag("en-GB")).firstDayOfWeek  // MONDAY
+        | * weekInfo(Locale.forLanguageTag("pt-PT")).firstDayOfWeek  // SUNDAY
+        | * ```
+        | *
+        | * The two fields vary independently, so neither implies the other. Portugal
+        | * starts its week on Sunday like the United States, and still wants four of
+        | * its days in the new year like the rest of Europe.
+        | *
+        | * A locale that names no region is maximised the way likely subtags maximise
+        | * it, so `en` answers for the United States. Falls back to CLDR's world
+        | * default: Monday, one day, and a Saturday to Sunday weekend.
+        | */
+        |public fun weekInfo(locale: Locale = Locale.current): WeekInfo = weekInfoTable.weekInfo(locale)
+        |
+        |/**
+        | * The same, for an ISO 3166-1 alpha-2 region code.
+        | *
+        | * Named for what it assumes rather than distinguished by its argument: a
+        | * caller that already holds a country code has the territory, and which
+        | * days a country rests is not a question about anybody's language.
+        | */
+        |public fun weekInfoForRegion(regionCode: String): WeekInfo = weekInfoTable.weekInfoForRegion(regionCode)
+        |
+    """.trimMargin()
 }
 
 /**
@@ -385,12 +491,27 @@ public fun emitSkeletonBinding(outputRoot: File, spec: BindingSpec, dateTimeObje
         | * object contributes is the tables, plus the pattern table it borrows from
         | * [$dateTimeName] rather than carrying twice.
         | */
-        |public object ${spec.objectName} : SkeletonFormatSource by PayloadSkeletonFormats(
+        |internal val skeletonSource: PayloadSkeletonFormats = PayloadSkeletonFormats(
         |    skeletonFormatsRegistry,
         |    skeletonAppendFormatsRegistry,
         |    skeletonNamesRegistry,
         |    $dateTimeName.records,
+        |    $dateTimeName.standaloneRecords,
         |)
+        |
+        |public object ${spec.objectName} : SkeletonFormatSource by skeletonSource {
+        |
+        |    /**
+        |     * The source itself, for the interval layer.
+        |     *
+        |     * `kotlinx-locale-datetime-cldr-intervals` has to pick a pattern for the
+        |     * requested skeleton before it can split one, and building a matcher
+        |     * sorts a locale's whole candidate pool. Handing over this object lets
+        |     * the two share one pool per locale instead of building two.
+        |     */
+        |    @InternalKotlinxLocaleApi
+        |    public val skeletons: PayloadSkeletonFormats get() = skeletonSource
+        |}
         |
         |/**
         | * Formats this date with the fields [skeleton] names, arranged the way

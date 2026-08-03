@@ -8,6 +8,8 @@ import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.CalendarCapitalizationSource
 import dev.carcara.kotlinx.locale.datetime.CalendarNameUsage
 import dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource
+import dev.carcara.kotlinx.locale.datetime.DurationPatternSource
+import dev.carcara.kotlinx.locale.datetime.DurationStyle
 import dev.carcara.kotlinx.locale.datetime.FormatStyle
 import dev.carcara.kotlinx.locale.datetime.NameContext
 import dev.carcara.kotlinx.locale.datetime.TextStyle
@@ -46,11 +48,15 @@ public class PayloadDateTimeFormats(
      */
     private val standaloneRecords: Map<String, String> = emptyMap(),
 ) : DateTimeFormatSource,
-    CalendarCapitalizationSource {
+    CalendarCapitalizationSource,
+    DurationPatternSource {
 
     override val supportedLocales: Set<Locale> by lazy {
         supportedLocalesOf(records)
     }
+
+    override fun durationPatternOrNull(style: DurationStyle, locale: Locale): String? =
+        recordFor(locale)?.durationPatterns?.getOrNull(style.ordinal)?.takeIf(String::isNotEmpty)
 
     override fun formatDateOrNull(date: LocalDate, style: FormatStyle, locale: Locale): String? {
         val data = recordFor(locale) ?: return null
@@ -237,6 +243,19 @@ public class DateTimeRecord(record: String, standaloneRecord: String? = null) {
         val (code, start, end) = item.split(',')
         DayPeriodRule(code.toInt(), start.toInt(), end.toInt())
     }
+
+    /**
+     * The `durationUnit` patterns, in `hm`, `hms`, `ms` order.
+     *
+     * Read positionally from the end of the record, and empty for a record
+     * written before these existed. The caller supplies root's patterns in that
+     * case, so an old record degrades to the answer almost every locale inherits
+     * rather than failing.
+     */
+    public val durationPatterns: List<String> = fields.getOrNull(25)
+        ?.takeIf(String::isNotEmpty)
+        ?.split(LIST_SEPARATOR)
+        .orEmpty()
 
     /** The name for a day period code, or null when this locale has none. */
     public fun dayPeriodName(code: Int): String? = when (code) {

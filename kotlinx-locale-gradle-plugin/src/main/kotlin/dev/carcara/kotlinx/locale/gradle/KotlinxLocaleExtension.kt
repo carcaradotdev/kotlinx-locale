@@ -71,8 +71,10 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     val timezone: TimeZoneFeatures = objects.newInstance(TimeZoneFeatures::class.java)
 
+    val personName: PersonNameFeatures = objects.newInstance(PersonNameFeatures::class.java)
+
     private val blocks: List<FeatureBlock>
-        get() = listOf(country, currency, datetime, number, language, timezone)
+        get() = listOf(country, currency, datetime, number, language, timezone, personName)
 
     /** Adds locales by reference, which is the form the compiler checks. */
     fun locales(vararg refs: LocaleRef) {
@@ -102,6 +104,10 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     fun datetime(action: Action<DateTimeFeatures>) {
         action.execute(datetime)
+    }
+
+    fun personName(action: Action<PersonNameFeatures>) {
+        action.execute(personName)
     }
 
     fun number(action: Action<NumberFeatures>) {
@@ -247,6 +253,15 @@ abstract class DateTimeFeatures @Inject constructor(objects: ObjectFactory) : Fe
     val skeletons: Property<Boolean> = flag(LocaleFeature.DATETIME_SKELETONS)
 
     /**
+     * Date and time intervals: `Jul 18 – 22, 2026`, with the parts both ends
+     * share written once.
+     *
+     * Generates the skeleton tables as well, because an interval is a split of
+     * the pattern the matcher picks for the requested skeleton.
+     */
+    val intervals: Property<Boolean> = flag(LocaleFeature.DATETIME_INTERVALS)
+
+    /**
      * Stand-alone month, weekday and quarter names: `červenec` where a date
      * would read `července`.
      *
@@ -263,4 +278,18 @@ abstract class DateTimeFeatures @Inject constructor(objects: ObjectFactory) : Fe
      * defaulting to one of them.
      */
     val relativeTime: Property<Boolean> = flag(LocaleFeature.DATETIME_RELATIVE_TIME)
+}
+
+/** Person name formatting, and the initials derived from it. */
+abstract class PersonNameFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
+
+    /**
+     * Writing a person's name the way a locale writes one, and its initials.
+     *
+     * One table, so this costs what the patterns weigh and nothing else. The
+     * order a name is written in depends on the name's locale as well as the
+     * reader's, so generating a narrow set of locales narrows who can be read
+     * to, not whose names can be written.
+     */
+    val formats: Property<Boolean> = flag(LocaleFeature.PERSONNAME_FORMATS)
 }

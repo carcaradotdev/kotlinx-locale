@@ -86,6 +86,15 @@ public class PayloadSkeletonFormats(
     private val skeletonAppendFormats: Map<String, String>,
     private val skeletonNames: Map<String, String>,
     private val dateTimeRecords: Map<String, String>,
+    /**
+     * The stand-alone names, empty when this build did not generate them.
+     *
+     * Needed here and not only in the style-based source, because a skeleton
+     * pattern can ask for them directly: Catalan's `yMMM` is `LLL 'del' y`, and
+     * without this table the `L` renders as the format name, giving
+     * `de maig del 2026` where CLDR means `maig del 2026`.
+     */
+    private val standaloneRecords: Map<String, String> = emptyMap(),
 ) : SkeletonFormatSource {
 
     override val supportedLocales: Set<Locale> by lazy { supportedLocalesOf(skeletonFormats) }
@@ -114,7 +123,13 @@ public class PayloadSkeletonFormats(
         return formatPattern(tokens, skeletons.dateTime, date, time, skeletons.record)
     }
 
-    private fun skeletonsFor(locale: Locale): LocaleSkeletons? {
+    /**
+     * The decoded data and matcher for [locale], built once and kept.
+     *
+     * Internal rather than private so the interval layer in this module reuses
+     * the pool instead of building a second matcher per locale.
+     */
+    internal fun skeletonsFor(locale: Locale): LocaleSkeletons? {
         val key = locale.toLanguageTag()
         if (key in matchers) return matchers[key]
         val formats = resolvedRecord(skeletonFormats, locale)
@@ -125,7 +140,7 @@ public class PayloadSkeletonFormats(
             null
         } else {
             val record = SkeletonRecord(formats, appendFormats, names)
-            val dateTimeRecord = DateTimeRecord(dateTime)
+            val dateTimeRecord = DateTimeRecord(dateTime, resolvedRecord(standaloneRecords, locale))
             LocaleSkeletons(record, dateTimeRecord, SkeletonMatcher(record, dateTimeRecord))
         }
         matchers[key] = built
@@ -133,4 +148,12 @@ public class PayloadSkeletonFormats(
     }
 }
 
-private class LocaleSkeletons(val record: SkeletonRecord, val dateTime: DateTimeRecord, val matcher: SkeletonMatcher)
+/**
+ * One locale's decoded skeleton data and the matcher over it.
+ *
+ * Internal rather than private so the interval layer can share it. Building a
+ * matcher sorts the locale's whole candidate pool, and interval formatting has to
+ * pick a pattern for the requested skeleton before it can do anything else, so a
+ * second source constructing its own would double that work per locale.
+ */
+internal class LocaleSkeletons(val record: SkeletonRecord, val dateTime: DateTimeRecord, val matcher: SkeletonMatcher)

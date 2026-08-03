@@ -6,6 +6,7 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/CldrDateTime : dev/c
 	public fun formatDateTimeOrNull (Lkotlinx/datetime/LocalDateTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatTimeOrNull (Lkotlinx/datetime/LocalTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public final fun getRecords ()Ljava/util/Map;
+	public final fun getStandaloneRecords ()Ljava/util/Map;
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public fun monthNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun monthNameOrNull (ILdev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
@@ -16,9 +17,14 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/LocalizedFormatKt {
 	public static final fun displayName (Lkotlinx/datetime/DayOfWeek;Ldev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public static final fun displayName (Lkotlinx/datetime/Month;Ldev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public static final fun displayName (Lkotlinx/datetime/Month;Ldev/carcara/kotlinx/locale/datetime/TextStyle;Ldev/carcara/kotlinx/locale/datetime/NameContext;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static final fun durationPattern (Ldev/carcara/kotlinx/locale/datetime/DurationStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun durationPattern$default (Ldev/carcara/kotlinx/locale/datetime/DurationStyle;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun format (Lkotlinx/datetime/LocalDate;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public static final fun format (Lkotlinx/datetime/LocalDateTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public static final fun format (Lkotlinx/datetime/LocalDateTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public static final fun format (Lkotlinx/datetime/LocalTime;Ldev/carcara/kotlinx/locale/datetime/FormatStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static final fun weekInfo (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
+	public static synthetic fun weekInfo$default (Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
+	public static final fun weekInfoForRegion (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/WeekInfo;
 }
 

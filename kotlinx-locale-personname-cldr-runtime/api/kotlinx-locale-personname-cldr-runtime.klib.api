@@ -1,0 +1,31 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-personname-cldr-runtime>
+final class dev.carcara.kotlinx.locale.personname.cldr.runtime/PayloadPersonNames : dev.carcara.kotlinx.locale.personname/PersonNameSource { // dev.carcara.kotlinx.locale.personname.cldr.runtime/PayloadPersonNames|null[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>) // dev.carcara.kotlinx.locale.personname.cldr.runtime/PayloadPersonNames.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final fun formatOrNull(dev.carcara.kotlinx.locale.personname/PersonName, dev.carcara.kotlinx.locale.personname/PersonNameLength, dev.carcara.kotlinx.locale.personname/PersonNameUsage, dev.carcara.kotlinx.locale.personname/PersonNameFormality, dev.carcara.kotlinx.locale.personname/PersonNameOrder, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.personname.cldr.runtime/PayloadPersonNames.formatOrNull|formatOrNull(dev.carcara.kotlinx.locale.personname.PersonName;dev.carcara.kotlinx.locale.personname.PersonNameLength;dev.carcara.kotlinx.locale.personname.PersonNameUsage;dev.carcara.kotlinx.locale.personname.PersonNameFormality;dev.carcara.kotlinx.locale.personname.PersonNameOrder;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun orderOrNull(dev.carcara.kotlinx.locale/Locale?, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.personname/PersonNameOrder? // dev.carcara.kotlinx.locale.personname.cldr.runtime/PayloadPersonNames.orderOrNull|orderOrNull(dev.carcara.kotlinx.locale.Locale?;dev.carcara.kotlinx.locale.Locale){}[0]
+}
+
+final class dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord { // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord|null[0]
+    constructor <init>(kotlin/String) // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.<init>|<init>(kotlin.String){}[0]
+
+    final val defaultFormality // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.defaultFormality|{}defaultFormality[0]
+        final fun <get-defaultFormality>(): dev.carcara.kotlinx.locale.personname/PersonNameFormality // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.defaultFormality.<get-defaultFormality>|<get-defaultFormality>(){}[0]
+    final val defaultLength // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.defaultLength|{}defaultLength[0]
+        final fun <get-defaultLength>(): dev.carcara.kotlinx.locale.personname/PersonNameLength // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.defaultLength.<get-defaultLength>|<get-defaultLength>(){}[0]
+    final val foreignSpace // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.foreignSpace|{}foreignSpace[0]
+        final fun <get-foreignSpace>(): kotlin/String // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.foreignSpace.<get-foreignSpace>|<get-foreignSpace>(){}[0]
+    final val initialPattern // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.initialPattern|{}initialPattern[0]
+        final fun <get-initialPattern>(): kotlin/String // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.initialPattern.<get-initialPattern>|<get-initialPattern>(){}[0]
+    final val initialSequence // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.initialSequence|{}initialSequence[0]
+        final fun <get-initialSequence>(): kotlin/String // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.initialSequence.<get-initialSequence>|<get-initialSequence>(){}[0]
+    final val nativeSpace // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.nativeSpace|{}nativeSpace[0]
+        final fun <get-nativeSpace>(): kotlin/String // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.nativeSpace.<get-nativeSpace>|<get-nativeSpace>(){}[0]
+}
