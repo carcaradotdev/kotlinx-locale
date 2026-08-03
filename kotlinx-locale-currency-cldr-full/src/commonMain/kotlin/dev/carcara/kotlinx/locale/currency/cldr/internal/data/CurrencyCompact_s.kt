@@ -6,16 +6,13 @@ internal val CURRENCY_COMPACT_SAH: String =
     "10:other=00 млрд ¤\u001E11:other=000 млрд ¤\u001E12:other=0 трлн ¤\u001E13:other=00 трлн ¤\u001E14:other=000 трлн ¤\u001E3:other=0 тыһ'.' ¤\u001E4:other=00 тыһ'.' ¤\u001E5:other=000 тыһ'.' ¤\u001E6:other=0 мөл ¤\u001E7:other=00 мөл ¤\u001E8:other=000 мөл ¤\u001E9:other=0 млрд ¤"
 
 internal val CURRENCY_COMPACT_SAT: String =
-    "10:other=¤ 00G\u001E11:other=¤ 000G\u001E12:other=¤ 0T\u001E13:other=¤ 00T\u001E14:other=¤ 000T\u001E3:one=¤0 ᱜᱮᱞᱥᱟᱭ\u001E3:other=¤ 0 ᱜᱮᱞᱥᱟᱭ\u001E4:other=¤ 00 ᱜᱮᱞᱥᱟᱭ\u001E5:other=¤ 000 ᱜᱮᱞᱥᱟᱭ\u001E6:other=¤ 0M\u001E7:other=¤ 00M\u001E8:other=¤ 000M\u001E9:other=¤ 0G"
+    "10:other=¤ 00G\u001E11:other=¤ 000G\u001E12:other=¤ 0T\u001E13:other=¤ 00T\u001E14:other=¤ 000T\u001E3:one=¤0 ᱜᱮᱞᱥᱟᱭ\u001E3:other=¤ 0 ᱜᱮᱞᱥᱟᱭ\u001E4:other=¤ 00K\u001E5:other=¤ 000 ᱜᱮᱞᱥᱟᱭ\u001E6:other=¤ 0M\u001E7:other=¤ 00M\u001E8:other=¤ 000M\u001E9:other=¤ 0G"
 
 internal val CURRENCY_COMPACT_SC: String =
     "10:other=00 Mrd ¤\u001E11:other=000 Mrd ¤\u001E12:other=0 Bln ¤\u001E13:other=00 Bln ¤\u001E14:other=000 Bln ¤\u001E3:other=0 mìg ¤\u001E4:other=00 mìg ¤\u001E5:other=000 mìg ¤\u001E6:other=0 Mln ¤\u001E7:other=00 Mln ¤\u001E8:other=000 Mln ¤\u001E9:other=0 Mrd ¤"
 
 internal val CURRENCY_COMPACT_SD: String =
     "10:one=¤ 00 بلين\u001E10:one:a=¤ 00 بلين\u001E10:other=¤ 00 بلين\u001E10:other:a=¤ 00 بلين\u001E11:one=¤ 000 بلين\u001E11:one:a=¤ 000 بلين\u001E11:other=¤ 000 بلين\u001E11:other:a=¤ 000 بلين\u001E12:one=¤ 0 ٽرلين\u001E12:one:a=¤ 0 ٽرلين\u001E12:other=¤ 0 ٽرلين\u001E12:other:a=¤ 0 ٽرلين\u001E13:one=¤ 00 ٽرلين\u001E13:one:a=¤ 00 ٽرلين\u001E13:other=¤ 00 ٽرلين\u001E13:other:a=¤ 00 ٽرلين\u001E14:one=¤ 000 ٽرلين\u001E14:one:a=¤ 000 ٽرلين\u001E14:other=¤ 000 ٽرلين\u001E14:other:a=¤ 000 ٽرلين\u001E3:one=¤ 0 هزار\u001E3:one:a=¤ 0 هزار\u001E3:other=¤ 0 هزار\u001E3:other:a=¤ 0 هزار\u001E4:one=¤ 00 هزار\u001E4:one:a=¤ 00 هزار\u001E4:other=¤ 00 هزار\u001E4:other:a=¤ 00 هزار\u001E5:one=¤ 000 هزار\u001E5:one:a=¤ 000 هزار\u001E5:other=¤ 000 هزار\u001E5:other:a=¤ 000 هزار\u001E6:one=¤ 0 ملين\u001E6:one:a=¤ 0 ملين\u001E6:other=¤ 0 ملين\u001E6:other:a=¤ 0 ملين\u001E7:one=¤ 00 ملين\u001E7:one:a=¤ 00 ملين\u001E7:other=¤ 00 ملين\u001E7:other:a=¤ 00 ملين\u001E8:one=¤ 000 ملين\u001E8:one:a=¤ 000 ملين\u001E8:other=¤ 000 ملين\u001E8:other:a=¤ 000 ملين\u001E9:one=¤ 0 بلين\u001E9:one:a=¤ 0 بلين\u001E9:other=¤ 0 بلين\u001E9:other:a=¤ 0 بلين"
-
-internal val CURRENCY_COMPACT_SE: String =
-    "10:other=00 md ¤\u001E11:other=000 md ¤\u001E12:other=0 bn ¤\u001E13:other=00 bn ¤\u001E14:other=000 bn ¤\u001E3:other=0 dt ¤\u001E4:other=00 dt ¤\u001E5:other=000 dt ¤\u001E6:other=0 mn ¤\u001E7:other=00 mn ¤\u001E8:other=000 mn ¤\u001E9:other=0 md ¤"
 
 internal val CURRENCY_COMPACT_SI: String =
     "10:one:a=¤ බි00\u001E10:other=¤බි00\u001E10:other:a=¤ බි00\u001E11:one:a=¤ බි000\u001E11:other=¤බි000\u001E11:other:a=¤ බි000\u001E12:one:a=¤ ට්‍රි0\u001E12:other=¤ට්‍රි0\u001E12:other:a=¤ ට්‍රි0\u001E13:one:a=¤ ට්‍රි00\u001E13:other=¤ට්‍රි00\u001E13:other:a=¤ ට්‍රි00\u001E14:one:a=¤ ට්‍රි000\u001E14:other=¤ට්‍රි000\u001E14:other:a=¤ ට්‍රි000\u001E3:one:a=¤ ද0\u001E3:other=¤ද0\u001E3:other:a=¤ ද0\u001E4:one:a=¤ ද00\u001E4:other=¤ද00\u001E4:other:a=¤ ද00\u001E5:one:a=¤ ද000\u001E5:other=¤ද000\u001E5:other:a=¤ ද000\u001E6:one:a=¤ මි0\u001E6:other=¤මි0\u001E6:other:a=¤ මි0\u001E7:one:a=¤ මි00\u001E7:other=¤මි00\u001E7:other:a=¤ මි00\u001E8:one:a=¤ මි000\u001E8:other=¤මි000\u001E8:other:a=¤ මි000\u001E9:one:a=¤ බි0\u001E9:other=¤බි0\u001E9:other:a=¤ බි0"

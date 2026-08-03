@@ -5,9 +5,6 @@ package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 internal val LOCALE_STANDALONE_BE: String =
     "студзень\u001Eлюты\u001Eсакавік\u001Eкрасавік\u001Eмай\u001Eчэрвень\u001Eліпень\u001Eжнівень\u001Eверасень\u001Eкастрычнік\u001Eлістапад\u001Eснежань\u001Fсту\u001Eлют\u001Eсак\u001Eкра\u001Eмай\u001Eчэр\u001Eліп\u001Eжні\u001Eвер\u001Eкас\u001Eліс\u001Eсне\u001F\u001F\u001F\u001F\u001F0"
 
-internal val LOCALE_STANDALONE_BE_TARASK: String =
-    "студзень\u001Eлюты\u001Eсакавік\u001Eкрасавік\u001Eтравень\u001Eчэрвень\u001Eліпень\u001Eжнівень\u001Eверасень\u001Eкастрычнік\u001Eлістапад\u001Eсьнежань\u001F\u001F\u001F\u001F\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_BN: String =
     "\u001Fজানু\u001Eফেব\u001Eমার্চ\u001Eএপ্রিল\u001Eমে\u001Eজুন\u001Eজুলাই\u001Eআগস্ট\u001Eসেপ্ট\u001Eঅক্টো\u001Eনভেম্বর\u001Eডিসে\u001F\u001F\u001F\u001F\u001F0"
 
@@ -21,7 +18,7 @@ internal val LOCALE_STANDALONE_BRX: String =
     "\u001F\u001F\u001Fसमबार\u001Eमंगलबार\u001Eबुधबार\u001Eबिस्थिबार\u001Eसुुखुरबार\u001Eसनिबार\u001Eरबिबार\u001F\u001F\u001F0"
 
 internal val LOCALE_STANDALONE_BS: String =
-    "\u001F\u001Fj\u001Ef\u001Em\u001Ea\u001Em\u001Ej\u001Ej\u001Ea\u001Es\u001Eo\u001En\u001Ed\u001F\u001F\u001Fp\u001Eu\u001Es\u001Eč\u001Ep\u001Es\u001En\u001Fc3aa"
+    "\u001F\u001Fj\u001Ef\u001Em\u001Ea\u001Em\u001Ej\u001Ej\u001Ea\u001Es\u001Eo\u001En\u001Ed\u001F\u001F\u001Fp\u001Eu\u001Es\u001Eč\u001Ep\u001Es\u001En\u001F0"
 
 internal val LOCALE_STANDALONE_BUA: String =
     "\u001F\u001F\u001F\u001F\u001FM\u001ET\u001EW\u001ET\u001EF\u001ES\u001ES\u001F0"

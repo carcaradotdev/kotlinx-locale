@@ -21,7 +21,7 @@ internal val TIME_ZONE_FORMATS_SD_DEVA: String =
     "+HH:mm\u001F-HH:mm\u001Fजीएमटी{0}\u001Fजीएमटी\u001FGMT+?\u001F{0} वक़्तु\u001F{0} मइयारी वक़्तु\u001F{0} दीं॒ह जो वक्त\u001F{1} ({0})"
 
 internal val TIME_ZONE_FORMATS_SE: String =
-    "+HH:mm\u001F−HH:mm\u001FUTC{0}\u001FUTC\u001FGMT+?\u001F{0} áigi\u001F{0} dábálašáigi\u001F{0} geassiáigi\u001F{0} ({1})"
+    "+HH:mm\u001F−HH:mm\u001FUTC{0}\u001FUTC\u001FGMT+?\u001F{0} áigi\u001F{0} (+0)\u001F{0} (+1)\u001F{0} ({1})"
 
 internal val TIME_ZONE_FORMATS_SE_FI: String =
     "+HH:mm\u001F-HH:mm\u001F{0} GMT\u001FGMT\u001FGMT+?\u001F{0} áigi\u001F{0} dálveáigi\u001F{0} geasseáigi\u001F{0} ({1})"
@@ -34,9 +34,6 @@ internal val TIME_ZONE_FORMATS_SI: String =
 
 internal val TIME_ZONE_FORMATS_SK: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001Fčasové pásmo {0}\u001F{0} (+0)\u001F{0} (+1)\u001F{1} ({0})"
-
-internal val TIME_ZONE_FORMATS_SKR: String =
-    "+HH:mm\u001F-HH:mm\u001Fجی ایم ٹی {0}\u001Fجی ایم ٹی\u001FGMT+?\u001F{0} وقت\u001F{0} (+0)\u001F{0} ݙین٘ہ موسمی وقت\u001F{1} ({0})"
 
 internal val TIME_ZONE_FORMATS_SL: String =
     "+HH.mm\u001F-HH.mm\u001FGMT {0}\u001FGMT\u001FGMT +?\u001F{0} (lokalni čas)\u001F{0} (standardni čas)\u001F{0} (poletni čas)\u001F{1} ({0})"

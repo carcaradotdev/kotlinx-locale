@@ -2,17 +2,11 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
-internal val NUMBER_SYMBOLS_AB: String =
-    "latn\u001F0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F+\u001F%\u001F‰\u001F≈\u001FE\u001F×\u001F∞\u001FNaN\u001F;\u001F:\u001F1"
-
 internal val NUMBER_SYMBOLS_AF: String =
     "latn\u001F0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FNaN\u001F;\u001F:\u001F1"
 
 internal val NUMBER_SYMBOLS_AM: String =
     "latn\u001F0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001Fበቁጥር ሊገለጽ የማይችል\u001F;\u001F:\u001F1"
-
-internal val NUMBER_SYMBOLS_AN: String =
-    "latn\u001F0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FNaN\u001F;\u001F:\u001F1"
 
 internal val NUMBER_SYMBOLS_AR: String =
     "latn\u001F0123456789\u001F.\u001F,\u001F.\u001F,\u001F‎-\u001F‎+\u001F‎%‎\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001Fليس رقمًا\u001F;\u001F:\u001F1"
@@ -28,6 +22,9 @@ internal val NUMBER_SYMBOLS_AS: String =
 
 internal val NUMBER_SYMBOLS_AST: String =
     "latn\u001F0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FND\u001F;\u001F:\u001F1"
+
+internal val NUMBER_SYMBOLS_AZ: String =
+    "latn\u001F0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FNaN\u001F;\u001F:\u001F1"
 
 internal val NUMBER_SYMBOLS_AZ_ARAB: String =
     "arabext\u001F۰۱۲۳۴۵۶۷۸۹\u001F٫\u001F٬\u001F٫\u001F٬\u001F‎-‎\u001F‎+‎\u001F٪\u001F؉\u001F~\u001F×۱۰^\u001F×\u001F∞\u001FNaN\u001F؛\u001F:\u001F1"

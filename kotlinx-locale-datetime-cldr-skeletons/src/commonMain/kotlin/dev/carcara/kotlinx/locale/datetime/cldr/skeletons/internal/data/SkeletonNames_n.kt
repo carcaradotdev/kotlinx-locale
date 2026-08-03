@@ -11,9 +11,6 @@ internal val SKELETON_NAMES_NB: String =
 internal val SKELETON_NAMES_ND: String =
     "Era\u001EUmnyaka\u001EQuarter\u001EInyangacale\u001E\u001E\u001EIlanga leviki\u001EIlanga\u001E\u001E\u001EDayperiod\u001EIhola\u001EUmuzuzu\u001EIsekendi\u001E\u001E\u001FKota 1\u001EKota 2\u001EKota 3\u001EKota 4\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FKota 1\u001EKota 2\u001EKota 3\u001EKota 4"
 
-internal val SKELETON_NAMES_NDS: String =
-    "Ära\u001EJohr\u001EQuartaal\u001EMaand\u001E\u001E\u001EWekendag\u001EDag\u001E\u001E\u001EHalvdag\u001EStünn\u001EMinuut\u001ESekunn\u001E\u001E\u001F1. Quartaal\u001E2. Quartaal\u001E3. Quartaal\u001E4. Quartaal\u001FQ.1\u001EQ.2\u001EQ.3\u001EQ.4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FQ. I\u001EQ. II\u001EQ. III\u001EQ. IV"
-
 internal val SKELETON_NAMES_NE: String =
     "काल\u001Eवर्ष\u001Eत्रैमासिक\u001Eमहिना\u001E\u001E\u001Eहप्ताको बार\u001Eबार\u001E\u001E\u001Eपूर्वाह्न / अपराह्न\u001Eघण्टा\u001Eमिनेट\u001Eसेकेन्ड\u001E\u001E\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001Fपहिलो त्रैमासिक\u001Eदोस्रो त्रैमासिक\u001Eतेस्रो त्रैमासिक\u001Eचौथो त्रैमासिक\u001FH\u001EH\u001F{1}: {0}\u001E{1}: {0}\u001E{1}, {0}\u001E{1}, {0}\u001Fप्रथम त्रैमासिक\u001Eद्वितीय त्रैमासिक\u001Eतृतीय त्रैमासिक\u001Eचतुर्थ त्रैमासिक\u001Fप्रथम त्रैमासिक\u001Eद्वितीय त्रैमासिक\u001Eतृतीय त्रैमासिक\u001Eचतुर्थ त्रैमासिक"
 

@@ -118,6 +118,3 @@ internal val SKELETON_NAMES_SW_KE: String =
 
 internal val SKELETON_NAMES_SYR: String =
     "ܕܪܐ\u001Eܫܢܬܐ\u001Eܪܘܒܥܐ ܕܫܢܬܐ\u001Eܝܪܚܐ\u001E\u001E\u001Eܝܘܡܐ ܕܫܒܘܥܐ\u001Eܝܘܡܐ\u001E\u001E\u001Eܩܕܡ ܛܗܪܐ/ܒܬܪ ܛܗܪܐ\u001Eܫܥܬܐ\u001Eܩܛܝܢܬܐ\u001Eܪܦܦܐ\u001E\u001E\u001Fܪܘܒܥܐ ܩܕܡܝܐ\u001Eܪܘܒܥܐ ܬܪܝܢܐ\u001Eܪܘܒܥܐ ܬܠܝܬܝܐ\u001Eܪܘܒܥܐ ܪܒܝܥܝܐ\u001F܏ܪ ܐ\u001E܏ܪ ܒ\u001E܏ܪ ܓ\u001E܏ܪ ܕ\u001Fh\u001Eh\u001F{1} ܒܫܥܬܐ {0}\u001E{1} ܒܫܥܬܐ {0}\u001E{1}، {0}\u001E{1}، {0}\u001F\u001F"
-
-internal val SKELETON_NAMES_SZL: String =
-    "era\u001Erok\u001Esztwierć roku\u001Emiesiōnc\u001E\u001E\u001Edziyń tydnia\u001Edziyń\u001E\u001E\u001Erano / po połedniu / na wieczōr\u001Egodzina\u001Eminuta\u001Esekunda\u001E\u001E\u001FI sztwierć roku\u001EII sztwierć roku\u001EIII sztwierć roku\u001EIV sztwierć roku\u001FI szr.\u001EII szr.\u001EIII szr.\u001EIV szr.\u001FH\u001EH\u001F{1} 'ô' {0}\u001E{1} 'ô' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FI sztwierć roku\u001EII sztwierć roku\u001EIII sztwierć roku\u001EIV sztwierć roku"

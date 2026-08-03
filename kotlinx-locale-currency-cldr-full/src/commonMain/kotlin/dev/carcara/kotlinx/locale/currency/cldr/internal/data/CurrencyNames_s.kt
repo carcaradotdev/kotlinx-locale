@@ -6,7 +6,7 @@ internal val CURRENCY_NAMES_SA: String =
     "root\u001F\u001FBRL\u001Dब्राजीली रियाल\u001ECNY\u001Dचीनी युआन\u001EEUR\u001Dफिरङ्गिन् मुद्रा\u001EGBP\u001Dआङ्ग्लदेशीयः पाउंड\u001EINR\u001Dभारतीय रूप्यकम्\u001EJPY\u001Dजापानी येन\u001ERUB\u001Dरष्यदेशीय रूबल\u001EUSD\u001Dयूएस डॉलर\u001EXXX\u001Dअज्ञात मुद्रा"
 
 internal val CURRENCY_NAMES_SAH: String =
-    "root\u001FRUB\u001D₽\u001EUSD\u001D\$\u001FRUB\u001DАрассыыйа солкуобайа\u001EUSD\u001DАХШ дуоллара"
+    "root\u001FRUB\u001D₽\u001FRUB\u001DАрассыыйа солкуобайа\u001EUSD\u001DАХШ дуоллара"
 
 internal val CURRENCY_NAMES_SAH_RU: String =
     "sah\u001F\u001F"
@@ -18,7 +18,7 @@ internal val CURRENCY_NAMES_SAQ_KE: String =
     "saq\u001F\u001F"
 
 internal val CURRENCY_NAMES_SAT: String =
-    "root\u001F\u001FBMD\u001Dᱵᱟᱹᱨᱢᱩᱰᱟ ᱰᱚᱞᱟᱨ\u001EBRL\u001Dᱵᱨᱟᱡᱤᱞᱤᱭᱟᱱ ᱨᱤᱭᱟᱹᱞ\u001ECNY\u001Dᱪᱤᱱᱤ ᱭᱩᱣᱟᱱ\u001EEUR\u001Dᱭᱩᱨᱚ\u001EGBP\u001Dᱵᱨᱤᱴᱤᱥ ᱯᱟᱣᱩᱸᱰ\u001EINR\u001Dᱥᱤᱧᱚᱛ ᱨᱮᱱᱟᱜ ᱴᱟᱠᱟ\u001EJPY\u001Dᱡᱟᱯᱟᱱᱤ ᱭᱮᱱ\u001ERUB\u001Dᱨᱩᱥᱤ ᱨᱩᱵᱟᱹᱞ\u001EUSD\u001Dᱭᱩᱮᱥ ᱰᱚᱞᱟᱨ\u001EXXX\u001Dᱵᱟᱝᱩᱨᱩᱢ ᱠᱟᱨᱮᱱᱥᱤ"
+    "root\u001F\u001FBRL\u001Dᱵᱨᱟᱡᱤᱞᱤᱭᱟᱱ ᱨᱤᱭᱟᱹᱞ\u001ECNY\u001Dᱪᱤᱱᱤ ᱭᱩᱣᱟᱱ\u001EEUR\u001Dᱭᱩᱨᱚ\u001EGBP\u001Dᱵᱨᱤᱴᱤᱥ ᱯᱟᱣᱩᱸᱰ\u001EINR\u001Dᱥᱤᱧᱚᱛ ᱨᱮᱱᱟᱜ ᱴᱟᱠᱟ\u001EJPY\u001Dᱡᱟᱯᱟᱱᱤ ᱭᱮᱱ\u001ERUB\u001Dᱨᱩᱥᱤ ᱨᱩᱵᱟᱹᱞ\u001EUSD\u001Dᱭᱩᱮᱥ ᱰᱚᱞᱟᱨ\u001EXXX\u001Dᱵᱟᱝᱩᱨᱩᱢ ᱠᱟᱨᱮᱱᱥᱤ"
 
 internal val CURRENCY_NAMES_SAT_DEVA_IN: String =
     "sat-Deva\u001F\u001F"
@@ -69,7 +69,7 @@ internal val CURRENCY_NAMES_SD_DEVA_IN: String =
     "sd-Deva\u001F\u001F"
 
 internal val CURRENCY_NAMES_SE: String =
-    "root\u001FDKK\u001DDkr\u001EGBP\u001DGB£\u001EISK\u001DIkr\u001ENOK\u001Dkr\u001ESEK\u001DSkr\u001ETHB\u001D฿\u001FEUR\u001Deuro\u001EFIM\u001Dsuoma márkki\u001ENOK\u001Dnorgga kruvdno\u001ESEK\u001Druoŧŧa kruvdno\u001EXAG\u001Duns silba\u001EXAU\u001Duns golli"
+    "root\u001FDKK\u001DDkr\u001ENOK\u001Dkr\u001ESEK\u001DSkr\u001ETHB\u001D฿\u001FEUR\u001Deuro\u001EFIM\u001Dsuoma márkki\u001ENOK\u001Dnorgga kruvdno\u001ESEK\u001Druoŧŧa kruvdno\u001EXAG\u001Duns silba\u001EXAU\u001Duns golli"
 
 internal val CURRENCY_NAMES_SEH: String =
     "root\u001FMZN\u001DMTn\u001FAED\u001DDirém dos Emirados Árabes Unidos\u001EAOA\u001DCuanza angolano\u001EAUD\u001DDólar australiano\u001EBHD\u001DDinar bareinita\u001EBIF\u001DFranco do Burundi\u001EBWP\u001DPula botsuanesa\u001ECAD\u001DDólar canadense\u001ECDF\u001DFranco congolês\u001ECHF\u001DFranco suíço\u001ECNY\u001DYuan Renminbi chinês\u001ECVE\u001DEscudo cabo-verdiano\u001EDJF\u001DFranco do Djibuti\u001EDZD\u001DDinar argelino\u001EEGP\u001DLibra egípcia\u001EERN\u001DNakfa da Eritréia\u001EETB\u001DBirr etíope\u001EEUR\u001DEuro\u001EGBP\u001DLibra britânica\u001EGHC\u001DCedi de Gana (1979–2007)\u001EGMD\u001DDalasi de Gâmbia\u001EGNS\u001DSyli da Guiné\u001EINR\u001DRúpia indiana\u001EJPY\u001DIene japonês\u001EKES\u001DXelim queniano\u001EKMF\u001DFranco de Comores\u001ELRD\u001DDólar liberiano\u001ELSL\u001DLoti do Lesoto\u001ELYD\u001DDinar líbio\u001EMAD\u001DDirém marroquino\u001EMGA\u001DFranco de Madagascar\u001EMRO\u001DOuguiya da Mauritânia (1973–2017)\u001EMRU\u001DOuguiya da Mauritânia\u001EMUR\u001DRupia de Maurício\u001EMWK\u001DCuacha do Maláui\u001EMZM\u001DMetical antigo de Moçambique\u001EMZN\u001DMetical de Moçambique\u001ENAD\u001DDólar da Namíbia\u001ENGN\u001DNaira nigeriana\u001ERWF\u001DFranco ruandês\u001ESAR\u001DRial saudita\u001ESCR\u001DRupia das Seychelles\u001ESDG\u001DDinar sudanês\u001ESDP\u001DLibra sudanesa antiga\u001ESHP\u001DLibra de Santa Helena\u001ESLE\u001DLeone de Serra Leoa\u001ESLL\u001DLeone de Serra Leoa (1964—2022)\u001ESOS\u001DXelim somali\u001ESTD\u001DDobra de São Tomé e Príncipe (1977–2017)\u001ESTN\u001DDobra de São Tomé e Príncipe\u001ESZL\u001DLilangeni da Suazilândia\u001ETND\u001DDinar tunisiano\u001ETZS\u001DXelim da Tanzânia\u001EUGX\u001DXelim ugandense (1966–1987)\u001EUSD\u001DDólar norte-americano\u001EXAF\u001DFranco CFA BEAC\u001EXOF\u001DFranco CFA BCEAO\u001EZAR\u001DRand sul-africano\u001EZMK\u001DCuacha zambiano (1968–2012)\u001EZMW\u001DCuacha zambiano\u001EZWD\u001DDólar do Zimbábue"
@@ -208,9 +208,6 @@ internal val CURRENCY_NAMES_SR_LATN_ME: String =
 
 internal val CURRENCY_NAMES_SS: String =
     "root\u001FSZL\u001DE\u001EZAR\u001DR\u001F"
-
-internal val CURRENCY_NAMES_SSY: String =
-    "root\u001FERN\u001DNfk\u001F"
 
 internal val CURRENCY_NAMES_SSY_ER: String =
     "ssy\u001F\u001F"

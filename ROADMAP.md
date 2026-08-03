@@ -67,14 +67,21 @@ The `w`, `W` and `F` pattern fields, and the numeric forms of `e` and `c`.
 
 ## Close the conformance exclusions
 
-Forty-six locales are excluded by name from two suites, and each is a bug rather
-than a boundary. They should close before anything is published.
+Nine locales are excluded by name from the person name suite, and each is a bug
+rather than a boundary. They should close before anything is published.
 
-- Intervals against ICU, 36 locales: the fallback reaches a different base
-  pattern than ICU when a skeleton has no interval entry of its own.
-- Person names against CLDR, 10 locales: Indic grapheme clusters beyond the
-  virama join, and which separator survives an empty field.
-- Each list is pinned by an assertion on its size, so neither can grow unnoticed.
+- Assamese, Kannada, Malayalam, Sinhala and Telugu: the grapheme rule joins
+  across a virama but not across every conjunct, so an initial comes out a
+  cluster short or long.
+- Catalan, Czech, Sardinian and Slovak: which literal survives when the field
+  between two of them is empty. The rule keeps the first separator and these
+  patterns want the bracketing one.
+
+The list is pinned by an assertion on its size so it cannot grow unnoticed. A
+second exclusion, the eight locales whose words are not space-separated, is a
+genuine boundary rather than a bug and is recorded as one.
+
+The interval suite has no exclusions: all 905 locales it shares with ICU agree.
 
 ## Platform sources for the remaining targets
 

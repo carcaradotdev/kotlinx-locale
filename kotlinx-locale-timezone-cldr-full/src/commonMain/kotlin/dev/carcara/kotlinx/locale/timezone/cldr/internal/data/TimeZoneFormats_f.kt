@@ -20,9 +20,6 @@ internal val TIME_ZONE_FORMATS_FO: String =
 internal val TIME_ZONE_FORMATS_FR: String =
     "+HH:mm\u001F−HH:mm\u001FUTC{0}\u001FUTC\u001FGMT+?\u001Fheure : {0}\u001F{0} (heure standard)\u001F{0} (heure d’été)\u001F{1} ({0})"
 
-internal val TIME_ZONE_FORMATS_FRR: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} Tidj\u001F{0} Standard Tidj\u001F{0} Somertidj\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_FR_CA: String =
     "+HH:mm\u001F−HH:mm\u001FUTC{0}\u001FUTC\u001FGMT+?\u001Fheure : {0}\u001F{0} (heure normale)\u001F{0} (heure avancée)\u001F{1} ({0})"
 

@@ -32,9 +32,6 @@ internal val SKELETON_NAMES_FO: String =
 internal val SKELETON_NAMES_FR: String =
     "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
 
-internal val SKELETON_NAMES_FRR: String =
-    "tidjrüm\u001Ejuar\u001Ekwartjuar\u001Emuun\u001E\u001E\u001Ewegdai\u001Edai\u001E\u001E\u001Eiarmade/eftermade\u001Estünj\u001Eminüt\u001Esekund\u001E\u001E\u001Fiarst kwartaal\u001Enaist kwartaal\u001Etraad kwartaal\u001Efjuard kwartaal\u001F1.Q\u001E2.Q\u001E3.Q\u001E4.Q\u001FH\u001EH\u001F{1} 'am' {0}\u001E{1} 'am' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"
-
 internal val SKELETON_NAMES_FR_CD: String =
     "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EhB\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
 
@@ -48,4 +45,4 @@ internal val SKELETON_NAMES_FUR: String =
     "ere\u001Ean\u001EQuarter\u001Emês\u001E\u001E\u001Edì de setemane\u001Edì\u001E\u001E\u001Etoc dal dì\u001Eore\u001Eminût\u001Esecont\u001E\u001E\u001FPrin trimestri\u001ESecont trimestri\u001ETierç trimestri\u001ECuart trimestri\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FPrin trimestri\u001ESecont trimestri\u001ETierç trimestri\u001ECuart trimestri"
 
 internal val SKELETON_NAMES_FY: String =
-    "Tiidsrin\u001EJier\u001Efearnsjier\u001EMoanne\u001E\u001E\u001Edei van de wike\u001Edei\u001E\u001E\u001EAM/PM\u001Eoere\u001EMinút\u001ESekonde\u001E\u001E\u001F1e fearnsjier\u001E2e fearnsjier\u001E3e fearnsjier\u001E4e fearnsjier\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'om' {0}\u001E{1} 'om' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1e fearnsjier\u001E2e fearnsjier\u001E3e fearnsjier\u001E4e fearnsjier"
+    "Tiidsrin\u001EJier\u001EQuarter\u001EMoanne\u001E\u001E\u001Edei van de wike\u001Edei\u001E\u001E\u001EAM/PM\u001Eoere\u001EMinút\u001ESekonde\u001E\u001E\u001F1e fearnsjier\u001E2e fearnsjier\u001E3e fearnsjier\u001E4e fearnsjier\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'om' {0}\u001E{1} 'om' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1e fearnsjier\u001E2e fearnsjier\u001E3e fearnsjier\u001E4e fearnsjier"

@@ -11,9 +11,6 @@ internal val TIME_ZONE_CITIES_NB: String =
 internal val TIME_ZONE_CITIES_NB_NO: String =
     "nb\u001F"
 
-internal val TIME_ZONE_CITIES_NDS: String =
-    "root\u001FAmerica/Mexico_City\u001DMexiko-Stadt\u001EAmerica/North_Dakota/Center\u001DCenter, Noord-Dakota\u001EAmerica/North_Dakota/New_Salem\u001DNew Salem, Noord-Dakota\u001EAntarctica/Vostok\u001DWostok\u001EAsia/Kamchatka\u001DKamschatka\u001EAsia/Krasnoyarsk\u001DKrasnojarsk\u001EAsia/Novosibirsk\u001DNowosibirsk\u001EAsia/Sakhalin\u001DSachalin\u001EAsia/Ulaanbaatar\u001DUlanbator\u001EAsia/Vladivostok\u001DWladiwostok\u001EAsia/Yakutsk\u001DJakutsk\u001EAsia/Yekaterinburg\u001DJekaterinborg\u001EAtlantic/Azores\u001DAzoren\u001EAtlantic/Canary\u001DKanaren\u001EEtc/Unknown\u001DNich begäng\u001EEurope/Moscow\u001DMoskau\u001EEurope/Volgograd\u001DWolgograd"
-
 internal val TIME_ZONE_CITIES_NDS_DE: String =
     "nds\u001F"
 

@@ -2,9 +2,6 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal val LOCALE_STANDALONE_GAA: String =
-    "Aharabata\u001EOflɔ\u001EOtsokrikri\u001EAbɛibe\u001EAgbiɛnaa\u001EOtukwajan\u001EMaawɛ\u001EManyawale\u001EGbo\u001EAntɔŋ\u001EAlemle\u001EAfuabe\u001F\u001F\u001F\u001F\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_GD: String =
     "Am Faoilleach\u001EAn Gearran\u001EAm Màrt\u001EAn Giblean\u001EAn Cèitean\u001EAn t-Ògmhios\u001EAn t-Iuchar\u001EAn Lùnastal\u001EAn t-Sultain\u001EAn Dàmhair\u001EAn t-Samhain\u001EAn Dùbhlachd\u001F\u001F\u001F\u001F\u001F\u001F0"
 

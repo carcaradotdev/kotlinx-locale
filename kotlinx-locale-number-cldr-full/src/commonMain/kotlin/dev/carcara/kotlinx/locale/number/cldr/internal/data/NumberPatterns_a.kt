@@ -2,8 +2,5 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
-internal val NUMBER_PATTERNS_AB: String =
-    "#,##0.###\u001F#,##0 %"
-
 internal val NUMBER_PATTERNS_AS: String =
     "#,##,##0.###\u001F#,##,##0%"

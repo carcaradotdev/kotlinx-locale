@@ -8,9 +8,6 @@ internal val TIME_ZONE_NAMES_JA: String =
 internal val TIME_ZONE_NAMES_JA_JP: String =
     "ja\u001F\u001F\u001F"
 
-internal val TIME_ZONE_NAMES_JBO: String =
-    "root\u001F\u001F\u001FColombia#ld\u001Dcistcika fo la kolombiias\u001EColombia#lg\u001Dtcika fo la kolombiias\u001EColombia#ls\u001Dnalcistcika fo la kolombiias\u001EGalapagos#ls\u001Dtcika fo la galapagos"
-
 internal val TIME_ZONE_NAMES_JBO_001: String =
     "jbo\u001F\u001F\u001F"
 

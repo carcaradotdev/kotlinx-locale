@@ -22,6 +22,3 @@ internal val LOCALE_STANDALONE_MN_MONG_MN: String =
 
 internal val LOCALE_STANDALONE_MT: String =
     "\u001F\u001FJn\u001EFr\u001EMz\u001EAp\u001EMj\u001EĠn\u001ELj\u001EAw\u001ESt\u001EOb\u001ENv\u001EDċ\u001F\u001F\u001FTn\u001ETl\u001EEr\u001EĦm\u001EĠm\u001ESb\u001EĦd\u001F0"
-
-internal val LOCALE_STANDALONE_MYV: String =
-    "\u001Fякш\u001Eдав\u001Eэйз\u001Eчад\u001Eпан\u001Eашт\u001Eмед\u001Eума\u001Eташ\u001Eожо\u001Eсун\u001Eаца\u001F\u001Fатяньчи\u001Eвастаньчи\u001Eкуншкачи\u001Eкалоньчи\u001Eсюконьчи\u001Eшлямочи\u001Eтаргочи\u001F\u001F\u001F0"

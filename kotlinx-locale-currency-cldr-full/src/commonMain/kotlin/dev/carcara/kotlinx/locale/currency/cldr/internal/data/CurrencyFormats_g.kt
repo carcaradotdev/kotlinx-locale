@@ -2,12 +2,6 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.currency.cldr.internal.data
 
-internal val CURRENCY_FORMATS_GAA: String =
-    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤ #,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00;(¤#,##0.00)\u001F¤ #,##0.00;(¤ #,##0.00)"
-
-internal val CURRENCY_FORMATS_GEZ: String =
-    "0123456789\u001F.\u001Fወ\u001F.\u001Fወ\u001F-\u001F1\u001F¤#,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00\u001F¤#,##0.00"
-
 internal val CURRENCY_FORMATS_GSW: String =
     "0123456789\u001F.\u001F'\u001F.\u001F'\u001F−\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤"
 

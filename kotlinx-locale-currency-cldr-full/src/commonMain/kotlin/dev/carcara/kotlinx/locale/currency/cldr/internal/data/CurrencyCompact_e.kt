@@ -2,6 +2,9 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.currency.cldr.internal.data
 
+internal val CURRENCY_COMPACT_EE: String =
+    "10:other=¤00B\u001E11:other=¤000B\u001E12:other=¤0T\u001E13:other=¤00T\u001E14:other=¤000T\u001E3:other=¤0K\u001E4:other=¤00K\u001E5:other=¤000K\u001E6:other=¤0M\u001E7:other=¤00M\u001E8:other=¤000M\u001E9:other=¤0B"
+
 internal val CURRENCY_COMPACT_EL: String =
     "10:other=00 δισ'.' ¤\u001E11:other=000 δισ'.' ¤\u001E12:other=0 τρισ'.' ¤\u001E13:other=00 τρισ'.' ¤\u001E14:other=000 τρισ'.' ¤\u001E3:other=0 χιλ'.' ¤\u001E4:other=00 χιλ'.' ¤\u001E5:other=000 χιλ'.' ¤\u001E6:other=0 εκ'.' ¤\u001E7:other=00 εκ'.' ¤\u001E8:other=000 εκ'.' ¤\u001E9:other=0 δισ'.' ¤"
 

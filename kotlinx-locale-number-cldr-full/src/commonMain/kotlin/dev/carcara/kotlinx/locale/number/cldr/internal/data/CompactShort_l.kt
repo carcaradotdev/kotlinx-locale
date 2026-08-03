@@ -2,14 +2,8 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
-internal val COMPACT_SHORT_LA: String =
-    "10:other=00 Md\u001E11:other=000 Md\u001E12:other=0 mil Md\u001E13:other=00 mil Md\u001E14:other=000 mil Md\u001E3:other=0M\u001E4:other=00M\u001E5:other=000M\u001E6:other=0 Mn\u001E7:other=00 Mn\u001E8:other=000 Mn\u001E9:other=0 Md"
-
 internal val COMPACT_SHORT_LB: String =
     "10:other=00 Mrd'.'\u001E11:other=000 Mrd'.'\u001E12:other=0 Bio'.'\u001E13:other=00 Bio'.'\u001E14:other=000 Bio'.'\u001E3:other=0 Dsd'.'\u001E4:other=00 Dsd'.'\u001E5:other=000 Dsd'.'\u001E6:other=0 Mio'.'\u001E7:other=00 Mio'.'\u001E8:other=000 Mio'.'\u001E9:other=0 Mrd'.'"
-
-internal val COMPACT_SHORT_LIJ: String =
-    "10:other=00 Mld\u001E11:other=000 Mld\u001E12:other=0 Bio\u001E13:other=00 Bio\u001E14:other=000 Bio\u001E3:other=0 k\u001E4:other=00 k\u001E5:other=000 k\u001E6:other=0 Mio\u001E7:other=00 Mio\u001E8:other=000 Mio\u001E9:other=0 Mld"
 
 internal val COMPACT_SHORT_LLD: String =
     "10:one=00 Mlg\u001E10:other=00 Mlg\u001E11:one=000 Mlg\u001E11:other=000 Mlg\u001E12:one=0 Bln\u001E12:other=0 Bln\u001E13:one=00 Bln\u001E13:other=00 Bln\u001E14:one=000 Bln\u001E14:other=000 Bln\u001E3:one=0m\u001E3:other=0m\u001E4:one=00m\u001E4:other=00m\u001E5:one=000m\u001E5:other=000m\u001E6:one=0 Mln\u001E6:other=0 Mln\u001E7:one=00 Mln\u001E7:other=00 Mln\u001E8:one=000 Mln\u001E8:other=000 Mln\u001E9:one=0 Mlg\u001E9:other=0 Mlg"

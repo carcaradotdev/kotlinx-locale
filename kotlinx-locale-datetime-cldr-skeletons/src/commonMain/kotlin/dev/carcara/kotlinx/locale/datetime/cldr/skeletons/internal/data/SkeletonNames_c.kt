@@ -21,25 +21,16 @@ internal val SKELETON_NAMES_CHR: String =
     "ᏗᏓᎴᏂᏍᎬ\u001EᎤᏕᏘᏴᏌᏗᏒᎢ\u001EᎩᏄᏙᏗ\u001EᎧᎸᎢ\u001E\u001E\u001EᎢᎦ ᏕᎨᏌᏗᏒ\u001EᎢᎦ\u001E\u001E\u001EᏌᎾᎴ/ᏒᎯᏱ\u001EᏑᏟᎶᏓ\u001EᎢᏯᏔᏬᏍᏔᏅ\u001EᎠᏎᏢ\u001E\u001E\u001F1st ᎩᏄᏙᏗ\u001E2nd ᎩᏄᏙᏗ\u001E3rd ᎩᏄᏙᏗ\u001E4th ᎩᏄᏙᏗ\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} ᎤᎾᎢ {0}\u001E{1} ᎤᎾᎢ {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1st ᎩᏄᏙᏗ\u001E2nd ᎩᏄᏙᏗ\u001E3rd ᎩᏄᏙᏗ\u001E4th ᎩᏄᏙᏗ"
 
 internal val SKELETON_NAMES_CKB: String =
-    "دەم\u001Eساڵ\u001Eچارەگ\u001Eمانگ\u001E\u001E\u001Eڕۆژی ھەفتە\u001EDay\u001E\u001E\u001Eپ.ن/د.ن\u001Eکاتژمێر\u001Eخولەک\u001Eچرکە\u001E\u001E\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم\u001Fچ١\u001Eچ٢\u001Eچ٣\u001Eچ٤\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم"
+    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم\u001Fچ١\u001Eچ٢\u001Eچ٣\u001Eچ٤\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم"
 
 internal val SKELETON_NAMES_CKB_IR: String =
-    "دەم\u001Eساڵ\u001Eچارەگ\u001Eمانگ\u001E\u001E\u001Eڕۆژی ھەفتە\u001EDay\u001E\u001E\u001Eپ.ن/د.ن\u001Eکاتژمێر\u001Eخولەک\u001Eچرکە\u001E\u001E\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم\u001Fچ١\u001Eچ٢\u001Eچ٣\u001Eچ٤\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم"
-
-internal val SKELETON_NAMES_CO: String =
-    "era\u001Eannu\u001Etrimestru\u001Emese\u001E\u001E\u001Eghjornu di a settimana\u001Eghjornu\u001E\u001E\u001EDayperiod\u001Eora\u001Eminutu\u001Eseconda\u001E\u001E\u001F1u trimestru\u001E2u trimestru\u001E3u trimestru\u001E4u trimestru\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1} 'à' {0}\u001F\u001F1u trimestru\u001E2u trimestru\u001E3u trimestru\u001E4u trimestru"
-
-internal val SKELETON_NAMES_COP: String =
-    "ⲡ̀ⲥⲏⲟⲩ\u001Eⲣⲟⲙⲡⲓ\u001Eⲣⲉϥⲧⲟⲩ\u001Eⲁⲃⲟⲧ\u001E\u001E\u001Eⲉϩⲟⲟⲩ ⲙ̀ⲡⲓⲁⲛϣⲁϣϥ\u001Eⲉϩⲟⲟⲩ\u001E\u001E\u001Eϧⲁϫⲉⲛ ⲙⲉⲣⲓ/ⲙⲉⲛⲉⲛⲥⲁ ⲙⲉⲣⲓ\u001Eⲟⲩⲛⲟⲩ\u001Eⲥⲟⲩⲥⲟⲩ\u001Eⲙⲁϩⲥ̀ⲛⲁⲩ\u001E\u001E\u001Fⲡⲓϩⲟⲩⲓⲧ ⲛ̀ⲣⲉϥⲧⲟⲩ\u001Eⲡⲓⲙⲁϩⲥ̀ⲛⲁⲩ ⲛ̀ⲣⲉϥⲧⲟⲩ\u001Eⲡⲓⲙⲁϩϣⲟⲙⲧ ⲛ̀ⲣⲉϥⲧⲟⲩ\u001Eⲡⲓⲙⲁϩϥ̀ⲧⲟⲩ ⲛ̀ⲣⲉϥⲧⲟⲩ\u001Fⲡⲓⲁ̅ ⲛ̀ⲣⲉϥⲧⲟⲩ\u001Eⲡⲓⲙⲁϩⲃ︦ ⲛ̀ⲣⲉϥⲧⲟⲩ\u001Eⲡⲓⲙⲁϩⲅ︦ ⲛ̀ⲣⲉϥⲧⲟⲩ\u001Eⲡⲓⲙⲁϩⲇ︦ ⲛ̀ⲣⲉϥⲧⲟⲩ\u001Fh\u001Eh\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"
+    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم\u001Fچ١\u001Eچ٢\u001Eچ٣\u001Eچ٤\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم"
 
 internal val SKELETON_NAMES_CS: String =
     "letopočet\u001Erok\u001Ečtvrtletí\u001Eměsíc\u001E\u001E\u001Eden v týdnu\u001Eden\u001E\u001E\u001Ečást dne\u001Ehodina\u001Eminuta\u001Esekunda\u001E\u001E\u001F1. čtvrtletí\u001E2. čtvrtletí\u001E3. čtvrtletí\u001E4. čtvrtletí\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} 'v' {0}\u001E{1} 'v' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. čtvrtletí\u001E2. čtvrtletí\u001E3. čtvrtletí\u001E4. čtvrtletí"
 
 internal val SKELETON_NAMES_CSW: String =
     "Era\u001Eᐊᐢᑭᕀ\u001EQuarter\u001Eᐲᓯᒼ\u001E\u001E\u001EDay of the Week\u001Eᑮᓯᑳᐤ\u001E\u001E\u001EDayperiod\u001Eᐚᐢᑳᐸᓂᐤ\u001Eᑎᐸᐦᐃᑲᓂᐢ\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
-
-internal val SKELETON_NAMES_CU: String =
-    "вѣ́къ\u001Eлѣ́то\u001Eче́тверть\u001Eмѣ́сѧцъ\u001E\u001E\u001Eде́нь седми́цы\u001Eде́нь\u001E\u001E\u001EДП/ПП\u001Eча́съ\u001Eминꙋ́та\u001Eсекꙋ́нда\u001E\u001E\u001Fа҃_ѧ че́тверть\u001Eв҃_ѧ че́тверть\u001Eг҃_ѧ че́тверть\u001Eд҃_ѧ че́тверть\u001Fа҃_ѧ че́тверть\u001Eв҃_ѧ че́тверть\u001Eг҃_ѧ че́тверть\u001Eд҃_ѧ че́тверть\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fа҃\u001Eв҃\u001Eг҃\u001Eд҃"
 
 internal val SKELETON_NAMES_CV: String =
     "самана\u001Eҫул\u001Eчӗрӗк\u001Eуйӑх\u001E\u001E\u001Eэрнен кунӗ\u001Eкун\u001E\u001E\u001Eк. у./к. х.\u001Eсехет\u001Eминут\u001Eҫеккунт\u001E\u001E\u001F1-мӗш чӗрӗк\u001E2-мӗш чӗрӗк\u001E3-мӗш чӗрӗк\u001E4-мӗш чӗрӗк\u001F1-мӗш чӗр.\u001E2-мӗш чӗр.\u001E3-мӗш чӗр.\u001E4-мӗш чӗр.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"

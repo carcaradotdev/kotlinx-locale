@@ -2,8 +2,5 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.datetime.cldr.internal.data
 
-internal val LOCALE_STANDALONE_OC: String =
-    "genièr\u001Efebrièr\u001Emarç\u001Eabril\u001Emai\u001Ejunh\u001Ejulhet\u001Eagost\u001Esetembre\u001Eoctòbre\u001Enovembre\u001Edecembre\u001F\u001F\u001F\u001F\u001F\u001F0"
-
 internal val LOCALE_STANDALONE_OS: String =
     "Январь\u001EФевраль\u001EМартъи\u001EАпрель\u001EМай\u001EИюнь\u001EИюль\u001EАвгуст\u001EСентябрь\u001EОктябрь\u001EНоябрь\u001EДекабрь\u001FЯнв.\u001EФевр.\u001EМарт.\u001EАпр.\u001EМай\u001EИюнь\u001EИюль\u001EАвг.\u001EСент.\u001EОкт.\u001EНояб.\u001EДек.\u001F\u001FКъуырисӕр\u001EДыццӕг\u001EӔртыццӕг\u001EЦыппӕрӕм\u001EМайрӕмбон\u001EСабат\u001EХуыцаубон\u001FКрс\u001EДцг\u001EӔрт\u001EЦпр\u001EМрб\u001EСбт\u001EХцб\u001F\u001F0"

@@ -9,7 +9,7 @@ internal val SKELETON_NAMES_ID: String =
     "era\u001Etahun\u001Ekuartal\u001Ebulan\u001E\u001E\u001Ehari dalam seminggu\u001Ehari\u001E\u001E\u001EAM/PM\u001Ejam\u001Emenit\u001Edetik\u001E\u001E\u001FKuartal ke-1\u001EKuartal ke-2\u001EKuartal ke-3\u001EKuartal ke-4\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'pukul' {0}\u001E{1} 'pukul' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FKuartal ke-1\u001EKuartal ke-2\u001EKuartal ke-3\u001EKuartal ke-4"
 
 internal val SKELETON_NAMES_IE: String =
-    "era\u001Eannu\u001Etrimestre\u001Emensu\u001E\u001E\u001Edie del semane\u001Edie\u001E\u001E\u001Emidídie\u001Ehor\u001Eminute\u001Eseconde\u001E\u001E\u001F1-m trimestre\u001E2-m trimestre\u001E3-m trimestre\u001E4-m trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} 'ye' {0}\u001E{1} 'ye' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1-m trimestre\u001E2-m trimestre\u001E3-m trimestre\u001E4-m trimestre"
+    "era\u001Eannu\u001Etrimestre\u001Emensu\u001E\u001E\u001Edie del semane\u001Edie\u001E\u001E\u001Emidídie\u001Ehor\u001Eminute\u001Eseconde\u001E\u001E\u001F1-m trimestre\u001E2-m trimestre\u001E3-m trimestre\u001E4-m trimestre\u001F1-m trimestre\u001E2-m trimestre\u001E3-m trimestre\u001E4-m trimestre\u001FH\u001EH\u001F{1} 'ye' {0}\u001E{1} 'ye' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_IG: String =
     "Oge\u001EAfọ\u001EỌnwa atọ n’afọ\u001EỌnwa\u001E\u001E\u001EỤbọchị izu\u001EỤbọchị\u001E\u001E\u001EN’ụtụtụ/N’abalị\u001EElekere\u001ENkeji\u001ESecond\u001E\u001E\u001FỌkara 1\u001EỌkara 2\u001EỌkara 3\u001EỌkara 4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} 'na' {0}\u001E{1} 'na' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001FỌkara 1\u001EỌkara 2\u001EỌkara 3\u001EỌkara 4"

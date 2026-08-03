@@ -2,6 +2,9 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
+internal val NUMBER_SYMBOLS_DA: String =
+    "latn\u001F0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FNaN\u001F;\u001F.\u001F1"
+
 internal val NUMBER_SYMBOLS_DE: String =
     "latn\u001F0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F+\u001F%\u001F‰\u001F≈\u001FE\u001F·\u001F∞\u001FNaN\u001F;\u001F:\u001F1"
 
@@ -10,9 +13,6 @@ internal val NUMBER_SYMBOLS_DE_AT: String =
 
 internal val NUMBER_SYMBOLS_DE_CH: String =
     "latn\u001F0123456789\u001F.\u001F'\u001F.\u001F'\u001F-\u001F+\u001F%\u001F‰\u001F≈\u001FE\u001F·\u001F∞\u001FNaN\u001F;\u001F:\u001F1"
-
-internal val NUMBER_SYMBOLS_DV: String =
-    "latn\u001F0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FNaN\u001F,\u001F:\u001F1"
 
 internal val NUMBER_SYMBOLS_DZ: String =
     "tibt\u001F༠༡༢༣༤༥༦༧༨༩\u001F.\u001F,\u001F.\u001F,\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001Fགྲངས་མེད\u001Fཨང་མད\u001F;\u001F:\u001F1"

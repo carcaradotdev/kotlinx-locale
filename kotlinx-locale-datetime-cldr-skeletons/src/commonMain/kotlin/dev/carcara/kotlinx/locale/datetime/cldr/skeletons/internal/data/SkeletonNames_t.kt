@@ -47,12 +47,6 @@ internal val SKELETON_NAMES_TOK: String =
 internal val SKELETON_NAMES_TR: String =
     "çağ\u001Eyıl\u001Eçeyrek\u001Eay\u001E\u001E\u001Ehaftanın günü\u001Egün\u001E\u001E\u001EÖÖ/ÖS\u001Esaat\u001Edakika\u001Esaniye\u001E\u001E\u001F1. çeyrek\u001E2. çeyrek\u001E3. çeyrek\u001E4. çeyrek\u001FÇ1\u001EÇ2\u001EÇ3\u001EÇ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. çeyrek\u001E2. çeyrek\u001E3. çeyrek\u001E4. çeyrek"
 
-internal val SKELETON_NAMES_TRV: String =
-    "Hngkawas\u001Ehngkawas\u001EQuarter\u001EIdas\u001E\u001E\u001EJiyax quri jiyax iyax sngayan\u001EJiyax\u001E\u001E\u001EJikan\u001ETuki\u001ESpngan\u001ESeykn\u001E\u001E\u001Fmnprxan\u001Emndha\u001Emntru\u001Emnspat\u001Fmn1\u001Emn2\u001Emn3\u001Emn4\u001Fh\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fmnprxan\u001Emndha\u001Emntru\u001Emnspat"
-
-internal val SKELETON_NAMES_TRW: String =
-    "دور\u001Eکال\u001Eڇا مای\u001Eما\u001E\u001E\u001Eہفتہ سی دی\u001Eدی\u001E\u001E\u001Eپیشیا موش/پیشیا پأش\u001Eگینٹہ\u001Eمیلٹ\u001Eسیکنڈ\u001E\u001E\u001Fاول ڇامای\u001Eدھویم ڇامای\u001Eڇوی ڇامای\u001Eچوٹھوم ڇامای\u001Fاول ڇامای\u001Eدوھیم ڇامای\u001Eڇوی ڇامای\u001Eچوٹھوم ڇامای\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001Fاول ڇامای\u001Eدوھیم ڇامای\u001Eڇوی ڇامای\u001Eچوٹھوم ڇامای\u001F"
-
 internal val SKELETON_NAMES_TR_CY: String =
     "çağ\u001Eyıl\u001Eçeyrek\u001Eay\u001E\u001E\u001Ehaftanın günü\u001Egün\u001E\u001E\u001EÖÖ/ÖS\u001Esaat\u001Edakika\u001Esaniye\u001E\u001E\u001F1. çeyrek\u001E2. çeyrek\u001E3. çeyrek\u001E4. çeyrek\u001FÇ1\u001EÇ2\u001EÇ3\u001EÇ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. çeyrek\u001E2. çeyrek\u001E3. çeyrek\u001E4. çeyrek"
 

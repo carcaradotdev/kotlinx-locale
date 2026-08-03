@@ -133,6 +133,7 @@ class PartialLocaleData {
 fun parseLdml(file: File): PartialLocaleData {
     val data = PartialLocaleData()
     val ldml = parseXml(file).documentElement
+    checkNoContainerDrafts(ldml, file.name)
 
     ldml.path("numbers", "defaultNumberingSystem")
         ?.takeIf { !it.hasAttribute("alt") }

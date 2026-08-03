@@ -5,14 +5,17 @@ package dev.carcara.kotlinx.locale.currency.cldr.internal.data
 internal val CURRENCY_FORMATS_BA: String =
     "0123456789\u001F.\u001F \u001F.\u001F \u001F-\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤"
 
+internal val CURRENCY_FORMATS_BAS: String =
+    "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤"
+
 internal val CURRENCY_FORMATS_BE: String =
     "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F2\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤"
 
-internal val CURRENCY_FORMATS_BEW: String =
-    "0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F1\u001F¤ #,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00\u001F¤#,##0.00"
+internal val CURRENCY_FORMATS_BEM: String =
+    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤#,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00;(¤#,##0.00)\u001F¤#,##0.00;(¤#,##0.00)"
 
 internal val CURRENCY_FORMATS_BEZ: String =
-    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F#,##0.00¤\u001F#,##0.00 ¤\u001F#,##0.00¤\u001F#,##0.00¤"
+    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F#,##0.00¤\u001F¤ #,##0.00\u001F#,##0.00¤\u001F#,##0.00¤"
 
 internal val CURRENCY_FORMATS_BG: String =
     "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F2\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤;(#,##0.00 ¤)\u001F#,##0.00 ¤;(#,##0.00 ¤)"
@@ -26,6 +29,9 @@ internal val CURRENCY_FORMATS_BHO: String =
 internal val CURRENCY_FORMATS_BLO: String =
     "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F1\u001F¤ #,##0.00;¤ -#,##0.00\u001F¤ #,##0.00;¤ -#,##0.00\u001F¤ #,##0.00;¤ -#,##0.00\u001F¤ #,##0.00;¤ -#,##0.00"
 
+internal val CURRENCY_FORMATS_BM_NKOO: String =
+    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤ #,##0.00\u001F¤ #,##0.00\u001F¤ #,##0.00\u001F¤ #,##0.00;(¤ #,##0.00)"
+
 internal val CURRENCY_FORMATS_BN: String =
     "০১২৩৪৫৬৭৮৯\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F#,##,##0.00¤\u001F#,##,##0.00 ¤\u001F#,##,##0.00¤;(#,##,##0.00¤)\u001F#,##,##0.00 ¤;(#,##,##0.00 ¤)"
 
@@ -33,7 +39,7 @@ internal val CURRENCY_FORMATS_BN_IN: String =
     "০১২৩৪৫৬৭৮৯\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤#,##,##0.00\u001F¤ #,##,##0.00\u001F¤#,##,##0.00;(¤#,##,##0.00)\u001F¤ #,##,##0.00;(¤ #,##,##0.00)"
 
 internal val CURRENCY_FORMATS_BQI: String =
-    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F‎−\u001F1\u001F‎¤ #,##0.00\u001F‎¤ #,##0.00\u001F‎¤ #,##0.00;‎(¤ #,##0.00)\u001F‎¤ #,##0.00;‎(¤ #,##0.00)"
+    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤ #,##0.00\u001F‎¤ #,##0.00\u001F¤ #,##0.00\u001F‎¤ #,##0.00;‎(¤ #,##0.00)"
 
 internal val CURRENCY_FORMATS_BR: String =
     "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤;(#,##0.00 ¤)\u001F#,##0.00 ¤;(#,##0.00 ¤)"

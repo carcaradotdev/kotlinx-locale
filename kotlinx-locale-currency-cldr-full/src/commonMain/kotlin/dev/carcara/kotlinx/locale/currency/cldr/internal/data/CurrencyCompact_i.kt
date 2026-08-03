@@ -8,6 +8,9 @@ internal val CURRENCY_COMPACT_IA: String =
 internal val CURRENCY_COMPACT_ID: String =
     "10:other=¤00 M\u001E10:other:a=¤ 00 M\u001E11:other=¤000 M\u001E11:other:a=¤ 000 M\u001E12:other=¤0 T\u001E12:other:a=¤ 0 T\u001E13:other=¤00 T\u001E13:other:a=¤ 00 T\u001E14:other=¤000 T\u001E14:other:a=¤ 000 T\u001E3:other=¤0 rb\u001E3:other:a=¤ 0 rb\u001E4:other=¤00 rb\u001E4:other:a=¤ 00 rb\u001E5:other=¤000 rb\u001E5:other:a=¤ 000 rb\u001E6:other=¤0 jt\u001E6:other:a=¤ 0 jt\u001E7:other=¤00 jt\u001E7:other:a=¤ 00 jt\u001E8:other=¤000 jt\u001E8:other:a=¤ 000 jt\u001E9:other=¤0 M\u001E9:other:a=¤ 0 M"
 
+internal val CURRENCY_COMPACT_IG: String =
+    "10:other=¤00G\u001E10:other:a=¤ 00G\u001E11:other=¤000G\u001E11:other:a=¤ 000G\u001E12:other=¤0T\u001E12:other:a=¤ 0T\u001E13:other=¤00T\u001E13:other:a=¤ 00T\u001E14:other=¤000T\u001E14:other:a=¤ 000T\u001E3:other=¤0K\u001E3:other:a=¤ 0K\u001E4:other=¤00K\u001E4:other:a=¤ 00K\u001E5:other=¤000K\u001E5:other:a=¤ 000K\u001E6:other=¤0M\u001E6:other:a=¤ 0M\u001E7:other=¤00M\u001E7:other:a=¤ 00M\u001E8:other=¤000M\u001E8:other:a=¤ 000M\u001E9:other=¤0G\u001E9:other:a=¤ 0G"
+
 internal val CURRENCY_COMPACT_IS: String =
     "10:other=00 ma'.' ¤\u001E11:other=000 ma'.' ¤\u001E12:other=0 bn ¤\u001E13:other=00 bn ¤\u001E14:other=000 bn ¤\u001E3:other=0 þ'.' ¤\u001E4:other=00 þ'.' ¤\u001E5:other=000 þ'.' ¤\u001E6:other=0 m'.' ¤\u001E7:other=00 m'.' ¤\u001E8:other=000 m'.' ¤\u001E9:other=0 ma'.' ¤"
 

@@ -2,23 +2,20 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.currency.cldr.internal.data
 
-internal val CURRENCY_FORMATS_AA: String =
-    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤#,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00\u001F¤#,##0.00"
-
 internal val CURRENCY_FORMATS_AB: String =
-    "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤"
+    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤ #,##0.00\u001F#,##0.00 ¤\u001F¤ #,##0.00\u001F#,##0.00 ¤"
 
 internal val CURRENCY_FORMATS_AF: String =
     "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F1\u001F¤#,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00;(¤#,##0.00)\u001F¤ #,##0.00;(¤ #,##0.00)"
 
 internal val CURRENCY_FORMATS_AGQ: String =
-    "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F1\u001F#,##0.00¤\u001F#,##0.00 ¤\u001F#,##0.00¤\u001F#,##0.00¤"
+    "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F1\u001F#,##0.00¤\u001F¤ #,##0.00\u001F#,##0.00¤\u001F#,##0.00¤"
 
 internal val CURRENCY_FORMATS_AK: String =
     "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤#,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00;(¤#,##0.00)\u001F¤ #,##0.00;(¤ #,##0.00)"
 
 internal val CURRENCY_FORMATS_AN: String =
-    "0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F¤#,##0.00;(¤#,##0.00)\u001F¤ #,##0.00;(¤ #,##0.00)"
+    "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤ #,##0.00\u001F#,##0.00 ¤\u001F¤ #,##0.00\u001F¤ #,##0.00;(¤ #,##0.00)"
 
 internal val CURRENCY_FORMATS_AR: String =
     "0123456789\u001F.\u001F,\u001F.\u001F,\u001F‎-\u001F1\u001F‏#,##0.00 ¤;‏-#,##0.00 ¤\u001F‏#,##0.00 ¤;‏-#,##0.00 ¤\u001F؜#,##0.00¤;(؜#,##0.00¤)\u001F؜#,##0.00 ¤;(؜#,##0.00 ¤)"

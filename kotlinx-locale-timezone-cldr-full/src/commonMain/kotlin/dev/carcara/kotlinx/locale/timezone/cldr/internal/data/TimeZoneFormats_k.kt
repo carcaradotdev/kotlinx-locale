@@ -5,9 +5,6 @@ package dev.carcara.kotlinx.locale.timezone.cldr.internal.data
 internal val TIME_ZONE_FORMATS_KA: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001Fდრო: {0}\u001F{0} სტანდარტული დრო\u001F{0} ზაფხულის დრო\u001F{1} ({0})"
 
-internal val TIME_ZONE_FORMATS_KAB: String =
-    "+HH:mm\u001F-HH:mm\u001FKLG {0}\u001FKLG\u001FGMT+?\u001FAkud: {0}\u001F{0} Akud amezday\u001F{0} Akud n unebdu\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_KEA: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001FOra di {0}\u001FOra Padron di {0}\u001FOra di Veron di {0}\u001F{1} ({0})"
 
@@ -19,9 +16,6 @@ internal val TIME_ZONE_FORMATS_KK: String =
 
 internal val TIME_ZONE_FORMATS_KK_ARAB: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} ۋاقىتى\u001F{0} ستاندارتتى ۋاقىتى\u001F{0} جازعى ۋاقىتى\u001F{1} ({0})"
-
-internal val TIME_ZONE_FORMATS_KL: String =
-    "+HH:mm\u001F−HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0}\u001F{0} (+0)\u001F{0} (+1)\u001F{0} ({1})"
 
 internal val TIME_ZONE_FORMATS_KM: String =
     "+HH:mm\u001F-HH:mm\u001Fម៉ោង​សកល {0}\u001Fម៉ោង​សកល\u001FGMT+?\u001Fម៉ោង​នៅ​ {0}\u001Fម៉ោង​ស្តង់ដារ​នៅ ​{0}\u001Fម៉ោង​ពេល​ថ្ងៃ​នៅ​ {0}\u001F{1} ({0})"

@@ -5,9 +5,6 @@ package dev.carcara.kotlinx.locale.currency.cldr.internal.data
 internal val CURRENCY_COMPACT_AF: String =
     "10:one:a=¤ 00 mjd\u001E10:other=¤00 mjd\u001E10:other:a=¤ 00 mjd\u001E11:one:a=¤ 000 mjd\u001E11:other=¤000 mjd\u001E11:other:a=¤ 000 mjd\u001E12:one:a=¤ 0 bn\u001E12:other=¤0 bn\u001E12:other:a=¤ 0 bn\u001E13:one:a=¤ 00 bn\u001E13:other=¤00 bn\u001E13:other:a=¤ 00 bn\u001E14:one=¤000 bn\u001E14:one:a=¤ 000 bn\u001E14:other=¤000 bn\u001E14:other:a=¤ 000 bn\u001E3:one:a=¤ 0 k\u001E3:other=¤0 k\u001E3:other:a=¤ 0 k\u001E4:one:a=¤ 00 k\u001E4:other=¤00 k\u001E4:other:a=¤ 00 k\u001E5:one:a=¤ 000 k\u001E5:other=¤000 k\u001E5:other:a=¤ 000 k\u001E6:one:a=¤ 0 m\u001E6:other=¤0 m\u001E6:other:a=¤ 0 m\u001E7:one:a=¤ 00 m\u001E7:other=¤00 m\u001E7:other:a=¤ 00 m\u001E8:one:a=¤ 000 m\u001E8:other=¤000 m\u001E8:other:a=¤ 000 m\u001E9:one:a=¤ 0 mjd\u001E9:other=¤0 mjd\u001E9:other:a=¤ 0 mjd"
 
-internal val CURRENCY_COMPACT_AGQ: String =
-    "10:other=00G¤\u001E11:other=000G¤\u001E12:other=0T¤\u001E13:other=00T¤\u001E14:other=000T¤\u001E3:other=0K¤\u001E4:other=00K¤\u001E5:other=000K¤\u001E6:other=0M¤\u001E7:other=00M¤\u001E8:other=000M¤\u001E9:other=0G¤"
-
 internal val CURRENCY_COMPACT_AK: String =
     "10:one=¤00G\u001E10:one:a=¤ 00G\u001E10:other=¤00G\u001E10:other:a=¤ 00G\u001E11:one:a=¤ 000G\u001E11:other=¤000G\u001E11:other:a=¤ 000G\u001E12:one:a=¤ 0T\u001E12:other=¤0T\u001E12:other:a=¤ 0T\u001E13:one:a=¤ 00T\u001E13:other=¤00T\u001E13:other:a=¤ 00T\u001E14:one:a=¤ 000T\u001E14:other=¤000T\u001E14:other:a=¤ 000T\u001E3:one:a=¤ 0K\u001E3:other=¤0K\u001E3:other:a=¤ 0K\u001E4:one:a=¤ 00K\u001E4:other=¤00K\u001E4:other:a=¤ 00K\u001E5:one:a=¤ 000K\u001E5:other=¤000K\u001E5:other:a=¤ 000K\u001E6:one:a=¤ 0M\u001E6:other=¤0M\u001E6:other:a=¤ 0M\u001E7:one:a=¤ 00M\u001E7:other=¤00M\u001E7:other:a=¤ 00M\u001E8:one:a=¤ 000M\u001E8:other=¤000M\u001E8:other:a=¤ 000M\u001E9:one=¤0G\u001E9:one:a=¤ 0G\u001E9:other=¤0G\u001E9:other:a=¤ 0G"
 
@@ -20,7 +17,7 @@ internal val CURRENCY_COMPACT_AR: String =
 internal val CURRENCY_COMPACT_AS: String =
     "10:one=¤ 00 শঃ কোঃ\u001E10:one:a=¤ 00 শঃ কোঃ\u001E10:other=¤ 00 শঃ কোঃ\u001E10:other:a=¤ 00 শঃ কোঃ\u001E11:one=¤ 000 শঃ কঃ\u001E11:one:a=¤ 000 শঃ কঃ\u001E11:other=¤ 000 শঃ কঃ\u001E11:other:a=¤ 000 শঃ কঃ\u001E12:one=¤ 0 শঃ পঃ\u001E12:one:a=¤ 0 শঃ পঃ\u001E12:other=¤ 0 শঃ পঃ\u001E12:other:a=¤ 0 শঃ পঃ\u001E13:one=¤ 00 শঃ পঃ\u001E13:one:a=¤ 00 শঃ পঃ\u001E13:other=¤ 00 শঃ পঃ\u001E13:other:a=¤ 00 শঃ পঃ\u001E14:one=¤ 000 শঃ পঃ\u001E14:one:a=¤ 000 শঃ পঃ\u001E14:other=¤ 000 শঃ পঃ\u001E14:other:a=¤ 000 শঃ পঃ\u001E3:other=¤ 0 হাজাৰ\u001E4:other=¤ 00 হাজাৰ\u001E5:one=¤ 0 লাখ\u001E5:one:a=¤ 0 লাখ\u001E5:other=¤ 0 লাখ\u001E5:other:a=¤ 0 লাখ\u001E6:other=¤ 0 নিযুত\u001E7:other=¤ 00 নিযুত\u001E8:one=¤ 0 নিঃ\u001E8:one:a=¤ 0 নিঃ\u001E8:other=¤ 0 নিঃ\u001E8:other:a=¤ 0 নিঃ\u001E9:one=¤ 0 শঃ কোঃ\u001E9:one:a=¤ 0 শঃ কোঃ\u001E9:other=¤ 0 শঃ কোঃ\u001E9:other:a=¤ 0 শঃ কোঃ"
 
-internal val CURRENCY_COMPACT_ASA: String =
+internal val CURRENCY_COMPACT_AST: String =
     "10:other=00G ¤\u001E11:other=000G ¤\u001E12:other=0T ¤\u001E13:other=00T ¤\u001E14:other=000T ¤\u001E3:other=0K ¤\u001E4:other=00K ¤\u001E5:other=000K ¤\u001E6:other=0M ¤\u001E7:other=00M ¤\u001E8:other=000M ¤\u001E9:other=0G ¤"
 
 internal val CURRENCY_COMPACT_AZ: String =

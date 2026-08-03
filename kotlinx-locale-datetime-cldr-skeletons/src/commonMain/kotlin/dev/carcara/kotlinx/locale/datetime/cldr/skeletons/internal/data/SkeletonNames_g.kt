@@ -5,17 +5,11 @@ package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 internal val SKELETON_NAMES_GA: String =
     "ré\u001Ebliain\u001Eráithe\u001Emí\u001E\u001E\u001Elá den tseachtain\u001Elá\u001E\u001E\u001Ea.m./p.m.\u001Euair\u001Enóiméad\u001Esoicind\u001E\u001E\u001F1ú ráithe\u001E2ú ráithe\u001E3ú ráithe\u001E4ú ráithe\u001FR1\u001ER2\u001ER3\u001ER4\u001FH\u001EH\u001F{1} 'ag' {0}\u001E{1} 'ag' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1ú ráithe\u001E2ú ráithe\u001E3ú ráithe\u001E4ú ráithe"
 
-internal val SKELETON_NAMES_GAA: String =
-    "yinɔ\u001Eafi\u001Enyɔji etɛ\u001Enyɔɔŋ\u001E\u001E\u001Eotsi lɛ mli gbi\u001Egbi\u001E\u001E\u001ELEEBI/SHWANE\u001Eŋmɛlɛtswaa\u001Eminiti\u001Esɛkɛnsi\u001E\u001E\u001Fnyɔji etɛ 1\u001Enyɔji etɛ 2\u001Enyɔji etɛ 3\u001Enyɔji etɛ 4\u001FN1\u001EN2\u001EN3\u001EN4\u001Fh\u001Eh\u001F{1} 'be' 'ni' 'atswa' {0}\u001E{1} 'be' 'ni' 'atswa' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fnyɔji etɛ 1\u001Enyɔji etɛ 2\u001Enyɔji etɛ 3\u001Enyɔji etɛ 4"
-
 internal val SKELETON_NAMES_GD: String =
     "linn\u001Ebliadhna\u001Ecairteal\u001Emìos\u001E\u001E\u001Elatha na seachdaine\u001Elatha\u001E\u001E\u001Em/f\u001Euair a thìde\u001Emionaid\u001Ediog\u001E\u001E\u001F1d chairteal\u001E2na cairteal\u001E3s cairteal\u001E4mh cairteal\u001FC1\u001EC2\u001EC3\u001EC4\u001FH\u001EH\u001F{1} 'aig' {0}\u001E{1} 'aig' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1d chairteal\u001E2na cairteal\u001E3s cairteal\u001E4mh cairteal"
 
 internal val SKELETON_NAMES_GL: String =
     "era\u001Eano\u001Etrimestre\u001Emes\u001E\u001E\u001Edía da semana\u001Edía\u001E\u001E\u001Ea.m./p.m.\u001Ehora\u001Eminuto\u001Esegundo\u001E\u001E\u001F1.º trimestre\u001E2.º trimestre\u001E3.º trimestre\u001E4.º trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1.º trimestre\u001E2.º trimestre\u001E3.º trimestre\u001E4.º trimestre"
-
-internal val SKELETON_NAMES_GN: String =
-    "Era\u001Eary\u001EQuarter\u001Ejasy\u001E\u001E\u001EDay of the Week\u001Eára\u001E\u001E\u001EDayperiod\u001Earapokõindy\u001Earavo’i\u001Earavo’ive\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_GSW: String =
     "Epoche\u001EJaar\u001EQuarter\u001EMonet\u001E\u001E\u001EWuchetag\u001ETag\u001E\u001E\u001ETageshälfti\u001ESchtund\u001EMinuute\u001ESekunde\u001E\u001E\u001F1. Quartal\u001E2. Quartal\u001E3. Quartal\u001E4. Quartal\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. Quartal\u001E2. Quartal\u001E3. Quartal\u001E4. Quartal"

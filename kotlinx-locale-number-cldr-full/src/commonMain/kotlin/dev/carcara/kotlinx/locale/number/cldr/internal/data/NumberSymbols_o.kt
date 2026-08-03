@@ -2,11 +2,5 @@
 // Regenerate with: ./gradlew :codegen:generateLocaleData
 package dev.carcara.kotlinx.locale.number.cldr.internal.data
 
-internal val NUMBER_SYMBOLS_OC: String =
-    "latn\u001F0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F+\u001F%\u001F‰\u001F≃\u001FE\u001F×\u001F∞\u001FNaN\u001F;\u001F'h'\u001F1"
-
-internal val NUMBER_SYMBOLS_OC_ES: String =
-    "latn\u001F0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FNaN\u001F;\u001F:\u001F2"
-
 internal val NUMBER_SYMBOLS_OS: String =
     "latn\u001F0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F+\u001F%\u001F‰\u001F~\u001FE\u001F×\u001F∞\u001FНН\u001F;\u001F:\u001F1"

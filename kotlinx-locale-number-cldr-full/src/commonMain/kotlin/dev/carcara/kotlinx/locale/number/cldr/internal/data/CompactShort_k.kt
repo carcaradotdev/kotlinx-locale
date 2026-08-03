@@ -5,9 +5,6 @@ package dev.carcara.kotlinx.locale.number.cldr.internal.data
 internal val COMPACT_SHORT_KA: String =
     "10:other=00 მლრდ'.'\u001E11:other=000 მლრ'.'\u001E12:other=0 ტრლ'.'\u001E13:other=00 ტრლ'.'\u001E14:other=000 ტრლ'.'\u001E3:other=0 ათ'.'\u001E4:other=00 ათ'.'\u001E5:other=000 ათ'.'\u001E6:other=0 მლნ'.'\u001E7:other=00 მლნ'.'\u001E8:other=000 მლნ'.'\u001E9:other=0 მლრდ'.'"
 
-internal val COMPACT_SHORT_KAB: String =
-    "10:other=00L\u001E11:other=000L\u001E12:other=0T\u001E13:other=00T\u001E14:other=000T\u001E3:other=0G\u001E4:other=00G\u001E5:other=000G\u001E6:other=0M\u001E7:other=00M\u001E8:other=000M\u001E9:other=0L"
-
 internal val COMPACT_SHORT_KEA: String =
     "10:other=00 MM\u001E11:other=000 MM\u001E12:other=0 Bi\u001E13:other=00 Bi\u001E14:other=000 Bi\u001E3:other=0 mil\u001E4:other=00 mil\u001E5:other=000 mil\u001E6:other=0 M\u001E7:other=00 M\u001E8:other=000 M\u001E9:other=0 MM"
 
@@ -19,9 +16,6 @@ internal val COMPACT_SHORT_KK: String =
 
 internal val COMPACT_SHORT_KK_ARAB: String =
     "10:other=00 ملرد\u001E11:other=000 ملرد\u001E12:other=0 تريلليون\u001E13:other=00 ترلن\u001E14:other=000 ترلن\u001E3:other=0 مىڭ\u001E4:other=00 مىڭ\u001E5:other=000 مىڭ\u001E6:other=0 ميلليون\u001E7:other=00 ميلليون\u001E8:other=000 ملن\u001E9:other=0 ميلليارد"
-
-internal val COMPACT_SHORT_KL: String =
-    "10:other=00 md\u001E11:other=000 md\u001E12:other=0 bn\u001E13:other=00 bn\u001E14:other=000 bn\u001E3:other=0 td\u001E4:other=00 td\u001E5:other=000 td\u001E6:other=0 mn\u001E7:other=00 mn\u001E8:other=000 mn\u001E9:other=0 md"
 
 internal val COMPACT_SHORT_KM: String =
     "10:other=00 ប៊ីលាន\u001E11:other=000 ប៊ីលាន\u001E12:other=0 ទ្រីលាន\u001E13:other=00 ទ្រីលាន\u001E14:other=000 ទ្រីលាន\u001E3:other=0ពាន់\u001E4:other=00 ពាន់\u001E5:other=000 ពាន់\u001E6:other=0 លាន\u001E7:other=00 លាន\u001E8:other=000 លាន\u001E9:other=0 ប៊ីលាន"

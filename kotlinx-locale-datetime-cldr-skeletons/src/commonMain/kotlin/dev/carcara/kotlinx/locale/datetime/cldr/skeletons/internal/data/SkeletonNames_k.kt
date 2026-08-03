@@ -9,7 +9,7 @@ internal val SKELETON_NAMES_KAA: String =
     "эра\u001Eжыл\u001Eшерек\u001Eай\u001E\u001E\u001Eҳәпте күни\u001Eкүн\u001E\u001E\u001EAM/PM\u001Eсаат\u001Eминут\u001Eсекунд\u001E\u001E\u001FI шерек\u001EII шерек\u001EIII шерек\u001EIV шерек\u001FI ш.\u001EII ш.\u001EIII ш.\u001EIV ш.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_KAB: String =
-    "Tallit\u001EAseggas\u001Eakraḍyur\u001EAggur\u001E\u001E\u001EUssan n ddurt\u001EAss\u001E\u001E\u001En tufat / n tmeddit\u001ETamert\u001ETamrect\u001ETasint\u001E\u001E\u001Fakraḍaggur amenzu\u001Eakraḍaggur wis-sin\u001Eakraḍaggur wis-kraḍ\u001Eakraḍaggur wis-kuẓ\u001FKḍg1\u001EKḍg2\u001EKḍg3\u001EKḍg4\u001Fh\u001Eh\u001F{1} 'ɣef' {0}\u001E{1} 'ɣef' {0}\u001E{1}, {0}\u001E{1}, {0}\u001Fakraḍyur 1u\u001Eakraḍyur w2\u001Eakraḍyur w3\u001Eakraḍyur w4\u001FKḍy1\u001EKḍy2\u001EKḍy3\u001EKḍy4"
+    "Tallit\u001EAseggas\u001EQuarter\u001EAggur\u001E\u001E\u001EUssan n ddurt\u001EAss\u001E\u001E\u001En tufat / n tmeddit\u001ETamert\u001ETamrect\u001ETasint\u001E\u001E\u001Fakraḍaggur amenzu\u001Eakraḍaggur wis-sin\u001Eakraḍaggur wis-kraḍ\u001Eakraḍaggur wis-kuẓ\u001FKḍg1\u001EKḍg2\u001EKḍg3\u001EKḍg4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fakraḍaggur amenzu\u001Eakraḍaggur wis-sin\u001Eakraḍaggur wis-kraḍ\u001Eakraḍaggur wis-kuẓ"
 
 internal val SKELETON_NAMES_KAM: String =
     "Ĩvinda\u001EMwaka\u001EQuarter\u001EMwai\u001E\u001E\u001EKyumwanĩ\u001EMũthenya\u001E\u001E\u001EĨyakwakya/Ĩyawĩoo\u001ESaa\u001ENdatĩka\u001Esekondi\u001E\u001E\u001FLovo ya mbee\u001ELovo ya kelĩ\u001ELovo ya katatũ\u001ELovo ya kana\u001FL1\u001EL2\u001EL3\u001EL4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FLovo ya mbee\u001ELovo ya kelĩ\u001ELovo ya katatũ\u001ELovo ya kana"
@@ -34,9 +34,6 @@ internal val SKELETON_NAMES_KK: String =
 
 internal val SKELETON_NAMES_KK_ARAB: String =
     "ءداۋىر\u001Eجىل\u001Eشيرەك\u001Eاي\u001E\u001E\u001Eاپتا كۇنى\u001Eكۇن\u001E\u001E\u001Eتۇسكە دەيىن/تۇستەن كەيىن\u001Eساعات\u001Eمينۋت\u001Eسەكۋند\u001E\u001E\u001Fءبىرىنشى توقسان\u001Eەكىنشى توقسان\u001Eءۇشىنشى توقسان\u001Eءتورتىنشى توقسان\u001F1- توقسان\u001E2- توقسان\u001E3- توقسان\u001E4- توقسان\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"
-
-internal val SKELETON_NAMES_KL: String =
-    "æra\u001Eukioq\u001EQuarter\u001Eqaammat\u001E\u001E\u001Esapaatip akunnerata ullui\u001Eulloq\u001E\u001E\u001Epiffissaq ulloq\u001Enalunaaquttap-akunnera\u001Eminutsi\u001Esekundi\u001E\u001E\u001Fukiup sisamararterutaa 1\u001Eukiup sisamararterutaa 2\u001Eukiup sisamararterutaa 3\u001Eukiup sisamararterutaa 4\u001FS1\u001ES2\u001ES3\u001ES4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fukiup sisamararterutaa 1\u001Eukiup sisamararterutaa 2\u001Eukiup sisamararterutaa 3\u001Eukiup sisamararterutaa 4"
 
 internal val SKELETON_NAMES_KLN: String =
     "Ibinta\u001EKenyit\u001EQuarter\u001EArawet\u001E\u001E\u001EBetutab wikit\u001EBetut\u001E\u001E\u001EBE/KE\u001ESait\u001EMinitit\u001ESekondit\u001E\u001E\u001FRobo netai\u001ERobo nebo aeng’\u001ERobo nebo somok\u001ERobo nebo ang’wan\u001FR1\u001ER2\u001ER3\u001ER4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FRobo netai\u001ERobo nebo aeng’\u001ERobo nebo somok\u001ERobo nebo ang’wan"
@@ -79,9 +76,6 @@ internal val SKELETON_NAMES_KU: String =
 
 internal val SKELETON_NAMES_KU_LATN_IQ: String =
     "çax\u001Esal\u001Eçaryek\u001Emeh\u001E\u001E\u001Eroja hefteyê\u001Eroj\u001E\u001E\u001EBN/PN\u001Esaet\u001Edeqîqe\u001Esanîye\u001E\u001E\u001Fçaryeka 1ê\u001Eçaryeka 2an\u001Eçaryeka 3an\u001Eçaryeka 4an\u001FÇ1\u001EÇ2\u001EÇ3\u001EÇ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fçaryeka 1ê\u001Eçaryeka 2an\u001Eçaryeka 3an\u001Eçaryeka 4an"
-
-internal val SKELETON_NAMES_KW: String =
-    "Era\u001EBledhen\u001EQuarter\u001EMis\u001E\u001E\u001EDedh an seythun\u001EDedh\u001E\u001E\u001EAM/PM\u001EEur\u001EMinute\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_KXV: String =
     "jug\u001Ebarsa\u001Ekuarṭer\u001Elenju\u001E\u001E\u001Evara ti dina\u001Edina\u001E\u001E\u001Eam/pm\u001Ebelā\u001Eminiṭ\u001Esekenḍ\u001E\u001E\u001F1sṭ kuarṭr\u001E2nḍ kuarṭr\u001E3rḍ kuarṭr\u001E4th kuarṭr\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} 'aã' {0}\u001E{1} 'aã' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1sṭ kuarṭr\u001E2nḍ kuarṭr\u001E3rḍ kuarṭr\u001E4th kuarṭr"

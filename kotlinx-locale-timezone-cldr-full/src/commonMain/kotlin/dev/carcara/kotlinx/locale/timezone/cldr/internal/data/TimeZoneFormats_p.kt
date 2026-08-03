@@ -5,9 +5,6 @@ package dev.carcara.kotlinx.locale.timezone.cldr.internal.data
 internal val TIME_ZONE_FORMATS_PA: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} ਵੇਲਾ\u001F{0} ਮਿਆਰੀ ਵੇਲਾ\u001F{0} ਪ੍ਰਕਾਸ਼ ਵੇਲਾ\u001F{1} ({0})"
 
-internal val TIME_ZONE_FORMATS_PAP: String =
-    "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001Fora di {0}\u001F{0} (+0)\u001F{0} (+1)\u001F{1} ({0})"
-
 internal val TIME_ZONE_FORMATS_PCM: String =
     "+HH:mm\u001F-HH:mm\u001FGMT{0}\u001FGMT\u001FGMT+?\u001F{0} Taim\u001F{0} Fíksd Taim\u001F{0} Délaít Taim\u001F{1} ({0})"
 
