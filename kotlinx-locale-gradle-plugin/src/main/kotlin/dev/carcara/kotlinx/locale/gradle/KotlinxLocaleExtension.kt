@@ -278,6 +278,15 @@ abstract class DateTimeFeatures @Inject constructor(objects: ObjectFactory) : Fe
      * defaulting to one of them.
      */
     val relativeTime: Property<Boolean> = flag(LocaleFeature.DATETIME_RELATIVE_TIME)
+
+    /**
+     * Duration wording: `2 hours`, `2 hr`, `2h`, `2 Stunden`.
+     *
+     * The measurement form, not the `h:mm` of `durationPattern`, which rides
+     * along with the date patterns. Generates the plural rules and number tables
+     * alongside, the way [relativeTime] does.
+     */
+    val durationUnits: Property<Boolean> = flag(LocaleFeature.DATETIME_DURATION_UNITS)
 }
 
 /** Person name formatting, and the initials derived from it. */

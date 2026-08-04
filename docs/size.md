@@ -23,6 +23,7 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | everything-platform | 49.1 KB | 153.7 KB | 54.0 KB | 4.8 KB |
 | number-full | 72.5 KB | 300.7 KB | 110.0 KB | 37.4 KB |
 | phone-full | 79.8 KB | 276.0 KB | 110.0 KB | 30.1 KB |
+| datetime-durations | 117.3 KB | 821.5 KB | 150.0 KB | 32.6 KB |
 | datetime-full | 127.3 KB | 493.5 KB | 140.0 KB | 12.6 KB |
 | datetime-relative | 143.7 KB | 836.0 KB | 190.0 KB | 46.2 KB |
 | datetime-skeletons | 185.8 KB | 826.9 KB | 205.0 KB | 19.1 KB |
@@ -32,7 +33,7 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | timezone-full | 533.2 KB | 2920.0 KB | 700.0 KB | 166.7 KB |
 | timezone-cities | 885.7 KB | 4212.0 KB | 1200.0 KB | 314.2 KB |
 | everything | 902.8 KB | 2848.9 KB | 1100.0 KB | 197.1 KB |
-| language-full | 1179.3 KB | 3137.9 KB | 1400.0 KB | 220.6 KB |
+| language-full | 1179.2 KB | 3137.9 KB | 1400.0 KB | 220.7 KB |
 
 ## What the platform layer costs
 

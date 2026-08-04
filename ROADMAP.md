@@ -7,6 +7,32 @@ A decision to stop is a boundary and lives in
 that should happen. An item leaves this file when it ships, or moves to the
 boundaries file if the answer turns out to be no. Nothing here has a date.
 
+## The rest of the measurement units
+
+`durationFormat` writes the fourteen `duration-*` units. CLDR carries 231, and
+the other 217 are length, mass, temperature, volume, pressure, speed, energy,
+digital storage and the rest of UTS #35 Part 6.
+
+- Nothing new is needed to read them. The parser, the record format, the width
+  and plural fallback and the ICU conformance fixture all already work per unit,
+  and `DURATION_UNITS` in `codegen/.../DurationUnits.kt` is the list they run
+  over. Widening it is the change.
+- What stops it being a one-line edit is size. Fourteen units measure at 117.3 KB
+  gzipped in `docs/size.md`; the other 217 are more than ten times the source
+  bytes, which would put the result among the largest tables here, in
+  `timezone-cities` territory. It wants its own artifact and probably its own
+  domain rather than a place in the datetime one.
+- Two questions duration never had to answer. Which unit a region prefers, so
+  that a length reads in feet for `en-US` and metres for `en-GB`, is
+  `unitPreferenceData` in `common/supplemental/units.xml`, a file this build
+  does not read today. Conversion between units is `unitConstants` and
+  `convertUnits` in the same file, and it is a separate decision from
+  formatting: `durationFormat` converts nothing on purpose, and a `unitFormat`
+  that did would be doing something this library has so far left to the caller.
+- Compound units are the other half. `{0} per hour` is a `perUnitPattern`, and
+  `kilometre per hour` composes two units through a pattern of its own. Neither
+  is read today.
+
 ## Bank account identifiers
 
 Validate and format an IBAN, keyed by the `Country` that already ships.

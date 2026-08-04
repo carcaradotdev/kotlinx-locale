@@ -51,6 +51,9 @@ public enum class GeneratedTable {
     /** "3 days ago" and its wording per locale. */
     RELATIVE_TIME,
 
+    /** "2 hours", "2 hr", "2h": the `duration-*` measurement units per locale. */
+    DURATION_UNITS,
+
     /** The nine zone format strings, and the locale-independent zone metadata. */
     TIME_ZONE_FORMATS,
 
@@ -106,6 +109,7 @@ public enum class GeneratedBinding(public val objectSuffix: String) {
     NUMBER("Number"),
     LANGUAGE("LanguageNames"),
     RELATIVE_TIME("RelativeTime"),
+    DURATION_UNITS("DurationUnits"),
     TIME_ZONE("TimeZone"),
     TIME_ZONE_CITIES("TimeZoneCities"),
     PERSON_NAME("PersonName"),
@@ -168,6 +172,7 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
                 GeneratedTable.ORDINALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.LANGUAGE_NAMES to "dev.carcara.kotlinx.locale.language.cldr.internal.data",
                 GeneratedTable.RELATIVE_TIME to "dev.carcara.kotlinx.locale.datetime.cldr.relative.internal.data",
+                GeneratedTable.DURATION_UNITS to "dev.carcara.kotlinx.locale.datetime.cldr.durations.internal.data",
                 GeneratedTable.TIME_ZONE_FORMATS to "dev.carcara.kotlinx.locale.timezone.cldr.internal.data",
                 GeneratedTable.TIME_ZONE_NAMES to "dev.carcara.kotlinx.locale.timezone.cldr.internal.data",
                 GeneratedTable.TIME_ZONE_CITIES to "dev.carcara.kotlinx.locale.timezone.cldr.cities.internal.data",
@@ -322,6 +327,14 @@ private val PAYLOAD_TABLES = listOf(
         "RELATIVE_TIME",
         "relativeTimeRegistry",
         "RELATIVE_TIME_CLDR_VERSION",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.DURATION_UNITS,
+        "durationUnits",
+        "DurationUnits",
+        "DURATION_UNITS",
+        "durationUnitsRegistry",
+        "DURATION_UNITS_CLDR_VERSION",
     ),
     PayloadTableSpec(
         GeneratedTable.LANGUAGE_NAMES,
@@ -513,6 +526,17 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
         emitRelativeTimeBinding(
             target.root,
             target.spec(packages[GeneratedTable.RELATIVE_TIME], cldr),
+            numberObject = number.packageName + "." + number.objectName,
+        )
+    }
+
+    roots[GeneratedBinding.DURATION_UNITS]?.let { target ->
+        val number = requireNotNull(roots[GeneratedBinding.NUMBER]) {
+            "duration wording picks a plural form and renders a count, so it needs the number binding"
+        }
+        emitDurationUnitsBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.DURATION_UNITS], cldr),
             numberObject = number.packageName + "." + number.objectName,
         )
     }

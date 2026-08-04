@@ -67,6 +67,7 @@ val published = listOf(
     "kotlinx-locale-datetime-cldr-skeletons",
     "kotlinx-locale-datetime-cldr-relative",
     "kotlinx-locale-datetime-cldr-intervals",
+    "kotlinx-locale-datetime-cldr-durations",
     "kotlinx-locale-datetime-platform",
     "kotlinx-locale-timezone-core",
     "kotlinx-locale-timezone-cldr-runtime",

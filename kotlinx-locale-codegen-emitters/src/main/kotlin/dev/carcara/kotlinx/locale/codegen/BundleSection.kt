@@ -42,6 +42,7 @@ public class BundleSection(
             BundleSection("dateTimeStandalone"),
             BundleSection("localeDisplayNames", sparseFields = 4),
             BundleSection("relativeTime"),
+            BundleSection("durationUnits"),
             BundleSection("personNames"),
             BundleSection("timeZoneFormats"),
             BundleSection("timeZoneNames", sparseFields = 3),
