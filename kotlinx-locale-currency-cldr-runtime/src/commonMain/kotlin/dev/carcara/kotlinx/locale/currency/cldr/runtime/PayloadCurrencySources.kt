@@ -98,6 +98,11 @@ public class PayloadCurrencyFormats(
     // parsing tries.
     private val parseIndexCache = HashMap<String, CurrencyParseIndex>()
 
+    // Same reason, one currency at a time: the six spellings a named currency is
+    // recognized by are six walks up the parent chain, and an application parses
+    // the same currency in the same locale over and over.
+    private val parseTokenCache = HashMap<String, List<String>>()
+
     override val supportedLocales: Set<Locale> by lazy {
         supportedLocalesOf(formatRecords)
     }
@@ -115,7 +120,10 @@ public class PayloadCurrencyFormats(
     override fun parseToMinorUnitsOrNull(text: String, currencyCode: String, locale: Locale): Long? {
         val currency = Currency.forCodeOrNull(currencyCode) ?: return null
         val format = numberFormatFor(locale) ?: return null
-        return parseFormattedCurrency(format, names, text, currency, locale)
+        val tokens = parseTokenCache.getOrPut("$currencyCode|${locale.toLanguageTag()}") {
+            currencyParseTokens(names, currency, locale)
+        }
+        return parseFormattedCurrency(format, tokens, text, currency, locale)
     }
 
     override fun currencyCodeOrNull(text: String, locale: Locale): String? =

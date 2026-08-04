@@ -33,7 +33,7 @@ private const val NON_BREAKING_SPACES = "\u00A0\u202F\u2007\u2009"
  */
 internal fun parseFormattedCurrency(
     data: CurrencyNumberFormat,
-    names: CurrencyNameSource,
+    tokens: List<String>,
     text: String,
     currency: Currency,
     locale: Locale,
@@ -47,24 +47,8 @@ internal fun parseFormattedCurrency(
         value = value.substring(1, value.length - 1)
     }
 
-    // Strip one currency representation: display name, any of the symbol
-    // spellings, or the ISO code, longest first so "HUF" is not half-eaten by a
-    // shorter token.
-    //
-    // All four spellings are accepted here, narrow included, because the caller
-    // has already said which currency this is: nothing is being identified, so
-    // nothing can be identified wrongly, and an amount written with the narrow
-    // symbol reads back. Identifying a currency from the text is the other
-    // entry point, and that one takes the narrow spellings out again.
-    val tokens = buildList {
-        add(names.displayName(currency, locale))
-        add(currency.code)
-        for (style in SYMBOL_STYLES) add(names.symbol(currency, locale, style))
-    }
-        .map { token -> token.filterNot { it in INVISIBLE_MARKS } }
-        .filter(String::isNotEmpty)
-        .distinct()
-        .sortedByDescending(String::length)
+    // Strip one currency representation, longest first so "HUF" is not
+    // half-eaten by a shorter token, and so "NT$" wins over the "$" inside it.
     for (token in tokens) {
         val index = value.indexOf(token, ignoreCase = true)
         if (index >= 0) {
@@ -117,6 +101,31 @@ internal fun parseFormattedCurrency(
     return ((if (negative) "-" else "") + combined.ifEmpty { "0" }).toLongOrNull()
 }
 
+/**
+ * The strings a currency the caller has already named is recognized by in one
+ * locale, longest first.
+ *
+ * Built once per currency and locale rather than per parse. Each spelling is a
+ * walk up the locale's parent chain, and there are six of them, so recomputing
+ * them for every amount made a round trip over the bundled locales slow enough
+ * to time out under Node.
+ *
+ * All four symbol spellings are here, narrow included, because the caller has
+ * said which currency this is: nothing is being identified, so nothing can be
+ * identified wrongly, and an amount written with the narrow symbol reads back.
+ * Identifying a currency from the text is [CurrencyParseIndex], and that one
+ * takes the narrow spellings out again.
+ */
+internal fun currencyParseTokens(names: CurrencyNameSource, currency: Currency, locale: Locale): List<String> = buildList {
+    add(names.displayName(currency, locale))
+    add(currency.code)
+    for (style in SYMBOL_STYLES) add(names.symbol(currency, locale, style))
+}
+    .map { token -> token.filterNot { it in INVISIBLE_MARKS } }
+    .filter(String::isNotEmpty)
+    .distinct()
+    .sortedByDescending(String::length)
+
 /** Every spelling a currency the caller already named is recognized by. */
 private val SYMBOL_STYLES = listOf(
     CurrencySymbolStyle.SYMBOL,
@@ -130,9 +139,9 @@ private val SYMBOL_STYLES = listOf(
  *
  * Narrow and formal are missing for the reason ICU leaves them out of its own
  * parse tables: they do not identify anything. CLDR disambiguates the plain
- * symbols within each locale, so en-CA writes CAD as `${'$'}` and USD as `US${'$'}` and
+ * symbols within each locale, so en-CA writes CAD as `$` and USD as `US$` and
  * neither collides, but the narrow spellings are deliberately not disambiguated
- * and in that same locale `${'$'}` is the narrow form of more than twenty currencies.
+ * and in that same locale `$` is the narrow form of more than twenty currencies.
  * Admitting them would mean picking one, and picking one is guessing.
  */
 private val IDENTIFYING_SYMBOL_STYLES = listOf(CurrencySymbolStyle.SYMBOL, CurrencySymbolStyle.VARIANT_SYMBOL)
@@ -181,7 +190,7 @@ internal class CurrencyParseIndex(names: CurrencyNameSource, locale: Locale) {
      * The code named by the longest entry that appears in [text], or `null` when
      * none does.
      *
-     * Longest first so `US${'$'}` is not read as `${'$'}`, and so a display name is not
+     * Longest first so `US$` is not read as `$`, and so a display name is not
      * half-eaten by an ISO code inside it.
      */
     fun codeIn(text: String): String? {

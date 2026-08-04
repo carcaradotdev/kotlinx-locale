@@ -123,7 +123,7 @@ public fun CurrencyFormatSource.parseFormattedOrNull(currency: Currency, text: S
  * Identification is a lookup rather than a guess: it reads the currency written
  * in [locale]'s own spellings, and answers nothing where the text would fit more
  * than one currency. Narrow symbols are not among the spellings it reads, since
- * `${'$'}` alone names over twenty currencies in some locales, so an amount printed
+ * `$` alone names over twenty currencies in some locales, so an amount printed
  * with [CurrencySymbolStyle.NARROW_SYMBOL] needs the overload that is told which
  * currency it is.
  */
