@@ -6,6 +6,7 @@ import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.internal.ENTRY_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
+import dev.carcara.kotlinx.locale.internal.GraphemeClusters
 import dev.carcara.kotlinx.locale.internal.KEY_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.resolvedRecord
 import dev.carcara.kotlinx.locale.personname.PersonName
@@ -204,38 +205,79 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
      * with a leading space, and what leaves no trailing comma when the last
      * field is missing.
      */
+    /**
+     * Renders a pattern, dropping what UTS #35 Part 8 says an absent field takes
+     * with it.
+     *
+     * The specification gives this as numbered steps and they are followed in
+     * its order rather than approximated. Getting it wrong is not subtle in its
+     * effect but is very subtle in its cause: the earlier version kept the first
+     * literal after an empty field, which lost a comma in Catalan and left an
+     * unbalanced parenthesis in Czech.
+     *
+     * 1. Everything before the first populated field is dropped, and everything
+     *    after the last one.
+     * 2. A run of two or more empty fields separated only by literals loses the
+     *    fields and the literals between them. A single empty field is removed.
+     *    What survives is the literal before the run and the literal after it.
+     * 3. The two literals now adjacent are coalesced: if either is empty the
+     *    answer is the other, and if the second matches the end of the first the
+     *    answer is the first. That is what turns a space and a space into one
+     *    space rather than two.
+     */
     private fun renderPattern(pattern: String, name: PersonName, record: PersonNameRecord): String {
+        val elements = parsePattern(pattern)
+
+        // Step 1: the span between the first and last populated fields.
+        val populated = elements.indices.filter { index ->
+            val element = elements[index]
+            element is PatternElement.Field && !resolveField(element, name, record).isNullOrEmpty()
+        }
+        if (populated.isEmpty()) return ""
+
         val result = StringBuilder()
-        var pending = StringBuilder()
-        var skipLiterals = false
-        for (element in parsePattern(pattern)) {
-            when (element) {
-                is PatternElement.Literal -> if (!skipLiterals) pending.append(element.text)
+        // The literal run waiting to be written, and whether an empty field has
+        // been seen since it was collected.
+        //
+        // Step 2 drops a literal that sits between two empty fields, and the
+        // qualifier matters: only when a literal was already collected. An empty
+        // field with no literal before it, which is what `{given-initial}` and
+        // `{given2-initial}` are in English, must still let the space that
+        // follows through, or the surname joins the initial.
+        var pending: String? = null
+        var sawEmptyField = false
+
+        for (index in populated.first() until elements.size) {
+            when (val element = elements[index]) {
+                is PatternElement.Literal -> {
+                    if (sawEmptyField && pending != null) continue
+                    pending = if (pending == null) element.text else coalesce(pending, element.text)
+                    sawEmptyField = false
+                }
                 is PatternElement.Field -> {
                     val value = resolveField(element, name, record)
                     if (value.isNullOrEmpty()) {
-                        // Two populated fields either side of a missing one are
-                        // joined by one separator, and it is the first one that
-                        // exists. A missing second surname must not turn a space
-                        // into a comma; a missing middle initial, which has no
-                        // separator before it at all, must still leave the space
-                        // that followed it.
-                        skipLiterals = pending.isNotEmpty()
+                        sawEmptyField = true
                     } else {
-                        if (result.isNotEmpty()) result.append(pending)
+                        pending?.let(result::append)
+                        pending = null
+                        sawEmptyField = false
                         result.append(value)
-                        pending = StringBuilder()
-                        skipLiterals = false
                     }
                 }
             }
         }
-        // The tail is kept when nothing was dropped after the last populated
-        // field, which is what closes a parenthesis the pattern opened, and
-        // dropped otherwise, which is what stops a missing last field leaving a
-        // dangling comma.
-        if (!skipLiterals) result.append(pending)
+        // The literal after the last populated field closes a bracket the
+        // pattern opened, so it is kept unless an empty field swallowed it.
+        if (!sawEmptyField || pending == null) pending?.let(result::append)
         return result.toString()
+    }
+
+    /** Step 3 of the pattern process: two adjacent literals become one. */
+    private fun coalesce(first: String?, second: String): String {
+        if (first.isNullOrEmpty()) return second
+        if (second.isEmpty()) return first
+        return if (first.endsWith(second)) first else first + second
     }
 
     private fun resolveField(field: PatternElement.Field, name: PersonName, record: PersonNameRecord): String? {
@@ -279,11 +321,19 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
         // Split on anything that is not a letter, not only on spaces. A
         // hyphenated given name is two words for this purpose: it initializes to
         // two letters, not one, in every locale CLDR has data for.
+        //
+        // Walked by grapheme cluster rather than by char, so a cluster is never
+        // split down the middle. That is what a format character inside a word
+        // needs: Malayalam writes a zero-width non-joiner inside `സ്‌റ്റോബർ`,
+        // which UAX #29 classes as Extend, so it belongs to the cluster and not
+        // between two words. Taking it for a separator produced two initials
+        // where CLDR produces one.
         val words = ArrayList<String>()
         val separators = ArrayList<String>()
         val word = StringBuilder()
         val separator = StringBuilder()
-        for (ch in value) {
+        for (cluster in GraphemeClusters.clusters(value)) {
+            val ch = cluster[0]
             if (ch.isLetterOrDigit() || ch.isMark()) {
                 if (separator.isNotEmpty()) {
                     if (word.isNotEmpty()) {
@@ -293,9 +343,9 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
                     }
                     separator.clear()
                 }
-                word.append(ch)
+                word.append(cluster)
             } else {
-                separator.append(ch)
+                separator.append(cluster)
             }
         }
         if (word.isNotEmpty()) words.add(word.toString())
@@ -443,42 +493,15 @@ internal fun Char.isMark(): Boolean = when (category) {
 }
 
 /**
- * The first grapheme cluster of a value, which is not the first character.
+ * The first grapheme cluster of a value, per UAX #29.
  *
  * A monogram is one written unit, and in Bengali or Devanagari that unit is a
- * consonant plus its vowel sign: three hundred and sixty-four of the values in
- * CLDR's own test data start with a cluster longer than one code point, and
- * taking `first()` answers with half a letter. Surrogate pairs count for the
- * same reason.
+ * consonant bound to the next by a virama. This used to be a hand-written rule
+ * that joined across any virama, which was wrong in both directions: it took a
+ * cluster too many in Kannada and one too few in Telugu. It now defers to the
+ * algorithm, which is held to Unicode's own conformance file.
  */
-internal fun firstGrapheme(value: String): String {
-    if (value.isEmpty()) return ""
-    var end = if (value[0].isHighSurrogate() && value.length > 1) 2 else 1
-    while (end < value.length) {
-        val previous = value[end - 1]
-        val ch = value[end]
-        val joined = ch.isMark() ||
-            ch == ZERO_WIDTH_JOINER ||
-            previous == ZERO_WIDTH_JOINER ||
-            // A virama binds the consonant after it into the same written unit,
-            // so a Bengali or Devanagari conjunct is one cluster rather than two.
-            // Stopping at the virama answers with half a letter.
-            previous in VIRAMAS
-        if (!joined) break
-        end += if (ch.isHighSurrogate() && end + 1 < value.length) 2 else 1
-    }
-    return value.substring(0, end)
-}
-
-private const val ZERO_WIDTH_JOINER = '\u200D'
-
-/** The viramas of the Indic and South-East Asian blocks CLDR's names reach. */
-private val VIRAMAS = charArrayOf(
-    '\u094D', '\u09CD', '\u0A4D', '\u0ACD', '\u0B4D', '\u0BCD', '\u0C4D', '\u0CCD',
-    '\u0D3B', '\u0D3C', '\u0D4D', '\u0DCA', '\u0E3A', '\u0EBA', '\u0F84', '\u1039',
-    '\u103A', '\u17D2', '\u1A60', '\u1B44', '\u1BAA', '\u1BAB', '\u1BF2', '\u1BF3',
-    '\u2D7F', '\uA806', '\uA8C4', '\uA953', '\uA9C0', '\uAAF6', '\uABED',
-).concatToString()
+internal fun firstGrapheme(value: String): String = GraphemeClusters.firstCluster(value)
 
 /**
  * Greek written in capitals drops its accents.

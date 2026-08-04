@@ -550,7 +550,11 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
     }
 
     roots[GeneratedBinding.PERSON_NAME]?.let { target ->
-        emitPersonNameBinding(target.root, target.spec(packages[GeneratedTable.PERSON_NAMES], cldr))
+        emitPersonNameBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.PERSON_NAMES], cldr),
+            graphemeBreak = bundle.tables[BundleTables.GRAPHEME_BREAK].orEmpty(),
+        )
     }
 
     roots[GeneratedBinding.INTERVALS]?.let { target ->

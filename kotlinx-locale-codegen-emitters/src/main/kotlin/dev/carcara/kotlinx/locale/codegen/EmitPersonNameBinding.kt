@@ -3,7 +3,7 @@ package dev.carcara.kotlinx.locale.codegen
 import java.io.File
 
 /** `CldrPersonName`-shaped binding: the source object plus the entry points. */
-public fun emitPersonNameBinding(outputRoot: File, spec: BindingSpec) {
+public fun emitPersonNameBinding(outputRoot: File, spec: BindingSpec, graphemeBreak: String) {
     val file = outputRoot.packageFile(spec.packageName, "PersonNameFormat.kt")
     file.writeText(
         preamble(
@@ -17,6 +17,7 @@ public fun emitPersonNameBinding(outputRoot: File, spec: BindingSpec) {
                 "dev.carcara.kotlinx.locale.personname.PersonNameOrder",
                 "dev.carcara.kotlinx.locale.personname.PersonNameSource",
                 "dev.carcara.kotlinx.locale.personname.PersonNameUsage",
+                "dev.carcara.kotlinx.locale.internal.GraphemeClusters",
                 "dev.carcara.kotlinx.locale.personname.cldr.runtime.PayloadPersonNames",
                 "dev.carcara.kotlinx.locale.personname.format",
                 "dev.carcara.kotlinx.locale.personname.order",
@@ -31,7 +32,22 @@ public fun emitPersonNameBinding(outputRoot: File, spec: BindingSpec) {
         | * The formatting lives in `kotlinx-locale-personname-cldr-runtime`; all this
         | * object contributes is the table.
         | */
-        |public object ${spec.objectName} : PersonNameSource by PayloadPersonNames(personNamesRegistry)
+        |/**
+        | * Where one written character ends, per UAX #29.
+        | *
+        | * Installed here because an initial and a monogram are the first cluster of
+        | * a field, and in several scripts that is more than one code point. A
+        | * constant rather than a table keyed by anything: it is a property of the
+        | * characters, not of a locale.
+        | */
+        |@InternalKotlinxLocaleApi
+        |internal val graphemeBreakTable: String = "${kotlinEscape(graphemeBreak)}"
+        |
+        |public object ${spec.objectName} : PersonNameSource by PayloadPersonNames(personNamesRegistry) {
+        |    init {
+        |        GraphemeClusters.install(graphemeBreakTable)
+        |    }
+        |}
         |
         |/**
         | * [name] written the way [locale] writes a name from [PersonName.locale].

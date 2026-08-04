@@ -38,19 +38,26 @@ class PersonNameConformanceTest {
     /**
      * Locales whose remaining differences are known but not yet fixed.
      *
-     * Two causes, both this library's rather than the data's.
+     * Fifty-one cases of thirty-four thousand, all of them this library's rather
+     * than the data's, and the cause of each is known.
      *
-     * Assamese, Kannada, Malayalam, Sinhala and Telugu want a grapheme rule finer
-     * than the virama join implemented here. That join reaches the common
-     * conjuncts and stops at some of the longer ones, so an initial comes out a
-     * cluster short or a cluster long.
+     * Catalan, Czech, Sardinian and Slovak turn on how `{surname-prefix}`
+     * resolves for a surname that has no prefix. ICU answers with the whole
+     * surname there, which was checked by running it, and this returns null, so
+     * a pattern opening with that field looks like it begins with an empty one
+     * and Catalan's sorting form loses its comma. Copying ICU's answer directly
+     * is not the fix: it collides with the mononym rule, which has already moved
+     * a lone given name into the surname, and Afrikaans then prints it twice.
+     * The two rules have to be reconciled, which is a change to both.
      *
-     * Catalan, Czech, Sardinian and Slovak differ over which literal survives
-     * when the field between two of them is empty. The rule here keeps the first
-     * separator, and these patterns want the bracketing one, so a comma or an
-     * opening parenthesis goes missing.
+     * Assamese and Telugu produce one initial too many or too few in a field
+     * with no spaces in it. That is a word boundary question rather than a
+     * cluster one, since the clusters now follow UAX #29, and it is the same
+     * problem the eight locales above are excluded for.
+     *
+     * `PersonNamePattern.java` in the ICU checkout is the reference for both.
      */
-    private val knownDifferences = setOf("as", "ca", "cs", "kn", "ml", "sc", "si", "sk", "te")
+    private val knownDifferences = setOf("as", "ca", "cs", "sc", "sk", "te")
 
     private fun buildName(fields: String, nameLocale: String): PersonName {
         val values = HashMap<String, String>()
@@ -84,7 +91,7 @@ class PersonNameConformanceTest {
     @Test
     fun theExclusionsDoNotGrowUnnoticed() {
         assertEquals(8, wordSegmentation.size, "the word segmentation exclusions changed")
-        assertEquals(9, knownDifferences.size, "the known differences changed; fix them or restate them")
+        assertEquals(6, knownDifferences.size, "the known differences changed; fix them or restate them")
     }
 
     @Test

@@ -108,5 +108,15 @@ public object BundleTables {
      */
     public const val WEEK_DATA: String = "weekData"
 
-    public val ALL: Set<String> = setOf(TIME_ZONE_METADATA, PHONE_TERRITORIES, PHONE_FORMATS, WEEK_DATA)
+    /**
+     * The UAX #29 grapheme cluster properties.
+     *
+     * A table rather than a section, and the least locale-dependent thing here:
+     * where one written character ends is a property of the characters, not of
+     * anybody's language. Narrowing a build to three locales must not narrow the
+     * scripts it can count letters in.
+     */
+    public const val GRAPHEME_BREAK: String = "graphemeBreak"
+
+    public val ALL: Set<String> = setOf(TIME_ZONE_METADATA, PHONE_TERRITORIES, PHONE_FORMATS, WEEK_DATA, GRAPHEME_BREAK)
 }
