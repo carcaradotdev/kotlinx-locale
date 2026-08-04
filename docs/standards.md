@@ -67,6 +67,7 @@ at the same specification.
 | `kotlinx-locale-currency-core` | [ISO 4217][iso4217], [UTS #35 Part 3][tr35-3] |
 | `kotlinx-locale-currency-cldr-runtime` | [UTS #35 Part 3][tr35-3], currency patterns and names |
 | `kotlinx-locale-currency-cldr-full` | [UTS #35 Part 3][tr35-3] |
+| `kotlinx-locale-currency-cldr-plurals` | [UTS #35 Part 3][tr35-3], count-keyed display names and the unit pattern that joins one to a number |
 | `kotlinx-locale-currency-platform` | none; reads the host |
 | `kotlinx-locale-currency-serialization` | [ISO 4217][iso4217] |
 | `kotlinx-locale-datetime-core` | [UTS #35 Part 4][tr35-4], and [Part 6][tr35-6] for week data |
@@ -75,6 +76,7 @@ at the same specification.
 | `kotlinx-locale-datetime-cldr-skeletons` | [UTS #35 Part 4][tr35-4], `availableFormats` |
 | `kotlinx-locale-datetime-cldr-relative` | [UTS #35 Part 2][tr35-2], `fields` and `relativeTime` |
 | `kotlinx-locale-datetime-cldr-intervals` | [UTS #35 Part 4][tr35-4], `intervalFormats` |
+| `kotlinx-locale-datetime-cldr-durations` | [UTS #35 Part 2][tr35-2], the `duration-` measurement units |
 | `kotlinx-locale-datetime-platform` | none; reads the host |
 | `kotlinx-locale-timezone-core` | [UTS #35 Part 4][tr35-4], zone names |
 | `kotlinx-locale-timezone-cldr-runtime` | [UTS #35 Part 4][tr35-4], the metazone resolution |
@@ -125,6 +127,40 @@ affected locales by name and count them rather than loosening the comparison, so
 the gap stays visible. The exclusions and their reasons are in the tests
 themselves, and the ones that are this library's bugs rather than boundaries are
 listed in [boundaries.md](boundaries.md).
+
+## Where ICU is not the answer
+
+ICU is the reference for most of what is checked above, and it is not the
+specification. Four kinds of difference come up, and each one is handled
+differently.
+
+**ICU is built from a different CLDR snapshot.** The pinned releases are CLDR
+`release-48-2` and ICU `78.3`, which are close but not the same, so a name or a
+pattern that moved between them shows up as a difference that has nothing to do
+with formatting. Where a fixture can tell the two apart it records what ICU
+formatted from and skips only the pairs that moved; where it cannot, the locale
+is named in the test. Burmese is the current example: `release-48-2` gives it a
+currency unit pattern of `{1} {0}`, putting the name before the number, and ICU
+78.3 carries none and inherits root's `{0} {1}`. This library follows its pin.
+
+**ICU resolves some locales to a different bundle.** ICU ships no data file for
+`sr-Cyrl-ME` and answers it from a Latin-script bundle, so it writes
+`dirham UAE` where CLDR's own `sr_Cyrl_ME.xml` writes `дирхам УАЕ`. That is a
+locale-fallback difference rather than a data one, and it moves 173 of that
+locale's 178 currency display names, plural or not.
+
+**ICU prunes coverage where CLDR has data.** For a locale ICU holds at minimal
+coverage it emits root's placeholders rather than the wording CLDR carries, and
+for a few locales it ships no unit data at all. Following that would mean
+shipping less than CLDR says, so this library does not; `resolveDurationUnits`
+records the cases.
+
+**ICU has defects.** ICU 78.3 cannot format a currency at
+`UnitWidth.FULL_NAME` when that currency declares its own pattern in the locale,
+which CLDR does once, for the Turkish lira in Turkish. The format routes through
+the pattern modifier, whose switch over the widths throws instead of handling the
+name width. Nothing here reproduces that: the generator leaves the pair out of
+the fixture, records why, and fails the build if it ever stops being a handful.
 
 [tr35-1]: https://www.unicode.org/reports/tr35/tr35.html
 [tr35-2]: https://www.unicode.org/reports/tr35/tr35-general.html

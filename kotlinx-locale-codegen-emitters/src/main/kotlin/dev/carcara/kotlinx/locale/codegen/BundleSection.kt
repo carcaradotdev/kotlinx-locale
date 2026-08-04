@@ -35,6 +35,7 @@ public class BundleSection(
             BundleSection("countryNames", sparseFields = 1),
             BundleSection("currencyFormats"),
             BundleSection("currencyNames", sparseFields = 2),
+            BundleSection("currencyPluralNames", sparseFields = 3),
             BundleSection("skeletonFormats"),
             BundleSection("skeletonAppendFormats"),
             BundleSection("skeletonNames"),

@@ -15,6 +15,9 @@ dependencies {
     implementation("dev.carcara:kotlinx-locale-country-cldr-runtime:0.1.0-SNAPSHOT")
     implementation("dev.carcara:kotlinx-locale-currency-core:0.1.0-SNAPSHOT")
     implementation("dev.carcara:kotlinx-locale-currency-cldr-runtime:0.1.0-SNAPSHOT")
+    // The plural rules that pick which spelling of a currency name a count takes.
+    implementation("dev.carcara:kotlinx-locale-number-core:0.1.0-SNAPSHOT")
+    implementation("dev.carcara:kotlinx-locale-number-cldr-runtime:0.1.0-SNAPSHOT")
     implementation("dev.carcara:kotlinx-locale-datetime-core:0.1.0-SNAPSHOT")
     implementation("dev.carcara:kotlinx-locale-datetime-cldr-runtime:0.1.0-SNAPSHOT")
 
@@ -30,7 +33,7 @@ kotlinxLocale {
     packageName = "com.example.locale"
 
     country { names = true }
-    currency { names = true; formats = true }
+    currency { names = true; formats = true; pluralNames = true }
     datetime { patterns = true }
 }
 

@@ -256,7 +256,8 @@ class GenerateLocaleSourcesFunctionalTest {
         // sends narrowed builds looking for functions they do not have.
         buildFile(
             features = "datetime { patterns = true; skeletons = true; intervals = true; durationUnits = true }\n" +
-                "personName { formats = true }",
+                "personName { formats = true }\n" +
+                "currency { pluralNames = true }",
         )
         run("generateLocaleSources")
 
@@ -274,6 +275,13 @@ class GenerateLocaleSourcesFunctionalTest {
         val durations = generated("com/example/locale/DurationUnits.kt").readText()
         assertContains(durations, "public fun durationFormat(")
         assertContains(durations, "public fun durationUnitName(")
+
+        // The name form, which is a third artifact and a third table. It is the
+        // one entry point in the library that a narrowed build reaches through a
+        // different object from the bundled one, so it is worth naming here.
+        val plurals = generated("com/example/locale/CurrencyPlurals.kt").readText()
+        assertContains(plurals, "public fun CurrencyAmount.formatPluralName(")
+        assertContains(plurals, "public fun Currency.pluralName(")
 
         val names = generated("com/example/locale/PersonNameFormat.kt").readText()
         assertContains(names, "public fun personNameFormat(")

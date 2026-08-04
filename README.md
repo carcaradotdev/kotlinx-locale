@@ -209,6 +209,8 @@ locale-currency-types = { module = "dev.carcara:kotlinx-locale-currency-types", 
 locale-currency-core = { module = "dev.carcara:kotlinx-locale-currency-core", version.ref = "kotlinx-locale" }
 locale-currency-cldr-runtime = { module = "dev.carcara:kotlinx-locale-currency-cldr-runtime", version.ref = "kotlinx-locale" }
 locale-currency-cldr-full = { module = "dev.carcara:kotlinx-locale-currency-cldr-full", version.ref = "kotlinx-locale" }
+# Currency names that agree with a count, on top of -cldr-full. Opt in.
+locale-currency-cldr-plurals = { module = "dev.carcara:kotlinx-locale-currency-cldr-plurals", version.ref = "kotlinx-locale" }
 locale-currency-platform = { module = "dev.carcara:kotlinx-locale-currency-platform", version.ref = "kotlinx-locale" }
 locale-currency-serialization = { module = "dev.carcara:kotlinx-locale-currency-serialization", version.ref = "kotlinx-locale" }
 
@@ -246,6 +248,8 @@ locale-phone-serialization = { module = "dev.carcara:kotlinx-locale-phone-serial
 # Bundled CLDR data: the normal choice.
 locale-country-cldr = ["locale-country-types", "locale-country-core", "locale-country-cldr-full"]
 locale-currency-cldr = ["locale-currency-types", "locale-currency-core", "locale-currency-cldr-full"]
+# The same, plus the names that agree with a count: "2 US dollars".
+locale-currency-plurals = ["locale-currency-types", "locale-currency-core", "locale-currency-cldr-plurals"]
 locale-datetime-cldr = ["locale-datetime-core", "locale-datetime-cldr-full"]
 # The same, plus skeleton formatting.
 locale-datetime-skeletons = ["locale-datetime-core", "locale-datetime-cldr-full", "locale-datetime-cldr-skeletons"]
@@ -358,6 +362,7 @@ kotlinx-locale-currency-types          generated enums
 kotlinx-locale-currency-core           the contract
 kotlinx-locale-currency-cldr-runtime   the engine, no data
 kotlinx-locale-currency-cldr-full      the engine plus 1121 locales
+kotlinx-locale-currency-cldr-plurals   the same, plus the count-keyed names
 kotlinx-locale-currency-platform       the host supplies it
 ```
 
@@ -399,6 +404,7 @@ plugin flag beside the artifact for every domain that has one.
 | `kotlinx-locale-currency-core` | `code`, `minorUnitDigits`, the ISO/CLDR scale conversions, the `for*` lookups, `CurrencyAmount` and its arithmetic, and the `CurrencyNameSource` and `CurrencyFormatSource` contracts. |
 | `kotlinx-locale-currency-cldr-runtime` | The symbol and name lookup plus the pattern-based number formatter and parser, over CLDR-shaped records it does not carry. |
 | `kotlinx-locale-currency-cldr-full` | `-cldr-runtime` plus the CLDR symbol, name and number tables for all 1121 locales: `CldrCurrency`, `Currency.symbol`, `Currency.displayName` and `CurrencyAmount.format`. |
+| `kotlinx-locale-currency-cldr-plurals` | `-cldr-full` plus CLDR's count-keyed currency names and the patterns that join one to a number: `CldrCurrencyPlurals`, `CurrencyAmount.formatPluralName` and `Currency.pluralName`. |
 | `kotlinx-locale-currency-platform` | `PlatformCurrency`: symbols, names and number formatting from `NumberFormat`, `Intl.NumberFormat` or `NSNumberFormatter`. Ships no tables. |
 | `kotlinx-locale-currency-serialization` | The `Currency` serializers (alphabetic code, numeric code, lenient) and the three `CurrencyAmount` forms. Locale-independent throughout, and so free of CLDR. |
 | `kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
@@ -554,8 +560,8 @@ calls against each layer:
 | --- | ---: | ---: | ---: |
 | datetime | 35.3 KB | 127.3 KB | 92.0 KB |
 | country | 20.2 KB | 376.4 KB | 356.2 KB |
-| currency | 24.9 KB | 434.1 KB | 409.2 KB |
-| all three | 49.1 KB | 902.8 KB | 853.7 KB |
+| currency | 25.1 KB | 442.8 KB | 417.7 KB |
+| all three | 49.1 KB | 911.0 KB | 861.9 KB |
 
 Gzipped over the minified bundle. Datetime saves the least because
 kotlinx-datetime sits in both numbers and only the formatting moved.

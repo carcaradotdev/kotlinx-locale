@@ -14,6 +14,39 @@ public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyNumb
 	public final fun getSymbols ()Ldev/carcara/kotlinx/locale/number/NumberSymbols;
 }
 
+public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralFormatOptions {
+	public static final field Companion Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralFormatOptions$Companion;
+	public fun <init> ()V
+	public fun <init> (Ldev/carcara/kotlinx/locale/number/SignDisplay;ZLjava/lang/Integer;Ldev/carcara/kotlinx/locale/number/NumberGrouping;)V
+	public synthetic fun <init> (Ldev/carcara/kotlinx/locale/number/SignDisplay;ZLjava/lang/Integer;Ldev/carcara/kotlinx/locale/number/NumberGrouping;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getCash ()Z
+	public final fun getFractionDigits ()Ljava/lang/Integer;
+	public final fun getGrouping ()Ldev/carcara/kotlinx/locale/number/NumberGrouping;
+	public final fun getSignDisplay ()Ldev/carcara/kotlinx/locale/number/SignDisplay;
+}
+
+public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralFormatOptions$Companion {
+	public final fun getDefault ()Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralFormatOptions;
+}
+
+public abstract interface class dev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralNameSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public abstract fun currencyPluralNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/number/PluralCategory;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public abstract fun formatPluralNameOrNull (JLjava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralFormatOptions;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralNameSourceKt {
+	public static final fun formatPluralName (Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralNameSource;Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/SignDisplay;ZLjava/lang/Integer;Ldev/carcara/kotlinx/locale/number/NumberGrouping;)Ljava/lang/String;
+	public static synthetic fun formatPluralName$default (Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralNameSource;Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/SignDisplay;ZLjava/lang/Integer;Ldev/carcara/kotlinx/locale/number/NumberGrouping;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun pluralName (Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralNameSource;Ldev/carcara/kotlinx/locale/currency/Currency;Ldev/carcara/kotlinx/locale/number/PluralCategory;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/FallbackCurrencyPluralNames : dev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralNameSource {
+	public fun <init> (Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralNameSource;Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralNameSource;)V
+	public fun currencyPluralNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/number/PluralCategory;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun formatPluralNameOrNull (JLjava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralFormatOptions;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+}
+
 public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/PayloadCurrencyFormats : dev/carcara/kotlinx/locale/currency/CurrencyFormatSource {
 	public fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ldev/carcara/kotlinx/locale/number/cldr/runtime/FormattedNumberSelector;)V
 	public synthetic fun <init> (Ljava/util/Map;Ljava/util/Map;Ljava/util/Map;Ldev/carcara/kotlinx/locale/number/cldr/runtime/FormattedNumberSelector;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -28,6 +61,13 @@ public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/PayloadCurre
 	public fun currencyNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun currencySymbolOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun currencySymbolOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+}
+
+public final class dev/carcara/kotlinx/locale/currency/cldr/runtime/PayloadCurrencyPluralNames : dev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralNameSource {
+	public fun <init> (Ljava/util/Map;Ldev/carcara/kotlinx/locale/currency/CurrencyNameSource;Ldev/carcara/kotlinx/locale/number/PluralRuleSource;)V
+	public fun currencyPluralNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/number/PluralCategory;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun formatPluralNameOrNull (JLjava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/cldr/runtime/CurrencyPluralFormatOptions;)Ljava/lang/String;
 	public fun getSupportedLocales ()Ljava/util/Set;
 }
 

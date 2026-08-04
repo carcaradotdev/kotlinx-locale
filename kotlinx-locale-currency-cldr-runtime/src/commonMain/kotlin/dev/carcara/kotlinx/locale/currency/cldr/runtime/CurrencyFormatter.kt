@@ -48,31 +48,9 @@ internal fun formatCurrency(
 ): String {
     val currencyText = names.symbol(currency, locale, options.style)
 
-    // CLDR's digit count for the currency, then its rounding increment, then any
-    // override the caller asked for. The order matters: the increment is
-    // expressed in units of CLDR's last fraction digit.
-    val cldrDigits = if (options.cash) currency.cldrCashFractionDigits else currency.cldrFractionDigits
-    val increment = if (options.cash) currency.cldrCashRoundingIncrement else currency.cldrRoundingIncrement
-    var scaled = rescaleFraction(minorUnits, currency.minorUnitDigits, cldrDigits)
-    if (increment > 0) scaled = roundToIncrement(scaled, increment.toLong())
-    val digits = options.fractionDigits ?: cldrDigits
-    // A negative amount smaller than the currency prints at keeps its sign, so
-    // -1 filler is `-0 Ft` rather than `0 Ft`. Rescaling to CLDR's digits lands
-    // on a Long, and a Long has no negative zero, so the sign would be gone
-    // before the renderer read it.
-    //
-    // What stands in for it is the smallest negative quantity one digit finer
-    // than the output: it rounds to zero at every digit count this can print,
-    // and it arrives negative, which is all the renderer needs to apply
-    // SignDisplay. Deliberately not the original amount, which would undo the
-    // rounding that produced the zero in the first place: a Swiss franc cash
-    // amount of -0.02 rounds to the nearest 0.05 and has to print as -0.00, not
-    // as the -0.02 it started from.
-    val amount = if (scaled == 0L && minorUnits < 0) {
-        Decimal.ofUnscaled(-1, digits + 1)
-    } else {
-        Decimal.ofUnscaled(scaled, cldrDigits)
-    }
+    val scaled = scaleCurrencyAmount(minorUnits, currency, options.cash, options.fractionDigits)
+    val amount = scaled.value
+    val digits = scaled.fractionDigits
 
     val accounting = options.signDisplay.usesAccountingPattern
     val basePattern = if (accounting) data.accountingPattern else data.standardPattern
@@ -122,6 +100,43 @@ internal fun formatCurrency(
         )
     }
     return formatted.text
+}
+
+/** An amount rounded onto CLDR's scale, and the digit count it prints at. */
+internal class ScaledCurrencyAmount(val value: Decimal, val fractionDigits: Int)
+
+/**
+ * [minorUnits] of [currency] rounded the way CLDR says to round it.
+ *
+ * CLDR's digit count for the currency, then its rounding increment, then any
+ * override the caller asked for. The order matters: the increment is expressed
+ * in units of CLDR's last fraction digit.
+ *
+ * A negative amount smaller than the currency prints at keeps its sign, so -1
+ * filler is `-0 Ft` rather than `0 Ft`. Rescaling to CLDR's digits lands on a
+ * Long, and a Long has no negative zero, so the sign would be gone before the
+ * renderer read it.
+ *
+ * What stands in for it is the smallest negative quantity one digit finer than
+ * the output: it rounds to zero at every digit count this can print, and it
+ * arrives negative, which is all the renderer needs to apply SignDisplay.
+ * Deliberately not the original amount, which would undo the rounding that
+ * produced the zero in the first place: a Swiss franc cash amount of -0.02
+ * rounds to the nearest 0.05 and has to print as -0.00, not as the -0.02 it
+ * started from.
+ */
+internal fun scaleCurrencyAmount(minorUnits: Long, currency: Currency, cash: Boolean, fractionDigits: Int?): ScaledCurrencyAmount {
+    val cldrDigits = if (cash) currency.cldrCashFractionDigits else currency.cldrFractionDigits
+    val increment = if (cash) currency.cldrCashRoundingIncrement else currency.cldrRoundingIncrement
+    var scaled = rescaleFraction(minorUnits, currency.minorUnitDigits, cldrDigits)
+    if (increment > 0) scaled = roundToIncrement(scaled, increment.toLong())
+    val digits = fractionDigits ?: cldrDigits
+    val value = if (scaled == 0L && minorUnits < 0) {
+        Decimal.ofUnscaled(-1, digits + 1)
+    } else {
+        Decimal.ofUnscaled(scaled, cldrDigits)
+    }
+    return ScaledCurrencyAmount(value, digits)
 }
 
 /** The plural category of a formatted number, which compact pattern selection needs. */

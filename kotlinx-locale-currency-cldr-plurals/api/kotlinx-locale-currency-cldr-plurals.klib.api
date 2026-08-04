@@ -1,0 +1,18 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-currency-cldr-plurals>
+final object dev.carcara.kotlinx.locale.currency.cldr.plurals/CldrCurrencyPlurals : dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralNameSource { // dev.carcara.kotlinx.locale.currency.cldr.plurals/CldrCurrencyPlurals|null[0]
+    final val supportedLocales // dev.carcara.kotlinx.locale.currency.cldr.plurals/CldrCurrencyPlurals.supportedLocales|{}supportedLocales[0]
+        final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.currency.cldr.plurals/CldrCurrencyPlurals.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final fun currencyPluralNameOrNull(kotlin/String, dev.carcara.kotlinx.locale.number/PluralCategory, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.plurals/CldrCurrencyPlurals.currencyPluralNameOrNull|currencyPluralNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.number.PluralCategory;dev.carcara.kotlinx.locale.Locale){}[0]
+    final fun formatPluralNameOrNull(kotlin/Long, kotlin/String, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralFormatOptions): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.plurals/CldrCurrencyPlurals.formatPluralNameOrNull|formatPluralNameOrNull(kotlin.Long;kotlin.String;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.currency.cldr.runtime.CurrencyPluralFormatOptions){}[0]
+}
+
+final fun (dev.carcara.kotlinx.locale.currency/Currency).dev.carcara.kotlinx.locale.currency.cldr.plurals/pluralName(kotlin/Long, dev.carcara.kotlinx.locale/Locale = ...): kotlin/String // dev.carcara.kotlinx.locale.currency.cldr.plurals/pluralName|pluralName@dev.carcara.kotlinx.locale.currency.Currency(kotlin.Long;dev.carcara.kotlinx.locale.Locale){}[0]
+final fun (dev.carcara.kotlinx.locale.currency/CurrencyAmount).dev.carcara.kotlinx.locale.currency.cldr.plurals/formatPluralName(dev.carcara.kotlinx.locale/Locale = ..., dev.carcara.kotlinx.locale.number/SignDisplay = ..., kotlin/Boolean = ..., kotlin/Int? = ..., dev.carcara.kotlinx.locale.number/NumberGrouping = ...): kotlin/String // dev.carcara.kotlinx.locale.currency.cldr.plurals/formatPluralName|formatPluralName@dev.carcara.kotlinx.locale.currency.CurrencyAmount(dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.number.SignDisplay;kotlin.Boolean;kotlin.Int?;dev.carcara.kotlinx.locale.number.NumberGrouping){}[0]

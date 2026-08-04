@@ -1,6 +1,8 @@
 import com.example.locale.GeneratedCountryNames
 import com.example.locale.displayName
 import com.example.locale.format
+import com.example.locale.formatPluralName
+import com.example.locale.pluralName
 import com.example.locale.symbol
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.country.Country
@@ -76,5 +78,30 @@ class NarrowedDataTest {
         val date = LocalDate(2026, 7, 27)
         assertEquals("27 de julho de 2026", date.format(FormatStyle.LONG, ptBr))
         assertEquals("July 27, 2026", date.format(FormatStyle.LONG, en))
+    }
+
+    @Test
+    fun `names a currency in words in the generated locales`() {
+        // The plural table is the one whose record carries three separate keyed
+        // fields: the count-keyed names, the pattern joining a name to a number,
+        // and the number formatting itself. Narrowing rebuilds all three, and a
+        // build that lost any of them would still compile and still answer, just
+        // wrongly, so the answers are what this checks.
+        assertEquals("2.00 US dollars", CurrencyAmount(Currency.USD, 200).formatPluralName(en))
+        assertEquals("1 US dollar", CurrencyAmount(Currency.USD, 100).formatPluralName(en, fractionDigits = 0))
+        assertEquals("2,00 Dólares americanos", CurrencyAmount(Currency.USD, 200).formatPluralName(ptBr))
+        // Japanese joins the number and the name with nothing at all, which is
+        // its own unitPattern rather than root's, so this fails if the pattern
+        // field did not survive narrowing.
+        assertEquals("2.00米ドル", CurrencyAmount(Currency.USD, 200).formatPluralName(ja))
+
+        assertEquals("US dollar", Currency.USD.pluralName(1, en))
+        assertEquals("US dollars", Currency.USD.pluralName(2, en))
+    }
+
+    @Test
+    fun `falls back to the configured locale for a currency name in words`() {
+        val german = Locale.forLanguageTag("de")
+        assertEquals("2.00 US dollars", CurrencyAmount(Currency.USD, 200).formatPluralName(german))
     }
 }

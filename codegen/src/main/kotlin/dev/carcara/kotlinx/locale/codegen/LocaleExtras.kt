@@ -17,6 +17,34 @@ class PartialLocaleExtras {
     /** currency code -> localized display name (count-less form). */
     val currencyNames = LinkedHashMap<String, String>()
 
+    /** `"<code>#<count>"` -> the display name that agrees with that plural category. */
+    val currencyPluralNames = LinkedHashMap<String, String>()
+
+    /**
+     * The same keys, where the file writes the inheritance marker instead of a
+     * name.
+     *
+     * Kept rather than dropped, which is what every other reader here does with
+     * the marker, because for this one element the marker and an absent element
+     * resolve differently. Absent means the lookup keeps walking; the marker
+     * means this locale inherits, and if nothing above it declares the category
+     * either, UTS #35 sends it laterally to the count-less display name of the
+     * locale that wrote the marker. Norwegian is where the two part company:
+     * `no` writes the marker under a currency whose count-less name is
+     * `arubiske floriner`, `nn` writes it under its own `arubiske florinar`, and
+     * `nn` has to answer with its parent's spelling.
+     */
+    val currencyPluralNameMarkers = LinkedHashSet<String>()
+
+    /**
+     * The currency codes this file writes at least one real count-keyed name
+     * for, which is what decides whether its markers resolve to anything.
+     */
+    val currencyPluralNameCodes = LinkedHashSet<String>()
+
+    /** numbering system attribute value ("" when absent) -> plural category -> the pattern joining a number to a currency name. */
+    val currencyUnitPatterns = LinkedHashMap<String, MutableMap<String, String>>()
+
     /** language subtag or CLDR locale id -> its name, only what this file declares. */
     val languageNames = LinkedHashMap<String, String>()
 
@@ -127,6 +155,20 @@ val CAPITALIZATION_USAGES: List<String> = listOf(
  */
 val ALT_CURRENCY_SYMBOLS: List<String> = listOf("narrow", "formal", "variant")
 
+/**
+ * The plural categories in the order the currency plural record stores them.
+ *
+ * Has to match `CATEGORY_ORDER` in `kotlinx-locale-currency-cldr-runtime`, which
+ * is positional over this list.
+ */
+val PLURAL_CATEGORIES: List<String> = listOf("zero", "one", "two", "few", "many", "other")
+
+/** The category every locale has, and the one the others fall back to. */
+const val OTHER_CATEGORY: String = "other"
+
+/** The pattern root declares for joining a number to a currency name. */
+const val ROOT_CURRENCY_UNIT_PATTERN: String = "{0} {1}"
+
 /** Fully resolved number-formatting data for the currency formatter. */
 class ResolvedCurrencyFormat(
     val digits: String,
@@ -233,10 +275,28 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
                     ?.textContent?.cleaned()
                     ?.let { extras.currencySymbols.putIfAbsent("$code#$alt", it) }
             }
-            currency.childElements("displayName")
-                .firstOrNull { !it.hasAttribute("alt") && !it.hasAttribute("count") }
+            val names = currency.childElements("displayName").filter { !it.hasAttribute("alt") }
+            names.firstOrNull { !it.hasAttribute("count") }
                 ?.textContent?.cleaned()
                 ?.let { extras.currencyNames.putIfAbsent(code, it) }
+            // The count-keyed spellings, under the same `code#suffix` key shape
+            // the alternative symbols use. Sparse the way everything here is: a
+            // locale that declares none inherits its parent's, and a category no
+            // locale in the chain declares falls back at lookup time rather than
+            // being written out per currency.
+            for (category in PLURAL_CATEGORIES) {
+                val declared = names.firstOrNull { it.getAttribute("count") == category } ?: continue
+                val key = "$code#$category"
+                val text = declared.textContent
+                if (text == INHERITANCE_MARKER) {
+                    extras.currencyPluralNameMarkers.add(key)
+                } else {
+                    text.cleaned()?.let {
+                        extras.currencyPluralNames.putIfAbsent(key, it)
+                        extras.currencyPluralNameCodes.add(code)
+                    }
+                }
+            }
         }
     }
 
@@ -322,6 +382,16 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
             ?.childElements("currencyFormat")
             ?.firstOrNull { it.getAttribute("type").let { type -> type == "standard" || type.isEmpty() } }
             ?.let { readCompact(it, extras.currencyCompact.getOrPut(system) { LinkedHashMap() }) }
+
+        // How a number and a spelled-out currency name are joined: `{0} {1}` in
+        // most locales, `{1} {0}` in Swahili, `{0} de {1}` in Romanian. Keyed by
+        // plural category because the joining word can agree with the count.
+        val unitPatterns = extras.currencyUnitPatterns.getOrPut(system) { LinkedHashMap() }
+        for (pattern in formatsEl.childElements("unitPattern")) {
+            val category = pattern.getAttribute("count")
+            if (category !in PLURAL_CATEGORIES) continue
+            pattern.textContent.cleaned()?.let { unitPatterns.putIfAbsent(category, it) }
+        }
 
         val target = extras.currencyPatterns.getOrPut(system) { PartialCurrencyPatterns() }
         val length = formatsEl.childElements("currencyFormatLength")
@@ -519,6 +589,40 @@ class ExtrasResolver(
             timeSeparator = symbol { it.timeSeparator } ?: ":",
             minimumGroupingDigits = partials.firstNotNullOfOrNull { it.minimumGroupingDigits } ?: 1,
         )
+    }
+
+    /**
+     * The six patterns joining a number to a spelled-out currency name for [id],
+     * in [PLURAL_CATEGORIES] order.
+     *
+     * Two fallbacks, and the order between them is what the shape of CLDR's data
+     * makes load bearing. A category the chain does not declare reads the
+     * resolved `other`, so Sinhala writes `1{1}{0}` from its own `other` rather
+     * than root's `{0} {1}`, and `other` itself terminates at root's `{0} {1}`.
+     * Applied after the chain rather than at each level, because that is where
+     * ICU applies it: the category-to-`other` step reads the locale's whole
+     * resolved table, which already includes what it inherited.
+     *
+     * Swahili is the case that separates the two orders. It declares `one` as
+     * `{0} {1}` and `other` as `{1} {0}`, so `1 forint ya Hungaria` and
+     * `forint za Hungaria 2` come out of the same locale.
+     */
+    fun resolveCurrencyUnitPatterns(id: String): List<String> {
+        val partials = flattener.dataChain(id).map(::partial)
+        val numberingSystem = partials.firstNotNullOfOrNull { it.defaultNumberingSystem } ?: "latn"
+        val systemKeys = listOf(numberingSystem, "latn", "")
+
+        fun declared(category: String): String? {
+            for (key in systemKeys) {
+                for (partial in partials) {
+                    partial.currencyUnitPatterns[key]?.get(category)?.let { return it }
+                }
+            }
+            return null
+        }
+
+        val other = declared("other") ?: ROOT_CURRENCY_UNIT_PATTERN
+        return PLURAL_CATEGORIES.map { declared(it) ?: other }
     }
 
     /** The capitalization bit field for [id], zero when nothing in the chain declares one. */
