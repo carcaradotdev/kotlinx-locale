@@ -14,6 +14,7 @@ probe-datetime-full
 probe-datetime-skeletons
 probe-datetime-platform
 probe-datetime-relative
+probe-datetime-durations
 probe-language-full
 probe-number-full
 probe-timezone-full

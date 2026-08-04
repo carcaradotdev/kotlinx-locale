@@ -1,0 +1,18 @@
+public final class dev/carcara/kotlinx/locale/datetime/cldr/durations/CldrDurationUnits : dev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnitFormatSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/datetime/cldr/durations/CldrDurationUnits;
+	public fun durationFormatOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun durationUnitNameOrNull (Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun getSupportedLocales ()Ljava/util/Set;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/cldr/durations/DurationUnitsKt {
+	public static final fun durationFormat (DILdev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static final fun durationFormat (JLdev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static final fun durationFormat (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun durationFormat$default (DILdev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static synthetic fun durationFormat$default (JLdev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static synthetic fun durationFormat$default (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+	public static final fun durationUnitName (Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static synthetic fun durationUnitName$default (Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/DurationUnit;Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/UnitWidth;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ljava/lang/String;
+}
+

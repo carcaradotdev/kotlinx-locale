@@ -59,6 +59,10 @@ private fun intervalConformanceDir(rootDir: File): File = rootDir
     .sourceRoot("kotlinx-locale-datetime-cldr-intervals", "commonTest")
     .resolve("dev/carcara/kotlinx/locale/datetime/cldr/intervals/conformance")
 
+private fun durationUnitConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-datetime-cldr-durations", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/datetime/cldr/durations/conformance")
+
 private fun weekConformanceDir(rootDir: File): File = rootDir
     .sourceRoot("kotlinx-locale-datetime-cldr-full", "commonTest")
     .resolve("dev/carcara/kotlinx/locale/datetime/cldr/conformance")
@@ -101,6 +105,7 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.DATE_TIME_STANDALONE, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
     .table(GeneratedTable.LANGUAGE_NAMES, rootDir.sourceRoot("kotlinx-locale-language-cldr-full"))
     .table(GeneratedTable.RELATIVE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-relative"))
+    .table(GeneratedTable.DURATION_UNITS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-durations"))
     .table(GeneratedTable.PERSON_NAMES, rootDir.sourceRoot("kotlinx-locale-personname-cldr-full"))
     .table(GeneratedTable.TIME_ZONE_FORMATS, rootDir.sourceRoot("kotlinx-locale-timezone-cldr-full"))
     .table(GeneratedTable.TIME_ZONE_NAMES, rootDir.sourceRoot("kotlinx-locale-timezone-cldr-full"))
@@ -167,6 +172,14 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
             root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-relative"),
             packageName = "dev.carcara.kotlinx.locale.datetime.cldr.relative",
             objectName = "CldrRelativeTime",
+        ),
+    )
+    .binding(
+        GeneratedBinding.DURATION_UNITS,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-datetime-cldr-durations"),
+            packageName = "dev.carcara.kotlinx.locale.datetime.cldr.durations",
+            objectName = "CldrDurationUnits",
         ),
     )
     .binding(
@@ -293,6 +306,23 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         relativeTime[canonicalTag(id)] = flattener.resolveRelativeTime(id, ::relativeFor).encode()
     }
 
+    val durationUnitCache = HashMap<String, PartialDurationUnits>()
+    fun durationUnitsFor(level: String): PartialDurationUnits = durationUnitCache.getOrPut(level) {
+        parseDurationUnits(cldrDir.resolve("common/main/$level.xml"))
+    }
+    val durationUnits = LinkedHashMap<String, String>()
+    // Root carries English rather than CLDR's root.xml, which declares only a
+    // short block of placeholders. A locale with no unit wording of its own
+    // resolves here, and ICU answers the same way for the same locales; see
+    // resolveDurationUnits.
+    durationUnits["root"] = requireNotNull(flattener.resolveDurationUnits("en", ::durationUnitsFor)) {
+        "en declares no duration units, so the root fallback would be empty"
+    }.encode()
+    for (id in flattener.localeIds) {
+        val resolved = flattener.resolveDurationUnits(id, ::durationUnitsFor) ?: continue
+        durationUnits[canonicalTag(id)] = resolved.encode()
+    }
+
     // After the extras resolver, because the capitalization bits ride along with
     // the stand-alone names and come from the same files.
     val dateTimeStandalone = LinkedHashMap<String, String>()
@@ -395,6 +425,11 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         icuTag = ICU_REPO.tag,
         entries = extractIcuWeekDataGolden(relativeTime.keys),
     )
+    emitIcuDurationUnitGolden(
+        outputFile = durationUnitConformanceDir(rootDir).resolve("IcuDurationUnitGoldenData.kt"),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuDurationUnitGolden(),
+    )
     emitIcuNumberGolden(
         outputFile = conformanceDir(rootDir).resolve("IcuNumberGoldenData.kt"),
         icuTag = ICU_REPO.tag,
@@ -441,6 +476,7 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .section("dateTimeStandalone", dateTimeStandalone)
         .section("localeDisplayNames", buildLocaleDisplayNamePayloads(flattener, extras))
         .section("relativeTime", relativeTime)
+        .section("durationUnits", durationUnits)
         .section("timeZoneFormats", timeZoneFormats)
         .section("timeZoneNames", timeZoneNames)
         .section("timeZoneCities", buildTimeZoneCityPayloads(flattener, ::zonesFor))

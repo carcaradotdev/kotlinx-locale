@@ -50,6 +50,7 @@ All date and time examples are real output for 2026-07-27, a Monday, at
 - [Date and time intervals](#date-and-time-intervals)
 - [Week data](#week-data)
 - [Duration patterns](#duration-patterns)
+- [Duration units](#duration-units)
 - [Country](#country)
 - [Currency](#currency)
 - [Numbers](#numbers)
@@ -666,6 +667,96 @@ as `1:30` or `0:01:30` is the caller's decision and CLDR does not answer it.
 
 Expect almost no variation: across every locale in the release only Finnish and
 Danish differ from root. Falls back to root's `h:mm`, `h:mm:ss` and `m:ss`.
+
+For `2 hours` rather than `2:00`, see [duration units](#duration-units) below.
+
+## Duration units
+
+From `kotlinx-locale-datetime-cldr-durations`, or with
+`datetime { durationUnits = true }`.
+
+```kotlin
+public enum class DurationUnit {
+    CENTURY, DECADE, YEAR, QUARTER, MONTH, WEEK, DAY, NIGHT,
+    HOUR, MINUTE, SECOND, MILLISECOND, MICROSECOND, NANOSECOND,
+}
+
+public enum class UnitWidth { LONG, SHORT, NARROW }
+
+public fun durationFormat(
+    value: Long,
+    unit: DurationUnit,
+    width: UnitWidth = UnitWidth.LONG,
+    locale: Locale = Locale.current,
+): String
+
+public fun durationFormat(
+    value: Double,
+    fractionDigits: Int,
+    unit: DurationUnit,
+    width: UnitWidth = UnitWidth.LONG,
+    locale: Locale = Locale.current,
+): String
+
+public fun durationFormat(
+    value: Decimal,
+    unit: DurationUnit,
+    width: UnitWidth = UnitWidth.LONG,
+    locale: Locale = Locale.current,
+): String
+
+public fun durationUnitName(
+    unit: DurationUnit,
+    width: UnitWidth = UnitWidth.LONG,
+    locale: Locale = Locale.current,
+): String
+```
+
+The measurement form of a quantity of time, where `durationPattern` above is the
+clock reading. This is what ICU spells
+`NumberFormatter.unit(MeasureUnit.MINUTE).unitWidth(NARROW)`.
+
+```kotlin
+val en = Locale.forLanguageTag("en")
+
+durationFormat(2, DurationUnit.HOUR, locale = en)                     // 2 hours
+durationFormat(2, DurationUnit.HOUR, UnitWidth.SHORT, en)             // 2 hr
+durationFormat(2, DurationUnit.HOUR, UnitWidth.NARROW, en)            // 2h
+durationFormat(90, DurationUnit.MINUTE, UnitWidth.NARROW, en)         // 90m
+durationFormat(1.5, fractionDigits = 1, DurationUnit.HOUR, locale = en)  // 1.5 hours
+```
+
+Real output for 2, one of the eight values the conformance goldens check:
+
+| Locale | `HOUR` long | `HOUR` short | `HOUR` narrow | `MINUTE` narrow |
+| --- | --- | --- | --- | --- |
+| en | 2 hours | 2 hr | 2h | 2m |
+| de | 2 Stunden | 2 Std. | 2h | 2 Min. |
+| fr | 2 heures | 2 h | 2h | 2min |
+| es | 2 horas | 2 h | 2h | 2min |
+| ru | 2 часа | 2 ч | 2 ч | 2 мин |
+| ja | 2 時間 | 2 時間 | 2h | 2m |
+
+The widths are wording rather than abbreviation, so a locale is free to make two
+of them the same and many do: German and Japanese both write the narrow hour as
+`2h`, and Russian writes the same `2 ч` at short and narrow. The separator is the
+locale's own. French joins its long hours with U+00A0 and its short ones with
+U+202F, the narrow no-break space it also groups digits with.
+
+The count is rendered through the number formatter rather than pasted in, so it
+picks up the locale's digits and grouping. The plural form is chosen from the
+number as it will be printed, which is why the entry points take either a `Long`
+or a value with an explicit digit count: in Czech `1 hodina` and `1,0 hodiny` are
+the same quantity and different forms.
+
+Which unit to use is yours to pick. Nothing here turns ninety minutes into an
+hour and a half, for the same reason [relative time](#relative-time) does not
+choose between `in 90 minutes` and `in 2 hours`.
+
+CLDR carries wording for 681 of the 1121 locales. The rest fall back to English,
+which is also what ICU does for them. Two of CLDR's `duration-` units are left
+out: `duration-fortnight` reaches twelve locales and `duration-day-person`
+sixteen.
 
 ## Country
 

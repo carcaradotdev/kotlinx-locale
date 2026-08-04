@@ -220,6 +220,8 @@ locale-datetime-cldr-full = { module = "dev.carcara:kotlinx-locale-datetime-cldr
 locale-datetime-cldr-skeletons = { module = "dev.carcara:kotlinx-locale-datetime-cldr-skeletons", version.ref = "kotlinx-locale" }
 # Relative wording, on top of -cldr-runtime rather than -cldr-full. Opt in.
 locale-datetime-cldr-relative = { module = "dev.carcara:kotlinx-locale-datetime-cldr-relative", version.ref = "kotlinx-locale" }
+# Duration wording, on the same footing as the relative tables. Opt in.
+locale-datetime-cldr-durations = { module = "dev.carcara:kotlinx-locale-datetime-cldr-durations", version.ref = "kotlinx-locale" }
 # Date and time ranges, on top of the skeletons. Opt in.
 locale-datetime-cldr-intervals = { module = "dev.carcara:kotlinx-locale-datetime-cldr-intervals", version.ref = "kotlinx-locale" }
 locale-datetime-platform = { module = "dev.carcara:kotlinx-locale-datetime-platform", version.ref = "kotlinx-locale" }
@@ -249,6 +251,8 @@ locale-datetime-cldr = ["locale-datetime-core", "locale-datetime-cldr-full"]
 locale-datetime-skeletons = ["locale-datetime-core", "locale-datetime-cldr-full", "locale-datetime-cldr-skeletons"]
 # Relative wording, which needs no date patterns.
 locale-datetime-relative = ["locale-datetime-core", "locale-datetime-cldr-relative"]
+# Duration wording, which needs none either.
+locale-datetime-durations = ["locale-datetime-core", "locale-datetime-cldr-durations"]
 # Ranges, which pull the skeletons in because an interval is a split of one.
 locale-datetime-intervals = ["locale-datetime-core", "locale-datetime-cldr-full", "locale-datetime-cldr-skeletons", "locale-datetime-cldr-intervals"]
 locale-personname-cldr = ["locale-personname-core", "locale-personname-cldr-full"]
@@ -405,6 +409,7 @@ plugin flag beside the artifact for every domain that has one.
 | `kotlinx-locale-personname-cldr-runtime` | Pattern selection, field modifiers and the empty-field cleanup. Carries no records. |
 | `kotlinx-locale-personname-cldr-full` | `CldrPersonName`, `personNameFormat` and `personNameOrder`: a name written the way a locale writes one, and its initials. |
 | `kotlinx-locale-datetime-cldr-relative` | `CldrRelativeTime` and `relativeTimeFormat`: `3 days ago` and `včera`, with the plural rules that pick among a language's forms. Its own artifact because it needs no date patterns. |
+| `kotlinx-locale-datetime-cldr-durations` | `CldrDurationUnits` and `durationFormat`: `2 hours`, `2 hr`, `2h`, across fourteen time units and three widths. Its own artifact for the same reason as the relative tables, and around 117 KB gzipped. Not the same thing as `durationPattern`, which gives `h:mm` and ships with `-cldr-full`. |
 | `kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
 | `kotlinx-locale-timezone-core` | `TimeZoneNameSource` and `TimeZoneNameStyle`: the forms UTS #35 Part 4 defines for naming a zone. |
 | `kotlinx-locale-timezone-cldr-runtime` | The localized GMT format, metazone resolution and the naming ladder, over records it does not carry. |
@@ -1043,6 +1048,11 @@ library has decided to stop is in [docs/boundaries.md](docs/boundaries.md).
   but you choose the unit. Whether ninety minutes reads as "in 90 minutes" or
   "in 2 hours" is not standardized by CLDR, ECMA-402 or ICU, all of which take
   the unit from the caller.
+- Duration wording lives in `kotlinx-locale-datetime-cldr-durations` and takes
+  the unit from you for the same reason. It agrees with ICU on all 10080 cells
+  of its conformance fixture, which is fourteen units at three widths and eight
+  values across thirty locales. CLDR has wording for 681 of the 1121 locales;
+  the rest fall back to English, as ICU does for them.
 - Interval formatting agrees with ICU on every one of the 905 locales the two
   builds share, with nothing excluded.
 - Person name formatting agrees with CLDR's own test data on ninety-nine per

@@ -112,6 +112,19 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
     ),
 
     /**
+     * Duration wording: `2 hours`, `2 hr`, `2h`.
+     *
+     * Carries the number and plural tables for the same reason relative time
+     * does, and is a separate feature from it because the two tables are
+     * separate: a build that counts things down does not need `yesterday`.
+     */
+    DATETIME_DURATION_UNITS(
+        dslName = "datetime.durationUnits",
+        tables = setOf(GeneratedTable.DURATION_UNITS, GeneratedTable.NUMBER, GeneratedTable.PLURALS),
+        bindings = setOf(GeneratedBinding.DURATION_UNITS, GeneratedBinding.NUMBER),
+    ),
+
+    /**
      * Language, script and region names, and `Locale.displayName`.
      *
      * One feature rather than three, because the display name algorithm reaches
