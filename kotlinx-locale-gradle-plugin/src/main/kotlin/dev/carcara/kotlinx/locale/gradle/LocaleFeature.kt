@@ -189,21 +189,18 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
     ),
 
     /**
-     * Compact money: `$1.2M`.
-     *
-     * Includes the currency name and pattern tables it formats through, and the
-     * plural table its own patterns are keyed by.
-     */
-    /**
      * The localized GMT format: `GMT-08:00` in the locale's own word and digits.
      *
      * Nine short strings per locale, and the fallback every other zone style
      * degrades to. Includes the number tables, because the offset is written
-     * with the locale's own digits.
+     * with the locale's own digits, and the plural table with them: the number
+     * binding carries the plural rules whatever it was asked for, so a closure
+     * that named the number table alone would emit a source file referring to a
+     * registry nothing wrote.
      */
     TIMEZONE_FORMATS(
         dslName = "timezone.formats",
-        tables = setOf(GeneratedTable.TIME_ZONE_FORMATS, GeneratedTable.NUMBER),
+        tables = setOf(GeneratedTable.TIME_ZONE_FORMATS, GeneratedTable.NUMBER, GeneratedTable.PLURALS),
         bindings = setOf(GeneratedBinding.TIME_ZONE, GeneratedBinding.NUMBER),
     ),
 
@@ -214,7 +211,12 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
      */
     TIMEZONE_NAMES(
         dslName = "timezone.names",
-        tables = setOf(GeneratedTable.TIME_ZONE_FORMATS, GeneratedTable.TIME_ZONE_NAMES, GeneratedTable.NUMBER),
+        tables = setOf(
+            GeneratedTable.TIME_ZONE_FORMATS,
+            GeneratedTable.TIME_ZONE_NAMES,
+            GeneratedTable.NUMBER,
+            GeneratedTable.PLURALS,
+        ),
         bindings = setOf(GeneratedBinding.TIME_ZONE, GeneratedBinding.NUMBER),
     ),
 
@@ -238,10 +240,17 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
             GeneratedTable.TIME_ZONE_NAMES,
             GeneratedTable.TIME_ZONE_CITIES,
             GeneratedTable.NUMBER,
+            GeneratedTable.PLURALS,
         ),
         bindings = setOf(GeneratedBinding.TIME_ZONE, GeneratedBinding.TIME_ZONE_CITIES, GeneratedBinding.NUMBER),
     ),
 
+    /**
+     * Compact money: `$1.2M`.
+     *
+     * Includes the currency name and pattern tables it formats through, and the
+     * plural table its own patterns are keyed by.
+     */
     CURRENCY_COMPACT(
         dslName = "currency.compact",
         tables = setOf(

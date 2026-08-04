@@ -97,8 +97,17 @@ public fun emitCountryBinding(outputRoot: File, spec: BindingSpec) {
     println("[codegen] emitted ${spec.objectName} to $file")
 }
 
-/** `CldrCurrency`-shaped binding: the source object plus the currency extensions. */
-public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject: String?) {
+/**
+ * `CldrCurrency`-shaped binding: the source object plus the currency extensions.
+ *
+ * [hasFormats] decides whether the number patterns are wired in, and with them
+ * `CurrencyAmount.format` and `parseFormatted`. False is not a formatter over an
+ * empty table: the entry points are absent, so a build that asked for the
+ * symbols and calls `format` fails to compile rather than rendering a hole. That
+ * is the failure this generator prefers, and it is why the symbols and the
+ * patterns are two flags rather than one.
+ */
+public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject: String?, hasFormats: Boolean) {
     val file = outputRoot.packageFile(spec.packageName, "CurrencyNames.kt")
     // Built here rather than spliced into the template, so the placeholders are
     // resolved once at emit time and the generated file carries none of them.
@@ -111,50 +120,12 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
             "\n        |                ?: PluralCategory.OTHER" +
             "\n        |        },"
     }
-    file.writeText(
-        preamble(
-            spec,
-            buildList {
-                add("dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi")
-                if (numberObject != null) {
-                    add(spec.registryPackage + ".currencyCompactRegistry")
-                    add("dev.carcara.kotlinx.locale.number.PluralCategory")
-                    add("dev.carcara.kotlinx.locale.number.PluralType")
-                    add("dev.carcara.kotlinx.locale.number.cldr.runtime.FormattedNumberSelector")
-                }
-                addAll(
-                    listOf(
-                        "dev.carcara.kotlinx.locale.Locale",
-                        "dev.carcara.kotlinx.locale.currency.Currency",
-                        "dev.carcara.kotlinx.locale.currency.CurrencyAmount",
-                        "dev.carcara.kotlinx.locale.currency.CurrencyFormatSource",
-                        "dev.carcara.kotlinx.locale.currency.CurrencyNameSource",
-                        "dev.carcara.kotlinx.locale.currency.CurrencyFormatOptions",
-                        "dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle",
-                        "dev.carcara.kotlinx.locale.number.NumberNotation",
-                        "dev.carcara.kotlinx.locale.number.SignDisplay",
-                        "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyFormats",
-                        "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyNames",
-                        "dev.carcara.kotlinx.locale.currency.code",
-                        "dev.carcara.kotlinx.locale.currency.displayName",
-                        "dev.carcara.kotlinx.locale.currency.format",
-                        "dev.carcara.kotlinx.locale.currency.parseFormattedOrNull",
-                        "dev.carcara.kotlinx.locale.currency.symbol",
-                        "${spec.registryPackage}.currencyFormatsRegistry",
-                        "${spec.registryPackage}.currencyNamesRegistry",
-                    ),
-                )
-            },
-            // Unconditional, and not only for the compact build. Constructing
-            // PayloadCurrencyFormats at all resolves its default arguments, and
-            // one of them is a FormattedNumberSelector, which is marked internal
-            // because it exists for the formatter modules to share. A build
-            // without compact money never mentions the type and still needs the
-            // opt-in; leaving it out compiled here and failed in the sample,
-            // which is the only build that compiles what the plugin generates.
-            fileAnnotation = "@file:OptIn(InternalKotlinxLocaleApi::class)",
-        ) + """
-        |
+    // Each block is trimmed on its own and the pieces are concatenated, rather
+    // than interpolated into one template: a margin-prefixed block spliced into
+    // another leaves the indentation of the splice point behind as a line of
+    // trailing whitespace, which ktlint then rejects in the consumer's build.
+    val sourceObject = if (hasFormats) {
+        """
         |/**
         | * The currency symbols, display names and number formats this build carries.
         | *
@@ -191,11 +162,24 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
         |        formats.parseToMinorUnitsOrNull(text, currencyCode, locale)
         |}
         |
-        |/** The currency symbol for [locale], e.g. `US${'$'}` for USD in pt-BR; falls back to the ISO code. */
-        |public fun Currency.symbol(locale: Locale = Locale.current): String = ${spec.objectName}.symbol(this, locale)
+        """.trimMargin()
+    } else {
+        """
+        |/**
+        | * The currency symbols and display names this build carries.
+        | *
+        | * One interface rather than two, so `by` says all of it: without the pattern
+        | * tables there is no second `supportedLocales` to disambiguate, and no
+        | * formatter to delegate to.
+        | */
+        |public object ${spec.objectName} : CurrencyNameSource by PayloadCurrencyNames(currencyNamesRegistry)
         |
-        |/** The display name for [locale]; falls back to the ISO code. */
-        |public fun Currency.displayName(locale: Locale = Locale.current): String = ${spec.objectName}.displayName(this, locale)
+        """.trimMargin()
+    }
+    val formatExtensions = if (!hasFormats) {
+        ""
+    } else {
+        """
         |
         |/**
         | * Formats the amount with the pattern and symbols of [locale].
@@ -242,7 +226,65 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
         |    "Cannot parse ${'$'}{currency.code} amount: '${'$'}text'"
         |}
         |
-        """.trimMargin(),
+        """.trimMargin()
+    }
+    file.writeText(
+        preamble(
+            spec,
+            buildList {
+                if (hasFormats) add("dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi")
+                if (numberObject != null) {
+                    add(spec.registryPackage + ".currencyCompactRegistry")
+                    add("dev.carcara.kotlinx.locale.number.PluralCategory")
+                    add("dev.carcara.kotlinx.locale.number.PluralType")
+                    add("dev.carcara.kotlinx.locale.number.cldr.runtime.FormattedNumberSelector")
+                }
+                addAll(
+                    listOf(
+                        "dev.carcara.kotlinx.locale.Locale",
+                        "dev.carcara.kotlinx.locale.currency.Currency",
+                        "dev.carcara.kotlinx.locale.currency.CurrencyNameSource",
+                        "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyNames",
+                        "dev.carcara.kotlinx.locale.currency.displayName",
+                        "dev.carcara.kotlinx.locale.currency.symbol",
+                        "${spec.registryPackage}.currencyNamesRegistry",
+                    ),
+                )
+                if (hasFormats) {
+                    addAll(
+                        listOf(
+                            "dev.carcara.kotlinx.locale.currency.CurrencyAmount",
+                            "dev.carcara.kotlinx.locale.currency.CurrencyFormatSource",
+                            "dev.carcara.kotlinx.locale.currency.CurrencyFormatOptions",
+                            "dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle",
+                            "dev.carcara.kotlinx.locale.number.NumberNotation",
+                            "dev.carcara.kotlinx.locale.number.SignDisplay",
+                            "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyFormats",
+                            "dev.carcara.kotlinx.locale.currency.code",
+                            "dev.carcara.kotlinx.locale.currency.format",
+                            "dev.carcara.kotlinx.locale.currency.parseFormattedOrNull",
+                            "${spec.registryPackage}.currencyFormatsRegistry",
+                        ),
+                    )
+                }
+            },
+            // Not only for the compact build. Constructing PayloadCurrencyFormats
+            // at all resolves its default arguments, and one of them is a
+            // FormattedNumberSelector, which is marked internal because it exists
+            // for the formatter modules to share. A build with the patterns and
+            // without compact money never mentions the type and still needs the
+            // opt-in; leaving it out compiled here and failed in the sample. A
+            // build without the patterns constructs nothing that asks for it.
+            fileAnnotation = "@file:OptIn(InternalKotlinxLocaleApi::class)".takeIf { hasFormats },
+        ) + "\n" + sourceObject + """
+        |
+        |/** The currency symbol for [locale], e.g. `US${'$'}` for USD in pt-BR; falls back to the ISO code. */
+        |public fun Currency.symbol(locale: Locale = Locale.current): String = ${spec.objectName}.symbol(this, locale)
+        |
+        |/** The display name for [locale]; falls back to the ISO code. */
+        |public fun Currency.displayName(locale: Locale = Locale.current): String = ${spec.objectName}.displayName(this, locale)
+        |
+        """.trimMargin() + formatExtensions,
     )
     println("[codegen] emitted ${spec.objectName} to $file")
 }

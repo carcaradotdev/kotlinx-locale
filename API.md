@@ -1739,16 +1739,61 @@ kotlinxLocale {
 | `fallback(LocaleRef)` or `fallback(String)` | The locale that answers for anything not generated. Required, and required to be one of `locales`. |
 | `packageName` | The package the generated sources go into. |
 | `objectPrefix` | The prefix on the generated objects, so `Generated` yields `GeneratedCountryNames`. Configurable because a project may want a narrow default set and a full one behind a lazy load. |
-| `country { names }` | Localized country names, behind `Country.displayName`. |
-| `currency { names }` | Localized currency symbols and display names. |
-| `currency { formats }` | Number patterns, for `CurrencyAmount.format` and `parseFormatted`. Implies `names`, because a pattern substitutes the symbol into itself. |
-| `datetime { patterns }` | Date and time patterns plus month and weekday names. |
-| `datetime { skeletons }` | Skeleton formatting and the pattern behind it. Implies `patterns`. Worth asking for deliberately: across all locales these are the larger half of the datetime data. |
 
 Asking for nothing at all fails the build rather than generating an empty source
 set. Prefer the `LocaleRef` overloads: a typo in a tag does not throw, it quietly
 generates data for one locale fewer than intended, and this is a build script so
 nothing fails at runtime either.
+
+### Feature flags
+
+Every flag is off by default. A flag declares the whole set of tables generating
+it needs rather than pointing at other flags, so turning one on can write a table
+another flag also names. That is what makes a half-configured source set
+impossible to ask for: `datetime { skeletons = true }` cannot produce a matcher
+with no patterns to match against, because the patterns are part of what
+`skeletons` means.
+
+A flag never changes what a call does. It decides which locales and which tables
+reach the generated source. Calling an entry point no flag enabled fails to
+compile, which is the failure worth having; a call that compiles and answers
+wrongly is not.
+
+The last column is the artifact a narrowed build declares in place of
+`-cldr-full`. Where two flags name the same one, declaring it once covers both.
+
+| Flag | What it generates | Runtime artifact |
+| --- | --- | --- |
+| `country { names }` | [`Country.displayName`](#countrydisplayname) | `kotlinx-locale-country-cldr-runtime` |
+| `currency { names }` | [`Currency.symbol` and `Currency.displayName`](#currencysymbol-and-currencydisplayname) | `kotlinx-locale-currency-cldr-runtime` |
+| `currency { formats }` | [`CurrencyAmount.format`](#currencyamountformat) and [`parseFormatted`](#currencyamountparseformatted-and-parseformattedornull). Writes the symbol table too, since a pattern substitutes the symbol into itself. | `kotlinx-locale-currency-cldr-runtime` |
+| `currency { compact }` | `$1.2M`, through `notation` on `format`. Writes the symbols, the patterns and the plural rules its own patterns are keyed by. | `kotlinx-locale-currency-cldr-runtime` |
+| `datetime { patterns }` | [`format` by `FormatStyle`](#localdateformat), [month](#monthdisplayname) and [weekday](#dayofweekdisplayname) names, [day periods](#day-periods), [`weekInfo`](#week-data), [`durationPattern`](#duration-patterns) | `kotlinx-locale-datetime-cldr-runtime` |
+| `datetime { skeletons }` | [`format` by skeleton](#skeleton-formatting) and [`skeletonPatternOrNull`](#skeletonpatternornull). Writes the pattern tables too. Worth asking for deliberately: across all locales these are the larger half of the datetime data. | `kotlinx-locale-datetime-cldr-runtime` |
+| `datetime { intervals }` | [`intervalFormat`](#date-and-time-intervals). Writes the skeleton tables too, since an interval is a split of the pattern the matcher picks. | `kotlinx-locale-datetime-cldr-runtime` |
+| `datetime { standalone }` | `TextStyle.STANDALONE` month, weekday and quarter names. Twelve thousand characters across every locale, because the table holds only where a locale differs from its format names. | `kotlinx-locale-datetime-cldr-runtime` |
+| `datetime { relativeTime }` | [`relativeTimeFormat`](#relativetimeformat). Writes the plural rules that choose the wording and the number tables that render its count. | `kotlinx-locale-datetime-cldr-runtime` |
+| `datetime { durationUnits }` | [`durationFormat` and `durationUnitName`](#duration-units), the `2 hours` form rather than the `h:mm` of `durationPattern`. Writes the plural and number tables alongside. | `kotlinx-locale-datetime-cldr-runtime` |
+| `language { names }` | [`Locale.displayName`, `nativeDisplayName`](#localedisplayname-and-localenativedisplayname), [`scriptName` and `regionName`](#localescriptname-and-localeregionname). The largest table in the library, and the one this plugin pays for most. | `kotlinx-locale-language-cldr-runtime` |
+| `number { formats }` | [`numberFormat`](#numberformat), [`numberFormatPercent`](#numberformatpercent-and-numberformatpercentvalue), [`numberSymbols` and `numberParseOrNull`](#numbersymbols-and-numberparseornull) | `kotlinx-locale-number-cldr-runtime` |
+| `number { compact }` | `1.2K` and `1.2 thousand`, through `notation`. Writes the plural rules its patterns are keyed by, so compact cannot pick the wrong form. | `kotlinx-locale-number-cldr-runtime` |
+| `number { plurals }` | [`pluralCategory`](#pluralcategory), for choosing between translated strings. Carried whole rather than narrowed: four kilobytes covers every locale in CLDR. | `kotlinx-locale-number-cldr-runtime` |
+| `number { ordinals }` | [`numberOrdinal`](#numberordinal). Writes the plural rules eight of the rule sets read. | `kotlinx-locale-number-cldr-runtime` |
+| `timezone { formats }` | [`UtcOffset.displayName`](#utcoffsetdisplayname), the localized GMT format every other zone style degrades to | `kotlinx-locale-timezone-cldr-runtime` |
+| `timezone { names }` | [`TimeZone.displayName`](#timezonedisplayname). Writes the format table, which every name falls back to. | `kotlinx-locale-timezone-cldr-runtime` |
+| `timezone { exemplarCities }` | [`TimeZone.exemplarCity`](#timezoneexemplarcity) and the generic location format. The largest zone table by a wide margin; without it the location format uses the identifier's last part, which is the fallback UTS #35 prescribes. | `kotlinx-locale-timezone-cldr-runtime` |
+| `personName { formats }` | [`personNameFormat` and `personNameOrder`](#person-names) | `kotlinx-locale-personname-cldr-runtime` |
+
+Some flags bring another domain's entry points with them, because the two share a
+source object. Any `timezone` flag writes the number binding, since the GMT
+offset is rendered in the locale's own digits, so a build that asked only for
+zone names also gets `numberFormat`. That is a larger generated source set, never
+a different answer.
+
+There is no `phone` flag. The metadata is keyed by territory rather than by
+locale, so naming three locales would narrow nothing; take
+`kotlinx-locale-phone-metadata-full` directly. See
+[Phone numbers](#phone-numbers).
 
 Narrowing only ever touches locale data. `Country.forAlpha2("br")` and
 `Currency.forCode("jpy")` keep working whatever was generated, because an app

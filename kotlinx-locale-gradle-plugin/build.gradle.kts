@@ -25,6 +25,22 @@ dependencies {
 
     testImplementation(libs.kotlin.test)
     testImplementation(gradleTestKit())
+
+    // What GeneratedSourceCompilesTest compiles each feature's output against.
+    // A feature declares the closure of tables it needs, and until something
+    // compiled the result that closure was only ever checked against file names:
+    // three timezone flags and one currency flag shipped emitting a source file
+    // that referred to a registry no table wrote. These are the JVM variants of
+    // the multiplatform runtime modules, which is what a narrowed consumer
+    // depends on in place of -cldr-full.
+    testImplementation(libs.kotlin.compiler.embeddable)
+    testImplementation(project(":kotlinx-locale-country-cldr-runtime"))
+    testImplementation(project(":kotlinx-locale-currency-cldr-runtime"))
+    testImplementation(project(":kotlinx-locale-datetime-cldr-runtime"))
+    testImplementation(project(":kotlinx-locale-language-cldr-runtime"))
+    testImplementation(project(":kotlinx-locale-number-cldr-runtime"))
+    testImplementation(project(":kotlinx-locale-personname-cldr-runtime"))
+    testImplementation(project(":kotlinx-locale-timezone-cldr-runtime"))
 }
 
 gradlePlugin {

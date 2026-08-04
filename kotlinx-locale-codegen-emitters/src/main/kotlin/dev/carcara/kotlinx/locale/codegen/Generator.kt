@@ -494,6 +494,9 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             } else {
                 null
             },
+            // The symbols can be asked for without the patterns, and then there
+            // is no format entry point rather than one over a table nothing wrote.
+            hasFormats = roots[GeneratedTable.CURRENCY_FORMATS] != null,
         )
     }
 

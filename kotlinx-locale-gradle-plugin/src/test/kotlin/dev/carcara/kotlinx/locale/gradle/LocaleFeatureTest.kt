@@ -10,10 +10,11 @@ import kotlin.test.assertTrue
  *
  * A feature declares the closure of tables generating it needs, which is what
  * makes a half-configured source set impossible to ask for. Two things can still
- * go wrong and neither is a compile error: a table nobody can reach, and a
- * feature whose closure is missing something it reads at runtime. The first is
- * checked here. The second is checked by the functional tests, which generate a
- * source set per feature and compile it.
+ * go wrong and neither is a compile error here: a table nobody can reach, and a
+ * feature whose closure is missing something the source it generates refers to.
+ * The first is checked below. The second is checked by
+ * [GeneratedSourceCompilesTest], which generates a source set per feature and
+ * runs the Kotlin compiler over it.
  */
 class LocaleFeatureTest {
 

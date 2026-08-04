@@ -274,6 +274,7 @@ locale-currency-narrowed = ["locale-currency-types", "locale-currency-core", "lo
 locale-datetime-narrowed = ["locale-datetime-core", "locale-datetime-cldr-runtime"]
 locale-language-narrowed = ["locale-language-core", "locale-language-cldr-runtime"]
 locale-number-narrowed = ["locale-number-core", "locale-number-cldr-runtime"]
+locale-personname-narrowed = ["locale-personname-core", "locale-personname-cldr-runtime"]
 locale-timezone-narrowed = ["locale-timezone-core", "locale-timezone-cldr-runtime"]
 # There is no locale-phone-narrowed: the phone metadata is keyed by territory
 # rather than by locale, so declaring three locales narrows nothing about it.
@@ -768,7 +769,11 @@ Narrowing only ever touches locale data. `Country.forAlpha2("br")` and
 that displays three currencies can still be handed an arbitrary code by a
 payment API.
 
-The plugin DSL is documented in full in [API.md](API.md#gradle-plugin).
+Every domain that ships a `-cldr-full` artifact has flags of its own: country,
+currency, datetime, language, number, time zones and person names. Phone metadata
+does not, because it is keyed by territory rather than by locale, so a locale set
+narrows nothing about it. [API.md](API.md#feature-flags) lists every flag next to
+what it generates and the `-cldr-runtime` artifact it needs.
 
 ## Supported platforms
 
