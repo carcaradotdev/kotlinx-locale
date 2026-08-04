@@ -55,19 +55,24 @@ internal fun formatCurrency(
     val increment = if (options.cash) currency.cldrCashRoundingIncrement else currency.cldrRoundingIncrement
     var scaled = rescaleFraction(minorUnits, currency.minorUnitDigits, cldrDigits)
     if (increment > 0) scaled = roundToIncrement(scaled, increment.toLong())
+    val digits = options.fractionDigits ?: cldrDigits
     // A negative amount smaller than the currency prints at keeps its sign, so
     // -1 filler is `-0 Ft` rather than `0 Ft`. Rescaling to CLDR's digits lands
     // on a Long, and a Long has no negative zero, so the sign would be gone
-    // before the renderer read it. Handing the renderer the ISO-scaled value
-    // instead lets it round to the same magnitude by the same half-even rule and
-    // see that the value arrived negative. Any rounding increment is already
-    // satisfied here, since zero is a multiple of every increment.
+    // before the renderer read it.
+    //
+    // What stands in for it is the smallest negative quantity one digit finer
+    // than the output: it rounds to zero at every digit count this can print,
+    // and it arrives negative, which is all the renderer needs to apply
+    // SignDisplay. Deliberately not the original amount, which would undo the
+    // rounding that produced the zero in the first place: a Swiss franc cash
+    // amount of -0.02 rounds to the nearest 0.05 and has to print as -0.00, not
+    // as the -0.02 it started from.
     val amount = if (scaled == 0L && minorUnits < 0) {
-        Decimal.ofUnscaled(minorUnits, currency.minorUnitDigits)
+        Decimal.ofUnscaled(-1, digits + 1)
     } else {
         Decimal.ofUnscaled(scaled, cldrDigits)
     }
-    val digits = options.fractionDigits ?: cldrDigits
 
     val accounting = options.signDisplay.usesAccountingPattern
     val basePattern = if (accounting) data.accountingPattern else data.standardPattern

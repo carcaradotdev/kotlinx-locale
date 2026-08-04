@@ -137,6 +137,32 @@ class CurrencyFormatTest {
     }
 
     @Test
+    fun keepsTheSignOnAnAmountThatRoundsAwayUnderEveryOption() {
+        // The rounding that produced the zero has to survive: a Swiss franc cash
+        // amount of -0.02 rounds to the nearest 0.05, so it prints as -0.00
+        // rather than as the -0.02 it started from.
+        assertEquals("-CHF\u00A00.00", format(Currency.CHF, -2, "en", cash = true))
+        assertEquals("-CHF\u00A00.05", format(Currency.CHF, -3, "en", cash = true))
+        // A digit-count override is applied after CLDR's scale, so the forint
+        // has already rounded away by the time three digits are asked for.
+        assertEquals(
+            "-HUF\u00A00.000",
+            CurrencyAmount(Currency.HUF, -1).format(locale("en"), fractionDigits = 3),
+        )
+        // Which sign the zero carries is SignDisplay's to decide, not this
+        // layer's. It only has to stop throwing the information away.
+        assertEquals("-HUF\u00A00", format(Currency.HUF, -1, "en", signDisplay = SignDisplay.AUTO))
+        assertEquals("-HUF\u00A00", format(Currency.HUF, -1, "en", signDisplay = SignDisplay.ALWAYS))
+        assertEquals("HUF\u00A00", format(Currency.HUF, -1, "en", signDisplay = SignDisplay.NEVER))
+        assertEquals("HUF\u00A00", format(Currency.HUF, -1, "en", signDisplay = SignDisplay.NEGATIVE))
+        assertEquals("HUF\u00A00", format(Currency.HUF, -1, "en", signDisplay = SignDisplay.EXCEPT_ZERO))
+        assertEquals("(HUF\u00A00)", format(Currency.HUF, -1, "en", signDisplay = SignDisplay.ACCOUNTING))
+        assertEquals("HUF\u00A00", format(Currency.HUF, -1, "en", signDisplay = SignDisplay.ACCOUNTING_NEGATIVE))
+        // A positive that rounds away carries no sign either way.
+        assertEquals("HUF\u00A00", format(Currency.HUF, 1, "en"))
+    }
+
+    @Test
     fun formatsLongExtremes() {
         assertEquals("$92,233,720,368,547,758.07", format(Currency.USD, Long.MAX_VALUE, "en"))
         assertEquals("-$92,233,720,368,547,758.08", format(Currency.USD, Long.MIN_VALUE, "en"))
