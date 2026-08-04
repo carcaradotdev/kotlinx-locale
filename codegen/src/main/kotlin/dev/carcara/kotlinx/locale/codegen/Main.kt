@@ -447,6 +447,11 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         entries = extractIcuCurrencyGolden(icuDir),
         numericCodes = extractIcuNumericCodes(icuDir),
     )
+    emitIcuCurrencyFormatGolden(
+        outputFile = conformanceDir(rootDir).resolve("IcuCurrencyFormatGoldenData.kt"),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuCurrencyFormatGolden(currencyEntries.associate { it.code to it.minorUnits }),
+    )
 
     val phoneTerritoryTable = encodePhoneTerritories(phoneMetadata)
     val phoneFormatTable = encodePhoneFormats(phoneMetadata)

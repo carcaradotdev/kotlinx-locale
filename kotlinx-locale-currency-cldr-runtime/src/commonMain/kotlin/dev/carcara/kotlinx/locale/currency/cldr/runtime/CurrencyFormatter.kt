@@ -55,7 +55,18 @@ internal fun formatCurrency(
     val increment = if (options.cash) currency.cldrCashRoundingIncrement else currency.cldrRoundingIncrement
     var scaled = rescaleFraction(minorUnits, currency.minorUnitDigits, cldrDigits)
     if (increment > 0) scaled = roundToIncrement(scaled, increment.toLong())
-    val amount = Decimal.ofUnscaled(scaled, cldrDigits)
+    // A negative amount smaller than the currency prints at keeps its sign, so
+    // -1 filler is `-0 Ft` rather than `0 Ft`. Rescaling to CLDR's digits lands
+    // on a Long, and a Long has no negative zero, so the sign would be gone
+    // before the renderer read it. Handing the renderer the ISO-scaled value
+    // instead lets it round to the same magnitude by the same half-even rule and
+    // see that the value arrived negative. Any rounding increment is already
+    // satisfied here, since zero is a multiple of every increment.
+    val amount = if (scaled == 0L && minorUnits < 0) {
+        Decimal.ofUnscaled(minorUnits, currency.minorUnitDigits)
+    } else {
+        Decimal.ofUnscaled(scaled, cldrDigits)
+    }
     val digits = options.fractionDigits ?: cldrDigits
 
     val accounting = options.signDisplay.usesAccountingPattern

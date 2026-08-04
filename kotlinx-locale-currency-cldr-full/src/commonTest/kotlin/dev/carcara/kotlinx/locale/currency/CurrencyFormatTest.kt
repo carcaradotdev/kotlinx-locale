@@ -128,8 +128,12 @@ class CurrencyFormatTest {
     fun formatsZeroAndSignEdgeCases() {
         assertEquals("$0.00", format(Currency.USD, 0, "en"))
         assertEquals("-$0.01", format(Currency.USD, -1, "en"))
-        // -0.40 lekë rounds to zero at CLDR's 0 digits: no minus sign survives.
-        assertEquals("ALL\u00A00", format(Currency.ALL, -40, "en"))
+        // -0.40 lekes rounds to zero at CLDR's 0 digits and keeps its sign.
+        // That is what SignDisplay documents for every value that does not
+        // name negative zero, and what ICU and Intl.NumberFormat both write.
+        // An unsigned zero is what SignDisplay.NEGATIVE is for.
+        assertEquals("-ALL\u00A00", format(Currency.ALL, -40, "en"))
+        assertEquals("ALL\u00A00", format(Currency.ALL, -40, "en", signDisplay = SignDisplay.NEGATIVE))
     }
 
     @Test
