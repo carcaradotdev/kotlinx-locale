@@ -7,7 +7,6 @@ import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.CurrencyFormatOptions
 import dev.carcara.kotlinx.locale.currency.CurrencyNameSource
-import dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle
 import dev.carcara.kotlinx.locale.currency.code
 import dev.carcara.kotlinx.locale.currency.displayName
 import dev.carcara.kotlinx.locale.currency.minorUnitDigits
@@ -47,10 +46,7 @@ internal fun formatCurrency(
     locale: Locale,
     options: CurrencyFormatOptions,
 ): String {
-    val currencyText = when (options.style) {
-        CurrencySymbolStyle.SYMBOL -> names.symbol(currency, locale)
-        CurrencySymbolStyle.CODE -> currency.code
-    }
+    val currencyText = names.symbol(currency, locale, options.style)
 
     // CLDR's digit count for the currency, then its rounding increment, then any
     // override the caller asked for. The order matters: the increment is
@@ -92,6 +88,7 @@ internal fun formatCurrency(
             fixedFractionDigits = digits,
             useCurrencySeparators = true,
             affix = affix,
+            currencySpacing = true,
         )
     } else {
         formatCompact(
@@ -105,6 +102,7 @@ internal fun formatCurrency(
             useCurrencySeparators = true,
             currencyText = currencyText,
             affix = affix,
+            currencySpacing = true,
         )
     }
     return formatted.text

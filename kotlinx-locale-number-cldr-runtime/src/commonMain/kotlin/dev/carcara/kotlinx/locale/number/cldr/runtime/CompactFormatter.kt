@@ -70,9 +70,10 @@ public fun formatCompact(
     useCurrencySeparators: Boolean = false,
     currencyText: String = "",
     affix: AffixSubstitution = AffixSubstitution.None,
+    currencySpacing: Boolean = false,
 ): FormattedNumber {
     if (table.isEmpty) {
-        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix, currencySpacing)
     }
 
     var magnitude = magnitudeOf(value)
@@ -82,11 +83,11 @@ public fun formatCompact(
         // still applies, though, which is what makes 0.125 read as 0.12 rather
         // than in full. Compact notation is a request for an approximate
         // reading, and the magnitude it lands on does not change that.
-        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix, currencySpacing)
     }
     if (magnitude > table.maximumMagnitude) magnitude = table.maximumMagnitude
     if (!table.hasCompactForm(magnitude)) {
-        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix, currencySpacing)
     }
 
     var divisor = table.divisorExponent(magnitude)
@@ -99,7 +100,7 @@ public fun formatCompact(
     val adjusted = minOf(magnitudeOf(divided) + divisor, table.maximumMagnitude)
     if (adjusted != magnitude) {
         if (!table.hasCompactForm(adjusted)) {
-            return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+            return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix, currencySpacing)
         }
         magnitude = adjusted
         divisor = table.divisorExponent(magnitude)
@@ -110,14 +111,14 @@ public fun formatCompact(
     val category = selectCategory.categoryOf(interim)
     val exact = if (divided.scale == 0) divided.unscaled else null
     val pattern = table.patternOrNull(magnitude, category, false, exact)
-        ?: return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+        ?: return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix, currencySpacing)
 
     // The "0" sentinel means this magnitude has no compact form in this locale,
     // so the whole number is written out. Ten locales use it to override a
     // parent's entry, which is why it has to be read as a value rather than
     // skipped past as an absence.
     if (pattern == "0") {
-        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix)
+        return renderPlain(value, standardPattern, symbols, options, fixedFractionDigits, useCurrencySeparators, affix, currencySpacing)
     }
 
     val alpha = currencyText.isNotEmpty() &&
@@ -146,6 +147,7 @@ public fun formatCompact(
         affix = affix,
         compactExponent = magnitude,
         groupingFloor = COMPACT_GROUPING_FLOOR,
+        currencySpacing = currencySpacing,
     )
 }
 
@@ -168,6 +170,7 @@ private fun renderPlain(
     fixedFractionDigits: Int?,
     useCurrencySeparators: Boolean,
     affix: AffixSubstitution,
+    currencySpacing: Boolean,
 ): FormattedNumber {
     val rounded = divideAndRound(value, 0, options, fixedFractionDigits)
     return renderNumber(
@@ -179,6 +182,7 @@ private fun renderPlain(
         useCurrencySeparators = useCurrencySeparators,
         affix = affix,
         groupingFloor = COMPACT_GROUPING_FLOOR,
+        currencySpacing = currencySpacing,
     )
 }
 

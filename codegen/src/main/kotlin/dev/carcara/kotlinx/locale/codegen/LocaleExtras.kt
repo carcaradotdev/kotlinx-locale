@@ -115,6 +115,18 @@ val CAPITALIZATION_USAGES: List<String> = listOf(
     "currencyName",
 )
 
+/**
+ * CLDR's alternative currency symbol spellings, in the order ICU numbers them.
+ *
+ * All three are output forms and each falls back to the plain symbol. Only
+ * `variant` is also a parse form: ICU's parse tables are fed from `Currencies`,
+ * `Currencies%variant` and `CurrencyPlurals`, and narrow is left out of them
+ * because it is ambiguous by construction. In en-CA narrow, `$` names more than
+ * twenty currencies and `£` names five, so admitting it to a reverse lookup
+ * would mean guessing at which one, and there is no upstream precedent for how.
+ */
+val ALT_CURRENCY_SYMBOLS: List<String> = listOf("narrow", "formal", "variant")
+
 /** Fully resolved number-formatting data for the currency formatter. */
 class ResolvedCurrencyFormat(
     val digits: String,
@@ -208,10 +220,19 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
         for (currency in currencies.childElements("currency")) {
             val code = currency.getAttribute("type")
             if (code !in currencyCodes) continue
-            currency.childElements("symbol")
-                .firstOrNull { !it.hasAttribute("alt") }
+            val symbols = currency.childElements("symbol")
+            symbols.firstOrNull { !it.hasAttribute("alt") }
                 ?.textContent?.cleaned()
                 ?.let { extras.currencySymbols.putIfAbsent(code, it) }
+            // The alternative spellings, keyed the way the short language names
+            // are. Stored only where a locale declares one: each falls back to
+            // the plain symbol at lookup time, so materializing the fallback
+            // here would write out 9500 duplicates of data already present.
+            for (alt in ALT_CURRENCY_SYMBOLS) {
+                symbols.firstOrNull { it.getAttribute("alt") == alt }
+                    ?.textContent?.cleaned()
+                    ?.let { extras.currencySymbols.putIfAbsent("$code#$alt", it) }
+            }
             currency.childElements("displayName")
                 .firstOrNull { !it.hasAttribute("alt") && !it.hasAttribute("count") }
                 ?.textContent?.cleaned()
@@ -283,6 +304,19 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
 
     for (formatsEl in numbers.childElements("currencyFormats")) {
         val system = formatsEl.getAttribute("numberSystem")
+
+        // The currency spacing rule is a constant in the runtime rather than a
+        // generated field, because root states it and all 1121 other locale
+        // files inherit it, so a per-locale copy would be the same thirty bytes
+        // a thousand times over. That is only safe while it stays true, so a
+        // locale that states its own rule fails the build here rather than
+        // being formatted with root's behind its back.
+        val spacing = formatsEl.childElements("currencySpacing")
+            .filter { it.childElements("beforeCurrency").isNotEmpty() || it.childElements("afterCurrency").isNotEmpty() }
+        check(spacing.isEmpty() || file.nameWithoutExtension == "root") {
+            "${file.name} declares its own currencySpacing; the runtime constant in NumberRenderer.kt " +
+                "assumes only root does. Generate the rule per locale instead."
+        }
         formatsEl.childElements("currencyFormatLength")
             .firstOrNull { it.getAttribute("type") == "short" }
             ?.childElements("currencyFormat")

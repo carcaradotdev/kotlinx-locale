@@ -16,24 +16,24 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | locale | 13.9 KB | 41.1 KB | 18.0 KB | 4.0 KB |
 | country-codes | 14.6 KB | 41.1 KB | 20.0 KB | 5.3 KB |
 | country-platform | 20.2 KB | 57.9 KB | 25.0 KB | 4.7 KB |
-| currency-platform | 24.9 KB | 75.9 KB | 26.0 KB | 1.0 KB |
+| currency-platform | 25.1 KB | 76.3 KB | 26.0 KB | 0.8 KB |
 | currency-codes | 26.8 KB | 81.4 KB | 30.0 KB | 3.1 KB |
 | datetime-platform | 35.3 KB | 112.6 KB | 42.0 KB | 6.6 KB |
 | personname-full | 46.1 KB | 364.8 KB | 60.0 KB | 13.8 KB |
-| everything-platform | 49.1 KB | 153.7 KB | 54.0 KB | 4.8 KB |
-| number-full | 72.5 KB | 300.7 KB | 110.0 KB | 37.4 KB |
+| everything-platform | 49.1 KB | 153.9 KB | 54.0 KB | 4.8 KB |
+| number-full | 76.3 KB | 310.6 KB | 110.0 KB | 33.6 KB |
 | phone-full | 79.8 KB | 276.0 KB | 110.0 KB | 30.1 KB |
-| datetime-durations | 117.3 KB | 821.5 KB | 150.0 KB | 32.6 KB |
+| datetime-durations | 121.2 KB | 830.9 KB | 150.0 KB | 28.7 KB |
 | datetime-full | 127.3 KB | 493.5 KB | 140.0 KB | 12.6 KB |
-| datetime-relative | 143.7 KB | 836.0 KB | 190.0 KB | 46.2 KB |
+| datetime-relative | 147.8 KB | 845.3 KB | 190.0 KB | 42.1 KB |
 | datetime-skeletons | 185.8 KB | 826.9 KB | 205.0 KB | 19.1 KB |
 | datetime-intervals | 213.3 KB | 1199.6 KB | 280.0 KB | 66.6 KB |
 | country-full | 376.4 KB | 1081.1 KB | 460.0 KB | 83.5 KB |
-| currency-full | 434.1 KB | 1383.4 KB | 500.0 KB | 65.8 KB |
-| timezone-full | 533.2 KB | 2920.0 KB | 700.0 KB | 166.7 KB |
+| currency-full | 442.7 KB | 1403.5 KB | 500.0 KB | 57.2 KB |
+| timezone-full | 534.2 KB | 2922.5 KB | 700.0 KB | 165.7 KB |
 | timezone-cities | 885.7 KB | 4212.0 KB | 1200.0 KB | 314.2 KB |
-| everything | 902.8 KB | 2848.9 KB | 1100.0 KB | 197.1 KB |
-| language-full | 1179.2 KB | 3137.9 KB | 1400.0 KB | 220.7 KB |
+| everything | 910.9 KB | 2868.3 KB | 1100.0 KB | 189.0 KB |
+| language-full | 1179.3 KB | 3137.9 KB | 1400.0 KB | 220.6 KB |
 
 ## What the platform layer costs
 
@@ -45,5 +45,5 @@ between the two columns is the data and nothing else.
 | --- | ---: | ---: | ---: | ---: |
 | datetime | 35.3 KB | 127.3 KB | 27.7% | 92.0 KB |
 | country | 20.2 KB | 376.4 KB | 5.4% | 356.2 KB |
-| currency | 24.9 KB | 434.1 KB | 5.8% | 409.2 KB |
-| all three | 49.1 KB | 902.8 KB | 5.4% | 853.7 KB |
+| currency | 25.1 KB | 442.7 KB | 5.7% | 417.6 KB |
+| all three | 49.1 KB | 910.9 KB | 5.4% | 861.8 KB |

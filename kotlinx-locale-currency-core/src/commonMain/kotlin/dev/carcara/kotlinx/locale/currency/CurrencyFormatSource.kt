@@ -69,6 +69,19 @@ public interface CurrencyFormatSource : LocaleDataSource {
 
     /** [text] read back as ISO minor units, or `null` when it does not parse. */
     public fun parseToMinorUnitsOrNull(text: String, currencyCode: String, locale: Locale): Long?
+
+    /**
+     * The ISO code of the currency [text] is written in, or `null` when it names
+     * none, names more than one, or this source cannot tell.
+     *
+     * Identification only: the amount is still read by
+     * [parseToMinorUnitsOrNull], which needs a code to fix the fraction scale.
+     *
+     * Answering `null` by default, because no platform formatter exposes this
+     * and a new abstract method would break every implementor. Sources that can
+     * answer are the ones over CLDR's own tables.
+     */
+    public fun currencyCodeOrNull(text: String, locale: Locale): String? = null
 }
 
 /**
@@ -103,6 +116,23 @@ public fun CurrencyFormatSource.format(
 public fun CurrencyFormatSource.parseFormattedOrNull(currency: Currency, text: String, locale: Locale): CurrencyAmount? =
     parseToMinorUnitsOrNull(text, currency.code, locale)?.let { CurrencyAmount(currency, it) }
 
+/**
+ * [text] read back as an amount, taking the currency from the text itself, or
+ * `null` when the currency cannot be identified or the amount does not parse.
+ *
+ * Identification is a lookup rather than a guess: it reads the currency written
+ * in [locale]'s own spellings, and answers nothing where the text would fit more
+ * than one currency. Narrow symbols are not among the spellings it reads, since
+ * `$` alone names over twenty currencies in some locales, so an amount printed
+ * with [CurrencySymbolStyle.NARROW_SYMBOL] needs the overload that is told which
+ * currency it is.
+ */
+public fun CurrencyFormatSource.parseFormattedOrNull(text: String, locale: Locale): CurrencyAmount? {
+    val code = currencyCodeOrNull(text, locale) ?: return null
+    val currency = Currency.forCodeOrNull(code) ?: return null
+    return parseToMinorUnitsOrNull(text, code, locale)?.let { CurrencyAmount(currency, it) }
+}
+
 /** Answers from [primary], and from [fallback] wherever primary has nothing. */
 public class FallbackCurrencyFormats(private val primary: CurrencyFormatSource, private val fallback: CurrencyFormatSource) :
     CurrencyFormatSource {
@@ -117,4 +147,7 @@ public class FallbackCurrencyFormats(private val primary: CurrencyFormatSource, 
     override fun parseToMinorUnitsOrNull(text: String, currencyCode: String, locale: Locale): Long? =
         primary.parseToMinorUnitsOrNull(text, currencyCode, locale)
             ?: fallback.parseToMinorUnitsOrNull(text, currencyCode, locale)
+
+    override fun currencyCodeOrNull(text: String, locale: Locale): String? =
+        primary.currencyCodeOrNull(text, locale) ?: fallback.currencyCodeOrNull(text, locale)
 }
