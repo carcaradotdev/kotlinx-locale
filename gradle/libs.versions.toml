@@ -17,6 +17,10 @@ libphonenumber = "9.0.19"
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
+# The Gradle plugin's tests only, so that the source each feature generates is
+# compiled rather than pattern-matched. Nothing published depends on it.
+kotlin-compiler-embeddable = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" }
+
 # The runtime the -serialization modules compile against, and the only thing they
 # need: their serializers are hand-written, so no module here applies the
 # serialization compiler plugin to its main sources. The Json format is a test

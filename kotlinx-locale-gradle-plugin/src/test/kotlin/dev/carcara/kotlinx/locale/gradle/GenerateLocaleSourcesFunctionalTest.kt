@@ -182,6 +182,27 @@ class GenerateLocaleSourcesFunctionalTest {
     }
 
     @Test
+    fun `currency symbols without the patterns carry no formatter`() {
+        buildFile(features = "currency { names = true }")
+        run("generateLocaleSources")
+
+        val binding = generated("com/example/locale/CurrencyNames.kt").readText()
+        assertContains(binding, "public fun Currency.symbol(")
+        assertContains(binding, "public fun Currency.displayName(")
+        // The patterns were not asked for, so there is nothing to format with.
+        // An absent entry point makes the call site fail to compile, which is
+        // the right failure; a formatter over a table nobody wrote is not.
+        assertFalse(
+            "public fun CurrencyAmount.format(" in binding,
+            "the format entry point was generated without the pattern table behind it",
+        )
+        assertFalse(
+            "currencyFormatsRegistry" in binding,
+            "the binding refers to a registry currency.names does not generate",
+        )
+    }
+
+    @Test
     fun `every feature generates the whole closure of tables it declared`() {
         // The plugin's correctness property in one test. A feature declares the
         // set of tables it needs rather than pointing at other features, so the
