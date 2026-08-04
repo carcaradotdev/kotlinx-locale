@@ -1029,17 +1029,39 @@ CurrencyAmount.parseOrNull(Currency.USD, "1,234")    // null, use parseFormatted
 ### CurrencySymbolStyle
 
 ```kotlin
-public enum class CurrencySymbolStyle { SYMBOL, CODE }
+public enum class CurrencySymbolStyle {
+    SYMBOL,
+    NARROW_SYMBOL,
+    VARIANT_SYMBOL,
+    FORMAL_SYMBOL,
+    CODE,
+}
 ```
 
 How the currency is written inside a formatted amount. `SYMBOL` uses the
 localized CLDR symbol (`$`, `€`, `US$` for USD in pt-BR); `CODE` uses the ISO
 4217 alphabetic code.
 
+The middle three are CLDR's alternative spellings of the symbol, the same four
+forms ICU exposes. `NARROW_SYMBOL` drops the prefix that tells currencies apart,
+so USD in pt-BR is `$` where `SYMBOL` gives `US$`. `VARIANT_SYMBOL` is an
+alternative spelling in real use, such as `TL` for the Turkish lira.
+`FORMAL_SYMBOL` is what an official document writes, and CLDR 48 declares
+exactly one: `NT$` for TWD in zh-Hant. Asking for an alternative a locale does
+not declare gives its plain symbol, and from there the ISO code.
+
+Only `SYMBOL` and `VARIANT_SYMBOL` are read back when parsing without being told
+the currency. `NARROW_SYMBOL` is ambiguous by design, since in en-CA the narrow
+`$` is the spelling of more than twenty currencies, so it identifies nothing. See
+[parseFormattedOrNull](#currencyamountparseformatted-and-parseformattedornull).
+
 ### Currency.symbol and Currency.displayName
 
 ```kotlin
-public fun Currency.symbol(locale: Locale = Locale.current): String
+public fun Currency.symbol(
+    locale: Locale = Locale.current,
+    style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL,
+): String
 public fun Currency.displayName(locale: Locale = Locale.current): String
 ```
 
@@ -1051,6 +1073,17 @@ Currency.USD.symbol(Locale.forLanguageTag("en"))     // $
 Currency.USD.symbol(Locale.forLanguageTag("pt-BR"))  // US$
 Currency.JPY.symbol(Locale.forLanguageTag("ja"))     // ￥ fullwidth, en uses ¥
 Currency.CHF.symbol(Locale.forLanguageTag("de-CH"))  // CHF, no symbol so the code
+
+val en = Locale.forLanguageTag("en")
+val ptBR = Locale.forLanguageTag("pt-BR")
+Currency.USD.symbol(ptBR, CurrencySymbolStyle.NARROW_SYMBOL)   // $
+Currency.TRY.symbol(en, CurrencySymbolStyle.NARROW_SYMBOL)     // ₺
+Currency.TRY.symbol(en, CurrencySymbolStyle.VARIANT_SYMBOL)    // TL, plain is TRY
+Currency.USD.symbol(en, CurrencySymbolStyle.FORMAL_SYMBOL)     // $, en declares none
+Currency.TWD.symbol(
+    Locale.forLanguageTag("zh-Hant"),
+    CurrencySymbolStyle.FORMAL_SYMBOL,
+)                                                              // NT$, plain is $
 
 Currency.USD.displayName(Locale.forLanguageTag("en"))     // US Dollar
 Currency.USD.displayName(Locale.forLanguageTag("pt-BR"))  // Dólar americano
@@ -1108,6 +1141,18 @@ When CLDR provides an `alphaNextToNumber` pattern variant it is used
 automatically whenever the character next to the number would be a letter, which
 is why `CHF 10.05` and `USD 1,234.56` get a space while `$1,234.56` does not.
 
+Where a locale has no such variant, UTS #35's currency spacing rule applies
+instead and inserts a no-break space itself. It fires when the character on the
+currency side is neither a symbol nor a separator and the character on the number
+side is a digit, so `Cg.` and a bare ISO code earn a space and `$` does not.
+
+```kotlin
+val enZA = Locale.forLanguageTag("en-ZA")
+CurrencyAmount(Currency.XCG, 123456).format(en)              // Cg. 1,234.56
+CurrencyAmount(Currency.AED, 123456).format(enZA)            // AED 1 234,56
+CurrencyAmount(Currency.USD, 123456).format(enZA)            // US$1 234,56, symbol ends in $
+```
+
 ### CurrencyAmount.parseFormatted and parseFormattedOrNull
 
 ```kotlin
@@ -1122,11 +1167,24 @@ public fun CurrencyAmount.Companion.parseFormattedOrNull(
     text: String,
     locale: Locale = Locale.current,
 ): CurrencyAmount?
+
+public fun CurrencyAmount.Companion.parseFormattedOrNull(
+    text: String,
+    locale: Locale = Locale.current,
+): CurrencyAmount?
 ```
 
 The reverse of `format`: reads a CLDR-formatted string using the locale's
 separators, digits and currency symbol. `parseFormatted` throws
 `IllegalArgumentException` on invalid input; `parseFormattedOrNull` returns null.
+
+The overload without a `currency` reads the currency out of the text as well.
+It is a lookup rather than a guess: it matches the spellings the locale writes,
+longest first, and answers null where the text would fit more than one currency.
+CLDR spells currencies apart within a locale, so pt-BR writes USD as `US$` and
+BRL as `R$` and neither is ambiguous. The narrow spellings are left out of that
+lookup because they are not distinct, so an amount printed with `NARROW_SYMBOL`
+needs the overload that is told which currency it is.
 
 The printed number is taken at face value and scaled to ISO minor units, so
 CLDR's reduced formatting digits do not distort the result.
@@ -1142,6 +1200,12 @@ CurrencyAmount.parseFormatted(Currency.HUF, "200,50 Ft", hu).minorUnits  // 2005
 
 CurrencyAmount.parseFormatted(Currency.USD, "($1,234.56)", en).minorUnits   // -123456
 CurrencyAmount.parseFormatted(Currency.EGP, "١٬٢٣٤٫٥٦", Locale.forLanguageTag("ar-EG"))
+
+// Without naming the currency:
+CurrencyAmount.parseFormattedOrNull("US$ 1.234,56", ptBR)  // USD 1234.56
+CurrencyAmount.parseFormattedOrNull("R$ 1.234,56", ptBR)   // BRL 1234.56
+CurrencyAmount.parseFormattedOrNull("200 Ft", hu)          // HUF 200.00
+CurrencyAmount.parseFormattedOrNull("$ 1.234,56", ptBR)    // null, narrow spelling
 ```
 
 Parsing is lenient about placement and strict about content. The currency may

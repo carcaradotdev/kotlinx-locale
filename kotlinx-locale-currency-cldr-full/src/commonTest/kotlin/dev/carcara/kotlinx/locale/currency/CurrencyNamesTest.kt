@@ -29,6 +29,34 @@ class CurrencyNamesTest {
     }
 
     @Test
+    fun writesTheAlternativeSpellingsCldrDeclares() {
+        val en = Locale.forLanguageTag("en")
+        val ptBr = Locale.forLanguageTag("pt-BR")
+        val zhHant = Locale.forLanguageTag("zh-Hant")
+
+        // Narrow drops the disambiguating prefix the plain symbol carries.
+        assertEquals("US$", Currency.USD.symbol(ptBr))
+        assertEquals("$", Currency.USD.symbol(ptBr, CurrencySymbolStyle.NARROW_SYMBOL))
+
+        // TRY writes all three differently in en.
+        assertEquals("TRY", Currency.TRY.symbol(en))
+        assertEquals("₺", Currency.TRY.symbol(en, CurrencySymbolStyle.NARROW_SYMBOL))
+        assertEquals("TL", Currency.TRY.symbol(en, CurrencySymbolStyle.VARIANT_SYMBOL))
+
+        // The one formal symbol in CLDR 48.
+        assertEquals("$", Currency.TWD.symbol(zhHant))
+        assertEquals("NT$", Currency.TWD.symbol(zhHant, CurrencySymbolStyle.FORMAL_SYMBOL))
+
+        // An alternative the locale does not declare falls back to the plain
+        // symbol, then to the ISO code, the order ICU resolves these in.
+        assertEquals("$", Currency.USD.symbol(en, CurrencySymbolStyle.FORMAL_SYMBOL))
+        assertEquals("CHF", Currency.CHF.symbol(Locale.forLanguageTag("de-CH"), CurrencySymbolStyle.NARROW_SYMBOL))
+
+        // CODE names no symbol at all.
+        assertEquals("USD", Currency.USD.symbol(ptBr, CurrencySymbolStyle.CODE))
+    }
+
+    @Test
     fun everyCurrencyResolvesSymbolAndNameInMajorLocales() {
         val locales = listOf("en", "de", "ja", "pt-BR", "ar-EG").map(Locale::forLanguageTag)
         for (locale in locales) {

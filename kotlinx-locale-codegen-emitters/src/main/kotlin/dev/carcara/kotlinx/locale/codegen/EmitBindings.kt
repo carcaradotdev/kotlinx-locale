@@ -148,6 +148,9 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
         |    override fun currencySymbolOrNull(currencyCode: String, locale: Locale): String? =
         |        names.currencySymbolOrNull(currencyCode, locale)
         |
+        |    override fun currencySymbolOrNull(currencyCode: String, locale: Locale, style: CurrencySymbolStyle): String? =
+        |        names.currencySymbolOrNull(currencyCode, locale, style)
+        |
         |    override fun currencyNameOrNull(currencyCode: String, locale: Locale): String? =
         |        names.currencyNameOrNull(currencyCode, locale)
         |
@@ -160,6 +163,9 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
         |
         |    override fun parseToMinorUnitsOrNull(text: String, currencyCode: String, locale: Locale): Long? =
         |        formats.parseToMinorUnitsOrNull(text, currencyCode, locale)
+        |
+        |    override fun currencyCodeOrNull(text: String, locale: Locale): String? =
+        |        formats.currencyCodeOrNull(text, locale)
         |}
         |
         """.trimMargin()
@@ -226,6 +232,21 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
         |    "Cannot parse ${'$'}{currency.code} amount: '${'$'}text'"
         |}
         |
+        |/**
+        | * Parses a formatted string whose currency is not known in advance, reading
+        | * the currency out of the text itself: `"US${'$'} 1.234,56"` in pt-BR is USD.
+        | *
+        | * The currency is looked up, not guessed. It reads the spellings [locale]
+        | * writes, which CLDR disambiguates within a locale, and answers `null` where
+        | * the text would fit more than one currency or none. Narrow symbols are not
+        | * among them, because `${'$'}` on its own names over twenty currencies in some
+        | * locales; pass the currency explicitly to read an amount written that way.
+        | */
+        |public fun CurrencyAmount.Companion.parseFormattedOrNull(
+        |    text: String,
+        |    locale: Locale = Locale.current,
+        |): CurrencyAmount? = ${spec.objectName}.parseFormattedOrNull(text, locale)
+        |
         """.trimMargin()
     }
     file.writeText(
@@ -244,6 +265,9 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
                         "dev.carcara.kotlinx.locale.Locale",
                         "dev.carcara.kotlinx.locale.currency.Currency",
                         "dev.carcara.kotlinx.locale.currency.CurrencyNameSource",
+                        // Named by `Currency.symbol`, which every build emits,
+                        // rather than only by the formatting extensions.
+                        "dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle",
                         "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyNames",
                         "dev.carcara.kotlinx.locale.currency.displayName",
                         "dev.carcara.kotlinx.locale.currency.symbol",
@@ -256,7 +280,6 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
                             "dev.carcara.kotlinx.locale.currency.CurrencyAmount",
                             "dev.carcara.kotlinx.locale.currency.CurrencyFormatSource",
                             "dev.carcara.kotlinx.locale.currency.CurrencyFormatOptions",
-                            "dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle",
                             "dev.carcara.kotlinx.locale.number.NumberNotation",
                             "dev.carcara.kotlinx.locale.number.SignDisplay",
                             "dev.carcara.kotlinx.locale.currency.cldr.runtime.PayloadCurrencyFormats",
@@ -278,8 +301,17 @@ public fun emitCurrencyBinding(outputRoot: File, spec: BindingSpec, numberObject
             fileAnnotation = "@file:OptIn(InternalKotlinxLocaleApi::class)".takeIf { hasFormats },
         ) + "\n" + sourceObject + """
         |
-        |/** The currency symbol for [locale], e.g. `US${'$'}` for USD in pt-BR; falls back to the ISO code. */
-        |public fun Currency.symbol(locale: Locale = Locale.current): String = ${spec.objectName}.symbol(this, locale)
+        |/**
+        | * The currency symbol for [locale], e.g. `US${'$'}` for USD in pt-BR; falls back
+        | * to the ISO code.
+        | *
+        | * [style] picks between CLDR's spellings. A locale that declares none of the
+        | * alternative it is asked for answers its plain symbol.
+        | */
+        |public fun Currency.symbol(
+        |    locale: Locale = Locale.current,
+        |    style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL,
+        |): String = ${spec.objectName}.symbol(this, locale, style)
         |
         |/** The display name for [locale]; falls back to the ISO code. */
         |public fun Currency.displayName(locale: Locale = Locale.current): String = ${spec.objectName}.displayName(this, locale)

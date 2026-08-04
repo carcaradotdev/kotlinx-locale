@@ -28,6 +28,89 @@ class CurrencyParseFormattedTest {
     }
 
     @Test
+    fun readsTheCurrencyOutOfTheTextWhenNotToldWhichItIs() {
+        val ptBr = locale("pt-BR")
+        assertEquals(
+            CurrencyAmount(Currency.USD, 123456),
+            CurrencyAmount.parseFormattedOrNull("US$ 1.234,56", ptBr),
+        )
+        assertEquals(
+            CurrencyAmount(Currency.BRL, 123456),
+            CurrencyAmount.parseFormattedOrNull("R$ 1.234,56", ptBr),
+        )
+        assertEquals(
+            CurrencyAmount(Currency.USD, 123456),
+            CurrencyAmount.parseFormattedOrNull("$1,234.56", locale("en")),
+        )
+        // The symbol a locale actually prints, read back without being told the
+        // currency: hu writes 200 forints as "200 Ft".
+        val hu = locale("hu")
+        assertEquals(
+            CurrencyAmount(Currency.HUF, 20000),
+            CurrencyAmount.parseFormattedOrNull(CurrencyAmount(Currency.HUF, 20000).format(hu), hu),
+        )
+        // The same with an ordinary space where the formatter writes U+00A0.
+        assertEquals(CurrencyAmount(Currency.HUF, 20000), CurrencyAmount.parseFormattedOrNull("200 Ft", hu))
+        // And the ISO code names a currency on its own, the way ICU registers it
+        // in the parse table alongside the symbol.
+        assertEquals(CurrencyAmount(Currency.HUF, 20000), CurrencyAmount.parseFormattedOrNull("HUF 200", hu))
+    }
+
+    @Test
+    fun everyLocaleReadsItsOwnCurrencyOutputBackWithoutBeingTold() {
+        // The round trip that matters: whatever the formatter prints, the
+        // currency-less parse identifies. Run over the currencies that have a
+        // symbol of their own in each locale, since the rest print an ISO code
+        // and are the easy case.
+        for (tag in listOf("en", "hu", "pt-BR", "de", "ja", "da", "en-ZA")) {
+            val locale = locale(tag)
+            for (currency in Currency.entries) {
+                if (CldrCurrency.currencySymbolOrNull(currency.code, locale) == null) continue
+                val amount = CurrencyAmount(currency, 123456)
+                val printed = amount.format(locale)
+                val read = CurrencyAmount.parseFormattedOrNull(printed, locale)
+                assertEquals(currency, read?.currency, "$tag ${currency.code} printed '$printed'")
+            }
+        }
+    }
+
+    @Test
+    fun refusesToIdentifyACurrencyFromASpellingThatNamesMoreThanOne() {
+        // In pt-BR no currency's plain symbol is "$": USD is US$ and BRL is R$.
+        // "$" is the narrow spelling, which names many currencies and so
+        // identifies none of them.
+        assertNull(CurrencyAmount.parseFormattedOrNull("$ 1.234,56", locale("pt-BR")))
+        // Nothing currency-like at all.
+        assertNull(CurrencyAmount.parseFormattedOrNull("1.234,56", locale("pt-BR")))
+        // Told which currency it is, the same text reads back.
+        assertEquals(
+            123456,
+            parsed(Currency.USD, "$ 1.234,56", "pt-BR"),
+        )
+    }
+
+    @Test
+    fun everyLocaleSpellsItsCurrenciesApart() {
+        // The property the currency-less parse rests on: within one locale, no
+        // two currencies share a plain or variant spelling. Where that failed,
+        // the index would drop the string and identification would start
+        // answering null for text that reads unambiguously to a person.
+        for (tag in listOf("en", "en-CA", "en-AU", "pt-BR", "de", "de-CH", "ja", "es-MX", "ar-EG")) {
+            val locale = locale(tag)
+            val seen = HashMap<String, String>()
+            for (currency in Currency.entries) {
+                for (style in listOf(CurrencySymbolStyle.SYMBOL, CurrencySymbolStyle.VARIANT_SYMBOL)) {
+                    val spelling = CldrCurrency.currencySymbolOrNull(currency.code, locale, style) ?: continue
+                    val owner = seen.put(spelling, currency.code)
+                    if (owner != null && owner != currency.code) {
+                        throw AssertionError("$tag spells both $owner and ${currency.code} as '$spelling'")
+                    }
+                }
+            }
+        }
+    }
+
+    @Test
     fun parsedAmountsAreIsoMinorUnitsEvenWhenCldrDropsDecimals() {
         // HUF: CLDR formats 0 digits, ISO defines 2. "200 Ft" is 200.00 forints.
         assertEquals(20000, parsed(Currency.HUF, "200 Ft", "hu"))

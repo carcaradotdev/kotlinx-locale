@@ -8,6 +8,7 @@ import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.CurrencyFormatOptions
 import dev.carcara.kotlinx.locale.currency.CurrencyFormatSource
 import dev.carcara.kotlinx.locale.currency.CurrencyNameSource
+import dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle
 import dev.carcara.kotlinx.locale.currency.forCodeOrNull
 import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.resolvedRecord
@@ -34,9 +35,33 @@ public class PayloadCurrencyNames(private val records: Map<String, String>) : Cu
     override fun currencySymbolOrNull(currencyCode: String, locale: Locale): String? =
         sparseRecordValue(records, locale, field = 1, fieldCount = 3, key = currencyCode)
 
+    /**
+     * The alternative spellings share the symbol table under a suffixed key, so
+     * each walks the parent chain on its own before the caller falls back to the
+     * plain symbol. That is what makes a parent's narrow spelling win over a
+     * child's standard one, which is the order ICU resolves them in too.
+     */
+    override fun currencySymbolOrNull(currencyCode: String, locale: Locale, style: CurrencySymbolStyle): String? {
+        val alt = style.altKey ?: return currencySymbolOrNull(currencyCode, locale)
+        return sparseRecordValue(records, locale, field = 1, fieldCount = 3, key = "$currencyCode#$alt")
+    }
+
     override fun currencyNameOrNull(currencyCode: String, locale: Locale): String? =
         sparseRecordValue(records, locale, field = 2, fieldCount = 3, key = currencyCode)
 }
+
+/**
+ * The CLDR `alt` attribute a style is stored under, or null for the plain
+ * symbol. [CurrencySymbolStyle.CODE] never reaches here: it names no symbol, and
+ * `symbol` answers it from the currency itself.
+ */
+internal val CurrencySymbolStyle.altKey: String?
+    get() = when (this) {
+        CurrencySymbolStyle.NARROW_SYMBOL -> "narrow"
+        CurrencySymbolStyle.FORMAL_SYMBOL -> "formal"
+        CurrencySymbolStyle.VARIANT_SYMBOL -> "variant"
+        CurrencySymbolStyle.SYMBOL, CurrencySymbolStyle.CODE -> null
+    }
 
 /**
  * A [CurrencyFormatSource] over CLDR number-format records and the symbol table
@@ -68,6 +93,11 @@ public class PayloadCurrencyFormats(
     private val names = PayloadCurrencyNames(nameRecords)
     private val compactCache = HashMap<String, CompactPatternTable>()
 
+    // Building one walks every currency in the entry set and every spelling of
+    // it, so it is built once per locale and kept, the way ICU caches its
+    // parsing tries.
+    private val parseIndexCache = HashMap<String, CurrencyParseIndex>()
+
     override val supportedLocales: Set<Locale> by lazy {
         supportedLocalesOf(formatRecords)
     }
@@ -87,6 +117,9 @@ public class PayloadCurrencyFormats(
         val format = numberFormatFor(locale) ?: return null
         return parseFormattedCurrency(format, names, text, currency, locale)
     }
+
+    override fun currencyCodeOrNull(text: String, locale: Locale): String? =
+        parseIndexCache.getOrPut(locale.toLanguageTag()) { CurrencyParseIndex(names, locale) }.codeIn(text)
 
     private fun numberFormatFor(locale: Locale): CurrencyNumberFormat? = resolvedRecord(formatRecords, locale)?.let(::CurrencyNumberFormat)
 }

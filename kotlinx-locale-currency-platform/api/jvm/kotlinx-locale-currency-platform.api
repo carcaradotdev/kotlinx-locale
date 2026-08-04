@@ -1,7 +1,9 @@
 public final class dev/carcara/kotlinx/locale/currency/platform/PlatformCurrency : dev/carcara/kotlinx/locale/currency/CurrencyFormatSource, dev/carcara/kotlinx/locale/currency/CurrencyNameSource {
 	public static final field INSTANCE Ldev/carcara/kotlinx/locale/currency/platform/PlatformCurrency;
+	public fun currencyCodeOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun currencyNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun currencySymbolOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun currencySymbolOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;)Ljava/lang/String;
 	public fun formatOrNull (JLjava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencyFormatOptions;)Ljava/lang/String;
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public final fun isAvailable ()Z

@@ -66,29 +66,44 @@ public final class dev/carcara/kotlinx/locale/currency/CurrencyFormatOptions$Com
 }
 
 public abstract interface class dev/carcara/kotlinx/locale/currency/CurrencyFormatSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public fun currencyCodeOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public abstract fun formatOrNull (JLjava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencyFormatOptions;)Ljava/lang/String;
 	public abstract fun parseToMinorUnitsOrNull (Ljava/lang/String;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/Long;
+}
+
+public final class dev/carcara/kotlinx/locale/currency/CurrencyFormatSource$DefaultImpls {
+	public static fun currencyCodeOrNull (Ldev/carcara/kotlinx/locale/currency/CurrencyFormatSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 }
 
 public final class dev/carcara/kotlinx/locale/currency/CurrencyFormatSourceKt {
 	public static final fun format (Ldev/carcara/kotlinx/locale/currency/CurrencyFormatSource;Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;Ldev/carcara/kotlinx/locale/number/SignDisplay;ZLjava/lang/Integer;Ldev/carcara/kotlinx/locale/number/NumberNotation;Ldev/carcara/kotlinx/locale/number/NumberGrouping;)Ljava/lang/String;
 	public static synthetic fun format$default (Ldev/carcara/kotlinx/locale/currency/CurrencyFormatSource;Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;Ldev/carcara/kotlinx/locale/number/SignDisplay;ZLjava/lang/Integer;Ldev/carcara/kotlinx/locale/number/NumberNotation;Ldev/carcara/kotlinx/locale/number/NumberGrouping;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun parseFormattedOrNull (Ldev/carcara/kotlinx/locale/currency/CurrencyFormatSource;Ldev/carcara/kotlinx/locale/currency/Currency;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;
+	public static final fun parseFormattedOrNull (Ldev/carcara/kotlinx/locale/currency/CurrencyFormatSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/currency/CurrencyAmount;
 }
 
 public abstract interface class dev/carcara/kotlinx/locale/currency/CurrencyNameSource : dev/carcara/kotlinx/locale/LocaleDataSource {
 	public abstract fun currencyNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public abstract fun currencySymbolOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun currencySymbolOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/currency/CurrencyNameSource$DefaultImpls {
+	public static fun currencySymbolOrNull (Ldev/carcara/kotlinx/locale/currency/CurrencyNameSource;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;)Ljava/lang/String;
 }
 
 public final class dev/carcara/kotlinx/locale/currency/CurrencyNameSourceKt {
 	public static final fun displayName (Ldev/carcara/kotlinx/locale/currency/CurrencyNameSource;Ldev/carcara/kotlinx/locale/currency/Currency;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
-	public static final fun symbol (Ldev/carcara/kotlinx/locale/currency/CurrencyNameSource;Ldev/carcara/kotlinx/locale/currency/Currency;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public static final fun symbol (Ldev/carcara/kotlinx/locale/currency/CurrencyNameSource;Ldev/carcara/kotlinx/locale/currency/Currency;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;)Ljava/lang/String;
+	public static synthetic fun symbol$default (Ldev/carcara/kotlinx/locale/currency/CurrencyNameSource;Ldev/carcara/kotlinx/locale/currency/Currency;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;ILjava/lang/Object;)Ljava/lang/String;
 }
 
 public final class dev/carcara/kotlinx/locale/currency/CurrencySymbolStyle : java/lang/Enum {
 	public static final field CODE Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;
+	public static final field FORMAL_SYMBOL Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;
+	public static final field NARROW_SYMBOL Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;
 	public static final field SYMBOL Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;
+	public static final field VARIANT_SYMBOL Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;
 	public static fun values ()[Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;
@@ -96,6 +111,7 @@ public final class dev/carcara/kotlinx/locale/currency/CurrencySymbolStyle : jav
 
 public final class dev/carcara/kotlinx/locale/currency/FallbackCurrencyFormats : dev/carcara/kotlinx/locale/currency/CurrencyFormatSource {
 	public fun <init> (Ldev/carcara/kotlinx/locale/currency/CurrencyFormatSource;Ldev/carcara/kotlinx/locale/currency/CurrencyFormatSource;)V
+	public fun currencyCodeOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun formatOrNull (JLjava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencyFormatOptions;)Ljava/lang/String;
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public fun parseToMinorUnitsOrNull (Ljava/lang/String;Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/Long;
@@ -105,6 +121,7 @@ public final class dev/carcara/kotlinx/locale/currency/FallbackCurrencyNames : d
 	public fun <init> (Ldev/carcara/kotlinx/locale/currency/CurrencyNameSource;Ldev/carcara/kotlinx/locale/currency/CurrencyNameSource;)V
 	public fun currencyNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun currencySymbolOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+	public fun currencySymbolOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/currency/CurrencySymbolStyle;)Ljava/lang/String;
 	public fun getSupportedLocales ()Ljava/util/Set;
 }
 

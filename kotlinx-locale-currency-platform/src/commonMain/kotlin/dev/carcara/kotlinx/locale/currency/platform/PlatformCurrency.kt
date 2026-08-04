@@ -113,6 +113,13 @@ public object PlatformCurrency : CurrencyNameSource, CurrencyFormatSource {
         // source rather than have this one guess.
         if (options.cash || options.fractionDigits != null || options.notation != NumberNotation.STANDARD) return null
         if (options.signDisplay != SignDisplay.AUTO && !options.signDisplay.usesAccountingPattern) return null
+        // The alternative symbol spellings, for the same reason. The shared
+        // surface here says symbol or ISO code and nothing else, so asking for a
+        // narrow one and being handed the plain symbol would be the wrong string
+        // rather than a plainer spelling of the right one, and it would answer
+        // before a composing source could reach CLDR's table and give the
+        // spelling that was asked for.
+        if (options.style != CurrencySymbolStyle.SYMBOL && options.style != CurrencySymbolStyle.CODE) return null
         val currency = Currency.forCodeOrNull(currencyCode) ?: return null
         return platformFormatCurrency(
             amount = CurrencyAmount(currency, minorUnits).toDecimalString(),

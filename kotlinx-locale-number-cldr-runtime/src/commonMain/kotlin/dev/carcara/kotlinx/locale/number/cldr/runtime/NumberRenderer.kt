@@ -55,6 +55,7 @@ public fun renderNumber(
     affix: AffixSubstitution = AffixSubstitution.None,
     compactExponent: Int = 0,
     groupingFloor: Int = 1,
+    currencySpacing: Boolean = false,
 ): FormattedNumber {
     val scaled = applyMultiplier(value, pattern.multiplier)
 
@@ -98,7 +99,17 @@ public fun renderNumber(
     }
 
     val effective = signPattern(pattern, symbols, options.signDisplay, negative, zero)
-    val text = renderAffix(effective.prefix, affix) + body + renderAffix(effective.suffix, affix)
+    val prefixText = renderAffix(effective.prefix, affix)
+    val suffixText = renderAffix(effective.suffix, affix)
+    val text = if (currencySpacing) {
+        prefixText +
+            currencySpacingInsert(effective.prefix, prefixText, body.firstOrNull(), atPrefix = true) +
+            body +
+            currencySpacingInsert(effective.suffix, suffixText, body.lastOrNull(), atPrefix = false) +
+            suffixText
+    } else {
+        prefixText + body + suffixText
+    }
     return FormattedNumber(text, integerPart, fractionPart, compactExponent)
 }
 
@@ -234,6 +245,49 @@ public fun isAlphaAdjacent(pattern: NumberPattern, currencyText: String): Boolea
     if (pattern.positiveSuffix.startsWith('¤')) return currencyText.first().isLetter()
     return false
 }
+
+/**
+ * CLDR's `insertBetween` for currency spacing.
+ *
+ * A constant rather than a generated field because CLDR declares
+ * `currencySpacing` in `root.xml` alone and every one of the other 1121 locale
+ * files inherits it unchanged, so a per-locale copy would be the same thirty
+ * bytes 1121 times. The codegen asserts that this is still true of the pinned
+ * release, and generation fails if a locale ever overrides the rule.
+ */
+private const val CURRENCY_SPACING_INSERT = "\u00A0"
+
+/**
+ * The space UTS #35 puts between a currency and the digits, or `""`.
+ *
+ * Three conditions, all of them CLDR's. The character next to the digits has to
+ * be the currency itself rather than a literal the pattern wrote, which is what
+ * [patternAffix] ending (or starting) in `¤` says and what stops a pattern that
+ * already spells its own space from getting a second one. Then root's
+ * `currencyMatch` of `[[:^S:]&[:^Z:]]` has to hold of the currency-side
+ * character, so `kr` earns a space and `$` does not, and its `surroundingMatch`
+ * of `[:digit:]` has to hold of the number-side one.
+ */
+private fun currencySpacingInsert(patternAffix: String, renderedAffix: String, bodyChar: Char?, atPrefix: Boolean): String {
+    val adjacentToCurrency = if (atPrefix) patternAffix.endsWith('¤') else patternAffix.startsWith('¤')
+    if (!adjacentToCurrency) return ""
+    val currencyChar = (if (atPrefix) renderedAffix.lastOrNull() else renderedAffix.firstOrNull()) ?: return ""
+    val numberChar = bodyChar ?: return ""
+    if (currencyChar.category in CURRENCY_SPACING_EXCLUDED) return ""
+    if (!numberChar.isDigit()) return ""
+    return CURRENCY_SPACING_INSERT
+}
+
+/** The `S` and `Z` general categories root's `currencyMatch` excludes. */
+private val CURRENCY_SPACING_EXCLUDED = setOf(
+    CharCategory.MATH_SYMBOL,
+    CharCategory.CURRENCY_SYMBOL,
+    CharCategory.MODIFIER_SYMBOL,
+    CharCategory.OTHER_SYMBOL,
+    CharCategory.SPACE_SEPARATOR,
+    CharCategory.LINE_SEPARATOR,
+    CharCategory.PARAGRAPH_SEPARATOR,
+)
 
 /** The ten digits as strings, supporting supplementary-plane numbering systems. */
 @InternalKotlinxLocaleApi

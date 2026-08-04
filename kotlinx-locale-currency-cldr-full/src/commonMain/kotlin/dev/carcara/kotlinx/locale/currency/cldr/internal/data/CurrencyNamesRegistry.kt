@@ -26,7 +26,7 @@ internal val currencyNamesRegistry: Map<String, String> = buildMap(1122) {
     put("apc-SY", CURRENCY_NAMES_APC_SY)
     put("ar", CURRENCY_NAMES_AR)
     put("ar-001", CURRENCY_NAMES_AR_001)
-    put("ar-AE", CURRENCY_NAMES_AR_001)
+    put("ar-AE", CURRENCY_NAMES_AR_AE)
     put("ar-BH", CURRENCY_NAMES_AR_001)
     put("ar-DJ", CURRENCY_NAMES_AR_DJ)
     put("ar-DZ", CURRENCY_NAMES_AR_001)
