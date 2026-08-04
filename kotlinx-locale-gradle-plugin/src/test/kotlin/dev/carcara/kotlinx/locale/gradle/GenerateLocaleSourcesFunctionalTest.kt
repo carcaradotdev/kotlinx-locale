@@ -233,7 +233,10 @@ class GenerateLocaleSourcesFunctionalTest {
         // a property of the -cldr-full artifact, it is a property of the emitter,
         // and the plugin calls the same one. If these drift, the documentation
         // sends narrowed builds looking for functions they do not have.
-        buildFile(features = "datetime { patterns = true; skeletons = true; intervals = true }\npersonName { formats = true }")
+        buildFile(
+            features = "datetime { patterns = true; skeletons = true; intervals = true; durationUnits = true }\n" +
+                "personName { formats = true }",
+        )
         run("generateLocaleSources")
 
         val dateTime = generated("com/example/locale/LocalizedFormat.kt").readText()
@@ -243,6 +246,13 @@ class GenerateLocaleSourcesFunctionalTest {
 
         val intervals = generated("com/example/locale/IntervalFormat.kt").readText()
         assertContains(intervals, "public fun intervalFormat(")
+
+        // The measurement form, which is a different file and a different table
+        // from the durationPattern above. Both names start with `duration`, so
+        // asserting one and assuming the other is exactly the drift this catches.
+        val durations = generated("com/example/locale/DurationUnits.kt").readText()
+        assertContains(durations, "public fun durationFormat(")
+        assertContains(durations, "public fun durationUnitName(")
 
         val names = generated("com/example/locale/PersonNameFormat.kt").readText()
         assertContains(names, "public fun personNameFormat(")
