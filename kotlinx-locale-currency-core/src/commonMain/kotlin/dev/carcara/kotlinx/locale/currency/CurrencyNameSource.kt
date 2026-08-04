@@ -44,11 +44,7 @@ public interface CurrencyNameSource : LocaleDataSource {
  * [CurrencySymbolStyle.SYMBOL] before falling back to the code, which is the
  * order ICU resolves the same three spellings in.
  */
-public fun CurrencyNameSource.symbol(
-    currency: Currency,
-    locale: Locale,
-    style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL,
-): String {
+public fun CurrencyNameSource.symbol(currency: Currency, locale: Locale, style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL): String {
     if (style == CurrencySymbolStyle.CODE) return currency.code
     return currencySymbolOrNull(currency.code, locale, style)
         ?: currencySymbolOrNull(currency.code, locale)

@@ -21,8 +21,7 @@ class CurrencySpacingTest {
 
     private val amount = 123456L
     private fun locale(tag: String) = Locale.forLanguageTag(tag)
-    private fun format(code: String, tag: String) =
-        CurrencyAmount(Currency.forCode(code), amount).format(locale(tag))
+    private fun format(code: String, tag: String) = CurrencyAmount(Currency.forCode(code), amount).format(locale(tag))
 
     @Test
     fun insertsTheSpaceWhereTheCurrencyEndsInALetterOrPoint() {
