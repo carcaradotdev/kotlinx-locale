@@ -59,6 +59,7 @@ val published = listOf(
     "kotlinx-locale-currency-core",
     "kotlinx-locale-currency-cldr-runtime",
     "kotlinx-locale-currency-cldr-full",
+    "kotlinx-locale-currency-cldr-plurals",
     "kotlinx-locale-currency-platform",
     "kotlinx-locale-currency-serialization",
     "kotlinx-locale-datetime-core",

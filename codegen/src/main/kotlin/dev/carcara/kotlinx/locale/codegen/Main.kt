@@ -59,6 +59,11 @@ private fun intervalConformanceDir(rootDir: File): File = rootDir
     .sourceRoot("kotlinx-locale-datetime-cldr-intervals", "commonTest")
     .resolve("dev/carcara/kotlinx/locale/datetime/cldr/intervals/conformance")
 
+/** Where the currency plural fixture goes, which is its own artifact's tests for the interval reason. */
+private fun currencyPluralConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-currency-cldr-plurals", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/currency/cldr/plurals/conformance")
+
 private fun durationUnitConformanceDir(rootDir: File): File = rootDir
     .sourceRoot("kotlinx-locale-datetime-cldr-durations", "commonTest")
     .resolve("dev/carcara/kotlinx/locale/datetime/cldr/durations/conformance")
@@ -99,6 +104,7 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.COUNTRY_CURRENCIES, rootDir.sourceRoot("kotlinx-locale-currency-types"))
     .table(GeneratedTable.CURRENCY_FORMATS, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
     .table(GeneratedTable.CURRENCY_NAMES, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))
+    .table(GeneratedTable.CURRENCY_PLURAL_NAMES, rootDir.sourceRoot("kotlinx-locale-currency-cldr-plurals"))
     .table(GeneratedTable.DATE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-full"))
     .table(GeneratedTable.SKELETONS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-skeletons"))
     .table(GeneratedTable.INTERVAL_FORMATS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-intervals"))
@@ -132,6 +138,14 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
             root = rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"),
             packageName = "dev.carcara.kotlinx.locale.currency.cldr",
             objectName = "CldrCurrency",
+        ),
+    )
+    .binding(
+        GeneratedBinding.CURRENCY_PLURALS,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-currency-cldr-plurals"),
+            packageName = "dev.carcara.kotlinx.locale.currency.cldr.plurals",
+            objectName = "CldrCurrencyPlurals",
         ),
     )
     .binding(
@@ -452,6 +466,11 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         icuTag = ICU_REPO.tag,
         entries = extractIcuCurrencyFormatGolden(currencyEntries.associate { it.code to it.minorUnits }),
     )
+    emitIcuCurrencyPluralGolden(
+        outputFile = currencyPluralConformanceDir(rootDir).resolve("IcuCurrencyPluralGoldenData.kt"),
+        icuTag = ICU_REPO.tag,
+        entries = extractIcuCurrencyPluralGolden(currencyEntries.associate { it.code to it.minorUnits }),
+    )
 
     val phoneTerritoryTable = encodePhoneTerritories(phoneMetadata)
     val phoneFormatTable = encodePhoneFormats(phoneMetadata)
@@ -499,6 +518,7 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .section("countryNames", buildCountryNamePayloads(flattener, extras))
         .section("currencyFormats", buildCurrencyFormatPayloads(flattener, extras))
         .section("currencyNames", buildCurrencyNamePayloads(flattener, extras))
+        .section("currencyPluralNames", buildCurrencyPluralNamePayloads(flattener, extras))
         .section("skeletonFormats", skeletonFormats)
         .section("skeletonAppendFormats", skeletonAppendFormats)
         .section("skeletonNames", skeletonNames)

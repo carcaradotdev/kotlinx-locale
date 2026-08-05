@@ -29,10 +29,11 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | datetime-skeletons | 185.8 KB | 826.9 KB | 205.0 KB | 19.1 KB |
 | datetime-intervals | 213.3 KB | 1199.6 KB | 280.0 KB | 66.6 KB |
 | country-full | 376.4 KB | 1081.1 KB | 460.0 KB | 83.5 KB |
-| currency-full | 442.7 KB | 1403.5 KB | 500.0 KB | 57.2 KB |
+| currency-full | 442.8 KB | 1403.8 KB | 500.0 KB | 57.1 KB |
 | timezone-full | 534.2 KB | 2922.5 KB | 700.0 KB | 165.7 KB |
+| currency-plurals | 811.1 KB | 2896.2 KB | 900.0 KB | 88.8 KB |
 | timezone-cities | 885.7 KB | 4212.0 KB | 1200.0 KB | 314.2 KB |
-| everything | 910.9 KB | 2868.3 KB | 1100.0 KB | 189.0 KB |
+| everything | 911.0 KB | 2868.5 KB | 1100.0 KB | 188.9 KB |
 | language-full | 1179.3 KB | 3137.9 KB | 1400.0 KB | 220.6 KB |
 
 ## What the platform layer costs
@@ -45,5 +46,5 @@ between the two columns is the data and nothing else.
 | --- | ---: | ---: | ---: | ---: |
 | datetime | 35.3 KB | 127.3 KB | 27.7% | 92.0 KB |
 | country | 20.2 KB | 376.4 KB | 5.4% | 356.2 KB |
-| currency | 25.1 KB | 442.7 KB | 5.7% | 417.6 KB |
-| all three | 49.1 KB | 910.9 KB | 5.4% | 861.8 KB |
+| currency | 25.1 KB | 442.8 KB | 5.7% | 417.7 KB |
+| all three | 49.1 KB | 911.0 KB | 5.4% | 861.9 KB |

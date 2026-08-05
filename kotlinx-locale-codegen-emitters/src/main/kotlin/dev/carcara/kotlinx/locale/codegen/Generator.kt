@@ -34,6 +34,9 @@ public enum class GeneratedTable {
     COUNTRY_NAMES,
     CURRENCY_FORMATS,
     CURRENCY_NAMES,
+
+    /** The count-keyed currency names behind `2 US dollars`, and the patterns that join them to a number. */
+    CURRENCY_PLURAL_NAMES,
     DATE_TIME,
 
     /** The three skeleton tables, which travel together. */
@@ -93,6 +96,12 @@ public enum class GeneratedTable {
 public enum class GeneratedBinding(public val objectSuffix: String) {
     COUNTRY("CountryNames"),
     CURRENCY("Currency"),
+
+    /**
+     * Needs [CURRENCY] too: the name form falls back to the count-less display
+     * name, which lives in the currency binding's table rather than in this one.
+     */
+    CURRENCY_PLURALS("CurrencyPlurals"),
     DATE_TIME("DateTime"),
 
     /**
@@ -160,6 +169,7 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
                 GeneratedTable.COUNTRY_NAMES to "dev.carcara.kotlinx.locale.country.cldr.internal.data",
                 GeneratedTable.CURRENCY_FORMATS to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.CURRENCY_NAMES to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
+                GeneratedTable.CURRENCY_PLURAL_NAMES to "dev.carcara.kotlinx.locale.currency.cldr.plurals.internal.data",
                 GeneratedTable.DATE_TIME to "dev.carcara.kotlinx.locale.datetime.cldr.internal.data",
                 GeneratedTable.DATE_TIME_STANDALONE to "dev.carcara.kotlinx.locale.datetime.cldr.internal.data",
                 GeneratedTable.SKELETONS to "dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data",
@@ -250,6 +260,14 @@ private val PAYLOAD_TABLES = listOf(
         "CurrencyNames",
         "CURRENCY_NAMES",
         "currencyNamesRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.CURRENCY_PLURAL_NAMES,
+        "currencyPluralNames",
+        "CurrencyPluralNames",
+        "CURRENCY_PLURAL_NAMES",
+        "currencyPluralNamesRegistry",
+        "CURRENCY_PLURAL_NAMES_CLDR_VERSION",
     ),
     // Three tables rather than one record: a locale's own availableFormats is the
     // bulk of it, its append formats are almost always root's, and its names sit
@@ -497,6 +515,21 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             // The symbols can be asked for without the patterns, and then there
             // is no format entry point rather than one over a table nothing wrote.
             hasFormats = roots[GeneratedTable.CURRENCY_FORMATS] != null,
+        )
+    }
+
+    roots[GeneratedBinding.CURRENCY_PLURALS]?.let { target ->
+        val currency = requireNotNull(roots[GeneratedBinding.CURRENCY]) {
+            "a currency name with no plural form of its own reads the count-less one, so it needs the currency binding"
+        }
+        val number = requireNotNull(roots[GeneratedBinding.NUMBER]) {
+            "a currency name agrees with the count, so it needs the plural rules the number binding carries"
+        }
+        emitCurrencyPluralsBinding(
+            target.root,
+            target.spec(packages[GeneratedTable.CURRENCY_PLURAL_NAMES], cldr),
+            currencyObject = currency.packageName + "." + currency.objectName,
+            numberObject = number.packageName + "." + number.objectName,
         )
     }
 

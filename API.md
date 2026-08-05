@@ -1096,23 +1096,31 @@ Currency.EUR.displayName(Locale.forLanguageTag("es"))     // euro
 public fun CurrencyAmount.format(
     locale: Locale = Locale.current,
     style: CurrencySymbolStyle = CurrencySymbolStyle.SYMBOL,
-    accounting: Boolean = false,
+    signDisplay: SignDisplay = SignDisplay.AUTO,
     cash: Boolean = false,
+    fractionDigits: Int? = null,
+    notation: NumberNotation = NumberNotation.STANDARD,
 ): String
 ```
 
-Formats the amount with the pattern and symbols of the locale. `accounting`
-selects the accounting pattern, and `cash` applies CLDR's cash fraction digits
-and cash rounding. The number of fraction digits shown is CLDR's, which can
-differ from the ISO minor units.
+Formats the amount with the pattern and symbols of the locale. `signDisplay`
+decides whether a sign appears and whether CLDR's accounting pattern is used,
+which is what puts `($1,234.56)` on a negative in en. `cash` applies CLDR's cash
+fraction digits and cash rounding. `fractionDigits` overrides CLDR's digit count,
+which is what a headline figure wants when it should read `£18,500` rather than
+`£18,500.00`. `notation` selects compact money. The digit count with no override
+is CLDR's, which can differ from the ISO minor units.
 
 ```kotlin
 val amount = CurrencyAmount(Currency.USD, -123456)
 val en = Locale.forLanguageTag("en")
 
 amount.format(en)                                       // -$1,234.56
-amount.format(en, accounting = true)                    // ($1,234.56)
+amount.format(en, signDisplay = SignDisplay.ACCOUNTING) // ($1,234.56)
 amount.format(en, style = CurrencySymbolStyle.CODE)     // -USD 1,234.56
+amount.format(en, fractionDigits = 0)                   // -$1,235
+CurrencyAmount(Currency.USD, 1234567_00)
+    .format(en, notation = NumberNotation.COMPACT_SHORT)  // $1.2M
 
 CurrencyAmount(Currency.CHF, 1003).format(en, cash = true)   // CHF 10.05
 CurrencyAmount(Currency.AMD, 12350).format(en, cash = true)  // AMD 124
@@ -1152,6 +1160,119 @@ CurrencyAmount(Currency.XCG, 123456).format(en)              // Cg. 1,234.56
 CurrencyAmount(Currency.AED, 123456).format(enZA)            // AED 1 234,56
 CurrencyAmount(Currency.USD, 123456).format(enZA)            // US$1 234,56, symbol ends in $
 ```
+
+### CurrencyAmount.formatPluralName and Currency.pluralName
+
+From `kotlinx-locale-currency-cldr-plurals`, or with
+`currency { pluralNames = true }`.
+
+```kotlin
+public fun CurrencyAmount.formatPluralName(
+    locale: Locale = Locale.current,
+    signDisplay: SignDisplay = SignDisplay.AUTO,
+    cash: Boolean = false,
+    fractionDigits: Int? = null,
+    grouping: NumberGrouping = NumberGrouping.AUTO,
+): String
+
+public fun Currency.pluralName(count: Long, locale: Locale = Locale.current): String
+```
+
+The currency written out in words, agreeing in number with the amount in front
+of it. This is what ICU spells `NumberFormatter.unitWidth(FULL_NAME)` and
+ECMA-402 spells `currencyDisplay: "name"`.
+
+Its own call rather than a sixth `CurrencySymbolStyle`, which is where this
+library parts company with how both of those present it. They put the name
+beside the symbol styles on one axis, and UTS #35 lists a `¤¤¤` placeholder next
+to `¤`, `¤¤` and `¤¤¤¤¤` that reads the same way, but the data underneath is not
+one axis. No locale in CLDR carries `¤¤¤` in a currency pattern, and none carries
+`¤¤` or `¤¤¤¤¤` either; all 10,375 currency patterns use a bare `¤`. The name
+form comes from a separate pair of elements, joined to a number written through
+the plain decimal pattern rather than substituted into a currency one, and ICU
+builds it in `LongNameHandler` while the other five widths go through
+`MutablePatternModifier`. Splitting at that seam is also what keeps `format`
+honest: the names are several times the size of every other currency table put
+together, so they ship separately, and the artifact without them has no style it
+must half-answer.
+
+```kotlin
+val en = Locale.forLanguageTag("en")
+val cs = Locale.forLanguageTag("cs")
+val pl = Locale.forLanguageTag("pl")
+
+CurrencyAmount(Currency.USD, 2_00).formatPluralName(en)                     // 2.00 US dollars
+CurrencyAmount(Currency.USD, 1_00).formatPluralName(en, fractionDigits = 0) // 1 US dollar
+CurrencyAmount(Currency.HUF, 1_00).formatPluralName(en)                     // 1 Hungarian forint
+CurrencyAmount(Currency.USD, 1_00).formatPluralName(cs)                     // 1,00 amerického dolaru
+
+Currency.USD.pluralName(1, pl)   // dolar amerykański
+Currency.USD.pluralName(2, pl)   // dolary amerykańskie
+Currency.USD.pluralName(5, pl)   // dolarów amerykańskich
+```
+
+Real output at CLDR's own digit count and at none, which are the two the
+conformance goldens check:
+
+| Locale | USD 1.00 | USD 1 | USD 5 | HUF 1 |
+| --- | --- | --- | --- | --- |
+| en | 1.00 US dollars | 1 US dollar | 5 US dollars | 1 Hungarian forint |
+| cs | 1,00 amerického dolaru | 1 americký dolar | 5 amerických dolarů | 1 maďarský forint |
+| pl | 1,00 dolara amerykańskiego | 1 dolar amerykański | 5 dolarów amerykańskich | 1 forint węgierski |
+| ro | 1,00 dolari americani | 1 dolar american | 5 dolari americani | 1 forint |
+| sw | dola za Marekani 1.00 | 1 dola ya Marekani | dola za Marekani 5 | 1 forint ya Hungaria |
+| ja | 1.00米ドル | 1米ドル | 5米ドル | 1ハンガリー フォリント |
+
+Plural here means the form the plural rules select, not the form for more than
+one, which is how CLDR and ICU use the word and how
+[`pluralCategory`](#pluralcategory) already uses it. `1 US dollar` is a plural
+name in that sense: it is the spelling the `one` category asks for.
+
+The form is chosen from the number as it will be printed rather than from its
+value, which is why the digit count changes it: at CLDR's two digits every rule
+that reads the visible fraction count lands on the same category, so `1.00 US
+dollars` is not the `one` form and `1 US dollar` is. The Czech and Polish rows
+show the same thing in a language where the difference has more than one
+spelling.
+
+What joins the two is CLDR's own pattern for the pair, keyed by category as
+well. Most locales use `{0} {1}`. Swahili reorders it for anything but `one`,
+which is why its `1` row reads the other way round from its `5`. Romanian's
+`other` inserts a word, so `20 de dolari americani` above nineteen but
+`5 dolari americani` below it. Japanese joins the two with nothing.
+
+The number is written the way the locale writes any number, not the way it
+writes money. Malayalam groups `12,34,567.89 യു.എസ്. ഡോളർ` in lakhs where the
+symbol form groups in threes, because its plain decimal pattern and its currency
+pattern disagree. Only the decimal and group separators stay the currency pair,
+which is what ICU does too.
+
+`signDisplay` decides whether a sign appears. Its accounting values write the
+same minus `AUTO` does rather than parentheses, because parentheses live in
+CLDR's accounting currency pattern and this form uses no currency pattern at all.
+There is no `notation`: compact wording would need the plain compact table, which
+lives in the number domain.
+
+A currency with no spelling for the category the number fell into reads its
+`other`, then the count-less display name, then the ISO code. That is the chain
+UTS #35 prescribes and ICU implements in `getPluralName`. CLDR carries count-keyed
+names for 213 of the 1121 locales; the rest resolve through their parents or land
+on the display name.
+
+A narrowed build answers the same way for the locales it generated, which is
+worth stating for this table because it carries three things rather than one: the
+count-keyed names, the pattern joining a name to a number, and the number
+formatting. `samples/narrowed` generates all three for three locales and asserts
+the output, since a build that lost any of them would still compile and still
+answer. A locale the build did not generate reads the fallback locale's names, in
+the agreeing form rather than the count-less one.
+
+Every name and every joined string is checked against ICU, and the places where
+the two answer differently are listed in
+[docs/standards.md](docs/standards.md#where-icu-is-not-the-answer). One of them
+is worth knowing from the calling side: ICU 78.3 cannot write this form at all
+for the Turkish lira in Turkish, the one currency CLDR gives its own pattern in a
+locale. This library writes it.
 
 ### CurrencyAmount.parseFormatted and parseFormattedOrNull
 
@@ -1832,6 +1953,7 @@ The last column is the artifact a narrowed build declares in place of
 | `currency { names }` | [`Currency.symbol` and `Currency.displayName`](#currencysymbol-and-currencydisplayname) | `kotlinx-locale-currency-cldr-runtime` |
 | `currency { formats }` | [`CurrencyAmount.format`](#currencyamountformat) and [`parseFormatted`](#currencyamountparseformatted-and-parseformattedornull). Writes the symbol table too, since a pattern substitutes the symbol into itself. | `kotlinx-locale-currency-cldr-runtime` |
 | `currency { compact }` | `$1.2M`, through `notation` on `format`. Writes the symbols, the patterns and the plural rules its own patterns are keyed by. | `kotlinx-locale-currency-cldr-runtime` |
+| `currency { pluralNames }` | [`CurrencyAmount.formatPluralName` and `Currency.pluralName`](#currencyamountformatpluralname-and-currencypluralname), the `2 US dollars` form. Writes the display names it falls back to and the plural rules that pick the form, but no currency pattern: the number is written the way the locale writes any number. | `kotlinx-locale-currency-cldr-runtime` |
 | `datetime { patterns }` | [`format` by `FormatStyle`](#localdateformat), [month](#monthdisplayname) and [weekday](#dayofweekdisplayname) names, [day periods](#day-periods), [`weekInfo`](#week-data), [`durationPattern`](#duration-patterns) | `kotlinx-locale-datetime-cldr-runtime` |
 | `datetime { skeletons }` | [`format` by skeleton](#skeleton-formatting) and [`skeletonPatternOrNull`](#skeletonpatternornull). Writes the pattern tables too. Worth asking for deliberately: across all locales these are the larger half of the datetime data. | `kotlinx-locale-datetime-cldr-runtime` |
 | `datetime { intervals }` | [`intervalFormat`](#date-and-time-intervals). Writes the skeleton tables too, since an interval is a split of the pattern the matcher picks. | `kotlinx-locale-datetime-cldr-runtime` |

@@ -75,10 +75,32 @@ public fun resolvedRecord(registry: Map<String, String>, locale: Locale): String
  * [field] is 1-based over the data fields, because field 0 is the parent tag.
  * [fieldCount] counts the parent, so country names (parent plus one field) pass
  * 2 and currency names (parent, symbols, names) pass 3.
+ *
+ * [stopBeforeRoot] refuses to climb from a locale's own record into root, which
+ * a few of UTS #35's lookups ask for by name: the currency display name
+ * algorithm reads its count-keyed steps "up to, but not including root" and only
+ * its last step "up to root". Against CLDR's own root the distinction is
+ * invisible, since root declares none of the data those steps read. It stops
+ * being invisible once a narrowed build puts the fallback locale's flattened
+ * record under `root`, because a step meant to find nothing then finds the
+ * fallback's answer and returns it in place of the asking locale's own.
+ *
+ * Refusing to climb rather than refusing to read, because those are different
+ * for a locale the build never generated. Such a locale resolves to root
+ * directly, and root is then the substitute it is meant to answer from, so the
+ * walk starts there and reads it. A locale that does have a record answers from
+ * its own chain and stops at the boundary.
  */
 @OptIn(InternalKotlinxLocaleApi::class)
 @InternalKotlinxLocaleApi
-public fun sparseRecordValue(registry: Map<String, String>, locale: Locale, field: Int, fieldCount: Int, key: String): String? {
+public fun sparseRecordValue(
+    registry: Map<String, String>,
+    locale: Locale,
+    field: Int,
+    fieldCount: Int,
+    key: String,
+    stopBeforeRoot: Boolean = false,
+): String? {
     require(field in 1 until fieldCount) { "field $field is out of range for a $fieldCount-field record" }
 
     var tag = startTag(registry, locale)
@@ -91,6 +113,7 @@ public fun sparseRecordValue(registry: Map<String, String>, locale: Locale, fiel
         }
         val parent = record.substring(0, record.indexOf(FIELD_SEPARATOR).coerceAtLeast(0))
         if (parent.isEmpty()) return null
+        if (stopBeforeRoot && parent == "root") return null
         tag = parent
     }
     return null

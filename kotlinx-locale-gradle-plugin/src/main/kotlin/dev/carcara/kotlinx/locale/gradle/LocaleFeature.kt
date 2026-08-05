@@ -262,6 +262,25 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
         ),
         bindings = setOf(GeneratedBinding.CURRENCY, GeneratedBinding.NUMBER),
     ),
+
+    /**
+     * Currency names that agree with a count: `2 US dollars`.
+     *
+     * Includes the currency name table it falls back to when a locale spells no
+     * form for the category, and the plural table that picks the category. Not
+     * the currency pattern table: the name form writes the number the way the
+     * locale writes any number, so no `¤` pattern is involved.
+     */
+    CURRENCY_PLURAL_NAMES(
+        dslName = "currency.pluralNames",
+        tables = setOf(
+            GeneratedTable.CURRENCY_NAMES,
+            GeneratedTable.CURRENCY_PLURAL_NAMES,
+            GeneratedTable.NUMBER,
+            GeneratedTable.PLURALS,
+        ),
+        bindings = setOf(GeneratedBinding.CURRENCY, GeneratedBinding.CURRENCY_PLURALS, GeneratedBinding.NUMBER),
+    ),
     ;
 
     companion object {

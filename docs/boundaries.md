@@ -246,10 +246,10 @@ seconds reads as `1:01` or `1:01:00` is not answered by CLDR, ECMA-402 or ICU,
 all of which take that from the caller. It is the same boundary as choosing the
 unit for a relative time, above.
 
-The name `durationFormat` is deliberately left free. The rich, genuinely
-locale-varying duration data is the `duration-*` measurement units and their
-plural forms, which this library does not carry, and that is what would deserve
-the name.
+`durationFormat` is the other name and the other thing. It writes the `duration-*`
+measurement units and their plural forms, which is where the genuinely
+locale-varying duration data is, and it lives in
+`kotlinx-locale-datetime-cldr-durations` rather than beside the pattern.
 
 ## Deriving a person's initials without word boundaries
 

@@ -180,6 +180,144 @@ fun buildCurrencyNamePayloads(flattener: Flattener, extras: ExtrasResolver): Map
 }
 
 /**
+ * Sparse per-locale currency plural payloads: the parent tag, the count-keyed
+ * display names this locale's own file declares, the patterns that join a number
+ * to one of them, and the number formatting the name form needs.
+ *
+ * All three data fields are keyed rather than positional, because a narrowed
+ * build flattens a sparse chain by merging its keyed entries and would drop a
+ * bare field past the last sparse one. The two single-entry fields hold their
+ * parts under one key each, so the flattening keeps the nearest locale's whole
+ * tuple rather than mixing two locales' halves.
+ *
+ * The number data is a copy of what `currencyFormats` already resolved rather
+ * than a reference to it: those records are internal to
+ * `kotlinx-locale-currency-cldr-full` and this table ships in its own artifact.
+ * It is six short strings against reaching across a module boundary, and the
+ * same trade `CurrencyNumberFormat` makes against the number domain.
+ *
+ * It is the plain decimal pattern that is carried, not the currency one. ICU
+ * renders `12,34,567.89 US dollars` in Malayalam where `$1,234,567.89` groups in
+ * threes, because a spelled-out name is not a `¤` in a currency pattern: the
+ * number is written the way that locale writes any number, and only the
+ * separators stay the currency pair.
+ */
+fun buildCurrencyPluralNamePayloads(flattener: Flattener, extras: ExtrasResolver): Map<String, String> {
+    fun entries(map: Map<String, String>): String = map.entries
+        .sortedBy { it.key }
+        .joinToString(LIST_SEPARATOR) { (code, value) -> code + KEY_SEPARATOR + value }
+
+    val unitPatterns = HashMap<String, String>()
+    fun units(id: String): String = unitPatterns.getOrPut(id) {
+        extras.resolveCurrencyUnitPatterns(id).joinToString(KEY_SEPARATOR)
+    }
+
+    val numberData = HashMap<String, String>()
+    fun numbers(id: String): String = numberData.getOrPut(id) {
+        val format = extras.resolveCurrencyFormat(id)
+        listOf(
+            format.digits,
+            format.currencyDecimal,
+            format.currencyGroup,
+            format.minusSign,
+            format.minimumGroupingDigits.toString(),
+            extras.resolveNumberPatterns(id).decimal,
+        ).joinToString(KEY_SEPARATOR)
+    }
+
+    val payloads = LinkedHashMap<String, String>()
+    for (id in listOf("root") + flattener.localeIds) {
+        val parentId = flattener.dataChain(id).getOrNull(1)
+
+        // Both tuples are resolved, so a locale that resolved to the same answer
+        // as its parent stores nothing and the lookup walks one more hop.
+        fun ownOrEmpty(key: String, resolve: (String) -> String): String {
+            val own = resolve(id)
+            if (parentId != null && own == resolve(parentId)) return ""
+            return key + KEY_SEPARATOR + own
+        }
+        val partial = extras.partial(id)
+        val names = LinkedHashMap<String, String>()
+        for (key in partial.currencyPluralNames.keys + partial.currencyPluralNameMarkers) {
+            // Deduplicated against the parent's resolved answer and nothing
+            // else. Leaving out a category that matches this locale's own
+            // `other` looks safe, since the runtime reads `other` when a
+            // category is missing, but it is not: that read restarts at the
+            // locale being asked, so a descendant that overrides `other` would
+            // answer with its own plural where this locale meant the singular.
+            // English drops `Papua New Guinean kina` under `one` that way and
+            // en-AU then answers `Papua New Guinean kinas` for 1.
+            val own = resolveCurrencyPluralName(flattener, extras, id, key) ?: continue
+            if (parentId != null && own == resolveCurrencyPluralName(flattener, extras, parentId, key)) continue
+            names[key] = own
+        }
+        payloads[canonicalTag(id)] = parentId?.let(::canonicalTag).orEmpty() + FIELD_SEPARATOR +
+            entries(names) + FIELD_SEPARATOR +
+            ownOrEmpty("u", ::units) + FIELD_SEPARATOR +
+            ownOrEmpty("n", ::numbers)
+    }
+    return payloads
+}
+
+/**
+ * The count-keyed currency name [id] resolves to for `"<code>#<count>"`, or null
+ * when nothing in its chain declares that category at all.
+ *
+ * Recursive on the parent's resolved value rather than on what the parent's file
+ * says, which is the whole difference between this and a plain chain walk. CLDR
+ * eliminates the inheritance marker during resolution, so by the time a lookup
+ * runs, a marker has already become whatever it inherited, and a child sees that
+ * rather than the marker.
+ *
+ * Two halves, in this order. A real spelling anywhere up the chain wins, wherever
+ * the markers sit relative to it. Only when the whole chain is markers does the
+ * lateral half apply, and it applies at the deepest locale that both wrote a
+ * marker and writes at least one real count-keyed name for the same currency,
+ * reading step 4 of UTS #35's algorithm from there: `other`, then that locale's
+ * own count-less display name. A locale writing only markers owns nothing and
+ * contributes nothing, so its parent's table arrives whole.
+ *
+ * Norwegian is three of the cases in one language. `nn` writes markers under
+ * both categories of the Aruban florin, owns nothing, and takes `no`'s
+ * `arubiske floriner` even though its own count-less spelling is
+ * `arubiske florinar`. It writes a real `one` for the Colombian peso, so there
+ * it owns the currency and its `other` marker reads its own
+ * `kolombianske pesos` rather than `no`'s. And `es-419` owns the tenge the same
+ * way, yet its `other` marker still reads `es`'s real `tengues kazajos`,
+ * because a real spelling up the chain outranks the lateral step.
+ *
+ * Every clause was measured rather than reasoned out, against the 966,540 names
+ * ICU4J was asked to cross-check across 905 shared locales. Dropping the marker
+ * outright misses 1,119. Resolving it straight to the count-less name misses
+ * 9,648, across Welsh, Irish, Scottish Gaelic and a dozen more. Adding the
+ * `other` step but not the ownership condition misses 2,107, across Traditional
+ * Chinese, Yoruba and Dari. Running the lateral half before the vertical one
+ * misses 1,215, across Latin American Spanish. What is left is 879, all of them
+ * `sr-Cyrl-ME`, where ICU ships no bundle for the tag at all and answers from a
+ * Latin-script one: its count-less display names differ from ours for 173 of
+ * 178 currencies, so that difference is older than this table.
+ */
+private fun resolveCurrencyPluralName(flattener: Flattener, extras: ExtrasResolver, id: String, key: String): String? {
+    val chain = flattener.dataChain(id)
+    // A real spelling anywhere up the chain wins, wherever the markers sit
+    // relative to it. This is the vertical half, and it is a plain walk.
+    chain.firstNotNullOfOrNull { extras.partial(it).currencyPluralNames[key] }?.let { return it }
+
+    // Nothing concrete anywhere, so the lateral half applies, at the deepest
+    // locale that both wrote the marker and owns the currency's table.
+    val code = key.substringBefore('#')
+    val owner = chain.firstOrNull { level ->
+        val partial = extras.partial(level)
+        key in partial.currencyPluralNameMarkers && code in partial.currencyPluralNameCodes
+    } ?: return null
+
+    if (key != "$code#$OTHER_CATEGORY") {
+        resolveCurrencyPluralName(flattener, extras, owner, "$code#$OTHER_CATEGORY")?.let { return it }
+    }
+    return extras.resolveValue(owner) { it.currencyNames[code] }
+}
+
+/**
  * Sparse per-locale display-name payloads: the parent tag, then the language,
  * script and territory names this locale's own file declares, then its three
  * composition patterns.

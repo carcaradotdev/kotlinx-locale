@@ -177,6 +177,15 @@ abstract class CurrencyFeatures @Inject constructor(objects: ObjectFactory) : Fe
      * its own.
      */
     val compact: Property<Boolean> = flag(LocaleFeature.CURRENCY_COMPACT)
+
+    /**
+     * Currency names that agree with a count, behind `CurrencyAmount.formatPluralName`
+     * and `Currency.pluralName`.
+     *
+     * Generates the display-name and plural tables it needs, so it is enough on
+     * its own.
+     */
+    val pluralNames: Property<Boolean> = flag(LocaleFeature.CURRENCY_PLURAL_NAMES)
 }
 
 abstract class LanguageFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
