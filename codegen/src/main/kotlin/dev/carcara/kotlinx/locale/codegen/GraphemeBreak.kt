@@ -94,6 +94,32 @@ private fun ucdLines(resource: String): List<List<String>> {
         .toList()
 }
 
+/**
+ * The code points UAX #29 rules WB6 and WB7 keep inside a word.
+ *
+ * `MidLetter`, `MidNumLet` and `Single_Quote`, which are the three classes that
+ * do not break a word when they stand between two letters. Emitted as the
+ * characters themselves rather than as ranges: there are seventeen of them and
+ * they do not form ranges, so a table of starts and ends would be longer than
+ * the set it encodes.
+ *
+ * The rest of the word break properties are deliberately not read. Applying them
+ * fully needs the dictionaries the scripts without spaces between words require,
+ * and this library ships none.
+ */
+fun parseWordBreakMidLetters(): String {
+    val wanted = setOf("MidLetter", "MidNumLet", "Single_Quote")
+    val points = sortedSetOf<Int>()
+    for (fields in ucdLines("WordBreakProperty.txt")) {
+        if (fields.getOrNull(1) !in wanted) continue
+        val (first, last) = parseRange(fields[0])
+        for (cp in first..last) points.add(cp)
+    }
+    check(points.isNotEmpty()) { "WordBreakProperty.txt carried no mid-word classes" }
+    println("[codegen] word break: ${points.size} mid-word code points from Unicode $UCD_VERSION")
+    return points.joinToString("") { it.toChar().toString() }
+}
+
 private fun parseRange(field: String): Pair<Int, Int> {
     val first = field.substringBefore("..")
     val last = field.substringAfter("..", first)

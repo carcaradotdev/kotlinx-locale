@@ -200,17 +200,26 @@ fun Flattener.resolvePersonNames(id: String, parse: (String) -> PartialPersonNam
 
     // Fold the alias graph, with a hop limit rather than a visited set: an alias
     // chain is two or three long and a cycle would otherwise hang generation.
+    //
+    // Per slot rather than per cell, because inheritance in LDML is per path and
+    // a slot is part of the path. Catalan declares the first pattern of five of
+    // its six sorting cells and writes the arrow marker for the second, and the
+    // marker resolves through root's lateral alias back to Catalan's own
+    // `sorting-long-formal`. Gating the walk on the first slot being absent
+    // skipped every one of them, which cost the sorting forms their comma.
     for (cell in PERSON_NAME_CELLS) {
-        if (slots.getValue(cell)[0] != null) continue
-        var current = cell
-        var hops = 0
-        while (hops++ < PERSON_NAME_CELLS.size) {
-            current = aliases[current] ?: break
-            val resolved = slots[current] ?: break
-            if (resolved[0] != null) {
-                val target = slots.getValue(cell)
-                for (slot in 0 until MAX_ALT_SLOTS) if (target[slot] == null) target[slot] = resolved[slot]
-                break
+        val target = slots.getValue(cell)
+        for (slot in 0 until MAX_ALT_SLOTS) {
+            if (target[slot] != null) continue
+            var current = cell
+            var hops = 0
+            while (hops++ < PERSON_NAME_CELLS.size) {
+                current = aliases[current] ?: break
+                val resolved = slots[current] ?: break
+                if (resolved[slot] != null) {
+                    target[slot] = resolved[slot]
+                    break
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ import dev.carcara.kotlinx.locale.internal.ENTRY_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.GraphemeClusters
 import dev.carcara.kotlinx.locale.internal.KEY_SEPARATOR
+import dev.carcara.kotlinx.locale.internal.WordBreaks
 import dev.carcara.kotlinx.locale.internal.resolvedRecord
 import dev.carcara.kotlinx.locale.personname.PersonName
 import dev.carcara.kotlinx.locale.personname.PersonNameFormality
@@ -104,15 +105,17 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
      */
     private fun forPattern(pattern: String, name: PersonName): PersonName {
         if (!fullSurname(name).isNullOrEmpty() || name.given.isNullOrEmpty()) return name
-        // Only when the pattern would write the surname out. A pattern that
-        // reduces it to an initial is asking for a supporting part of a longer
-        // name, so moving the one name there would abbreviate the only thing
-        // there is: `{given-informal} {surname-initial}` has to answer with the
-        // whole name, not with its first letter.
-        val writesSurname = parsePattern(pattern).any {
-            it is PatternElement.Field && it.name.startsWith("surname") && "initial" !in it.modifiers
+        // Only when the pattern has nowhere else to write the name. The test is
+        // whether the pattern already spells the given name out, not whether it
+        // writes a surname: Sardinian's short informal pattern is
+        // `{given-informal} {surname-prefix} {surname-core-initial}`, which does
+        // both, and keying on the surname moved the one name into a field that
+        // then abbreviated it. A pattern that only initialises the given name is
+        // not spelling it out, so `{given-initial} {surname}` still moves.
+        val writesGiven = parsePattern(pattern).any {
+            it is PatternElement.Field && it.name == "given" && "initial" !in it.modifiers
         }
-        if (!writesSurname) return name
+        if (writesGiven) return name
         return PersonName(
             given = null,
             given2 = name.given2,
@@ -226,58 +229,94 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
      *    space rather than two.
      */
     private fun renderPattern(pattern: String, name: PersonName, record: PersonNameRecord): String {
-        val elements = parsePattern(pattern)
-
-        // Step 1: the span between the first and last populated fields.
-        val populated = elements.indices.filter { index ->
-            val element = elements[index]
-            element is PatternElement.Field && !resolveField(element, name, record).isNullOrEmpty()
-        }
-        if (populated.isEmpty()) return ""
-
         val result = StringBuilder()
-        // The literal run waiting to be written, and whether an empty field has
-        // been seen since it was collected.
-        //
-        // Step 2 drops a literal that sits between two empty fields, and the
-        // qualifier matters: only when a literal was already collected. An empty
-        // field with no literal before it, which is what `{given-initial}` and
-        // `{given2-initial}` are in English, must still let the space that
-        // follows through, or the surname joins the initial.
-        var pending: String? = null
-        var sawEmptyField = false
+        // The literal run collected before the current gap and the one collected
+        // inside it. Splitting them is what lets step 3 splice the two sides
+        // together rather than pick one and throw the other away.
+        val textBefore = StringBuilder()
+        val textAfter = StringBuilder()
+        var seenLeadingField = false
+        var seenEmptyLeadingField = false
+        var seenEmptyField = false
 
-        for (index in populated.first() until elements.size) {
-            when (val element = elements[index]) {
-                is PatternElement.Literal -> {
-                    if (sawEmptyField && pending != null) continue
-                    pending = if (pending == null) element.text else coalesce(pending, element.text)
-                    sawEmptyField = false
+        for (element in parsePattern(pattern)) {
+            when (element) {
+                is PatternElement.Literal -> when {
+                    // Before the first populated field: nothing to attach to.
+                    seenEmptyLeadingField -> Unit
+                    seenEmptyField -> textAfter.append(element.text)
+                    else -> textBefore.append(element.text)
                 }
                 is PatternElement.Field -> {
                     val value = resolveField(element, name, record)
                     if (value.isNullOrEmpty()) {
-                        sawEmptyField = true
+                        if (!seenLeadingField) {
+                            seenEmptyLeadingField = true
+                            textBefore.setLength(0)
+                        } else {
+                            seenEmptyField = true
+                            textAfter.setLength(0)
+                        }
                     } else {
-                        pending?.let(result::append)
-                        pending = null
-                        sawEmptyField = false
+                        seenLeadingField = true
+                        seenEmptyLeadingField = false
+                        if (seenEmptyField) {
+                            result.append(coalesce(textBefore, textAfter))
+                            seenEmptyField = false
+                        } else {
+                            result.append(textBefore)
+                            textBefore.setLength(0)
+                        }
                         result.append(value)
                     }
                 }
             }
         }
-        // The literal after the last populated field closes a bracket the
-        // pattern opened, so it is kept unless an empty field swallowed it.
-        if (!sawEmptyField || pending == null) pending?.let(result::append)
+        // A literal run left over after the last populated field belongs to the
+        // fields that followed it, and those were all empty.
+        if (!seenEmptyField) result.append(textBefore)
         return result.toString()
     }
 
-    /** Step 3 of the pattern process: two adjacent literals become one. */
-    private fun coalesce(first: String?, second: String): String {
-        if (first.isNullOrEmpty()) return second
-        if (second.isEmpty()) return first
-        return if (first.endsWith(second)) first else first + second
+    /**
+     * Step 3 of the pattern process: the literal run around a gap.
+     *
+     * Keeps [before] up to and including its first space, and the run of
+     * non-space characters at the end of [after]. Both sides survive, which is
+     * the part a rule that picks one of them gets wrong: the Czech and Slovak
+     * sorting patterns end `{given2} {surname-prefix} ({title}, {credentials})`,
+     * and with no prefix to write the bracket lives in the half that a
+     * keep-the-first rule discards.
+     *
+     * Ported from `PersonNamePattern.coalesce` in ICU rather than derived from
+     * UTS #35 Part 8, which states the rule in one sentence.
+     */
+    private fun coalesce(before: StringBuilder, after: StringBuilder): String {
+        if (endsWith(before, after)) after.setLength(0)
+
+        var end = 0
+        while (end < before.length && !before[end].isWhitespace()) end++
+        var start = after.length - 1
+        while (start >= 0 && !after[start].isWhitespace()) start--
+        // One space joins the two halves: the first one on the left if there is
+        // one, otherwise the last one on the right.
+        if (end < before.length) end++ else if (start >= 0) start--
+
+        val joined = before.substring(0, end) + after.substring(start + 1)
+        before.setLength(0)
+        after.setLength(0)
+        return joined
+    }
+
+    /** Whether [text] ends with [suffix], neither of them a `String` yet. */
+    private fun endsWith(text: StringBuilder, suffix: StringBuilder): Boolean {
+        var textIndex = text.length - 1
+        var suffixIndex = suffix.length - 1
+        while (textIndex >= 0 && suffixIndex >= 0 && text[textIndex] == suffix[suffixIndex]) {
+            textIndex--
+            suffixIndex--
+        }
+        return suffixIndex < 0
     }
 
     private fun resolveField(field: PatternElement.Field, name: PersonName, record: PersonNameRecord): String? {
@@ -311,11 +350,11 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
     /**
      * The initials of a value, wrapped and joined the way the locale writes them.
      *
-     * Split on whitespace rather than with a word break iterator. The difference
-     * shows only where words are not separated by spaces, which is Khmer,
-     * Burmese and the CJK locales, and matching those needs the dictionaries a
-     * break iterator carries. See the conformance test for the exact set that
-     * excludes.
+     * Words are found from the characters rather than with a full break
+     * iterator: UAX #29's rules that need no dictionary are applied, and the
+     * ones that do are not. The difference shows only where words are not
+     * separated by spaces, which is Khmer, Burmese and the CJK locales. See the
+     * conformance test for the exact set that excludes.
      */
     private fun initialsOf(value: String, record: PersonNameRecord, retain: Boolean): String {
         // Split on anything that is not a letter, not only on spaces. A
@@ -332,9 +371,19 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
         val separators = ArrayList<String>()
         val word = StringBuilder()
         val separator = StringBuilder()
-        for (cluster in GraphemeClusters.clusters(value)) {
+        val clusters = GraphemeClusters.clusters(value)
+        for ((index, cluster) in clusters.withIndex()) {
             val ch = cluster[0]
-            if (ch.isLetterOrDigit() || ch.isMark()) {
+            val letter = ch.isLetterOrDigit() || ch.isMark()
+            // UAX #29 rules WB6 and WB7: mid-word punctuation standing between
+            // two letters does not end the word. Catalan writes `Gal·la` with a
+            // middle dot and takes one initial from it, not two.
+            val midWord = !letter &&
+                word.isNotEmpty() &&
+                separator.isEmpty() &&
+                WordBreaks.isMidWord(ch) &&
+                clusters.getOrNull(index + 1)?.get(0)?.let { it.isLetterOrDigit() || it.isMark() } == true
+            if (letter || midWord) {
                 if (separator.isNotEmpty()) {
                     if (word.isNotEmpty()) {
                         words.add(word.toString())

@@ -515,6 +515,7 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .table(BundleTables.PHONE_FORMATS, phoneFormatTable)
         .table(BundleTables.WEEK_DATA, supplemental.encodeWeekData())
         .table(BundleTables.GRAPHEME_BREAK, encodeGraphemeBreakRanges(parseGraphemeBreakRanges()))
+        .table(BundleTables.WORD_BREAK_MID, parseWordBreakMidLetters())
         .section("countryNames", buildCountryNamePayloads(flattener, extras))
         .section("currencyFormats", buildCurrencyFormatPayloads(flattener, extras))
         .section("currencyNames", buildCurrencyNamePayloads(flattener, extras))

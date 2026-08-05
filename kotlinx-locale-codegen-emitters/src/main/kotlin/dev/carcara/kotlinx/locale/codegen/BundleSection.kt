@@ -120,5 +120,21 @@ public object BundleTables {
      */
     public const val GRAPHEME_BREAK: String = "graphemeBreak"
 
-    public val ALL: Set<String> = setOf(TIME_ZONE_METADATA, PHONE_TERRITORIES, PHONE_FORMATS, WEEK_DATA, GRAPHEME_BREAK)
+    /**
+     * The UAX #29 word break classes that keep punctuation inside a word.
+     *
+     * Beside [GRAPHEME_BREAK] and for the same reason: an initial is the first
+     * cluster of each word, so a build that cannot see where a word ends counts
+     * the wrong number of them.
+     */
+    public const val WORD_BREAK_MID: String = "wordBreakMid"
+
+    public val ALL: Set<String> = setOf(
+        TIME_ZONE_METADATA,
+        PHONE_TERRITORIES,
+        PHONE_FORMATS,
+        WEEK_DATA,
+        GRAPHEME_BREAK,
+        WORD_BREAK_MID,
+    )
 }

@@ -259,6 +259,11 @@ Khmer, Lao, Burmese, Shan and the Chinese locales the words in a field are not
 separated by spaces, so finding them needs the dictionary a word-break iterator
 carries. Those dictionaries are larger than this whole domain.
 
+The UAX #29 word boundaries that need no dictionary are applied. Rules WB6 and
+WB7, which keep a middle dot or an apostrophe inside a word rather than between
+two, come from the vendored `WordBreakProperty.txt` and are what make Catalan's
+`Gal·la` one initial instead of two.
+
 Guessing would be worse than declining: an initial taken from the wrong place is
 wrong in a way nobody can see without reading the script. The affected locales
 are named in the conformance test and counted rather than silently skipped.

@@ -69,3 +69,9 @@ public final class dev/carcara/kotlinx/locale/internal/PayloadRecordsKt {
 	public static final fun supportedLocalesOf (Ljava/util/Map;)Ljava/util/Set;
 }
 
+public final class dev/carcara/kotlinx/locale/internal/WordBreaks {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/internal/WordBreaks;
+	public final fun install (Ljava/lang/String;)V
+	public final fun isMidWord (C)Z
+}
+

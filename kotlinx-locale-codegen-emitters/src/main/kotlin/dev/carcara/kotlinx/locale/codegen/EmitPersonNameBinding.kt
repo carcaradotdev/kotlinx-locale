@@ -3,7 +3,7 @@ package dev.carcara.kotlinx.locale.codegen
 import java.io.File
 
 /** `CldrPersonName`-shaped binding: the source object plus the entry points. */
-public fun emitPersonNameBinding(outputRoot: File, spec: BindingSpec, graphemeBreak: String) {
+public fun emitPersonNameBinding(outputRoot: File, spec: BindingSpec, graphemeBreak: String, wordBreakMid: String) {
     val file = outputRoot.packageFile(spec.packageName, "PersonNameFormat.kt")
     file.writeText(
         preamble(
@@ -18,6 +18,7 @@ public fun emitPersonNameBinding(outputRoot: File, spec: BindingSpec, graphemeBr
                 "dev.carcara.kotlinx.locale.personname.PersonNameSource",
                 "dev.carcara.kotlinx.locale.personname.PersonNameUsage",
                 "dev.carcara.kotlinx.locale.internal.GraphemeClusters",
+                "dev.carcara.kotlinx.locale.internal.WordBreaks",
                 "dev.carcara.kotlinx.locale.personname.cldr.runtime.PayloadPersonNames",
                 "dev.carcara.kotlinx.locale.personname.format",
                 "dev.carcara.kotlinx.locale.personname.order",
@@ -43,9 +44,20 @@ public fun emitPersonNameBinding(outputRoot: File, spec: BindingSpec, graphemeBr
         |@InternalKotlinxLocaleApi
         |internal val graphemeBreakTable: String = "${kotlinEscape(graphemeBreak)}"
         |
+        |/**
+        | * The punctuation that stays inside a word, per UAX #29 rules WB6 and WB7.
+        | *
+        | * Installed beside the cluster table and for the same reason: an initial is
+        | * taken from the first cluster of each word, so where the words end is half
+        | * the question. Catalan's `Gal·la` is one word and one initial.
+        | */
+        |@InternalKotlinxLocaleApi
+        |internal val wordBreakMidTable: String = "${kotlinEscape(wordBreakMid)}"
+        |
         |public object ${spec.objectName} : PersonNameSource by PayloadPersonNames(personNamesRegistry) {
         |    init {
         |        GraphemeClusters.install(graphemeBreakTable)
+        |        WordBreaks.install(wordBreakMidTable)
         |    }
         |}
         |

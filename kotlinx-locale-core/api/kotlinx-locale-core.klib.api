@@ -64,6 +64,11 @@ final object dev.carcara.kotlinx.locale.internal/GraphemeClusters { // dev.carca
     final fun install(kotlin/String) // dev.carcara.kotlinx.locale.internal/GraphemeClusters.install|install(kotlin.String){}[0]
 }
 
+final object dev.carcara.kotlinx.locale.internal/WordBreaks { // dev.carcara.kotlinx.locale.internal/WordBreaks|null[0]
+    final fun install(kotlin/String) // dev.carcara.kotlinx.locale.internal/WordBreaks.install|install(kotlin.String){}[0]
+    final fun isMidWord(kotlin/Char): kotlin/Boolean // dev.carcara.kotlinx.locale.internal/WordBreaks.isMidWord|isMidWord(kotlin.Char){}[0]
+}
+
 final const val dev.carcara.kotlinx.locale.internal/ENTRY_SEPARATOR // dev.carcara.kotlinx.locale.internal/ENTRY_SEPARATOR|{}ENTRY_SEPARATOR[0]
     final fun <get-ENTRY_SEPARATOR>(): kotlin/Char // dev.carcara.kotlinx.locale.internal/ENTRY_SEPARATOR.<get-ENTRY_SEPARATOR>|<get-ENTRY_SEPARATOR>(){}[0]
 final const val dev.carcara.kotlinx.locale.internal/FIELD_SEPARATOR // dev.carcara.kotlinx.locale.internal/FIELD_SEPARATOR|{}FIELD_SEPARATOR[0]
