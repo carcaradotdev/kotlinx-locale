@@ -18,9 +18,10 @@ import kotlin.test.assertTrue
  * from an ICU build made from a nearby snapshot they carry no version skew at
  * all: a disagreement here is this library's, never a difference of edition.
  *
- * Ninety-nine per cent of the thirty-seven thousand cases pass. The rest are
- * excluded by name below rather than by loosening the comparison, so what is not
- * covered stays countable and visible.
+ * Every one of the thirty-seven thousand cases passes, apart from the locales
+ * whose words are not separated by spaces. Those are excluded by name below
+ * rather than by loosening the comparison, so what is not covered stays
+ * countable and visible.
  */
 class PersonNameConformanceTest {
 
@@ -38,26 +39,17 @@ class PersonNameConformanceTest {
     /**
      * Locales whose remaining differences are known but not yet fixed.
      *
-     * Fifty-one cases of thirty-four thousand, all of them this library's rather
-     * than the data's, and the cause of each is known.
+     * Empty, and kept rather than deleted so that it cannot fill up quietly.
+     * Every locale outside [wordSegmentation] agrees with CLDR on every case.
      *
-     * Catalan, Czech, Sardinian and Slovak turn on how `{surname-prefix}`
-     * resolves for a surname that has no prefix. ICU answers with the whole
-     * surname there, which was checked by running it, and this returns null, so
-     * a pattern opening with that field looks like it begins with an empty one
-     * and Catalan's sorting form loses its comma. Copying ICU's answer directly
-     * is not the fix: it collides with the mononym rule, which has already moved
-     * a lone given name into the surname, and Afrikaans then prints it twice.
-     * The two rules have to be reconciled, which is a change to both.
-     *
-     * Assamese and Telugu produce one initial too many or too few in a field
-     * with no spaces in it. That is a word boundary question rather than a
-     * cluster one, since the clusters now follow UAX #29, and it is the same
-     * problem the eight locales above are excluded for.
-     *
-     * `PersonNamePattern.java` in the ICU checkout is the reference for both.
+     * It held six until the rules behind them were read out of ICU rather than
+     * inferred from UTS #35 Part 8, which states them tersely enough that three
+     * separate answers came out wrong: which literal survives around an empty
+     * field, when a lone given name moves into the surname, and where a word
+     * ends when the punctuation inside it is a middle dot. `PersonNamePattern`
+     * and `FieldModifierImpl` in the ICU checkout are the reference.
      */
-    private val knownDifferences = setOf("as", "ca", "cs", "sc", "sk", "te")
+    private val knownDifferences = setOf<String>()
 
     private fun buildName(fields: String, nameLocale: String): PersonName {
         val values = HashMap<String, String>()
@@ -91,7 +83,7 @@ class PersonNameConformanceTest {
     @Test
     fun theExclusionsDoNotGrowUnnoticed() {
         assertEquals(8, wordSegmentation.size, "the word segmentation exclusions changed")
-        assertEquals(6, knownDifferences.size, "the known differences changed; fix them or restate them")
+        assertEquals(0, knownDifferences.size, "the known differences changed; fix them or restate them")
     }
 
     @Test

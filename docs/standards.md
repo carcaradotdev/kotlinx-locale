@@ -105,6 +105,7 @@ from memory. Bumping any of them is a deliberate commit.
 | libphonenumber | `v9.0.19` | `PHONE_REPO` in `codegen/.../Repos.kt`, mirrored by `libphonenumber` in `gradle/libs.versions.toml` |
 | ISO 4217 list one and list three | published 2026-01-01 | vendored at `codegen/src/main/resources/iso4217/` |
 | Unicode Emoji | 17.0 | `EMOJI_VERSION` in `codegen/.../Repos.kt`, vendored at `codegen/src/main/resources/emoji/` |
+| Unicode Character Database | 15.1.0 | `UCD_VERSION` in `codegen/.../Repos.kt`, vendored at `codegen/src/main/resources/ucd/` |
 
 ICU is read two ways and shipped neither: parsed as data for its resource
 bundles, and called as a library to generate the expected answers the conformance
@@ -125,8 +126,9 @@ independent implementation of the same standard rather than to its own reading:
 Where this library and the reference disagree, the conformance tests exclude the
 affected locales by name and count them rather than loosening the comparison, so
 the gap stays visible. The exclusions and their reasons are in the tests
-themselves, and the ones that are this library's bugs rather than boundaries are
-listed in [boundaries.md](boundaries.md).
+themselves, each one pinned by an assertion on its size so that the list cannot
+grow unnoticed. What remains is a decision to stop rather than an open bug, and
+is written up in [boundaries.md](boundaries.md).
 
 ## Where ICU is not the answer
 

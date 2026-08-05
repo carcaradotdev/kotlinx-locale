@@ -614,6 +614,7 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             target.root,
             target.spec(packages[GeneratedTable.PERSON_NAMES], cldr),
             graphemeBreak = bundle.tables[BundleTables.GRAPHEME_BREAK].orEmpty(),
+            wordBreakMid = bundle.tables[BundleTables.WORD_BREAK_MID].orEmpty(),
         )
     }
 

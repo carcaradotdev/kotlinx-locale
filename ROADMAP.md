@@ -91,30 +91,6 @@ The `w`, `W` and `F` pattern fields, and the numeric forms of `e` and `c`.
   enabling them unchecked would be guessing.
 - Where: `UNSUPPORTED_FIELD_LETTERS` in `codegen/.../Flatten.kt`.
 
-## Close the conformance exclusions
-
-Six locales are excluded by name from the person name suite, and each is a bug
-rather than a boundary. They should close before anything is published.
-
-- Catalan, Czech, Sardinian and Slovak: `{surname-prefix}` on a surname with no
-  prefix. ICU answers with the whole surname; this answers null, so a pattern
-  opening with that field reads as starting empty. Copying ICU's answer alone
-  regresses Afrikaans, because the mononym rule has already moved a lone given
-  name into the surname and it then prints twice. Both rules move together.
-- Assamese and Telugu: one initial too many or too few in a field with no
-  spaces in it. A word boundary question rather than a cluster one, since the
-  clusters themselves now follow UAX #29.
-- The reference for both is `PersonNamePattern.java`, now in the ICU checkout.
-- Catalan, Czech, Sardinian and Slovak: which literal survives when the field
-  between two of them is empty. The rule keeps the first separator and these
-  patterns want the bracketing one.
-
-The list is pinned by an assertion on its size so it cannot grow unnoticed. A
-second exclusion, the eight locales whose words are not space-separated, is a
-genuine boundary rather than a bug and is recorded as one.
-
-The interval suite has no exclusions: all 905 locales it shares with ICU agree.
-
 ## Platform sources for the remaining targets
 
 - `-platform` reads no locale data on Linux, Windows, Android Native or

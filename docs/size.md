@@ -19,7 +19,7 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | currency-platform | 25.1 KB | 76.3 KB | 26.0 KB | 0.8 KB |
 | currency-codes | 26.8 KB | 81.4 KB | 30.0 KB | 3.1 KB |
 | datetime-platform | 35.3 KB | 112.6 KB | 42.0 KB | 6.6 KB |
-| personname-full | 46.1 KB | 364.8 KB | 60.0 KB | 13.8 KB |
+| personname-full | 46.3 KB | 365.5 KB | 60.0 KB | 13.6 KB |
 | everything-platform | 49.1 KB | 153.9 KB | 54.0 KB | 4.8 KB |
 | number-full | 76.3 KB | 310.6 KB | 110.0 KB | 33.6 KB |
 | phone-full | 79.8 KB | 276.0 KB | 110.0 KB | 30.1 KB |
@@ -28,13 +28,13 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | datetime-relative | 147.8 KB | 845.3 KB | 190.0 KB | 42.1 KB |
 | datetime-skeletons | 185.8 KB | 826.9 KB | 205.0 KB | 19.1 KB |
 | datetime-intervals | 213.3 KB | 1199.6 KB | 280.0 KB | 66.6 KB |
-| country-full | 376.4 KB | 1081.1 KB | 460.0 KB | 83.5 KB |
-| currency-full | 442.8 KB | 1403.8 KB | 500.0 KB | 57.1 KB |
+| country-full | 376.5 KB | 1081.1 KB | 460.0 KB | 83.4 KB |
+| currency-full | 442.9 KB | 1403.8 KB | 500.0 KB | 57.0 KB |
 | timezone-full | 534.2 KB | 2922.5 KB | 700.0 KB | 165.7 KB |
-| currency-plurals | 811.1 KB | 2896.2 KB | 900.0 KB | 88.8 KB |
-| timezone-cities | 885.7 KB | 4212.0 KB | 1200.0 KB | 314.2 KB |
-| everything | 911.0 KB | 2868.5 KB | 1100.0 KB | 188.9 KB |
-| language-full | 1179.3 KB | 3137.9 KB | 1400.0 KB | 220.6 KB |
+| currency-plurals | 811.2 KB | 2896.2 KB | 900.0 KB | 88.7 KB |
+| timezone-cities | 885.8 KB | 4212.0 KB | 1200.0 KB | 314.1 KB |
+| everything | 911.0 KB | 2868.6 KB | 1100.0 KB | 188.9 KB |
+| language-full | 1179.3 KB | 3138.0 KB | 1400.0 KB | 220.6 KB |
 
 ## What the platform layer costs
 
@@ -45,6 +45,6 @@ between the two columns is the data and nothing else.
 | domain | platform | CLDR | what survives | saved |
 | --- | ---: | ---: | ---: | ---: |
 | datetime | 35.3 KB | 127.3 KB | 27.7% | 92.0 KB |
-| country | 20.2 KB | 376.4 KB | 5.4% | 356.2 KB |
-| currency | 25.1 KB | 442.8 KB | 5.7% | 417.7 KB |
+| country | 20.2 KB | 376.5 KB | 5.4% | 356.2 KB |
+| currency | 25.1 KB | 442.9 KB | 5.7% | 417.7 KB |
 | all three | 49.1 KB | 911.0 KB | 5.4% | 861.9 KB |
