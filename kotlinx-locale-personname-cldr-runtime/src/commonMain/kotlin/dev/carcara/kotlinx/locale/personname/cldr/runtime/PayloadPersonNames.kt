@@ -300,7 +300,11 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
         while (start >= 0 && !after[start].isWhitespace()) start--
         // One space joins the two halves: the first one on the left if there is
         // one, otherwise the last one on the right.
-        if (end < before.length) end++ else if (start >= 0) start--
+        if (end < before.length) {
+            end++
+        } else if (start >= 0) {
+            start--
+        }
 
         val joined = before.substring(0, end) + after.substring(start + 1)
         before.setLength(0)
