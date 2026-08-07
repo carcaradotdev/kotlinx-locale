@@ -72,6 +72,46 @@ private fun greatestDifference(startDate: LocalDate?, endDate: LocalDate?, start
     return null
 }
 
+/** The fields an interval pattern can name, coarsest first. */
+private const val FIELD_ORDER = "yMdahms"
+
+/**
+ * Where a pattern letter sits in [FIELD_ORDER], or -1 for a letter that names no
+ * field an interval turns on.
+ *
+ * The synonyms matter. A skeleton can reach the day through `d`, `E` or `c`, and
+ * the hour through any of four letters depending on the locale's cycle, and a
+ * comparison that only knew the canonical spelling would decide a skeleton had
+ * no day field because the locale wrote a weekday.
+ */
+private fun fieldRank(letter: Char): Int = when (letter) {
+    'y', 'Y', 'u', 'U', 'r' -> 0
+    'M', 'L' -> 1
+    'd', 'D', 'E', 'e', 'c' -> 2
+    'a', 'b', 'B' -> 3
+    'h', 'H', 'K', 'k' -> 4
+    'm' -> 5
+    's' -> 6
+    else -> -1
+}
+
+/**
+ * [requested] widened to reach [difference], or null when it already does.
+ *
+ * Every field between the one the two values differ in and the coarsest the
+ * skeleton names, so a day over two years widens to a whole date rather than to
+ * a year and a day with a month-shaped hole between them. Existing letters keep
+ * their widths; only the missing fields are added, at their narrowest, which is
+ * what CLDR's own fallback does.
+ */
+private fun widenedSkeleton(requested: String, difference: Char): String? {
+    val target = fieldRank(difference)
+    if (target < 0) return null
+    val coarsest = requested.mapNotNull { letter -> fieldRank(letter).takeIf { it >= 0 } }.minOrNull() ?: return null
+    if (target >= coarsest) return null
+    return FIELD_ORDER.substring(target, coarsest) + requested
+}
+
 /**
  * Interval formatting over a table of CLDR interval records.
  *
@@ -148,9 +188,32 @@ public class PayloadIntervalFormats(private val records: Map<String, String>, pr
             }
         }
 
-        // No entry, or a pattern with nothing to split: the locale's own
-        // fallback over two whole formats.
-        return substitute(record.fallback, formatOne(startDate, startTime), formatOne(endDate, endTime))
+        // No entry for this field. Which of two things that means depends on
+        // whether the field is coarser or finer than anything the skeleton names,
+        // and the two want opposite answers.
+        //
+        // Coarser: the skeleton cannot show what they differ in, so the format
+        // has to widen. Without this, a day-only skeleton over two months reads
+        // "14 – 14", which is not a narrower answer than the right one, it is a
+        // wrong one.
+        val widened = widenedSkeleton(requested, difference)?.let(locales.matcher::bestPatternOrNull)
+        if (widened != null) {
+            val tokens = parseDateTimePattern(widened).withoutZoneFields()
+            return substitute(
+                record.fallback,
+                formatPattern(tokens, locales.dateTime, startDate, startTime, locales.record),
+                formatPattern(tokens, locales.dateTime, endDate, endTime, locales.record),
+            )
+        }
+
+        // Finer: the two are the same value as far as this format can express, so
+        // CLDR writes it once. "2026 – 2026" is never the answer to a year-shaped
+        // question about two days in the same year.
+        val first = formatOne(startDate, startTime)
+        val second = formatOne(endDate, endTime)
+        if (first == second) return first
+
+        return substitute(record.fallback, first, second)
     }
 
     private fun recordFor(locale: Locale): IntervalRecord? {

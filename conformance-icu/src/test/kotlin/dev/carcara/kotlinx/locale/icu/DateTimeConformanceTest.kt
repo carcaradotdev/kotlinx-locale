@@ -18,17 +18,21 @@ package dev.carcara.kotlinx.locale.icu
 
 import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import com.ibm.icu.text.DateIntervalFormat
 import com.ibm.icu.text.DateTimePatternGenerator
 import com.ibm.icu.text.DisplayContext
 import com.ibm.icu.text.RelativeDateTimeFormatter
+import com.ibm.icu.util.DateInterval
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.datetime.RelativeTimeNumbering
 import dev.carcara.kotlinx.locale.datetime.RelativeTimeStyle
 import dev.carcara.kotlinx.locale.datetime.RelativeTimeUnit
+import dev.carcara.kotlinx.locale.datetime.cldr.intervals.CldrDateTimeIntervals
 import dev.carcara.kotlinx.locale.datetime.cldr.relative.CldrRelativeTime
 import dev.carcara.kotlinx.locale.datetime.cldr.skeletons.CldrDateTimeSkeletons
 import dev.carcara.kotlinx.locale.test.assertTrue
+import kotlinx.datetime.LocalDate
 
 /**
  * The two datetime domains a committed golden covers worst.
@@ -50,6 +54,11 @@ val DateTimeConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfi
         .sorted()
 
     val relativeTags = CldrRelativeTime.supportedLocales
+        .map { it.toLanguageTag() }
+        .filter(IcuHarness::icuCarries)
+        .sorted()
+
+    val intervalTags = CldrDateTimeIntervals.supportedLocales
         .map { it.toLanguageTag() }
         .filter(IcuHarness::icuCarries)
         .sorted()
@@ -114,7 +123,79 @@ val DateTimeConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfi
         }
         comparison.settle(minimumCompared = relativeTags.size * 20L)
     }
+
+    test("interval formatting agrees with ICU") {
+        // Intervals had a golden at 905 locales and no live comparison, which
+        // sounds covered and is not: the golden was cut from the same ICU the
+        // generator ran against, so it re-asserts what the generator did rather
+        // than checking it. Asking ICU now is what makes it an oracle.
+        val comparison = DomainComparison("intervals")
+        for (tag in intervalTags) {
+            val locale = IcuHarness.locale(tag)
+            val uLocale = IcuHarness.uLocale(tag)
+            for (skeleton in INTERVAL_SKELETONS) {
+                val formatter = DateIntervalFormat.getInstance(skeleton, uLocale)
+                formatter.setTimeZone(ICU_UTC)
+                for (range in DATE_RANGES) {
+                    val ours = CldrDateTimeIntervals
+                        .intervalFormatOrNull(range.fromDate, range.toDate, skeleton, locale)
+                        ?: continue
+                    val theirs = formatter.format(DateInterval(range.fromMillis, range.toMillis))
+                    comparison.compare(tag, "$skeleton/${range.name}", ours, theirs) {
+                        calendarSkew(tag) ?: widening(skeleton, range.differingField)
+                    }
+                }
+            }
+        }
+        comparison.settle(minimumCompared = intervalTags.size * 5L)
+    }
 }
+
+/**
+ * The skeletons where the two endpoints differ in a field that matters.
+ *
+ * An interval pattern is chosen by the largest calendar field the two ends
+ * disagree on, so the useful cases are the ones that cross a boundary: same day,
+ * across a day, across a month, across a year. A skeleton with no field for the
+ * boundary being crossed falls back to formatting both ends whole, which is the
+ * other branch worth exercising.
+ */
+private val INTERVAL_SKELETONS = listOf("yMd", "yMMMd", "yMMMEd", "MMMd", "Md", "yM", "yMMM", "y", "d")
+
+/**
+ * Whether this case is one where neither side could render the difference.
+ *
+ * Read off the inputs rather than off the answers: the skeleton either names the
+ * field the two endpoints differ in or it does not, and that is decided before
+ * anything is formatted. Classifying on the shape of the output instead would be
+ * the classifier deciding a real disagreement looked close enough.
+ */
+private fun widening(skeleton: String, differingField: Char): Divergence? =
+    if (differingField in skeleton) null else Divergence.WIDENED_FALLBACK
+
+/** One pair of dates per calendar field an interval pattern can turn on. */
+private class DateRange(
+    val name: String,
+    val differingField: Char,
+    fromYear: Int,
+    fromMonth: Int,
+    fromDay: Int,
+    toYear: Int,
+    toMonth: Int,
+    toDay: Int,
+) {
+    val fromDate: LocalDate = LocalDate(fromYear, fromMonth, fromDay)
+    val toDate: LocalDate = LocalDate(toYear, toMonth, toDay)
+    val fromMillis: Long = utcMillis(fromYear, fromMonth, fromDay)
+    val toMillis: Long = utcMillis(toYear, toMonth, toDay)
+}
+
+private val DATE_RANGES = listOf(
+    DateRange("same-day", 'd', REFERENCE_YEAR, REFERENCE_MONTH, REFERENCE_DAY, REFERENCE_YEAR, REFERENCE_MONTH, REFERENCE_DAY),
+    DateRange("across-days", 'd', REFERENCE_YEAR, REFERENCE_MONTH, REFERENCE_DAY, REFERENCE_YEAR, REFERENCE_MONTH, REFERENCE_DAY + 3),
+    DateRange("across-months", 'M', REFERENCE_YEAR, REFERENCE_MONTH, REFERENCE_DAY, REFERENCE_YEAR, REFERENCE_MONTH + 2, REFERENCE_DAY),
+    DateRange("across-years", 'y', REFERENCE_YEAR, REFERENCE_MONTH, REFERENCE_DAY, REFERENCE_YEAR + 1, REFERENCE_MONTH, REFERENCE_DAY),
+)
 
 /**
  * The skeletons worth asking about.

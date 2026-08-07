@@ -25,6 +25,8 @@ import dev.carcara.kotlinx.locale.number.Decimal
 import dev.carcara.kotlinx.locale.number.PluralType
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumber
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumberPlurals
+import dev.carcara.kotlinx.locale.number.cldr.numberFormat
+import dev.carcara.kotlinx.locale.number.cldr.numberFormatPercent
 import dev.carcara.kotlinx.locale.number.pluralCategory
 import dev.carcara.kotlinx.locale.number.symbols
 import dev.carcara.kotlinx.locale.test.assertTrue
@@ -44,30 +46,69 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  */
 val AlgorithmConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    val tags = CldrNumberPlurals.supportedLocales
+    val pluralTags = CldrNumberPlurals.supportedLocales
+        .map { it.toLanguageTag() }
+        .filter(IcuHarness::icuCarries)
+        .sorted()
+
+    // Not the same set. Plural rules are declared per language and there are 227
+    // of them; symbols and patterns are per locale and there are 1122. Driving
+    // the symbol comparison off the plural set was a copied line, and it held
+    // that domain to 188 locales of the 1122 it ships while reporting green.
+    val numberTags = CldrNumber.supportedLocales
         .map { it.toLanguageTag() }
         .filter(IcuHarness::icuCarries)
         .sorted()
 
     test("the comparison set is the whole shipped catalogue") {
         assertTrue(
-            tags.size > 100,
-            "only ${tags.size} locales are comparable against ICU's plural rules, which suggests the " +
+            pluralTags.size > 100,
+            "only ${pluralTags.size} locales are comparable against ICU's plural rules, which suggests the " +
                 "availability filter is wrong rather than that ICU shrank",
+        )
+        assertTrue(
+            numberTags.size > 500,
+            "only ${numberTags.size} locales carry number symbols and are comparable against ICU",
         )
     }
 
     test("cardinal plural selection agrees with ICU") {
-        comparePlurals("plural-cardinal", tags, PluralType.CARDINAL, PluralRules.PluralType.CARDINAL)
+        comparePlurals("plural-cardinal", pluralTags, PluralType.CARDINAL, PluralRules.PluralType.CARDINAL)
     }
 
     test("ordinal plural selection agrees with ICU") {
-        comparePlurals("plural-ordinal", tags, PluralType.ORDINAL, PluralRules.PluralType.ORDINAL)
+        comparePlurals("plural-ordinal", pluralTags, PluralType.ORDINAL, PluralRules.PluralType.ORDINAL)
+    }
+
+    test("number formatting agrees with ICU") {
+        // Symbols are a table and this is the renderer that composes them. A
+        // locale can have every symbol right and still place the grouping wrong,
+        // because the grouping width, the minimum grouping digits and the
+        // negative pattern come from the pattern rather than from the symbols.
+        val comparison = DomainComparison("number-formats")
+        for (tag in numberTags) {
+            val locale = IcuHarness.locale(tag)
+            val uLocale = IcuHarness.uLocale(tag)
+            val decimal = com.ibm.icu.text.NumberFormat.getInstance(uLocale)
+            val percent = com.ibm.icu.text.NumberFormat.getPercentInstance(uLocale)
+
+            for (text in NUMBER_SAMPLES) {
+                val value = Decimal.parse(text)
+                val ours = numberFormat(value, locale)
+                comparison.compare(tag, "decimal/$text", ours, decimal.format(java.math.BigDecimal(text))) { null }
+            }
+            for (text in PERCENT_SAMPLES) {
+                val value = Decimal.parse(text)
+                val ours = numberFormatPercent(value, locale)
+                comparison.compare(tag, "percent/$text", ours, percent.format(java.math.BigDecimal(text))) { null }
+            }
+        }
+        comparison.settle(minimumCompared = numberTags.size * 10L)
     }
 
     test("number symbols agree with ICU") {
         val comparison = DomainComparison("number-symbols")
-        for (tag in tags) {
+        for (tag in numberTags) {
             val locale = IcuHarness.locale(tag)
             val ours = CldrNumber.symbols(locale)
             val icu = com.ibm.icu.text.DecimalFormatSymbols.getInstance(IcuHarness.uLocale(tag))
@@ -84,9 +125,32 @@ val AlgorithmConformanceTest by matrixSuite(matrixConfig { testConfig = TestConf
         }
         // Five symbols per locale, so this is a floor on the locale count rather
         // than a large number for its own sake.
-        comparison.settle(minimumCompared = tags.size * 4L)
+        comparison.settle(minimumCompared = numberTags.size * 4L)
     }
 }
+
+/**
+ * Values chosen for the rendering branches.
+ *
+ * The magnitudes straddle every grouping width in CLDR: three digits needs none,
+ * four is where a locale with `minimumGroupingDigits` of two still writes none,
+ * five upward is where the Indic three-two-two grouping separates from the
+ * Western three-three. The negatives exercise the pattern's second half, which
+ * several locales write with a prefix rather than a sign.
+ */
+private val NUMBER_SAMPLES = listOf(
+    "0", "1", "-1", "12", "123", "1234", "12345", "123456", "1234567", "-1234567",
+    "0.5", "-0.5", "1.25", "1234.5",
+)
+
+/**
+ * Fractions rather than percentages, which is what `numberFormatPercent` takes.
+ *
+ * Kept to values that are exact at two decimal places, because ICU's percent
+ * instance rounds to whole percent by default and comparing rounding modes is a
+ * different question from comparing patterns.
+ */
+private val PERCENT_SAMPLES = listOf("0", "0.01", "0.25", "0.5", "1", "-0.25", "2.5")
 
 /**
  * Holds this library's plural evaluator to ICU's for the same values.

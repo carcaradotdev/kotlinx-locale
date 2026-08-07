@@ -133,7 +133,7 @@ is written up in [boundaries.md](boundaries.md).
 ## Where ICU is not the answer
 
 ICU is the reference for most of what is checked above, and it is not the
-specification. Four kinds of difference come up, and each one is handled
+specification. Five kinds of difference come up, and each one is handled
 differently.
 
 **ICU is built from a different CLDR snapshot.** The pinned releases are CLDR
@@ -157,6 +157,16 @@ for a few locales it ships no unit data at all. Following that would mean
 shipping less than CLDR says, so this library does not; `resolveDurationUnits`
 records the cases.
 
+**Neither side is told which wider format to use.** An interval whose two ends
+differ in a field the requested skeleton cannot show has to be rendered by some
+wider format, and CLDR does not say which one. Asked for a day over two months,
+this library re-runs its own skeleton matcher and Afrikaans gets `2026-03-14 –
+2026-05-14`; ICU falls back to the locale's short date and gets `14/3 – 14/5`.
+Both name the same two days unambiguously and neither is wrong. What would be
+wrong is not widening at all, which is what this library did until
+`:conformance-icu` compared the two: it wrote `14 – 14` for an interval two
+months long.
+
 **ICU has defects.** ICU 78.3 cannot format a currency at
 `UnitWidth.FULL_NAME` when that currency declares its own pattern in the locale,
 which CLDR does once, for the Turkish lira in Turkish. The format routes through
@@ -164,21 +174,24 @@ the pattern modifier, whose switch over the widths throws instead of handling th
 name width. Nothing here reproduces that: the generator leaves the pair out of
 the fixture, records why, and fails the build if it ever stops being a handful.
 
-### Where the four kinds are recorded
+### Where the five kinds are recorded
 
-Three of the four are derivable from the ICU4J jar, and one is not. That split
-is what `conformance/ledger` is built around.
+Four of the five are derivable, and one is not. That split is what
+`conformance/ledger` is built around.
 
 A snapshot difference, a bundle fallback and a pruned locale can each be
 recognised by asking ICU about its own resources: whether it carries a bundle
 for the locale at all, whether the value it gave is root's, whether its value
-matches the CLDR release this build pins. So those three are computed and pinned
-by an exact count per domain rather than listed row by row. Listing them would
+matches the CLDR release this build pins. A widened interval is recognised
+earlier still, from the request rather than the answer: the skeleton either
+names the field the two ends differ in or it does not, and that is settled
+before anything is formatted. So those four are computed and pinned by an exact
+count per domain rather than listed row by row. Listing them would
 be thousands of lines nobody reads a second time; the count moving is the thing
 worth noticing, because a classifier that excuses more cases than it used to is
 how a real bug stops being reported.
 
-The fourth kind cannot be derived. An ICU defect and a deliberate divergence
+The fifth kind cannot be derived. An ICU defect and a deliberate divergence
 look identical to a program, and telling them apart is a judgement someone
 makes once and writes down. Those are the only rows the ledger enumerates, and
 a row without a note fails at write time.

@@ -7,10 +7,20 @@
 #
 # domain	locales	cases
 country-names	905	195957
+currency-formats	905	36200
+currency-minor-units	1	307
 currency-names	905	204555
+currency-plural-names	838	979110
+datetime-names	905	103170
+datetime-patterns	905	5430
 display-names	905	181411
-number-symbols	188	940
+duration-units	650	109200
+exemplar-cities	905	173297
+intervals	905	32580
+number-formats	905	19005
+number-symbols	905	4525
 plural-cardinal	188	5828
 plural-ordinal	188	5828
 relative-time	905	108600
 skeletons	905	23530
+timezone-names	905	187893

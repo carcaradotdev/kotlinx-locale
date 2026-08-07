@@ -6,4 +6,6 @@
 # into excusing real bugs.
 #
 # domain	divergence	count
+intervals	ICU_PRUNED	515
+intervals	WIDENED_FALLBACK	1475
 skeletons	ICU_PRUNED	116

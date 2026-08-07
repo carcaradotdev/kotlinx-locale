@@ -57,6 +57,7 @@ dependencies {
     testImplementation(project(":kotlinx-locale-datetime-cldr-skeletons"))
     testImplementation(project(":kotlinx-locale-datetime-cldr-relative"))
     testImplementation(project(":kotlinx-locale-datetime-cldr-durations"))
+    testImplementation(project(":kotlinx-locale-datetime-cldr-intervals"))
     testImplementation(project(":kotlinx-locale-timezone-cldr-full"))
     testImplementation(project(":kotlinx-locale-timezone-cldr-cities"))
     testImplementation(project(":kotlinx-locale-personname-cldr-full"))

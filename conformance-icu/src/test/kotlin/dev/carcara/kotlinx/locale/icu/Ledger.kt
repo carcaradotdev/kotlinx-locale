@@ -57,6 +57,21 @@ enum class Divergence {
      */
     ICU_PRUNED,
 
+    /**
+     * Both sides had to widen a format and picked different widenings.
+     *
+     * Derived: an interval whose endpoints differ in a field the requested
+     * skeleton cannot show has to be rendered by some wider format, and CLDR
+     * does not say which. This library re-runs its own skeleton matcher, so
+     * Afrikaans gets `y-MM-dd`; ICU falls back to the locale's short date, so it
+     * gets `d/M/y`. Both name the same two days unambiguously.
+     *
+     * Counted rather than listed for the usual reason, and the count is the
+     * guard: if this library ever stopped widening at all, the number would move
+     * and the comparison that hid it would fail.
+     */
+    WIDENED_FALLBACK,
+
     /** A defect in ICU. Needs a note saying which, and ideally an upstream link. */
     DEFECT,
 
