@@ -37,6 +37,12 @@ dependencies {
     // targets read back. Shared so that the two halves cannot drift.
     testImplementation(project(":conformance-test-suite"))
 
+    // For LICENSE_HEADER. A generated source is a shipped source and carries the
+    // notice like any other, and it has to come out of the generator: this one
+    // rewrites its files whole, so a notice added afterwards by
+    // scripts/license_header.py would be stripped by the next updateDigests.
+    testImplementation(project(":kotlinx-locale-codegen-emitters"))
+
     // Every source with a table to compare. These resolve to the `jvm` variant
     // of each multiplatform module.
     testImplementation(project(":kotlinx-locale-core"))
