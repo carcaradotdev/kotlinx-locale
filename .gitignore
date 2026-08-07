@@ -8,6 +8,9 @@ build/
 # Kotlin
 .kotlin/
 
+# Python, from scripts/
+__pycache__/
+
 # IDE
 .idea/
 *.iml
