@@ -39,12 +39,39 @@ import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
  * the JVM is the same line on every other target; what the JVM number cannot see
  * is an `actual` declaration in a native or JS source set. Those are few and are
  * listed as a known limit rather than papered over.
+ *
+ * ## Why some modules are switched off entirely
+ *
+ * This plugin arrives through `kotlinx-locale-multiplatform-base`, which every
+ * multiplatform module applies, including the two that exist only to test the
+ * others. Left alone they write a report each, and those reports are read by
+ * `.github/scripts/kover_summary.py` straight off disk, so the per-module table
+ * carried a `test-assertions 0.0%` row that measured nothing. `gradle/coverage-
+ * exempt.txt` says which modules are not the library, and a listed one gets
+ * [KoverProjectExtension.disable] rather than a filter: no instrumentation, no
+ * report, nothing on disk to read by accident.
  */
 plugins {
     id("org.jetbrains.kotlinx.kover")
 }
 
+val coverageExempt = providers
+    .fileContents(rootProject.layout.projectDirectory.file("gradle/coverage-exempt.txt"))
+    .asText
+    .map { text ->
+        text.lineSequence()
+            .map(String::trim)
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .toSet()
+    }
+    .getOrElse(emptySet())
+
 extensions.configure<KoverProjectExtension> {
+    if (project.path in coverageExempt) {
+        disable()
+        return@configure
+    }
+
     reports {
         filters {
             excludes {

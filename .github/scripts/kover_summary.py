@@ -60,17 +60,54 @@ def cell(pair):
     return f"{covered}/{total}", f"{percent(pair):.1f}%"
 
 
-def module_reports():
-    """Every per-module report, keyed by the module directory that produced it.
+def source_index():
+    """Which module owns each source file, keyed by (package path, file name).
 
-    `./gradlew koverXmlReport` runs the task in each project as well as the root
-    aggregate, so these exist already and cost nothing extra to read.
+    Kover's XML names a class by its package and its source file name and says
+    nothing about which Gradle module compiled it, so the mapping has to come
+    from the tree. Walking `*/src/*/kotlin` is exact for this build: every module
+    keeps its sources there, and a package plus a file name is unique across the
+    repo because two files with both the same would collide on the classpath.
     """
-    found = {}
-    for path in sorted(pathlib.Path(".").glob("*/build/reports/kover/report.xml")):
-        module = path.parts[0]
-        found[module] = path
-    return found
+    index = {}
+    for source in pathlib.Path(".").glob("*/src/*/kotlin/**/*.kt"):
+        module = source.parts[0]
+        # .../src/<sourceSet>/kotlin/<package as directories>/<File>.kt
+        package = "/".join(source.parts[4:-1])
+        index[(package, source.name)] = module
+    return index
+
+
+def modules_from_aggregate(root):
+    """Per-module coverage, split out of the aggregate rather than read per module.
+
+    Reading each module's own report was the first design and it reported
+    fiction: a module's own Kover run sees only its own tests, so
+    `timezone-cldr-runtime` came out at 0 of 114 lines while the aggregate had
+    107 of them covered by the `-cldr-full` suites that own the data. Every
+    `-core` and `-runtime` module read the same way, which made the table look
+    like a list of untested code when it was a list of code tested from
+    somewhere else.
+
+    Attributing the aggregate's own classes back to their modules answers the
+    question the table was always meant to answer, and it can only count
+    coverage that actually exists.
+    """
+    index = source_index()
+    totals = {}
+    unattributed = 0
+    for package in root.findall("package"):
+        package_name = package.get("name", "")
+        for klass in package.findall("class"):
+            module = index.get((package_name, klass.get("sourcefilename", "")))
+            if module is None:
+                unattributed += 1
+                continue
+            bucket = totals.setdefault(module, {})
+            for kind, pair in counters(klass).items():
+                covered, total = bucket.get(kind, (0, 0))
+                bucket[kind] = (covered + pair[0], total + pair[1])
+    return totals, unattributed
 
 
 def main():
@@ -105,25 +142,27 @@ def main():
 
     # Every module, worst first. A module with no measurable lines is listed too,
     # because "this module has nothing Kover can see" is itself worth knowing.
+    by_module, unattributed = modules_from_aggregate(root)
     modules = []
-    for name, path in module_reports().items():
-        c = counters(ElementTree.parse(path).getroot())
+    for name, c in by_module.items():
         lines_pair = c.get("LINE", (0, 0))
         modules.append((name, lines_pair, c.get("BRANCH", (0, 0)), c.get("METHOD", (0, 0))))
     modules.sort(key=lambda m: (percent(m[1]), m[0]))
 
     if modules:
+        note = (
+            "Split out of the aggregate above, so a module is credited for the tests "
+            "that reach it from anywhere. The `-core` and `-cldr-runtime` modules hold "
+            "the parsers and renderers and are driven through the `-cldr-full` suites "
+            "that own the data, which is the coverage this counts."
+        )
+        if unattributed:
+            note += f" {unattributed} classes had no source file in the tree and are in the total but no row."
         out += [
             "",
             f"### By module ({len(modules)})",
             "",
-            "Each row counts only that module's **own** tests against its own code, "
-            "which is not what the headline number measures. The `-core` and "
-            "`-cldr-runtime` modules read low or zero here because their parsers and "
-            "renderers are driven through the `-cldr-full` suites that own the data; "
-            "the aggregate above counts that, a per-module report cannot. Read this "
-            "table as which modules can be tested standing on their own, not as which "
-            "code is untested.",
+            note,
             "",
             "| module | lines | % | branches | % | methods | % |",
             "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",

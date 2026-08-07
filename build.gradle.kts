@@ -29,24 +29,20 @@ plugins {
 /**
  * What the coverage number is about: the published library.
  *
- * The build-time modules are left out on purpose. `:codegen` clones repositories
- * and parses XML, `:conformance-icu` is a test harness, `:test-assertions` and
- * `:conformance-test-suite` are test infrastructure, and `tools/probe-*` are
- * size probes with no code. Including any of them would move the headline number
- * without telling a reader anything about the artifacts people depend on.
- *
- * They still produce their own reports; they are simply not what "coverage of
- * the library" means.
+ * `gradle/coverage-exempt.txt` names the modules that are not it, and says why.
+ * The same list switches Kover off inside those modules, so a module cannot be
+ * absent from the headline number and still write a report of its own.
  */
-val notTheLibrary = setOf(
-    ":codegen",
-    ":conformance-icu",
-    ":conformance-test-suite",
-    ":test-assertions",
-    ":kotlinx-locale-codegen-data",
-    ":kotlinx-locale-codegen-emitters",
-    ":kotlinx-locale-gradle-plugin",
-)
+val notTheLibrary = providers
+    .fileContents(layout.projectDirectory.file("gradle/coverage-exempt.txt"))
+    .asText
+    .map { text ->
+        text.lineSequence()
+            .map(String::trim)
+            .filter { it.isNotEmpty() && !it.startsWith("#") }
+            .toSet()
+    }
+    .get()
 
 dependencies {
     for (module in rootProject.subprojects) {
