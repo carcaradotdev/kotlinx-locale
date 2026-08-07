@@ -19,19 +19,22 @@
 package dev.carcara.kotlinx.locale.currency.cldr.internal.data
 
 internal val CURRENCY_FORMATS_SA: String =
-    "०१२३४५६७८९\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤#,##,##0.00\u001F¤ #,##0.00\u001F¤ #,##0.00\u001F¤ #,##0.00"
+    "०१२३४५६७८९\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤#,##,##0.00\u001F¤#,##,##0.00\u001F¤ #,##0.00\u001F¤ #,##0.00"
 
 internal val CURRENCY_FORMATS_SAT: String =
     "᱐᱑᱒᱓᱔᱕᱖᱗᱘᱙\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤ #,##0.00\u001F¤ #,##0.00\u001F¤ #,##0.00\u001F¤ #,##0.00"
 
 internal val CURRENCY_FORMATS_SD: String =
-    "٠١٢٣٤٥٦٧٨٩\u001F.\u001F٬\u001F.\u001F٬\u001F؜-\u001F1\u001F#,##0.00 ¤\u001F¤ #,##0.00\u001F¤#,##0.00;(¤#,##0.00)\u001F¤ #,##0.00;(¤ #,##0.00)"
+    "٠١٢٣٤٥٦٧٨٩\u001F.\u001F٬\u001F.\u001F٬\u001F؜-\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F¤#,##0.00;(¤#,##0.00)\u001F¤ #,##0.00;(¤ #,##0.00)"
 
 internal val CURRENCY_FORMATS_SDH: String =
-    "٠١٢٣٤٥٦٧٨٩\u001F٫\u001F٬\u001F٫\u001F٬\u001F؜-\u001F1\u001F#,##0.00 ¤\u001F¤ #,##0.00\u001F#,##0.00 ¤\u001F#,##0.00 ¤"
+    "٠١٢٣٤٥٦٧٨٩\u001F٫\u001F٬\u001F٫\u001F٬\u001F؜-\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤"
 
 internal val CURRENCY_FORMATS_SL: String =
     "0123456789\u001F,\u001F.\u001F,\u001F.\u001F−\u001F2\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤;(#,##0.00 ¤)\u001F#,##0.00 ¤;(#,##0.00 ¤)"
+
+internal val CURRENCY_FORMATS_SU: String =
+    "0123456789\u001F,\u001F.\u001F,\u001F.\u001F-\u001F1\u001F¤#,##0.00\u001F¤#,##0.00\u001F¤#,##0.00\u001F¤#,##0.00"
 
 internal val CURRENCY_FORMATS_SZL: String =
     "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F1\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F#,##0.00 ¤\u001F¤ #,##0.00"
