@@ -11,6 +11,8 @@ final class dev.carcara.kotlinx.locale.personname.cldr.runtime/PayloadPersonName
 
     final fun formatOrNull(dev.carcara.kotlinx.locale.personname/PersonName, dev.carcara.kotlinx.locale.personname/PersonNameLength, dev.carcara.kotlinx.locale.personname/PersonNameUsage, dev.carcara.kotlinx.locale.personname/PersonNameFormality, dev.carcara.kotlinx.locale.personname/PersonNameOrder, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.personname.cldr.runtime/PayloadPersonNames.formatOrNull|formatOrNull(dev.carcara.kotlinx.locale.personname.PersonName;dev.carcara.kotlinx.locale.personname.PersonNameLength;dev.carcara.kotlinx.locale.personname.PersonNameUsage;dev.carcara.kotlinx.locale.personname.PersonNameFormality;dev.carcara.kotlinx.locale.personname.PersonNameOrder;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun orderOrNull(dev.carcara.kotlinx.locale/Locale?, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.personname/PersonNameOrder? // dev.carcara.kotlinx.locale.personname.cldr.runtime/PayloadPersonNames.orderOrNull|orderOrNull(dev.carcara.kotlinx.locale.Locale?;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.personname.cldr.runtime/PayloadPersonNames.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord { // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord|null[0]
@@ -28,4 +30,6 @@ final class dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord 
         final fun <get-initialSequence>(): kotlin/String // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.initialSequence.<get-initialSequence>|<get-initialSequence>(){}[0]
     final val nativeSpace // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.nativeSpace|{}nativeSpace[0]
         final fun <get-nativeSpace>(): kotlin/String // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.nativeSpace.<get-nativeSpace>|<get-nativeSpace>(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.personname.cldr.runtime/PersonNameRecord.Companion|null[0]
 }

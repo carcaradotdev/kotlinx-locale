@@ -15,6 +15,8 @@ public interface PluralRuleSource : LocaleDataSource {
 
     /** The category [number] falls into for [locale], or `null` when this source has no rules for it. */
     public fun pluralCategoryOrNull(number: FormattedNumber, type: PluralType, locale: Locale): PluralCategory?
+
+    public companion object
 }
 
 /**
@@ -77,4 +79,6 @@ public class FallbackPluralRules(private val primary: PluralRuleSource, private 
 
     override fun pluralCategoryOrNull(number: FormattedNumber, type: PluralType, locale: Locale): PluralCategory? =
         primary.pluralCategoryOrNull(number, type, locale) ?: fallback.pluralCategoryOrNull(number, type, locale)
+
+    public companion object
 }

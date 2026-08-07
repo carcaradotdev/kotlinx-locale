@@ -11,10 +11,25 @@ import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.number
 
 /** The four CLDR standard format lengths. */
-public enum class FormatStyle { FULL, LONG, MEDIUM, SHORT }
+public enum class FormatStyle {
+    FULL,
+    LONG,
+    MEDIUM,
+    SHORT,
+    ;
+
+    public companion object
+}
 
 /** Width of localized month and day-of-week names. */
-public enum class TextStyle { FULL, ABBREVIATED, NARROW }
+public enum class TextStyle {
+    FULL,
+    ABBREVIATED,
+    NARROW,
+    ;
+
+    public companion object
+}
 
 /**
  * A source that renders dates, times and calendar names in a locale's
@@ -55,6 +70,8 @@ public interface DateTimeFormatSource : LocaleDataSource {
     /** The weekday name in [context]; see [monthNameOrNull]. */
     public fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, context: NameContext, locale: Locale): String? =
         dayOfWeekNameOrNull(isoDayNumber, style, locale)
+
+    public companion object
 }
 
 /**
@@ -123,4 +140,6 @@ public class FallbackDateTimeFormats(private val primary: DateTimeFormatSource, 
     override fun dayOfWeekNameOrNull(isoDayNumber: Int, style: TextStyle, locale: Locale): String? =
         primary.dayOfWeekNameOrNull(isoDayNumber, style, locale)
             ?: fallback.dayOfWeekNameOrNull(isoDayNumber, style, locale)
+
+    public companion object
 }

@@ -134,6 +134,8 @@ public class PayloadDateTimeFormats(
 
     private fun recordFor(locale: Locale): DateTimeRecord? = resolvedRecord(records, locale)
         ?.let { DateTimeRecord(it, resolvedRecord(standaloneRecords, locale)) }
+
+    public companion object
 }
 
 /**
@@ -263,6 +265,8 @@ public class DateTimeRecord(record: String, standaloneRecord: String? = null) {
         DayPeriodCodes.PM -> pm
         else -> dayPeriodNames[code - 2].ifEmpty { null }
     }
+
+    public companion object
 }
 
 /**
@@ -286,6 +290,8 @@ public object DayPeriodCodes {
 @InternalKotlinxLocaleApi
 public class DayPeriodRule(public val code: Int, public val start: Int, public val end: Int) {
     public val isPoint: Boolean get() = start == end
+
+    public companion object
 }
 
 /** The pattern record for [locale], for the ICU cross-check. */

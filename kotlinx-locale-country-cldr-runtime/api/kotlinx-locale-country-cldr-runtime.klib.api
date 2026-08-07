@@ -13,4 +13,6 @@ final class dev.carcara.kotlinx.locale.country.cldr.runtime/PayloadCountryNames 
         final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.country.cldr.runtime/PayloadCountryNames.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
 
     final fun countryNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.country.cldr.runtime/PayloadCountryNames.countryNameOrNull|countryNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.country.cldr.runtime/PayloadCountryNames.Companion|null[0]
 }

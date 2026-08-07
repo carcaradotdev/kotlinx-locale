@@ -19,9 +19,15 @@ import kotlinx.datetime.number
  */
 @InternalKotlinxLocaleApi
 public sealed interface PatternToken {
-    public data class Literal(public val text: String) : PatternToken
+    public data class Literal(public val text: String) : PatternToken {
+        public companion object
+    }
 
-    public data class Field(public val letter: Char, public val count: Int) : PatternToken
+    public data class Field(public val letter: Char, public val count: Int) : PatternToken {
+        public companion object
+    }
+
+    public companion object
 }
 
 private val ZONE_FIELD_LETTERS = setOf('z', 'Z', 'v', 'V', 'O', 'x', 'X')

@@ -23,6 +23,9 @@ public enum class Capitalization {
 
     /** In a list or a menu, which is the picker row case. */
     UI_LIST_OR_MENU,
+    ;
+
+    public companion object
 }
 
 /**

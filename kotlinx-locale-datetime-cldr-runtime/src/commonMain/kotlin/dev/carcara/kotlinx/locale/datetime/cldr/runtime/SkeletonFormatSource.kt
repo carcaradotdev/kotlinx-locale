@@ -51,6 +51,8 @@ public interface SkeletonFormatSource : LocaleDataSource {
     public fun formatOrNull(time: LocalTime, skeleton: String, locale: Locale): String?
 
     public fun formatOrNull(dateTime: LocalDateTime, skeleton: String, locale: Locale): String?
+
+    public companion object
 }
 
 /**
@@ -146,6 +148,8 @@ public class PayloadSkeletonFormats(
         matchers[key] = built
         return built
     }
+
+    public companion object
 }
 
 /**

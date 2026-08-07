@@ -17,6 +17,8 @@ public interface LocaleRef {
 
     /** The canonical BCP 47 tag, e.g. `pt-BR` or `zh-Hans-CN`. */
     public val tag: String
+
+    public companion object
 }
 
 /** The locale this reference names. */

@@ -18,6 +18,8 @@ public interface CountryNameSource : LocaleDataSource {
      * when the source has no name for it.
      */
     public fun countryNameOrNull(alpha2: String, locale: Locale): String?
+
+    public companion object
 }
 
 /**
@@ -57,4 +59,6 @@ public class FallbackCountryNames(private val primary: CountryNameSource, privat
 
     override fun countryNameOrNull(alpha2: String, locale: Locale): String? =
         primary.countryNameOrNull(alpha2, locale) ?: fallback.countryNameOrNull(alpha2, locale)
+
+    public companion object
 }

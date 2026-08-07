@@ -28,6 +28,7 @@ public final class dev/carcara/kotlinx/locale/number/Decimal$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/number/FallbackNumberFormats : dev/carcara/kotlinx/locale/number/NumberFormatSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/FallbackNumberFormats$Companion;
 	public fun <init> (Ldev/carcara/kotlinx/locale/number/NumberFormatSource;Ldev/carcara/kotlinx/locale/number/NumberFormatSource;)V
 	public fun formatOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
 	public fun formatPercentOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/PercentScale;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
@@ -36,19 +37,31 @@ public final class dev/carcara/kotlinx/locale/number/FallbackNumberFormats : dev
 	public fun symbolsOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/NumberSymbols;
 }
 
+public final class dev/carcara/kotlinx/locale/number/FallbackNumberFormats$Companion {
+}
+
 public final class dev/carcara/kotlinx/locale/number/FallbackOrdinalFormats : dev/carcara/kotlinx/locale/number/OrdinalFormatSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/FallbackOrdinalFormats$Companion;
 	public fun <init> (Ldev/carcara/kotlinx/locale/number/OrdinalFormatSource;Ldev/carcara/kotlinx/locale/number/OrdinalFormatSource;)V
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public fun ordinalOrNull (JLdev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 }
 
+public final class dev/carcara/kotlinx/locale/number/FallbackOrdinalFormats$Companion {
+}
+
 public final class dev/carcara/kotlinx/locale/number/FallbackPluralRules : dev/carcara/kotlinx/locale/number/PluralRuleSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/FallbackPluralRules$Companion;
 	public fun <init> (Ldev/carcara/kotlinx/locale/number/PluralRuleSource;Ldev/carcara/kotlinx/locale/number/PluralRuleSource;)V
 	public fun getSupportedLocales ()Ljava/util/Set;
 	public fun pluralCategoryOrNull (Ldev/carcara/kotlinx/locale/number/FormattedNumber;Ldev/carcara/kotlinx/locale/number/PluralType;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
 }
 
+public final class dev/carcara/kotlinx/locale/number/FallbackPluralRules$Companion {
+}
+
 public final class dev/carcara/kotlinx/locale/number/FormattedNumber : java/lang/CharSequence {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/FormattedNumber$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun charAt (I)C
@@ -66,6 +79,9 @@ public final class dev/carcara/kotlinx/locale/number/FormattedNumber : java/lang
 	public final fun length ()I
 	public fun subSequence (II)Ljava/lang/CharSequence;
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/number/FormattedNumber$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/number/NumberFormatOptions {
@@ -86,10 +102,14 @@ public final class dev/carcara/kotlinx/locale/number/NumberFormatOptions$Compani
 }
 
 public abstract interface class dev/carcara/kotlinx/locale/number/NumberFormatSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/NumberFormatSource$Companion;
 	public abstract fun formatOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
 	public abstract fun formatPercentOrNull (Ldev/carcara/kotlinx/locale/number/Decimal;Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/number/PercentScale;Ldev/carcara/kotlinx/locale/number/NumberFormatOptions;)Ldev/carcara/kotlinx/locale/number/FormattedNumber;
 	public abstract fun parseDecimalOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/Decimal;
 	public abstract fun symbolsOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/NumberSymbols;
+}
+
+public final class dev/carcara/kotlinx/locale/number/NumberFormatSource$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/number/NumberFormatSourceKt {
@@ -110,19 +130,27 @@ public final class dev/carcara/kotlinx/locale/number/NumberFormatSourceKt {
 public final class dev/carcara/kotlinx/locale/number/NumberGrouping : java/lang/Enum {
 	public static final field ALWAYS Ldev/carcara/kotlinx/locale/number/NumberGrouping;
 	public static final field AUTO Ldev/carcara/kotlinx/locale/number/NumberGrouping;
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/NumberGrouping$Companion;
 	public static final field NEVER Ldev/carcara/kotlinx/locale/number/NumberGrouping;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/number/NumberGrouping;
 	public static fun values ()[Ldev/carcara/kotlinx/locale/number/NumberGrouping;
 }
 
+public final class dev/carcara/kotlinx/locale/number/NumberGrouping$Companion {
+}
+
 public final class dev/carcara/kotlinx/locale/number/NumberNotation : java/lang/Enum {
 	public static final field COMPACT_LONG Ldev/carcara/kotlinx/locale/number/NumberNotation;
 	public static final field COMPACT_SHORT Ldev/carcara/kotlinx/locale/number/NumberNotation;
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/NumberNotation$Companion;
 	public static final field STANDARD Ldev/carcara/kotlinx/locale/number/NumberNotation;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/number/NumberNotation;
 	public static fun values ()[Ldev/carcara/kotlinx/locale/number/NumberNotation;
+}
+
+public final class dev/carcara/kotlinx/locale/number/NumberNotation$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/number/NumberSymbols {
@@ -154,7 +182,11 @@ public final class dev/carcara/kotlinx/locale/number/NumberSymbols$Companion {
 }
 
 public abstract interface class dev/carcara/kotlinx/locale/number/OrdinalFormatSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/OrdinalFormatSource$Companion;
 	public abstract fun ordinalOrNull (JLdev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/number/OrdinalFormatSource$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/number/OrdinalFormatSourceKt {
@@ -163,11 +195,15 @@ public final class dev/carcara/kotlinx/locale/number/OrdinalFormatSourceKt {
 }
 
 public final class dev/carcara/kotlinx/locale/number/PercentScale : java/lang/Enum {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/PercentScale$Companion;
 	public static final field FRACTION Ldev/carcara/kotlinx/locale/number/PercentScale;
 	public static final field PERCENT Ldev/carcara/kotlinx/locale/number/PercentScale;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/number/PercentScale;
 	public static fun values ()[Ldev/carcara/kotlinx/locale/number/PercentScale;
+}
+
+public final class dev/carcara/kotlinx/locale/number/PercentScale$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/number/PluralCategory : java/lang/Enum {
@@ -189,7 +225,11 @@ public final class dev/carcara/kotlinx/locale/number/PluralCategory$Companion {
 }
 
 public abstract interface class dev/carcara/kotlinx/locale/number/PluralRuleSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/PluralRuleSource$Companion;
 	public abstract fun pluralCategoryOrNull (Ldev/carcara/kotlinx/locale/number/FormattedNumber;Ldev/carcara/kotlinx/locale/number/PluralType;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/number/PluralCategory;
+}
+
+public final class dev/carcara/kotlinx/locale/number/PluralRuleSource$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/number/PluralRuleSourceKt {
@@ -203,10 +243,14 @@ public final class dev/carcara/kotlinx/locale/number/PluralRuleSourceKt {
 
 public final class dev/carcara/kotlinx/locale/number/PluralType : java/lang/Enum {
 	public static final field CARDINAL Ldev/carcara/kotlinx/locale/number/PluralType;
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/PluralType$Companion;
 	public static final field ORDINAL Ldev/carcara/kotlinx/locale/number/PluralType;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/number/PluralType;
 	public static fun values ()[Ldev/carcara/kotlinx/locale/number/PluralType;
+}
+
+public final class dev/carcara/kotlinx/locale/number/PluralType$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/number/SignDisplay : java/lang/Enum {
@@ -216,6 +260,7 @@ public final class dev/carcara/kotlinx/locale/number/SignDisplay : java/lang/Enu
 	public static final field ACCOUNTING_NEGATIVE Ldev/carcara/kotlinx/locale/number/SignDisplay;
 	public static final field ALWAYS Ldev/carcara/kotlinx/locale/number/SignDisplay;
 	public static final field AUTO Ldev/carcara/kotlinx/locale/number/SignDisplay;
+	public static final field Companion Ldev/carcara/kotlinx/locale/number/SignDisplay$Companion;
 	public static final field EXCEPT_ZERO Ldev/carcara/kotlinx/locale/number/SignDisplay;
 	public static final field NEGATIVE Ldev/carcara/kotlinx/locale/number/SignDisplay;
 	public static final field NEVER Ldev/carcara/kotlinx/locale/number/SignDisplay;
@@ -226,6 +271,9 @@ public final class dev/carcara/kotlinx/locale/number/SignDisplay : java/lang/Enu
 	public final fun getUsesAccountingPattern ()Z
 	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/number/SignDisplay;
 	public static fun values ()[Ldev/carcara/kotlinx/locale/number/SignDisplay;
+}
+
+public final class dev/carcara/kotlinx/locale/number/SignDisplay$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/number/internal/RescaleKt {

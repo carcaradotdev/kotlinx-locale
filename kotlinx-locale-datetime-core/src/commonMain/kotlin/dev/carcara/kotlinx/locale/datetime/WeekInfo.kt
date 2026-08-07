@@ -85,6 +85,8 @@ public interface WeekInfoSource {
      * territory, and should not have to build a locale around it.
      */
     public fun weekInfoForRegionOrNull(regionCode: String): WeekInfo?
+
+    public companion object
 }
 
 /** [locale]'s week data, falling back to [WeekInfo.WORLD]. */

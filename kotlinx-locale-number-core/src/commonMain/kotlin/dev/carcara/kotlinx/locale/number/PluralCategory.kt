@@ -42,4 +42,10 @@ public enum class PluralCategory {
  * English ordinal has `one`, `two`, `few` and `other`, which is where `1st`,
  * `2nd`, `3rd` and `4th` come from.
  */
-public enum class PluralType { CARDINAL, ORDINAL }
+public enum class PluralType {
+    CARDINAL,
+    ORDINAL,
+    ;
+
+    public companion object
+}

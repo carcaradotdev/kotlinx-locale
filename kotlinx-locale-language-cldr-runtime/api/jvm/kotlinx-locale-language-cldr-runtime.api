@@ -1,4 +1,5 @@
 public final class dev/carcara/kotlinx/locale/language/cldr/runtime/PayloadLanguageNames : dev/carcara/kotlinx/locale/language/LanguageNameSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/language/cldr/runtime/PayloadLanguageNames$Companion;
 	public fun <init> (Ljava/util/Map;)V
 	public fun capitalized (Ljava/lang/String;Ldev/carcara/kotlinx/locale/language/LanguageNameUsage;Ldev/carcara/kotlinx/locale/Capitalization;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun displayPatternsOrNull (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/language/LocaleDisplayPatterns;
@@ -6,5 +7,8 @@ public final class dev/carcara/kotlinx/locale/language/cldr/runtime/PayloadLangu
 	public fun languageNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/language/LanguageNameStyle;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun regionNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun scriptNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/language/cldr/runtime/PayloadLanguageNames$Companion {
 }
 

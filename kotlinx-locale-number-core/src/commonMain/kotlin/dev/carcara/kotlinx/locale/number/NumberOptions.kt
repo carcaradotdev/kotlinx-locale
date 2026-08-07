@@ -80,6 +80,8 @@ public enum class SignDisplay {
             this == EXCEPT_ZERO ||
             this == ACCOUNTING_NEGATIVE ||
             this == ACCOUNTING_EXCEPT_ZERO
+
+    public companion object
 }
 
 /**
@@ -89,7 +91,14 @@ public enum class SignDisplay {
  * behind the two compact forms are `decimalFormatLength type="short"` and
  * `type="long"`, and for money `currencyFormatLength type="short"`.
  */
-public enum class NumberNotation { STANDARD, COMPACT_SHORT, COMPACT_LONG }
+public enum class NumberNotation {
+    STANDARD,
+    COMPACT_SHORT,
+    COMPACT_LONG,
+    ;
+
+    public companion object
+}
 
 /**
  * Whether grouping separators appear.
@@ -99,7 +108,14 @@ public enum class NumberNotation { STANDARD, COMPACT_SHORT, COMPACT_LONG }
  * all three. [ALWAYS] ignores that and groups from the first opportunity;
  * [NEVER] writes no separators at all.
  */
-public enum class NumberGrouping { AUTO, ALWAYS, NEVER }
+public enum class NumberGrouping {
+    AUTO,
+    ALWAYS,
+    NEVER,
+    ;
+
+    public companion object
+}
 
 /**
  * Whether a percent value arrives as a fraction or already scaled.
@@ -120,6 +136,9 @@ public enum class PercentScale {
 
     /** `7.5` prints as `7.5%`. */
     PERCENT,
+    ;
+
+    public companion object
 }
 
 /**

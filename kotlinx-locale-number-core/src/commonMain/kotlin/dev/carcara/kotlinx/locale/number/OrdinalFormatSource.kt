@@ -28,6 +28,8 @@ public interface OrdinalFormatSource : LocaleDataSource {
 
     /** [value] as an ordinal in [locale], or `null` when this build has no rules for it. */
     public fun ordinalOrNull(value: Long, locale: Locale): String?
+
+    public companion object
 }
 
 /**
@@ -47,4 +49,6 @@ public class FallbackOrdinalFormats(private val primary: OrdinalFormatSource, pr
 
     override fun ordinalOrNull(value: Long, locale: Locale): String? =
         primary.ordinalOrNull(value, locale) ?: fallback.ordinalOrNull(value, locale)
+
+    public companion object
 }

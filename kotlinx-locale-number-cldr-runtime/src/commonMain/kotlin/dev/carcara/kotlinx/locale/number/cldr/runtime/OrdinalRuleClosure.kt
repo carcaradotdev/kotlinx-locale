@@ -157,6 +157,8 @@ public class OrdinalRuleClosure(encoded: String) {
         val category = selectOrdinalCategory(value)
         return choices[category.cldrName] ?: choices["other"]
     }
+
+    public companion object
 }
 
 private class RbnfRule(val base: Long, val divisor: Long, val body: String)

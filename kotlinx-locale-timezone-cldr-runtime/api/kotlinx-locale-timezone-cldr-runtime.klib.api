@@ -14,6 +14,8 @@ final class dev.carcara.kotlinx.locale.timezone.cldr.runtime/PayloadTimeZoneName
 
     final fun displayNameOrNull(kotlinx.datetime/TimeZone, dev.carcara.kotlinx.locale.timezone/TimeZoneNameStyle, kotlinx.datetime/UtcOffset?, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.timezone.cldr.runtime/PayloadTimeZoneNames.displayNameOrNull|displayNameOrNull(kotlinx.datetime.TimeZone;dev.carcara.kotlinx.locale.timezone.TimeZoneNameStyle;kotlinx.datetime.UtcOffset?;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun exemplarCityOrNull(kotlinx.datetime/TimeZone, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.timezone.cldr.runtime/PayloadTimeZoneNames.exemplarCityOrNull|exemplarCityOrNull(kotlinx.datetime.TimeZone;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.timezone.cldr.runtime/PayloadTimeZoneNames.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneFormats { // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneFormats|null[0]
@@ -37,6 +39,8 @@ final class dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneFormats { /
         final fun <get-regionFormat>(): kotlin/String // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneFormats.regionFormat.<get-regionFormat>|<get-regionFormat>(){}[0]
     final val regionStandard // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneFormats.regionStandard|{}regionStandard[0]
         final fun <get-regionStandard>(): kotlin/String // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneFormats.regionStandard.<get-regionStandard>|<get-regionStandard>(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneFormats.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneMetadata { // dev.carcara.kotlinx.locale.timezone.cldr.runtime/TimeZoneMetadata|null[0]

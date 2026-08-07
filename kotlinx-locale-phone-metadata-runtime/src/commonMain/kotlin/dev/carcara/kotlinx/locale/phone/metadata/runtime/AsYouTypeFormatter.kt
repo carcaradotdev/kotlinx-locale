@@ -102,6 +102,8 @@ public class AsYouTypeFormatter internal constructor(
         val grouped = rule.groupPrefix(body) ?: return typed
         return if (hasPrefix) national + grouped else grouped
     }
+
+    public companion object
 }
 
 /**

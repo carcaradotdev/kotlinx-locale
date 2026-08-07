@@ -25,7 +25,9 @@ public class BindingSpec(
     public val registryPackage: String,
     /** What the header credits the data to. */
     public val source: String,
-)
+) {
+    public companion object
+}
 
 /**
  * The header plus a sorted import block.

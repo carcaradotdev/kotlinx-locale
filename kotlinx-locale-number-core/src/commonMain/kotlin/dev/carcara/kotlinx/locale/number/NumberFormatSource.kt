@@ -29,6 +29,8 @@ public interface NumberFormatSource : LocaleDataSource {
 
     /** [text] read back as a [Decimal], or `null` when it does not parse in [locale]. */
     public fun parseDecimalOrNull(text: String, locale: Locale): Decimal?
+
+    public companion object
 }
 
 /**
@@ -156,4 +158,6 @@ public class FallbackNumberFormats(private val primary: NumberFormatSource, priv
 
     override fun parseDecimalOrNull(text: String, locale: Locale): Decimal? =
         primary.parseDecimalOrNull(text, locale) ?: fallback.parseDecimalOrNull(text, locale)
+
+    public companion object
 }

@@ -19,4 +19,10 @@ package dev.carcara.kotlinx.locale.datetime
  * and eight when the short weekday width lands, and adding an entry to a public
  * enum breaks every exhaustive `when` a consumer wrote.
  */
-public enum class NameContext { FORMAT, STANDALONE }
+public enum class NameContext {
+    FORMAT,
+    STANDALONE,
+    ;
+
+    public companion object
+}

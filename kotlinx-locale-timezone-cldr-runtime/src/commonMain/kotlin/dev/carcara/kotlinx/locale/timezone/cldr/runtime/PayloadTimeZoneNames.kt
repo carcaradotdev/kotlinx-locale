@@ -51,6 +51,8 @@ public class TimeZoneFormats(record: String) {
 
     /** `{1} ({0})`, for a partial location name. */
     public val fallbackFormat: String = fields[8]
+
+    public companion object
 }
 
 /**
@@ -215,6 +217,8 @@ public class PayloadTimeZoneNames(
                 for (digit in digits) append(symbols.digits[digit - '0'])
             }
         }
+
+    public companion object
 }
 
 /**

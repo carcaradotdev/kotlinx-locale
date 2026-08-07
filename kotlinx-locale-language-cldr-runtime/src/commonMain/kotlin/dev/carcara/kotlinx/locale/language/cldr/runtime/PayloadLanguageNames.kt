@@ -90,4 +90,6 @@ public class PayloadLanguageNames(private val records: Map<String, String>) : La
                 ?: LocaleDisplayPatterns.Root.localeKeyTypePattern,
         )
     }
+
+    public companion object
 }

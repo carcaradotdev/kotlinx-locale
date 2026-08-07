@@ -29,4 +29,6 @@ public class PayloadCountryNames(private val records: Map<String, String>) : Cou
 
     override fun countryNameOrNull(alpha2: String, locale: Locale): String? =
         sparseRecordValue(records, locale, field = 1, fieldCount = 2, key = alpha2)
+
+    public companion object
 }

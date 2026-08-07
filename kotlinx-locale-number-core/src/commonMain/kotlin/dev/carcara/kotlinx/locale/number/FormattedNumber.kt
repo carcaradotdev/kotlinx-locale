@@ -65,4 +65,6 @@ public class FormattedNumber @InternalKotlinxLocaleApi public constructor(
     override fun subSequence(startIndex: Int, endIndex: Int): CharSequence = text.subSequence(startIndex, endIndex)
 
     override fun toString(): String = text
+
+    public companion object
 }

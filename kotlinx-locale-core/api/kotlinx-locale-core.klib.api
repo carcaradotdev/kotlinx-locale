@@ -20,16 +20,22 @@ final enum class dev.carcara.kotlinx.locale/Capitalization : kotlin/Enum<dev.car
 
     final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale/Capitalization // dev.carcara.kotlinx.locale/Capitalization.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<dev.carcara.kotlinx.locale/Capitalization> // dev.carcara.kotlinx.locale/Capitalization.values|values#static(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale/Capitalization.Companion|null[0]
 }
 
 abstract interface dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale/LocaleDataSource|null[0]
     abstract val supportedLocales // dev.carcara.kotlinx.locale/LocaleDataSource.supportedLocales|{}supportedLocales[0]
         abstract fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale/LocaleDataSource.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale/LocaleDataSource.Companion|null[0]
 }
 
 abstract interface dev.carcara.kotlinx.locale/LocaleRef { // dev.carcara.kotlinx.locale/LocaleRef|null[0]
     abstract val tag // dev.carcara.kotlinx.locale/LocaleRef.tag|{}tag[0]
         abstract fun <get-tag>(): kotlin/String // dev.carcara.kotlinx.locale/LocaleRef.tag.<get-tag>|<get-tag>(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale/LocaleRef.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale/Locale { // dev.carcara.kotlinx.locale/Locale|null[0]
