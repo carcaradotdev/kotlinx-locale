@@ -22,18 +22,12 @@ import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.Digest
-import dev.carcara.kotlinx.locale.currency.Currency
-import dev.carcara.kotlinx.locale.currency.CurrencyAmount
+import dev.carcara.kotlinx.locale.conformance.currencyDigestSerialization
+import dev.carcara.kotlinx.locale.conformance.numberDigestSerialization
+import dev.carcara.kotlinx.locale.conformance.pluralDigestSerialization
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
-import dev.carcara.kotlinx.locale.currency.forCodeOrNull
-import dev.carcara.kotlinx.locale.currency.format
-import dev.carcara.kotlinx.locale.number.Decimal
-import dev.carcara.kotlinx.locale.number.NumberNotation
-import dev.carcara.kotlinx.locale.number.PluralType
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumber
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumberPlurals
-import dev.carcara.kotlinx.locale.number.format
-import dev.carcara.kotlinx.locale.number.pluralCategory
 import dev.carcara.kotlinx.locale.test.assertTrue
 import java.io.File
 
@@ -61,47 +55,15 @@ val DigestGeneratorTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
     }
 
     test("number digests are current") {
-        settleDigests("number", tags) { tag -> numberSerialization(Locale.forLanguageTag(tag)) }
+        settleDigests("number", tags) { tag -> CldrNumber.numberDigestSerialization(Locale.forLanguageTag(tag)) }
     }
 
     test("currency format digests are current") {
-        settleDigests("currency-format", tags) { tag -> currencySerialization(Locale.forLanguageTag(tag)) }
+        settleDigests("currency-format", tags) { tag -> CldrCurrency.currencyDigestSerialization(Locale.forLanguageTag(tag)) }
     }
 
     test("plural digests are current") {
-        settleDigests("plural", tags) { tag -> pluralSerialization(Locale.forLanguageTag(tag)) }
-    }
-}
-
-/** The values whose formatting exercises grouping, rounding and compact selection. */
-private val NUMBER_VALUES = listOf(
-    "0", "1", "-1", "0.5", "1.5", "2.5", "-2.5", "1234.5678", "999999", "1000000",
-    "-1234567.891", "0.000001", "123456789012345",
-)
-
-private fun numberSerialization(locale: Locale): List<String> = buildList {
-    for (text in NUMBER_VALUES) {
-        val value = Decimal.parse(text)
-        add(CldrNumber.format(value, locale))
-        add(CldrNumber.format(value, locale, notation = NumberNotation.COMPACT_SHORT))
-        add(CldrNumber.format(value, locale, notation = NumberNotation.COMPACT_LONG))
-        add(CldrNumber.format(value, locale, minimumFractionDigits = 2, maximumFractionDigits = 2))
-    }
-}
-
-private fun currencySerialization(locale: Locale): List<String> = buildList {
-    for (code in listOf("USD", "EUR", "JPY", "BHD", "CHF", "HUF", "CLP")) {
-        val currency = Currency.forCodeOrNull(code) ?: continue
-        for (minorUnits in listOf(0L, 1L, -1L, 123456L, -123456L, 999999999L)) {
-            add(CldrCurrency.format(CurrencyAmount(currency, minorUnits), locale))
-        }
-    }
-}
-
-private fun pluralSerialization(locale: Locale): List<String> = buildList {
-    for (text in NUMBER_VALUES) {
-        val value = Decimal.parse(text)
-        add(CldrNumberPlurals.pluralCategory(value, value.scale, locale, PluralType.CARDINAL).cldrName)
+        settleDigests("plural", tags) { tag -> CldrNumberPlurals.pluralDigestSerialization(Locale.forLanguageTag(tag)) }
     }
 }
 
@@ -129,7 +91,7 @@ private fun settleDigests(domain: String, tags: List<String>, serialize: (String
                 appendLine("//")
                 appendLine("// Not an oracle: correctness is :conformance-icu's job. This says only")
                 appendLine("// that every target computes the same thing.")
-                appendLine("package dev.carcara.kotlinx.locale.conformance")
+                appendLine("package ${digestPackage(domain)}")
                 appendLine()
                 appendLine("public val ${domain.digestValName()}: Map<String, String> = mapOf(")
                 for ((tag, digest) in digests) appendLine("    \"$tag\" to \"$digest\",")
@@ -167,6 +129,19 @@ private fun String.digestValName(): String =
         .joinToString("") + "Digests"
 
 /** Each domain's digests live in the `commonTest` of the module that owns it. */
+/**
+ * The package a domain's digests are declared in.
+ *
+ * Matches the directory the file goes to. Writing one package for files that
+ * land in three different places compiles, because Kotlin does not require the
+ * two to agree, and then reads as a mistake to everyone who opens it.
+ */
+private fun digestPackage(domain: String): String = when (domain) {
+    "number", "plural" -> "dev.carcara.kotlinx.locale.number.conformance"
+    "currency-format" -> "dev.carcara.kotlinx.locale.currency.conformance"
+    else -> error("no package owns the '$domain' digests")
+}
+
 private fun digestFile(domain: String): File {
     val root = Ledger.rootDir()
     val module = when (domain) {

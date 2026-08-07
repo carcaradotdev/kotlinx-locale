@@ -16,6 +16,20 @@
 
 package dev.carcara.kotlinx.locale.conformance
 
+import dev.carcara.kotlinx.locale.Locale
+import dev.carcara.kotlinx.locale.currency.Currency
+import dev.carcara.kotlinx.locale.currency.CurrencyAmount
+import dev.carcara.kotlinx.locale.currency.CurrencyFormatSource
+import dev.carcara.kotlinx.locale.currency.forCodeOrNull
+import dev.carcara.kotlinx.locale.currency.format
+import dev.carcara.kotlinx.locale.number.Decimal
+import dev.carcara.kotlinx.locale.number.NumberFormatSource
+import dev.carcara.kotlinx.locale.number.NumberNotation
+import dev.carcara.kotlinx.locale.number.PluralRuleSource
+import dev.carcara.kotlinx.locale.number.PluralType
+import dev.carcara.kotlinx.locale.number.format
+import dev.carcara.kotlinx.locale.number.pluralCategory
+
 /**
  * A per-locale digest of what a source answers, for the domains that can
  * genuinely differ between targets.
@@ -89,6 +103,52 @@ public object Digest {
      * values and would let two different lists digest identically.
      */
     private const val SEPARATOR: Char = ''
+}
+
+/**
+ * The values whose formatting exercises grouping, rounding and compact
+ * magnitude selection.
+ *
+ * Shared rather than written twice. The JVM generator and the twenty-three
+ * targets held to what it produced have to serialize identically, and the way
+ * that goes wrong is a value list edited on one side. One definition means a
+ * digest mismatch is a real disagreement rather than a drifted fixture.
+ */
+public val DIGEST_VALUES: List<String> = listOf(
+    "0", "1", "-1", "0.5", "1.5", "2.5", "-2.5", "1234.5678", "999999", "1000000",
+    "-1234567.891", "0.000001", "123456789012345",
+)
+
+/** The currencies whose fraction digits and symbol placement differ most. */
+public val DIGEST_CURRENCIES: List<String> = listOf("USD", "EUR", "JPY", "BHD", "CHF", "HUF", "CLP")
+
+/** What a number source answers for [locale], as the digest sees it. */
+public fun NumberFormatSource.numberDigestSerialization(locale: Locale): List<String> = buildList {
+    for (text in DIGEST_VALUES) {
+        val value = Decimal.parse(text)
+        add(format(value, locale))
+        add(format(value, locale, notation = NumberNotation.COMPACT_SHORT))
+        add(format(value, locale, notation = NumberNotation.COMPACT_LONG))
+        add(format(value, locale, minimumFractionDigits = 2, maximumFractionDigits = 2))
+    }
+}
+
+/** What a plural source answers for [locale], as the digest sees it. */
+public fun PluralRuleSource.pluralDigestSerialization(locale: Locale): List<String> = buildList {
+    for (text in DIGEST_VALUES) {
+        val value = Decimal.parse(text)
+        add(pluralCategory(value, value.scale, locale, PluralType.CARDINAL).cldrName)
+    }
+}
+
+/** What a currency source answers for [locale], as the digest sees it. */
+public fun CurrencyFormatSource.currencyDigestSerialization(locale: Locale): List<String> = buildList {
+    for (code in DIGEST_CURRENCIES) {
+        val currency = Currency.forCodeOrNull(code) ?: continue
+        for (minorUnits in listOf(0L, 1L, -1L, 123456L, -123456L, 999999999L)) {
+            add(format(CurrencyAmount(currency, minorUnits), locale))
+        }
+    }
 }
 
 /**
