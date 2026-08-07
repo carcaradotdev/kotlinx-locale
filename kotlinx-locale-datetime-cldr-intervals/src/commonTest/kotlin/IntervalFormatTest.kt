@@ -1,39 +1,37 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.intervals
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.intervals.conformance.icuIntervalGolden
 import dev.carcara.kotlinx.locale.datetime.cldr.intervals.conformance.icuIntervalGoldenCases
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 import kotlinx.datetime.LocalDate
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
-class IntervalFormatTest {
+val IntervalFormatTest by matrixSuite {
 
-    private val en = Locale.forLanguageTag("en")
+    val en = Locale.forLanguageTag("en")
 
     /**
      * CLDR and ICU disagree about which invisible space they write, and the
      * difference is not a formatting decision. Same fold the shared conformance
      * assertions apply.
      */
-    private fun String.spaces(): String = map { if (it.isWhitespace()) ' ' else it }.joinToString("")
+    fun String.spaces(): String = map { if (it.isWhitespace()) ' ' else it }.joinToString("")
 
-    private fun date(text: String): LocalDate {
+    fun date(text: String): LocalDate {
         val (y, m, d) = text.split('-').map(String::toInt)
         return LocalDate(y, m, d)
     }
 
-    @Test
-    fun theFourCasesCollapseWhatTheyShare() {
+    test("theFourCasesCollapseWhatTheyShare") {
         assertEquals("Jul 22, 2026", intervalFormat(date("2026-07-22"), date("2026-07-22"), "yMMMd", en).spaces())
         assertEquals("Jul 18 – 22, 2026", intervalFormat(date("2026-07-18"), date("2026-07-22"), "yMMMd", en).spaces())
         assertEquals("May 18 – Jul 22, 2026", intervalFormat(date("2026-05-18"), date("2026-07-22"), "yMMMd", en).spaces())
         assertEquals("May 18, 2025 – Jul 22, 2026", intervalFormat(date("2025-05-18"), date("2026-07-22"), "yMMMd", en).spaces())
     }
 
-    @Test
-    fun anUnrenderableSkeletonFallsBackToTheIso8601IntervalForm() {
+    test("anUnrenderableSkeletonFallsBackToTheIso8601IntervalForm") {
         // Week-of-year is not a field this library renders, so the matcher
         // refuses the skeleton and there is no locale answer to give. ISO
         // 8601-1:2019 clause 3.2.6 writes an interval as <start>/<end>, so that
@@ -49,15 +47,13 @@ class IntervalFormatTest {
         )
     }
 
-    @Test
-    fun anIdenticalPairFormatsOnce() {
+    test("anIdenticalPairFormatsOnce") {
         // The case most likely to come out as the same text twice with a dash.
         val once = intervalFormat(date("2026-07-22"), date("2026-07-22"), "yMMMd", en)
         assertTrue('–' !in once && '-' !in once, "an identical pair should not be joined: $once")
     }
 
-    @Test
-    fun everyLocaleAgreesWithIcu() {
+    test("everyLocaleAgreesWithIcu") {
         val mismatches = ArrayList<String>()
         var compared = 0
         for ((tag, expected) in icuIntervalGolden) {

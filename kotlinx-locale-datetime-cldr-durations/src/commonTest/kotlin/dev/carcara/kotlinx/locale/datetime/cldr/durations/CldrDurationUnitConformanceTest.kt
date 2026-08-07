@@ -1,13 +1,13 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.durations
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.durations.conformance.icuDurationUnitGolden
 import dev.carcara.kotlinx.locale.datetime.cldr.durations.conformance.icuDurationUnitGoldenCases
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.DurationUnit
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.UnitWidth
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Every cell ICU was asked about, asked again here.
@@ -17,12 +17,11 @@ import kotlin.test.assertTrue
  * the fallback rules this table is built on were read off this fixture, so an
  * exclusion here would be the fixture agreeing with itself.
  */
-class CldrDurationUnitConformanceTest {
+val CldrDurationUnitConformanceTest by matrixSuite {
 
-    private val units = DurationUnit.entries.associateBy { "duration-" + it.name.lowercase() }
+    val units = DurationUnit.entries.associateBy { "duration-" + it.name.lowercase() }
 
-    @Test
-    fun matchesIcu() {
+    test("matchesIcu") {
         val failures = ArrayList<String>()
         var checked = 0
         for ((tag, answers) in icuDurationUnitGolden) {
@@ -43,8 +42,7 @@ class CldrDurationUnitConformanceTest {
         )
     }
 
-    @Test
-    fun theGoldenCoversWhatItClaims() {
+    test("theGoldenCoversWhatItClaims") {
         assertEquals(30, icuDurationUnitGolden.size, "the golden should cover the shared ICU locale set")
         assertEquals(14 * 3 * 8, icuDurationUnitGoldenCases.size, "14 units x 3 widths x 8 values")
         assertEquals(14, units.size)

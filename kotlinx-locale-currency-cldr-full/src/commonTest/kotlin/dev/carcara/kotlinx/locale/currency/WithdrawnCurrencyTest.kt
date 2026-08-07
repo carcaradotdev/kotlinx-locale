@@ -1,13 +1,13 @@
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.displayName
 import dev.carcara.kotlinx.locale.currency.cldr.format
 import dev.carcara.kotlinx.locale.currency.cldr.symbol
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 private val EN = Locale.of("en")
 private val HR = Locale.of("hr")
@@ -17,10 +17,9 @@ private val HR = Locale.of("hr")
  * and a [CurrencyAmount] needs a [Currency] to render against. So the entry set
  * carries both lists, and these hold the line between them.
  */
-class WithdrawnCurrencyTest {
+val WithdrawnCurrencyTest by matrixSuite {
 
-    @Test
-    fun withdrawnCodesResolveAndFormat() {
+    test("withdrawnCodesResolveAndFormat") {
         val kuna = assertNotNull(Currency.forCodeOrNull("HRK"), "HRK stopped being tender, it did not stop existing")
         assertTrue(!kuna.isActive, "the kuna was withdrawn when Croatia adopted the euro")
         assertEquals(2, kuna.minorUnitDigits)
@@ -31,16 +30,14 @@ class WithdrawnCurrencyTest {
         assertEquals("HRK\u00A01,234.56", CurrencyAmount(kuna, 123456).format(EN, style = CurrencySymbolStyle.CODE))
     }
 
-    @Test
-    fun theOtherWithdrawnCodesAreThereToo() {
+    test("theOtherWithdrawnCodesAreThereToo") {
         for (code in listOf("SLL", "ZWL", "CUC", "DEM", "TRL")) {
             val currency = assertNotNull(Currency.forCodeOrNull(code), "$code is missing")
             assertTrue(!currency.isActive, "$code should not be active")
         }
     }
 
-    @Test
-    fun activeIsTheFilterAPickerWants() {
+    test("activeIsTheFilterAPickerWants") {
         val active = Currency.active
         assertEquals(178, active.size, "the active set is ISO list one")
         assertTrue(Currency.entries.size > active.size, "entries carries the withdrawn codes as well")
@@ -49,8 +46,7 @@ class WithdrawnCurrencyTest {
         assertTrue(!assertNotNull(Currency.forCodeOrNull("HRK")).isActive)
     }
 
-    @Test
-    fun tenderWindowsComeFromCldr() {
+    test("tenderWindowsComeFromCldr") {
         val kuna = assertNotNull(Currency.forCodeOrNull("HRK"))
         // 2023-01-14, the day CLDR records the kuna stopped being tender.
         assertTrue(kuna.lastTenderEpochDay < Int.MAX_VALUE, "a withdrawn code has a closing date")
@@ -63,8 +59,7 @@ class WithdrawnCurrencyTest {
         assertTrue(!none.isTender, "XXX is CLDR's no-currency code")
     }
 
-    @Test
-    fun numericLookupPrefersTheActiveEntry() {
+    test("numericLookupPrefersTheActiveEntry") {
         // ISO reuses 191 for the 1991 Croatian dinar and the kuna that replaced
         // it, and 8 for both Albanian leks. The lookup has to pick one.
         val byCode = assertNotNull(Currency.forCodeOrNull("HRK"))

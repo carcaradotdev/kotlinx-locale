@@ -1,12 +1,12 @@
 package dev.carcara.kotlinx.locale.currency.cldr.plurals
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.cldr.displayName
 import dev.carcara.kotlinx.locale.currency.cldr.runtime.pluralName
 import dev.carcara.kotlinx.locale.number.PluralCategory
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertEquals
 
 /**
  * The five shapes CLDR's inheritance marker takes under a count-keyed currency
@@ -19,18 +19,16 @@ import kotlin.test.assertEquals
  * overrides part of a currency's naming and leaves the rest to its parent, which
  * is a long tail rather than a headline locale.
  */
-class CurrencyPluralInheritanceTest {
+val CurrencyPluralInheritanceTest by matrixSuite {
 
-    private val nn = Locale.forLanguageTag("nn")
-    private val enAu = Locale.forLanguageTag("en-AU")
-    private val es419 = Locale.forLanguageTag("es-419")
-    private val zhHantHk = Locale.forLanguageTag("zh-Hant-HK")
+    val nn = Locale.forLanguageTag("nn")
+    val enAu = Locale.forLanguageTag("en-AU")
+    val es419 = Locale.forLanguageTag("es-419")
+    val zhHantHk = Locale.forLanguageTag("zh-Hant-HK")
 
-    private fun name(currency: Currency, category: PluralCategory, locale: Locale) =
-        CldrCurrencyPlurals.pluralName(currency, category, locale)
+    fun name(currency: Currency, category: PluralCategory, locale: Locale) = CldrCurrencyPlurals.pluralName(currency, category, locale)
 
-    @Test
-    fun aLocaleThatWritesOnlyMarkersInheritsItsParentsWholeTable() {
+    test("aLocaleThatWritesOnlyMarkersInheritsItsParentsWholeTable") {
         // nn writes markers under both categories of the Aruban florin and its
         // own count-less `arubiske florinar`. It owns nothing, so `no`'s table
         // arrives whole, including the `-er` spelling nn does not otherwise use.
@@ -39,8 +37,7 @@ class CurrencyPluralInheritanceTest {
         assertEquals("arubiske florinar", Currency.AWG.displayName(nn))
     }
 
-    @Test
-    fun aMarkerBesideARealNameResolvesInsideItsOwnLocale() {
+    test("aMarkerBesideARealNameResolvesInsideItsOwnLocale") {
         // nn writes a real `one` for the Colombian peso, so it owns that
         // currency, and its `other` marker reads nn's own count-less name rather
         // than the `colombianske pesos` its parent resolved to.
@@ -48,8 +45,7 @@ class CurrencyPluralInheritanceTest {
         assertEquals("kolombianske pesos", name(Currency.COP, PluralCategory.OTHER, nn))
     }
 
-    @Test
-    fun arealSpellingAnywhereUpTheChainBeatsTheLateralStep() {
+    test("arealSpellingAnywhereUpTheChainBeatsTheLateralStep") {
         // es-419 owns the tenge through a real `one`, but its `other` marker
         // still reads es's real `tengues kazajos` rather than falling laterally
         // to a display name.
@@ -57,8 +53,7 @@ class CurrencyPluralInheritanceTest {
         assertEquals("tengues kazajos", name(Currency.KZT, PluralCategory.OTHER, es419))
     }
 
-    @Test
-    fun aCategoryAnAncestorSpellsIsNotLeftToTheOtherFallback() {
+    test("aCategoryAnAncestorSpellsIsNotLeftToTheOtherFallback") {
         // en-AU overrides only `other` for the kina. Its `one` has to reach
         // English's singular rather than en-AU's own plural, which is what a
         // table that dropped `one` for matching English's `other` would give.
@@ -66,8 +61,7 @@ class CurrencyPluralInheritanceTest {
         assertEquals("Papua New Guinean kinas", name(Currency.PGK, PluralCategory.OTHER, enAu))
     }
 
-    @Test
-    fun aMarkerWithNoRealNameAnywhereFallsThroughToTheAskersDisplayName() {
+    test("aMarkerWithNoRealNameAnywhereFallsThroughToTheAskersDisplayName") {
         // Every locale in this chain writes a marker and no real name, so there
         // is no count-keyed data at all and the third step of UTS #35's chain
         // answers with zh-Hant-HK's own spelling rather than zh-Hant's.

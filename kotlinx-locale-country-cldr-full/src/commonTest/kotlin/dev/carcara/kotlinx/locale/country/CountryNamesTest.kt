@@ -1,22 +1,21 @@
 package dev.carcara.kotlinx.locale.country
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
 import dev.carcara.kotlinx.locale.country.cldr.displayName
 import dev.carcara.kotlinx.locale.country.cldr.forDisplayNameOrNull
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotEquals
+import dev.carcara.kotlinx.locale.test.assertNotNull
+import dev.carcara.kotlinx.locale.test.assertNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
-class CountryNamesTest {
+val CountryNamesTest by matrixSuite {
 
-    private fun locale(tag: String) = Locale.forLanguageTag(tag)
+    fun locale(tag: String) = Locale.forLanguageTag(tag)
 
-    @Test
-    fun localizesNames() {
+    test("localizesNames") {
         assertEquals("United States", Country.US.displayName(locale("en")))
         assertEquals("Estados Unidos", Country.US.displayName(locale("pt")))
         assertEquals("Deutschland", Country.DE.displayName(locale("de")))
@@ -26,16 +25,14 @@ class CountryNamesTest {
         assertEquals("Côte d’Ivoire", Country.CI.displayName(locale("en")))
     }
 
-    @Test
-    fun inheritsNamesFromTheParentLocale() {
+    test("inheritsNamesFromTheParentLocale") {
         // de-AT and pt-BR declare no name of their own for these countries.
         assertEquals("Deutschland", Country.DE.displayName(locale("de-AT")))
         assertEquals("Estados Unidos", Country.US.displayName(locale("pt-BR")))
         assertEquals("United Kingdom", Country.GB.displayName(locale("en-AU")))
     }
 
-    @Test
-    fun honorsCldrParentLocaleOverrides() {
+    test("honorsCldrParentLocaleOverrides") {
         // es-AR inherits from es-419 (a CLDR parentLocales override), which
         // renames CI relative to plain es.
         assertEquals("Côte d’Ivoire", Country.CI.displayName(locale("es")))
@@ -43,15 +40,13 @@ class CountryNamesTest {
         assertEquals("Costa de Marfil", Country.CI.displayName(locale("es-AR")))
     }
 
-    @Test
-    fun fallsBackToTheAlpha2Code() {
+    test("fallsBackToTheAlpha2Code") {
         // A valid but unknown language reaches CLDR root, which carries no names.
         assertEquals("US", Country.US.displayName(locale("xx")))
         assertEquals("BR", Country.BR.displayName(locale("zz")))
     }
 
-    @Test
-    fun findsCountriesByDisplayName() {
+    test("findsCountriesByDisplayName") {
         val en = locale("en")
         assertEquals(Country.US, Country.forDisplayNameOrNull("United States", en))
         assertEquals(Country.US, Country.forDisplayNameOrNull("united states", en))
@@ -62,8 +57,7 @@ class CountryNamesTest {
         assertNull(Country.forDisplayNameOrNull("", en))
     }
 
-    @Test
-    fun everyCountryHasAnEnglishName() {
+    test("everyCountryHasAnEnglishName") {
         val en = locale("en")
         for (country in Country.entries) {
             val name = country.displayName(en)
@@ -72,8 +66,7 @@ class CountryNamesTest {
         }
     }
 
-    @Test
-    fun englishNamesRoundTripThroughReverseLookup() {
+    test("englishNamesRoundTripThroughReverseLookup") {
         val en = locale("en")
         for (country in Country.entries) {
             assertEquals(
@@ -84,8 +77,7 @@ class CountryNamesTest {
         }
     }
 
-    @Test
-    fun majorLocalesNameEveryCountry() {
+    test("majorLocalesNameEveryCountry") {
         for (tag in listOf("en", "pt", "es", "fr", "de", "ja", "ru", "zh")) {
             val locale = locale(tag)
             for (country in Country.entries) {
@@ -96,8 +88,7 @@ class CountryNamesTest {
         }
     }
 
-    @Test
-    fun reverseLookupIsSoundInMajorLocales() {
+    test("reverseLookupIsSoundInMajorLocales") {
         // Some locales give two countries the same name, so reverse lookup must
         // return a country carrying exactly the requested name, though not
         // necessarily the one that produced it.
@@ -112,8 +103,7 @@ class CountryNamesTest {
         }
     }
 
-    @Test
-    fun reportsTheLocalesItCarriesDataFor() {
+    test("reportsTheLocalesItCarriesDataFor") {
         val tags = CldrCountry.supportedLocales.map(Locale::toLanguageTag)
         assertTrue(tags.size > 700, "expected hundreds of locales, got ${tags.size}")
         assertTrue("en" in tags)
@@ -123,8 +113,7 @@ class CountryNamesTest {
         assertTrue("root" !in tags)
     }
 
-    @Test
-    fun everyLocaleResolvesANameForEveryCountry() {
+    test("everyLocaleResolvesANameForEveryCountry") {
         for (locale in CldrCountry.supportedLocales) {
             for (country in listOf(Country.US, Country.BR, Country.JP, Country.DE, Country.EG, Country.IN)) {
                 assertTrue(

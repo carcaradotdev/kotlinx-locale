@@ -1,16 +1,15 @@
 package dev.carcara.kotlinx.locale.country
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertFailsWith
+import dev.carcara.kotlinx.locale.test.assertNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
-class CountryTest {
+val CountryTest by matrixSuite {
 
-    @Test
-    fun exposesIsoCodes() {
+    test("exposesIsoCodes") {
         assertEquals("US", Country.US.alpha2)
         assertEquals("USA", Country.US.alpha3)
         assertEquals(840, Country.US.numericCode)
@@ -25,8 +24,7 @@ class CountryTest {
         assertEquals(20, Country.AD.numericCode)
     }
 
-    @Test
-    fun coversTheIsoCountrySet() {
+    test("coversTheIsoCountrySet") {
         assertTrue(
             Country.entries.size in 240..260,
             "expected the ISO 3166-1 set, got ${Country.entries.size}",
@@ -48,8 +46,7 @@ class CountryTest {
         )
     }
 
-    @Test
-    fun excludesNonIsoCldrRegions() {
+    test("excludesNonIsoCldrRegions") {
         // Macroregions, exceptionally reserved codes and user-assigned codes
         // are CLDR regions but not ISO 3166-1 countries.
         for (code in listOf("EU", "EZ", "UN", "AC", "IC", "TA", "XK", "ZZ", "QO")) {
@@ -57,8 +54,7 @@ class CountryTest {
         }
     }
 
-    @Test
-    fun mapsBetweenAllRepresentations() {
+    test("mapsBetweenAllRepresentations") {
         for (country in Country.entries) {
             assertEquals(country, Country.forAlpha2(country.alpha2))
             assertEquals(country, Country.forAlpha3(country.alpha3))
@@ -66,15 +62,13 @@ class CountryTest {
         }
     }
 
-    @Test
-    fun parsesCodesCaseInsensitively() {
+    test("parsesCodesCaseInsensitively") {
         assertEquals(Country.US, Country.forAlpha2OrNull("us"))
         assertEquals(Country.US, Country.forAlpha3OrNull("usa"))
         assertEquals(Country.BR, Country.forAlpha2OrNull("bR"))
     }
 
-    @Test
-    fun rejectsUnknownCodes() {
+    test("rejectsUnknownCodes") {
         assertNull(Country.forAlpha2OrNull("XX"))
         assertNull(Country.forAlpha3OrNull("ZZZ"))
         assertNull(Country.forNumericCodeOrNull(0))
@@ -83,8 +77,7 @@ class CountryTest {
         assertFailsWith<IllegalArgumentException> { Country.forNumericCode(0) }
     }
 
-    @Test
-    fun resolvesTheLocaleRegion() {
+    test("resolvesTheLocaleRegion") {
         assertEquals(Country.BR, Country.forLocaleOrNull(Locale.forLanguageTag("pt-BR")))
         assertEquals(Country.US, Country.forLocaleOrNull(Locale.forLanguageTag("en-US")))
         assertNull(Country.forLocaleOrNull(Locale.forLanguageTag("en")))

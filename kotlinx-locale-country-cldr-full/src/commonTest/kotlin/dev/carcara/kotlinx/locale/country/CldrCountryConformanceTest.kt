@@ -1,24 +1,31 @@
 package dev.carcara.kotlinx.locale.country
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToCountryNames
-import dev.carcara.kotlinx.locale.conformance.assertEveryCountryHasAnRgiFlag
 import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
-import kotlin.test.Test
+import dev.carcara.kotlinx.locale.country.conformance.assertEveryCountryHasAnRgiFlag
+import dev.carcara.kotlinx.locale.country.conformance.assertMatchesIcuCountryNames
 
 /**
  * The bundled source is a second encoding of the data ICU encodes, so it is
  * held to the exact tier: every name matches ICU byte for byte.
  */
-class CldrCountryConformanceTest {
+val CldrCountryConformanceTest by matrixSuite {
 
-    @Test
-    fun conformsExactly() = CldrCountry.assertConformsToCountryNames(ConformanceTier.EXACT)
+    test("conforms to the source contract at the exact tier") {
+        CldrCountry.assertConformsToCountryNames(ConformanceTier.EXACT)
+    }
+
+    test("names match ICU") {
+        CldrCountry.assertMatchesIcuCountryNames()
+    }
 
     /**
      * Flags are not locale data and not this source's, but this is where the
      * country entry set is on the classpath with the conformance fixtures.
      */
-    @Test
-    fun everyCountryHasAFlagUnicodeRecommends() = assertEveryCountryHasAnRgiFlag()
+    test("every country has a flag Unicode recommends") {
+        assertEveryCountryHasAnRgiFlag()
+    }
 }

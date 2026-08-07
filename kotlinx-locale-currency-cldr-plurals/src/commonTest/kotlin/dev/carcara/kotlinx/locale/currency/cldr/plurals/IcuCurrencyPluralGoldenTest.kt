@@ -1,5 +1,6 @@
 package dev.carcara.kotlinx.locale.currency.cldr.plurals
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.CurrencyAmount
@@ -9,8 +10,7 @@ import dev.carcara.kotlinx.locale.currency.cldr.plurals.conformance.icuCurrencyP
 import dev.carcara.kotlinx.locale.currency.cldr.runtime.pluralName
 import dev.carcara.kotlinx.locale.currency.forCodeOrNull
 import dev.carcara.kotlinx.locale.number.PluralCategory
-import kotlin.test.Test
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Holds the name form to what ICU writes for the same amount.
@@ -26,13 +26,12 @@ import kotlin.test.assertTrue
  * currency name in the golden set moved, so this compares all 23,400 of them,
  * and [everyGoldenNameMatchesIcu] is what fails first if one ever does.
  */
-class IcuCurrencyPluralGoldenTest {
+val IcuCurrencyPluralGoldenTest by matrixSuite {
 
     /** ICU and CLDR point releases disagree about which no-break space they use. */
-    private fun String.normalizedSpaces(): String = replace(' ', ' ').replace(' ', ' ')
+    fun String.normalizedSpaces(): String = replace(' ', ' ').replace(' ', ' ')
 
-    @Test
-    fun namedOutputMatchesIcu() {
+    test("namedOutputMatchesIcu") {
         var compared = 0
         val mismatches = ArrayList<String>()
         for ((tag, golden) in icuCurrencyPluralGoldenData) {
@@ -59,8 +58,7 @@ class IcuCurrencyPluralGoldenTest {
         )
     }
 
-    @Test
-    fun everyGoldenNameMatchesIcu() {
+    test("everyGoldenNameMatchesIcu") {
         // The tables behind the output, checked on their own so that a CLDR or
         // ICU bump reports a name that moved as a name that moved rather than as
         // a thousand formatting failures.

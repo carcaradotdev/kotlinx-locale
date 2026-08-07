@@ -1,17 +1,16 @@
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.cldr.displayName
 import dev.carcara.kotlinx.locale.currency.cldr.symbol
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
-class CurrencyNamesTest {
+val CurrencyNamesTest by matrixSuite {
 
-    @Test
-    fun localizesSymbolsAndNames() {
+    test("localizesSymbolsAndNames") {
         assertEquals("$", Currency.USD.symbol(Locale.forLanguageTag("en")))
         assertEquals("US$", Currency.USD.symbol(Locale.forLanguageTag("pt-BR")))
         assertEquals("¥", Currency.JPY.symbol(Locale.forLanguageTag("en")))
@@ -28,8 +27,7 @@ class CurrencyNamesTest {
         assertEquals("日本円", Currency.JPY.displayName(Locale.forLanguageTag("ja")))
     }
 
-    @Test
-    fun writesTheAlternativeSpellingsCldrDeclares() {
+    test("writesTheAlternativeSpellingsCldrDeclares") {
         val en = Locale.forLanguageTag("en")
         val ptBr = Locale.forLanguageTag("pt-BR")
         val zhHant = Locale.forLanguageTag("zh-Hant")
@@ -56,8 +54,7 @@ class CurrencyNamesTest {
         assertEquals("USD", Currency.USD.symbol(ptBr, CurrencySymbolStyle.CODE))
     }
 
-    @Test
-    fun everyCurrencyResolvesSymbolAndNameInMajorLocales() {
+    test("everyCurrencyResolvesSymbolAndNameInMajorLocales") {
         val locales = listOf("en", "de", "ja", "pt-BR", "ar-EG").map(Locale::forLanguageTag)
         for (locale in locales) {
             for (currency in Currency.entries) {
@@ -67,8 +64,7 @@ class CurrencyNamesTest {
         }
     }
 
-    @Test
-    fun reportsTheLocalesItCarriesDataFor() {
+    test("reportsTheLocalesItCarriesDataFor") {
         val tags = CldrCurrency.supportedLocales.map(Locale::toLanguageTag)
         assertTrue(tags.size > 700, "expected hundreds of locales, got ${tags.size}")
         assertTrue("en" in tags)

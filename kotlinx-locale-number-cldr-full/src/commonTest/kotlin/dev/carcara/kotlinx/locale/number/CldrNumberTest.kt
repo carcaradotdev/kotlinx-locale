@@ -1,5 +1,6 @@
 package dev.carcara.kotlinx.locale.number
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumber
 import dev.carcara.kotlinx.locale.number.cldr.numberFormat
@@ -8,9 +9,8 @@ import dev.carcara.kotlinx.locale.number.cldr.numberOrdinal
 import dev.carcara.kotlinx.locale.number.cldr.numberParseOrNull
 import dev.carcara.kotlinx.locale.number.cldr.numberSymbols
 import dev.carcara.kotlinx.locale.number.cldr.pluralCategory
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 private val EN = Locale.of("en")
 private val DE = Locale.of("de")
@@ -18,10 +18,9 @@ private val CS = Locale.of("cs")
 private val TR = Locale.of("tr")
 private val PL = Locale.of("pl")
 
-class CldrNumberTest {
+val CldrNumberTest by matrixSuite {
 
-    @Test
-    fun groupsWithTheLocaleSeparators() {
+    test("groupsWithTheLocaleSeparators") {
         assertEquals("1,234,567", numberFormat(1234567L, EN))
         assertEquals("1.234.567", numberFormat(1234567L, DE))
         // Czech groups with a no-break space, which is the character CLDR
@@ -29,8 +28,7 @@ class CldrNumberTest {
         assertEquals("1 234 567", numberFormat(1234567L, CS))
     }
 
-    @Test
-    fun honoursMinimumGroupingDigits() {
+    test("honoursMinimumGroupingDigits") {
         // Polish declares minimumGroupingDigits 2, so a four-digit number does
         // not group and a five-digit one does.
         assertEquals("1000", numberFormat(1000L, PL))
@@ -38,8 +36,7 @@ class CldrNumberTest {
         assertEquals("1,000", numberFormat(1000L, EN))
     }
 
-    @Test
-    fun percentTakesAFractionAndCarriesTheLocalePlacement() {
+    test("percentTakesAFractionAndCarriesTheLocalePlacement") {
         val eighth = Decimal.parse("0.125")
         // 12.5 rounds to 12 rather than 13: LDML says nothing about the rounding
         // mode, so this library follows ICU and rounds half to even, which is
@@ -54,8 +51,7 @@ class CldrNumberTest {
         assertEquals("%12,5", numberFormatPercent(eighth, TR, fractionDigits = 1))
     }
 
-    @Test
-    fun compactPinsItsDefaultPrecision() {
+    test("compactPinsItsDefaultPrecision") {
         // Two significant digits or none, whichever keeps more: the value this
         // library pins where UTS #35 says only "typically".
         assertEquals("1.2K", numberFormat(1200L, EN, notation = NumberNotation.COMPACT_SHORT))
@@ -66,14 +62,12 @@ class CldrNumberTest {
         assertEquals("1.2M", numberFormat(1200000L, EN, notation = NumberNotation.COMPACT_SHORT))
     }
 
-    @Test
-    fun compactLongUsesTheLocaleWording() {
+    test("compactLongUsesTheLocaleWording") {
         assertEquals("1.2 thousand", numberFormat(1200L, EN, notation = NumberNotation.COMPACT_LONG))
         assertTrue(numberFormat(1200L, DE, notation = NumberNotation.COMPACT_LONG).isNotEmpty())
     }
 
-    @Test
-    fun pluralCategoryReadsTheVisibleDigits() {
+    test("pluralCategoryReadsTheVisibleDigits") {
         // The Czech rule is `one: i = 1 and v = 0` and `many: v != 0`, so the
         // same numeric value falls into different categories depending on how it
         // is about to be printed.
@@ -85,8 +79,7 @@ class CldrNumberTest {
         assertEquals(PluralCategory.OTHER, pluralCategory(2L, EN))
     }
 
-    @Test
-    fun ordinalsFollowTheRuleSetOrRootsFullStop() {
+    test("ordinalsFollowTheRuleSetOrRootsFullStop") {
         assertEquals("1st", numberOrdinal(1L, EN))
         assertEquals("2nd", numberOrdinal(2L, EN))
         assertEquals("3rd", numberOrdinal(3L, EN))
@@ -99,8 +92,7 @@ class CldrNumberTest {
         assertEquals("2.", numberOrdinal(2L, CS))
     }
 
-    @Test
-    fun signDisplayPutsThePlusWhereTheLocaleDoes() {
+    test("signDisplayPutsThePlusWhereTheLocaleDoes") {
         assertEquals("+42", numberFormat(42L, EN, signDisplay = SignDisplay.ALWAYS))
         assertEquals("-42", numberFormat(-42L, EN))
         assertEquals("42", numberFormat(42L, EN))
@@ -113,8 +105,7 @@ class CldrNumberTest {
         assertEquals("42", numberFormat(-42L, EN, signDisplay = SignDisplay.NEVER))
     }
 
-    @Test
-    fun symbolsAreHandedOutWhole() {
+    test("symbolsAreHandedOutWhole") {
         val czech = numberSymbols(CS)
         assertEquals(",", czech.decimal)
         assertEquals(" ", czech.group)
@@ -124,8 +115,7 @@ class CldrNumberTest {
         assertEquals(2, numberSymbols(PL).minimumGroupingDigits)
     }
 
-    @Test
-    fun parsingKeepsTheDigitsItWasGiven() {
+    test("parsingKeepsTheDigitsItWasGiven") {
         val parsed = numberParseOrNull("1.50", EN)
         assertEquals(Decimal.parse("1.50"), parsed)
         assertEquals(2, parsed?.scale, "the scale is what the plural rules read")
@@ -133,8 +123,7 @@ class CldrNumberTest {
         assertEquals(null, numberParseOrNull("not a number", EN))
     }
 
-    @Test
-    fun everyLocaleAnswers() {
+    test("everyLocaleAnswers") {
         var checked = 0
         for (locale in CldrNumber.supportedLocales) {
             val formatted = numberFormat(1234567L, locale)

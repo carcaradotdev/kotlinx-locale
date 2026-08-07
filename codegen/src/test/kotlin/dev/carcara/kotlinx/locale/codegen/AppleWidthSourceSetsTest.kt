@@ -1,9 +1,9 @@
 package dev.carcara.kotlinx.locale.codegen
 
+import at.asitplus.testballoon.matrix.matrixSuite
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 import java.io.File
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /**
  * Holds the two Apple source sets that exist only because of a pointer width to
@@ -24,14 +24,13 @@ import kotlin.test.assertTrue
  * set and a handle on the repository root; it has nothing to do with generating
  * data.
  */
-class AppleWidthSourceSetsTest {
+val AppleWidthSourceSetsTest by matrixSuite {
 
-    private val rootDir = File(
+    val rootDir = File(
         System.getProperty("kotlinx.locale.rootDir") ?: error("kotlinx.locale.rootDir is not set"),
     )
 
-    @Test
-    fun theWidthSpecificSourceSetsAreCopiesOfEachOther() {
+    test("theWidthSpecificSourceSetsAreCopiesOfEachOther") {
         val modules = rootDir.listFiles { file: File -> file.isDirectory && file.name.startsWith("kotlinx-locale-") }
             .orEmpty()
             .sortedBy(File::getName)

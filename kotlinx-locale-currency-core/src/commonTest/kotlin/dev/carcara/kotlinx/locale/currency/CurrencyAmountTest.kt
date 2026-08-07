@@ -1,15 +1,14 @@
 package dev.carcara.kotlinx.locale.currency
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import at.asitplus.testballoon.matrix.matrixSuite
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertFailsWith
+import dev.carcara.kotlinx.locale.test.assertNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
-class CurrencyAmountTest {
+val CurrencyAmountTest by matrixSuite {
 
-    @Test
-    fun decomposesIntoMajorAndMinorParts() {
+    test("decomposesIntoMajorAndMinorParts") {
         val amount = CurrencyAmount(Currency.USD, 1250)
         assertEquals(12, amount.majorUnits)
         assertEquals(50, amount.minorPart)
@@ -27,8 +26,7 @@ class CurrencyAmountTest {
         assertEquals(500, dinar.minorPart)
     }
 
-    @Test
-    fun buildsFromMajorAndMinorParts() {
+    test("buildsFromMajorAndMinorParts") {
         assertEquals(1250, CurrencyAmount.of(Currency.USD, 12, 50).minorUnits)
         assertEquals(-1250, CurrencyAmount.of(Currency.USD, -12, -50).minorUnits)
         assertEquals(-5, CurrencyAmount.of(Currency.USD, 0, -5).minorUnits)
@@ -40,8 +38,7 @@ class CurrencyAmountTest {
         assertFailsWith<IllegalArgumentException> { CurrencyAmount.of(Currency.JPY, 12, 1) }
     }
 
-    @Test
-    fun supportsArithmeticWithinOneCurrency() {
+    test("supportsArithmeticWithinOneCurrency") {
         val a = CurrencyAmount(Currency.USD, 1000)
         val b = CurrencyAmount(Currency.USD, 250)
         assertEquals(1250, (a + b).minorUnits)
@@ -56,8 +53,7 @@ class CurrencyAmountTest {
         assertFailsWith<IllegalArgumentException> { a.compareTo(yen) }
     }
 
-    @Test
-    fun amountsAreValueObjects() {
+    test("amountsAreValueObjects") {
         assertEquals(CurrencyAmount(Currency.USD, 1250), CurrencyAmount(Currency.USD, 1250))
         assertTrue(CurrencyAmount(Currency.USD, 1250) != CurrencyAmount(Currency.EUR, 1250))
         assertTrue(CurrencyAmount(Currency.USD, 1250) != CurrencyAmount(Currency.USD, 1251))
@@ -68,8 +64,7 @@ class CurrencyAmountTest {
         assertEquals("USD 12.50", CurrencyAmount(Currency.USD, 1250).toString())
     }
 
-    @Test
-    fun rendersIsoDecimalStrings() {
+    test("rendersIsoDecimalStrings") {
         assertEquals("12.50", CurrencyAmount(Currency.USD, 1250).toDecimalString())
         assertEquals("-12.50", CurrencyAmount(Currency.USD, -1250).toDecimalString())
         assertEquals("-0.05", CurrencyAmount(Currency.USD, -5).toDecimalString())
@@ -78,8 +73,7 @@ class CurrencyAmountTest {
         assertEquals("1.500", CurrencyAmount(Currency.BHD, 1500).toDecimalString())
     }
 
-    @Test
-    fun parsesIsoDecimalStrings() {
+    test("parsesIsoDecimalStrings") {
         assertEquals(1250, CurrencyAmount.parse(Currency.USD, "12.50").minorUnits)
         assertEquals(1250, CurrencyAmount.parse(Currency.USD, "12.5").minorUnits)
         assertEquals(-700, CurrencyAmount.parse(Currency.USD, "-7").minorUnits)
@@ -98,8 +92,7 @@ class CurrencyAmountTest {
         assertFailsWith<IllegalArgumentException> { CurrencyAmount.parse(Currency.USD, "abc") }
     }
 
-    @Test
-    fun decimalStringsRoundTripForEveryCurrency() {
+    test("decimalStringsRoundTripForEveryCurrency") {
         val samples = listOf(0L, 1, -1, 99, -100, 123456, -9999999, Long.MAX_VALUE, Long.MIN_VALUE)
         for (currency in Currency.entries) {
             for (minorUnits in samples) {
@@ -113,8 +106,7 @@ class CurrencyAmountTest {
         }
     }
 
-    @Test
-    fun handlesLongExtremes() {
+    test("handlesLongExtremes") {
         val max = CurrencyAmount(Currency.USD, Long.MAX_VALUE)
         assertEquals("92233720368547758.07", max.toDecimalString())
         assertEquals(92233720368547758, max.majorUnits)

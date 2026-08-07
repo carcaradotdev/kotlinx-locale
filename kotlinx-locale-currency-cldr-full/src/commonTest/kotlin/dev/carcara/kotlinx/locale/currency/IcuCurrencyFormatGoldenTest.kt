@@ -1,12 +1,12 @@
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
-import dev.carcara.kotlinx.locale.conformance.icuCurrencyFormatGoldenData
-import dev.carcara.kotlinx.locale.conformance.icuCurrencyFormatGoldenMinorUnits
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.cldr.format
-import kotlin.test.Test
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.currency.conformance.icuCurrencyFormatGoldenData
+import dev.carcara.kotlinx.locale.currency.conformance.icuCurrencyFormatGoldenMinorUnits
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Holds formatted currency output to what ICU writes for the same amount.
@@ -25,15 +25,14 @@ import kotlin.test.assertTrue
  * one locale, and [everyGoldenLocaleIsMostlyComparable] fails if it ever stops
  * being narrow.
  */
-class IcuCurrencyFormatGoldenTest {
+val IcuCurrencyFormatGoldenTest by matrixSuite {
 
-    private fun style(name: String): CurrencySymbolStyle = CurrencySymbolStyle.valueOf(name)
+    fun style(name: String): CurrencySymbolStyle = CurrencySymbolStyle.valueOf(name)
 
     /** ICU and CLDR point releases disagree about which no-break space they use. */
-    private fun String.normalizedSpaces(): String = replace(' ', ' ').replace(' ', ' ')
+    fun String.normalizedSpaces(): String = replace(' ', ' ').replace(' ', ' ')
 
-    @Test
-    fun formattedOutputMatchesIcu() {
+    test("formattedOutputMatchesIcu") {
         var compared = 0
         val mismatches = ArrayList<String>()
         for ((tag, golden) in icuCurrencyFormatGoldenData) {
@@ -67,8 +66,7 @@ class IcuCurrencyFormatGoldenTest {
         )
     }
 
-    @Test
-    fun everyGoldenLocaleIsMostlyComparable() {
+    test("everyGoldenLocaleIsMostlyComparable") {
         // The skip above is meant to catch a handful of currencies whose symbol
         // moved between the two releases. A locale where it fires for most of
         // the set means something else is wrong, and comparing what is left

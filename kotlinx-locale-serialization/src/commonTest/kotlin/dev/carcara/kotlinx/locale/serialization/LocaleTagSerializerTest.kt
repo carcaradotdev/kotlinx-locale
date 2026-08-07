@@ -1,6 +1,9 @@
 package dev.carcara.kotlinx.locale.serialization
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertFailsWith
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
@@ -8,14 +11,17 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
-class LocaleTagSerializerTest {
+@Serializable
+private data class Preferences(
+    @Serializable(with = LocaleTagSerializer::class) val display: Locale,
+    @Serializable(with = LocaleTagSerializer::class) val fallback: Locale,
+)
 
-    @Test
-    fun writesTheCanonicalTag() {
+@Serializable
+private data class Request(@Contextual val locale: Locale)
+val LocaleTagSerializerTest by matrixSuite {
+    test("writesTheCanonicalTag") {
         assertEquals("\"pt-BR\"", Json.encodeToString(LocaleTagSerializer, Locale.of("pt", region = "BR")))
         assertEquals("\"en\"", Json.encodeToString(LocaleTagSerializer, Locale.of("en")))
         assertEquals(
@@ -24,15 +30,13 @@ class LocaleTagSerializerTest {
         )
     }
 
-    @Test
-    fun normalizesSubtagCaseOnTheWayOut() {
+    test("normalizesSubtagCaseOnTheWayOut") {
         // The instance normalizes, so the tag written is canonical whatever the
         // caller passed. Serialization inherits that rather than repeating it.
         assertEquals("\"pt-BR\"", Json.encodeToString(LocaleTagSerializer, Locale.of("PT", region = "br")))
     }
 
-    @Test
-    fun roundTripsEveryShapeOfTag() {
+    test("roundTripsEveryShapeOfTag") {
         val locales = listOf(
             Locale.of("en"),
             Locale.of("pt", region = "BR"),
@@ -46,8 +50,7 @@ class LocaleTagSerializerTest {
         }
     }
 
-    @Test
-    fun readsLenientlyBecauseForLanguageTagDoes() {
+    test("readsLenientlyBecauseForLanguageTagDoes") {
         // POSIX identifiers and Unicode extensions parse, so a tag written by
         // something other than this serializer still reads.
         assertEquals(
@@ -60,31 +63,27 @@ class LocaleTagSerializerTest {
         )
     }
 
-    @Test
-    fun rejectsATagWithNoLanguageSubtag() {
+    test("rejectsATagWithNoLanguageSubtag") {
         assertFailsWith<SerializationException> { Json.decodeFromString(LocaleTagSerializer, "\"\"") }
         assertFailsWith<SerializationException> { Json.decodeFromString(LocaleTagSerializer, "\"123\"") }
         assertFailsWith<SerializationException> { Json.decodeFromString(LocaleTagSerializer, "\"C\"") }
     }
 
-    @Test
-    fun worksInsideAGeneratedSerializer() {
+    test("worksInsideAGeneratedSerializer") {
         val preferences = Preferences(Locale.of("pt", region = "BR"), Locale.of("en"))
         val encoded = Json.encodeToString(preferences)
         assertEquals("""{"display":"pt-BR","fallback":"en"}""", encoded)
         assertEquals(preferences, Json.decodeFromString<Preferences>(encoded))
     }
 
-    @Test
-    fun worksAsACollectionElement() {
+    test("worksAsACollectionElement") {
         val locales = listOf(Locale.of("pt", region = "BR"), Locale.of("ja"))
         val encoded = Json.encodeToString(ListSerializer(LocaleTagSerializer), locales)
         assertEquals("""["pt-BR","ja"]""", encoded)
         assertEquals(locales, Json.decodeFromString(ListSerializer(LocaleTagSerializer), encoded))
     }
 
-    @Test
-    fun resolvesContextually() {
+    test("resolvesContextually") {
         // The one-line alternative to annotating every property, for a codebase
         // that has settled on a single strategy.
         val json = Json { serializersModule = SerializersModule { contextual(LocaleTagSerializer) } }
@@ -92,13 +91,4 @@ class LocaleTagSerializerTest {
         assertEquals("""{"locale":"fr-CA"}""", json.encodeToString(request))
         assertEquals(request, json.decodeFromString<Request>("""{"locale":"fr-CA"}"""))
     }
-
-    @Serializable
-    private data class Preferences(
-        @Serializable(with = LocaleTagSerializer::class) val display: Locale,
-        @Serializable(with = LocaleTagSerializer::class) val fallback: Locale,
-    )
-
-    @Serializable
-    private data class Request(@Contextual val locale: Locale)
 }

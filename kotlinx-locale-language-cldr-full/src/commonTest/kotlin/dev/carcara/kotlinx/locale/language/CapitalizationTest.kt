@@ -1,11 +1,11 @@
 package dev.carcara.kotlinx.locale.language
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Capitalization
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.language.cldr.CldrLanguage
 import dev.carcara.kotlinx.locale.language.cldr.nativeDisplayName
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertEquals
 
 private val CS = Locale.of("cs")
 private val BE = Locale.of("be")
@@ -16,10 +16,9 @@ private val TR = Locale.of("tr")
  * row capitalizes it is a property of the language, recorded per usage, and not
  * something a caller can decide by uppercasing the first letter.
  */
-class CapitalizationTest {
+val CapitalizationTest by matrixSuite {
 
-    @Test
-    fun czechTitleCasesALanguageNameInAMenu() {
+    test("czechTitleCasesALanguageNameInAMenu") {
         val name = CS.nativeDisplayName
         assertEquals("čeština", name, "CLDR stores the running-text form")
         assertEquals(
@@ -32,8 +31,7 @@ class CapitalizationTest {
         )
     }
 
-    @Test
-    fun aLocaleThatDeclaresNoTransformIsLeftAlone() {
+    test("aLocaleThatDeclaresNoTransformIsLeftAlone") {
         // Belarusian writes its names in lower case and declares no transform,
         // which means it. Title-casing anyway would be wrong here and in 251
         // other locales, which is why the data has to ship rather than be
@@ -45,8 +43,7 @@ class CapitalizationTest {
         )
     }
 
-    @Test
-    fun turkishDeclaresNoTransformForLanguageNames() {
+    test("turkishDeclaresNoTransformForLanguageNames") {
         // It declares one for relative wording and not for names, which is the
         // kind of per-usage difference that makes a single per-locale flag the
         // wrong shape for this data.

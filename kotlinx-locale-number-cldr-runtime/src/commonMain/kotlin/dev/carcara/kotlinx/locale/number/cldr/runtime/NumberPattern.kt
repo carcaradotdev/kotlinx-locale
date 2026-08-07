@@ -3,7 +3,16 @@ package dev.carcara.kotlinx.locale.number.cldr.runtime
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 
 /** The characters that make up the number core of a CLDR number pattern. */
-private const val NUMBER_CHARS = "#0,."
+// 1 to 9 belong here as much as 0 does. UTS #35 writes a rounding increment
+// with them, `#,##0.05` being round-to-five-hundredths, and leaving them out put
+// the 5 outside the core: it parsed as a literal suffix, so the increment was
+// always zero and the digit was printed after the number. The branch that reads
+// an increment in `parseSubpattern` was unreachable for the same reason.
+//
+// Nothing in the bundled tables reaches it today, because a currency's rounding
+// increment is carried on the Currency entry rather than in its pattern, which
+// is why this survived. It is still what the pattern grammar says.
+private const val NUMBER_CHARS = "#0123456789,."
 
 /**
  * One parsed CLDR number pattern.

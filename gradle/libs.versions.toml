@@ -7,6 +7,18 @@ android-compileSdk = "36"
 android-minSdk = "21"
 ktlint-gradle = "14.2.0"
 maven-publish = "0.37.0"
+kover = "0.9.9"
+# The suffix names the Kotlin release the compiler plugin was built for, so this
+# and `kotlin` above move together. Every de.infix.testBalloon artifact in one
+# build has to carry the same version.
+testballoon = "1.0.1-K2.4.0"
+# The data and property layers on top of TestBalloon. Published for twenty-four
+# of this build's twenty-five targets; see the wasmWasi note in
+# `kotlinx-locale-multiplatform-base` for the one it omits.
+testballoon-addons = "0.16.0"
+# Reached through the addon, which needs its own assertion vocabulary. Pinned
+# here rather than left transitive so a version bump is a visible edit.
+kotest = "6.0.4"
 # Matches ICU_REPO.tag in Repos.kt: the goldens the skeleton matcher is held to
 # have to come from the same ICU release the CLDR data is pinned against.
 icu4j = "78.3"
@@ -16,6 +28,23 @@ libphonenumber = "9.0.19"
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+
+# The test framework. The Gradle plugin instruments the compilation but does not
+# put the framework on the classpath, so this is declared for every test source
+# set by `kotlinx-locale-multiplatform-base` rather than being implied.
+#
+# `matrix` is what makes a case set readable: it turns a list of fixtures into
+# one reported node per locale instead of one accumulated string per domain.
+# `compact` bounds what that costs, which matters at eleven hundred locales.
+# The Android host test compilation only. TestBalloon integrates there through a
+# JUnit 4 runner, and JUnit 4 used to arrive transitively with kotlin-test; with
+# kotlin-test gone the runner has nothing to register with and the task discovers
+# no tests at all.
+junit4 = { module = "junit:junit", version = "4.13.2" }
+
+testballoon-framework-core = { module = "de.infix.testBalloon:testBalloon-framework-core", version.ref = "testballoon" }
+testballoon-matrix = { module = "at.asitplus.testballoon:matrix", version.ref = "testballoon-addons" }
+kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 
 # The Gradle plugin's tests only, so that the source each feature generates is
 # compiled rather than pattern-matched. Nothing published depends on it.
@@ -41,3 +70,5 @@ gradle-plugin-android-kmp-library = { module = "com.android.kotlin.multiplatform
 gradle-plugin-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint-gradle" }
 gradle-plugin-kotlin-serialization = { module = "org.jetbrains.kotlin.plugin.serialization:org.jetbrains.kotlin.plugin.serialization.gradle.plugin", version.ref = "kotlin" }
 gradle-plugin-maven-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "maven-publish" }
+gradle-plugin-testballoon = { module = "de.infix.testBalloon:testBalloon-gradle-plugin", version.ref = "testballoon" }
+gradle-plugin-kover = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }

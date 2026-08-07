@@ -1,5 +1,6 @@
 package dev.carcara.kotlinx.locale.phone
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.phone.metadata.PhoneNumbers
 import dev.carcara.kotlinx.locale.phone.metadata.asYouType
@@ -9,10 +10,9 @@ import dev.carcara.kotlinx.locale.phone.metadata.phoneNumberOrNull
 import dev.carcara.kotlinx.locale.phone.metadata.phoneRegionCandidates
 import dev.carcara.kotlinx.locale.phone.metadata.phoneRegionOrNull
 import dev.carcara.kotlinx.locale.phone.metadata.typeOf
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Every example written in API.md, run.
@@ -20,10 +20,9 @@ import kotlin.test.assertTrue
  * Prose does not fail to compile, and the phone section is the newest and so the
  * most likely to drift. Each assertion here is one line of that document.
  */
-class DocumentedExamplesTest {
+val DocumentedExamplesTest by matrixSuite {
 
-    @Test
-    fun theParseAndFormatExample() {
+    test("theParseAndFormatExample") {
         val number = assertNotNull(phoneNumberOrNull("020 7123 4567", Country.GB))
         assertTrue(number.isValid())
         assertEquals(PhoneNumberType.FIXED_LINE, number.typeOf())
@@ -35,8 +34,7 @@ class DocumentedExamplesTest {
         assertEquals("GB", number.regionCode)
     }
 
-    @Test
-    fun theAsYouTypeExample() {
+    test("theAsYouTypeExample") {
         val formatter = Country.US.asYouType()
         assertEquals("2", formatter.append('2'))
         assertEquals("201-5", formatter.append("015"))
@@ -44,15 +42,13 @@ class DocumentedExamplesTest {
         assertEquals("(201) 555-012", formatter.removeLast())
     }
 
-    @Test
-    fun theFailureReasonExample() {
+    test("theFailureReasonExample") {
         val result = PhoneNumbers.parse("1", Country.BR)
         assertTrue(result is PhoneParseResult.Failed)
         assertEquals(PhoneParseFailure.TOO_SHORT, result.reason)
     }
 
-    @Test
-    fun parsingAcceptsWhatPeopleType() {
+    test("parsingAcceptsWhatPeopleType") {
         val forms = listOf(
             "+442071234567",
             "+44 20 7123 4567",
@@ -66,8 +62,7 @@ class DocumentedExamplesTest {
         }
     }
 
-    @Test
-    fun theNumberCarriesItsOwnCountry() {
+    test("theNumberCarriesItsOwnCountry") {
         // The whole point of the region property: one call, both facts.
         val number = assertNotNull(phoneNumberOrNull("+55 11 96123-4567"))
         assertEquals(Country.BR, number.region)
@@ -78,8 +73,7 @@ class DocumentedExamplesTest {
         assertEquals(null, phoneRegionOrNull("11961234567"))
     }
 
-    @Test
-    fun aBareNationalNumberListsItsCandidates() {
+    test("aBareNationalNumberListsItsCandidates") {
         // No calling code means no country, so the honest answer is every
         // territory it would be valid in rather than a guess at one.
         val candidates = phoneRegionCandidates("2071234567")
@@ -90,8 +84,7 @@ class DocumentedExamplesTest {
         assertEquals(listOf(Country.GB), phoneRegionCandidates("+442071234567"))
     }
 
-    @Test
-    fun anExtensionSurvivesTheRoundTrip() {
+    test("anExtensionSurvivesTheRoundTrip") {
         val number = assertNotNull(phoneNumberOrNull("+44 20 7123 4567 ext. 89"))
         assertEquals("89", number.extension)
         assertEquals("tel:+44-20-7123-4567;ext=89", number.format(PhoneNumberFormat.RFC3966))

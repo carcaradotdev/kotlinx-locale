@@ -2,32 +2,31 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.datetime.cldr.CldrDateTime
 import dev.carcara.kotlinx.locale.datetime.cldr.displayName
 import dev.carcara.kotlinx.locale.datetime.cldr.format
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.formatPattern
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.parseDateTimePattern
+import dev.carcara.kotlinx.locale.test.assertTrue
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
-import kotlin.test.Test
-import kotlin.test.assertTrue
 
 /**
  * End-to-end sweep: every bundled locale must format every style without
  * throwing and without producing blank output.
  */
-class AllLocalesSmokeTest {
+val AllLocalesSmokeTest by matrixSuite {
 
-    private val date = LocalDate(2026, 7, 27)
-    private val time = LocalTime(15, 5, 9)
-    private val dateTime = LocalDateTime(date, time)
+    val date = LocalDate(2026, 7, 27)
+    val time = LocalTime(15, 5, 9)
+    val dateTime = LocalDateTime(date, time)
 
-    @Test
-    fun everyLocaleFormatsEveryStyle() {
+    test("everyLocaleFormatsEveryStyle") {
         for (locale in CldrDateTime.supportedLocales) {
             for (style in FormatStyle.entries) {
                 val dateResult = date.format(style, locale)
@@ -44,8 +43,7 @@ class AllLocalesSmokeTest {
         }
     }
 
-    @Test
-    fun everyLocaleResolvesADayPeriodAtEveryHour() {
+    test("everyLocaleResolvesADayPeriodAtEveryHour") {
         val bTokens = parseDateTimePattern("B")
         val bLowerTokens = parseDateTimePattern("b")
         for (locale in CldrDateTime.supportedLocales) {
@@ -61,8 +59,7 @@ class AllLocalesSmokeTest {
         }
     }
 
-    @Test
-    fun everyLocaleHasNamesForEveryMonthAndDay() {
+    test("everyLocaleHasNamesForEveryMonthAndDay") {
         for (locale in CldrDateTime.supportedLocales) {
             for (style in TextStyle.entries) {
                 for (month in Month.entries) {

@@ -1,5 +1,6 @@
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.durations.CldrDurationUnits
 import dev.carcara.kotlinx.locale.datetime.cldr.durations.durationFormat
@@ -7,9 +8,8 @@ import dev.carcara.kotlinx.locale.datetime.cldr.durations.durationUnitName
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.DurationUnit
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.UnitWidth
 import dev.carcara.kotlinx.locale.number.Decimal
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 private val en = Locale.forLanguageTag("en")
 private val de = Locale.forLanguageTag("de")
@@ -26,10 +26,9 @@ private val es = Locale.forLanguageTag("es")
  */
 private const val NBSP = "\u00A0"
 
-class CldrDurationUnitsTest {
+val CldrDurationUnitsTest by matrixSuite {
 
-    @Test
-    fun widthsDiffer() {
+    test("widthsDiffer") {
         assertEquals("2 hours", durationFormat(2, DurationUnit.HOUR, UnitWidth.LONG, en))
         assertEquals("2 hr", durationFormat(2, DurationUnit.HOUR, UnitWidth.SHORT, en))
         assertEquals("2h", durationFormat(2, DurationUnit.HOUR, UnitWidth.NARROW, en))
@@ -39,15 +38,13 @@ class CldrDurationUnitsTest {
         assertEquals("2m", durationFormat(2, DurationUnit.MINUTE, UnitWidth.NARROW, en))
     }
 
-    @Test
-    fun singularTakesTheOneForm() {
+    test("singularTakesTheOneForm") {
         assertEquals("1 hour", durationFormat(1, DurationUnit.HOUR, UnitWidth.LONG, en))
         assertEquals("1 minute", durationFormat(1, DurationUnit.MINUTE, UnitWidth.LONG, en))
     }
 
     /** French joins its hours with U+00A0 where German uses an ordinary space. */
-    @Test
-    fun otherLocalesUseTheirOwnWording() {
+    test("otherLocalesUseTheirOwnWording") {
         assertEquals("2 Stunden", durationFormat(2, DurationUnit.HOUR, UnitWidth.LONG, de))
         assertEquals("2${NBSP}heures", durationFormat(2, DurationUnit.HOUR, UnitWidth.LONG, fr))
     }
@@ -58,8 +55,7 @@ class CldrDurationUnitsTest {
      * English, so a missing long resolves out of the locale's own short. Note the
      * ordinary space, where the same locale's hours take U+00A0.
      */
-    @Test
-    fun aMissingLongReadsTheLocalesOwnShort() {
+    test("aMissingLongReadsTheLocalesOwnShort") {
         assertEquals("3 nuits", durationFormat(3, DurationUnit.NIGHT, UnitWidth.LONG, fr))
     }
 
@@ -67,14 +63,12 @@ class CldrDurationUnitsTest {
      * Spanish declares no short hour and root does, so the short form is root's
      * `{0} h` rather than Spanish's own narrow `3h` or its long `3 horas`.
      */
-    @Test
-    fun aMissingShortReadsRoot() {
+    test("aMissingShortReadsRoot") {
         assertEquals("3 h", durationFormat(3, DurationUnit.HOUR, UnitWidth.SHORT, es))
     }
 
     /** A locale CLDR has no unit wording for falls through to English, as ICU does. */
-    @Test
-    fun aLocaleWithNoWordingFallsBackToEnglish() {
+    test("aLocaleWithNoWordingFallsBackToEnglish") {
         val afar = Locale.forLanguageTag("aa")
         assertEquals("2 hours", durationFormat(2, DurationUnit.HOUR, UnitWidth.LONG, afar))
         assertEquals("2 hr", durationFormat(2, DurationUnit.HOUR, UnitWidth.SHORT, afar))
@@ -86,8 +80,7 @@ class CldrDurationUnitsTest {
      * caseless one is the citation form. Taking whichever came first in the file
      * gave the genitive.
      */
-    @Test
-    fun grammaticalCaseVariantsAreNotTheAnswer() {
+    test("grammaticalCaseVariantsAreNotTheAnswer") {
         assertEquals("2 сата", durationFormat(2, DurationUnit.HOUR, UnitWidth.LONG, Locale.forLanguageTag("sr")))
     }
 
@@ -96,8 +89,7 @@ class CldrDurationUnitsTest {
      * with a fraction digit in `many` whatever the value is, so `1` and `1.0`
      * differ for the same quantity.
      */
-    @Test
-    fun czechSeparatesOneFromOnePointZero() {
+    test("czechSeparatesOneFromOnePointZero") {
         val one = durationFormat(1, DurationUnit.HOUR, UnitWidth.LONG, cs)
         val onePointZero = durationFormat(1.0, fractionDigits = 1, DurationUnit.HOUR, UnitWidth.LONG, cs)
         assertTrue(one != onePointZero, "expected 1 and 1.0 to take different plural forms, both were $one")
@@ -108,29 +100,25 @@ class CldrDurationUnitsTest {
      * is what puts a locale's own digits in the phrase. Egyptian Arabic resolves
      * to the Arabic-Indic set; plain `ar` does not, and ICU agrees.
      */
-    @Test
-    fun digitsFollowTheLocalesNumberingSystem() {
+    test("digitsFollowTheLocalesNumberingSystem") {
         val egyptian = durationFormat(3, DurationUnit.HOUR, UnitWidth.LONG, Locale.forLanguageTag("ar-EG"))
         assertTrue(egyptian.any { it in '٠'..'٩' }, "expected Arabic-Indic digits, got $egyptian")
         assertTrue(durationFormat(3, DurationUnit.HOUR, UnitWidth.LONG, ar).any { it in '0'..'9' })
     }
 
     /** The digits printed are the digits the plural form was chosen from. */
-    @Test
-    fun fractionsKeepTheirDigits() {
+    test("fractionsKeepTheirDigits") {
         assertEquals("1.5 hours", durationFormat(1.5, fractionDigits = 1, DurationUnit.HOUR, UnitWidth.LONG, en))
         assertEquals("2.50 hours", durationFormat(Decimal.ofUnscaled(250, 2), DurationUnit.HOUR, UnitWidth.LONG, en))
     }
 
-    @Test
-    fun unitNamesResolve() {
+    test("unitNamesResolve") {
         assertEquals("hours", durationUnitName(DurationUnit.HOUR, UnitWidth.LONG, en))
         assertEquals("minutes", durationUnitName(DurationUnit.MINUTE, UnitWidth.LONG, en))
         assertEquals("min", durationUnitName(DurationUnit.MINUTE, UnitWidth.NARROW, en))
     }
 
-    @Test
-    fun everyUnitAnswersInEveryWidthForASampleOfLocales() {
+    test("everyUnitAnswersInEveryWidthForASampleOfLocales") {
         for (tag in listOf("en", "de", "fr", "es", "ru", "ja", "zh", "ar", "hi", "pl", "cs", "tr")) {
             val locale = Locale.forLanguageTag(tag)
             for (unit in DurationUnit.entries) {
@@ -144,8 +132,7 @@ class CldrDurationUnitsTest {
     }
 
     /** Every locale the table claims should answer for every unit and width. */
-    @Test
-    fun everyLocaleInTheTableAnswers() {
+    test("everyLocaleInTheTableAnswers") {
         for (locale in CldrDurationUnits.supportedLocales) {
             for (unit in DurationUnit.entries) {
                 for (width in UnitWidth.entries) {
@@ -158,8 +145,7 @@ class CldrDurationUnitsTest {
     }
 
     /** The table carries the locales CLDR has real wording for, not all 1122. */
-    @Test
-    fun supportedLocalesReflectsRealCoverage() {
+    test("supportedLocalesReflectsRealCoverage") {
         val supported = CldrDurationUnits.supportedLocales
         assertTrue(supported.size in 500..900, "expected a few hundred locales, got ${supported.size}")
         assertTrue(Locale.forLanguageTag("en") in supported)

@@ -2,11 +2,11 @@
 
 package dev.carcara.kotlinx.locale.platform
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * The capability contract, asserted on every target.
@@ -16,10 +16,9 @@ import kotlin.test.assertTrue
  * it is not: the four targets with no locale data are exactly the ones where a
  * silent no-op would hide a regression.
  */
-class PlatformLocaleDataTest {
+val PlatformLocaleDataTest by matrixSuite {
 
-    @Test
-    fun availabilityAndEnumerationAgree() {
+    test("availabilityAndEnumerationAgree") {
         val tags = PlatformLocaleData.availableLocaleTags()
         if (PlatformLocaleData.isAvailable) {
             // JS and Wasm/JS are available and enumerate nothing, which is allowed
@@ -32,8 +31,7 @@ class PlatformLocaleDataTest {
         }
     }
 
-    @Test
-    fun everyEnumeratedTagParses() {
+    test("everyEnumeratedTagParses") {
         val tags = PlatformLocaleData.availableLocaleTags()
         // Foundation returns identifiers such as pt_BR rather than pt-BR, so this
         // is also the check that the lenient parser covers what the hosts emit.
@@ -47,8 +45,7 @@ class PlatformLocaleDataTest {
         )
     }
 
-    @Test
-    fun enumerationIsStableAcrossCalls() {
+    test("enumerationIsStableAcrossCalls") {
         // The domain sources cache supportedLocales lazily, which is only sound if
         // the platform answers the same way twice.
         assertEquals(PlatformLocaleData.availableLocaleTags(), PlatformLocaleData.availableLocaleTags())

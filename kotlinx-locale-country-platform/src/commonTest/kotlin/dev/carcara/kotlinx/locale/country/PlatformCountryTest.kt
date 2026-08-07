@@ -1,14 +1,14 @@
 package dev.carcara.kotlinx.locale.country
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToCountryNames
 import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
 import dev.carcara.kotlinx.locale.country.platform.PlatformCountry
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * The platform country source, checked on every target this module builds for.
@@ -18,21 +18,19 @@ import kotlin.test.assertTrue
  * return, because a test that quietly does nothing on the four targets with no
  * locale data still passes there and reads as coverage it is not.
  */
-class PlatformCountryTest {
+val PlatformCountryTest by matrixSuite {
 
-    private val composed = FallbackCountryNames(primary = PlatformCountry, fallback = CldrCountry)
+    val composed = FallbackCountryNames(primary = PlatformCountry, fallback = CldrCountry)
 
-    private val en = Locale.of("en")
+    val en = Locale.of("en")
 
     // Runs identically everywhere ------------------------------------------------
 
-    @Test
-    fun theCompositionConformsBehaviourally() {
+    test("theCompositionConformsBehaviourally") {
         composed.assertConformsToCountryNames(ConformanceTier.BEHAVIOURAL)
     }
 
-    @Test
-    fun theCompositionAnswersEverywhereEvenWhereThePlatformDoesNot() {
+    test("theCompositionAnswersEverywhereEvenWhereThePlatformDoesNot") {
         // The property that makes the platform layer usable: whatever the host is
         // missing, the bundled source covers, and the caller sees one source that
         // always answers. True on the hosts with data and on the four without.
@@ -46,8 +44,7 @@ class PlatformCountryTest {
         }
     }
 
-    @Test
-    fun theCompositionAgreesWithTheBundledSourceInEnglishForTheMajorCountries() {
+    test("theCompositionAgreesWithTheBundledSourceInEnglishForTheMajorCountries") {
         // Every host and CLDR give the same English names for these, so this is an
         // exact assertion that holds on every target: on JVM, JS and Apple the
         // platform answers, on the other four the bundled source does, and the
@@ -59,8 +56,7 @@ class PlatformCountryTest {
 
     // Host-dependent, asserted on both sides -------------------------------------
 
-    @Test
-    fun theSourceHonoursItsAvailabilityContract() {
+    test("theSourceHonoursItsAvailabilityContract") {
         if (PlatformCountry.isAvailable) {
             for (alpha2 in listOf("BR", "DE", "JP", "US", "FR")) {
                 val name = assertNotNull(
@@ -81,8 +77,7 @@ class PlatformCountryTest {
         }
     }
 
-    @Test
-    fun namesAreLocalizedWhereThePlatformHasThem() {
+    test("namesAreLocalizedWhereThePlatformHasThem") {
         val english = PlatformCountry.countryNameOrNull("DE", en)
         val german = PlatformCountry.countryNameOrNull("DE", Locale.of("de"))
         if (PlatformCountry.isAvailable) {
@@ -95,8 +90,7 @@ class PlatformCountryTest {
         }
     }
 
-    @Test
-    fun anUnassignedCodeIsAnsweredByTheHostRatherThanEchoed() {
+    test("anUnassignedCodeIsAnsweredByTheHostRatherThanEchoed") {
         // ZZ looks like a region code and nobody assigns it. CldrCountry returns
         // null. java.util.Locale returns a localized "Unknown Region", which the
         // echo filter cannot catch because it is a name rather than the code.

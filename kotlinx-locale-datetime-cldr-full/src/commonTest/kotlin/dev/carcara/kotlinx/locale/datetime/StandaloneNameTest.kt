@@ -1,14 +1,14 @@
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.CldrDateTime
 import dev.carcara.kotlinx.locale.datetime.cldr.displayName
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Month
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
-import kotlin.test.assertTrue
 
 private val CS = Locale.of("cs")
 private val HR = Locale.of("hr")
@@ -20,10 +20,9 @@ private val EN = Locale.of("en")
  * one on a calendar header is the kind of mistake a reader notices and a test
  * does not, unless it is this one.
  */
-class StandaloneNameTest {
+val StandaloneNameTest by matrixSuite {
 
-    @Test
-    fun czechMonthsCarryTheirCase() {
+    test("czechMonthsCarryTheirCase") {
         assertEquals("července", Month.JULY.displayName(TextStyle.FULL, CS))
         assertEquals("července", Month.JULY.displayName(TextStyle.FULL, NameContext.FORMAT, CS))
         assertEquals("červenec", Month.JULY.displayName(TextStyle.FULL, NameContext.STANDALONE, CS))
@@ -31,8 +30,7 @@ class StandaloneNameTest {
         assertEquals("leden", Month.JANUARY.displayName(TextStyle.FULL, NameContext.STANDALONE, CS))
     }
 
-    @Test
-    fun croatianDiffersInWidthAsWellAsCase() {
+    test("croatianDiffersInWidthAsWellAsCase") {
         assertEquals("srpnja", Month.JULY.displayName(TextStyle.FULL, HR))
         assertEquals("srpanj", Month.JULY.displayName(TextStyle.FULL, NameContext.STANDALONE, HR))
         // Stand-alone narrow is a number in Croatian, so this is not only a case
@@ -40,8 +38,7 @@ class StandaloneNameTest {
         assertEquals("7.", Month.JULY.displayName(TextStyle.NARROW, NameContext.STANDALONE, HR))
     }
 
-    @Test
-    fun englishAnswersTheSameInBothContexts() {
+    test("englishAnswersTheSameInBothContexts") {
         for (month in Month.entries) {
             assertEquals(
                 month.displayName(TextStyle.FULL, EN),
@@ -56,8 +53,7 @@ class StandaloneNameTest {
         }
     }
 
-    @Test
-    fun everyLocaleAnswersInBothContexts() {
+    test("everyLocaleAnswersInBothContexts") {
         var differing = 0
         for (locale in CldrDateTime.supportedLocales) {
             for (month in Month.entries) {
@@ -70,8 +66,7 @@ class StandaloneNameTest {
         assertTrue(differing > 500, "expected the languages that inflect months to differ, got $differing")
     }
 
-    @Test
-    fun theStandaloneWeekdayIsThereToo() {
+    test("theStandaloneWeekdayIsThereToo") {
         // Russian weekday names are the same in both contexts, but its months
         // are not, which is the pair worth pinning against a regression that
         // wired the two tables to the same field.

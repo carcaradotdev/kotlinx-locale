@@ -164,6 +164,31 @@ the pattern modifier, whose switch over the widths throws instead of handling th
 name width. Nothing here reproduces that: the generator leaves the pair out of
 the fixture, records why, and fails the build if it ever stops being a handful.
 
+### Where the four kinds are recorded
+
+Three of the four are derivable from the ICU4J jar, and one is not. That split
+is what `conformance/ledger` is built around.
+
+A snapshot difference, a bundle fallback and a pruned locale can each be
+recognised by asking ICU about its own resources: whether it carries a bundle
+for the locale at all, whether the value it gave is root's, whether its value
+matches the CLDR release this build pins. So those three are computed and pinned
+by an exact count per domain rather than listed row by row. Listing them would
+be thousands of lines nobody reads a second time; the count moving is the thing
+worth noticing, because a classifier that excuses more cases than it used to is
+how a real bug stops being reported.
+
+The fourth kind cannot be derived. An ICU defect and a deliberate divergence
+look identical to a program, and telling them apart is a judgement someone
+makes once and writes down. Those are the only rows the ledger enumerates, and
+a row without a note fails at write time.
+
+This replaces what the tests used to do. Exclusions living in the tests
+themselves worked while the comparison covered thirty locales; at eleven hundred
+it would mean a list in every module and no way to see the shape of the whole.
+`:conformance-icu` compares every locale the library ships, and
+`conformance/ledger/README.md` describes what it keeps.
+
 [tr35-1]: https://www.unicode.org/reports/tr35/tr35.html
 [tr35-2]: https://www.unicode.org/reports/tr35/tr35-general.html
 [tr35-3]: https://www.unicode.org/reports/tr35/tr35-numbers.html

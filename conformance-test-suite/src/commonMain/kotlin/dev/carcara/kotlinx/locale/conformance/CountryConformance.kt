@@ -6,52 +6,17 @@ import dev.carcara.kotlinx.locale.country.CountryNameSource
 import dev.carcara.kotlinx.locale.country.alpha2
 import dev.carcara.kotlinx.locale.country.countryForDisplayNameOrNull
 import dev.carcara.kotlinx.locale.country.displayName
-import dev.carcara.kotlinx.locale.country.flagEmoji
-import dev.carcara.kotlinx.locale.country.forAlpha2OrNull
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
-
-/**
- * Holds `Country.flagEmoji` to the RGI flag sequences of UTS #51.
- *
- * Not on a source, because a flag is not locale data: it is arithmetic on the
- * alpha-2 code. What is worth checking is that the arithmetic lands on a
- * sequence Unicode recommends, and that the surrogate pair it builds is right on
- * whichever target this runs on.
- */
-public fun assertEveryCountryHasAnRgiFlag() {
-    assertTrue(rgiFlagRegionCodes.size > 240, "expected the full RGI flag set, got ${rgiFlagRegionCodes.size}")
-    for (country in Country.entries) {
-        assertTrue(
-            country.alpha2 in rgiFlagRegionCodes,
-            "${country.alpha2} has no RGI flag sequence in Emoji $RGI_EMOJI_VERSION",
-        )
-        val flag = country.flagEmoji
-        // Two astral code points, so four UTF-16 units on every target.
-        assertEquals(4, flag.length, "${country.alpha2} did not build two regional indicators")
-        val codePoints = listOf(flag.codePointAtIndex(0), flag.codePointAtIndex(2))
-        assertEquals(
-            country.alpha2,
-            codePoints.map { 'A' + (it - 0x1F1E6) }.joinToString(""),
-            "${country.alpha2} built a sequence that decodes to something else",
-        )
-    }
-}
-
-private fun String.codePointAtIndex(index: Int): Int {
-    val high = this[index].code
-    val low = this[index + 1].code
-    return 0x10000 + ((high - 0xD800) shl 10) + (low - 0xDC00)
-}
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Runs this source through the country conformance suite and fails the calling
  * test on the first disagreement.
  *
- * At [ConformanceTier.EXACT] every name is compared against ICU's; at
- * [ConformanceTier.BEHAVIOURAL] only against what the API promises regardless
- * of where the data came from.
+ * Both tiers get the shape checks. The comparison against ICU's own names is
+ * not here: it needs the golden, and the golden lives in the module that owns
+ * the table it describes. `country-cldr-full` runs it as its own case.
  */
 public fun CountryNameSource.assertConformsToCountryNames(tier: ConformanceTier) {
     val english = Locale.of("en")
@@ -62,27 +27,10 @@ public fun CountryNameSource.assertConformsToCountryNames(tier: ConformanceTier)
     if (tier == ConformanceTier.EXACT) {
         assertTrue(supportedLocales.isNotEmpty(), "a CLDR-backed source is expected to enumerate its locales")
         assertTrue(english in supportedLocales, "a CLDR-backed source is expected to carry English")
-        assertMatchesIcuCountryNames()
     }
     assertNamesAreWellShaped(english)
     assertNamesReverseLookUp(english)
     assertUnknownLocalesStillAnswer()
-}
-
-private fun CountryNameSource.assertMatchesIcuCountryNames() {
-    assertTrue(icuCountryGoldenData.size >= 25, "expected the full golden locale set")
-    for (golden in icuCountryGoldenData) {
-        val locale = Locale.forLanguageTag(golden.tag)
-        assertTrue(golden.names.isNotEmpty(), "${golden.tag} has no golden names")
-        for ((alpha2, icuName) in golden.names) {
-            val country = assertNotNull(Country.forAlpha2OrNull(alpha2), "$alpha2 is not in this build's entry set")
-            assertEquals(
-                icuName.normalizedSpaces(),
-                displayName(country, locale).normalizedSpaces(),
-                "${golden.tag} $alpha2",
-            )
-        }
-    }
 }
 
 private fun CountryNameSource.assertNamesAreWellShaped(english: Locale) {

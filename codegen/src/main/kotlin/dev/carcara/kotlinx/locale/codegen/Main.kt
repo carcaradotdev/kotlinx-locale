@@ -25,18 +25,21 @@ fun main(args: Array<String>) {
 private fun File.sourceRoot(module: String, sourceSet: String = "commonMain"): File = resolve("$module/src/$sourceSet/kotlin")
 
 /**
- * The ICU fixtures live in the conformance module rather than in one domain's
- * tests, so that any source can be checked against them and not just the
- * bundled one.
- */
-/**
- * Where the phone fixtures go, which is not the shared conformance module.
+ * Every fixture goes to the `commonTest` of the one module that reads it.
  *
- * They are six thousand cases used by exactly one module, and the shared module
- * is compiled into every other module's test binary. Putting them there made
- * `country-cldr-full` carry the phone edge cases on every Kotlin/Native target,
- * which is waste on its own and was enough to exhaust the Native compiler's
- * heap while linking.
+ * There used to be a shared `conformance-test-suite` destination here, on the
+ * reasoning that any source should be checkable against any fixture. The cost
+ * was that the shared module is a project dependency of thirteen modules and
+ * compiles into every one of their test binaries, so `country-cldr-full` linked
+ * the number goldens and `number-cldr-full` linked the time zone ones. That was
+ * 2.9 MB of generated source in each, and it is what the memory note in
+ * `gradle.properties` was written about.
+ *
+ * The phone, person name, interval, currency plural, duration and week fixtures
+ * were moved out one at a time as each of them broke something; the rest
+ * followed. What stayed in the shared module is the contract a source owes
+ * whatever its data came from, which is the part a platform source also has to
+ * satisfy and which carries no data at all.
  */
 private fun phoneConformanceDir(rootDir: File): File = rootDir
     .sourceRoot("kotlinx-locale-phone-metadata-full", "commonTest")
@@ -72,8 +75,35 @@ private fun weekConformanceDir(rootDir: File): File = rootDir
     .sourceRoot("kotlinx-locale-datetime-cldr-full", "commonTest")
     .resolve("dev/carcara/kotlinx/locale/datetime/cldr/conformance")
 
-private fun conformanceDir(rootDir: File): File = rootDir
-    .sourceRoot("conformance-test-suite")
+private fun countryConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-country-cldr-full", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/country/conformance")
+
+private fun currencyConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-currency-cldr-full", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/currency/conformance")
+
+private fun numberConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-number-cldr-full", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/number/conformance")
+
+private fun skeletonConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-datetime-cldr-skeletons", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/datetime/cldr/skeletons/conformance")
+
+private fun timeZoneConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-timezone-cldr-cities", "commonTest")
+    .resolve("dev/carcara/kotlinx/locale/timezone/conformance")
+
+/**
+ * The grapheme break cases, which belong to `kotlinx-locale-core`.
+ *
+ * The code they exercise is `core/internal/GraphemeClusters.kt`. The cases sat
+ * in the person name module for as long as person names were the only caller,
+ * which made a failure in the segmenter read as a failure in name formatting.
+ */
+private fun coreConformanceDir(rootDir: File): File = rootDir
+    .sourceRoot("kotlinx-locale-core", "commonTest")
     .resolve("dev/carcara/kotlinx/locale/conformance")
 
 /** Where the published bundle lives, as a resource inside kotlinx-locale-codegen-data. */
@@ -378,13 +408,13 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
     val plurals = parsePlurals(cldrDir)
     val rbnf = parseRbnfOrdinals(cldrDir, flattener.localeIds, supplemental.parentOverrides)
     emitCldrPluralSamples(
-        outputFile = conformanceDir(rootDir).resolve("CldrPluralSampleData.kt"),
+        outputFile = numberConformanceDir(rootDir).resolve("CldrPluralSampleData.kt"),
         cldrTag = CLDR_REPO.tag,
         samples = plurals.samples,
     )
 
     val emoji = crossCheckCountryFlags(countryList)
-    emitEmojiFlagGolden(conformanceDir(rootDir).resolve("EmojiFlagGoldenData.kt"), emoji)
+    emitEmojiFlagGolden(countryConformanceDir(rootDir).resolve("EmojiFlagGoldenData.kt"), emoji)
 
     val countryCurrencyCodes = LinkedHashMap<String, String>()
     for (country in countryList) {
@@ -393,39 +423,39 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
     }
 
     emitIcuGolden(
-        outputFile = conformanceDir(rootDir).resolve("IcuGoldenData.kt"),
+        outputFile = weekConformanceDir(rootDir).resolve("IcuGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuGolden(icuDir),
     )
     emitIcuCountryGolden(
-        outputFile = conformanceDir(rootDir).resolve("IcuCountryGoldenData.kt"),
+        outputFile = countryConformanceDir(rootDir).resolve("IcuCountryGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuCountryGolden(icuDir),
     )
     emitCldrDateTimeCases(
-        outputFile = conformanceDir(rootDir).resolve("CldrDateTimeCaseData.kt"),
+        outputFile = skeletonConformanceDir(rootDir).resolve("CldrDateTimeCaseData.kt"),
         cldrTag = CLDR_REPO.tag,
         cases = extractCldrDateTimeCases(cldrDir),
     )
     val goldenSkeletons = goldenSkeletons(skeletonFormats)
     emitIcuSkeletonGolden(
-        outputDir = conformanceDir(rootDir),
+        outputDir = skeletonConformanceDir(rootDir),
         icuTag = ICU_REPO.tag,
         skeletons = goldenSkeletons,
         entries = extractIcuSkeletonGolden(icuDir, goldenSkeletons, resolvedSkeletons, resolvedDateTime, declaredFormats),
     )
     emitIcuPluralGolden(
-        outputFile = conformanceDir(rootDir).resolve("IcuPluralGoldenData.kt"),
+        outputFile = numberConformanceDir(rootDir).resolve("IcuPluralGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuPluralGolden(plurals.index.keys.map(::canonicalTag).toSet()),
     )
     emitIcuTimeZoneGolden(
-        outputFile = conformanceDir(rootDir).resolve("IcuTimeZoneGoldenData.kt"),
+        outputFile = timeZoneConformanceDir(rootDir).resolve("IcuTimeZoneGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuTimeZoneGolden(timeZoneNames.keys),
     )
     emitGraphemeBreakCases(
-        outputFile = conformanceDir(rootDir).resolve("GraphemeBreakCaseData.kt"),
+        outputFile = coreConformanceDir(rootDir).resolve("GraphemeBreakCaseData.kt"),
         ucdVersion = UCD_VERSION,
         cases = parseGraphemeBreakCases(cldrDir),
         table = encodeGraphemeBreakRanges(parseGraphemeBreakRanges()),
@@ -451,18 +481,18 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         entries = extractIcuDurationUnitGolden(),
     )
     emitIcuNumberGolden(
-        outputFile = conformanceDir(rootDir).resolve("IcuNumberGoldenData.kt"),
+        outputFile = numberConformanceDir(rootDir).resolve("IcuNumberGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuNumberGolden(icuDir, numberSymbols, numberPatterns, numberCompactShort, numberCompactLong),
     )
     emitIcuCurrencyGolden(
-        outputFile = conformanceDir(rootDir).resolve("IcuCurrencyGoldenData.kt"),
+        outputFile = currencyConformanceDir(rootDir).resolve("IcuCurrencyGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuCurrencyGolden(icuDir),
         numericCodes = extractIcuNumericCodes(icuDir),
     )
     emitIcuCurrencyFormatGolden(
-        outputFile = conformanceDir(rootDir).resolve("IcuCurrencyFormatGoldenData.kt"),
+        outputFile = currencyConformanceDir(rootDir).resolve("IcuCurrencyFormatGoldenData.kt"),
         icuTag = ICU_REPO.tag,
         entries = extractIcuCurrencyFormatGolden(currencyEntries.associate { it.code to it.minorUnits }),
     )

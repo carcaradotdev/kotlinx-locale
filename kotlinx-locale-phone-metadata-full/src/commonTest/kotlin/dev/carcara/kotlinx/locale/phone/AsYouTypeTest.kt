@@ -1,9 +1,9 @@
 package dev.carcara.kotlinx.locale.phone
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.phone.metadata.asYouType
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertEquals
 
 /**
  * The as-you-type formatter, keystroke by keystroke.
@@ -12,28 +12,25 @@ import kotlin.test.assertEquals
  * expected output, because the thing that breaks is the transition: a grouping
  * that is right at seven digits and wrong at eight is the bug this catches.
  */
-class AsYouTypeTest {
+val AsYouTypeTest by matrixSuite {
 
-    private fun typed(region: Country, input: String): List<String> {
+    fun typed(region: Country, input: String): List<String> {
         val formatter = region.asYouType()
         return input.map { formatter.append(it) }
     }
 
-    @Test
-    fun groupsAUkLandlineAsItArrives() {
+    test("groupsAUkLandlineAsItArrives") {
         val steps = typed(Country.GB, "02071234567")
         assertEquals("0", steps[0])
         assertEquals("02071234567", steps.last().filter { it.isDigit() || it == '0' }.take(11))
     }
 
-    @Test
-    fun groupsAUsNumberIntoAreaCodeAndBody() {
+    test("groupsAUsNumberIntoAreaCodeAndBody") {
         val steps = typed(Country.US, "2015550123")
         assertEquals("201 555 0123".filter(Char::isDigit), steps.last().filter(Char::isDigit))
     }
 
-    @Test
-    fun backspaceUndoesTheLastDigit() {
+    test("backspaceUndoesTheLastDigit") {
         val formatter = Country.US.asYouType()
         formatter.append("2015550123")
         val before = formatter.nationalDigits
@@ -41,8 +38,7 @@ class AsYouTypeTest {
         assertEquals(before.dropLast(1), formatter.nationalDigits)
     }
 
-    @Test
-    fun clearForgetsEverything() {
+    test("clearForgetsEverything") {
         val formatter = Country.GB.asYouType()
         formatter.append("020712")
         formatter.clear()
@@ -50,8 +46,7 @@ class AsYouTypeTest {
         assertEquals("", formatter.nationalDigits)
     }
 
-    @Test
-    fun everyDigitTypedSurvivesFormatting() {
+    test("everyDigitTypedSurvivesFormatting") {
         // The invariant a text field depends on: formatting adds punctuation and
         // never loses or reorders a digit, whatever partial state it is in.
         for (region in listOf(Country.US, Country.GB, Country.DE, Country.BR, Country.JP)) {
@@ -65,8 +60,7 @@ class AsYouTypeTest {
         }
     }
 
-    @Test
-    fun digitsBeforeLocatesTheCaret() {
+    test("digitsBeforeLocatesTheCaret") {
         val formatter = Country.US.asYouType()
         val text = formatter.append("2015550123")
         assertEquals(0, formatter.digitsBefore(0))

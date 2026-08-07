@@ -5,8 +5,8 @@ import dev.carcara.kotlinx.locale.country.forAlpha2OrNull
 import dev.carcara.kotlinx.locale.phone.PhoneNumberFormat
 import dev.carcara.kotlinx.locale.phone.PhoneNumberSource
 import dev.carcara.kotlinx.locale.phone.PhoneParseResult
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Holds a phone source to libphonenumber's own answers.

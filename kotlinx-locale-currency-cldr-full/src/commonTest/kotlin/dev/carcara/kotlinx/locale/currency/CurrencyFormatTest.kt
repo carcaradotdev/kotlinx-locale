@@ -1,25 +1,25 @@
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.cldr.displayName
 import dev.carcara.kotlinx.locale.currency.cldr.format
 import dev.carcara.kotlinx.locale.currency.cldr.symbol
 import dev.carcara.kotlinx.locale.number.SignDisplay
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Golden expectations taken from CLDR release-48-2 data. Several locales
  * separate the symbol from the number with U+00A0 (NBSP), written as an
  * escape below to keep it visible.
  */
-class CurrencyFormatTest {
+val CurrencyFormatTest by matrixSuite {
 
-    private fun locale(tag: String) = Locale.forLanguageTag(tag)
+    fun locale(tag: String) = Locale.forLanguageTag(tag)
 
-    private fun format(
+    fun format(
         currency: Currency,
         minorUnits: Long,
         tag: String,
@@ -28,73 +28,62 @@ class CurrencyFormatTest {
         cash: Boolean = false,
     ): String = CurrencyAmount(currency, minorUnits).format(locale(tag), style, signDisplay, cash)
 
-    @Test
-    fun formatsEnglish() {
+    test("formatsEnglish") {
         assertEquals("$1,234.56", format(Currency.USD, 123456, "en"))
         assertEquals("-$1,234.56", format(Currency.USD, -123456, "en"))
         assertEquals("$0.05", format(Currency.USD, 5, "en"))
         assertEquals("¥1,234", format(Currency.JPY, 1234, "en"))
     }
 
-    @Test
-    fun formatsTheAccountingPattern() {
+    test("formatsTheAccountingPattern") {
         assertEquals("($1,234.56)", format(Currency.USD, -123456, "en", signDisplay = SignDisplay.ACCOUNTING))
         assertEquals("$1,234.56", format(Currency.USD, 123456, "en", signDisplay = SignDisplay.ACCOUNTING))
     }
 
-    @Test
-    fun formatsWithIsoCodes() {
+    test("formatsWithIsoCodes") {
         // The alphaNextToNumber pattern inserts a NBSP after the alphabetic code.
         assertEquals("USD\u00A01,234.56", format(Currency.USD, 123456, "en", style = CurrencySymbolStyle.CODE))
         assertEquals("JPY\u00A01,234", format(Currency.JPY, 1234, "ja", style = CurrencySymbolStyle.CODE))
     }
 
-    @Test
-    fun usesTheAlphaPatternForAlphabeticSymbols() {
+    test("usesTheAlphaPatternForAlphabeticSymbols") {
         // CHF has no symbol, so the symbol is the code, which is alphabetic.
         assertEquals("CHF\u00A01,234.56", format(Currency.CHF, 123456, "en"))
         assertEquals("ALL\u00A0123", format(Currency.ALL, 12345, "en"))
     }
 
-    @Test
-    fun formatsGermanStyleSuffixSymbols() {
+    test("formatsGermanStyleSuffixSymbols") {
         assertEquals("1.234,56\u00A0€", format(Currency.EUR, 123456, "de"))
         assertEquals("-1.234,56\u00A0€", format(Currency.EUR, -123456, "de"))
     }
 
-    @Test
-    fun formatsPortuguese() {
+    test("formatsPortuguese") {
         assertEquals("R$\u00A01.234,56", format(Currency.BRL, 123456, "pt-BR"))
         assertEquals("US$\u00A01.234,56", format(Currency.USD, 123456, "pt"))
     }
 
-    @Test
-    fun formatsSwissNegativeSubpattern() {
+    test("formatsSwissNegativeSubpattern") {
         assertEquals("CHF\u00A01'234.56", format(Currency.CHF, 123456, "de-CH"))
         assertEquals("CHF-1'234.56", format(Currency.CHF, -123456, "de-CH"))
     }
 
-    @Test
-    fun formatsDutchNegativeSubpattern() {
+    test("formatsDutchNegativeSubpattern") {
         assertEquals("€\u00A01.234,56", format(Currency.EUR, 123456, "nl"))
         assertEquals("€\u00A0-1.234,56", format(Currency.EUR, -123456, "nl"))
     }
 
-    @Test
-    fun formatsIndianLakhGrouping() {
+    test("formatsIndianLakhGrouping") {
         assertEquals("₹1,23,456.78", format(Currency.INR, 12345678, "hi"))
         assertEquals("₹123.45", format(Currency.INR, 12345, "hi"))
     }
 
-    @Test
-    fun honorsMinimumGroupingDigits() {
+    test("honorsMinimumGroupingDigits") {
         // es requires two digits before the first separator: 1000 stays ungrouped.
         assertEquals("1000,00\u00A0€", format(Currency.EUR, 100000, "es"))
         assertEquals("10.000,00\u00A0€", format(Currency.EUR, 1000000, "es"))
     }
 
-    @Test
-    fun formatsCashWithRoundingIncrements() {
+    test("formatsCashWithRoundingIncrements") {
         // CHF cash rounds to 0.05.
         assertEquals("CHF\u00A010.00", format(Currency.CHF, 1002, "en", cash = true))
         assertEquals("CHF\u00A010.05", format(Currency.CHF, 1003, "en", cash = true))
@@ -102,8 +91,7 @@ class CurrencyFormatTest {
         assertEquals("AMD\u00A0124", format(Currency.AMD, 12350, "en", cash = true))
     }
 
-    @Test
-    fun formatsCldrDigitsThatDivergeFromIso() {
+    test("formatsCldrDigitsThatDivergeFromIso") {
         // ALL: ISO carries 2 minor units, CLDR formats none (half-even rescale).
         assertEquals("ALL\u00A0123", format(Currency.ALL, 12345, "en"))
         assertEquals("ALL\u00A0124", format(Currency.ALL, 12350, "en"))
@@ -113,19 +101,16 @@ class CurrencyFormatTest {
         assertEquals("XAU\u00A05.00", format(Currency.XAU, 5, "en"))
     }
 
-    @Test
-    fun formatsArabicWithNativeDigits() {
+    test("formatsArabicWithNativeDigits") {
         val formatted = format(Currency.EGP, 123456, "ar-EG")
         assertTrue("١٬٢٣٤٫٥٦" in formatted, "expected Arabic-Indic digits in '$formatted'")
     }
 
-    @Test
-    fun fallsBackToRootForUnknownLocales() {
+    test("fallsBackToRootForUnknownLocales") {
         assertEquals("US$\u00A01,234.56", format(Currency.USD, 123456, "xx"))
     }
 
-    @Test
-    fun formatsZeroAndSignEdgeCases() {
+    test("formatsZeroAndSignEdgeCases") {
         assertEquals("$0.00", format(Currency.USD, 0, "en"))
         assertEquals("-$0.01", format(Currency.USD, -1, "en"))
         // -0.40 lekes rounds to zero at CLDR's 0 digits and keeps its sign.
@@ -136,8 +121,7 @@ class CurrencyFormatTest {
         assertEquals("ALL\u00A00", format(Currency.ALL, -40, "en", signDisplay = SignDisplay.NEGATIVE))
     }
 
-    @Test
-    fun keepsTheSignOnAnAmountThatRoundsAwayUnderEveryOption() {
+    test("keepsTheSignOnAnAmountThatRoundsAwayUnderEveryOption") {
         // The rounding that produced the zero has to survive: a Swiss franc cash
         // amount of -0.02 rounds to the nearest 0.05, so it prints as -0.00
         // rather than as the -0.02 it started from.
@@ -162,27 +146,23 @@ class CurrencyFormatTest {
         assertEquals("HUF\u00A00", format(Currency.HUF, 1, "en"))
     }
 
-    @Test
-    fun formatsLongExtremes() {
+    test("formatsLongExtremes") {
         assertEquals("$92,233,720,368,547,758.07", format(Currency.USD, Long.MAX_VALUE, "en"))
         assertEquals("-$92,233,720,368,547,758.08", format(Currency.USD, Long.MIN_VALUE, "en"))
         assertEquals("¥9,223,372,036,854,775,807", format(Currency.JPY, Long.MAX_VALUE, "en"))
     }
 
-    @Test
-    fun formatsLargeAmountsWithSecondaryGrouping() {
+    test("formatsLargeAmountsWithSecondaryGrouping") {
         assertEquals("₹1,23,45,67,890.12", format(Currency.INR, 123456789012, "hi"))
         assertEquals("$92,23,37,20,36,85,475.80", format(Currency.USD, 92233720368547580, "hi"))
     }
 
-    @Test
-    fun formatsNegativeCashAmounts() {
+    test("formatsNegativeCashAmounts") {
         assertEquals("-CHF\u00A010.05", format(Currency.CHF, -1003, "en", cash = true))
         assertEquals("(CHF\u00A010.05)", format(Currency.CHF, -1003, "en", signDisplay = SignDisplay.ACCOUNTING, cash = true))
     }
 
-    @Test
-    fun nativeDigitLocalesNeverLeakAsciiDigits() {
+    test("nativeDigitLocalesNeverLeakAsciiDigits") {
         for (tag in listOf("ar-EG", "fa", "bn")) {
             for (currency in listOf(Currency.USD, Currency.JPY, Currency.BHD)) {
                 val formatted = format(currency, 1234567, tag)
@@ -194,8 +174,7 @@ class CurrencyFormatTest {
         }
     }
 
-    @Test
-    fun everyLocaleDistinguishesNegativeAmounts() {
+    test("everyLocaleDistinguishesNegativeAmounts") {
         for (locale in CldrCurrency.supportedLocales) {
             val positive = CurrencyAmount(Currency.USD, 123456).format(locale)
             val negative = CurrencyAmount(Currency.USD, -123456).format(locale)
@@ -203,8 +182,7 @@ class CurrencyFormatTest {
         }
     }
 
-    @Test
-    fun everyLocaleFormatsEveryStyleWithoutBlanks() {
+    test("everyLocaleFormatsEveryStyleWithoutBlanks") {
         val currencies = listOf(Currency.USD, Currency.EUR, Currency.JPY, Currency.BHD)
         for (locale in CldrCurrency.supportedLocales) {
             for (currency in currencies) {
@@ -225,8 +203,7 @@ class CurrencyFormatTest {
         }
     }
 
-    @Test
-    fun everyLocaleLocalizesSymbolsAndNames() {
+    test("everyLocaleLocalizesSymbolsAndNames") {
         for (locale in CldrCurrency.supportedLocales) {
             for (currency in listOf(Currency.USD, Currency.EUR)) {
                 assertTrue(currency.symbol(locale).isNotBlank(), "$locale ${currency.code} symbol")

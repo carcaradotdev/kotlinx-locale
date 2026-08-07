@@ -1,9 +1,9 @@
 package dev.carcara.kotlinx.locale.gradle
 
+import at.asitplus.testballoon.matrix.matrixSuite
 import dev.carcara.kotlinx.locale.codegen.GeneratedTable
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Holds the feature set to the table set.
@@ -16,10 +16,9 @@ import kotlin.test.assertTrue
  * [GeneratedSourceCompilesTest], which generates a source set per feature and
  * runs the Kotlin compiler over it.
  */
-class LocaleFeatureTest {
+val LocaleFeatureTest by matrixSuite {
 
-    @Test
-    fun everyTableIsReachableFromSomeFeature() {
+    test("everyTableIsReachableFromSomeFeature") {
         // The enums and the locale catalog are not features: they carry the
         // entity sets rather than locale data, and a narrowed build takes them
         // from the published -types artifacts rather than generating its own.
@@ -38,8 +37,7 @@ class LocaleFeatureTest {
         )
     }
 
-    @Test
-    fun everyFeatureNamesItselfTheWayTheDslDoes() {
+    test("everyFeatureNamesItselfTheWayTheDslDoes") {
         for (feature in LocaleFeature.entries) {
             assertTrue(
                 feature.dslName.count { it == '.' } == 1,
@@ -49,8 +47,7 @@ class LocaleFeatureTest {
         }
     }
 
-    @Test
-    fun aFeatureThatReadsAnotherTableCarriesItInItsOwnClosure() {
+    test("aFeatureThatReadsAnotherTableCarriesItInItsOwnClosure") {
         // A currency pattern substitutes the symbol into itself, so formats
         // without names would render a hole rather than fail.
         assertTrue(GeneratedTable.CURRENCY_NAMES in LocaleFeature.CURRENCY_FORMATS.tables)

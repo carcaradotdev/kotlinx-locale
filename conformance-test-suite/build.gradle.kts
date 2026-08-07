@@ -21,16 +21,17 @@ kotlin {
             api(project(":kotlinx-locale-datetime-cldr-runtime"))
             api(project(":kotlinx-locale-number-core"))
             api(project(":kotlinx-locale-timezone-core"))
-            // kotlin-test is an api dependency on purpose: the suite reports
-            // through assertions, so a caller is already in a test source set.
-            api(libs.kotlin.test)
+            // api on purpose: the suite reports through assertions, so a caller
+            // is already writing them. Not kotlin-test, which cannot share a
+            // Kotlin/Wasm compilation with the test framework.
+            api(project(":test-assertions"))
         }
-        // Declared again for this module's own tests rather than inherited from
-        // the api above. The Android host test compilation does not pick it up
-        // that way, so `check` failed there on an unresolved `Test` annotation
-        // while every other target compiled.
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
+        // kotlin-test used to be declared again here, for the Android host test
+        // compilation, which does not inherit it through the `api` above. The
+        // multiplatform convention plugin now puts it on every commonTest, so
+        // repeating it landed it on this module's test compilation twice and
+        // Kotlin/Wasm emitted two `startUnitTests` entry points into one module.
+        // Nothing is lost by dropping it: the convention plugin covers the case
+        // the original comment was about.
     }
 }

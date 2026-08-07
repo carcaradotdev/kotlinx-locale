@@ -151,7 +151,16 @@ public fun List<PatternToken>.withoutZoneFields(): List<PatternToken> {
 }
 
 // The closing ] must be escaped: JS unicode-mode regexes reject a lone one.
-private val EMPTY_BRACKET_PAIR = Regex("""\(\s*\)|\[\s*\]""")
+//
+// The class is spelled out rather than written `\s`, and that is not style.
+// `\s` is the five ASCII whitespace characters in java.util.regex and every
+// Unicode whitespace character in a JS RegExp, U+00A0 and U+202F included.
+// Those two are exactly what CLDR puts between a number and its symbol, all
+// over these patterns. Under `\s` a pattern holding a bracket pair around a
+// no-break space loses it on Kotlin/JS and Wasm and keeps it everywhere else,
+// which surfaces only as one locale formatting differently on one platform.
+// `StdlibParityTest` in kotlinx-locale-core pins the difference.
+private val EMPTY_BRACKET_PAIR = Regex("""\([ \t\n\r]*\)|\[[ \t\n\r]*\]""")
 
 /**
  * Renders [tokens] against [date] and [time].

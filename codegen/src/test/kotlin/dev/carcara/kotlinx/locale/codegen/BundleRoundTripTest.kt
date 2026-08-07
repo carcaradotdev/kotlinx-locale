@@ -1,9 +1,9 @@
 package dev.carcara.kotlinx.locale.codegen
 
+import at.asitplus.testballoon.matrix.matrixSuite
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 import java.io.File
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /**
  * Pins the published bundle to the checked-in sources.
@@ -20,14 +20,17 @@ import kotlin.test.assertTrue
  * bundle cannot carry something the sources need, which is the more interesting
  * case, because the plugin would silently generate it wrong.
  */
-class BundleRoundTripTest {
-
-    private val rootDir = File(
+val BundleRoundTripTest by matrixSuite {
+    val rootDir = File(
         System.getProperty("kotlinx.locale.rootDir") ?: error("kotlinx.locale.rootDir is not set"),
     )
 
-    @Test
-    fun theBundleRegeneratesEveryShippedSourceByteForByte() {
+    fun createTempDirectory(): File = File.createTempFile("kotlinx-locale-roundtrip", "").let { file ->
+        file.delete()
+        file.mkdirs()
+        file
+    }
+    test("theBundleRegeneratesEveryShippedSourceByteForByte") {
         val bundle = bundleFile(rootDir).bufferedReader().use(LocaleDataBundle::readFrom)
         assertEquals(1121, bundle.localeTags.size, "the bundle lost locales")
 
@@ -65,8 +68,7 @@ class BundleRoundTripTest {
         }
     }
 
-    @Test
-    fun narrowingKeepsTheLocalesItWasAskedForAndTheirAncestors() {
+    test("narrowingKeepsTheLocalesItWasAskedForAndTheirAncestors") {
         val bundle = bundleFile(rootDir).bufferedReader().use(LocaleDataBundle::readFrom)
         val narrowed = bundle.narrowTo(setOf("pt-BR", "es-AR", "en"))
 
@@ -88,11 +90,5 @@ class BundleRoundTripTest {
         // Entity data is not locale data, so narrowing locales keeps all of it.
         assertEquals(bundle.countries.size, narrowed.countries.size)
         assertEquals(bundle.currencies.size, narrowed.currencies.size)
-    }
-
-    private fun createTempDirectory(): File = File.createTempFile("kotlinx-locale-roundtrip", "").let { file ->
-        file.delete()
-        file.mkdirs()
-        file
     }
 }
