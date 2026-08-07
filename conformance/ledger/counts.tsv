@@ -6,6 +6,7 @@
 # into excusing real bugs.
 #
 # domain	divergence	count
+currency-formats	BUNDLE_FALLBACK	441
 intervals	ICU_PRUNED	515
 intervals	WIDENED_FALLBACK	1475
 skeletons	ICU_PRUNED	116

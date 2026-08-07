@@ -18,7 +18,7 @@ package dev.carcara.kotlinx.locale.icu
 
 import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
-import com.ibm.icu.text.NumberFormat
+import com.ibm.icu.number.NumberFormatter
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.currency.Currency
@@ -94,18 +94,20 @@ val CurrencyFormatConformanceTest by matrixSuite(matrixConfig { testConfig = Tes
         val comparison = DomainComparison("currency-formats")
         for (tag in formatTags) {
             val locale = IcuHarness.locale(tag)
-            val format = NumberFormat.getCurrencyInstance(IcuHarness.uLocale(tag))
+            val formatter = NumberFormatter.withLocale(IcuHarness.uLocale(tag))
             for (currency in FORMAT_CURRENCIES) {
                 val icuCurrency = icuCurrencies[currency] ?: continue
-                format.currency = icuCurrency
+                val format = formatter.unit(icuCurrency)
                 for (minorUnits in AMOUNTS) {
                     val amount = CurrencyAmount(currency, minorUnits)
                     // Both sides are handed the same quantity, written out by this
                     // library and parsed back by ICU, so what is left to disagree
                     // about is the rendering and nothing else.
                     val ours = amount.format(locale)
-                    val theirs = format.format(BigDecimal(amount.toDecimalString()))
-                    comparison.compare(tag, "${currency.code}/$minorUnits", ours, theirs) { null }
+                    val theirs = format.format(BigDecimal(amount.toDecimalString())).toString()
+                    comparison.compare(tag, "${currency.code}/$minorUnits", ours, theirs) {
+                        answeredFromAncestor(tag, currency, icuCurrency, amount, ours, theirs)
+                    }
                 }
             }
         }
@@ -140,6 +142,42 @@ val CurrencyFormatConformanceTest by matrixSuite(matrixConfig { testConfig = Tes
         }
         comparison.settle(minimumCompared = pluralTags.size * 5L)
     }
+}
+
+/**
+ * Whether ICU rendered this from an ancestor's data while CLDR gave the locale
+ * its own.
+ *
+ * `en-150` is in `ULocale.getAvailableLocales`, so the availability filter lets
+ * it through, and ICU still writes `€1,234.56` for it. CLDR's own `en_150.xml`
+ * declares `#,##0.00 ¤`, which is what this library writes. Availability is per
+ * locale and coverage is per element, so a locale can be carried and still have
+ * this particular field answered from further up.
+ *
+ * The test is whether ICU gave the parent's answer where this library did not:
+ * that is ICU declining to use data the locale has, which is a non-comparison
+ * rather than a disagreement. It is deliberately narrow. Where both sides agree
+ * with the parent nothing reaches here at all, and where ICU answers something
+ * that is neither the locale's nor the parent's, this returns null and the case
+ * goes to the ledger for a person.
+ */
+private fun answeredFromAncestor(
+    tag: String,
+    currency: Currency,
+    icuCurrency: com.ibm.icu.util.Currency,
+    amount: CurrencyAmount,
+    ours: String,
+    theirs: String,
+): Divergence? {
+    val parent = tag.substringBeforeLast('-', "").takeIf { it.isNotEmpty() && it != tag } ?: return null
+    val parentIcu = NumberFormatter.withLocale(IcuHarness.uLocale(parent))
+        .unit(icuCurrency)
+        .format(BigDecimal(amount.toDecimalString()))
+        .toString()
+    if (theirs.normalizedSpaces() != parentIcu.normalizedSpaces()) return null
+    val parentOurs = CurrencyAmount(currency, amount.minorUnits).format(IcuHarness.locale(parent))
+    if (ours.normalizedSpaces() == parentOurs.normalizedSpaces()) return null
+    return Divergence.BUNDLE_FALLBACK
 }
 
 /**

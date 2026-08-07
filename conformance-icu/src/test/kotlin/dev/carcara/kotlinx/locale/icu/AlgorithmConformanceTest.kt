@@ -18,7 +18,10 @@ package dev.carcara.kotlinx.locale.icu
 
 import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import com.ibm.icu.number.NumberFormatter
+import com.ibm.icu.number.Scale
 import com.ibm.icu.text.PluralRules
+import com.ibm.icu.util.MeasureUnit
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.number.Decimal
@@ -89,18 +92,26 @@ val AlgorithmConformanceTest by matrixSuite(matrixConfig { testConfig = TestConf
         for (tag in numberTags) {
             val locale = IcuHarness.locale(tag)
             val uLocale = IcuHarness.uLocale(tag)
-            val decimal = com.ibm.icu.text.NumberFormat.getInstance(uLocale)
-            val percent = com.ibm.icu.text.NumberFormat.getPercentInstance(uLocale)
+            // `NumberFormatter`, not `NumberFormat.getInstance`. The legacy
+            // formatter does not apply `minimumGroupingDigits`, so it writes
+            // Belarusian 1234 as `1 234` where CLDR says the group separator
+            // starts at five digits. Asked the old way, this comparison reported
+            // 1234 divergences in 78 locales and every one of them was the oracle
+            // being wrong.
+            val decimal = NumberFormatter.withLocale(uLocale)
+            val percent = NumberFormatter.withLocale(uLocale)
+                .unit(MeasureUnit.PERCENT)
+                .scale(Scale.powerOfTen(2))
 
             for (text in NUMBER_SAMPLES) {
                 val value = Decimal.parse(text)
                 val ours = numberFormat(value, locale)
-                comparison.compare(tag, "decimal/$text", ours, decimal.format(java.math.BigDecimal(text))) { null }
+                comparison.compare(tag, "decimal/$text", ours, decimal.format(java.math.BigDecimal(text)).toString()) { null }
             }
             for (text in PERCENT_SAMPLES) {
                 val value = Decimal.parse(text)
                 val ours = numberFormatPercent(value, locale)
-                comparison.compare(tag, "percent/$text", ours, percent.format(java.math.BigDecimal(text))) { null }
+                comparison.compare(tag, "percent/$text", ours, percent.format(java.math.BigDecimal(text)).toString()) { null }
             }
         }
         comparison.settle(minimumCompared = numberTags.size * 10L)
