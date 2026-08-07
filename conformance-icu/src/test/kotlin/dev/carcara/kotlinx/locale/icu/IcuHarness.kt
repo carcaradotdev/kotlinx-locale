@@ -114,6 +114,10 @@ class DomainComparison(private val domain: String) {
     private val found = LinkedHashMap<String, LedgerRow>()
     private val derived = LinkedHashMap<Divergence, Long>()
     private var compared = 0L
+
+    // Distinct locales, not cases. The two answer different questions and the
+    // locale count is the one a reader means by "how much is checked".
+    private val localesCompared = HashSet<String>()
     private var skipped = 0L
 
     /** Records a case that was not compared, and why, so the totals stay honest. */
@@ -131,6 +135,7 @@ class DomainComparison(private val domain: String) {
      */
     fun compare(locale: String, case: String, ours: String, icu: String, classify: () -> Divergence?) {
         compared++
+        localesCompared.add(locale)
         if (ours.normalizedSpaces() == icu.normalizedSpaces()) return
         val kind = classify()
         if (kind != null && kind != Divergence.DEFECT && kind != Divergence.DELIBERATE) {
@@ -169,6 +174,7 @@ class DomainComparison(private val domain: String) {
             val existing = ledger.read(domain)
             ledger.write(domain, found.values.map { row -> row.copy(note = existing[row.key()]?.note ?: row.note) })
             ledger.writeCounts(ledger.readCounts() + counts)
+            ledger.recordCoverage(domain, localesCompared.size.toLong(), compared)
             return
         }
 

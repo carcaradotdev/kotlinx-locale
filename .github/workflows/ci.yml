@@ -163,6 +163,15 @@ jobs:
         id: kover
         run: python3 .github/scripts/kover_summary.py
 
+      # A different question from the one above, and the one a locale library is
+      # actually judged on: how much of the shipped data was compared against
+      # ICU or CLDR. Line coverage cannot answer it, because formatting thirty
+      # locales runs the same code as formatting eleven hundred.
+      - name: Measure oracle coverage
+        run: |
+          python3 .github/scripts/oracle_coverage.py
+          cat oracle-coverage.md >> coverage-summary.md
+
       # Always written, needs no token, and works for a fork. This is the copy
       # that is guaranteed to exist.
       - name: Write the run summary

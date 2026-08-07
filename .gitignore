@@ -34,3 +34,4 @@ captures/
 
 # Written by .github/scripts/kover_summary.py for the coverage job to post.
 /coverage-summary.md
+/oracle-coverage.md
