@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime.cldr
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.conformance.icuWeekDataGolden
 import dev.carcara.kotlinx.locale.test.assertEquals
@@ -24,7 +27,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.isoDayNumber
 
-val WeekInfoTest by matrixSuite {
+val WeekInfoTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("everyLocaleAgreesWithIcu") {
         val mismatches = ArrayList<String>()

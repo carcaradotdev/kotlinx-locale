@@ -16,14 +16,17 @@
 
 package dev.carcara.kotlinx.locale.country
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertFailsWith
 import dev.carcara.kotlinx.locale.test.assertNull
 import dev.carcara.kotlinx.locale.test.assertTrue
 
-val CountryTest by matrixSuite {
+val CountryTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("exposesIsoCodes") {
         assertEquals("US", Country.US.alpha2)

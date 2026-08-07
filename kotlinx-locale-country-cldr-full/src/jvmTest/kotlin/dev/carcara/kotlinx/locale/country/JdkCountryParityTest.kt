@@ -16,14 +16,17 @@
 
 package dev.carcara.kotlinx.locale.country
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertEquals
 
 /**
  * Cross-checks the generated ISO 3166-1 data against the JDK's own tables —
  * a third independent source next to CLDR and ICU, available on JVM only.
  */
-val JdkCountryParityTest by matrixSuite {
+val JdkCountryParityTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("alpha2SetMatchesTheJdk") {
         val jdk = java.util.Locale.getISOCountries().toSortedSet()

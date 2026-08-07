@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.country
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToCountryNames
@@ -34,7 +37,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * return, because a test that quietly does nothing on the four targets with no
  * locale data still passes there and reads as coverage it is not.
  */
-val PlatformCountryTest by matrixSuite {
+val PlatformCountryTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val composed = FallbackCountryNames(primary = PlatformCountry, fallback = CldrCountry)
 

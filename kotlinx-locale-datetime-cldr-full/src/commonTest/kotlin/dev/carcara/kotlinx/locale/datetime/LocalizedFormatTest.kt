@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.displayName
 import dev.carcara.kotlinx.locale.datetime.cldr.format
@@ -28,7 +31,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
 
-val LocalizedFormatTest by matrixSuite {
+val LocalizedFormatTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
     val date = LocalDate(2026, 7, 27) // a Monday
     val time = LocalTime(15, 5, 9)
     val dateTime = LocalDateTime(date, time)

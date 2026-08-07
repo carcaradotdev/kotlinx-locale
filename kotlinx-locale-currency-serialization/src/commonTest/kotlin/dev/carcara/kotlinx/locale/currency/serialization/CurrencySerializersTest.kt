@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency.serialization
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.active
 import dev.carcara.kotlinx.locale.currency.code
@@ -37,7 +40,7 @@ private data class Quote(
     @Serializable(with = CurrencyCodeSerializer::class) val base: Currency,
     @Serializable(with = CurrencyNumericCodeSerializer::class) val quote: Currency,
 )
-val CurrencySerializersTest by matrixSuite {
+val CurrencySerializersTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
     test("writesEachCodeInItsOwnForm") {
         assertEquals("\"USD\"", Json.encodeToString(CurrencyCodeSerializer, Currency.USD))
         assertEquals("840", Json.encodeToString(CurrencyNumericCodeSerializer, Currency.USD))

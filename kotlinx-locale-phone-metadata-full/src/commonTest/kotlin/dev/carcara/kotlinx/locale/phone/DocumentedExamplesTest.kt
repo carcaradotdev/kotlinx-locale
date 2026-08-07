@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.phone
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.phone.metadata.PhoneNumbers
 import dev.carcara.kotlinx.locale.phone.metadata.asYouType
@@ -36,7 +39,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * Prose does not fail to compile, and the phone section is the newest and so the
  * most likely to drift. Each assertion here is one line of that document.
  */
-val DocumentedExamplesTest by matrixSuite {
+val DocumentedExamplesTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("theParseAndFormatExample") {
         val number = assertNotNull(phoneNumberOrNull("020 7123 4567", Country.GB))

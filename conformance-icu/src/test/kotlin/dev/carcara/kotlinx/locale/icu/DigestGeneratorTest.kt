@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.icu
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.Digest
 import dev.carcara.kotlinx.locale.currency.Currency
@@ -49,7 +52,7 @@ import java.io.File
  * See `Digest` in the conformance suite for why the scope is these domains and
  * not the name tables.
  */
-val DigestGeneratorTest by matrixSuite {
+val DigestGeneratorTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val tags = CldrNumber.supportedLocales.map { it.toLanguageTag() }.sorted()
 

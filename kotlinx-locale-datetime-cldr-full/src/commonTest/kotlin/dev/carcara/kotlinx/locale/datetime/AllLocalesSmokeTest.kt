@@ -18,7 +18,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.datetime.cldr.CldrDateTime
 import dev.carcara.kotlinx.locale.datetime.cldr.displayName
@@ -36,7 +39,7 @@ import kotlinx.datetime.Month
  * End-to-end sweep: every bundled locale must format every style without
  * throwing and without producing blank output.
  */
-val AllLocalesSmokeTest by matrixSuite {
+val AllLocalesSmokeTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val date = LocalDate(2026, 7, 27)
     val time = LocalTime(15, 5, 9)

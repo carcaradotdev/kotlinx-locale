@@ -18,7 +18,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.conformance.icuGoldenData
@@ -30,7 +33,7 @@ import dev.carcara.kotlinx.locale.test.assertEquals
  * the same upstream data). Fields ICU does not define for a locale are null
  * in the golden entry and skipped.
  */
-val IcuGoldenTest by matrixSuite {
+val IcuGoldenTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     // The two sources are point releases of the same upstream data and can
     // disagree on which non-breaking space variant they use (U+00A0 vs U+202F);

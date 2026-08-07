@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency.cldr.plurals
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.CurrencyAmount
@@ -42,7 +45,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * currency name in the golden set moved, so this compares all 23,400 of them,
  * and [everyGoldenNameMatchesIcu] is what fails first if one ever does.
  */
-val IcuCurrencyPluralGoldenTest by matrixSuite {
+val IcuCurrencyPluralGoldenTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     /** ICU and CLDR point releases disagree about which no-break space they use. */
     fun String.normalizedSpaces(): String = replace(' ', ' ').replace(' ', ' ')

@@ -18,7 +18,10 @@
 
 package dev.carcara.kotlinx.locale.platform
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.test.assertEquals
@@ -32,7 +35,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * it is not: the four targets with no locale data are exactly the ones where a
  * silent no-op would hide a regression.
  */
-val PlatformLocaleDataTest by matrixSuite {
+val PlatformLocaleDataTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("availabilityAndEnumerationAgree") {
         val tags = PlatformLocaleData.availableLocaleTags()

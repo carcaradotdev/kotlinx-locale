@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.codegen
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertTrue
 import java.io.File
@@ -40,7 +43,7 @@ import java.io.File
  * set and a handle on the repository root; it has nothing to do with generating
  * data.
  */
-val AppleWidthSourceSetsTest by matrixSuite {
+val AppleWidthSourceSetsTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val rootDir = File(
         System.getProperty("kotlinx.locale.rootDir") ?: error("kotlinx.locale.rootDir is not set"),

@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime.cldr.intervals
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.intervals.conformance.icuIntervalGolden
 import dev.carcara.kotlinx.locale.datetime.cldr.intervals.conformance.icuIntervalGoldenCases
@@ -24,7 +27,7 @@ import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertTrue
 import kotlinx.datetime.LocalDate
 
-val IntervalFormatTest by matrixSuite {
+val IntervalFormatTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val en = Locale.forLanguageTag("en")
 

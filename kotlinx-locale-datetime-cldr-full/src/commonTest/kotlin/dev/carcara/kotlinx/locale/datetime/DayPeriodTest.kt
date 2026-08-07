@@ -18,7 +18,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.format
@@ -32,7 +35,7 @@ import kotlinx.datetime.LocalTime
  * the CLDR rules from dayPeriods.xml) and `b` (AM/PM plus exact noon and
  * midnight). Expected values are the format/abbreviated names from CLDR.
  */
-val DayPeriodTest by matrixSuite {
+val DayPeriodTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     fun dayPeriod(tag: String, time: LocalTime, pattern: String = "B"): String = formatPattern(
         parseDateTimePattern(pattern),

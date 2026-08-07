@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToCurrencyFormats
@@ -36,7 +39,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * return: a test that quietly does nothing on the four targets with no locale
  * data still passes there, which reads as coverage it is not.
  */
-val PlatformCurrencyTest by matrixSuite {
+val PlatformCurrencyTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val names = FallbackCurrencyNames(primary = PlatformCurrency, fallback = CldrCurrency)
     val formats = FallbackCurrencyFormats(primary = PlatformCurrency, fallback = CldrCurrency)

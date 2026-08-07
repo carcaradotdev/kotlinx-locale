@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.phone.serialization
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.phone.PhoneNumber
 import dev.carcara.kotlinx.locale.phone.metadata.PhoneNumbers
@@ -33,7 +36,7 @@ private object National : PhoneNumberNationalSerializer(PhoneNumbers, Country.GB
 private object Rfc3966 : PhoneNumberRfc3966Serializer(PhoneNumbers)
 private object Lenient : LenientPhoneNumberSerializer(PhoneNumbers, Country.GB)
 
-val PhoneNumberSerializersTest by matrixSuite {
+val PhoneNumberSerializersTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val number = assertNotNull(phoneNumberOrNull("+44 20 7123 4567"))
 

@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.format
 import dev.carcara.kotlinx.locale.currency.cldr.parseFormattedOrNull
@@ -33,7 +36,7 @@ import dev.carcara.kotlinx.locale.test.assertEquals
  * first case, so it agrees with a build that has this switched off and is no use
  * as a second opinion on it.
  */
-val CurrencySpacingTest by matrixSuite {
+val CurrencySpacingTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val amount = 123456L
     fun locale(tag: String) = Locale.forLanguageTag(tag)

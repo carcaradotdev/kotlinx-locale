@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.codegen
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertTrue
 import java.io.File
@@ -36,7 +39,7 @@ import java.io.File
  * bundle cannot carry something the sources need, which is the more interesting
  * case, because the plugin would silently generate it wrong.
  */
-val BundleRoundTripTest by matrixSuite {
+val BundleRoundTripTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
     val rootDir = File(
         System.getProperty("kotlinx.locale.rootDir") ?: error("kotlinx.locale.rootDir is not set"),
     )

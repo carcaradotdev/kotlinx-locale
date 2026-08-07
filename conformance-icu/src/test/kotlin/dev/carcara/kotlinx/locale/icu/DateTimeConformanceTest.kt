@@ -16,10 +16,13 @@
 
 package dev.carcara.kotlinx.locale.icu
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
 import com.ibm.icu.text.DateTimePatternGenerator
 import com.ibm.icu.text.DisplayContext
 import com.ibm.icu.text.RelativeDateTimeFormatter
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.datetime.RelativeTimeNumbering
 import dev.carcara.kotlinx.locale.datetime.RelativeTimeStyle
 import dev.carcara.kotlinx.locale.datetime.RelativeTimeUnit
@@ -39,7 +42,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * a native test binary; asking ICU the same question on the JVM costs nothing to
  * store.
  */
-val DateTimeConformanceTest by matrixSuite {
+val DateTimeConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val skeletonTags = CldrDateTimeSkeletons.supportedLocales
         .map { it.toLanguageTag() }

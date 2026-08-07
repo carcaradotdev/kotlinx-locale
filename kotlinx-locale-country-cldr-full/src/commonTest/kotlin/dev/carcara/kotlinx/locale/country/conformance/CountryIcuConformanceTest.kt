@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.country.conformance
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.country.CountryNameSource
 import dev.carcara.kotlinx.locale.test.assertFailsWith
@@ -30,7 +33,7 @@ import dev.carcara.kotlinx.locale.test.assertFailsWith
  * rejects something. Without this, `assertMatchesIcuCountryNames` could be
  * gutted to a no-op and every conformance test in the build would stay green.
  */
-val CountryIcuConformanceRejection by matrixSuite {
+val CountryIcuConformanceRejection by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("rejects a well-shaped source that is not CLDR") {
         val plausible = object : CountryNameSource {

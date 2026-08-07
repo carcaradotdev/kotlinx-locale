@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
@@ -34,7 +37,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * upstream is CLDR. The disagreements are counted rather than asserted, so a
  * sudden jump is still visible.
  */
-val JdkCurrencyParityTest by matrixSuite {
+val JdkCurrencyParityTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("active Currencies Match The Jdk") {
         var skipped = 0

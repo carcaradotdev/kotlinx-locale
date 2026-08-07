@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency.serialization
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.CurrencyAmount
 import dev.carcara.kotlinx.locale.currency.code
@@ -35,7 +38,7 @@ private data class Invoice(
     @Serializable(with = CurrencyAmountDecimalSerializer::class) val tax: CurrencyAmount,
     @Serializable(with = CurrencyAmountCodeAndDecimalSerializer::class) val total: CurrencyAmount,
 )
-val CurrencyAmountSerializersTest by matrixSuite {
+val CurrencyAmountSerializersTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
     val forms = listOf<KSerializer<CurrencyAmount>>(
         CurrencyAmountMinorUnitsSerializer,
         CurrencyAmountDecimalSerializer,

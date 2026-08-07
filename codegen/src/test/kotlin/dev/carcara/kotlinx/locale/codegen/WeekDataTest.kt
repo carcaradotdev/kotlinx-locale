@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.codegen
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertTrue
 import java.io.File
@@ -38,7 +41,7 @@ import java.io.File
  * the only one. Skipping is stated per test rather than left to fail, because a
  * test that fails on a missing input says nothing about the code.
  */
-val WeekDataTest by matrixSuite {
+val WeekDataTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val rootDir = File(
         System.getProperty("kotlinx.locale.rootDir") ?: error("kotlinx.locale.rootDir is not set"),

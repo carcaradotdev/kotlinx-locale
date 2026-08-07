@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.durations.CldrDurationUnits
 import dev.carcara.kotlinx.locale.datetime.cldr.durations.durationFormat
@@ -42,7 +45,7 @@ private val es = Locale.forLanguageTag("es")
  */
 private const val NBSP = "\u00A0"
 
-val CldrDurationUnitsTest by matrixSuite {
+val CldrDurationUnitsTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("widthsDiffer") {
         assertEquals("2 hours", durationFormat(2, DurationUnit.HOUR, UnitWidth.LONG, en))

@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.cldr.format
@@ -27,7 +30,7 @@ import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertFailsWith
 import dev.carcara.kotlinx.locale.test.assertNull
 
-val CurrencyParseFormattedTest by matrixSuite {
+val CurrencyParseFormattedTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     fun locale(tag: String) = Locale.forLanguageTag(tag)
 

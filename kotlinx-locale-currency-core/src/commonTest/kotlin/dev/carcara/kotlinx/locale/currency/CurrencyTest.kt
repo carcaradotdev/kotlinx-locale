@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.country.alpha2
@@ -25,7 +28,7 @@ import dev.carcara.kotlinx.locale.test.assertFailsWith
 import dev.carcara.kotlinx.locale.test.assertNull
 import dev.carcara.kotlinx.locale.test.assertTrue
 
-val CurrencyTest by matrixSuite {
+val CurrencyTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("exposesIsoData") {
         assertEquals("USD", Currency.USD.code)

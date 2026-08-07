@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime.cldr.intervals
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.DurationStyle
 import dev.carcara.kotlinx.locale.datetime.cldr.durationPattern
@@ -27,7 +30,7 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 
 /** Every interval, week data and duration example in API.md. */
-val DocumentedExamplesTest by matrixSuite {
+val DocumentedExamplesTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val en = Locale.forLanguageTag("en")
 

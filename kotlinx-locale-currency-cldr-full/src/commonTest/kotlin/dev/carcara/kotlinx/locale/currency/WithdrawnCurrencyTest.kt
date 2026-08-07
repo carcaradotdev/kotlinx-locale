@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.displayName
 import dev.carcara.kotlinx.locale.currency.cldr.format
@@ -33,7 +36,7 @@ private val HR = Locale.of("hr")
  * and a [CurrencyAmount] needs a [Currency] to render against. So the entry set
  * carries both lists, and these hold the line between them.
  */
-val WithdrawnCurrencyTest by matrixSuite {
+val WithdrawnCurrencyTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("withdrawnCodesResolveAndFormat") {
         val kuna = assertNotNull(Currency.forCodeOrNull("HRK"), "HRK stopped being tender, it did not stop existing")

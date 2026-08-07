@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.internal
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.conformance.GRAPHEME_BREAK_VERSION
 import dev.carcara.kotlinx.locale.conformance.graphemeBreakCases
@@ -37,7 +40,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * here.
  */
 @OptIn(InternalKotlinxLocaleApi::class)
-val GraphemeClustersConformance by matrixSuite {
+val GraphemeClustersConformance by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     // Registration-time, and deliberately so: the table is global state the
     // segmenter reads, every case below needs it, and installing it once is

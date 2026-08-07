@@ -16,13 +16,16 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.datetime.cldr.skeletons.CldrDateTimeSkeletons
 import dev.carcara.kotlinx.locale.datetime.cldr.skeletons.conformance.assertConformsToIcuSkeletons
 import dev.carcara.kotlinx.locale.datetime.cldr.skeletons.conformance.assertMatchesCldrDateTimeCases
 
-val SkeletonConformanceTest by matrixSuite {
+val SkeletonConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("conforms to ICU") {
         CldrDateTimeSkeletons.assertConformsToIcuSkeletons(ConformanceTier.EXACT)

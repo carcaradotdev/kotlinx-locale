@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.number
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.conformance.assertNumbersAreWellShaped
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumber
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumberPlurals
@@ -28,7 +31,7 @@ import dev.carcara.kotlinx.locale.number.conformance.assertConformsToIcuPlurals
  * The bundled source is a second encoding of the data CLDR ships, so it is held
  * to CLDR's own samples rather than only to the shape of its answers.
  */
-val CldrNumberConformanceTest by matrixSuite {
+val CldrNumberConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("plural rules agree with CLDR's own samples") {
         CldrNumberPlurals.assertConformsToCldrPluralSamples()

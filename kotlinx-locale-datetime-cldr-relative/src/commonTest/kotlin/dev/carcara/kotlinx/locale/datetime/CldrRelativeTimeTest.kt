@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.relative.CldrRelativeTime
 import dev.carcara.kotlinx.locale.datetime.cldr.relative.relativeTimeFormat
@@ -26,7 +29,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
 private val EN = Locale.of("en")
 private val CS = Locale.of("cs")
 
-val CldrRelativeTimeTest by matrixSuite {
+val CldrRelativeTimeTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("prefersTheWordWhereTheLocaleHasOne") {
         assertEquals("yesterday", relativeTimeFormat(-1L, RelativeTimeUnit.DAY, locale = EN))

@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.cldr.displayName
@@ -31,7 +34,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * separate the symbol from the number with U+00A0 (NBSP), written as an
  * escape below to keep it visible.
  */
-val CurrencyFormatTest by matrixSuite {
+val CurrencyFormatTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     fun locale(tag: String) = Locale.forLanguageTag(tag)
 

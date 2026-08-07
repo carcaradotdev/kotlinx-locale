@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.country
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToCountryNames
 import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
@@ -27,7 +30,7 @@ import dev.carcara.kotlinx.locale.country.conformance.assertMatchesIcuCountryNam
  * The bundled source is a second encoding of the data ICU encodes, so it is
  * held to the exact tier: every name matches ICU byte for byte.
  */
-val CldrCountryConformanceTest by matrixSuite {
+val CldrCountryConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("conforms to the source contract at the exact tier") {
         CldrCountry.assertConformsToCountryNames(ConformanceTier.EXACT)

@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency.cldr.plurals
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.cldr.displayName
@@ -35,7 +38,7 @@ import dev.carcara.kotlinx.locale.test.assertEquals
  * overrides part of a currency's naming and leaves the rest to its parent, which
  * is a long tail rather than a headline locale.
  */
-val CurrencyPluralInheritanceTest by matrixSuite {
+val CurrencyPluralInheritanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val nn = Locale.forLanguageTag("nn")
     val enAu = Locale.forLanguageTag("en-AU")

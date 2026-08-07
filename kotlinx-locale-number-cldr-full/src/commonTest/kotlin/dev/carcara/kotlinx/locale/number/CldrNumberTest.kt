@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.number
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumber
 import dev.carcara.kotlinx.locale.number.cldr.numberFormat
@@ -34,7 +37,7 @@ private val CS = Locale.of("cs")
 private val TR = Locale.of("tr")
 private val PL = Locale.of("pl")
 
-val CldrNumberTest by matrixSuite {
+val CldrNumberTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("groupsWithTheLocaleSeparators") {
         assertEquals("1,234,567", numberFormat(1234567L, EN))

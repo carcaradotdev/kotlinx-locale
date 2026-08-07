@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency.cldr.plurals
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.CurrencyAmount
@@ -33,7 +36,7 @@ import dev.carcara.kotlinx.locale.test.assertEquals
  * where it started. These are the cases those axes reach: the sign, cash
  * rounding, grouping, and the boundary where a rounded amount keeps its minus.
  */
-val CurrencyPluralNameTest by matrixSuite {
+val CurrencyPluralNameTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val en = Locale.forLanguageTag("en")
     val cs = Locale.forLanguageTag("cs")

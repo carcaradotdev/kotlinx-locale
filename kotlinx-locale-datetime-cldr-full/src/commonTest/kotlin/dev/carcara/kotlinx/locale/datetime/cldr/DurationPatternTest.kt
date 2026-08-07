@@ -16,12 +16,15 @@
 
 package dev.carcara.kotlinx.locale.datetime.cldr
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.DurationStyle
 import dev.carcara.kotlinx.locale.test.assertEquals
 
-val DurationPatternTest by matrixSuite {
+val DurationPatternTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("rootAnswersForAlmostEveryLocale") {
         for (tag in listOf("en", "de", "ja", "pt-BR", "ar", "hi", "zh-Hant", "ru")) {

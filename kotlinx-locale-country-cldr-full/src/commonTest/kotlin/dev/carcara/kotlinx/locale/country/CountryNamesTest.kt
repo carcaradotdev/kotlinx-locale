@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.country
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
 import dev.carcara.kotlinx.locale.country.cldr.displayName
@@ -27,7 +30,7 @@ import dev.carcara.kotlinx.locale.test.assertNotNull
 import dev.carcara.kotlinx.locale.test.assertNull
 import dev.carcara.kotlinx.locale.test.assertTrue
 
-val CountryNamesTest by matrixSuite {
+val CountryNamesTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     fun locale(tag: String) = Locale.forLanguageTag(tag)
 

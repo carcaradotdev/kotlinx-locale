@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.timezone
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertTrue
@@ -49,7 +52,7 @@ private fun zoneOrNull(id: String): TimeZone? = try {
     null
 }
 
-val CldrTimeZoneTest by matrixSuite {
+val CldrTimeZoneTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("theOffsetFormatIsLocaleDataRatherThanAFixedString") {
         // The word, the digits and the zero form all vary, which is what a

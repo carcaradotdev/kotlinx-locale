@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.serialization
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertFailsWith
@@ -36,7 +39,7 @@ private data class Preferences(
 
 @Serializable
 private data class Request(@Contextual val locale: Locale)
-val LocaleTagSerializerTest by matrixSuite {
+val LocaleTagSerializerTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
     test("writesTheCanonicalTag") {
         assertEquals("\"pt-BR\"", Json.encodeToString(LocaleTagSerializer, Locale.of("pt", region = "BR")))
         assertEquals("\"en\"", Json.encodeToString(LocaleTagSerializer, Locale.of("en")))

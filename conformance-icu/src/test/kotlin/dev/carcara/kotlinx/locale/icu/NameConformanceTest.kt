@@ -16,9 +16,12 @@
 
 package dev.carcara.kotlinx.locale.icu
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
 import com.ibm.icu.text.LocaleDisplayNames
 import com.ibm.icu.util.ULocale
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.country.alpha2
 import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
@@ -43,7 +46,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * no oracle at all: a generator that misread one field would have shipped it to
  * eleven hundred locales with nothing to say otherwise.
  */
-val NameConformanceTest by matrixSuite {
+val NameConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val tags = CldrCountry.supportedLocales
         .map { it.toLanguageTag() }

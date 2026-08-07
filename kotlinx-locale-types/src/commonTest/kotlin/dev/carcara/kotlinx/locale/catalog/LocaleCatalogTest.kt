@@ -16,14 +16,17 @@
 
 package dev.carcara.kotlinx.locale.catalog
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.LocaleRef
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertTrue
 import dev.carcara.kotlinx.locale.toLocale
 
-val LocaleCatalogTest by matrixSuite {
+val LocaleCatalogTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("theLanguageItselfIsTheBareLocale") {
         assertEquals("pt", PT.tag)

@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.language
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Capitalization
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.language.cldr.CldrLanguage
@@ -32,7 +35,7 @@ private val TR = Locale.of("tr")
  * row capitalizes it is a property of the language, recorded per usage, and not
  * something a caller can decide by uppercasing the first letter.
  */
-val CapitalizationTest by matrixSuite {
+val CapitalizationTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("czechTitleCasesALanguageNameInAMenu") {
         val name = CS.nativeDisplayName

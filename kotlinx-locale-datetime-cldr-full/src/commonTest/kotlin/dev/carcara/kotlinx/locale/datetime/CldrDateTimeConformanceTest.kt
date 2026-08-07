@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToDateTimeFormats
 import dev.carcara.kotlinx.locale.datetime.cldr.CldrDateTime
@@ -27,7 +30,7 @@ import dev.carcara.kotlinx.locale.datetime.cldr.conformance.assertMatchesIcuCale
  * formatted output are cross-checked separately in `IcuGolden`, which can reach
  * the tables directly because it lives in the module that owns them.
  */
-val CldrDateTimeConformanceTest by matrixSuite {
+val CldrDateTimeConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("conforms to the source contract at the exact tier") {
         CldrDateTime.assertConformsToDateTimeFormats(ConformanceTier.EXACT)

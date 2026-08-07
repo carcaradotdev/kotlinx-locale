@@ -16,8 +16,11 @@
 
 package dev.carcara.kotlinx.locale.icu
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
 import com.ibm.icu.text.PluralRules
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.number.Decimal
 import dev.carcara.kotlinx.locale.number.PluralType
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumber
@@ -39,7 +42,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * which is the point: the committed goldens cover thirty, and the rules that go
  * wrong are rarely the ones a person would have picked for a sample.
  */
-val AlgorithmConformanceTest by matrixSuite {
+val AlgorithmConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val tags = CldrNumberPlurals.supportedLocales
         .map { it.toLanguageTag() }

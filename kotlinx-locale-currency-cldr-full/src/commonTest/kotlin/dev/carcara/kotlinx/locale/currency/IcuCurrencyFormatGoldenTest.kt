@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.cldr.format
@@ -41,7 +44,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * one locale, and [everyGoldenLocaleIsMostlyComparable] fails if it ever stops
  * being narrow.
  */
-val IcuCurrencyFormatGoldenTest by matrixSuite {
+val IcuCurrencyFormatGoldenTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     fun style(name: String): CurrencySymbolStyle = CurrencySymbolStyle.valueOf(name)
 

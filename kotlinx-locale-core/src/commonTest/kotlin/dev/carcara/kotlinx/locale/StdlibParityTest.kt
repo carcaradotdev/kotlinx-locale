@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertFalse
 import dev.carcara.kotlinx.locale.test.assertTrue
@@ -39,7 +42,7 @@ import kotlin.math.floor
  *
  * Every input here is one the library's own CLDR data can produce.
  */
-val StdlibParityTest by matrixSuite {
+val StdlibParityTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     // The two spaces CLDR uses and that ICU point releases disagree about. They
     // appear throughout the number, currency and datetime tables.

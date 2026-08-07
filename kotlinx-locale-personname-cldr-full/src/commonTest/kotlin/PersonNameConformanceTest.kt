@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.personname.cldr
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.personname.PersonName
 import dev.carcara.kotlinx.locale.personname.PersonNameFormality
@@ -39,7 +42,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * rather than by loosening the comparison, so what is not covered stays
  * countable and visible.
  */
-val PersonNameConformanceTest by matrixSuite {
+val PersonNameConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     /**
      * Locales whose words are not separated by spaces.

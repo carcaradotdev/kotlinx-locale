@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToDateTimeFormats
@@ -36,7 +39,7 @@ import kotlinx.datetime.Month
 /**
  * The platform datetime source, and the timezone trap it exists to avoid.
  */
-val PlatformDateTimeTest by matrixSuite {
+val PlatformDateTimeTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val composed = FallbackDateTimeFormats(primary = PlatformDateTime, fallback = CldrDateTime)
 

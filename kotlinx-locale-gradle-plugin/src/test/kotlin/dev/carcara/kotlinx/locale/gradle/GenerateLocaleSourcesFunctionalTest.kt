@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.gradle
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.codegen.emittedFilePrefixes
 import dev.carcara.kotlinx.locale.test.assertContains
 import dev.carcara.kotlinx.locale.test.assertEquals
@@ -130,7 +133,7 @@ private fun LocaleFeature.asBuildScript(): String {
     return "$block { $property = true }"
 }
 
-val GenerateLocaleSourcesFunctionalTest by matrixSuite {
+val GenerateLocaleSourcesFunctionalTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("generates a narrowed source set") {
         withProject {

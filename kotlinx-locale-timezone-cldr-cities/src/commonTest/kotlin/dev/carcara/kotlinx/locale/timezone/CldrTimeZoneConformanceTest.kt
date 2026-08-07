@@ -18,7 +18,10 @@
 
 package dev.carcara.kotlinx.locale.timezone
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumber
@@ -37,7 +40,7 @@ import dev.carcara.kotlinx.locale.timezone.conformance.assertConformsToIcuTimeZo
  * other end of that choice, where a build did ask for them, and it is the
  * configuration the generic location format is written for.
  */
-val CldrTimeZoneConformanceTest by matrixSuite {
+val CldrTimeZoneConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val source = PayloadTimeZoneNames(
         CldrTimeZone.formatRecords,

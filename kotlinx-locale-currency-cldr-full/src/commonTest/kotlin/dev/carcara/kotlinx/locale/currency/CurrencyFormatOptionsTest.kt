@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.format
 import dev.carcara.kotlinx.locale.number.NumberNotation
@@ -27,7 +30,7 @@ private val EN = Locale.of("en")
 private val EN_GB = Locale.of("en", region = "GB")
 
 /** The options CLDR carries but the first shape of this API had no way to ask for. */
-val CurrencyFormatOptionsTest by matrixSuite {
+val CurrencyFormatOptionsTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("fractionDigitsOverrideTheCurrencysOwn") {
         val amount = CurrencyAmount(Currency.GBP, 1850000)

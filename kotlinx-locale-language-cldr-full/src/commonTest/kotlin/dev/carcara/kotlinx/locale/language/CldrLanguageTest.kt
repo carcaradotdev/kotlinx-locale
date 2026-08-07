@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.language
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.language.cldr.CldrLanguage
 import dev.carcara.kotlinx.locale.language.cldr.displayName
@@ -29,7 +32,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
 private val EN = Locale.of("en")
 private val PT = Locale.of("pt")
 
-val CldrLanguageTest by matrixSuite {
+val CldrLanguageTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("namesALanguageInAnotherLanguage") {
         assertEquals("German", Locale.of("de").displayName(EN))

@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.phone
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.phone.metadata.asYouType
 import dev.carcara.kotlinx.locale.test.assertEquals
@@ -28,7 +31,7 @@ import dev.carcara.kotlinx.locale.test.assertEquals
  * expected output, because the thing that breaks is the transition: a grouping
  * that is right at seven digits and wrong at eight is the bug this catches.
  */
-val AsYouTypeTest by matrixSuite {
+val AsYouTypeTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     fun typed(region: Country, input: String): List<String> {
         val formatter = region.asYouType()

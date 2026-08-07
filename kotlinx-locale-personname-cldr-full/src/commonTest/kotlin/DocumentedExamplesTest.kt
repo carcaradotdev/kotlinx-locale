@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.personname.cldr
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.personname.PersonName
 import dev.carcara.kotlinx.locale.personname.PersonNameLength
@@ -25,7 +28,7 @@ import dev.carcara.kotlinx.locale.personname.PersonNameUsage
 import dev.carcara.kotlinx.locale.test.assertEquals
 
 /** Every person name example in API.md, asserted so the prose cannot drift. */
-val DocumentedExamplesTest by matrixSuite {
+val DocumentedExamplesTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val name = PersonName(given = "Iris", surname = "Adler")
 

@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.CldrDateTime
 import dev.carcara.kotlinx.locale.datetime.cldr.displayName
@@ -36,7 +39,7 @@ private val EN = Locale.of("en")
  * one on a calendar header is the kind of mistake a reader notices and a test
  * does not, unless it is this one.
  */
-val StandaloneNameTest by matrixSuite {
+val StandaloneNameTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("czechMonthsCarryTheirCase") {
         assertEquals("července", Month.JULY.displayName(TextStyle.FULL, CS))

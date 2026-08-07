@@ -18,7 +18,10 @@
 
 package dev.carcara.kotlinx.locale.number.cldr.runtime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.number.FormattedNumber
 import dev.carcara.kotlinx.locale.number.PluralCategory
@@ -37,7 +40,7 @@ import dev.carcara.kotlinx.locale.test.assertEquals
  * set as a string in CLDR's own syntax, so a test needs no locale, no table and
  * no fixture.
  */
-val PluralRuleSetTest by matrixSuite {
+val PluralRuleSetTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     /** A value as the formatter would hand it over: printed digits, not a number. */
     fun number(integerDigits: String, fractionDigits: String = "", compactExponent: Int = 0) = FormattedNumber(

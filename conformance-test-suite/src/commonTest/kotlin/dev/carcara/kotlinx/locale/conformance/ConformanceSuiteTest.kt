@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.conformance
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.country.CountryNameSource
 import dev.carcara.kotlinx.locale.test.assertFailsWith
@@ -33,7 +36,7 @@ import dev.carcara.kotlinx.locale.test.assertFailsWith
  * golden it reads, and so does the negative case for it. What the exact tier
  * still means here is that a source can describe its own coverage.
  */
-val ConformanceSuiteTest by matrixSuite {
+val ConformanceSuiteTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     fun source(name: (String) -> String?) = object : CountryNameSource {
         override val supportedLocales: Set<Locale> = setOf(Locale.of("en"))

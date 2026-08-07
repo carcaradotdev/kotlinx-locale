@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.country.serialization
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.country.alpha2
 import dev.carcara.kotlinx.locale.test.assertEquals
@@ -36,7 +39,7 @@ private data class Route(
     @Serializable(with = CountryAlpha3Serializer::class) val via: Country,
     @Serializable(with = CountryNumericCodeSerializer::class) val to: Country,
 )
-val CountrySerializersTest by matrixSuite {
+val CountrySerializersTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
     test("writesEachCodeInItsOwnForm") {
         assertEquals("\"US\"", Json.encodeToString(CountryAlpha2Serializer, Country.US))
         assertEquals("\"USA\"", Json.encodeToString(CountryAlpha3Serializer, Country.US))

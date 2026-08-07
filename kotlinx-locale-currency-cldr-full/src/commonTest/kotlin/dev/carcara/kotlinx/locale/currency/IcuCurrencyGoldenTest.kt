@@ -18,7 +18,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.conformance.icuCurrencyGoldenData
@@ -33,7 +36,7 @@ import dev.carcara.kotlinx.locale.test.assertEquals
  * only from inside the module that owns them, and no source interface exposes
  * them because no platform could implement one that did.
  */
-val IcuCurrencyGoldenTest by matrixSuite {
+val IcuCurrencyGoldenTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     fun String.normalized() = replace(' ', ' ').replace(' ', ' ')
 

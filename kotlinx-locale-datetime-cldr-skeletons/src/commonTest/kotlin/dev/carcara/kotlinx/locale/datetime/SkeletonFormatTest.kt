@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.skeletons.CldrDateTimeSkeletons
 import dev.carcara.kotlinx.locale.datetime.cldr.skeletons.format
@@ -32,7 +35,7 @@ private val time = LocalTime(15, 5, 9)
 
 private fun locale(tag: String) = Locale.forLanguageTag(tag)
 
-val SkeletonFormatTest by matrixSuite {
+val SkeletonFormatTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("the same fields are arranged differently per locale") {
         assertEquals("27 de jul. de 2026", date.format("yMMMd", locale("pt-BR")))

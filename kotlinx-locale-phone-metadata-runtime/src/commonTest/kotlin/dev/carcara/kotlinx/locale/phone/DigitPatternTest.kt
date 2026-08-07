@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.phone
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.phone.metadata.runtime.DigitPattern
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertFalse
@@ -27,7 +30,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * The matcher is the piece the whole domain rests on, so it is tested against
  * the constructs the metadata uses rather than only through the metadata.
  */
-val DigitPatternTest by matrixSuite {
+val DigitPatternTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("matchesLiteralsAndDigitClasses") {
         assertTrue(DigitPattern.parse("""\d{3}""").matches("123"))

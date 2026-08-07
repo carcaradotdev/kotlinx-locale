@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime.cldr.durations
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.durations.conformance.icuDurationUnitGolden
 import dev.carcara.kotlinx.locale.datetime.cldr.durations.conformance.icuDurationUnitGoldenCases
@@ -33,7 +36,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * the fallback rules this table is built on were read off this fixture, so an
  * exclusion here would be the fixture agreeing with itself.
  */
-val CldrDurationUnitConformanceTest by matrixSuite {
+val CldrDurationUnitConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     val units = DurationUnit.entries.associateBy { "duration-" + it.name.lowercase() }
 

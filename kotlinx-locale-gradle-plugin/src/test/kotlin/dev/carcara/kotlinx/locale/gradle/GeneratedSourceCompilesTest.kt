@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.gradle
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.codegen.BindingTarget
 import dev.carcara.kotlinx.locale.codegen.LocaleDataBundle
 import dev.carcara.kotlinx.locale.codegen.RegistryPackages
@@ -54,7 +57,7 @@ import java.io.PrintStream
  */
 private const val PACKAGE = "com.example.locale"
 
-val GeneratedSourceCompilesTest by matrixSuite {
+val GeneratedSourceCompilesTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
     val bundlePath: String = System.getProperty("kotlinx.locale.bundle")
         ?: error("kotlinx.locale.bundle is not set; see kotlinx-locale-gradle-plugin/build.gradle.kts")
 

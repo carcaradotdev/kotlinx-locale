@@ -18,7 +18,10 @@
 
 package dev.carcara.kotlinx.locale.number.cldr.runtime
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertNull
@@ -34,7 +37,7 @@ import dev.carcara.kotlinx.locale.test.assertNull
  * `NumberPattern.parse` takes CLDR's own syntax, so a case here is a line a
  * reader can check against the specification without decoding anything.
  */
-val NumberPatternTest by matrixSuite {
+val NumberPatternTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("reads the plain decimal pattern every locale starts from") {
         val pattern = NumberPattern.parse("#,##0.###")

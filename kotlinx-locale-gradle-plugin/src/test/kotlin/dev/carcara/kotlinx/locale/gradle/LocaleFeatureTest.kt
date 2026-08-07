@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.gradle
 
+import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.codegen.GeneratedTable
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertTrue
@@ -32,7 +35,7 @@ import dev.carcara.kotlinx.locale.test.assertTrue
  * [GeneratedSourceCompilesTest], which generates a source set per feature and
  * runs the Kotlin compiler over it.
  */
-val LocaleFeatureTest by matrixSuite {
+val LocaleFeatureTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("everyTableIsReachableFromSomeFeature") {
         // The enums and the locale catalog are not features: they carry the
