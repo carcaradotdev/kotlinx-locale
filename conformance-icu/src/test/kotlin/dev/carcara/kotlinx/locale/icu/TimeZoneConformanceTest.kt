@@ -77,7 +77,11 @@ val TimeZoneConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfi
             for (id in zones) {
                 val ours = CldrTimeZoneCities.exemplarCityOrNull(TimeZone.of(id), locale) ?: continue
                 val theirs = icu.getExemplarLocationName(id) ?: continue
-                comparison.compare(tag, id, ours, theirs) { classifyZone(tag) }
+                comparison.compare(tag, id, ours, theirs) {
+                    classifyZone(tag, ours) { other ->
+                        TimeZoneNames.getInstance(IcuHarness.uLocale(other)).getExemplarLocationName(id)
+                    }
+                }
             }
         }
         comparison.settle(minimumCompared = cityTags.size * 50L)
@@ -106,7 +110,11 @@ val TimeZoneConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfi
                 for ((style, type) in ZONE_STYLES) {
                     val ours = CldrTimeZone.displayNameOrNull(zone, style, null, locale) ?: continue
                     val theirs = icu.getDisplayName(id, type, REFERENCE_MILLIS) ?: continue
-                    comparison.compare(tag, "$id/$style", ours, theirs) { classifyZone(tag) }
+                    comparison.compare(tag, "$id/$style", ours, theirs) {
+                        classifyZone(tag, ours) { other ->
+                            TimeZoneNames.getInstance(IcuHarness.uLocale(other)).getDisplayName(id, type, REFERENCE_MILLIS)
+                        }
+                    }
                 }
             }
         }
@@ -123,4 +131,12 @@ private val ZONE_STYLES = listOf(
     TimeZoneNameStyle.DAYLIGHT_SHORT to TimeZoneNames.NameType.SHORT_DAYLIGHT,
 )
 
-private fun classifyZone(tag: String): Divergence? = if (!IcuHarness.icuCarries(tag)) Divergence.BUNDLE_FALLBACK else null
+/**
+ * Both zone domains disagree in exactly one locale, and for the same reason as
+ * the currency ones: ICU has no `sr_Cyrl_ME` bundle and answers it in Latin.
+ */
+private fun classifyZone(tag: String, ours: String, lookup: (String) -> String?): Divergence? = when {
+    !IcuHarness.icuCarries(tag) -> Divergence.BUNDLE_FALLBACK
+    IcuHarness.answeredInAnotherScript(tag, ours, lookup) -> Divergence.BUNDLE_FALLBACK
+    else -> null
+}

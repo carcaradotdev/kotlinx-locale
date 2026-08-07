@@ -89,6 +89,32 @@ object IcuHarness {
     fun uLocale(tag: String): ULocale = ULocale.forLanguageTag(tag)
 
     fun locale(tag: String): Locale = Locale.forLanguageTag(tag)
+
+    /**
+     * True when ICU answered [tag] from a bundle in a script the tag did not ask
+     * for, and this library answered in the one it did.
+     *
+     * `sr-Cyrl-ME` is the case the whole check exists for. ICU has no data file
+     * for it, resolves it to a Latin bundle and writes `dirham UAE`, where
+     * `sr_Cyrl_ME.xml` writes `дирхам УАЕ`. Asked for plain `sr` this looks like
+     * agreement, because `sr` is Cyrillic by default, so comparing against the
+     * bare language misses it entirely and 1982 rows landed in the ledger.
+     *
+     * The test is deliberately two-sided. ICU has to disagree with its own answer
+     * for the script alone, and this library has to match that answer. Both
+     * halves matter: the first says ICU dropped the script, and the second says
+     * there is nothing else in dispute, so a genuine regional difference in the
+     * name is not swallowed by this.
+     */
+    fun answeredInAnotherScript(tag: String, ours: String, lookup: (String) -> String?): Boolean {
+        val locale = uLocale(tag)
+        val script = locale.script
+        if (script.isEmpty()) return false
+        val scriptOnly = "${locale.language}-$script"
+        if (scriptOnly == tag) return false
+        val forScript = lookup(scriptOnly) ?: return false
+        return lookup(tag) != forScript && ours.normalizedSpaces() == forScript.normalizedSpaces()
+    }
 }
 
 /**

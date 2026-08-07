@@ -142,7 +142,12 @@ val CalendarConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfi
                     CldrDurationUnits.durationUnitNameOrNull(unit, width, locale)?.let { ours ->
                         val theirs = formatter.getUnitDisplayName(measureUnit)
                         if (theirs != null) {
-                            comparison.compare(tag, "$unit/$width/name", ours, theirs) { null }
+                            comparison.compare(tag, "$unit/$width/name", ours, theirs) {
+                                scriptFallback(tag, ours) { other ->
+                                    MeasureFormat.getInstance(IcuHarness.uLocale(other), icuWidth)
+                                        .getUnitDisplayName(measureUnit)
+                                }
+                            }
                         }
                     }
 
@@ -155,7 +160,12 @@ val CalendarConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfi
                             .durationFormatOrNull(Decimal.parse(count.toString()), unit, width, locale)
                             ?: continue
                         val theirs = formatter.format(Measure(count, measureUnit))
-                        comparison.compare(tag, "$unit/$width/$count", ours, theirs) { null }
+                        comparison.compare(tag, "$unit/$width/$count", ours, theirs) {
+                            scriptFallback(tag, ours) { other ->
+                                MeasureFormat.getInstance(IcuHarness.uLocale(other), icuWidth)
+                                    .format(Measure(count, measureUnit))
+                            }
+                        }
                     }
                 }
             }
@@ -163,6 +173,10 @@ val CalendarConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfi
         comparison.settle(minimumCompared = durationTags.size * 10L)
     }
 }
+
+/** The one locale ICU has no bundle for and answers in the wrong script. */
+private fun scriptFallback(tag: String, ours: String, lookup: (String) -> String?): Divergence? =
+    if (IcuHarness.answeredInAnotherScript(tag, ours, lookup)) Divergence.BUNDLE_FALLBACK else null
 
 private val NAME_CONTEXTS = listOf(
     NameContext.FORMAT to DateFormatSymbols.FORMAT,

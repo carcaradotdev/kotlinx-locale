@@ -7,6 +7,11 @@
 #
 # domain	divergence	count
 currency-formats	BUNDLE_FALLBACK	441
+currency-names	BUNDLE_FALLBACK	284
+currency-plural-names	BUNDLE_FALLBACK	1698
+duration-units	BUNDLE_FALLBACK	144
+exemplar-cities	BUNDLE_FALLBACK	418
 intervals	ICU_PRUNED	515
 intervals	WIDENED_FALLBACK	1475
 skeletons	ICU_PRUNED	116
+timezone-names	BUNDLE_FALLBACK	290

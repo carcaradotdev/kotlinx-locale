@@ -94,13 +94,17 @@ val NameConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
                 CldrCurrency.currencyNameOrNull(currency.code, locale)?.let { ours ->
                     val theirs = icuCurrency.getName(uLocale, com.ibm.icu.util.Currency.LONG_NAME, null)
                     comparison.compare(tag, "${currency.code}/name", ours, theirs) {
-                        classifyCurrency(tag, currency.code)
+                        classifyCurrency(tag, ours) { other ->
+                            icuCurrency.getName(IcuHarness.uLocale(other), com.ibm.icu.util.Currency.LONG_NAME, null)
+                        }
                     }
                 }
                 CldrCurrency.currencySymbolOrNull(currency.code, locale)?.let { ours ->
                     val theirs = icuCurrency.getName(uLocale, com.ibm.icu.util.Currency.SYMBOL_NAME, null)
                     comparison.compare(tag, "${currency.code}/symbol", ours, theirs) {
-                        classifyCurrency(tag, currency.code)
+                        classifyCurrency(tag, ours) { other ->
+                            icuCurrency.getName(IcuHarness.uLocale(other), com.ibm.icu.util.Currency.SYMBOL_NAME, null)
+                        }
                     }
                 }
             }
@@ -128,7 +132,17 @@ val NameConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
             }
             for (script in SCRIPTS) {
                 val ours = CldrLanguage.scriptNameOrNull(script, locale) ?: continue
-                val theirs = icu.scriptDisplayName(script)
+
+                // In context, not stand-alone. CLDR gives a few scripts two
+                // names: Afrikaans writes `Vereenvoudig` for `Hans` and
+                // `Vereenvoudigde Han` under `alt="stand-alone"`. This library
+                // ships the first, which is the one that goes inside a locale
+                // name; `scriptDisplayName` returns the second, and asking it
+                // put 1318 rows in the ledger that were the two APIs answering
+                // different questions. The in-context accessor is deprecated in
+                // ICU and is still the one that names the same element.
+                @Suppress("DEPRECATION")
+                val theirs = icu.scriptDisplayNameInContext(script)
                 comparison.compare(tag, "script/$script", ours, theirs) {
                     classifyDisplayName(tag, script, ours, theirs)
                 }
@@ -162,20 +176,14 @@ private fun classifyRegion(tag: String, code: String, ours: String, icu: String)
     return null
 }
 
-private fun classifyCurrency(tag: String, code: String): Divergence? {
+private fun classifyCurrency(tag: String, ours: String, lookup: (String) -> String?): Divergence? {
     if (!IcuHarness.icuCarries(tag)) return Divergence.BUNDLE_FALLBACK
-    // ICU resolves a handful of locales to a bundle in a different script; the
-    // clearest case is sr-Cyrl-ME, which ICU answers from a Latin bundle. The
-    // test is whether ICU's own answer came from the locale that was asked for.
-    val asked = IcuHarness.uLocale(tag)
-    val answered = com.ibm.icu.util.Currency.getInstance(code)
-        ?.getName(asked, com.ibm.icu.util.Currency.LONG_NAME, null)
-    if (answered != null && asked.script.isNotEmpty()) {
-        val bare = ULocale.forLanguageTag(tag.substringBefore('-'))
-        val bareName = com.ibm.icu.util.Currency.getInstance(code)
-            ?.getName(bare, com.ibm.icu.util.Currency.LONG_NAME, null)
-        if (answered == bareName) return Divergence.BUNDLE_FALLBACK
-    }
+    // ICU resolves a handful of locales to a bundle in a different script, and
+    // sr-Cyrl-ME is the whole of it here. This used to compare ICU's answer
+    // against its answer for the bare language, which cannot see the case: `sr`
+    // is Cyrillic by default, so ICU agreed with itself and 1982 rows across the
+    // name and plural-name domains went to the ledger unexplained.
+    if (IcuHarness.answeredInAnotherScript(tag, ours, lookup)) return Divergence.BUNDLE_FALLBACK
     return null
 }
 

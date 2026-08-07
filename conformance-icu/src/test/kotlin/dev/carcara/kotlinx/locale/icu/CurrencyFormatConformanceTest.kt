@@ -136,7 +136,21 @@ val CurrencyFormatConformanceTest by matrixSuite(matrixConfig { testConfig = Tes
                         category.cldrName,
                         isChoiceFormat,
                     ) ?: continue
-                    comparison.compare(tag, "${currency.code}/${category.cldrName}", ours, theirs) { null }
+                    comparison.compare(tag, "${currency.code}/${category.cldrName}", ours, theirs) {
+                        if (IcuHarness.answeredInAnotherScript(tag, ours) { other ->
+                                icuCurrency.getName(
+                                    IcuHarness.uLocale(other),
+                                    com.ibm.icu.util.Currency.PLURAL_LONG_NAME,
+                                    category.cldrName,
+                                    isChoiceFormat,
+                                )
+                            }
+                        ) {
+                            Divergence.BUNDLE_FALLBACK
+                        } else {
+                            null
+                        }
+                    }
                 }
             }
         }
