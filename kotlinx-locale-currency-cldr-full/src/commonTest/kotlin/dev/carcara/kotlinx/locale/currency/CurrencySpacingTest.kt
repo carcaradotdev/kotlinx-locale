@@ -61,6 +61,20 @@ val CurrencySpacingTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
         assertEquals("US\$1\u00A0234,56", format("USD", "en-ZA"))
     }
 
+    test("seesADigitThatIsASurrogatePair") {
+        // Chakma numbers with U+11136 and up, which are two UTF-16 units each.
+        // The rule used to ask `Char.isDigit` of one of them, saw half a
+        // surrogate pair, decided it was not a digit and wrote `123.456BHD`. Nine
+        // of the numbering systems CLDR ships are above the basic plane, so this
+        // is the shape of the bug rather than one locale's quirk, and no test
+        // touched it until `:conformance-icu` compared 29 locales against ICU.
+        assertEquals("𑄷𑄸𑄹.𑄺𑄻𑄼\u00A0BHD", format("BHD", "ccp"))
+        assertEquals(
+            "𑄷,𑄸𑄹,𑄺𑄻𑄼\u00A0CLP",
+            format("CLP", "ccp"),
+        )
+    }
+
     test("doesNotDoubleTheSpaceAPatternAlreadyWrites") {
         // da writes `#,##0.00 ¤` with the space in the pattern, so the rule has
         // no boundary to act on and `kr.` keeps exactly one space.
