@@ -17,6 +17,8 @@ final class dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter
     final fun clear() // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.clear|clear(){}[0]
     final fun digitsBefore(kotlin/Int): kotlin/Int // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.digitsBefore|digitsBefore(kotlin.Int){}[0]
     final fun removeLast(): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.removeLast|removeLast(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.phone.metadata.runtime/AsYouTypeFormatter.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern { // dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern|null[0]
@@ -73,6 +75,8 @@ final class dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord 
         final fun <get-formats>(): kotlin.collections/List<dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule> // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord.formats.<get-formats>|<get-formats>(){}[0]
     final val territoryId // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord.territoryId|{}territoryId[0]
         final fun <get-territoryId>(): kotlin/String // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord.territoryId.<get-territoryId>|<get-territoryId>(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRecord.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule { // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule|null[0]
@@ -94,6 +98,8 @@ final class dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule { 
     final fun acceptsPrefix(kotlin/String, kotlin/Int): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.acceptsPrefix|acceptsPrefix(kotlin.String;kotlin.Int){}[0]
     final fun appliesTo(kotlin/String): kotlin/Boolean // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.appliesTo|appliesTo(kotlin.String){}[0]
     final fun pattern(): dev.carcara.kotlinx.locale.phone.metadata.runtime/DigitPattern // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.pattern|pattern(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneFormatRule.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord { // dev.carcara.kotlinx.locale.phone.metadata.runtime/PhoneTerritoryRecord|null[0]

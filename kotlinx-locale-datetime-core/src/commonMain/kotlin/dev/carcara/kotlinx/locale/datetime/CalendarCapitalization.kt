@@ -32,6 +32,9 @@ public enum class CalendarNameUsage {
     DAY_FORMAT,
     DAY_STANDALONE,
     RELATIVE,
+    ;
+
+    public companion object
 }
 
 /**
@@ -54,4 +57,6 @@ public interface CalendarCapitalizationSource {
      * a menu.
      */
     public fun capitalized(name: String, usage: CalendarNameUsage, capitalization: Capitalization, locale: Locale): String = name
+
+    public companion object
 }

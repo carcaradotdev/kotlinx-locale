@@ -90,6 +90,8 @@ public open class PhoneNumberE164Serializer(private val source: PhoneNumberSourc
     }
 
     override fun deserialize(decoder: Decoder): PhoneNumber = source.decode(decoder.decodeString(), null, "E.164")
+
+    public companion object
 }
 
 /**
@@ -111,6 +113,8 @@ public open class PhoneNumberInternationalSerializer(private val source: PhoneNu
     }
 
     override fun deserialize(decoder: Decoder): PhoneNumber = source.decode(decoder.decodeString(), null, "international")
+
+    public companion object
 }
 
 /**
@@ -139,6 +143,8 @@ public open class PhoneNumberNationalSerializer(
     }
 
     override fun deserialize(decoder: Decoder): PhoneNumber = source.decode(decoder.decodeString(), defaultRegion, "national")
+
+    public companion object
 }
 
 /**
@@ -158,6 +164,8 @@ public open class PhoneNumberRfc3966Serializer(private val source: PhoneNumberSo
     }
 
     override fun deserialize(decoder: Decoder): PhoneNumber = source.decode(decoder.decodeString(), null, "RFC 3966")
+
+    public companion object
 }
 
 /**
@@ -188,6 +196,8 @@ public open class LenientPhoneNumberSerializer(private val source: PhoneNumberSo
     }
 
     override fun deserialize(decoder: Decoder): PhoneNumber = source.decode(decoder.decodeString(), defaultRegion, "phone number")
+
+    public companion object
 }
 
 /**

@@ -20,7 +20,9 @@ import java.io.BufferedWriter
 import java.io.Reader
 
 /** One ISO 3166-1 country, with the English name that becomes its KDoc. */
-public class CountryInfo(public val alpha2: String, public val alpha3: String, public val numeric: Int, public val englishName: String)
+public class CountryInfo(public val alpha2: String, public val alpha3: String, public val numeric: Int, public val englishName: String) {
+    public companion object
+}
 
 /** One ISO 4217 currency, with the CLDR fraction behavior that rides along with it. */
 public class CurrencyEntry(
@@ -55,7 +57,9 @@ public class CurrencyEntry(
      * still carries it.
      */
     public val isCurrent: Boolean = true,
-)
+) {
+    public companion object
+}
 
 /**
  * Everything the emitters need, already resolved out of CLDR.
@@ -356,6 +360,8 @@ public class LocaleDataBundle private constructor(
                 sections = sections,
             )
         }
+
+        public companion object
     }
 
     public companion object {

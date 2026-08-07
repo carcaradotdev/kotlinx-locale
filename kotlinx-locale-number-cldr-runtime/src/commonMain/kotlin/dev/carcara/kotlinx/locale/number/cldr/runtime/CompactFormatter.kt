@@ -64,6 +64,8 @@ private const val COMPACT_GROUPING_FLOOR = 2
 @InternalKotlinxLocaleApi
 public fun interface FormattedNumberSelector {
     public fun categoryOf(number: FormattedNumber): PluralCategory
+
+    public companion object
 }
 
 /**

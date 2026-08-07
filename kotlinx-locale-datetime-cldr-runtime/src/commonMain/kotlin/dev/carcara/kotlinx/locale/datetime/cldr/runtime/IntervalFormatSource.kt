@@ -46,6 +46,8 @@ public interface IntervalFormatSource : LocaleDataSource {
     public fun intervalFormatOrNull(start: LocalTime, end: LocalTime, skeleton: String, locale: Locale): String?
 
     public fun intervalFormatOrNull(start: LocalDateTime, end: LocalDateTime, skeleton: String, locale: Locale): String?
+
+    public companion object
 }
 
 /**
@@ -158,6 +160,8 @@ public class PayloadIntervalFormats(private val records: Map<String, String>, pr
         decoded[key] = built
         return built
     }
+
+    public companion object
 }
 
 /**
@@ -209,6 +213,8 @@ public class IntervalRecord(record: String) {
         val hourLetter = pattern.firstOrNull { it in "HhKk" } ?: 'H'
         return byKey["$canonicalSkeleton.$hourLetter"] ?: byKey["$canonicalSkeleton.H"] ?: byKey["$canonicalSkeleton.h"]
     }
+
+    public companion object
 }
 
 /**

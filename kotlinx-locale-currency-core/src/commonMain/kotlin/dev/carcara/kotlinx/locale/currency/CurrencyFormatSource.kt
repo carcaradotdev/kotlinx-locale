@@ -98,6 +98,8 @@ public interface CurrencyFormatSource : LocaleDataSource {
      * answer are the ones over CLDR's own tables.
      */
     public fun currencyCodeOrNull(text: String, locale: Locale): String? = null
+
+    public companion object
 }
 
 /**
@@ -166,4 +168,6 @@ public class FallbackCurrencyFormats(private val primary: CurrencyFormatSource, 
 
     override fun currencyCodeOrNull(text: String, locale: Locale): String? =
         primary.currencyCodeOrNull(text, locale) ?: fallback.currencyCodeOrNull(text, locale)
+
+    public companion object
 }

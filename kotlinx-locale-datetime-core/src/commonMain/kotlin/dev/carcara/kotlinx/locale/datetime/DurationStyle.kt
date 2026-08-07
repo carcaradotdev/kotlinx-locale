@@ -33,6 +33,9 @@ public enum class DurationStyle {
 
     /** `m:ss`, the form an elapsed time under an hour takes. */
     MINUTE_SECOND,
+    ;
+
+    public companion object
 }
 
 /**
@@ -61,6 +64,8 @@ public interface DurationPatternSource {
 
     /** The pattern for [style], or null when this build carries none for [locale]. */
     public fun durationPatternOrNull(style: DurationStyle, locale: Locale): String?
+
+    public companion object
 }
 
 /**

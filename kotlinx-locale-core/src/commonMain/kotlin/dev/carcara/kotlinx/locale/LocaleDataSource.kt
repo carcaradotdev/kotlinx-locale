@@ -47,4 +47,6 @@ public interface LocaleDataSource {
      * allowed and the documented fallbacks apply.
      */
     public val supportedLocales: Set<Locale>
+
+    public companion object
 }

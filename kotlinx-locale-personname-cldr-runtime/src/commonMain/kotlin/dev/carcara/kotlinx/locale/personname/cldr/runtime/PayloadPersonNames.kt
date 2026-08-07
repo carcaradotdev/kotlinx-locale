@@ -434,6 +434,8 @@ public class PayloadPersonNames(private val records: Map<String, String>) : Pers
             }
         }
     }
+
+    public companion object
 }
 
 /** One locale's person name data. */
@@ -499,6 +501,8 @@ public class PersonNameRecord(record: String) {
         if (name == formatting) return true
         return (name == "ja" || name == "zh") && (formatting == "ja" || formatting == "zh")
     }
+
+    public companion object
 }
 
 internal sealed interface PatternElement {

@@ -29,6 +29,23 @@ Two entry points that differ only in what they assume about the input are named
 for the assumption, never distinguished by the argument alone. `numberFormatPercent`
 takes a fraction and `numberFormatPercentValue` takes an already-scaled value.
 
+## Every public type declares a companion object
+
+A companion can only be written inside the class it belongs to, so a consumer
+cannot add one and a type that ships without one is closed to static-side
+extensions for good. Every public class, interface and enum therefore declares
+`public companion object`, empty when the library has nothing to put in it, and
+a new one does the same. The three emitters that generate public types
+(`EmitCatalog`, `EmitCountry`, `EmitCurrency`) already write one.
+
+Objects are the exception, and not really an exception: an extension on an
+object attaches to the object itself, so `CldrCountry` and `PlatformLocaleData`
+need nothing. The marker annotation does not get one either.
+
+The empty companions land in the `api/` dumps as bare `Companion` entries.
+Deleting one from a dump means deleting an extension point, so treat it the way
+you would treat removing a function.
+
 ## Editing README.md and API.md
 
 These two files are what someone reads before they decide whether to use the

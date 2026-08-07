@@ -97,4 +97,6 @@ public class SkeletonRecord(formats: String, appendFormats: String, names: Strin
 
     /** This locale's name for a field, which is what an append format's `{2}` writes. */
     internal fun fieldName(field: Int): String = fieldNameByField.getOrElse(field) { "" }
+
+    public companion object
 }

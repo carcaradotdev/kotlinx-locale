@@ -60,4 +60,7 @@ public enum class CurrencySymbolStyle {
 
     /** The ISO 4217 alphabetic code, e.g. `USD`. */
     CODE,
+    ;
+
+    public companion object
 }

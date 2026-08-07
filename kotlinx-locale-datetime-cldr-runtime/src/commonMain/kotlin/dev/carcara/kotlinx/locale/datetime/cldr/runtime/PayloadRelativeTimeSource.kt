@@ -103,6 +103,8 @@ public class RelativeTimeRecord(record: String) {
         return slot(unit, style, base + CATEGORY_ORDER.indexOf(category))
             ?: slot(unit, style, base + CATEGORY_ORDER.indexOf(PluralCategory.OTHER))
     }
+
+    public companion object
 }
 
 /**
@@ -150,4 +152,6 @@ public class PayloadRelativeTimeFormats(
         recordFor(locale)?.unitName(unit, style)
 
     private fun recordFor(locale: Locale): RelativeTimeRecord? = resolvedRecord(records, locale)?.let(::RelativeTimeRecord)
+
+    public companion object
 }

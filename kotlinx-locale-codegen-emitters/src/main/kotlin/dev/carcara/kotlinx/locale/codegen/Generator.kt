@@ -32,7 +32,9 @@ public class BindingTarget(
     public val packageName: String,
     /** The object's name, e.g. `CldrCountry` or `GeneratedCountryNames`. */
     public val objectName: String,
-)
+) {
+    public companion object
+}
 
 /**
  * Every table an emitter can write, and so every root a caller can ask for.
@@ -106,6 +108,9 @@ public enum class GeneratedTable {
 
     /** The rule closures behind `1st` and `1.`, shared the same way. */
     ORDINALS,
+    ;
+
+    public companion object
 }
 
 /** Every source object the binding emitter can write, and the suffix its name takes. */
@@ -138,6 +143,9 @@ public enum class GeneratedBinding(public val objectSuffix: String) {
     TIME_ZONE("TimeZone"),
     TIME_ZONE_CITIES("TimeZoneCities"),
     PERSON_NAME("PersonName"),
+    ;
+
+    public companion object
 }
 
 public class SourceRoots private constructor(
@@ -163,7 +171,11 @@ public class SourceRoots private constructor(
         }
 
         public fun build(): SourceRoots = SourceRoots(tables, bindings)
+
+        public companion object
     }
+
+    public companion object
 }
 
 /**

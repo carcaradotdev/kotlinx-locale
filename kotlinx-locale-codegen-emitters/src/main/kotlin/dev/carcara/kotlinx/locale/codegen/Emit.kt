@@ -149,4 +149,6 @@ public class KeyedPayloadEmitter(
                 "(${constByPayload.size} unique payloads) to $outputDir",
         )
     }
+
+    public companion object
 }

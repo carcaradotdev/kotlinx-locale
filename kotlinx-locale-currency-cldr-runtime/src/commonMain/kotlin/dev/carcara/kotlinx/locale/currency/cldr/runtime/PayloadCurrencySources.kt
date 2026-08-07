@@ -64,6 +64,8 @@ public class PayloadCurrencyNames(private val records: Map<String, String>) : Cu
 
     override fun currencyNameOrNull(currencyCode: String, locale: Locale): String? =
         sparseRecordValue(records, locale, field = 2, fieldCount = 3, key = currencyCode)
+
+    public companion object
 }
 
 /**
@@ -146,6 +148,8 @@ public class PayloadCurrencyFormats(
         parseIndexCache.getOrPut(locale.toLanguageTag()) { CurrencyParseIndex(names, locale) }.codeIn(text)
 
     private fun numberFormatFor(locale: Locale): CurrencyNumberFormat? = resolvedRecord(formatRecords, locale)?.let(::CurrencyNumberFormat)
+
+    public companion object
 }
 
 /**
@@ -205,6 +209,8 @@ public class CurrencyNumberFormat(record: String) {
     public val standardAlphaPattern: String = fields[8]
     public val accountingPattern: String = fields[9]
     public val accountingAlphaPattern: String = fields[10]
+
+    public companion object
 }
 
 /** The number-format record for [locale], for the ICU cross-check. */

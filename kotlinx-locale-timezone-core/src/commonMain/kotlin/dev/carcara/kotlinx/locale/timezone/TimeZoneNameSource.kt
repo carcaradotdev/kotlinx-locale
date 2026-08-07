@@ -53,6 +53,9 @@ public enum class TimeZoneNameStyle {
 
     /** The same, as short as the locale writes it: `GMT-8`. */
     OFFSET_SHORT,
+    ;
+
+    public companion object
 }
 
 /**
@@ -81,6 +84,8 @@ public interface TimeZoneNameSource : LocaleDataSource {
      * separate artifact because they are the largest table here.
      */
     public fun exemplarCityOrNull(zone: TimeZone, locale: Locale): String?
+
+    public companion object
 }
 
 /**
@@ -114,4 +119,6 @@ public class FallbackTimeZoneNames(private val primary: TimeZoneNameSource, priv
 
     override fun exemplarCityOrNull(zone: TimeZone, locale: Locale): String? =
         primary.exemplarCityOrNull(zone, locale) ?: fallback.exemplarCityOrNull(zone, locale)
+
+    public companion object
 }

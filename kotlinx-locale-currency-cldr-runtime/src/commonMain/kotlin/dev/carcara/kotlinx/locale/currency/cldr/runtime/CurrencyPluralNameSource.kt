@@ -122,6 +122,8 @@ public interface CurrencyPluralNameSource : LocaleDataSource {
      * words, or `null` when this source cannot render it.
      */
     public fun formatPluralNameOrNull(minorUnits: Long, currencyCode: String, locale: Locale, options: CurrencyPluralFormatOptions): String?
+
+    public companion object
 }
 
 /**
@@ -169,6 +171,8 @@ public class FallbackCurrencyPluralNames(private val primary: CurrencyPluralName
         options: CurrencyPluralFormatOptions,
     ): String? = primary.formatPluralNameOrNull(minorUnits, currencyCode, locale, options)
         ?: fallback.formatPluralNameOrNull(minorUnits, currencyCode, locale, options)
+
+    public companion object
 }
 
 /** The parent tag, the count-keyed names, the unit patterns, the number data. */
@@ -321,6 +325,8 @@ public class PayloadCurrencyPluralNames(
             sparseRecordValue(records, locale, field = NUMBER_FIELD, fieldCount = FIELD_COUNT, key = "n"),
         )
     }
+
+    public companion object
 }
 
 /**

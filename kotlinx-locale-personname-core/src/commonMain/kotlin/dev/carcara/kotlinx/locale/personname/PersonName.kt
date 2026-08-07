@@ -26,6 +26,9 @@ public enum class PersonNameLength {
 
     /** Whatever the formatting locale declares, which is not the same everywhere. */
     DEFAULT,
+    ;
+
+    public companion object
 }
 
 /** What the formatted name is for. */
@@ -38,6 +41,9 @@ public enum class PersonNameUsage {
 
     /** Initials, for an avatar or a compact badge. */
     MONOGRAM,
+    ;
+
+    public companion object
 }
 
 /** How formal the wording is. */
@@ -47,6 +53,9 @@ public enum class PersonNameFormality {
 
     /** Whatever the formatting locale declares. */
     DEFAULT,
+    ;
+
+    public companion object
 }
 
 /**
@@ -65,6 +74,9 @@ public enum class PersonNameOrder {
 
     /** The form a list is sorted by: `Adler, Iris`. */
     SORTING,
+    ;
+
+    public companion object
 }
 
 /**
@@ -110,6 +122,8 @@ public class PersonName(
     public val preferredOrder: PersonNameOrder = PersonNameOrder.DEFAULT,
 ) {
     override fun toString(): String = "PersonName(given=$given, surname=$surname, locale=$locale)"
+
+    public companion object
 }
 
 /** A source of person name formatting. */
@@ -132,6 +146,8 @@ public interface PersonNameSource {
      * null when this build has no data for [locale].
      */
     public fun orderOrNull(nameLocale: Locale?, locale: Locale): PersonNameOrder?
+
+    public companion object
 }
 
 /**

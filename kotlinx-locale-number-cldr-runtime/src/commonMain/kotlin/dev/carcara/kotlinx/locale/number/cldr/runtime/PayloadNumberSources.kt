@@ -123,6 +123,8 @@ public class PayloadNumberFormats(
         cache[key] = numbers
         return numbers
     }
+
+    public companion object
 }
 
 private class LocaleNumbers(
@@ -163,6 +165,8 @@ public class PayloadPluralRules(
         val ruleSet = parsed.getOrPut(id) { PluralRuleSet.parse(ruleSets[id].orEmpty()) }
         return ruleSet.select(number)
     }
+
+    public companion object
 }
 
 /** An ordinal source over the generated rule closures. */
@@ -188,4 +192,6 @@ public class PayloadOrdinalFormats(
             plurals.pluralCategory(count, locale, PluralType.ORDINAL)
         }
     }
+
+    public companion object
 }

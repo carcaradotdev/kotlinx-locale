@@ -161,6 +161,8 @@ public class PhoneFormatRecord(record: String) {
             val parts = fields[index].split(KEY_SEPARATOR)
             if (parts.size < 7) null else PhoneFormatRule(parts)
         }
+
+    public companion object
 }
 
 /** One `numberFormat`: which numbers it applies to, and what it writes. */
@@ -222,4 +224,6 @@ public class PhoneFormatRule(parts: List<String>) {
 
     /** How many leading-digit patterns this rule declares. */
     public val leadingDigitsCount: Int get() = leadingDigitsSources.size
+
+    public companion object
 }

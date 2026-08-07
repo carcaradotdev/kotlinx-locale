@@ -50,6 +50,8 @@ public interface CurrencyNameSource : LocaleDataSource {
 
     /** The currency display name for [locale], or `null` when this source has none. */
     public fun currencyNameOrNull(currencyCode: String, locale: Locale): String?
+
+    public companion object
 }
 
 /**
@@ -91,4 +93,6 @@ public class FallbackCurrencyNames(private val primary: CurrencyNameSource, priv
 
     override fun currencyNameOrNull(currencyCode: String, locale: Locale): String? =
         primary.currencyNameOrNull(currencyCode, locale) ?: fallback.currencyNameOrNull(currencyCode, locale)
+
+    public companion object
 }

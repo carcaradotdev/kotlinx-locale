@@ -14,6 +14,8 @@ open class dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSeri
 
     open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
     open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.phone.serialization/LenientPhoneNumberSerializer.Companion|null[0]
 }
 
 open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer|null[0]
@@ -24,6 +26,8 @@ open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Seriali
 
     open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
     open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberE164Serializer.Companion|null[0]
 }
 
 open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer|null[0]
@@ -34,6 +38,8 @@ open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternation
 
     open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
     open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberInternationalSerializer.Companion|null[0]
 }
 
 open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer|null[0]
@@ -44,6 +50,8 @@ open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSer
 
     open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
     open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberNationalSerializer.Companion|null[0]
 }
 
 open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer|null[0]
@@ -54,6 +62,8 @@ open class dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Seri
 
     open fun deserialize(kotlinx.serialization.encoding/Decoder): dev.carcara.kotlinx.locale.phone/PhoneNumber // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
     open fun serialize(kotlinx.serialization.encoding/Encoder, dev.carcara.kotlinx.locale.phone/PhoneNumber) // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.carcara.kotlinx.locale.phone.PhoneNumber){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberRfc3966Serializer.Companion|null[0]
 }
 
 final object dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberPartsSerializer : kotlinx.serialization/KSerializer<dev.carcara.kotlinx.locale.phone/PhoneNumber> { // dev.carcara.kotlinx.locale.phone.serialization/PhoneNumberPartsSerializer|null[0]

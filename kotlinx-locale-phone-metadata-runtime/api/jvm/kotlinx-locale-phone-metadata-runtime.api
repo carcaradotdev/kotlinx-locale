@@ -1,4 +1,5 @@
 public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFormatter {
+	public static final field Companion Ldev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFormatter$Companion;
 	public final fun append (C)Ljava/lang/String;
 	public final fun append (Ljava/lang/CharSequence;)Ljava/lang/String;
 	public final fun clear ()V
@@ -6,6 +7,9 @@ public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFo
 	public final fun getNationalDigits ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
 	public final fun removeLast ()Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFormatter$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/AsYouTypeFormatterKt {
@@ -51,12 +55,17 @@ public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneDescri
 }
 
 public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneFormatRecord {
+	public static final field Companion Ldev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneFormatRecord$Companion;
 	public fun <init> (Ljava/lang/String;)V
 	public final fun getFormats ()Ljava/util/List;
 	public final fun getTerritoryId ()Ljava/lang/String;
 }
 
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneFormatRecord$Companion {
+}
+
 public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneFormatRule {
+	public static final field Companion Ldev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneFormatRule$Companion;
 	public fun <init> (Ljava/util/List;)V
 	public final fun acceptsPrefix (Ljava/lang/String;I)Z
 	public final fun appliesTo (Ljava/lang/String;)Z
@@ -67,6 +76,9 @@ public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneFormat
 	public final fun getNationalPrefixFormattingRule ()Ljava/lang/String;
 	public final fun getNationalPrefixOptional ()Z
 	public final fun pattern ()Ldev/carcara/kotlinx/locale/phone/metadata/runtime/DigitPattern;
+}
+
+public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneFormatRule$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/phone/metadata/runtime/PhoneTerritoryRecord {

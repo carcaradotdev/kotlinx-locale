@@ -80,6 +80,8 @@ public class NumberSymbolsRecord(record: String) {
         timeSeparator = timeSeparator,
         minimumGroupingDigits = minimumGroupingDigits,
     )
+
+    public companion object
 }
 
 /** The plain decimal and percent patterns for one locale. */
@@ -90,6 +92,8 @@ public class NumberPatternRecord(record: String) {
 
     public val decimalPattern: String = fields[0]
     public val percentPattern: String = fields[1]
+
+    public companion object
 }
 
 /** The symbol record for [locale], for the ICU cross-check. */
@@ -210,4 +214,6 @@ public class CompactPatternTable(record: String) {
         if (zeros == 0) return magnitude - (magnitude % 3)
         return magnitude - (zeros - 1)
     }
+
+    public companion object
 }

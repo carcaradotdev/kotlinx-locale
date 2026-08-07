@@ -8,6 +8,8 @@
 // Library unique name: <dev.carcara:kotlinx-locale-country-core>
 abstract interface dev.carcara.kotlinx.locale.country/CountryNameSource : dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale.country/CountryNameSource|null[0]
     abstract fun countryNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.country/CountryNameSource.countryNameOrNull|countryNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.country/CountryNameSource.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.country/FallbackCountryNames : dev.carcara.kotlinx.locale.country/CountryNameSource { // dev.carcara.kotlinx.locale.country/FallbackCountryNames|null[0]
@@ -17,6 +19,8 @@ final class dev.carcara.kotlinx.locale.country/FallbackCountryNames : dev.carcar
         final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.country/FallbackCountryNames.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
 
     final fun countryNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.country/FallbackCountryNames.countryNameOrNull|countryNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.country/FallbackCountryNames.Companion|null[0]
 }
 
 final val dev.carcara.kotlinx.locale.country/alpha2 // dev.carcara.kotlinx.locale.country/alpha2|@dev.carcara.kotlinx.locale.country.Country{}alpha2[0]
