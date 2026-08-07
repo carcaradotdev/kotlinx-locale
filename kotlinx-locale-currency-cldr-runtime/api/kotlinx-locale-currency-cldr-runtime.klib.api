@@ -9,6 +9,8 @@
 abstract interface dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralNameSource : dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralNameSource|null[0]
     abstract fun currencyPluralNameOrNull(kotlin/String, dev.carcara.kotlinx.locale.number/PluralCategory, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralNameSource.currencyPluralNameOrNull|currencyPluralNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.number.PluralCategory;dev.carcara.kotlinx.locale.Locale){}[0]
     abstract fun formatPluralNameOrNull(kotlin/Long, kotlin/String, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralFormatOptions): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralNameSource.formatPluralNameOrNull|formatPluralNameOrNull(kotlin.Long;kotlin.String;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.currency.cldr.runtime.CurrencyPluralFormatOptions){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralNameSource.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyNumberFormat { // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyNumberFormat|null[0]
@@ -38,6 +40,8 @@ final class dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyNumberForma
         final fun <get-standardPattern>(): kotlin/String // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyNumberFormat.standardPattern.<get-standardPattern>|<get-standardPattern>(){}[0]
     final val symbols // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyNumberFormat.symbols|{}symbols[0]
         final fun <get-symbols>(): dev.carcara.kotlinx.locale.number/NumberSymbols // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyNumberFormat.symbols.<get-symbols>|<get-symbols>(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyNumberFormat.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralFormatOptions { // dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralFormatOptions|null[0]
@@ -66,6 +70,8 @@ final class dev.carcara.kotlinx.locale.currency.cldr.runtime/FallbackCurrencyPlu
 
     final fun currencyPluralNameOrNull(kotlin/String, dev.carcara.kotlinx.locale.number/PluralCategory, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/FallbackCurrencyPluralNames.currencyPluralNameOrNull|currencyPluralNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.number.PluralCategory;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun formatPluralNameOrNull(kotlin/Long, kotlin/String, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralFormatOptions): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/FallbackCurrencyPluralNames.formatPluralNameOrNull|formatPluralNameOrNull(kotlin.Long;kotlin.String;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.currency.cldr.runtime.CurrencyPluralFormatOptions){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.currency.cldr.runtime/FallbackCurrencyPluralNames.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyFormats : dev.carcara.kotlinx.locale.currency/CurrencyFormatSource { // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyFormats|null[0]
@@ -77,6 +83,8 @@ final class dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyForm
     final fun currencyCodeOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyFormats.currencyCodeOrNull|currencyCodeOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun formatOrNull(kotlin/Long, kotlin/String, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.currency/CurrencyFormatOptions): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyFormats.formatOrNull|formatOrNull(kotlin.Long;kotlin.String;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.currency.CurrencyFormatOptions){}[0]
     final fun parseToMinorUnitsOrNull(kotlin/String, kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/Long? // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyFormats.parseToMinorUnitsOrNull|parseToMinorUnitsOrNull(kotlin.String;kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyFormats.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyNames : dev.carcara.kotlinx.locale.currency/CurrencyNameSource { // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyNames|null[0]
@@ -88,6 +96,8 @@ final class dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyName
     final fun currencyNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyNames.currencyNameOrNull|currencyNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun currencySymbolOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyNames.currencySymbolOrNull|currencySymbolOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun currencySymbolOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.currency/CurrencySymbolStyle): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyNames.currencySymbolOrNull|currencySymbolOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.currency.CurrencySymbolStyle){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyNames.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyPluralNames : dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralNameSource { // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyPluralNames|null[0]
@@ -98,6 +108,8 @@ final class dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyPlur
 
     final fun currencyPluralNameOrNull(kotlin/String, dev.carcara.kotlinx.locale.number/PluralCategory, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyPluralNames.currencyPluralNameOrNull|currencyPluralNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.number.PluralCategory;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun formatPluralNameOrNull(kotlin/Long, kotlin/String, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralFormatOptions): kotlin/String? // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyPluralNames.formatPluralNameOrNull|formatPluralNameOrNull(kotlin.Long;kotlin.String;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.currency.cldr.runtime.CurrencyPluralFormatOptions){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.currency.cldr.runtime/PayloadCurrencyPluralNames.Companion|null[0]
 }
 
 final fun (dev.carcara.kotlinx.locale.currency.cldr.runtime/CurrencyPluralNameSource).dev.carcara.kotlinx.locale.currency.cldr.runtime/formatPluralName(dev.carcara.kotlinx.locale.currency/CurrencyAmount, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.number/SignDisplay = ..., kotlin/Boolean = ..., kotlin/Int? = ..., dev.carcara.kotlinx.locale.number/NumberGrouping = ...): kotlin/String // dev.carcara.kotlinx.locale.currency.cldr.runtime/formatPluralName|formatPluralName@dev.carcara.kotlinx.locale.currency.cldr.runtime.CurrencyPluralNameSource(dev.carcara.kotlinx.locale.currency.CurrencyAmount;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.number.SignDisplay;kotlin.Boolean;kotlin.Int?;dev.carcara.kotlinx.locale.number.NumberGrouping){}[0]

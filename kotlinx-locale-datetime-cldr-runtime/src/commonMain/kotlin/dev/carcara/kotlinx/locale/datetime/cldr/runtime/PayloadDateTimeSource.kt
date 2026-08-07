@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 Carcara.dev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 @file:OptIn(InternalKotlinxLocaleApi::class)
 
 package dev.carcara.kotlinx.locale.datetime.cldr.runtime
@@ -134,6 +150,8 @@ public class PayloadDateTimeFormats(
 
     private fun recordFor(locale: Locale): DateTimeRecord? = resolvedRecord(records, locale)
         ?.let { DateTimeRecord(it, resolvedRecord(standaloneRecords, locale)) }
+
+    public companion object
 }
 
 /**
@@ -263,6 +281,8 @@ public class DateTimeRecord(record: String, standaloneRecord: String? = null) {
         DayPeriodCodes.PM -> pm
         else -> dayPeriodNames[code - 2].ifEmpty { null }
     }
+
+    public companion object
 }
 
 /**
@@ -286,6 +306,8 @@ public object DayPeriodCodes {
 @InternalKotlinxLocaleApi
 public class DayPeriodRule(public val code: Int, public val start: Int, public val end: Int) {
     public val isPoint: Boolean get() = start == end
+
+    public companion object
 }
 
 /** The pattern record for [locale], for the ICU cross-check. */

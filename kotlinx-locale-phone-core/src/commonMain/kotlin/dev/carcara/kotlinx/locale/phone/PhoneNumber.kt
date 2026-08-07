@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 Carcara.dev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.carcara.kotlinx.locale.phone
 
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
@@ -86,6 +102,8 @@ public class PhoneNumber @InternalKotlinxLocaleApi public constructor(
 
     /** The E.164 form, with the extension appended when there is one. */
     override fun toString(): String = if (extension == null) e164 else "$e164;ext=$extension"
+
+    public companion object
 }
 
 /**
@@ -115,6 +133,9 @@ public enum class PhoneNumberType {
 
     /** No description in the territory's metadata matches. */
     UNKNOWN,
+    ;
+
+    public companion object
 }
 
 /** The written forms of a number. */
@@ -131,6 +152,9 @@ public enum class PhoneNumberFormat {
 
     /** `tel:+44-121-234-5678`. The RFC 3966 URI, extension included. */
     RFC3966,
+    ;
+
+    public companion object
 }
 
 /**
@@ -157,6 +181,9 @@ public enum class PhoneParseFailure {
 
     /** More digits than E.164 permits. */
     TOO_LONG,
+    ;
+
+    public companion object
 }
 
 /**
@@ -168,12 +195,18 @@ public enum class PhoneParseFailure {
  */
 public sealed class PhoneParseResult {
 
-    public class Parsed @InternalKotlinxLocaleApi public constructor(public val number: PhoneNumber) : PhoneParseResult()
+    public class Parsed @InternalKotlinxLocaleApi public constructor(public val number: PhoneNumber) : PhoneParseResult() {
+        public companion object
+    }
 
-    public class Failed @InternalKotlinxLocaleApi public constructor(public val reason: PhoneParseFailure) : PhoneParseResult()
+    public class Failed @InternalKotlinxLocaleApi public constructor(public val reason: PhoneParseFailure) : PhoneParseResult() {
+        public companion object
+    }
 
     /** The number, or `null` when parsing failed. */
     public val numberOrNull: PhoneNumber? get() = (this as? Parsed)?.number
+
+    public companion object
 }
 
 /**
@@ -196,6 +229,9 @@ public enum class CallingCodeSource {
 
     /** The input had no calling code and the default region supplied it. */
     FROM_DEFAULT_REGION,
+    ;
+
+    public companion object
 }
 
 /**
@@ -252,6 +288,8 @@ public interface PhoneNumberSource {
 
     /** The calling code [region] uses, or `null` when this source has no metadata for it. */
     public fun callingCodeOrNull(region: Country): Int?
+
+    public companion object
 }
 
 /** [text] parsed, or `null`. The accessor for callers that do not act on the reason. */

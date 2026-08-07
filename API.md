@@ -62,6 +62,7 @@ All date and time examples are real output for 2026-07-27, a Monday, at
 - [Phone numbers](#phone-numbers)
 - [Serialization](#serialization)
 - [Gradle plugin](#gradle-plugin)
+- [Writing your own extensions](#writing-your-own-extensions)
 - [Errors, guarantees and versions](#errors-guarantees-and-versions)
 
 Which standard each of these implements, with a link to the primary source, is
@@ -1985,6 +1986,35 @@ Narrowing only ever touches locale data. `Country.forAlpha2("br")` and
 `Currency.forCode("jpy")` keep working whatever was generated, because an app
 that displays three currencies can still be handed an arbitrary code by a
 payment API.
+
+## Writing your own extensions
+
+Every public class, interface and enum in these modules declares a companion
+object, most of them empty. An empty one is not an oversight. A companion can
+only be written inside the class it belongs to, so a type that ships without one
+can never be extended on its static side afterwards, and declaring them up front
+is the only way to leave that open.
+
+What it buys you is somewhere to put lookups and constructors of your own, under
+the name a reader will already be typing:
+
+```kotlin
+/** The markets this app prices in. */
+val Country.Companion.supportedMarkets: Set<Country>
+    get() = setOf(Country.BR, Country.GB, Country.PT)
+
+/** A lookup the library does not ship: the currency whose symbol someone typed. */
+fun Currency.Companion.forSymbolOrNull(symbol: String, locale: Locale = Locale.current): Currency? =
+    Currency.entries.firstOrNull { it.symbol(locale) == symbol }
+```
+
+Extending an instance never needed any of this and has always worked, which is
+where `Country.displayName` and `Currency.symbol` come from. The `Cldr*` and
+`Platform*` data sources are objects rather than classes, so an extension on one
+attaches to the object itself and needs no companion either.
+
+The companions show up in the `api/` dumps as empty `Companion` entries. They
+are part of the committed ABI and are not removed.
 
 ## Errors, guarantees and versions
 

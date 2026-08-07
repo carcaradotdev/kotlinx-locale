@@ -1,13 +1,48 @@
+/*
+ * Copyright 2026 Carcara.dev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.carcara.kotlinx.locale.datetime
 
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.LocaleDataSource
 
 /** The units CLDR carries relative names for. */
-public enum class RelativeTimeUnit { YEAR, QUARTER, MONTH, WEEK, DAY, HOUR, MINUTE, SECOND }
+public enum class RelativeTimeUnit {
+    YEAR,
+    QUARTER,
+    MONTH,
+    WEEK,
+    DAY,
+    HOUR,
+    MINUTE,
+    SECOND,
+    ;
+
+    public companion object
+}
 
 /** How wide the wording is: CLDR's base field and its short and narrow variants. */
-public enum class RelativeTimeStyle { FULL, SHORT, NARROW }
+public enum class RelativeTimeStyle {
+    FULL,
+    SHORT,
+    NARROW,
+    ;
+
+    public companion object
+}
 
 /**
  * Whether the wording always counts, or prefers a word where the locale has one.
@@ -16,7 +51,13 @@ public enum class RelativeTimeStyle { FULL, SHORT, NARROW }
  * [ALWAYS] gives `1 day ago` and `3 days ago`. The same distinction ECMA-402
  * spells `numeric`.
  */
-public enum class RelativeTimeNumbering { AUTO, ALWAYS }
+public enum class RelativeTimeNumbering {
+    AUTO,
+    ALWAYS,
+    ;
+
+    public companion object
+}
 
 /**
  * A source that writes an offset in time the way a locale writes it.
@@ -57,6 +98,8 @@ public interface RelativeTimeFormatSource : LocaleDataSource {
 
     /** The locale's name for [unit] itself: `month`, `měsíc`. */
     public fun unitNameOrNull(unit: RelativeTimeUnit, style: RelativeTimeStyle, locale: Locale): String?
+
+    public companion object
 }
 
 /**
@@ -105,4 +148,6 @@ public class FallbackRelativeTimeFormats(private val primary: RelativeTimeFormat
 
     override fun unitNameOrNull(unit: RelativeTimeUnit, style: RelativeTimeStyle, locale: Locale): String? =
         primary.unitNameOrNull(unit, style, locale) ?: fallback.unitNameOrNull(unit, style, locale)
+
+    public companion object
 }

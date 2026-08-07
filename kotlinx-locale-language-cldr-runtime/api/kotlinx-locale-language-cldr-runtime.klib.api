@@ -17,4 +17,6 @@ final class dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageName
     final fun languageNameOrNull(kotlin/String, dev.carcara.kotlinx.locale.language/LanguageNameStyle, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.languageNameOrNull|languageNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.language.LanguageNameStyle;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun regionNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.regionNameOrNull|regionNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun scriptNameOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.scriptNameOrNull|scriptNameOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.Companion|null[0]
 }

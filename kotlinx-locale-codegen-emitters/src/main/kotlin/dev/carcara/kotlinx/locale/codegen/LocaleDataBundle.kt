@@ -1,10 +1,28 @@
+/*
+ * Copyright 2026 Carcara.dev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.carcara.kotlinx.locale.codegen
 
 import java.io.BufferedWriter
 import java.io.Reader
 
 /** One ISO 3166-1 country, with the English name that becomes its KDoc. */
-public class CountryInfo(public val alpha2: String, public val alpha3: String, public val numeric: Int, public val englishName: String)
+public class CountryInfo(public val alpha2: String, public val alpha3: String, public val numeric: Int, public val englishName: String) {
+    public companion object
+}
 
 /** One ISO 4217 currency, with the CLDR fraction behavior that rides along with it. */
 public class CurrencyEntry(
@@ -39,7 +57,9 @@ public class CurrencyEntry(
      * still carries it.
      */
     public val isCurrent: Boolean = true,
-)
+) {
+    public companion object
+}
 
 /**
  * Everything the emitters need, already resolved out of CLDR.
@@ -340,6 +360,8 @@ public class LocaleDataBundle private constructor(
                 sections = sections,
             )
         }
+
+        public companion object
     }
 
     public companion object {

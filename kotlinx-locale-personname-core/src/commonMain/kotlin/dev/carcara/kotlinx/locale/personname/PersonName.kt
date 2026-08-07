@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 Carcara.dev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.carcara.kotlinx.locale.personname
 
 import dev.carcara.kotlinx.locale.Locale
@@ -10,6 +26,9 @@ public enum class PersonNameLength {
 
     /** Whatever the formatting locale declares, which is not the same everywhere. */
     DEFAULT,
+    ;
+
+    public companion object
 }
 
 /** What the formatted name is for. */
@@ -22,6 +41,9 @@ public enum class PersonNameUsage {
 
     /** Initials, for an avatar or a compact badge. */
     MONOGRAM,
+    ;
+
+    public companion object
 }
 
 /** How formal the wording is. */
@@ -31,6 +53,9 @@ public enum class PersonNameFormality {
 
     /** Whatever the formatting locale declares. */
     DEFAULT,
+    ;
+
+    public companion object
 }
 
 /**
@@ -49,6 +74,9 @@ public enum class PersonNameOrder {
 
     /** The form a list is sorted by: `Adler, Iris`. */
     SORTING,
+    ;
+
+    public companion object
 }
 
 /**
@@ -94,6 +122,8 @@ public class PersonName(
     public val preferredOrder: PersonNameOrder = PersonNameOrder.DEFAULT,
 ) {
     override fun toString(): String = "PersonName(given=$given, surname=$surname, locale=$locale)"
+
+    public companion object
 }
 
 /** A source of person name formatting. */
@@ -116,6 +146,8 @@ public interface PersonNameSource {
      * null when this build has no data for [locale].
      */
     public fun orderOrNull(nameLocale: Locale?, locale: Locale): PersonNameOrder?
+
+    public companion object
 }
 
 /**

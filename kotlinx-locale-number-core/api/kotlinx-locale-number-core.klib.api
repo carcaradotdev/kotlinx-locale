@@ -16,6 +16,8 @@ final enum class dev.carcara.kotlinx.locale.number/NumberGrouping : kotlin/Enum<
 
     final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.number/NumberGrouping // dev.carcara.kotlinx.locale.number/NumberGrouping.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.number/NumberGrouping> // dev.carcara.kotlinx.locale.number/NumberGrouping.values|values#static(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/NumberGrouping.Companion|null[0]
 }
 
 final enum class dev.carcara.kotlinx.locale.number/NumberNotation : kotlin/Enum<dev.carcara.kotlinx.locale.number/NumberNotation> { // dev.carcara.kotlinx.locale.number/NumberNotation|null[0]
@@ -28,6 +30,8 @@ final enum class dev.carcara.kotlinx.locale.number/NumberNotation : kotlin/Enum<
 
     final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.number/NumberNotation // dev.carcara.kotlinx.locale.number/NumberNotation.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.number/NumberNotation> // dev.carcara.kotlinx.locale.number/NumberNotation.values|values#static(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/NumberNotation.Companion|null[0]
 }
 
 final enum class dev.carcara.kotlinx.locale.number/PercentScale : kotlin/Enum<dev.carcara.kotlinx.locale.number/PercentScale> { // dev.carcara.kotlinx.locale.number/PercentScale|null[0]
@@ -39,6 +43,8 @@ final enum class dev.carcara.kotlinx.locale.number/PercentScale : kotlin/Enum<de
 
     final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.number/PercentScale // dev.carcara.kotlinx.locale.number/PercentScale.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.number/PercentScale> // dev.carcara.kotlinx.locale.number/PercentScale.values|values#static(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/PercentScale.Companion|null[0]
 }
 
 final enum class dev.carcara.kotlinx.locale.number/PluralCategory : kotlin/Enum<dev.carcara.kotlinx.locale.number/PluralCategory> { // dev.carcara.kotlinx.locale.number/PluralCategory|null[0]
@@ -71,6 +77,8 @@ final enum class dev.carcara.kotlinx.locale.number/PluralType : kotlin/Enum<dev.
 
     final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.number/PluralType // dev.carcara.kotlinx.locale.number/PluralType.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.number/PluralType> // dev.carcara.kotlinx.locale.number/PluralType.values|values#static(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/PluralType.Companion|null[0]
 }
 
 final enum class dev.carcara.kotlinx.locale.number/SignDisplay : kotlin/Enum<dev.carcara.kotlinx.locale.number/SignDisplay> { // dev.carcara.kotlinx.locale.number/SignDisplay|null[0]
@@ -97,6 +105,8 @@ final enum class dev.carcara.kotlinx.locale.number/SignDisplay : kotlin/Enum<dev
 
     final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.number/SignDisplay // dev.carcara.kotlinx.locale.number/SignDisplay.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.number/SignDisplay> // dev.carcara.kotlinx.locale.number/SignDisplay.values|values#static(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/SignDisplay.Companion|null[0]
 }
 
 abstract interface dev.carcara.kotlinx.locale.number/NumberFormatSource : dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale.number/NumberFormatSource|null[0]
@@ -104,14 +114,20 @@ abstract interface dev.carcara.kotlinx.locale.number/NumberFormatSource : dev.ca
     abstract fun formatPercentOrNull(dev.carcara.kotlinx.locale.number/Decimal, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.number/PercentScale, dev.carcara.kotlinx.locale.number/NumberFormatOptions): dev.carcara.kotlinx.locale.number/FormattedNumber? // dev.carcara.kotlinx.locale.number/NumberFormatSource.formatPercentOrNull|formatPercentOrNull(dev.carcara.kotlinx.locale.number.Decimal;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.number.PercentScale;dev.carcara.kotlinx.locale.number.NumberFormatOptions){}[0]
     abstract fun parseDecimalOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number/Decimal? // dev.carcara.kotlinx.locale.number/NumberFormatSource.parseDecimalOrNull|parseDecimalOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
     abstract fun symbolsOrNull(dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number/NumberSymbols? // dev.carcara.kotlinx.locale.number/NumberFormatSource.symbolsOrNull|symbolsOrNull(dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/NumberFormatSource.Companion|null[0]
 }
 
 abstract interface dev.carcara.kotlinx.locale.number/OrdinalFormatSource : dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale.number/OrdinalFormatSource|null[0]
     abstract fun ordinalOrNull(kotlin/Long, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.number/OrdinalFormatSource.ordinalOrNull|ordinalOrNull(kotlin.Long;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/OrdinalFormatSource.Companion|null[0]
 }
 
 abstract interface dev.carcara.kotlinx.locale.number/PluralRuleSource : dev.carcara.kotlinx.locale/LocaleDataSource { // dev.carcara.kotlinx.locale.number/PluralRuleSource|null[0]
     abstract fun pluralCategoryOrNull(dev.carcara.kotlinx.locale.number/FormattedNumber, dev.carcara.kotlinx.locale.number/PluralType, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number/PluralCategory? // dev.carcara.kotlinx.locale.number/PluralRuleSource.pluralCategoryOrNull|pluralCategoryOrNull(dev.carcara.kotlinx.locale.number.FormattedNumber;dev.carcara.kotlinx.locale.number.PluralType;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/PluralRuleSource.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.number/Decimal : kotlin/Comparable<dev.carcara.kotlinx.locale.number/Decimal> { // dev.carcara.kotlinx.locale.number/Decimal|null[0]
@@ -160,6 +176,8 @@ final class dev.carcara.kotlinx.locale.number/FallbackNumberFormats : dev.carcar
     final fun formatPercentOrNull(dev.carcara.kotlinx.locale.number/Decimal, dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.number/PercentScale, dev.carcara.kotlinx.locale.number/NumberFormatOptions): dev.carcara.kotlinx.locale.number/FormattedNumber? // dev.carcara.kotlinx.locale.number/FallbackNumberFormats.formatPercentOrNull|formatPercentOrNull(dev.carcara.kotlinx.locale.number.Decimal;dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.number.PercentScale;dev.carcara.kotlinx.locale.number.NumberFormatOptions){}[0]
     final fun parseDecimalOrNull(kotlin/String, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number/Decimal? // dev.carcara.kotlinx.locale.number/FallbackNumberFormats.parseDecimalOrNull|parseDecimalOrNull(kotlin.String;dev.carcara.kotlinx.locale.Locale){}[0]
     final fun symbolsOrNull(dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number/NumberSymbols? // dev.carcara.kotlinx.locale.number/FallbackNumberFormats.symbolsOrNull|symbolsOrNull(dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/FallbackNumberFormats.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.number/FallbackOrdinalFormats : dev.carcara.kotlinx.locale.number/OrdinalFormatSource { // dev.carcara.kotlinx.locale.number/FallbackOrdinalFormats|null[0]
@@ -169,6 +187,8 @@ final class dev.carcara.kotlinx.locale.number/FallbackOrdinalFormats : dev.carca
         final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.number/FallbackOrdinalFormats.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
 
     final fun ordinalOrNull(kotlin/Long, dev.carcara.kotlinx.locale/Locale): kotlin/String? // dev.carcara.kotlinx.locale.number/FallbackOrdinalFormats.ordinalOrNull|ordinalOrNull(kotlin.Long;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/FallbackOrdinalFormats.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.number/FallbackPluralRules : dev.carcara.kotlinx.locale.number/PluralRuleSource { // dev.carcara.kotlinx.locale.number/FallbackPluralRules|null[0]
@@ -178,6 +198,8 @@ final class dev.carcara.kotlinx.locale.number/FallbackPluralRules : dev.carcara.
         final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.number/FallbackPluralRules.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]
 
     final fun pluralCategoryOrNull(dev.carcara.kotlinx.locale.number/FormattedNumber, dev.carcara.kotlinx.locale.number/PluralType, dev.carcara.kotlinx.locale/Locale): dev.carcara.kotlinx.locale.number/PluralCategory? // dev.carcara.kotlinx.locale.number/FallbackPluralRules.pluralCategoryOrNull|pluralCategoryOrNull(dev.carcara.kotlinx.locale.number.FormattedNumber;dev.carcara.kotlinx.locale.number.PluralType;dev.carcara.kotlinx.locale.Locale){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/FallbackPluralRules.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.number/FormattedNumber : kotlin/CharSequence { // dev.carcara.kotlinx.locale.number/FormattedNumber|null[0]
@@ -207,6 +229,8 @@ final class dev.carcara.kotlinx.locale.number/FormattedNumber : kotlin/CharSeque
     final fun get(kotlin/Int): kotlin/Char // dev.carcara.kotlinx.locale.number/FormattedNumber.get|get(kotlin.Int){}[0]
     final fun subSequence(kotlin/Int, kotlin/Int): kotlin/CharSequence // dev.carcara.kotlinx.locale.number/FormattedNumber.subSequence|subSequence(kotlin.Int;kotlin.Int){}[0]
     final fun toString(): kotlin/String // dev.carcara.kotlinx.locale.number/FormattedNumber.toString|toString(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.number/FormattedNumber.Companion|null[0]
 }
 
 final class dev.carcara.kotlinx.locale.number/NumberFormatOptions { // dev.carcara.kotlinx.locale.number/NumberFormatOptions|null[0]

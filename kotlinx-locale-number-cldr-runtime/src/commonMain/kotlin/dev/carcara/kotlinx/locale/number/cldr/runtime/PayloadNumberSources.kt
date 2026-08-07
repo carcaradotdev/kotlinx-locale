@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 Carcara.dev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 @file:OptIn(InternalKotlinxLocaleApi::class)
 
 package dev.carcara.kotlinx.locale.number.cldr.runtime
@@ -107,6 +123,8 @@ public class PayloadNumberFormats(
         cache[key] = numbers
         return numbers
     }
+
+    public companion object
 }
 
 private class LocaleNumbers(
@@ -147,6 +165,8 @@ public class PayloadPluralRules(
         val ruleSet = parsed.getOrPut(id) { PluralRuleSet.parse(ruleSets[id].orEmpty()) }
         return ruleSet.select(number)
     }
+
+    public companion object
 }
 
 /** An ordinal source over the generated rule closures. */
@@ -172,4 +192,6 @@ public class PayloadOrdinalFormats(
             plurals.pluralCategory(count, locale, PluralType.ORDINAL)
         }
     }
+
+    public companion object
 }

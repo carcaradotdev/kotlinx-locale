@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 Carcara.dev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.carcara.kotlinx.locale.codegen
 
 import java.io.File
@@ -16,7 +32,9 @@ public class BindingTarget(
     public val packageName: String,
     /** The object's name, e.g. `CldrCountry` or `GeneratedCountryNames`. */
     public val objectName: String,
-)
+) {
+    public companion object
+}
 
 /**
  * Every table an emitter can write, and so every root a caller can ask for.
@@ -90,6 +108,9 @@ public enum class GeneratedTable {
 
     /** The rule closures behind `1st` and `1.`, shared the same way. */
     ORDINALS,
+    ;
+
+    public companion object
 }
 
 /** Every source object the binding emitter can write, and the suffix its name takes. */
@@ -122,6 +143,9 @@ public enum class GeneratedBinding(public val objectSuffix: String) {
     TIME_ZONE("TimeZone"),
     TIME_ZONE_CITIES("TimeZoneCities"),
     PERSON_NAME("PersonName"),
+    ;
+
+    public companion object
 }
 
 public class SourceRoots private constructor(
@@ -147,7 +171,11 @@ public class SourceRoots private constructor(
         }
 
         public fun build(): SourceRoots = SourceRoots(tables, bindings)
+
+        public companion object
     }
+
+    public companion object
 }
 
 /**

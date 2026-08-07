@@ -1008,6 +1008,19 @@ generated sources are excluded by their `// GENERATED` header. Run
 `./gradlew ktlintFormat` to fix style before committing, or
 `./gradlew ktlintCheck` to verify.
 
+Every source file opens with the Apache notice, and a script keeps all of them
+identical to the copy in [LICENSE](LICENSE):
+
+```sh
+python3 scripts/license_header.py check   # name the files whose header is wrong
+python3 scripts/license_header.py apply   # rewrite them
+```
+
+The notice is read out of LICENSE rather than written down a second time, so
+editing the copyright line there and running `apply` updates the whole tree.
+Generated sources carry it as well: the emitters write the same notice above the
+`// GENERATED` line, so regenerating does not strip it.
+
 Each library module records its public ABI under `<module>/api/`: one
 `.klib.api` file covering every Kotlin/Native, JS and Wasm target, plus
 `jvm/<module>.api` for the JVM bytecode.
@@ -1032,12 +1045,13 @@ Other tasks worth knowing:
 ./gradlew -p samples/narrowed build   # the plugin sample, against local artifacts
 ```
 
-CI runs on every push to `main` and on pull requests: ktlint, the layering
-check, plugin validation and a configuration-cache round trip; the size budgets;
-the narrowed sample built against locally published artifacts; an ABI check on
-macOS; and `./gradlew build` on Linux, macOS and Windows runners, which together
-cover every target's tests a host can execute. Pull requests must be green on
-all of it before merging.
+CI runs on every push to `main` and on pull requests: the license header check,
+ktlint, the layering check, plugin validation and a configuration-cache round
+trip; the size budgets; the tests of the generator, the emitters and the Gradle
+plugin; the narrowed sample built against locally published artifacts; an ABI
+check on macOS; and one job per Kotlin target, running that target's tests where
+the runner can execute them and compiling it where it cannot. Pull requests must
+be green on all of it before merging.
 
 ## Scope and limitations
 

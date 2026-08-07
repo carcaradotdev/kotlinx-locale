@@ -15,7 +15,11 @@ public final class dev/carcara/kotlinx/locale/country/CountryFlagKt {
 }
 
 public abstract interface class dev/carcara/kotlinx/locale/country/CountryNameSource : dev/carcara/kotlinx/locale/LocaleDataSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/country/CountryNameSource$Companion;
 	public abstract fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/country/CountryNameSource$Companion {
 }
 
 public final class dev/carcara/kotlinx/locale/country/CountryNameSourceKt {
@@ -24,8 +28,12 @@ public final class dev/carcara/kotlinx/locale/country/CountryNameSourceKt {
 }
 
 public final class dev/carcara/kotlinx/locale/country/FallbackCountryNames : dev/carcara/kotlinx/locale/country/CountryNameSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/country/FallbackCountryNames$Companion;
 	public fun <init> (Ldev/carcara/kotlinx/locale/country/CountryNameSource;Ldev/carcara/kotlinx/locale/country/CountryNameSource;)V
 	public fun countryNameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
 	public fun getSupportedLocales ()Ljava/util/Set;
+}
+
+public final class dev/carcara/kotlinx/locale/country/FallbackCountryNames$Companion {
 }
 

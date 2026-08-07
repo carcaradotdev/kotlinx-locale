@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 Carcara.dev
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.carcara.kotlinx.locale.language
 
 import dev.carcara.kotlinx.locale.Capitalization
@@ -5,7 +21,13 @@ import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.LocaleDataSource
 
 /** Which spelling of a name: CLDR's default, or its shorter `alt="short"` form. */
-public enum class LanguageNameStyle { STANDARD, SHORT }
+public enum class LanguageNameStyle {
+    STANDARD,
+    SHORT,
+    ;
+
+    public companion object
+}
 
 /**
  * Whether a dialect gets its own name or is composed from the language plus its
@@ -15,7 +37,13 @@ public enum class LanguageNameStyle { STANDARD, SHORT }
  * `English (United Kingdom)`. This is UTS #35's combine-language parameter and
  * ECMA-402's `languageDisplay`, and [DIALECT] is the default in both.
  */
-public enum class LanguageDisplay { DIALECT, STANDARD }
+public enum class LanguageDisplay {
+    DIALECT,
+    STANDARD,
+    ;
+
+    public companion object
+}
 
 /**
  * The three patterns that join the parts of a locale display name.
@@ -83,10 +111,19 @@ public interface LanguageNameSource : LocaleDataSource {
      * lookup rather than a call to uppercase the first letter.
      */
     public fun capitalized(name: String, usage: LanguageNameUsage, capitalization: Capitalization, locale: Locale): String = name
+
+    public companion object
 }
 
 /** Which kind of name is being capitalized; CLDR records the answer per usage. */
-public enum class LanguageNameUsage { LANGUAGE, SCRIPT, TERRITORY }
+public enum class LanguageNameUsage {
+    LANGUAGE,
+    SCRIPT,
+    TERRITORY,
+    ;
+
+    public companion object
+}
 
 /** Answers from [primary], and from [fallback] wherever primary has nothing. */
 public class FallbackLanguageNames(private val primary: LanguageNameSource, private val fallback: LanguageNameSource) :
@@ -108,4 +145,6 @@ public class FallbackLanguageNames(private val primary: LanguageNameSource, priv
 
     override fun capitalized(name: String, usage: LanguageNameUsage, capitalization: Capitalization, locale: Locale): String =
         primary.capitalized(name, usage, capitalization, locale)
+
+    public companion object
 }
