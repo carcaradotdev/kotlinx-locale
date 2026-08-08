@@ -133,7 +133,7 @@ is written up in [boundaries.md](boundaries.md).
 ## Where ICU is not the answer
 
 ICU is the reference for most of what is checked above, and it is not the
-specification. Five kinds of difference come up, and each one is handled
+specification. Six kinds of difference come up, and each one is handled
 differently.
 
 **ICU is built from a different CLDR snapshot.** The pinned releases are CLDR
@@ -167,6 +167,12 @@ wrong is not widening at all, which is what this library did until
 `:conformance-icu` compared the two: it wrote `14 – 14` for an interval two
 months long.
 
+**This library has not built it yet.** Hawaiian writes its short date with a
+`numbers` attribute selecting lowercase Roman numerals for the month alone, and
+that per-field override is not implemented, so the month renders in the locale's
+default digits. ICU is right and this is a gap rather than a decision, which is
+what `NOT_IMPLEMENTED` says; the rows disappear when the feature lands.
+
 **ICU has defects.** ICU 78.3 cannot format a currency at
 `UnitWidth.FULL_NAME` when that currency declares its own pattern in the locale,
 which CLDR does once, for the Turkish lira in Turkish. The format routes through
@@ -174,9 +180,9 @@ the pattern modifier, whose switch over the widths throws instead of handling th
 name width. Nothing here reproduces that: the generator leaves the pair out of
 the fixture, records why, and fails the build if it ever stops being a handful.
 
-### Where the five kinds are recorded
+### Where the six kinds are recorded
 
-Four of the five are derivable, and one is not. That split is what
+Four of the six are derivable, and two are not. That split is what
 `conformance/ledger` is built around.
 
 A snapshot difference, a bundle fallback and a pruned locale can each be
@@ -191,10 +197,12 @@ be thousands of lines nobody reads a second time; the count moving is the thing
 worth noticing, because a classifier that excuses more cases than it used to is
 how a real bug stops being reported.
 
-The fifth kind cannot be derived. An ICU defect and a deliberate divergence
-look identical to a program, and telling them apart is a judgement someone
-makes once and writes down. Those are the only rows the ledger enumerates, and
-a row without a note fails at write time.
+The last two cannot be derived. An ICU defect, a deliberate divergence and a
+thing this library has not built yet look identical to a program, and telling
+them apart is a judgement someone makes once and writes down. Those are the only
+rows the ledger enumerates, a row without a note fails at write time, and a
+reviewed classification is carried across a regeneration for the same reason its
+note is: neither can be re-derived.
 
 This replaces what the tests used to do. Exclusions living in the tests
 themselves worked while the comparison covered thirty locales; at eleven hundred

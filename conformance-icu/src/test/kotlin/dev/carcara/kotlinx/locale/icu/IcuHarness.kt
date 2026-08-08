@@ -164,7 +164,9 @@ class DomainComparison(private val domain: String) {
         localesCompared.add(locale)
         if (ours.normalizedSpaces() == icu.normalizedSpaces()) return
         val kind = classify()
-        if (kind != null && kind != Divergence.DEFECT && kind != Divergence.DELIBERATE) {
+        // Asked of the set rather than by naming kinds, so adding one to the
+        // enum cannot quietly make it a counted kind that no one ever reads.
+        if (kind != null && kind !in Ledger.JUDGEMENT_CALLS) {
             derived[kind] = (derived[kind] ?: 0) + 1
             return
         }
@@ -194,11 +196,29 @@ class DomainComparison(private val domain: String) {
         val counts = derived.entries.associate { (kind, n) -> "$domain\t${kind.name}" to n }
 
         if (Ledger.writing) {
-            // Notes are the one thing a regeneration cannot invent, so carry
-            // over whatever the reviewed file already said for a row that is
-            // still there.
+            // The reviewed answer is the one thing a regeneration cannot invent,
+            // and it is both fields rather than just the note. Carrying the note
+            // alone was the first version, and it reset every classification to
+            // DEFECT on the next run while keeping the sentence that said the
+            // row was deliberate: 209 rows read "a defect in ICU" over an
+            // explanation of why this library answers differently on purpose.
+            //
+            // Only the judgement kinds are carried. A row the classifier can
+            // derive is re-derived every time, which is what keeps a classifier
+            // that stopped firing from being papered over by an old answer.
             val existing = ledger.read(domain)
-            ledger.write(domain, found.values.map { row -> row.copy(note = existing[row.key()]?.note ?: row.note) })
+            ledger.write(
+                domain,
+                found.values.map { row ->
+                    val reviewed = existing[row.key()]
+                    when {
+                        reviewed == null -> row
+                        reviewed.divergence in Ledger.JUDGEMENT_CALLS ->
+                            row.copy(divergence = reviewed.divergence, note = reviewed.note)
+                        else -> row.copy(note = reviewed.note)
+                    }
+                },
+            )
             ledger.writeCounts(ledger.readCounts() + counts)
             ledger.recordCoverage(domain, localesCompared.size.toLong(), compared)
             return

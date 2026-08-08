@@ -76,6 +76,17 @@ enum class Divergence {
     DEFECT,
 
     /**
+     * ICU is right and this library has not built the thing yet.
+     *
+     * The kind that was missing. [DEFECT] blames ICU and [DELIBERATE] claims a
+     * decision, and a known gap is neither: calling it deliberate would put a
+     * stopping point in `docs/boundaries.md` for work that is meant to happen.
+     * The note says what is missing and points at the ROADMAP entry, so the row
+     * disappears when the feature lands rather than being carried forever.
+     */
+    NOT_IMPLEMENTED,
+
+    /**
      * This library answers differently on purpose.
      *
      * Every one of these should correspond to an entry in `docs/boundaries.md`.
@@ -273,8 +284,8 @@ class Ledger(private val dir: File) {
     }
 
     companion object {
-        /** The two kinds only a person can tell apart, and so the only ones written out one by one. */
-        val JUDGEMENT_CALLS = setOf(Divergence.DEFECT, Divergence.DELIBERATE)
+        /** The kinds only a person can tell apart, and so the only ones written out one by one. */
+        val JUDGEMENT_CALLS = setOf(Divergence.DEFECT, Divergence.DELIBERATE, Divergence.NOT_IMPLEMENTED)
 
         /**
          * What `updateLedger` writes into a row nobody has explained yet.

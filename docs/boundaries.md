@@ -225,6 +225,26 @@ reaches past it to the wide one.
 Welsh and Filipino are the same shape across more units, because CLDR leaves
 more of their categories to lateral inheritance.
 
+## The hour cycle a standard time pattern uses
+
+CLDR's supplemental `timeData` gives each region a preferred hour cycle, and the
+question is what that preference is allowed to touch. This library applies it
+where UTS #35 defines it, which is skeleton resolution: `j` picks the locale's
+own cycle, and that is what `numberFormat`'s datetime counterpart and every
+skeleton call go through. The four standard patterns are locale data, and they
+render as the locale's own inheritance chain declares them.
+
+ICU applies the preference to the standard patterns too. Kurdish in Iraq states
+no time pattern anywhere in its chain and inherits root's twenty-four hour form,
+so this library writes `15:30` and ICU writes `3:30 PN`. Argentina goes the other
+way: it inherits the twelve-hour pattern from `es-419` and ICU renders
+`03:30:45`.
+
+The skeleton comparison in `:conformance-icu` agrees with ICU across all 905
+locales it can answer for, which is the evidence that the preference is being
+honoured where it is specified. Extending it to the standard patterns would mean
+overriding data a locale states on purpose, on the strength of a region default.
+
 ## Time zone naming at a past instant
 
 The zone name API takes a style and an offset. It does not take an instant and
