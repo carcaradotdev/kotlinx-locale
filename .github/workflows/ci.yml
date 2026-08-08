@@ -319,7 +319,7 @@ jobs:
           - { target: watchosX64, os: macos-latest, task: watchosX64MainKlibrary }
           - { target: macosX64, os: macos-latest, task: macosX64MainKlibrary }
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -333,6 +333,43 @@ jobs:
           path: ~/.konan
           key: konan-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
           restore-keys: konan-${{ runner.os }}-
+      # What a runner may use, which is not what a laptop may use.
+      #
+      # gradle.properties holds the build to two workers, 2 GB for the daemon
+      # and 3 GB for the Kotlin/Native compiler, because building this matrix
+      # locally will take a 48 GB machine down. That is the right default for a
+      # fresh clone and the wrong one here: a runner is ephemeral, sized per job
+      # and thrown away.
+      #
+      # Left at those ceilings, mingwX64 went from the twenty minutes it takes
+      # on main to past the hour it was allowed, because Windows is where
+      # Kotlin/Native compilation is slowest and all three ceilings compound.
+      #
+      # Written to GRADLE_USER_HOME rather than passed as `-D` or GRADLE_OPTS,
+      # because those lose to the project's own gradle.properties and this file
+      # is the one place Gradle ranks above it.
+      - name: Let the runner use what it has
+        run: |
+          set -euo pipefail
+          # setup-gradle sets GRADLE_USER_HOME on some runners, so ask rather
+          # than assume. Writing to the wrong file would leave the ceilings in
+          # place and read as a fix that worked.
+          home="${GRADLE_USER_HOME:-$HOME/.gradle}"
+          mkdir -p "$home"
+          cat >> "$home/gradle.properties" <<'PROPERTIES'
+          org.gradle.workers.max=4
+          org.gradle.jvmargs=-Xmx4G -XX:+UseParallelGC -Dfile.encoding=UTF-8
+          kotlin.daemon.jvmargs=-Xmx4G -XX:+UseParallelGC
+          kotlin.native.jvmArgs=-Xmx4G -XX:+UseParallelGC
+          PROPERTIES
+          echo "wrote $home/gradle.properties"
+          # Read the values back out of Gradle itself. A file in the right place
+          # that Gradle still outranks is the same silent no-op by another route.
+          ./gradlew -q properties \
+            | grep -E '^(org\.gradle\.workers\.max|org\.gradle\.jvmargs|kotlin\.native\.jvmArgs):' \
+            | tee /tmp/effective.txt
+          grep -q 'org.gradle.workers.max: 4' /tmp/effective.txt
+          grep -q 'kotlin.native.jvmArgs: -Xmx4G' /tmp/effective.txt
       - name: ${{ matrix.task }}
         run: ./gradlew ${{ matrix.task }}
 
