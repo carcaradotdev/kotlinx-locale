@@ -18,31 +18,33 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.format
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.formatPattern
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.parseDateTimePattern
+import dev.carcara.kotlinx.locale.test.assertEquals
 import kotlinx.datetime.LocalTime
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
 /**
  * Covers the day period pattern fields: `B` (flexible day periods selected by
  * the CLDR rules from dayPeriods.xml) and `b` (AM/PM plus exact noon and
  * midnight). Expected values are the format/abbreviated names from CLDR.
  */
-class DayPeriodTest {
+val DayPeriodTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    private fun dayPeriod(tag: String, time: LocalTime, pattern: String = "B"): String = formatPattern(
+    fun dayPeriod(tag: String, time: LocalTime, pattern: String = "B"): String = formatPattern(
         parseDateTimePattern(pattern),
         localeDataFor(Locale.forLanguageTag(tag)),
         date = null,
         time = time,
     )
 
-    @Test
-    fun flexibleDayPeriodsInEnglish() {
+    test("flexibleDayPeriodsInEnglish") {
         assertEquals("midnight", dayPeriod("en", LocalTime(0, 0)))
         // English mornings start at 00:00 in CLDR; night only runs 21:00-24:00.
         assertEquals("in the morning", dayPeriod("en", LocalTime(0, 30)))
@@ -53,15 +55,13 @@ class DayPeriodTest {
         assertEquals("at night", dayPeriod("en", LocalTime(22, 0)))
     }
 
-    @Test
-    fun noonAndMidnightRequireTheExactTime() {
+    test("noonAndMidnightRequireTheExactTime") {
         assertEquals("in the afternoon", dayPeriod("en", LocalTime(12, 0, 30)))
         assertEquals("in the afternoon", dayPeriod("en", LocalTime(12, 1)))
         assertEquals("in the morning", dayPeriod("en", LocalTime(0, 0, 30)))
     }
 
-    @Test
-    fun flexibleDayPeriodsInGerman() {
+    test("flexibleDayPeriodsInGerman") {
         assertEquals("Mitternacht", dayPeriod("de", LocalTime(0, 0)))
         assertEquals("nachts", dayPeriod("de", LocalTime(3, 0)))
         assertEquals("morgens", dayPeriod("de", LocalTime(5, 0)))
@@ -71,8 +71,7 @@ class DayPeriodTest {
         assertEquals("abends", dayPeriod("de", LocalTime(19, 0)))
     }
 
-    @Test
-    fun nightIntervalsWrapPastMidnight() {
+    test("nightIntervalsWrapPastMidnight") {
         // Russian night1 runs 22:00-04:00, crossing midnight.
         assertEquals("ночи", dayPeriod("ru", LocalTime(23, 0)))
         assertEquals("ночи", dayPeriod("ru", LocalTime(2, 0)))
@@ -81,8 +80,7 @@ class DayPeriodTest {
         assertEquals("полд.", dayPeriod("ru", LocalTime(12, 0)))
     }
 
-    @Test
-    fun amPmNoonMidnightField() {
+    test("amPmNoonMidnightField") {
         assertEquals("midnight", dayPeriod("en", LocalTime(0, 0), pattern = "b"))
         assertEquals("noon", dayPeriod("en", LocalTime(12, 0), pattern = "b"))
         assertEquals("AM", dayPeriod("en", LocalTime(0, 30), pattern = "b"))
@@ -93,8 +91,7 @@ class DayPeriodTest {
         assertEquals("PM", dayPeriod("de", LocalTime(12, 0), pattern = "b"))
     }
 
-    @Test
-    fun fallsBackToAmPmWithoutRulesOrNames() {
+    test("fallsBackToAmPmWithoutRulesOrNames") {
         // Unknown language: root data, whose rules are plain am/pm.
         assertEquals("AM", dayPeriod("zz", LocalTime(9, 0)))
         assertEquals("PM", dayPeriod("zz", LocalTime(15, 0)))
@@ -103,8 +100,7 @@ class DayPeriodTest {
 
     // Traditional Chinese is the locale family whose standard time patterns
     // actually contain B (Bh:mm), so day periods show up in public output.
-    @Test
-    fun formatsChineseTimesWithFlexibleDayPeriods() {
+    test("formatsChineseTimesWithFlexibleDayPeriods") {
         val zhHant = Locale.forLanguageTag("zh-Hant")
         assertEquals("凌晨2:05", LocalTime(2, 5).format(FormatStyle.SHORT, zhHant))
         assertEquals("清晨6:05", LocalTime(6, 5).format(FormatStyle.SHORT, zhHant))
@@ -115,8 +111,7 @@ class DayPeriodTest {
         assertEquals("午夜12:00", LocalTime(0, 0).format(FormatStyle.SHORT, zhHant))
     }
 
-    @Test
-    fun stripsBracketedZoneFieldsFromChineseTimeStyles() {
+    test("stripsBracketedZoneFieldsFromChineseTimeStyles") {
         // The zh-Hant FULL pattern is "Bh:mm:ss [zzzz]"; dropping the zone must
         // also drop the brackets it lived in.
         val zhHant = Locale.forLanguageTag("zh-Hant")

@@ -16,20 +16,22 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.relative.CldrRelativeTime
 import dev.carcara.kotlinx.locale.datetime.cldr.relative.relativeTimeFormat
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 private val EN = Locale.of("en")
 private val CS = Locale.of("cs")
 
-class CldrRelativeTimeTest {
+val CldrRelativeTimeTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    @Test
-    fun prefersTheWordWhereTheLocaleHasOne() {
+    test("prefersTheWordWhereTheLocaleHasOne") {
         assertEquals("yesterday", relativeTimeFormat(-1L, RelativeTimeUnit.DAY, locale = EN))
         assertEquals("tomorrow", relativeTimeFormat(1L, RelativeTimeUnit.DAY, locale = EN))
         assertEquals("today", relativeTimeFormat(0L, RelativeTimeUnit.DAY, locale = EN))
@@ -38,14 +40,12 @@ class CldrRelativeTimeTest {
         assertEquals("předevčírem", relativeTimeFormat(-2L, RelativeTimeUnit.DAY, locale = CS))
     }
 
-    @Test
-    fun countsWhenAskedTo() {
+    test("countsWhenAskedTo") {
         assertEquals("1 day ago", relativeTimeFormat(-1L, RelativeTimeUnit.DAY, numbering = RelativeTimeNumbering.ALWAYS, locale = EN))
         assertEquals("in 1 day", relativeTimeFormat(1L, RelativeTimeUnit.DAY, numbering = RelativeTimeNumbering.ALWAYS, locale = EN))
     }
 
-    @Test
-    fun czechPicksAmongItsFourPluralForms() {
+    test("czechPicksAmongItsFourPluralForms") {
         // one, few, many and other are four different words, and this is what a
         // hand-rolled ladder that divides by seven gets wrong.
         assertEquals("před 1 dnem", relativeTimeFormat(-1L, RelativeTimeUnit.DAY, numbering = RelativeTimeNumbering.ALWAYS, locale = CS))
@@ -55,8 +55,7 @@ class CldrRelativeTimeTest {
         assertEquals("za 10 dní", relativeTimeFormat(10L, RelativeTimeUnit.DAY, locale = CS))
     }
 
-    @Test
-    fun theWidthsFallBackToTheBase() {
+    test("theWidthsFallBackToTheBase") {
         for (style in RelativeTimeStyle.entries) {
             assertTrue(
                 relativeTimeFormat(-3L, RelativeTimeUnit.HOUR, style, locale = EN).isNotBlank(),
@@ -66,8 +65,7 @@ class CldrRelativeTimeTest {
         assertEquals("3 hr. ago", relativeTimeFormat(-3L, RelativeTimeUnit.HOUR, RelativeTimeStyle.SHORT, locale = EN))
     }
 
-    @Test
-    fun everyLocaleAndUnitAnswers() {
+    test("everyLocaleAndUnitAnswers") {
         var checked = 0
         for (locale in CldrRelativeTime.supportedLocales) {
             for (unit in RelativeTimeUnit.entries) {

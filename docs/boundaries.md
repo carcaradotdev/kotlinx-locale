@@ -169,6 +169,82 @@ Carrying the withdrawn ISO 4217 codes shrinks the third case to almost nothing.
 A code that still will not resolve after that is a wrong payload, which is an
 error to handle rather than a value to render.
 
+## Minor units come from ISO 4217
+
+`CurrencyAmount` counts minor units the way ISO 4217 does, and for 29 codes that
+is not what CLDR's `currencyData` says. The metals and the X codes are the larger
+half: ISO gives XAU, XAG, XPT, XPD, XDR and the rest no minor unit at all, and
+ICU has no entry for them and falls back to its own default of two. The smaller
+half is sixteen currencies where the two registries simply disagree, Hungarian
+forint and Indonesian rupiah among them.
+
+Following ISO for a field ISO defines is the whole of the reasoning. The
+disagreement is recorded case by case in `conformance/ledger/currency-minor-units.tsv`,
+so it is a list somebody can read rather than a rule nobody can see.
+
+## The parent a currency pattern is inherited from
+
+CLDR's `parentLocales` makes `en-BE`, `en-DE` and twenty-two others children of
+`en-150`, whose own file declares the European currency pattern and separators.
+This library follows that chain, so English in Belgium formats money the way
+`en_150.xml` says. ICU renders those locales with the plain English pattern.
+
+The same file gives Cape Verde a decimal separator of `$`, declared on the CVE
+entry rather than on the locale. It is applied to CVE and to nothing else, which
+is where UTS #35 attaches it. ICU applies it to every currency in the locale, so
+Bahraini dinar comes out as `0$000` there and `0,000` here.
+
+## CLDR values marked unconfirmed or provisional
+
+CLDR ranks every value `unconfirmed`, `provisional`, `contributed` or approved.
+The top two are production data and are read; the bottom two are work in
+progress that survived into the release, and are skipped in favour of whatever
+the locale inherits.
+
+Low German is the visible case. It writes its own time patterns, `Klock H.mm:ss`
+and `Kl. H.mm`, and marks both unconfirmed, so this library writes the inherited
+`15:30:45` where ICU writes the draft. Occitan does the same.
+
+This is one filter in `Xml.kt` rather than a decision made at each of the thirty
+odd places CLDR is read, because a draft value is never the one wanted and
+deciding once is impossible to forget.
+
+## The width a relative time falls back to
+
+Relative time is stored at three widths, and a plural category CLDR leaves out
+of all three falls back to `other`. Which `other` is the question, and this
+library takes it from the narrowest width that has one.
+
+Akan is the case that decides it. Asked for a week ago at `NARROW`, the category
+is `one`, and `ak` writes the inheritance marker for `one` at every width. Its
+`week-narrow` writes its own `other` as `nnawɔtwe {0} a atwam`, and the wide
+field writes `nnawɔtwe{0} a atwam` without the space. The locale wrote a narrow
+value and the caller asked for the narrow width, so that is the answer. ICU
+reaches past it to the wide one.
+
+Welsh and Filipino are the same shape across more units, because CLDR leaves
+more of their categories to lateral inheritance.
+
+## The hour cycle a standard time pattern uses
+
+CLDR's supplemental `timeData` gives each region a preferred hour cycle, and the
+question is what that preference is allowed to touch. This library applies it
+where UTS #35 defines it, which is skeleton resolution: `j` picks the locale's
+own cycle, and that is what `numberFormat`'s datetime counterpart and every
+skeleton call go through. The four standard patterns are locale data, and they
+render as the locale's own inheritance chain declares them.
+
+ICU applies the preference to the standard patterns too. Kurdish in Iraq states
+no time pattern anywhere in its chain and inherits root's twenty-four hour form,
+so this library writes `15:30` and ICU writes `3:30 PN`. Argentina goes the other
+way: it inherits the twelve-hour pattern from `es-419` and ICU renders
+`03:30:45`.
+
+The skeleton comparison in `:conformance-icu` agrees with ICU across all 905
+locales it can answer for, which is the evidence that the preference is being
+honoured where it is specified. Extending it to the standard patterns would mean
+overriding data a locale states on purpose, on the strength of a region default.
+
 ## Time zone naming at a past instant
 
 The zone name API takes a style and an offset. It does not take an instant and

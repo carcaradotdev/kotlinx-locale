@@ -31,3 +31,7 @@ captures/
 # Lock file of the JS bundle-size probe: its npm dependency set changes with
 # the scenario being measured, so it is regenerated rather than pinned.
 /tools/js-size/kotlin-js-store/
+
+# Written by .github/scripts/kover_summary.py for the coverage job to post.
+/coverage-summary.md
+/oracle-coverage.md

@@ -16,16 +16,18 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.format
+import dev.carcara.kotlinx.locale.test.assertTrue
 import kotlinx.datetime.LocalDate
-import kotlin.test.Test
-import kotlin.test.assertTrue
 
-class CurrentLocaleFormatTest {
+val CurrentLocaleFormatTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    @Test
-    fun currentLocaleFormatsEndToEnd() {
+    test("currentLocaleFormatsEndToEnd") {
         // Whatever the platform reports must be formattable.
         val formatted = LocalDate(2026, 7, 27).format(FormatStyle.MEDIUM, Locale.current)
         assertTrue(formatted.isNotBlank())

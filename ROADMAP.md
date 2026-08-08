@@ -91,6 +91,24 @@ The `w`, `W` and `F` pattern fields, and the numeric forms of `e` and `c`.
   enabling them unchecked would be guessing.
 - Where: `UNSUPPORTED_FIELD_LETTERS` in `codegen/.../Flatten.kt`.
 
+## Per-field numbering system overrides
+
+A pattern can name a numbering system for one field rather than the whole
+number. CLDR writes it as a `numbers` attribute, and Hawaiian uses it for the
+short date: `d/M/yy` with `numbers="M=romanlow"`, so the month is a lowercase
+Roman numeral and the day and year are not.
+
+- What ships now: the attribute is dropped, so Hawaiian renders `14/3/26` where
+  CLDR asks for `14/iii/26`. Two locales in the catalogue use it.
+- What is left is `romanlow` itself. It is a rule-based system rather than a set
+  of ten digits, so `digitStringsOf` cannot express it and neither can the
+  substitution `PatternFormatter` does today.
+- Where: the `numbers` attribute is read in `codegen/.../LocaleExtras.kt` and
+  would need carrying through `SkeletonRecord` to the formatter.
+- Found by `:conformance-icu`, and recorded in
+  `conformance/ledger/datetime-patterns.tsv` as `NOT_IMPLEMENTED`. Those rows go
+  away when this lands, which is how the ledger says the work is done.
+
 ## Platform sources for the remaining targets
 
 - `-platform` reads no locale data on Linux, Windows, Android Native or

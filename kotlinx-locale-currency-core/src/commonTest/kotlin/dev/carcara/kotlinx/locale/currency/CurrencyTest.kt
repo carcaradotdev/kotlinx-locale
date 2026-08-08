@@ -16,19 +16,21 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.country.alpha2
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertFailsWith
+import dev.carcara.kotlinx.locale.test.assertNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
-class CurrencyTest {
+val CurrencyTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    @Test
-    fun exposesIsoData() {
+    test("exposesIsoData") {
         assertEquals("USD", Currency.USD.code)
         assertEquals(840, Currency.USD.numericCode)
         assertEquals(2, Currency.USD.defaultFractionDigits)
@@ -41,8 +43,7 @@ class CurrencyTest {
         assertEquals(999, Currency.XXX.numericCode)
     }
 
-    @Test
-    fun exposesIsoVersusCldrDecimalCases() {
+    test("exposesIsoVersusCldrDecimalCases") {
         // CLDR intentionally formats some currencies with fewer digits than ISO defines.
         assertEquals(2, Currency.ALL.defaultFractionDigits)
         assertEquals(0, Currency.ALL.cldrFractionDigits)
@@ -62,8 +63,7 @@ class CurrencyTest {
         assertEquals(-1, Currency.XXX.defaultFractionDigits)
     }
 
-    @Test
-    fun coversBothIsoLists() {
+    test("coversBothIsoLists") {
         assertTrue(
             Currency.active.size > 150,
             "expected the active ISO 4217 set, got ${Currency.active.size}",
@@ -83,8 +83,7 @@ class CurrencyTest {
         assertEquals(numerics.size, numerics.toSet().size, "active numeric codes must be unique")
     }
 
-    @Test
-    fun mapsBetweenRepresentations() {
+    test("mapsBetweenRepresentations") {
         for (currency in Currency.entries) {
             assertEquals(currency, Currency.forCode(currency.code))
         }
@@ -103,8 +102,7 @@ class CurrencyTest {
         assertFailsWith<IllegalArgumentException> { Currency.forNumericCode(0) }
     }
 
-    @Test
-    fun convertsBetweenIsoAndCldrScales() {
+    test("convertsBetweenIsoAndCldrScales") {
         // ALL: ISO 2 decimals, CLDR 0 -> divide by 100, half-even.
         assertEquals(123, Currency.ALL.isoToCldrUnits(12345))
         assertEquals(124, Currency.ALL.isoToCldrUnits(12350)) // tie, 123 is odd -> away
@@ -122,8 +120,7 @@ class CurrencyTest {
         assertEquals(5, Currency.XAU.cldrToIsoUnits(500))
     }
 
-    @Test
-    fun mapsCountriesToCurrencies() {
+    test("mapsCountriesToCurrencies") {
         assertEquals(Currency.USD, Country.US.currency)
         assertEquals(Currency.BRL, Country.BR.currency)
         assertEquals(Currency.JPY, Country.JP.currency)
@@ -143,8 +140,7 @@ class CurrencyTest {
         assertNull(Currency.forLocaleOrNull(Locale.forLanguageTag("pt")))
     }
 
-    @Test
-    fun enumWideDataInvariantsHold() {
+    test("enumWideDataInvariantsHold") {
         for (currency in Currency.entries) {
             assertTrue(currency.defaultFractionDigits in -1..4, "${currency.code} iso digits")
             assertTrue(currency.cldrFractionDigits in 0..4, "${currency.code} cldr digits")
@@ -155,8 +151,7 @@ class CurrencyTest {
         }
     }
 
-    @Test
-    fun scaleConversionsRoundTripWheneverCldrKeepsAllDigits() {
+    test("scaleConversionsRoundTripWheneverCldrKeepsAllDigits") {
         val samples = listOf(0L, 1, -1, 12345, -99999, 10_000_000_000)
         for (currency in Currency.entries) {
             if (currency.cldrFractionDigits < currency.minorUnitDigits) continue
@@ -170,8 +165,7 @@ class CurrencyTest {
         }
     }
 
-    @Test
-    fun everyCountryWithACurrencyResolvesActiveCodes() {
+    test("everyCountryWithACurrencyResolvesActiveCodes") {
         for (country in Country.entries) {
             for (currency in country.currencies) {
                 assertTrue(currency.code.length == 3, "${country.alpha2} -> ${currency.code}")

@@ -22,7 +22,7 @@ internal val CURRENCY_FORMATS_TA_MY: String =
     "0123456789\u001F.\u001F,\u001F.\u001F,\u001F-\u001F1\u001F¤ #,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00;(¤#,##0.00)\u001F¤ #,##0.00;(¤ #,##0.00)"
 
 internal val CURRENCY_FORMATS_TN: String =
-    "0123456789\u001F.\u001F'\u001F.\u001F'\u001F-\u001F1\u001F¤#,##0.00\u001F¤ #,##0.00\u001F¤#,##0.00\u001F¤#,##0.00"
+    "0123456789\u001F.\u001F'\u001F.\u001F'\u001F-\u001F1\u001F¤#,##0.00\u001F¤#,##0.00\u001F¤#,##0.00\u001F¤#,##0.00"
 
 internal val CURRENCY_FORMATS_TOK: String =
     "0123456789\u001F,\u001F \u001F,\u001F \u001F-\u001F1\u001F¤#,#0.00\u001F¤ #,#0.00\u001F¤#,#0.00\u001F¤ #,#0.00"

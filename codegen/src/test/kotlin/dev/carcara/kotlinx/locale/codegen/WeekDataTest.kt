@@ -16,10 +16,13 @@
 
 package dev.carcara.kotlinx.locale.codegen
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 import java.io.File
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 /**
  * Holds `<weekData>` to what CLDR actually says, against the clone rather than
@@ -38,33 +41,36 @@ import kotlin.test.assertTrue
  * the only one. Skipping is stated per test rather than left to fail, because a
  * test that fails on a missing input says nothing about the code.
  */
-class WeekDataTest {
+val WeekDataTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    private val rootDir = File(
+    val rootDir = File(
         System.getProperty("kotlinx.locale.rootDir") ?: error("kotlinx.locale.rootDir is not set"),
     )
 
-    private val cldrDir: File = reposDir(rootDir).resolve("cldr")
+    val cldrDir: File = reposDir(rootDir).resolve("cldr")
 
-    /** False on a checkout that has not cloned CLDR, which is what CI looks like. */
-    private val cloned: Boolean get() = cldrDir.resolve("common/supplemental/supplementalData.xml").isFile
+    /**
+     * False on a checkout that has not cloned CLDR, which is what CI looks like.
+     *
+     * Read once, at registration. A local `val` cannot carry a custom getter,
+     * and nothing clones a repository partway through a test run anyway.
+     */
+    val cloned: Boolean = cldrDir.resolve("common/supplemental/supplementalData.xml").isFile
 
-    private val supplemental: SupplementalData by lazy { parseSupplemental(cldrDir) }
+    val supplemental: SupplementalData by lazy { parseSupplemental(cldrDir) }
 
-    private fun row(territory: String) = supplemental.weekData.getValue(territory)
+    fun row(territory: String) = supplemental.weekData.getValue(territory)
 
-    @Test
-    fun theWorldDefaultIsMondayWithOneMinimumDayAndASaturdayWeekend() {
-        if (!cloned) return
+    test("theWorldDefaultIsMondayWithOneMinimumDayAndASaturdayWeekend") {
+        if (!cloned) return@test
         val world = row("001")
         assertEquals(1, world.firstDay, "001 starts the week on Monday")
         assertEquals(1, world.minDays)
         assertEquals(setOf(6, 7), world.weekend, "001 rests Saturday and Sunday")
     }
 
-    @Test
-    fun theVariantRowDoesNotOverwriteBritain() {
-        if (!cloned) return
+    test("theVariantRowDoesNotOverwriteBritain") {
+        if (!cloned) return@test
         // supplementalData.xml carries `<firstDay day="sun" territories="GB"
         // alt="variant">` after the row that lists GB among the Monday
         // territories. Reading it would flip every British calendar.
@@ -72,17 +78,15 @@ class WeekDataTest {
         assertEquals(4, row("GB").minDays, "GB needs four days in the year for week one")
     }
 
-    @Test
-    fun theUnitedStatesStartsOnSunday() {
-        if (!cloned) return
+    test("theUnitedStatesStartsOnSunday") {
+        if (!cloned) return@test
         assertEquals(7, row("US").firstDay)
         assertEquals(1, row("US").minDays)
         assertEquals(setOf(6, 7), row("US").weekend)
     }
 
-    @Test
-    fun aWeekendCanBeASingleDay() {
-        if (!cloned) return
+    test("aWeekendCanBeASingleDay") {
+        if (!cloned) return@test
         // Iran declares both a start and an end of Friday, and India declares
         // only a start, inheriting Sunday as the end from 001. Both collapse to
         // one day, which a start-and-end pair hides and a set does not.
@@ -91,16 +95,14 @@ class WeekDataTest {
         assertEquals(setOf(7), row("UG").weekend)
     }
 
-    @Test
-    fun aWeekendCanSitMidweek() {
-        if (!cloned) return
+    test("aWeekendCanSitMidweek") {
+        if (!cloned) return@test
         assertEquals(setOf(4, 5), row("AF").weekend, "Afghanistan rests Thursday and Friday")
         assertEquals(setOf(5, 6), row("IL").weekend, "Israel rests Friday and Saturday")
     }
 
-    @Test
-    fun everyTerritoryResolvesEveryField() {
-        if (!cloned) return
+    test("everyTerritoryResolvesEveryField") {
+        if (!cloned) return@test
         for ((territory, week) in supplemental.weekData) {
             assertTrue(week.firstDay in 1..7, "$territory has an out-of-range first day")
             assertTrue(week.minDays in 1..7, "$territory has an out-of-range minimum")
@@ -109,9 +111,8 @@ class WeekDataTest {
         }
     }
 
-    @Test
-    fun theEncodedOverlayAnswersForALocaleWithNoRegion() {
-        if (!cloned) return
+    test("theEncodedOverlayAnswersForALocaleWithNoRegion") {
+        if (!cloned) return@test
         val encoded = supplemental.encodeWeekData()
         val (territories, overlay) = encoded.split(FIELD_SEPARATOR).let { it[0] to it[1] }
 
@@ -134,9 +135,8 @@ class WeekDataTest {
         assertTrue(overlay.isNotEmpty(), "the overlay resolved to nothing")
     }
 
-    @Test
-    fun aScriptRowSurvivesAgreeingWithTheWorldWhenItsLanguageDoesNot() {
-        if (!cloned) return
+    test("aScriptRowSurvivesAgreeingWithTheWorldWhenItsLanguageDoesNot") {
+        if (!cloned) return@test
         val overlay = supplemental.encodeWeekData().split(FIELD_SEPARATOR)[1]
 
         fun lookup(key: String): String? = overlay.split(LIST_SEPARATOR)

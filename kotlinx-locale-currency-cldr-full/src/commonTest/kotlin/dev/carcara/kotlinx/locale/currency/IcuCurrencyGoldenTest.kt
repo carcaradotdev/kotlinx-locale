@@ -18,11 +18,14 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
-import dev.carcara.kotlinx.locale.conformance.icuCurrencyGoldenData
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import dev.carcara.kotlinx.locale.currency.conformance.icuCurrencyGoldenData
+import dev.carcara.kotlinx.locale.test.assertEquals
 
 /**
  * Cross-checks the number-formatting tables against ICU's independently encoded
@@ -33,12 +36,11 @@ import kotlin.test.assertEquals
  * only from inside the module that owns them, and no source interface exposes
  * them because no platform could implement one that did.
  */
-class IcuCurrencyGoldenTest {
+val IcuCurrencyGoldenTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    private fun String.normalized() = replace(' ', ' ').replace(' ', ' ')
+    fun String.normalized() = replace(' ', ' ').replace(' ', ' ')
 
-    @Test
-    fun runtimeNumberDataMatchesIcu() {
+    test("runtimeNumberDataMatchesIcu") {
         for (golden in icuCurrencyGoldenData) {
             val format = currencyFormatFor(Locale.forLanguageTag(golden.tag))
             golden.decimal?.let {

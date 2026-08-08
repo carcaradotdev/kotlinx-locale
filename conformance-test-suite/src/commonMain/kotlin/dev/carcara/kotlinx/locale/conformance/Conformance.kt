@@ -51,5 +51,11 @@ public enum class ConformanceTier {
 /**
  * Normalizes the no-break space variants that ICU and CLDR point releases
  * disagree on: U+00A0 NO-BREAK SPACE and U+202F NARROW NO-BREAK SPACE.
+ *
+ * Public rather than internal because the ICU comparisons that use it live in
+ * the module that owns each fixture, not here. The shared module carries the
+ * contract every source owes; the fixtures and the comparisons against them sit
+ * next to the one source they describe, so that a module's test binary links its
+ * own goldens and nobody else's.
  */
-internal fun String.normalizedSpaces(): String = replace('\u00A0', ' ').replace('\u202F', ' ')
+public fun String.normalizedSpaces(): String = replace('\u00A0', ' ').replace('\u202F', ' ')

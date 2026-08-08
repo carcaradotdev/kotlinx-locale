@@ -119,9 +119,9 @@ public fun renderNumber(
     val suffixText = renderAffix(effective.suffix, affix)
     val text = if (currencySpacing) {
         prefixText +
-            currencySpacingInsert(effective.prefix, prefixText, body.firstOrNull(), atPrefix = true) +
+            currencySpacingInsert(effective.prefix, prefixText, body, digitStrings, atPrefix = true) +
             body +
-            currencySpacingInsert(effective.suffix, suffixText, body.lastOrNull(), atPrefix = false) +
+            currencySpacingInsert(effective.suffix, suffixText, body, digitStrings, atPrefix = false) +
             suffixText
     } else {
         prefixText + body + suffixText
@@ -283,14 +283,28 @@ private const val CURRENCY_SPACING_INSERT = "\u00A0"
  * `currencyMatch` of `[[:^S:]&[:^Z:]]` has to hold of the currency-side
  * character, so `kr` earns a space and `$` does not, and its `surroundingMatch`
  * of `[:digit:]` has to hold of the number-side one.
+ *
+ * The third condition is asked of [digitStrings] rather than of a `Char`. This
+ * used to read `body.firstOrNull()?.isDigit()`, which is one UTF-16 unit, and
+ * nine of the numbering systems CLDR ships live above the basic plane where a
+ * digit is a surrogate pair. Chakma saw the half of U+11136 nearest the currency,
+ * decided it was not a digit and dropped the space, so 29 locales wrote
+ * `123.456BHD`. Asking the locale's own digits is exact and needs no
+ * supplementary-plane character properties, which common Kotlin does not carry.
  */
-private fun currencySpacingInsert(patternAffix: String, renderedAffix: String, bodyChar: Char?, atPrefix: Boolean): String {
+private fun currencySpacingInsert(
+    patternAffix: String,
+    renderedAffix: String,
+    body: String,
+    digitStrings: List<String>,
+    atPrefix: Boolean,
+): String {
     val adjacentToCurrency = if (atPrefix) patternAffix.endsWith('¤') else patternAffix.startsWith('¤')
     if (!adjacentToCurrency) return ""
     val currencyChar = (if (atPrefix) renderedAffix.lastOrNull() else renderedAffix.firstOrNull()) ?: return ""
-    val numberChar = bodyChar ?: return ""
     if (currencyChar.category in CURRENCY_SPACING_EXCLUDED) return ""
-    if (!numberChar.isDigit()) return ""
+    val nextToDigit = if (atPrefix) digitStrings.any(body::startsWith) else digitStrings.any(body::endsWith)
+    if (!nextToDigit) return ""
     return CURRENCY_SPACING_INSERT
 }
 

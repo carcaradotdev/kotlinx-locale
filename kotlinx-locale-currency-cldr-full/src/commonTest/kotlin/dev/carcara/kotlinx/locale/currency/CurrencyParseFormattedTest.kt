@@ -16,26 +16,28 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.cldr.format
 import dev.carcara.kotlinx.locale.currency.cldr.parseFormatted
 import dev.carcara.kotlinx.locale.currency.cldr.parseFormattedOrNull
 import dev.carcara.kotlinx.locale.number.SignDisplay
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNull
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertFailsWith
+import dev.carcara.kotlinx.locale.test.assertNull
 
-class CurrencyParseFormattedTest {
+val CurrencyParseFormattedTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    private fun locale(tag: String) = Locale.forLanguageTag(tag)
+    fun locale(tag: String) = Locale.forLanguageTag(tag)
 
-    private fun parsed(currency: Currency, text: String, tag: String): Long? =
+    fun parsed(currency: Currency, text: String, tag: String): Long? =
         CurrencyAmount.parseFormattedOrNull(currency, text, locale(tag))?.minorUnits
 
-    @Test
-    fun parsesLocalizedFormats() {
+    test("parsesLocalizedFormats") {
         assertEquals(20000, parsed(Currency.BRL, "R$ 200,00", "pt-BR"))
         assertEquals(123456, parsed(Currency.BRL, "R$ 1.234,56", "pt-BR"))
         assertEquals(123456, parsed(Currency.USD, "$1,234.56", "en"))
@@ -43,8 +45,7 @@ class CurrencyParseFormattedTest {
         assertEquals(1234, parsed(Currency.JPY, "￥1,234", "ja"))
     }
 
-    @Test
-    fun readsTheCurrencyOutOfTheTextWhenNotToldWhichItIs() {
+    test("readsTheCurrencyOutOfTheTextWhenNotToldWhichItIs") {
         val ptBr = locale("pt-BR")
         assertEquals(
             CurrencyAmount(Currency.USD, 123456),
@@ -72,8 +73,7 @@ class CurrencyParseFormattedTest {
         assertEquals(CurrencyAmount(Currency.HUF, 20000), CurrencyAmount.parseFormattedOrNull("HUF 200", hu))
     }
 
-    @Test
-    fun everyLocaleReadsItsOwnCurrencyOutputBackWithoutBeingTold() {
+    test("everyLocaleReadsItsOwnCurrencyOutputBackWithoutBeingTold") {
         // The round trip that matters: whatever the formatter prints, the
         // currency-less parse identifies. Run over the currencies that have a
         // symbol of their own in each locale, since the rest print an ISO code
@@ -90,8 +90,7 @@ class CurrencyParseFormattedTest {
         }
     }
 
-    @Test
-    fun refusesToIdentifyACurrencyFromASpellingThatNamesMoreThanOne() {
+    test("refusesToIdentifyACurrencyFromASpellingThatNamesMoreThanOne") {
         // In pt-BR no currency's plain symbol is "$": USD is US$ and BRL is R$.
         // "$" is the narrow spelling, which names many currencies and so
         // identifies none of them.
@@ -105,8 +104,7 @@ class CurrencyParseFormattedTest {
         )
     }
 
-    @Test
-    fun everyLocaleSpellsItsCurrenciesApart() {
+    test("everyLocaleSpellsItsCurrenciesApart") {
         // The property the currency-less parse rests on: within one locale, no
         // two currencies share a plain or variant spelling. Where that failed,
         // the index would drop the string and identification would start
@@ -126,8 +124,7 @@ class CurrencyParseFormattedTest {
         }
     }
 
-    @Test
-    fun parsedAmountsAreIsoMinorUnitsEvenWhenCldrDropsDecimals() {
+    test("parsedAmountsAreIsoMinorUnitsEvenWhenCldrDropsDecimals") {
         // HUF: CLDR formats 0 digits, ISO defines 2. "200 Ft" is 200.00 forints.
         assertEquals(20000, parsed(Currency.HUF, "200 Ft", "hu"))
         assertEquals(20000, parsed(Currency.HUF, "200", "hu"))
@@ -137,16 +134,14 @@ class CurrencyParseFormattedTest {
         assertEquals(12300, parsed(Currency.ALL, "ALL 123", "en"))
     }
 
-    @Test
-    fun acceptsSymbolCodeNameOrBareNumbers() {
+    test("acceptsSymbolCodeNameOrBareNumbers") {
         assertEquals(123456, parsed(Currency.USD, "USD 1,234.56", "en"))
         assertEquals(123456, parsed(Currency.USD, "1,234.56", "en"))
         assertEquals(123456, parsed(Currency.USD, "US Dollar 1,234.56", "en"))
         assertEquals(50, parsed(Currency.USD, "usd .50", "en"))
     }
 
-    @Test
-    fun recognizesNegativeForms() {
+    test("recognizesNegativeForms") {
         assertEquals(-123456, parsed(Currency.USD, "-$1,234.56", "en"))
         assertEquals(-123456, parsed(Currency.USD, "($1,234.56)", "en"))
         assertEquals(-123456, parsed(Currency.EUR, "-1.234,56 €", "de"))
@@ -155,23 +150,20 @@ class CurrencyParseFormattedTest {
         assertEquals(-5, parsed(Currency.USD, "-$0.05", "en"))
     }
 
-    @Test
-    fun readsSeparatorsPerLocale() {
+    test("readsSeparatorsPerLocale") {
         // In de a dot groups; in en it separates decimals.
         assertEquals(123400, parsed(Currency.EUR, "1.234", "de"))
         assertEquals(123, parsed(Currency.EUR, "1.23", "en"))
         assertEquals(123456, parsed(Currency.CHF, "CHF 1'234.56", "de-CH"))
     }
 
-    @Test
-    fun parsesNativeDigits() {
+    test("parsesNativeDigits") {
         val formatted = CurrencyAmount(Currency.EGP, 123456).format(locale("ar-EG"))
         assertEquals(123456, parsed(Currency.EGP, formatted, "ar-EG"))
         assertEquals(123456, parsed(Currency.EGP, "١٬٢٣٤٫٥٦", "ar-EG"))
     }
 
-    @Test
-    fun rejectsUnparseableText() {
+    test("rejectsUnparseableText") {
         assertNull(parsed(Currency.USD, "", "en"))
         assertNull(parsed(Currency.USD, "abc", "en"))
         assertNull(parsed(Currency.USD, "$", "en"))
@@ -187,8 +179,7 @@ class CurrencyParseFormattedTest {
         }
     }
 
-    @Test
-    fun formattedOutputRoundTripsInEveryLocale() {
+    test("formattedOutputRoundTripsInEveryLocale") {
         val currencies = listOf(
             Currency.USD,
             Currency.EUR,
@@ -217,8 +208,7 @@ class CurrencyParseFormattedTest {
         }
     }
 
-    @Test
-    fun accountingOutputRoundTrips() {
+    test("accountingOutputRoundTrips") {
         for (tag in listOf("en", "de", "pt-BR", "ja", "ar-EG", "hu", "nl", "de-CH")) {
             val locale = locale(tag)
             for (minorUnits in listOf(-123456L, -1)) {

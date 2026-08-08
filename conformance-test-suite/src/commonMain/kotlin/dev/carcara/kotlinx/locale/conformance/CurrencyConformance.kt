@@ -32,9 +32,9 @@ import dev.carcara.kotlinx.locale.currency.isoToCldrUnits
 import dev.carcara.kotlinx.locale.currency.parseFormattedOrNull
 import dev.carcara.kotlinx.locale.currency.symbol
 import dev.carcara.kotlinx.locale.number.SignDisplay
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /** The locales the formatting checks run over, chosen for separator and digit variety. */
 private val FORMAT_LOCALES = listOf("en", "de", "ja", "pt-BR", "ar-EG", "hi", "fr-CH")
@@ -51,7 +51,9 @@ public fun CurrencyNameSource.assertConformsToCurrencyNames(tier: ConformanceTie
         assertTrue(supportedLocales.isNotEmpty(), "a CLDR-backed source is expected to enumerate its locales")
     }
 
-    if (tier == ConformanceTier.EXACT) assertMatchesIcuCurrencyNames()
+    // The comparison against ICU's own symbols and names is not here: it needs
+    // the golden, and the golden lives in the module that owns the table it
+    // describes. `currency-cldr-full` runs it as its own case.
 
     for (tag in FORMAT_LOCALES) {
         val locale = Locale.forLanguageTag(tag)
@@ -72,29 +74,6 @@ public fun CurrencyNameSource.assertConformsToCurrencyNames(tier: ConformanceTie
         unnamed < 10,
         "$unnamed active currencies fell back to their code in en, which suggests the name table is missing rows",
     )
-}
-
-private fun CurrencyNameSource.assertMatchesIcuCurrencyNames() {
-    assertTrue(icuCurrencyGoldenData.size >= 25, "expected the full golden locale set")
-    for (golden in icuCurrencyGoldenData) {
-        val locale = Locale.forLanguageTag(golden.tag)
-        for ((code, icuSymbol) in golden.symbols) {
-            val currency = assertNotNull(Currency.forCodeOrNull(code), "$code is not in this build's entry set")
-            assertEquals(
-                icuSymbol.normalizedSpaces(),
-                symbol(currency, locale).normalizedSpaces(),
-                "${golden.tag} $code symbol",
-            )
-        }
-        for ((code, icuName) in golden.names) {
-            val currency = assertNotNull(Currency.forCodeOrNull(code), "$code is not in this build's entry set")
-            assertEquals(
-                icuName.normalizedSpaces(),
-                displayName(currency, locale).normalizedSpaces(),
-                "${golden.tag} $code name",
-            )
-        }
-    }
 }
 
 /**
@@ -187,23 +166,4 @@ private fun CurrencyFormatSource.assertStylesAndVariantsRender(tier: Conformance
         format(amount, locale, CurrencySymbolStyle.SYMBOL, SignDisplay.ACCOUNTING).startsWith("("),
         "en accounting negatives are parenthesized",
     )
-}
-
-/**
- * Cross-checks this build's ISO 4217 numeric codes against ICU's independently
- * maintained table. A property of the entry set rather than of any source, so
- * it takes no receiver.
- */
-public fun assertCurrencyNumericCodesMatchIcu() {
-    assertTrue(icuCurrencyNumericCodes.size > 250, "expected ICU's full numeric code table")
-    var checked = 0
-    for (currency in Currency.entries) {
-        val icuNumeric = icuCurrencyNumericCodes[currency.code] ?: continue
-        assertEquals(icuNumeric, currency.numericCode, "${currency.code} numeric code")
-        checked++
-    }
-    // ICU carries the withdrawn codes too, so this checks well past the active
-    // set. The threshold moves with the entry set rather than tracking it
-    // exactly, since ICU and ISO do not carry identical historical tables.
-    assertTrue(checked > 250, "expected to check both ISO lists against ICU, checked $checked")
 }

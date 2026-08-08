@@ -16,17 +16,22 @@
 
 package dev.carcara.kotlinx.locale.phone
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.phone.conformance.assertConformsToLibPhoneNumber
 import dev.carcara.kotlinx.locale.phone.conformance.assertParsesLikeLibPhoneNumber
 import dev.carcara.kotlinx.locale.phone.metadata.PhoneNumbers
-import kotlin.test.Test
 
 /** The bundled metadata is a second encoding of libphonenumber's, so it answers to it. */
-class PhoneConformanceTest {
+val PhoneConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    @Test
-    fun agreesWithLibPhoneNumber() = PhoneNumbers.assertConformsToLibPhoneNumber()
+    test("agreesWithLibPhoneNumber") {
+        PhoneNumbers.assertConformsToLibPhoneNumber()
+    }
 
-    @Test
-    fun parsesTheAwkwardInputsTheSameWay() = PhoneNumbers.assertParsesLikeLibPhoneNumber()
+    test("parsesTheAwkwardInputsTheSameWay") {
+        PhoneNumbers.assertParsesLikeLibPhoneNumber()
+    }
 }

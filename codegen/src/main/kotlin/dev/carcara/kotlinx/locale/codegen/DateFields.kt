@@ -106,12 +106,20 @@ fun Flattener.resolveRelativeTime(id: String, parse: (String) -> PartialRelative
     val base = RELATIVE_UNITS.map { unit -> merged[unit]?.map { it.orEmpty() } ?: List(SLOTS_PER_UNIT) { "" } }
     val blocks = ArrayList<List<List<String>>>(3)
     blocks += base
+    // Narrow falls back to short, and short to the base. One tier at a time,
+    // which is the order UTS #35 gives and which this used to skip: both widths
+    // resolved straight to the base, so a locale whose `hour-narrow` is all
+    // inheritance markers took the full word instead of the abbreviation sitting
+    // in its `hour-short`. Afrikaans wrote `oor 2 uur` where CLDR gives
+    // `oor 2 u.`, and 253 locales did the same across every unit.
+    var narrower = base
     for (width in listOf("-short", "-narrow")) {
         val block = RELATIVE_UNITS.mapIndexed { index, unit ->
             val slots = merged["$unit$width"]
-            List(SLOTS_PER_UNIT) { slot -> slots?.get(slot) ?: base[index][slot] }
+            List(SLOTS_PER_UNIT) { slot -> slots?.get(slot) ?: narrower[index][slot] }
         }
         blocks += if (block == base) emptyList() else block
+        narrower = block
     }
     return ResolvedRelativeTime(blocks)
 }
