@@ -22,10 +22,15 @@
  * the shape must already be applied when this one is, which the plugins blocks
  * of the applying modules guarantee.
  *
- * This is the vanniktech base plugin rather than the main one: the main plugin
- * fills the POM from `POM_*` Gradle properties, which is the documented
- * Isolated Projects incompatibility, and the POM below is the same for every
- * module anyway.
+ * This is the vanniktech base plugin rather than the main one. The main plugin
+ * fills the POM from `POM_*` Gradle properties by reading them off the project,
+ * which is the documented Isolated Projects incompatibility. The properties
+ * below carry the same names, because that is what anyone who has published a
+ * library before will look for, but they are read through `providers`, which is
+ * the form Isolated Projects allows.
+ *
+ * They live in the root `gradle.properties` and are the same for every module.
+ * A module contributes only its own name and description.
  *
  * Publishing needs credentials the build does not carry: a Central Portal
  * token as `mavenCentralUsername`/`mavenCentralPassword` and a GPG key as
@@ -37,6 +42,27 @@ plugins {
     id("com.vanniktech.maven.publish.base")
 }
 
+/**
+ * One `POM_*` property, refused when it is absent or blank.
+ *
+ * Blank counts as absent because a property left with nothing after the `=` is
+ * the shape a half-filled gradle.properties takes, and an empty `<url>` reaches
+ * the Portal as an invalid POM rather than as a missing one.
+ *
+ * Read at configuration rather than wired as a provider, so a missing property
+ * names itself here instead of surfacing as "no value present" while a release
+ * is generating POMs. Going through `providers` is what makes the read a build
+ * input, so editing gradle.properties invalidates the configuration cache.
+ */
+fun pomProperty(name: String): String =
+    providers.gradleProperty(name).orNull?.takeIf { it.isNotBlank() }
+        ?: error(
+            "$name is missing or blank in the root gradle.properties. Every published POM carries " +
+                "it, and Maven Central rejects a deployment whose POM is incomplete.",
+        )
+
+val fallbackDescription = pomProperty("POM_DESCRIPTION")
+
 mavenPublishing {
     publishToMavenCentral()
     signAllPublications()
@@ -46,32 +72,27 @@ mavenPublishing {
         name.set(project.name)
         // A provider because the module sets its description after this plugin
         // is applied; read eagerly it would always be the fallback.
-        description.set(
-            provider {
-                project.description
-                    ?: "Locale support for Kotlin Multiplatform, written entirely in common Kotlin"
-            },
-        )
-        inceptionYear.set("2026")
-        url.set("https://github.com/carcaradotdev/kotlinx-locale")
+        description.set(provider { project.description ?: fallbackDescription })
+        inceptionYear.set(pomProperty("POM_INCEPTION_YEAR"))
+        url.set(pomProperty("POM_URL"))
         licenses {
             license {
-                name.set("The Apache License, Version 2.0")
-                url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
-                distribution.set("repo")
+                name.set(pomProperty("POM_LICENSE_NAME"))
+                url.set(pomProperty("POM_LICENSE_URL"))
+                distribution.set(pomProperty("POM_LICENSE_DIST"))
             }
         }
         developers {
             developer {
-                id.set("DevSrSouza")
-                name.set("Gabriel Souza")
-                url.set("https://github.com/DevSrSouza")
+                id.set(pomProperty("POM_DEVELOPER_ID"))
+                name.set(pomProperty("POM_DEVELOPER_NAME"))
+                url.set(pomProperty("POM_DEVELOPER_URL"))
             }
         }
         scm {
-            url.set("https://github.com/carcaradotdev/kotlinx-locale")
-            connection.set("scm:git:git://github.com/carcaradotdev/kotlinx-locale.git")
-            developerConnection.set("scm:git:ssh://git@github.com/carcaradotdev/kotlinx-locale.git")
+            url.set(pomProperty("POM_SCM_URL"))
+            connection.set(pomProperty("POM_SCM_CONNECTION"))
+            developerConnection.set(pomProperty("POM_SCM_DEV_CONNECTION"))
         }
     }
 }
