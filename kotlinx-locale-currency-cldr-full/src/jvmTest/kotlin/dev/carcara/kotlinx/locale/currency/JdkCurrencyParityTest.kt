@@ -16,8 +16,11 @@
 
 package dev.carcara.kotlinx.locale.currency
 
-import kotlin.test.Test
-import kotlin.test.assertTrue
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Cross-checks the generated ISO 4217 data against the JDK's currency table — a
@@ -34,10 +37,9 @@ import kotlin.test.assertTrue
  * upstream is CLDR. The disagreements are counted rather than asserted, so a
  * sudden jump is still visible.
  */
-class JdkCurrencyParityTest {
+val JdkCurrencyParityTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    @Test
-    fun activeCurrenciesMatchTheJdk() {
+    test("active Currencies Match The Jdk") {
         var skipped = 0
         val mismatches = ArrayList<String>()
         for (currency in Currency.active) {
@@ -61,8 +63,7 @@ class JdkCurrencyParityTest {
         assertTrue(skipped <= 5, "JDK was missing $skipped currencies; its data may be stale")
     }
 
-    @Test
-    fun withdrawnCurrenciesDivergeFromTheJdkOnlyWhereTheSourcesDo() {
+    test("withdrawn Currencies Diverge From The Jdk Only Where The Sources Do") {
         val divergent = ArrayList<String>()
         var compared = 0
         for (currency in Currency.entries) {

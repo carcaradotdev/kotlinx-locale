@@ -16,17 +16,19 @@
 
 package dev.carcara.kotlinx.locale.catalog
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.LocaleRef
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 import dev.carcara.kotlinx.locale.toLocale
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
-class LocaleCatalogTest {
+val LocaleCatalogTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    @Test
-    fun theLanguageItselfIsTheBareLocale() {
+    test("theLanguageItselfIsTheBareLocale") {
         assertEquals("pt", PT.tag)
         assertEquals("en", EN.tag)
         // A language CLDR has no regional data for still names itself.
@@ -34,8 +36,7 @@ class LocaleCatalogTest {
         assertTrue(NO.entries.isEmpty(), "expected no regional entries under no, got ${NO.entries}")
     }
 
-    @Test
-    fun namesTheRegionsBelowTheLanguage() {
+    test("namesTheRegionsBelowTheLanguage") {
         assertEquals("pt-BR", PT.BR.tag)
         assertEquals("en-GB", EN.GB.tag)
         // pt-PT collides with the enum's own name and still resolves: the
@@ -43,15 +44,13 @@ class LocaleCatalogTest {
         assertEquals("pt-PT", PT.PT.tag)
     }
 
-    @Test
-    fun flattensScriptsAndVariantsIntoOneLevel() {
+    test("flattensScriptsAndVariantsIntoOneLevel") {
         assertEquals("zh-Hans-CN", ZH.HANS_CN.tag)
         assertEquals("sr-Cyrl-BA", SR.CYRL_BA.tag)
         assertEquals("ca-ES-valencia", CA.ES_VALENCIA.tag)
     }
 
-    @Test
-    fun namesMacroregionsAfterTheirEnglishRegionName() {
+    test("namesMacroregionsAfterTheirEnglishRegionName") {
         // 001, 150 and 419 are not valid Kotlin identifiers, and backticking
         // them would produce JVM field names Java callers cannot reference.
         assertEquals("ar-001", AR.WORLD.tag)
@@ -59,22 +58,19 @@ class LocaleCatalogTest {
         assertEquals("es-419", ES.LATIN_AMERICA.tag)
     }
 
-    @Test
-    fun everyTagParsesBackToTheLocaleItNames() {
+    test("everyTagParsesBackToTheLocaleItNames") {
         val refs = listOf<LocaleRef>(PT, ZH, ES, CA) + PT.entries + ZH.entries + ES.entries + CA.entries
         for (ref in refs) {
             assertEquals(ref.tag, ref.toLocale().toLanguageTag(), "${ref.tag} did not round trip")
         }
     }
 
-    @Test
-    fun entriesCoverTheLanguage() {
+    test("entriesCoverTheLanguage") {
         assertTrue(PT.entries.size > 10, "expected every Portuguese region, got ${PT.entries.size}")
         assertTrue(EN.entries.size > 100, "expected every English region, got ${EN.entries.size}")
     }
 
-    @Test
-    fun refsAreUsableWhereverALocaleRefIsAsked() {
+    test("refsAreUsableWhereverALocaleRefIsAsked") {
         fun tagOf(ref: LocaleRef) = ref.tag
         assertEquals("pt", tagOf(PT))
         assertEquals("pt-BR", tagOf(PT.BR))

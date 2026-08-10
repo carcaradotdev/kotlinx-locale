@@ -413,17 +413,57 @@ fun parseLocaleExtras(file: File, countryCodes: Set<String>, currencyCodes: Set<
         val length = formatsEl.childElements("currencyFormatLength")
             .firstOrNull { !it.hasAttribute("type") } ?: continue
         for (format in length.childElements("currencyFormat")) {
-            fun pattern(alt: String?): String? = format.childElements("pattern")
+            fun element(alt: String?): org.w3c.dom.Element? = format.childElements("pattern")
                 .firstOrNull { it.getAttribute("alt") == (alt ?: "") }
-                ?.textContent?.cleaned()
+
+            fun pattern(alt: String?): String? = element(alt)?.textContent?.cleaned()
+
+            /**
+             * What this file says about its `alphaNextToNumber`, in three states.
+             *
+             * `cleaned` maps both "the element is absent" and "the element is the
+             * inheritance marker" to null, and the two need opposite handling.
+             * Absent means the locale has no alternative form and its own standard
+             * pattern is the answer. The marker means the locale is explicitly
+             * asking its parent, so the walk has to carry on up.
+             */
+            fun alphaOf(standard: String): String? = when {
+                element("alphaNextToNumber") == null -> standard
+                else -> pattern("alphaNextToNumber")
+            }
+            // A pattern and its `alphaNextToNumber` come from the same file, or
+            // the alternative keeps looking on its own.
+            //
+            // Filling the two independently let them come from different
+            // ancestors. Aghem writes `#,##0.00¤` and its own alternative
+            // `#,##0.00 ¤`, and took neither: the alternative arrived from an
+            // ancestor as `¤ #,##0.00`, which put the symbol on the other side of
+            // the number. 119 locales rendered `US$ 0,00` where CLDR says
+            // `0,00 US$`, and `:conformance-icu` is what found it.
+            //
+            // Binding them unconditionally is the wrong repair, because a locale
+            // that writes the inheritance marker is asking for its parent's
+            // answer and means it.
             when (format.getAttribute("type")) {
                 "standard", "" -> {
-                    if (target.standard == null) target.standard = pattern(null)
-                    if (target.standardAlpha == null) target.standardAlpha = pattern("alphaNextToNumber")
+                    val standard = pattern(null)
+                    if (target.standard == null && standard != null) {
+                        target.standard = standard
+                        target.standardAlpha = alphaOf(standard)
+                    } else if (target.standardAlpha == null) {
+                        // A nearer file wrote the marker and asked its parent.
+                        // This is the parent being asked.
+                        target.standardAlpha = pattern("alphaNextToNumber")
+                    }
                 }
                 "accounting" -> {
-                    if (target.accounting == null) target.accounting = pattern(null)
-                    if (target.accountingAlpha == null) target.accountingAlpha = pattern("alphaNextToNumber")
+                    val accounting = pattern(null)
+                    if (target.accounting == null && accounting != null) {
+                        target.accounting = accounting
+                        target.accountingAlpha = alphaOf(accounting)
+                    } else if (target.accountingAlpha == null) {
+                        target.accountingAlpha = pattern("alphaNextToNumber")
+                    }
                 }
             }
         }

@@ -56,6 +56,17 @@ val CLDR_REPO = RepoSpec(
         // release as the tables, so unlike an ICU4J golden they carry no
         // snapshot skew.
         "common/testData/personNameTest",
+        // Locale identity: likely subtags, canonicalisation and display names.
+        //
+        // This is the foundation the other forty-five modules resolve through
+        // and the thinnest-tested code in the build. CLDR ships normative cases
+        // for it in the same release as the tables, so they carry no snapshot
+        // skew and need no ICU cross-check. `localeDisplayName.txt` is
+        // parameterised by `@languageDisplay=[standard|dialect]`, which is
+        // exactly the `LanguageDisplay` enum in kotlinx-locale-language-core.
+        "common/testData/localeIdentifiers",
+        // Duration and measurement unit cases, normative for the same reason.
+        "common/testData/units",
     ),
 )
 

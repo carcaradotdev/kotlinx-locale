@@ -21,6 +21,10 @@ on:
 
 permissions:
   contents: read
+  # The coverage job edits one comment on the pull request rather than adding a
+  # new one per run. Read-only for a fork's token, which the job handles by
+  # falling back to the run summary; see the note there.
+  pull-requests: write
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -54,8 +58,15 @@ jobs:
         run: ./gradlew checkLayeringRule
       - name: Validate the convention plugins and task declarations
         run: ./gradlew -p build-logic validatePlugins
+      # The second graph is not redundant. The test framework's only build-level
+      # hook is `gradle.taskGraph.whenReady`, which never fires for `:help`, so
+      # a graph without a test task in it cannot tell you whether test
+      # configuration round-trips.
       - name: Check the configuration cache round-trips
-        run: ./gradlew :help --configuration-cache && ./gradlew :help --configuration-cache
+        run: |
+          ./gradlew :help --configuration-cache && ./gradlew :help --configuration-cache
+          ./gradlew :kotlinx-locale-types:jvmTest --configuration-cache
+          ./gradlew :kotlinx-locale-types:jvmTest --configuration-cache
 
   size:
     name: size
@@ -94,6 +105,107 @@ jobs:
             :codegen:test \
             :kotlinx-locale-codegen-emitters:test \
             :kotlinx-locale-gradle-plugin:test
+
+  conformance:
+    # The live ICU comparison, across every locale the library ships rather than
+    # the thirty a committed golden can afford.
+    #
+    # Needs the ICU4J jar and nothing else: no CLDR clone, which is what lets it
+    # run here at all, since `codegen/repos` is hundreds of megabytes and CI
+    # never clones it. Runs beside the target matrix rather than inside it, and
+    # the matrix is the longer job, so this does not extend the critical path.
+    name: conformance
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # A real gate. Every row in conformance/ledger is classified and carries a
+    # sentence saying why, so a divergence that reaches this job is one nobody
+    # has seen before and it fails the pull request that caused it.
+    #
+    # This blocked nothing while the triage was outstanding, which was the honest
+    # state then and would be a hiding place now.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Compare every shipped table against ICU4J
+        run: ./gradlew :conformance-icu:test
+
+  coverage:
+    # Line and branch coverage over the hand-written code, which is 157 of this
+    # build's 1160 main source files. The other 1003 are generated tables and are
+    # filtered out in `kotlinx-locale-coverage`; a number that counted them would
+    # move when CLDR adds a locale and would mean nothing either way.
+    #
+    # Kover instruments JVM bytecode, so this measures the `jvm` target. The
+    # sources are common, so a covered line is covered on every target; what it
+    # cannot see is an `actual` in a native or JS source set.
+    name: coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Measure coverage
+        run: ./gradlew koverXmlReport koverHtmlReport
+
+      - name: Read the counters
+        id: kover
+        run: python3 .github/scripts/kover_summary.py
+
+      # A different question from the one above, and the one a locale library is
+      # actually judged on: how much of the shipped data was compared against
+      # ICU or CLDR. Line coverage cannot answer it, because formatting thirty
+      # locales runs the same code as formatting eleven hundred.
+      - name: Measure oracle coverage
+        run: |
+          python3 .github/scripts/oracle_coverage.py
+          cat oracle-coverage.md >> coverage-summary.md
+
+      # Always written, needs no token, and works for a fork. This is the copy
+      # that is guaranteed to exist.
+      - name: Write the run summary
+        run: cat coverage-summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      # A pull request from a fork gets a read-only token, so this step cannot
+      # run there and is skipped rather than failed. The summary above already
+      # carries the same table.
+      - name: Comment on the pull request
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('coverage-summary.md', 'utf8');
+            const marker = '<!-- kover-coverage -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const existing = await github.paginate(
+              github.rest.issues.listComments, { owner, repo, issue_number },
+            );
+            const mine = existing.find((c) => c.body.includes(marker));
+            // Edited in place: one comment that tracks the branch, rather than a
+            // new one on every push turning the conversation into a changelog.
+            if (mine) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: mine.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }
+
+      - name: Upload the HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: build/reports/kover/html
+          retention-days: 14
 
   sample:
     name: sample
@@ -172,7 +284,11 @@ jobs:
           - { target: jvm, os: ubuntu-latest, task: jvmTest }
           - { target: js, os: ubuntu-latest, task: jsTest }
           - { target: wasmJs, os: ubuntu-latest, task: wasmJsTest }
-          - { target: wasmWasi, os: ubuntu-latest, task: wasmWasiTest }
+          # Compile only. The test framework's data layer does not publish a
+          # wasm-wasi variant, so this target has no test compilation; see the
+          # note in kotlinx-locale-multiplatform-base. The klib task is what
+          # keeps the target from silently rotting in the meantime.
+          - { target: wasmWasi, os: ubuntu-latest, task: compileKotlinWasmWasi }
           - { target: androidLibrary, os: ubuntu-latest, task: testAndroidHostTest }
 
           # Native, host-executable.
@@ -200,7 +316,7 @@ jobs:
           - { target: watchosX64, os: macos-latest, task: watchosX64MainKlibrary }
           - { target: macosX64, os: macos-latest, task: macosX64MainKlibrary }
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -214,6 +330,43 @@ jobs:
           path: ~/.konan
           key: konan-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
           restore-keys: konan-${{ runner.os }}-
+      # What a runner may use, which is not what a laptop may use.
+      #
+      # gradle.properties holds the build to two workers, 2 GB for the daemon
+      # and 3 GB for the Kotlin/Native compiler, because building this matrix
+      # locally will take a 48 GB machine down. That is the right default for a
+      # fresh clone and the wrong one here: a runner is ephemeral, sized per job
+      # and thrown away.
+      #
+      # Left at those ceilings, mingwX64 went from the twenty minutes it takes
+      # on main to past the hour it was allowed, because Windows is where
+      # Kotlin/Native compilation is slowest and all three ceilings compound.
+      #
+      # Written to GRADLE_USER_HOME rather than passed as `-D` or GRADLE_OPTS,
+      # because those lose to the project's own gradle.properties and this file
+      # is the one place Gradle ranks above it.
+      - name: Let the runner use what it has
+        run: |
+          set -euo pipefail
+          # setup-gradle sets GRADLE_USER_HOME on some runners, so ask rather
+          # than assume. Writing to the wrong file would leave the ceilings in
+          # place and read as a fix that worked.
+          home="${GRADLE_USER_HOME:-$HOME/.gradle}"
+          mkdir -p "$home"
+          cat >> "$home/gradle.properties" <<'PROPERTIES'
+          org.gradle.workers.max=4
+          org.gradle.jvmargs=-Xmx4G -XX:+UseParallelGC -Dfile.encoding=UTF-8
+          kotlin.daemon.jvmargs=-Xmx4G -XX:+UseParallelGC
+          kotlin.native.jvmArgs=-Xmx4G -XX:+UseParallelGC
+          PROPERTIES
+          echo "wrote $home/gradle.properties"
+          # Read the values back out of Gradle itself. A file in the right place
+          # that Gradle still outranks is the same silent no-op by another route.
+          ./gradlew -q properties \
+            | grep -E '^(org\.gradle\.workers\.max|org\.gradle\.jvmargs|kotlin\.native\.jvmArgs):' \
+            | tee /tmp/effective.txt
+          grep -q 'org.gradle.workers.max: 4' /tmp/effective.txt
+          grep -q 'kotlin.native.jvmArgs: -Xmx4G' /tmp/effective.txt
       - name: ${{ matrix.task }}
         run: ./gradlew ${{ matrix.task }}
 

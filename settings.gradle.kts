@@ -129,6 +129,21 @@ published.forEach { include(":$it") }
 include(":conformance-test-suite")
 include(":codegen")
 
+// The assertion vocabulary every test source set in this build is written in.
+// Not kotlin-test, because kotlin-test and the test framework cannot share a
+// Kotlin/Wasm compilation; see the module's own build file.
+include(":test-assertions")
+
+// The live ICU comparison. A plain JVM module, because ICU4J is a JVM library
+// and this is the one place in the build allowed to depend on it at test time.
+//
+// It needs the ICU4J jar and nothing else: no CLDR clone, which is what lets it
+// run in CI, where `codegen/repos` never exists. What it compares is every
+// shipped table against the answers ICU gives for the same question, across all
+// eleven hundred locales rather than the thirty a committed golden can afford.
+// The disagreements that are real and expected live in `conformance/ledger`.
+include(":conformance-icu")
+
 // Kotlin/JS probes that measure what each dependency set costs a consumer. Not
 // published; see tools/README.md. The list lives in one file that both this and
 // the verification convention plugin read, so a probe cannot be built without

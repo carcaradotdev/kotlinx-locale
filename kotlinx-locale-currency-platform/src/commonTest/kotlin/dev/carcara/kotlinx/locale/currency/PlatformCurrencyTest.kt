@@ -16,6 +16,10 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToCurrencyFormats
@@ -23,10 +27,9 @@ import dev.carcara.kotlinx.locale.conformance.assertConformsToCurrencyNames
 import dev.carcara.kotlinx.locale.currency.cldr.CldrCurrency
 import dev.carcara.kotlinx.locale.currency.platform.PlatformCurrency
 import dev.carcara.kotlinx.locale.number.SignDisplay
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * The platform currency source, checked on every target this module builds for.
@@ -36,23 +39,21 @@ import kotlin.test.assertTrue
  * return: a test that quietly does nothing on the four targets with no locale
  * data still passes there, which reads as coverage it is not.
  */
-class PlatformCurrencyTest {
+val PlatformCurrencyTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    private val names = FallbackCurrencyNames(primary = PlatformCurrency, fallback = CldrCurrency)
-    private val formats = FallbackCurrencyFormats(primary = PlatformCurrency, fallback = CldrCurrency)
+    val names = FallbackCurrencyNames(primary = PlatformCurrency, fallback = CldrCurrency)
+    val formats = FallbackCurrencyFormats(primary = PlatformCurrency, fallback = CldrCurrency)
 
-    private val en = Locale.of("en")
-    private val chf = Currency.forCode("CHF")
+    val en = Locale.of("en")
+    val chf = Currency.forCode("CHF")
 
     // Runs identically everywhere ------------------------------------------------
 
-    @Test
-    fun theCompositionConformsOnNames() {
+    test("theCompositionConformsOnNames") {
         names.assertConformsToCurrencyNames(ConformanceTier.BEHAVIOURAL)
     }
 
-    @Test
-    fun cashRoundingComesFromTheBundledSourceOnEveryPlatform() {
+    test("cashRoundingComesFromTheBundledSourceOnEveryPlatform") {
         // No platform formatter knows CLDR cash rounding, so the platform misses on
         // every target and the bundled source answers on every target. That makes
         // this one exact string a genuine all-platforms assertion rather than a
@@ -81,8 +82,7 @@ class PlatformCurrencyTest {
         assertTrue(formats.format(CurrencyAmount(chf, 1234), en).startsWith("CHF"))
     }
 
-    @Test
-    fun theCompositionRendersEveryAmount() {
+    test("theCompositionRendersEveryAmount") {
         // Deliberately not the conformance round trip. That asks one source to read
         // back what it wrote, and a composition can format with the platform and
         // parse with the bundled source. The two do not agree on every glyph:
@@ -105,8 +105,7 @@ class PlatformCurrencyTest {
         }
     }
 
-    @Test
-    fun theCompositionNamesEveryCurrency() {
+    test("theCompositionNamesEveryCurrency") {
         for (tag in listOf("en", "de", "ja", "pt-BR")) {
             val locale = Locale.forLanguageTag(tag)
             for (currency in Currency.entries) {
@@ -116,8 +115,7 @@ class PlatformCurrencyTest {
         }
     }
 
-    @Test
-    fun anUnknownCodeMissesRatherThanGuessing() {
+    test("anUnknownCodeMissesRatherThanGuessing") {
         assertEquals(
             null,
             PlatformCurrency.formatOrNull(
@@ -132,8 +130,7 @@ class PlatformCurrencyTest {
 
     // Host-dependent, asserted on both sides -------------------------------------
 
-    @Test
-    fun theSourceHonoursItsAvailabilityContract() {
+    test("theSourceHonoursItsAvailabilityContract") {
         if (PlatformCurrency.isAvailable) {
             val symbol = assertNotNull(PlatformCurrency.currencySymbolOrNull("USD", en), "no English symbol for USD")
             assertTrue(!symbol.equals("USD", ignoreCase = true), "the symbol came back as the code")
@@ -172,8 +169,7 @@ class PlatformCurrencyTest {
         }
     }
 
-    @Test
-    fun largeAmountsStayExactWhereThePlatformFormatsAtAll() {
+    test("largeAmountsStayExactWhereThePlatformFormatsAtAll") {
         // Past 2^53 minor units, which is where a Double would start rounding. The
         // amount crosses to the platform as a decimal string precisely so this
         // holds.
@@ -191,8 +187,7 @@ class PlatformCurrencyTest {
         }
     }
 
-    @Test
-    fun theIsoCodeStyleWritesTheCodeWhereThePlatformFormatsAtAll() {
+    test("theIsoCodeStyleWritesTheCodeWhereThePlatformFormatsAtAll") {
         val withCode = PlatformCurrency.formatOrNull(
             123456,
             "USD",
@@ -206,8 +201,7 @@ class PlatformCurrencyTest {
         }
     }
 
-    @Test
-    fun thePlatformSourceIsSelfConsistentWhereItParses() {
+    test("thePlatformSourceIsSelfConsistentWhereItParses") {
         // JVM and Android only: Intl has no parser and Foundation's is lossy, so
         // elsewhere there is no self-consistency to check. Asserting the absence
         // rather than skipping, so that a platform gaining a parser is noticed.

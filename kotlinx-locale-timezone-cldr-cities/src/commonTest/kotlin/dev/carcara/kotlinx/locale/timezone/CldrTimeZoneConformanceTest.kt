@@ -18,14 +18,17 @@
 
 package dev.carcara.kotlinx.locale.timezone
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
-import dev.carcara.kotlinx.locale.conformance.assertConformsToIcuTimeZoneNames
 import dev.carcara.kotlinx.locale.country.cldr.CldrCountry
 import dev.carcara.kotlinx.locale.number.cldr.CldrNumber
 import dev.carcara.kotlinx.locale.timezone.cldr.CldrTimeZone
 import dev.carcara.kotlinx.locale.timezone.cldr.cities.internal.data.timeZoneCitiesRegistry
 import dev.carcara.kotlinx.locale.timezone.cldr.runtime.PayloadTimeZoneNames
-import kotlin.test.Test
+import dev.carcara.kotlinx.locale.timezone.conformance.assertConformsToIcuTimeZoneNames
 
 /**
  * Held against ICU with every table this domain can be given.
@@ -37,9 +40,9 @@ import kotlin.test.Test
  * other end of that choice, where a build did ask for them, and it is the
  * configuration the generic location format is written for.
  */
-class CldrTimeZoneConformanceTest {
+val CldrTimeZoneConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    private val source = PayloadTimeZoneNames(
+    val source = PayloadTimeZoneNames(
         CldrTimeZone.formatRecords,
         CldrTimeZone.nameRecords,
         timeZoneCitiesRegistry,
@@ -47,6 +50,7 @@ class CldrTimeZoneConformanceTest {
         CldrNumber,
     ) { region, locale -> CldrCountry.countryNameOrNull(region, locale) }
 
-    @Test
-    fun namesAgreeWithIcu() = source.assertConformsToIcuTimeZoneNames()
+    test("names agree with ICU") {
+        source.assertConformsToIcuTimeZoneNames()
+    }
 }

@@ -1,0 +1,24 @@
+# The modules Kover does not measure, one Gradle path per line.
+#
+# Read by the kotlinx-locale-coverage convention plugin, which calls
+# `disable()` on a listed project so it neither instruments nor writes a
+# report, and by build.gradle.kts, which leaves it out of the aggregate.
+# One list, so a module cannot be missing from the headline number while
+# still showing up in the per-module table.
+#
+# What they have in common is that none of them ship. Measuring test
+# infrastructure against its own tests answers nothing: a number for
+# :test-assertions says how thoroughly the assertions test themselves, which
+# is not a fact about this library. Build-time code is left out for the same
+# reason, one step further removed.
+
+# Test infrastructure.
+:conformance-icu
+:conformance-test-suite
+:test-assertions
+
+# Build-time code: clones repositories, parses CLDR, emits Kotlin.
+:codegen
+:kotlinx-locale-codegen-data
+:kotlinx-locale-codegen-emitters
+:kotlinx-locale-gradle-plugin

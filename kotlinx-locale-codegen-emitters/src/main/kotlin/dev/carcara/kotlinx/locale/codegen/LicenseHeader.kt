@@ -16,6 +16,8 @@
 
 package dev.carcara.kotlinx.locale.codegen
 
+import java.io.File
+
 /**
  * The Apache license notice every emitted file opens with, followed by the blank
  * line that separates it from the `// GENERATED` marker.
@@ -47,3 +49,26 @@ public val LICENSE_HEADER: String = """
     | * limitations under the License.
     | */
 """.trimMargin() + "\n\n"
+
+/**
+ * The `package` line a generated file opens with, read off where it is written.
+ *
+ * Here for the same reason as [LICENSE_HEADER], and found the same way. Ten
+ * fixture emitters wrote one hardcoded package while `Main.kt` decided their
+ * directories separately, so moving a fixture into the module that reads it
+ * moved the file and left the declaration behind. The tree looked right because
+ * the move rewrote the committed files; the next
+ * `./gradlew :codegen:generateLocaleData` put all ten back and stopped the test
+ * sources compiling.
+ *
+ * Deriving it from the path means the two cannot disagree: a fixture that moves
+ * takes its package with it.
+ */
+public fun packageOf(outputFile: File): String {
+    val parts = outputFile.absoluteFile.parentFile.invariantSeparatorsPath.split('/')
+    val kotlin = parts.lastIndexOf("kotlin")
+    require(kotlin >= 0 && kotlin + 1 < parts.size) {
+        "cannot tell what package $outputFile belongs to: no src/<sourceSet>/kotlin/<package> on its path"
+    }
+    return parts.drop(kotlin + 1).joinToString(".")
+}

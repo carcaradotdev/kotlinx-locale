@@ -28,6 +28,8 @@ dependencies {
     implementation(libs.gradle.plugin.ktlint)
     implementation(libs.gradle.plugin.kotlin.serialization)
     implementation(libs.gradle.plugin.maven.publish)
+    implementation(libs.gradle.plugin.testballoon)
+    implementation(libs.gradle.plugin.kover)
 }
 
 // Strict validation turns a missing annotation or an implicit ABSOLUTE path

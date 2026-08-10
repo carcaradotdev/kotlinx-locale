@@ -18,11 +18,14 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
-import dev.carcara.kotlinx.locale.conformance.icuGoldenData
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import dev.carcara.kotlinx.locale.datetime.cldr.conformance.icuGoldenData
+import dev.carcara.kotlinx.locale.test.assertEquals
 
 /**
  * Cross-checks the CLDR-generated runtime data against patterns and names
@@ -30,16 +33,15 @@ import kotlin.test.assertEquals
  * the same upstream data). Fields ICU does not define for a locale are null
  * in the golden entry and skipped.
  */
-class IcuGoldenTest {
+val IcuGoldenTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     // The two sources are point releases of the same upstream data and can
     // disagree on which non-breaking space variant they use (U+00A0 vs U+202F);
     // normalize those before comparing.
-    private fun String.normalized() = replace(' ', ' ').replace(' ', ' ')
-    private fun List<String>.normalized() = map { it.normalized() }
+    fun String.normalized() = replace(' ', ' ').replace(' ', ' ')
+    fun List<String>.normalized() = map { it.normalized() }
 
-    @Test
-    fun runtimeDataMatchesIcu() {
+    test("runtimeDataMatchesIcu") {
         for (golden in icuGoldenData) {
             val data = localeDataFor(Locale.forLanguageTag(golden.tag))
             golden.dateFormats?.let {

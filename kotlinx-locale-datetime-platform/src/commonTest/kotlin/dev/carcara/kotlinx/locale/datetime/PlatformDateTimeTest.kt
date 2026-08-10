@@ -16,6 +16,10 @@
 
 package dev.carcara.kotlinx.locale.datetime
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.conformance.ConformanceTier
 import dev.carcara.kotlinx.locale.conformance.assertConformsToDateTimeFormats
@@ -23,34 +27,31 @@ import dev.carcara.kotlinx.locale.datetime.cldr.CldrDateTime
 import dev.carcara.kotlinx.locale.datetime.displayName
 import dev.carcara.kotlinx.locale.datetime.format
 import dev.carcara.kotlinx.locale.datetime.platform.PlatformDateTime
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotNull
+import dev.carcara.kotlinx.locale.test.assertTrue
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.Month
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 /**
  * The platform datetime source, and the timezone trap it exists to avoid.
  */
-class PlatformDateTimeTest {
+val PlatformDateTimeTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    private val composed = FallbackDateTimeFormats(primary = PlatformDateTime, fallback = CldrDateTime)
+    val composed = FallbackDateTimeFormats(primary = PlatformDateTime, fallback = CldrDateTime)
 
-    private val en = Locale.of("en")
-    private val date = LocalDate(2026, 7, 27)
-    private val time = LocalTime(15, 5, 9)
+    val en = Locale.of("en")
+    val date = LocalDate(2026, 7, 27)
+    val time = LocalTime(15, 5, 9)
 
-    @Test
-    fun theCompositionConformsBehaviourally() {
+    test("theCompositionConformsBehaviourally") {
         composed.assertConformsToDateTimeFormats(ConformanceTier.BEHAVIOURAL)
     }
 
-    @Test
-    fun theCompositionNamesTheMonthsAndWeekdaysIdenticallyEverywhere() {
+    test("theCompositionNamesTheMonthsAndWeekdaysIdenticallyEverywhere") {
         // Every host and CLDR agree on the English calendar names, so these are
         // exact assertions that hold on every target: the platform answers on
         // JVM, JS and Apple, the bundled source answers on the other four.
@@ -62,8 +63,7 @@ class PlatformDateTimeTest {
         assertEquals("Sunday", composed.displayName(DayOfWeek(7), TextStyle.FULL, en))
     }
 
-    @Test
-    fun theCompositionRendersEveryStyleEverywhere() {
+    test("theCompositionRendersEveryStyleEverywhere") {
         val moment = LocalDateTime(date, time)
         for (tag in listOf("en", "de", "ja", "pt-BR", "ar-EG")) {
             val locale = Locale.forLanguageTag(tag)
@@ -75,8 +75,7 @@ class PlatformDateTimeTest {
         }
     }
 
-    @Test
-    fun theSourceHonoursItsAvailabilityContract() {
+    test("theSourceHonoursItsAvailabilityContract") {
         if (PlatformDateTime.isAvailable) {
             PlatformDateTime.assertConformsToDateTimeFormats(ConformanceTier.BEHAVIOURAL)
         } else {
@@ -91,12 +90,11 @@ class PlatformDateTimeTest {
         }
     }
 
-    @Test
-    fun theDayThatGoesInIsTheDayThatComesOut() {
+    test("theDayThatGoesInIsTheDayThatComesOut") {
         if (!PlatformDateTime.isAvailable) {
             // Covered by the availability contract test; nothing to shift.
             assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
-            return
+            return@test
         }
         // The trap this guards: a LocalDate has no zone, and the platform
         // formatters take an instant plus a zone. Formatted in the host's zone,
@@ -111,11 +109,10 @@ class PlatformDateTimeTest {
         }
     }
 
-    @Test
-    fun theHourThatGoesInIsTheHourThatComesOut() {
+    test("theHourThatGoesInIsTheHourThatComesOut") {
         if (!PlatformDateTime.isAvailable) {
             assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
-            return
+            return@test
         }
         val formatted = assertNotNull(PlatformDateTime.formatTimeOrNull(time, FormatStyle.MEDIUM, en))
         assertTrue("05" in formatted || "5" in formatted, "lost the minutes: '$formatted'")
@@ -124,11 +121,10 @@ class PlatformDateTimeTest {
         assertTrue("3" in formatted || "15" in formatted, "lost or shifted the hour: '$formatted'")
     }
 
-    @Test
-    fun theFourLengthsDifferFromEachOther() {
+    test("theFourLengthsDifferFromEachOther") {
         if (!PlatformDateTime.isAvailable) {
             assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
-            return
+            return@test
         }
         val rendered = FormatStyle.entries.map { assertNotNull(PlatformDateTime.formatDateOrNull(date, it, en)) }
         // FULL and LONG can coincide in some locales, but all four collapsing to
@@ -137,11 +133,10 @@ class PlatformDateTimeTest {
         assertTrue(rendered.first().length >= rendered.last().length, "FULL was shorter than SHORT: $rendered")
     }
 
-    @Test
-    fun theNamesAreLocalizedAndNotJustEnglish() {
+    test("theNamesAreLocalizedAndNotJustEnglish") {
         if (!PlatformDateTime.isAvailable) {
             assertEquals(null, PlatformDateTime.monthNameOrNull(7, TextStyle.FULL, en))
-            return
+            return@test
         }
         assertEquals("July", PlatformDateTime.monthNameOrNull(7, TextStyle.FULL, en))
         assertEquals("Monday", PlatformDateTime.dayOfWeekNameOrNull(1, TextStyle.FULL, en))
@@ -154,11 +149,10 @@ class PlatformDateTimeTest {
         assertEquals("Sunday", PlatformDateTime.dayOfWeekNameOrNull(7, TextStyle.FULL, en))
     }
 
-    @Test
-    fun theGluedDateTimeCarriesBothHalves() {
+    test("theGluedDateTimeCarriesBothHalves") {
         if (!PlatformDateTime.isAvailable) {
             assertEquals(null, PlatformDateTime.formatDateOrNull(date, FormatStyle.LONG, en))
-            return
+            return@test
         }
         val moment = LocalDateTime(date, time)
         val glued = assertNotNull(
@@ -168,8 +162,7 @@ class PlatformDateTimeTest {
         assertTrue("05" in glued || "5" in glued, "the time half is missing: '$glued'")
     }
 
-    @Test
-    fun anOutOfRangeMonthOrWeekdayIsRefused() {
+    test("anOutOfRangeMonthOrWeekdayIsRefused") {
         assertEquals(null, PlatformDateTime.monthNameOrNull(0, TextStyle.FULL, en))
         assertEquals(null, PlatformDateTime.monthNameOrNull(13, TextStyle.FULL, en))
         assertEquals(null, PlatformDateTime.dayOfWeekNameOrNull(0, TextStyle.FULL, en))

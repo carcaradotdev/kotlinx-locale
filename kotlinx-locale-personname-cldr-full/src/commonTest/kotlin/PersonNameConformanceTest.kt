@@ -16,6 +16,10 @@
 
 package dev.carcara.kotlinx.locale.personname.cldr
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.personname.PersonName
 import dev.carcara.kotlinx.locale.personname.PersonNameFormality
@@ -23,9 +27,8 @@ import dev.carcara.kotlinx.locale.personname.PersonNameLength
 import dev.carcara.kotlinx.locale.personname.PersonNameOrder
 import dev.carcara.kotlinx.locale.personname.PersonNameUsage
 import dev.carcara.kotlinx.locale.personname.conformance.personNameCases
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 /**
  * Holds the formatter to CLDR's own person name test data.
@@ -39,7 +42,7 @@ import kotlin.test.assertTrue
  * rather than by loosening the comparison, so what is not covered stays
  * countable and visible.
  */
-class PersonNameConformanceTest {
+val PersonNameConformanceTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     /**
      * Locales whose words are not separated by spaces.
@@ -50,7 +53,7 @@ class PersonNameConformanceTest {
      * whole domain. Recorded as a boundary rather than approximated, because an
      * initial taken from the wrong place is worse than no initial at all.
      */
-    private val wordSegmentation = setOf("km", "lo", "my", "shn", "yue", "yue-Hans", "zh", "zh-Hant")
+    val wordSegmentation = setOf("km", "lo", "my", "shn", "yue", "yue-Hans", "zh", "zh-Hant")
 
     /**
      * Locales whose remaining differences are known but not yet fixed.
@@ -65,9 +68,9 @@ class PersonNameConformanceTest {
      * ends when the punctuation inside it is a middle dot. `PersonNamePattern`
      * and `FieldModifierImpl` in the ICU checkout are the reference.
      */
-    private val knownDifferences = setOf<String>()
+    val knownDifferences = setOf<String>()
 
-    private fun buildName(fields: String, nameLocale: String): PersonName {
+    fun buildName(fields: String, nameLocale: String): PersonName {
         val values = HashMap<String, String>()
         if (fields.isNotEmpty()) {
             for (pair in fields.split('')) {
@@ -90,20 +93,17 @@ class PersonNameConformanceTest {
         )
     }
 
-    @Test
-    fun theFixtureIsWholeAndDecodes() {
+    test("theFixtureIsWholeAndDecodes") {
         assertEquals(36960, personNameCases.size, "the fixture changed size")
         assertTrue(personNameCases.all { it.size == 8 }, "a case did not decode into eight parts")
     }
 
-    @Test
-    fun theExclusionsDoNotGrowUnnoticed() {
+    test("theExclusionsDoNotGrowUnnoticed") {
         assertEquals(8, wordSegmentation.size, "the word segmentation exclusions changed")
         assertEquals(0, knownDifferences.size, "the known differences changed; fix them or restate them")
     }
 
-    @Test
-    fun everyCaseMatchesCldr() {
+    test("everyCaseMatchesCldr") {
         val mismatches = ArrayList<String>()
         var compared = 0
         var excluded = 0

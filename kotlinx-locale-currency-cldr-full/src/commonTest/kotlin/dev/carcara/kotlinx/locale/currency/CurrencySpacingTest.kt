@@ -16,11 +16,14 @@
 
 package dev.carcara.kotlinx.locale.currency
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.currency.cldr.format
 import dev.carcara.kotlinx.locale.currency.cldr.parseFormattedOrNull
-import kotlin.test.Test
-import kotlin.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertEquals
 
 /**
  * UTS #35 currency spacing: the space CLDR puts between a currency and the
@@ -33,14 +36,13 @@ import kotlin.test.assertEquals
  * first case, so it agrees with a build that has this switched off and is no use
  * as a second opinion on it.
  */
-class CurrencySpacingTest {
+val CurrencySpacingTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    private val amount = 123456L
-    private fun locale(tag: String) = Locale.forLanguageTag(tag)
-    private fun format(code: String, tag: String) = CurrencyAmount(Currency.forCode(code), amount).format(locale(tag))
+    val amount = 123456L
+    fun locale(tag: String) = Locale.forLanguageTag(tag)
+    fun format(code: String, tag: String) = CurrencyAmount(Currency.forCode(code), amount).format(locale(tag))
 
-    @Test
-    fun insertsTheSpaceWhereTheCurrencyEndsInALetterOrPoint() {
+    test("insertsTheSpaceWhereTheCurrencyEndsInALetterOrPoint") {
         // A currency with no symbol in this locale falls back to its ISO code,
         // and a letter against a digit earns the space.
         assertEquals("AED\u00A01\u00A0234,56", format("AED", "en-ZA"))
@@ -51,8 +53,7 @@ class CurrencySpacingTest {
         assertEquals("රු.\u00A01,234.56", format("LKR", "si"))
     }
 
-    @Test
-    fun leavesSymbolCurrenciesAlone() {
+    test("leavesSymbolCurrenciesAlone") {
         // `$` is a currency symbol, which root's currencyMatch excludes.
         assertEquals("\$1,234.56", format("USD", "en"))
         // `US$` ends in one too, so the space here is the pattern's own.
@@ -60,15 +61,27 @@ class CurrencySpacingTest {
         assertEquals("US\$1\u00A0234,56", format("USD", "en-ZA"))
     }
 
-    @Test
-    fun doesNotDoubleTheSpaceAPatternAlreadyWrites() {
+    test("seesADigitThatIsASurrogatePair") {
+        // Chakma numbers with U+11136 and up, which are two UTF-16 units each.
+        // The rule used to ask `Char.isDigit` of one of them, saw half a
+        // surrogate pair, decided it was not a digit and wrote `123.456BHD`. Nine
+        // of the numbering systems CLDR ships are above the basic plane, so this
+        // is the shape of the bug rather than one locale's quirk, and no test
+        // touched it until `:conformance-icu` compared 29 locales against ICU.
+        assertEquals("𑄷𑄸𑄹.𑄺𑄻𑄼\u00A0BHD", format("BHD", "ccp"))
+        assertEquals(
+            "𑄷,𑄸𑄹,𑄺𑄻𑄼\u00A0CLP",
+            format("CLP", "ccp"),
+        )
+    }
+
+    test("doesNotDoubleTheSpaceAPatternAlreadyWrites") {
         // da writes `#,##0.00 ¤` with the space in the pattern, so the rule has
         // no boundary to act on and `kr.` keeps exactly one space.
         assertEquals("1.234,56\u00A0kr.", format("DKK", "da"))
     }
 
-    @Test
-    fun theInsertedSpaceReadsBack() {
+    test("theInsertedSpaceReadsBack") {
         // Parsing tolerates it without requiring it, which is what ICU means by
         // letting currency spacing be a weak match.
         val en = locale("en")

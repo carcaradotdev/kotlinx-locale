@@ -133,7 +133,7 @@ is written up in [boundaries.md](boundaries.md).
 ## Where ICU is not the answer
 
 ICU is the reference for most of what is checked above, and it is not the
-specification. Four kinds of difference come up, and each one is handled
+specification. Six kinds of difference come up, and each one is handled
 differently.
 
 **ICU is built from a different CLDR snapshot.** The pinned releases are CLDR
@@ -157,12 +157,58 @@ for a few locales it ships no unit data at all. Following that would mean
 shipping less than CLDR says, so this library does not; `resolveDurationUnits`
 records the cases.
 
+**Neither side is told which wider format to use.** An interval whose two ends
+differ in a field the requested skeleton cannot show has to be rendered by some
+wider format, and CLDR does not say which one. Asked for a day over two months,
+this library re-runs its own skeleton matcher and Afrikaans gets `2026-03-14 –
+2026-05-14`; ICU falls back to the locale's short date and gets `14/3 – 14/5`.
+Both name the same two days unambiguously and neither is wrong. What would be
+wrong is not widening at all, which is what this library did until
+`:conformance-icu` compared the two: it wrote `14 – 14` for an interval two
+months long.
+
+**This library has not built it yet.** Hawaiian writes its short date with a
+`numbers` attribute selecting lowercase Roman numerals for the month alone, and
+that per-field override is not implemented, so the month renders in the locale's
+default digits. ICU is right and this is a gap rather than a decision, which is
+what `NOT_IMPLEMENTED` says; the rows disappear when the feature lands.
+
 **ICU has defects.** ICU 78.3 cannot format a currency at
 `UnitWidth.FULL_NAME` when that currency declares its own pattern in the locale,
 which CLDR does once, for the Turkish lira in Turkish. The format routes through
 the pattern modifier, whose switch over the widths throws instead of handling the
 name width. Nothing here reproduces that: the generator leaves the pair out of
 the fixture, records why, and fails the build if it ever stops being a handful.
+
+### Where the six kinds are recorded
+
+Four of the six are derivable, and two are not. That split is what
+`conformance/ledger` is built around.
+
+A snapshot difference, a bundle fallback and a pruned locale can each be
+recognised by asking ICU about its own resources: whether it carries a bundle
+for the locale at all, whether the value it gave is root's, whether its value
+matches the CLDR release this build pins. A widened interval is recognised
+earlier still, from the request rather than the answer: the skeleton either
+names the field the two ends differ in or it does not, and that is settled
+before anything is formatted. So those four are computed and pinned by an exact
+count per domain rather than listed row by row. Listing them would
+be thousands of lines nobody reads a second time; the count moving is the thing
+worth noticing, because a classifier that excuses more cases than it used to is
+how a real bug stops being reported.
+
+The last two cannot be derived. An ICU defect, a deliberate divergence and a
+thing this library has not built yet look identical to a program, and telling
+them apart is a judgement someone makes once and writes down. Those are the only
+rows the ledger enumerates, a row without a note fails at write time, and a
+reviewed classification is carried across a regeneration for the same reason its
+note is: neither can be re-derived.
+
+This replaces what the tests used to do. Exclusions living in the tests
+themselves worked while the comparison covered thirty locales; at eleven hundred
+it would mean a list in every module and no way to see the shape of the whole.
+`:conformance-icu` compares every locale the library ships, and
+`conformance/ledger/README.md` describes what it keeps.
 
 [tr35-1]: https://www.unicode.org/reports/tr35/tr35.html
 [tr35-2]: https://www.unicode.org/reports/tr35/tr35-general.html

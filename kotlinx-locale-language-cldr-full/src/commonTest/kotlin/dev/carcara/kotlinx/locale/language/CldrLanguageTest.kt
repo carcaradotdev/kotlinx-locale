@@ -16,23 +16,25 @@
 
 package dev.carcara.kotlinx.locale.language
 
+import at.asitplus.testballoon.matrix.matrixConfig
+import at.asitplus.testballoon.matrix.matrixSuite
+import de.infix.testBalloon.framework.core.TestConfig
+import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.language.cldr.CldrLanguage
 import dev.carcara.kotlinx.locale.language.cldr.displayName
 import dev.carcara.kotlinx.locale.language.cldr.nativeDisplayName
 import dev.carcara.kotlinx.locale.language.cldr.regionName
 import dev.carcara.kotlinx.locale.language.cldr.scriptName
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 
 private val EN = Locale.of("en")
 private val PT = Locale.of("pt")
 
-class CldrLanguageTest {
+val CldrLanguageTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    @Test
-    fun namesALanguageInAnotherLanguage() {
+    test("namesALanguageInAnotherLanguage") {
         assertEquals("German", Locale.of("de").displayName(EN))
         // Portuguese does not capitalize a language name, and CLDR stores what
         // the language writes rather than what a UI might want.
@@ -41,8 +43,7 @@ class CldrLanguageTest {
         assertEquals("Icelandic", Locale.of("is").displayName(EN))
     }
 
-    @Test
-    fun namesALanguageInItself() {
+    test("namesALanguageInItself") {
         // The row title of a language picker. CLDR writes these as the language
         // does, which is lower case in several of them.
         assertEquals("Deutsch", Locale.of("de").nativeDisplayName)
@@ -51,8 +52,7 @@ class CldrLanguageTest {
         assertEquals("português", Locale.of("pt").nativeDisplayName)
     }
 
-    @Test
-    fun dialectNamesComeFromCldrAndTheStandardFormIsComposed() {
+    test("dialectNamesComeFromCldrAndTheStandardFormIsComposed") {
         val british = Locale.forLanguageTag("en-GB")
         assertEquals("British English", british.displayName(EN))
         assertEquals("English (United Kingdom)", british.displayName(EN, LanguageDisplay.STANDARD))
@@ -60,8 +60,7 @@ class CldrLanguageTest {
         assertEquals("European Portuguese", Locale.forLanguageTag("pt-PT").displayName(EN))
     }
 
-    @Test
-    fun composesTheSubtagsTheDialectNameDidNotConsume() {
+    test("composesTheSubtagsTheDialectNameDidNotConsume") {
         // CLDR has its own dialect name for es-419, so DIALECT takes it and only
         // STANDARD composes. 419 is a macro-region, which the country enum does
         // not carry and this domain's own territory table does.
@@ -77,22 +76,19 @@ class CldrLanguageTest {
         )
     }
 
-    @Test
-    fun namesScriptsAndRegions() {
+    test("namesScriptsAndRegions") {
         assertEquals("Latin", EN.scriptName("Latn"))
         assertEquals("Cyrillic", EN.scriptName("Cyrl"))
         assertEquals("Latin America", EN.regionName("419"))
         assertEquals("Croatia", EN.regionName("HR"))
     }
 
-    @Test
-    fun anUnknownSubtagFallsBackToItself() {
+    test("anUnknownSubtagFallsBackToItself") {
         assertEquals("qqq", EN.scriptName("qqq"))
         assertEquals("zz", Locale.of("zz").displayName(EN))
     }
 
-    @Test
-    fun everyLocaleCanNameItself() {
+    test("everyLocaleCanNameItself") {
         var checked = 0
         for (locale in CldrLanguage.supportedLocales) {
             assertTrue(locale.nativeDisplayName.isNotBlank(), "$locale named nothing")
