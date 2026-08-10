@@ -16,6 +16,9 @@
 
 package dev.carcara.kotlinx.locale.codegen
 
+import dev.carcara.kotlinx.locale.codegen.pipeline.KeyElisionCodec
+import dev.carcara.kotlinx.locale.codegen.pipeline.PayloadCodec
+import dev.carcara.kotlinx.locale.codegen.pipeline.PayloadShape
 import java.io.File
 
 /**
@@ -469,7 +472,34 @@ private val PAYLOAD_TABLES = listOf(
  * empty registry. An empty registry compiles and then answers `null` for every
  * locale, which is the failure this is worth a check to avoid.
  */
-public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, packages: RegistryPackages = RegistryPackages.SHIPPED) {
+/**
+ * Which codec a section is written with when the caller does not say.
+ *
+ * Only the sparse sections, and only because those are the ones every reader
+ * reaches through `sparseRecordValue`. A resolved table is parsed by whichever
+ * source owns it, sometimes positionally, so eliding its keys would mean
+ * teaching each of those readers the new shape one at a time. These six are also
+ * where the keys are: they carry the zone ids, the ISO codes and the BCP-47
+ * subtags that every locale repeats.
+ */
+public fun defaultCodecFor(section: String): PayloadCodec =
+    if (BundleSection.BY_NAME[section]?.isSparse == true) KeyElisionCodec() else PayloadCodec.Identity
+
+public fun generateSources(
+    bundle: LocaleDataBundle,
+    roots: SourceRoots,
+    packages: RegistryPackages = RegistryPackages.SHIPPED,
+    /**
+     * Which codec each section is written with, by section name.
+     *
+     * A function rather than a map because the interesting answer is per
+     * section: keys are two thirds of the time-zone tables and a tenth of the
+     * language ones, so one codec is not the right answer everywhere. The
+     * default rewrites nothing, which is what keeps adding the pipeline a no-op
+     * until a build asks for something.
+     */
+    codecs: (String) -> PayloadCodec = ::defaultCodecFor,
+) {
     val cldr = bundle.cldrVersion
 
     for (spec in PAYLOAD_TABLES) {
@@ -479,6 +509,7 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             "the bundle carries no '${spec.section}' section, but ${spec.table} was asked for. " +
                 "Either the bundle predates that section or generation skipped it."
         }
+        val section = BundleSection.BY_NAME[spec.section]
         KeyedPayloadEmitter(
             outputDir = root.packageDir(packages[spec.table]),
             packageName = packages[spec.table],
@@ -487,6 +518,10 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
             registryProperty = spec.registryProperty,
             source = "CLDR $cldr",
             versionConst = spec.versionConstName?.let { it to cldr },
+            // The section already declares where the fields are, so the codec is
+            // told the same thing the runtime decoder is told, from one place.
+            shape = PayloadShape(section?.sparseFields ?: 0),
+            codec = codecs(spec.section),
         ).emit(payloads)
     }
 

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-// The half of code generation that a user's build can run: emitters plus the
-// reader for the pre-resolved CLDR bundle. Nothing here clones a repository or
-// parses XML, so it is safe on a build classpath.
+// The record format and the codecs that rewrite it, with nothing above them.
+// This module holds no File, no Kotlin syntax and no CLDR vocabulary: it maps
+// payload strings to payload strings, so a codec can be written and measured
+// without a code generator anywhere near it.
 plugins {
     id("kotlinx-locale-jvm")
     id("kotlinx-locale-publish")
@@ -27,14 +28,5 @@ kotlin {
 }
 
 dependencies {
-    // `api`, not `implementation`: a build that configures a codec names types
-    // from the pipeline, and the emitter's own signature exposes one.
-    api(project(":kotlinx-locale-codegen-pipeline"))
     testImplementation(libs.kotlin.test)
-}
-
-tasks.test {
-    // LicenseHeaderTest compares the emitted header against the LICENSE file, so
-    // it needs to know where the root of the checkout is.
-    systemProperty("kotlinx.locale.rootDir", rootDir.absolutePath)
 }
