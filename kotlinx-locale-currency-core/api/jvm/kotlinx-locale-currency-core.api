@@ -35,17 +35,9 @@ public final class dev/carcara/kotlinx/locale/currency/CurrencyCodesKt {
 	public static final fun forCountryOrNull (Ldev/carcara/kotlinx/locale/currency/Currency$Companion;Ldev/carcara/kotlinx/locale/country/Country;)Ldev/carcara/kotlinx/locale/currency/Currency;
 	public static final fun forLocaleOrNull (Ldev/carcara/kotlinx/locale/currency/Currency$Companion;Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/currency/Currency;
 	public static synthetic fun forLocaleOrNull$default (Ldev/carcara/kotlinx/locale/currency/Currency$Companion;Ldev/carcara/kotlinx/locale/Locale;ILjava/lang/Object;)Ldev/carcara/kotlinx/locale/currency/Currency;
-	public static final fun forNumericCode (Ldev/carcara/kotlinx/locale/currency/Currency$Companion;I)Ldev/carcara/kotlinx/locale/currency/Currency;
-	public static final fun forNumericCodeOrNull (Ldev/carcara/kotlinx/locale/currency/Currency$Companion;I)Ldev/carcara/kotlinx/locale/currency/Currency;
-	public static final fun getActive (Ldev/carcara/kotlinx/locale/currency/Currency$Companion;)Ljava/util/List;
 	public static final fun getCode (Ldev/carcara/kotlinx/locale/currency/Currency;)Ljava/lang/String;
-	public static final fun getFirstTenderEpochDay (Ldev/carcara/kotlinx/locale/currency/Currency;)I
-	public static final fun getLastTenderEpochDay (Ldev/carcara/kotlinx/locale/currency/Currency;)I
 	public static final fun getMinorUnitDigits (Ldev/carcara/kotlinx/locale/currency/Currency;)I
-	public static final fun isActive (Ldev/carcara/kotlinx/locale/currency/Currency;)Z
-	public static final fun isTender (Ldev/carcara/kotlinx/locale/currency/Currency;)Z
 	public static final fun isoToCldrUnits (Ldev/carcara/kotlinx/locale/currency/Currency;J)J
-	public static final fun wasTenderOn (Ldev/carcara/kotlinx/locale/currency/Currency;I)Z
 }
 
 public final class dev/carcara/kotlinx/locale/currency/CurrencyFormatOptions {
@@ -119,6 +111,17 @@ public final class dev/carcara/kotlinx/locale/currency/CurrencySymbolStyle : jav
 }
 
 public final class dev/carcara/kotlinx/locale/currency/CurrencySymbolStyle$Companion {
+}
+
+public final class dev/carcara/kotlinx/locale/currency/CurrencyTenderWindowsKt {
+	public static final fun forNumericCode (Ldev/carcara/kotlinx/locale/currency/Currency$Companion;I)Ldev/carcara/kotlinx/locale/currency/Currency;
+	public static final fun forNumericCodeOrNull (Ldev/carcara/kotlinx/locale/currency/Currency$Companion;I)Ldev/carcara/kotlinx/locale/currency/Currency;
+	public static final fun getActive (Ldev/carcara/kotlinx/locale/currency/Currency$Companion;)Ljava/util/List;
+	public static final fun getFirstTenderEpochDay (Ldev/carcara/kotlinx/locale/currency/Currency;)I
+	public static final fun getLastTenderEpochDay (Ldev/carcara/kotlinx/locale/currency/Currency;)I
+	public static final fun isActive (Ldev/carcara/kotlinx/locale/currency/Currency;)Z
+	public static final fun isTender (Ldev/carcara/kotlinx/locale/currency/Currency;)Z
+	public static final fun wasTenderOn (Ldev/carcara/kotlinx/locale/currency/Currency;I)Z
 }
 
 public final class dev/carcara/kotlinx/locale/currency/FallbackCurrencyFormats : dev/carcara/kotlinx/locale/currency/CurrencyFormatSource {

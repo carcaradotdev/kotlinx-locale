@@ -65,7 +65,7 @@ public class Locale private constructor(
                 "Invalid language subtag: '$language'"
             }
             return Locale(
-                language = legacyLanguageAliases[language.lowercase()] ?: language.lowercase(),
+                language = legacyLanguageAlias(language.lowercase()),
                 script = script?.let {
                     require(it.length == 4 && it.all(Char::isLatinLetter)) { "Invalid script subtag: '$it'" }
                     it.lowercase().replaceFirstChar(Char::uppercaseChar)
@@ -140,13 +140,14 @@ public class Locale private constructor(
     }
 }
 
-private val legacyLanguageAliases: Map<String, String> = mapOf(
-    "iw" to "he",
-    "in" to "id",
-    "ji" to "yi",
-    "mo" to "ro",
-    "tl" to "fil",
-)
+private fun legacyLanguageAlias(language: String): String = when (language) {
+    "iw" -> "he"
+    "in" -> "id"
+    "ji" -> "yi"
+    "mo" -> "ro"
+    "tl" -> "fil"
+    else -> language
+}
 
 private fun Char.isLatinLetter(): Boolean = this in 'a'..'z' || this in 'A'..'Z'
 private fun Char.isAsciiDigit(): Boolean = this in '0'..'9'
