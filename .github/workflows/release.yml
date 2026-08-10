@@ -1,0 +1,145 @@
+# Copyright 2026 Carcara.dev
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Release
+
+# Publishing a GitHub release creates the tag, and the tag carries the version.
+# Nothing in the tree does: gradle.properties stays on a snapshot version, which
+# is what a checkout of main should build, and the released number exists in one
+# place that is also the announcement. There is no version bump commit to forget
+# and no way for the tag and the artifacts to disagree.
+on:
+  release:
+    types: [published]
+
+# Only what the CI workflow called below asks for. A reusable workflow cannot
+# hold a permission its caller lacks, and ci.yml declares pull-requests: write
+# for the coverage comment, so omitting it here fails the call before any job
+# starts. The comment step is guarded on a pull_request event and stays skipped.
+permissions:
+  contents: read
+  pull-requests: write
+
+# One release at a time, and never cancelled. An upload killed halfway leaves a
+# deployment in the Portal that nobody asked for and that has to expire on its
+# own.
+concurrency:
+  group: release-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  version:
+    # Reads the version out of the tag before anything expensive runs, so a
+    # mistyped tag costs ten seconds rather than the whole matrix.
+    name: version
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.tag.outputs.version }}
+    steps:
+      - name: Take the version from the tag
+        id: tag
+        env:
+          # Through the environment rather than interpolated into the script. A
+          # tag name is text an outside contributor can influence, and a value
+          # substituted into a run block is substituted before bash sees it.
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          version="${TAG#v}"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then
+            echo "::error::tag '$TAG' is not a release version. Write v1.2.3 or 1.2.3, optionally suffixed -alpha01 or -RC1"
+            exit 1
+          fi
+          # A separate check because the pattern above cannot tell SNAPSHOT from
+          # any other prerelease word, and a snapshot version does not go
+          # through the Portal at all: the plugin would upload it to the
+          # snapshot repository and the release step would quietly do nothing.
+          if [[ "$version" == *SNAPSHOT* ]]; then
+            echo "::error::tag '$TAG' names a snapshot. Releases are cut from a fixed version"
+            exit 1
+          fi
+          echo "Releasing $version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+  verify:
+    # The same CI that runs on main, on the tagged commit. It has usually
+    # already passed there, and running it again is the point: a release is the
+    # one build where "it was green last week" does not answer the question.
+    name: verify
+    needs: version
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    name: publish
+    needs: [version, verify]
+    # macOS is the only host that can compile every target, and every target has
+    # to be in the deployment, so one job publishes all of them. Splitting the
+    # work across hosts would split the deployment too, and half a library on
+    # Maven Central is worse than none.
+    runs-on: macos-26
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Cache Kotlin/Native toolchain
+        uses: actions/cache@v4
+        with:
+          path: ~/.konan
+          key: konan-${{ runner.os }}-${{ hashFiles('gradle/libs.versions.toml') }}
+          restore-keys: konan-${{ runner.os }}-
+
+      # One deployment for the whole build. The plugin stages every module's
+      # artifacts into a local directory and uploads them as a single bundle
+      # once the build finishes, so a module that fails to build takes the
+      # upload with it and nothing reaches the Portal. That is what makes
+      # `AndRelease` safe: the Portal releases a bundle whole or not at all, so
+      # skipping the manual publish click cannot leave a partial version behind.
+      #
+      # No configuration cache. The signing key arrives as a project property
+      # and would be written into the cache entry on disk, and the entry buys
+      # nothing here anyway: setup-gradle only saves configuration cache state
+      # when given an encryption key, so every run of this job starts cold.
+      - name: Publish every module as one deployment
+        env:
+          # Everything the publish needs arrives as an environment variable and
+          # nothing is written to gradle.properties or passed on the command
+          # line. ORG_GRADLE_PROJECT_ is the prefix Gradle reads project
+          # properties from the environment under, and the one the publishing
+          # plugin documents for exactly this; the value never touches a file.
+          # The version goes the same way, so the tag is the only thing that
+          # decides what gets released.
+          ORG_GRADLE_PROJECT_version: ${{ needs.version.outputs.version }}
+          # Publishes JVM, Android, iOS and JS only. Maven Central meters file
+          # count per month and the full twenty-five targets are four times the
+          # files. The verify job above still built and tested every one of
+          # them; this decides what ships, not what works.
+          ORG_GRADLE_PROJECT_slimTargets: "true"
+          # A Central Portal user token, generated at
+          # https://central.sonatype.com/account, not the account login.
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          # The armoured private key in full, armour lines and line breaks
+          # included. An environment variable holds newlines, so it needs none
+          # of the stripping that a gradle.properties entry would.
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_IN_MEMORY_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_IN_MEMORY_KEY_PASSWORD }}
+        run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache

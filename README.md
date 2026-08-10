@@ -785,25 +785,44 @@ what it generates and the `-cldr-runtime` artifact it needs.
 
 ### Kotlin targets
 
-Every module publishes the same target set, which follows the
+The build compiles and tests twenty-five targets. A release publishes six of
+them.
+
+| Group | Targets |
+| --- | --- |
+| JVM | `jvm` (toolchain 21), Android (`compileSdk` 36, `minSdk` 21) |
+| Web | `js` |
+| Apple | `iosArm64`, `iosSimulatorArm64`, `iosX64` |
+
+`js` and `wasmJs` run in a browser as readily as under Node. Neither touches the
+DOM or a Node built-in: `Locale.current` and the `-platform` modules go through
+`Intl`, which every browser and every full-ICU Node build provides. The test
+tasks use Node because it starts faster than a headless browser, which is a
+choice about the test runner rather than about where the artifact works.
+
+The other nineteen are missing from Maven Central rather than unsupported. Each
+one compiles and runs its tests on every push. They do not ship yet because
+Maven Central
+[meters how many files an organization publishes each month](https://central.sonatype.org/publish/maven-central-publishing-limits/),
+and twenty-five targets across forty-two multiplatform modules is twenty-six
+publications each, several times what that allows. The list follows the
 [Kotlin/Native tiers](https://kotlinlang.org/docs/native-target-support.html)
 and matches what kotlinx-datetime publishes.
 
 | Group | Targets |
 | --- | --- |
-| JVM | `jvm` (toolchain 21), Android (`compileSdk` 36, `minSdk` 21) |
-| Web | `js` (Node.js), `wasmJs` (Node.js), `wasmWasi` (Node.js) |
-| Native tier 1 | `macosArm64`, `iosArm64`, `iosSimulatorArm64` |
+| Web | `wasmJs`, `wasmWasi` |
+| Native tier 1 | `macosArm64` |
 | Native tier 2 | `linuxX64`, `linuxArm64`, `watchosArm32`, `watchosArm64`, `watchosSimulatorArm64`, `tvosArm64`, `tvosSimulatorArm64` |
-| Native tier 3 | `androidNativeArm32`, `androidNativeArm64`, `androidNativeX86`, `androidNativeX64`, `iosX64`, `mingwX64`, `watchosDeviceArm64` |
-| Deprecated, still published | `macosX64`, `watchosX64`, `tvosX64` |
+| Native tier 3 | `androidNativeArm32`, `androidNativeArm64`, `androidNativeX86`, `androidNativeX64`, `mingwX64`, `watchosDeviceArm64` |
+| Deprecated in Kotlin/Native | `macosX64`, `watchosX64`, `tvosX64` |
 
 The last row is deprecated in Kotlin/Native but still published by
-kotlinx-datetime (KT-78660), so dropping it here would strand consumers who
-target it.
+kotlinx-datetime (KT-78660), so dropping it from the build would strand
+consumers who target it.
 
-Only `Locale.current` and the `-platform` modules behave differently across that
-list. Everything else is target-independent.
+Only `Locale.current` and the `-platform` modules behave differently across
+those two lists. Everything else is target-independent.
 
 ### Locale.current
 
