@@ -13,28 +13,28 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 
 | scenario | gzip | raw | budget | headroom |
 | --- | ---: | ---: | ---: | ---: |
-| locale | 13.9 KB | 41.1 KB | 18.0 KB | 4.0 KB |
+| locale | 8.9 KB | 24.4 KB | 18.0 KB | 9.0 KB |
 | country-codes | 14.6 KB | 41.1 KB | 20.0 KB | 5.3 KB |
-| country-platform | 20.2 KB | 57.9 KB | 25.0 KB | 4.7 KB |
-| currency-platform | 25.1 KB | 76.3 KB | 26.0 KB | 0.8 KB |
-| currency-codes | 26.8 KB | 81.4 KB | 30.0 KB | 3.1 KB |
-| datetime-platform | 35.3 KB | 112.6 KB | 42.0 KB | 6.6 KB |
-| personname-full | 46.3 KB | 365.5 KB | 60.0 KB | 13.6 KB |
-| everything-platform | 49.1 KB | 153.9 KB | 54.0 KB | 4.8 KB |
-| number-full | 76.3 KB | 310.6 KB | 110.0 KB | 33.6 KB |
-| phone-full | 79.8 KB | 276.0 KB | 110.0 KB | 30.1 KB |
-| datetime-durations | 121.2 KB | 830.9 KB | 150.0 KB | 28.7 KB |
-| datetime-full | 127.3 KB | 493.5 KB | 140.0 KB | 12.6 KB |
-| datetime-relative | 147.8 KB | 845.3 KB | 190.0 KB | 42.1 KB |
-| datetime-skeletons | 185.8 KB | 826.9 KB | 205.0 KB | 19.1 KB |
-| datetime-intervals | 213.3 KB | 1199.6 KB | 280.0 KB | 66.6 KB |
-| country-full | 376.5 KB | 1081.1 KB | 460.0 KB | 83.4 KB |
-| currency-full | 442.9 KB | 1403.8 KB | 500.0 KB | 57.0 KB |
-| timezone-full | 534.2 KB | 2922.5 KB | 700.0 KB | 165.7 KB |
-| currency-plurals | 811.2 KB | 2896.2 KB | 900.0 KB | 88.7 KB |
-| timezone-cities | 885.8 KB | 4212.0 KB | 1200.0 KB | 314.1 KB |
-| everything | 911.0 KB | 2868.6 KB | 1100.0 KB | 188.9 KB |
-| language-full | 1179.3 KB | 3138.0 KB | 1400.0 KB | 220.6 KB |
+| country-platform | 19.9 KB | 57.1 KB | 25.0 KB | 5.0 KB |
+| currency-platform | 22.9 KB | 68.6 KB | 26.0 KB | 3.0 KB |
+| currency-codes | 25.0 KB | 74.4 KB | 30.0 KB | 4.9 KB |
+| datetime-platform | 34.4 KB | 109.4 KB | 42.0 KB | 7.5 KB |
+| personname-full | 46.3 KB | 365.7 KB | 60.0 KB | 13.6 KB |
+| everything-platform | 47.0 KB | 146.2 KB | 54.0 KB | 6.9 KB |
+| number-full | 76.4 KB | 310.6 KB | 110.0 KB | 33.5 KB |
+| phone-full | 79.9 KB | 276.2 KB | 110.0 KB | 30.0 KB |
+| datetime-durations | 121.3 KB | 831.1 KB | 150.0 KB | 28.6 KB |
+| datetime-full | 127.3 KB | 493.6 KB | 140.0 KB | 12.6 KB |
+| datetime-relative | 148.1 KB | 881.1 KB | 190.0 KB | 41.8 KB |
+| datetime-skeletons | 185.9 KB | 827.0 KB | 205.0 KB | 19.0 KB |
+| datetime-intervals | 213.7 KB | 1200.5 KB | 280.0 KB | 66.2 KB |
+| country-full | 317.3 KB | 933.9 KB | 460.0 KB | 142.6 KB |
+| currency-full | 381.2 KB | 1274.5 KB | 500.0 KB | 118.7 KB |
+| timezone-full | 422.6 KB | 2307.7 KB | 700.0 KB | 277.3 KB |
+| currency-plurals | 645.1 KB | 2450.5 KB | 900.0 KB | 254.8 KB |
+| timezone-cities | 665.6 KB | 2997.1 KB | 1200.0 KB | 534.3 KB |
+| everything | 790.1 KB | 2592.0 KB | 1100.0 KB | 309.8 KB |
+| language-full | 889.4 KB | 2635.4 KB | 1400.0 KB | 510.5 KB |
 
 ## What the platform layer costs
 
@@ -44,7 +44,7 @@ between the two columns is the data and nothing else.
 
 | domain | platform | CLDR | what survives | saved |
 | --- | ---: | ---: | ---: | ---: |
-| datetime | 35.3 KB | 127.3 KB | 27.7% | 92.0 KB |
-| country | 20.2 KB | 376.5 KB | 5.4% | 356.2 KB |
-| currency | 25.1 KB | 442.9 KB | 5.7% | 417.7 KB |
-| all three | 49.1 KB | 911.0 KB | 5.4% | 861.9 KB |
+| datetime | 34.4 KB | 127.3 KB | 27.0% | 92.9 KB |
+| country | 19.9 KB | 317.3 KB | 6.3% | 297.3 KB |
+| currency | 22.9 KB | 381.2 KB | 6.0% | 358.3 KB |
+| all three | 47.0 KB | 790.1 KB | 6.0% | 743.1 KB |

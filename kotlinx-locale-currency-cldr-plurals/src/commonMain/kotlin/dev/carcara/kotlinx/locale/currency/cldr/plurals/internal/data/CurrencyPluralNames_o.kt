@@ -19,28 +19,28 @@
 package dev.carcara.kotlinx.locale.currency.cldr.plurals.internal.data
 
 internal val CURRENCY_PLURAL_NAMES_OC_ES: String =
-    "oc\u001F\u001F\u001F"
+    "oc\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_OKA_CA: String =
-    "oka\u001F\u001F\u001F"
+    "oka\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_OM: String =
-    "root\u001FBMD#one\u001DDoolaara Beermudaa\u001EBMD#other\u001DDoolaarota Beermudaa\u001EBZD#one\u001DDoolaara Beliizee\u001EBZD#other\u001DDoolaarota Beliizee\u001ECAD#one\u001DDoolaara Kanaadaa\u001ECAD#other\u001DDoolaarota Kanaadaa\u001ECRC#one\u001DKoloonii Kostaa Rikaa\u001ECRC#other\u001DKoloonota Kostaa Rikaa\u001EUSD#one\u001DDoolaara Ameerikaa\u001EUSD#other\u001DDoolarota Ameerikaa\u001F\u001F"
+    "root\u001F1oDoolaara Beermudaa\u001EDoolaarota Beermudaa\u001EDoolaara Beliizee\u001EDoolaarota Beliizee\u001EDoolaara Kanaadaa\u001EDoolaarota Kanaadaa\u001EKoloonii Kostaa Rikaa\u001EKoloonota Kostaa Rikaa\u001EDoolaara Ameerikaa\u001EDoolarota Ameerikaa\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_OM_ET: String =
-    "om\u001F\u001F\u001F"
+    "om\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_OR: String =
-    "root\u001FAED#one\u001DUAE ଦିରହାମ୍\u001EAED#other\u001DUAE ଦିରହାମ୍\u001ELSL#one\u001Dଲେସୋଥୋ ଲୋଟି\u001ELSL#other\u001Dଲେସୋଥୋ ଲୋଟିସ୍\u001ESBD#one\u001Dସୋଲୋମୋନ୍ ଦ୍ଵୀପପୁଞ୍ଜ ଡଲାର୍\u001ESBD#other\u001Dସୋଲୋମୋନ ଦ୍ଵୀପପୁଞ୍ଜ ଡଲାର୍\u001ESDG#one\u001Dସୁଦାନୀଜ ପାଉଣ୍ଡ୍\u001ESDG#other\u001Dସୁଦାନୀୟ ପାଉଣ୍ଡ୍\u001ESZL#one\u001Dସ୍ଵାଜି ଲିଲାଞ୍ଜେନି\u001ESZL#other\u001Dସ୍ଵାଜି ଇମାଲଞ୍ଜେନି\u001EXCG#one\u001Dକ‍୍ୟାରବିଅନ୍‌ ଗିଲ୍ଡର୍‌\u001EXCG#other\u001Dକ‍୍ୟାରବିଅନ୍‌ ଗିଲ୍ଡର୍‌\u001EXOF#one\u001Dପଶ୍ଚିମ ଆଫ୍ରିକୀୟ CFA ଫ୍ରାଙ୍କ୍\u001EXOF#other\u001Dପଶ୍ଚିମ ଆଫ୍ରିକିୟ CFA ଫ୍ରାଙ୍କ୍\u001EXXX#one\u001D(ମୁଦ୍ରାର ଅଜଣା ଏକକ)\u001EXXX#other\u001D(ଅଜଣା ମୁଦ୍ରା)\u001EZWG#one\u001Dଜିମ୍ବାୱିଅନ୍‌ ଗୋଲ୍ଡ୍‌\u001EZWG#other\u001Dଜିମ୍ବାୱିଅନ୍‌ ଗୋଲ୍ଡ୍‌\u001F\u001Fn\u001D0123456789\u001D.\u001D,\u001D-\u001D1\u001D#,##,##0.###"
+    "root\u001F1pUAE ଦିରହାମ୍\u001EUAE ଦିରହାମ୍\u001Eଲେସୋଥୋ ଲୋଟି\u001Eଲେସୋଥୋ ଲୋଟିସ୍\u001Eସୋଲୋମୋନ୍ ଦ୍ଵୀପପୁଞ୍ଜ ଡଲାର୍\u001Eସୋଲୋମୋନ ଦ୍ଵୀପପୁଞ୍ଜ ଡଲାର୍\u001Eସୁଦାନୀଜ ପାଉଣ୍ଡ୍\u001Eସୁଦାନୀୟ ପାଉଣ୍ଡ୍\u001Eସ୍ଵାଜି ଲିଲାଞ୍ଜେନି\u001Eସ୍ଵାଜି ଇମାଲଞ୍ଜେନି\u001Eକ‍୍ୟାରବିଅନ୍‌ ଗିଲ୍ଡର୍‌\u001Eକ‍୍ୟାରବିଅନ୍‌ ଗିଲ୍ଡର୍‌\u001Eପଶ୍ଚିମ ଆଫ୍ରିକୀୟ CFA ଫ୍ରାଙ୍କ୍\u001Eପଶ୍ଚିମ ଆଫ୍ରିକିୟ CFA ଫ୍ରାଙ୍କ୍\u001E(ମୁଦ୍ରାର ଅଜଣା ଏକକ)\u001E(ଅଜଣା ମୁଦ୍ରା)\u001Eଜିମ୍ବାୱିଅନ୍‌ ଗୋଲ୍ଡ୍‌\u001Eଜିମ୍ବାୱିଅନ୍‌ ଗୋଲ୍ଡ୍‌\u001F02\u001F010123456789\u001D.\u001D,\u001D-\u001D1\u001D#,##,##0.###"
 
 internal val CURRENCY_PLURAL_NAMES_OR_IN: String =
-    "or\u001F\u001F\u001F"
+    "or\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_OS: String =
-    "root\u001FBRL#one\u001Dбразилиаг реал\u001EBRL#other\u001Dбразилиаг реалы\u001EEUR#one\u001Dевро\u001EEUR#other\u001Dевройы\u001EGBP#one\u001Dбритайнаг фунт\u001EGBP#other\u001Dбритайнаг фунты\u001EGEL#one\u001Dлар\u001EGEL#other\u001Dлары\u001ERUB#one\u001Dсом\u001ERUB#other\u001Dсомы\u001EUSD#one\u001DАИШ-ы доллар\u001EUSD#other\u001DАИШ-ы доллары\u001EXXX#one\u001Dнӕзонгӕ валютӕ\u001EXXX#other\u001Dнӕзонгӕ валютӕйы\u001F\u001Fn\u001D0123456789\u001D,\u001D \u001D-\u001D1\u001D#,##0.###"
+    "root\u001F1qбразилиаг реал\u001Eбразилиаг реалы\u001Eевро\u001Eевройы\u001Eбритайнаг фунт\u001Eбритайнаг фунты\u001Eлар\u001Eлары\u001Eсом\u001Eсомы\u001EАИШ-ы доллар\u001EАИШ-ы доллары\u001Eнӕзонгӕ валютӕ\u001Eнӕзонгӕ валютӕйы\u001F02\u001F010123456789\u001D,\u001D \u001D-\u001D1\u001D#,##0.###"
 
 internal val CURRENCY_PLURAL_NAMES_OSA_US: String =
-    "osa\u001F\u001F\u001F"
+    "osa\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_OS_GE: String =
-    "os\u001F\u001F\u001F"
+    "os\u001F00\u001F02\u001F02"

@@ -19,22 +19,22 @@
 package dev.carcara.kotlinx.locale.timezone.cldr.cities.internal.data
 
 internal val TIME_ZONE_CITIES_WAE: String =
-    "root\u001FAfrica/Accra\u001DAkra\u001EAfrica/Algiers\u001DAlgier\u001EAfrica/Cairo\u001DKairo\u001EAfrica/Djibouti\u001DDšibuti\u001EAfrica/Khartoum\u001DKartum\u001EAfrica/Mogadishu\u001DMogadišu\u001EAfrica/Ouagadougou\u001DWagadugu\u001EAfrica/Tripoli\u001DTripolis\u001EAmerica/Cayman\u001DKaimaninsla\u001EAmerica/Cordoba\u001DKordoba\u001EAmerica/Havana\u001DHawanna\u001EAmerica/Jamaica\u001DJamaika\u001EAmerica/Montserrat\u001DMonserat\u001EAsia/Baghdad\u001DBagdad\u001EAsia/Damascus\u001DDamaskus\u001EAsia/Hong_Kong\u001DHongkong\u001EAsia/Singapore\u001DSingapur\u001EAsia/Tokyo\u001DTokio\u001EAtlantic/Reykjavik\u001DRikjawik\u001EAustralia/Sydney\u001DSidnei\u001EEtc/Unknown\u001DUnbekannti Stadt\u001EEurope/Amsterdam\u001DAmšterdam\u001EEurope/Belgrade\u001DBelgrad\u001EEurope/Brussels\u001DBrüssel\u001EEurope/Bucharest\u001DBukarešt\u001EEurope/Budapest\u001DBudapešt\u001EEurope/Copenhagen\u001DKopehage\u001EEurope/Istanbul\u001DKonštantinopel\u001EEurope/Kaliningrad\u001DKönigsbärg\u001EEurope/Ljubljana\u001DLaibač\u001EEurope/Prague\u001DPrag\u001EEurope/Rome\u001DRom\u001EEurope/Tallinn\u001DReval\u001EEurope/Tirane\u001DTiran\u001EEurope/Vatican\u001DVatikan\u001EEurope/Vienna\u001DWien\u001EEurope/Vilnius\u001DWilna\u001EEurope/Volgograd\u001DWolgograd\u001EEurope/Warsaw\u001DWaršau\u001EEurope/Zurich\u001DZürič"
+    "root\u001F1rAkra\u001EAlgier\u001EKairo\u001EDšibuti\u001EKartum\u001EMogadišu\u001EWagadugu\u001ETripolis\u001EKaimaninsla\u001EKordoba\u001EHawanna\u001EJamaika\u001EMonserat\u001EBagdad\u001EDamaskus\u001EHongkong\u001ESingapur\u001ETokio\u001ERikjawik\u001ESidnei\u001EUnbekannti Stadt\u001EAmšterdam\u001EBelgrad\u001EBrüssel\u001EBukarešt\u001EBudapešt\u001EKopehage\u001EKonštantinopel\u001EKönigsbärg\u001ELaibač\u001EPrag\u001ERom\u001EReval\u001ETiran\u001EVatikan\u001EWien\u001EWilna\u001EWolgograd\u001EWaršau\u001EZürič"
 
 internal val TIME_ZONE_CITIES_WAE_CH: String =
-    "wae\u001F"
+    "wae\u001F01"
 
 internal val TIME_ZONE_CITIES_WAL_ET: String =
-    "wal\u001F"
+    "wal\u001F01"
 
 internal val TIME_ZONE_CITIES_WA_BE: String =
-    "wa\u001F"
+    "wa\u001F01"
 
 internal val TIME_ZONE_CITIES_WBP_AU: String =
-    "wbp\u001F"
+    "wbp\u001F01"
 
 internal val TIME_ZONE_CITIES_WO: String =
-    "root\u001FEtc/Unknown\u001DDëkk buñ xamul"
+    "root\u001F0CDëkk buñ xamul"
 
 internal val TIME_ZONE_CITIES_WO_SN: String =
-    "wo\u001F"
+    "wo\u001F01"
