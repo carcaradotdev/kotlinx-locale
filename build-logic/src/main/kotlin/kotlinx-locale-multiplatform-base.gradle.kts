@@ -43,6 +43,25 @@ plugins {
 
 val libs = the<VersionCatalogsExtension>().named("libs")
 
+// Narrows the build to the four platforms a release ships: JVM, Android, iOS
+// and JS. Off by default, so a developer and CI still see all twenty-five
+// targets; the release workflow turns it on with
+// ORG_GRADLE_PROJECT_slimTargets=true.
+//
+// Maven Central meters file count per month, and a target costs the same in
+// files whoever uses it. Twenty-five targets across forty-two multiplatform
+// modules is twenty-six publications each, and each publication carries an
+// artifact, sources, javadoc, a POM and module metadata, every one of them with
+// a signature and checksums beside it. The four platforms here are a quarter of
+// that.
+//
+// This has to narrow the targets rather than skip the publishing tasks. The
+// root module metadata of a multiplatform publication lists every target the
+// build configures, so a target left declared but never uploaded points a
+// consumer at coordinates that do not exist, which fails later and worse than
+// not offering the platform at all.
+val slimTargets = providers.gradleProperty("slimTargets").orNull.toBoolean()
+
 kotlin {
     explicitApi()
 
@@ -73,50 +92,61 @@ kotlin {
         }
     }
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        nodejs {
-            testTask {
-                useMocha {
-                    timeout = "120s"
+    // The three iOS targets are the whole of what a release means by "iOS".
+    // iosX64 is the Intel simulator and tier 3 rather than tier 1, but leaving
+    // it out would break anyone still developing on an Intel Mac for the sake
+    // of one klib per module, so it sits with the other two.
+    iosSimulatorArm64()
+    iosArm64()
+    iosX64()
+
+    // Everything a release currently leaves out. Still built and tested on
+    // every push; see the note on slimTargets above for why publishing them is
+    // a separate question from supporting them.
+    //
+    // Native targets follow the tiers of <https://kotlinlang.org/docs/native-target-support.html>,
+    // matching the targets published by kotlinx-datetime.
+    if (!slimTargets) {
+        @OptIn(ExperimentalWasmDsl::class)
+        wasmJs {
+            nodejs {
+                testTask {
+                    useMocha {
+                        timeout = "120s"
+                    }
                 }
             }
         }
-    }
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmWasi {
-        nodejs()
-    }
+        @OptIn(ExperimentalWasmDsl::class)
+        wasmWasi {
+            nodejs()
+        }
 
-    // Native targets follow the tiers of <https://kotlinlang.org/docs/native-target-support.html>,
-    // matching the targets published by kotlinx-datetime.
-    // Tier 1
-    macosArm64()
-    iosSimulatorArm64()
-    iosArm64()
-    // Tier 2
-    linuxX64()
-    linuxArm64()
-    watchosSimulatorArm64()
-    watchosArm32()
-    watchosArm64()
-    tvosSimulatorArm64()
-    tvosArm64()
-    // Tier 3
-    androidNativeArm32()
-    androidNativeArm64()
-    androidNativeX86()
-    androidNativeX64()
-    iosX64()
-    mingwX64()
-    watchosDeviceArm64()
-    // Deprecated x64 Apple targets, still published by kotlinx-datetime (KT-78660)
-    @Suppress("DEPRECATION", "DEPRECATION_ERROR")
-    run {
-        macosX64()
-        watchosX64()
-        tvosX64()
+        // Tier 1
+        macosArm64()
+        // Tier 2
+        linuxX64()
+        linuxArm64()
+        watchosSimulatorArm64()
+        watchosArm32()
+        watchosArm64()
+        tvosSimulatorArm64()
+        tvosArm64()
+        // Tier 3
+        androidNativeArm32()
+        androidNativeArm64()
+        androidNativeX86()
+        androidNativeX64()
+        mingwX64()
+        watchosDeviceArm64()
+        // Deprecated x64 Apple targets, still published by kotlinx-datetime (KT-78660)
+        @Suppress("DEPRECATION", "DEPRECATION_ERROR")
+        run {
+            macosX64()
+            watchosX64()
+            tvosX64()
+        }
     }
 
     // Materialise the default hierarchy now, so the Apple source sets the two
@@ -134,18 +164,25 @@ kotlin {
     // Both sets are children of appleMain rather than replacements for it: the
     // shared Apple code stays in one place, and only the handful of declarations
     // that mention a varying width are written twice.
-    val appleIlp32Main by sourceSets.creating { dependsOn(sourceSets.getByName("appleMain")) }
-    val appleLp64Main by sourceSets.creating { dependsOn(sourceSets.getByName("appleMain")) }
-    for (name in listOf("watchosArm32Main", "watchosArm64Main")) {
-        sourceSets.getByName(name).dependsOn(appleIlp32Main)
+    // Looked up rather than named, because a narrowed build has no watch target
+    // and so no member of the 32-bit set at all. A source set is only created
+    // when something is left to hang off it; one that belongs to no compilation
+    // is reported by Kotlin and reads its directory to nobody.
+    val appleIlp32 = listOf("watchosArm32Main", "watchosArm64Main")
+        .mapNotNull { sourceSets.findByName(it) }
+    if (appleIlp32.isNotEmpty()) {
+        val appleIlp32Main by sourceSets.creating { dependsOn(sourceSets.getByName("appleMain")) }
+        appleIlp32.forEach { it.dependsOn(appleIlp32Main) }
     }
-    for (name in listOf(
+    val appleLp64 = listOf(
         "macosArm64Main", "macosX64Main",
         "iosArm64Main", "iosSimulatorArm64Main", "iosX64Main",
         "tvosArm64Main", "tvosSimulatorArm64Main", "tvosX64Main",
         "watchosSimulatorArm64Main", "watchosX64Main", "watchosDeviceArm64Main",
-    )) {
-        sourceSets.getByName(name).dependsOn(appleLp64Main)
+    ).mapNotNull { sourceSets.findByName(it) }
+    if (appleLp64.isNotEmpty()) {
+        val appleLp64Main by sourceSets.creating { dependsOn(sourceSets.getByName("appleMain")) }
+        appleLp64.forEach { it.dependsOn(appleLp64Main) }
     }
 
     // Declared here rather than in forty build files. The TestBalloon Gradle
