@@ -564,7 +564,11 @@ public fun generateSources(
             // told the same thing the runtime decoder is told, from one place.
             shape = PayloadShape(section?.sparseFields ?: 0),
             codec = codecs(spec.section),
-            packedRoots = packedRoots(spec.section),
+            // Packing splits a table across utf8Main and utf16Main, which only
+            // the shipped layout has. Anything generating into its own package
+            // is one source set in somebody else's project: nowhere to put a
+            // second form, and no `actual` to answer an `expect`.
+            packedRoots = if (packages === RegistryPackages.SHIPPED) packedRoots(spec.section) else null,
         ).emit(payloads)
     }
 
