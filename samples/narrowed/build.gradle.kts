@@ -48,9 +48,19 @@ kotlinxLocale {
 
     packageName = "com.example.locale"
 
+    // The catalog for these three locales, into com.example.locale.catalog.
+    // Three enums rather than the 322 kotlinx-locale-types carries, which is why
+    // that artifact is absent from the dependency block above.
+    catalog = true
+
     country { names = true }
     currency { names = true; formats = true; pluralNames = true }
     datetime { patterns = true }
+
+    // Deliberately not narrowed: no country { entries(...) } and no
+    // currency { entries(...) }. This build resolves codes it did not choose,
+    // which the test below checks, and an entry set narrowed to what the UI
+    // displays would answer null for them. See samples/narrowed/README.md.
 }
 
 tasks.test {

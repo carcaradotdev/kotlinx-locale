@@ -15,6 +15,8 @@
  */
 
 import com.example.locale.GeneratedCountryNames
+import com.example.locale.catalog.JA
+import com.example.locale.catalog.PT
 import com.example.locale.displayName
 import com.example.locale.format
 import com.example.locale.formatPluralName
@@ -28,6 +30,7 @@ import dev.carcara.kotlinx.locale.currency.Currency
 import dev.carcara.kotlinx.locale.currency.CurrencyAmount
 import dev.carcara.kotlinx.locale.currency.forCode
 import dev.carcara.kotlinx.locale.datetime.FormatStyle
+import dev.carcara.kotlinx.locale.toLocale
 import kotlinx.datetime.LocalDate
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -73,13 +76,29 @@ class NarrowedDataTest {
     }
 
     @Test
-    fun `the codes and lookups are unaffected by narrowing`() {
-        // These come from -core and -types, which the plugin does not touch, so
-        // an arbitrary code from a payment API still resolves.
+    fun `the codes and lookups are unaffected by narrowing the locales`() {
+        // Country and Currency come from the shipped -types artifacts here,
+        // because this build narrowed its locales and not its entry sets. An
+        // arbitrary code from a payment API still resolves. Adding
+        // country { entries(...) } would be the trade that changes this.
         assertEquals(Country.BR, Country.forAlpha2("br"))
         assertEquals("BR", Country.BR.alpha2)
         assertEquals("BRA", Country.BR.alpha3)
         assertEquals(Currency.JPY, Currency.forCode("jpy"))
+    }
+
+    @Test
+    fun `the catalog names the locales this build generated`() {
+        // Generated into com.example.locale.catalog rather than taken from
+        // kotlinx-locale-types, which is not on the classpath. JA exists because
+        // this build declared ja; a language it did not declare would not
+        // compile here at all.
+        assertEquals("pt-BR", PT.BR.tag)
+        assertEquals(ptBr, PT.BR.toLocale())
+        assertEquals(ja, JA.toLocale())
+        // PT itself is the bare language, and pt is here because pt-BR inherits
+        // from it. Its own entries are the pt-* locales this build kept.
+        assertEquals("pt", PT.tag)
     }
 
     @Test

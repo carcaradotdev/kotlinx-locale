@@ -389,4 +389,169 @@ val GenerateLocaleSourcesFunctionalTest by matrixSuite(matrixConfig { testConfig
             assertContains(failure.output, "kotlinxLocale generates nothing")
         }
     }
+
+    test("generates the catalog for the declared locales and nothing else") {
+        withProject {
+            buildFile(locales = """locales("pt-BR", "en")""", features = "catalog = true")
+            run("generateLocaleSources")
+
+            // The catalog's own package, under the consumer's, because nothing in
+            // the library declares an extension on a catalog enum and so nothing
+            // pins where it lives.
+            val portuguese = generated("com/example/locale/catalog/PT.kt")
+            assertTrue(portuguese.isFile, "the language of a declared locale is missing")
+            val text = portuguese.readText()
+            assertContains(text, "package com.example.locale.catalog")
+            assertContains(text, "public enum class PT(override val tag: String) : LocaleRef")
+            assertContains(text, """BR("pt-BR")""")
+
+            // narrowTo keeps the ancestors a sparse record resolves through, so
+            // `en` is here as itself rather than as somebody's parent.
+            assertTrue(generated("com/example/locale/catalog/EN.kt").isFile, "the other declared locale is missing")
+            assertFalse(
+                generated("com/example/locale/catalog/JA.kt").isFile,
+                "a language nothing declared can be named, and would answer in the fallback",
+            )
+        }
+    }
+
+    test("narrows the Country enum to the entries that were named") {
+        withProject {
+            buildFile(features = """country { entries("BR", "US"); names = true }""")
+            run("generateLocaleSources")
+
+            // The library's own package, not the consumer's: kotlinx-locale-country-core
+            // declares Country.alpha2 and Country.Companion.forAlpha2 on this
+            // exact name, and an enum anywhere else would not be the one they
+            // extend.
+            val country = generated("dev/carcara/kotlinx/locale/country/Country.kt").readText()
+            assertContains(country, "package dev.carcara.kotlinx.locale.country")
+            assertContains(country, """BR("BRA", 76)""")
+            assertContains(country, """US("USA", 840)""")
+            assertFalse("""DE("DEU"""" in country, "a country nothing asked for survived")
+            // The rule the whole library holds to, and the one a generated type
+            // is most likely to drop.
+            assertContains(country, "public companion object")
+
+            // The names go with the entry set. A territory name for a country the
+            // enum no longer has is a row no call site can reach.
+            val names = generated("com/example/locale/internal/data").listFiles()
+                .orEmpty()
+                .filter { it.name.startsWith("CountryNames") }
+                .joinToString("\n") { it.readText() }
+            assertTrue(names.isNotEmpty(), "the name table is missing")
+            assertContains(names, "Brasil")
+            assertFalse("Alemanha" in names, "the name of a dropped country survived")
+        }
+    }
+
+    test("narrowing the currencies takes the country-to-currency map with them") {
+        withProject {
+            buildFile(features = """currency { entries("BRL", "USD") }""")
+            run("generateLocaleSources")
+
+            val currency = generated("dev/carcara/kotlinx/locale/currency/Currency.kt").readText()
+            assertContains(currency, "BRL(986,")
+            assertFalse("JPY(392," in currency, "a currency nothing asked for survived")
+
+            // The tender windows are read by Currency ordinal, so the row count
+            // has to follow the entry count exactly. Two entries, two rows. A
+            // table that kept all three hundred would answer `isActive` from
+            // whatever currency used to sit at ordinal 0.
+            val tender = generated("dev/carcara/kotlinx/locale/currency/internal/CurrencyTender.kt")
+                .readLines()
+                .last { it.trimStart().startsWith("\"") }
+                .trim()
+                .removeSurrounding("\"")
+            assertEquals(2, tender.split(';').size, "the tender table and the enum disagree about how many entries there are")
+
+            // Ships in the same artifact the exclusion removes, so generating the
+            // enum has to generate this too or Country.currency reads a table
+            // nothing declares.
+            val map = generated("dev/carcara/kotlinx/locale/currency/internal/CountryCurrencies.kt").readText()
+            assertContains(map, "BR")
+            assertContains(map, "BRL")
+            assertFalse("JPY" in map, "a dropped currency survived in the country map")
+        }
+    }
+
+    test("excludes the published artifact of every type it generates, and only those") {
+        withProject {
+            // The exclusion is what makes the generated enum resolvable at all:
+            // the -core module carries the shipped one as an api dependency, so
+            // without this a build gets two Country classes on one classpath and
+            // whichever the compiler saw first.
+            File(projectDir, "build.gradle.kts").writeText(
+                """
+                plugins {
+                    id("dev.carcara.kotlinx-locale")
+                }
+
+                val probe by configurations.creating
+
+                dependencies {
+                    kotlinxLocaleCldrData(files("${BUNDLE.replace("\\", "\\\\")}"))
+                }
+
+                kotlinxLocale {
+                    locales("pt-BR", "en")
+                    fallback("en")
+                    packageName = "com.example.locale"
+                    catalog = true
+                    country { entries("BR", "US") }
+                }
+
+                tasks.register("printExcludes") {
+                    val rules = provider {
+                        probe.excludeRules.map { it.group + ":" + it.module }.sorted()
+                    }
+                    doLast { println("excludes=" + rules.get()) }
+                }
+                """.trimIndent(),
+            )
+            // Twice with the configuration cache, because the exclusion is
+            // applied from afterEvaluate and a cache hit skips configuration
+            // altogether. A rule that only existed on the storing run would let
+            // the shipped enum back in on every later build.
+            run("printExcludes", "--configuration-cache")
+            val output = run("printExcludes", "--configuration-cache").output
+            assertContains(output, "Configuration cache entry reused")
+
+            assertContains(output, "dev.carcara:kotlinx-locale-country-types")
+            // The catalog replaces nothing. kotlinx-locale-types is a leaf, so a
+            // build that generates its own simply leaves the dependency out, and
+            // excluding it would break a build that wanted both.
+            assertFalse(
+                "kotlinx-locale-types" in output.substringAfter("excludes=").substringBefore("\n")
+                    .replace("kotlinx-locale-country-types", ""),
+                "the catalog is not a replacement and must not be excluded",
+            )
+            // Not asked for, so the shipped Currency stays.
+            assertFalse(
+                "kotlinx-locale-currency-types" in output,
+                "a type nothing narrowed had its artifact excluded",
+            )
+        }
+    }
+
+    test("a build that only asks for a type still generates") {
+        withProject {
+            // The "generates nothing" check counts types as well as features, so
+            // a catalog-only build is a configuration rather than a failure. This
+            // is the case the whole thing was asked for: a project that wants the
+            // locale list and none of the data.
+            buildFile(features = "catalog = true")
+            assertEquals(TaskOutcome.SUCCESS, run("generateLocaleSources").task(":generateLocaleSources")?.outcome)
+            assertTrue(generated("com/example/locale/catalog/EN.kt").isFile)
+            assertFalse(generated("com/example/locale/internal/data").isDirectory, "no data was asked for")
+        }
+    }
+
+    test("refuses an entry the bundle has no data for") {
+        withProject {
+            buildFile(features = """country { entries("BR", "ZZ") }""")
+            val failure = runner("generateLocaleSources").buildAndFail()
+            assertContains(failure.output, "no country data for ZZ")
+        }
+    }
 }

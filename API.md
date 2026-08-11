@@ -272,6 +272,10 @@ typo there does not throw, it quietly generates data for one locale fewer than
 intended. Nothing requires it in application code, and `Locale.forLanguageTag`
 stays the zero-cost path for tags built at runtime.
 
+The shipped artifact covers all 1121 CLDR locales, which is 322 enums and 1.3 MB
+of Kotlin. A build that ships eight locales can generate the eight it uses
+instead with `catalog = true`; see [type flags](#type-flags).
+
 ## Dates and times
 
 From `kotlinx-locale-datetime-cldr-full`, or with `datetime { patterns = true }`.
@@ -1925,6 +1929,7 @@ kotlinxLocale {
 | `fallback(LocaleRef)` or `fallback(String)` | The locale that answers for anything not generated. Required, and required to be one of `locales`. |
 | `packageName` | The package the generated sources go into. |
 | `objectPrefix` | The prefix on the generated objects, so `Generated` yields `GeneratedCountryNames`. Configurable because a project may want a narrow default set and a full one behind a lazy load. |
+| `catalog` | Generates the locale catalog for the declared locales. Off by default. See [type flags](#type-flags). |
 
 Asking for nothing at all fails the build rather than generating an empty source
 set. Prefer the `LocaleRef` overloads: a typo in a tag does not throw, it quietly
@@ -1982,10 +1987,53 @@ locale, so naming three locales would narrow nothing; take
 `kotlinx-locale-phone-metadata-full` directly. See
 [Phone numbers](#phone-numbers).
 
-Narrowing only ever touches locale data. `Country.forAlpha2("br")` and
+A feature only ever narrows locale data. `Country.forAlpha2("br")` and
 `Currency.forCode("jpy")` keep working whatever was generated, because an app
 that displays three currencies can still be handed an arbitrary code by a
-payment API.
+payment API. The type flags below are the ones that change that.
+
+### Type flags
+
+The entry sets are a second axis. A feature decides which languages a build can
+answer in; a type decides which locales, countries and currencies it can name at
+all. They are independent: an app that ships one language may still list every
+country, and an app that ships forty may only ever name three currencies.
+
+| Flag | What it generates | What it replaces |
+| --- | --- | --- |
+| `catalog = true` | The [locale catalog](#the-locale-catalog) for the declared locales, into `<packageName>.catalog`. Three locales means three enums rather than the 322 the shipped artifact carries. | nothing; leave `kotlinx-locale-types` out of the dependency block |
+| `country { entries(...) }` | The [`Country`](#country) enum with these entries. Narrows `country { names }` to match, since a territory name for a country the enum no longer has is a row nothing can look up. | `kotlinx-locale-country-types` |
+| `currency { entries(...) }` | The [`Currency`](#currency) enum with these entries, and the [country-to-currency map](#countrycurrency-and-countrycurrencies) narrowed with them. | `kotlinx-locale-currency-types` |
+
+```kotlin
+kotlinxLocale {
+    locales(PT.BR, EN.US)
+    fallback(EN.US)
+    catalog = true
+
+    country { entries(Country.BR, Country.US); names = true }
+    currency { entries(Currency.BRL, Currency.USD); names = true }
+}
+```
+
+Both `entries` overloads take codes as strings too, for a set built at
+configuration time. The typed form is worth preferring for the same reason
+`locales(PT.BR)` is: a mistyped code narrows the enum by one entry in silence.
+
+`Country` and `Currency` keep the library's own package, because that is where
+`kotlinx-locale-country-core` and `kotlinx-locale-currency-core` declare
+`alpha2`, `forAlpha2` and the rest. Two enums of the same name on one classpath
+is a duplicate class, so the plugin excludes the shipped artifact from every
+configuration in the project. Nothing to write in the dependency block: the
+exclusion follows from `entries` being there at all. The catalog is the
+exception. Nothing in the library extends a catalog enum, so it goes under
+`packageName` and replaces nothing.
+
+Know what you are giving up before narrowing an entry set. An unlisted locale
+answers in the fallback, but there is no fallback for an unlisted country:
+`Country.forAlpha2OrNull("DE")` returns null, and a build that parses ISO codes
+out of anything it does not control wants the whole enum. The catalog carries no
+such risk, since it only ever names locales the build already declared.
 
 ## Writing your own extensions
 

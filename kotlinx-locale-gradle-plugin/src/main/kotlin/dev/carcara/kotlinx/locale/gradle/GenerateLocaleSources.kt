@@ -85,6 +85,18 @@ abstract class GenerateLocaleSources : DefaultTask() {
     @get:Input
     abstract val features: SetProperty<LocaleFeature>
 
+    /** Which public types to generate rather than take from a published artifact. */
+    @get:Input
+    abstract val types: SetProperty<LocaleType>
+
+    /** The `Country` entries, when [types] carries [LocaleType.COUNTRY_ENTRIES]. */
+    @get:Input
+    abstract val countryCodes: SetProperty<String>
+
+    /** The `Currency` entries, when [types] carries [LocaleType.CURRENCY_ENTRIES]. */
+    @get:Input
+    abstract val currencyCodes: SetProperty<String>
+
     @get:OutputDirectory
     abstract val outputDirectory: DirectoryProperty
 
@@ -103,14 +115,23 @@ abstract class GenerateLocaleSources : DefaultTask() {
         files.delete { spec -> spec.delete(root) }
         root.mkdirs()
 
-        val bundle = readBundle().narrowTo(
-            // Sorted so the output does not depend on the set's iteration order,
-            // which is what makes the task's result reproducible.
-            tags = locales.get().sorted().toSet(),
-            fallbackTag = fallbackLocale.get(),
-        )
+        val bundle = readBundle()
+            .narrowTo(
+                // Sorted so the output does not depend on the set's iteration order,
+                // which is what makes the task's result reproducible.
+                tags = locales.get().sorted().toSet(),
+                fallbackTag = fallbackLocale.get(),
+            )
+            // The second axis, and independent of the first: a null set leaves
+            // that entity whole, which is what a build that narrowed only its
+            // locales gets.
+            .narrowEntitiesTo(
+                countries = countryCodes.get().takeIf { it.isNotEmpty() }?.sorted()?.toSet(),
+                currencies = currencyCodes.get().takeIf { it.isNotEmpty() }?.sorted()?.toSet(),
+            )
 
         val requested = features.get()
+        val requestedTypes = types.get()
         val basePackage = packageName.get()
         val prefix = objectPrefix.get()
 
@@ -128,14 +149,26 @@ abstract class GenerateLocaleSources : DefaultTask() {
                 )
             }
         }
+        // The same root. A type's package is decided by the emitter rather than
+        // by where it is written: the catalog follows basePackage, and the two
+        // enums have to keep the library's own so the -core extensions resolve.
+        for (type in requestedTypes) {
+            type.tables.forEach { table -> builder.table(table, root) }
+        }
 
         generateSources(bundle = bundle, roots = builder.build(), packages = RegistryPackages.under(basePackage))
 
         logger.lifecycle(
             "[kotlinx-locale] generated ${bundle.localeTags.size} locales " +
                 "(fallback ${fallbackLocale.get()}) into $basePackage: " +
-                requested.joinToString { it.dslName },
+                (requested.map { it.dslName } + requestedTypes.map { it.dslName }).joinToString(),
         )
+        if (LocaleType.COUNTRY_ENTRIES in requestedTypes) {
+            logger.lifecycle("[kotlinx-locale] Country carries ${bundle.countries.size} entries")
+        }
+        if (LocaleType.CURRENCY_ENTRIES in requestedTypes) {
+            logger.lifecycle("[kotlinx-locale] Currency carries ${bundle.currencies.size} entries")
+        }
     }
 
     /**

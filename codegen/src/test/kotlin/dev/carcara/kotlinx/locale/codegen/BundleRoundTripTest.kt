@@ -21,6 +21,8 @@ import at.asitplus.testballoon.matrix.matrixSuite
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertFailsWith
+import dev.carcara.kotlinx.locale.test.assertFalse
 import dev.carcara.kotlinx.locale.test.assertTrue
 import java.io.File
 
@@ -109,5 +111,51 @@ val BundleRoundTripTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
         // Entity data is not locale data, so narrowing locales keeps all of it.
         assertEquals(bundle.countries.size, narrowed.countries.size)
         assertEquals(bundle.currencies.size, narrowed.currencies.size)
+    }
+
+    test("narrowingEntitiesKeepsTheEntriesAskedForAndTheRowsThatCanReachThem") {
+        val bundle = bundleFile(rootDir).bufferedReader().use(LocaleDataBundle::readFrom)
+        val narrowed = bundle.narrowEntitiesTo(countries = setOf("BR", "US"), currencies = setOf("BRL", "USD"))
+
+        assertEquals(listOf("BR", "US"), narrowed.countries.map(CountryInfo::alpha2))
+        assertEquals(listOf("BRL", "USD"), narrowed.currencies.map(CurrencyEntry::code))
+
+        // The other axis is untouched: this is a build that named two countries,
+        // not one that named two languages.
+        assertEquals(bundle.localeTags.size, narrowed.localeTags.size)
+        assertEquals(bundle.countryNames.keys, narrowed.countryNames.keys)
+
+        // The names go with the entry set, because a name for a country the enum
+        // no longer has is a row nothing can look up. This is the larger half of
+        // what narrowing the enum is for: the enum itself is 12 KB of source and
+        // the territory tables across every locale are hundreds.
+        val portuguese = narrowed.countryNames.getValue("pt")
+        assertTrue("Brasil" in portuguese, "the name of a country that was kept")
+        assertFalse("Alemanha" in portuguese, "the name of a country that was dropped")
+        assertTrue(
+            narrowed.countryNames.values.sumOf(String::length) < bundle.countryNames.values.sumOf(String::length) / 20,
+            "keeping two of 249 countries should drop almost every name",
+        )
+
+        // A row per country that has one of the kept currencies, and only those
+        // codes in it. A country whose codes were all dropped goes entirely,
+        // which is what makes Country.currency answer null rather than reach for
+        // an entry the enum does not have.
+        assertEquals("BRL", narrowed.countryCurrencies["BR"])
+        assertEquals(null, narrowed.countryCurrencies["JP"], "a country left with no kept currency")
+
+        // The field layout has to survive, or every lookup past the narrowed one
+        // reads the wrong field. currencyNames carries two.
+        for ((tag, record) in narrowed.currencyNames) {
+            assertEquals(3, record.split(FIELD_SEPARATOR).size, "$tag lost a field")
+        }
+    }
+
+    test("narrowingEntitiesRefusesACodeTheBundleDoesNotCarry") {
+        val bundle = bundleFile(rootDir).bufferedReader().use(LocaleDataBundle::readFrom)
+        val failure = assertFailsWith<IllegalArgumentException> {
+            bundle.narrowEntitiesTo(countries = setOf("BR", "ZZ"))
+        }
+        assertTrue("no country data for ZZ" in failure.message.orEmpty(), "got: ${failure.message}")
     }
 }

@@ -35,9 +35,14 @@ dependencies {
     compileOnly(libs.gradle.plugin.kotlin.multiplatform)
 
     // LocaleRef so the DSL can take a locale rather than a string, and the
-    // catalog so a consumer can write PT.BR in their own build script.
+    // catalog so a consumer can write PT.BR in their own build script. The two
+    // entity enums are here for the same reason: `country { entries(Country.BR) }`
+    // is checked by the compiler where a list of alpha-2 strings is not, and a
+    // typo in one of those narrows the enum by one entry in silence.
     api(project(":kotlinx-locale-core"))
     api(project(":kotlinx-locale-types"))
+    api(project(":kotlinx-locale-country-types"))
+    api(project(":kotlinx-locale-currency-types"))
 
     testImplementation(libs.kotlin.test)
     testImplementation(gradleTestKit())
