@@ -153,6 +153,37 @@ kotlin {
     // sets below hang off exist while this block is still configuring.
     applyDefaultHierarchyTemplate()
 
+    // How a target stores a string literal, which is what decides how the
+    // generated data is packed.
+    //
+    // Kotlin/Native stores every literal as UTF-16: two bytes a character,
+    // whatever the character. Everything else stores UTF-8 or the JVM's modified
+    // UTF-8, which charges one byte below U+0080 and three at U+0800 and above.
+    // The generated tables are compressed, and compressed bytes have to be
+    // written down as characters, so the two families want opposite packings:
+    // seven bits a character where characters are billed by value, fifteen where
+    // they are billed by the each. See docs/compression.md.
+    //
+    // Looked up rather than named, because a narrowed build may have no target
+    // on one side, and a source set that belongs to no compilation is an error.
+    val utf16Targets = listOf("nativeMain").mapNotNull { sourceSets.findByName(it) }
+    val utf8Targets = listOf("jvmMain", "androidMain", "jsMain", "wasmJsMain", "wasmWasiMain")
+        .mapNotNull { sourceSets.findByName(it) }
+    if (utf16Targets.isNotEmpty()) {
+        val utf16Main by sourceSets.creating { dependsOn(sourceSets.getByName("commonMain")) }
+        utf16Targets.forEach { it.dependsOn(utf16Main) }
+        val utf16Test by sourceSets.creating { dependsOn(sourceSets.getByName("commonTest")) }
+        sourceSets.findByName("nativeTest")?.dependsOn(utf16Test)
+    }
+    if (utf8Targets.isNotEmpty()) {
+        val utf8Main by sourceSets.creating { dependsOn(sourceSets.getByName("commonMain")) }
+        utf8Targets.forEach { it.dependsOn(utf8Main) }
+        val utf8Test by sourceSets.creating { dependsOn(sourceSets.getByName("commonTest")) }
+        listOf("jvmTest", "androidHostTest", "jsTest", "wasmJsTest", "wasmWasiTest")
+            .mapNotNull { sourceSets.findByName(it) }
+            .forEach { it.dependsOn(utf8Test) }
+    }
+
     // Apple's NSUInteger, and so every Foundation enum typed by it, is 32 bits
     // wide on two watch targets and 64 everywhere else. watchosArm32 is armv7k,
     // and watchosArm64 is arm64_32, a 64-bit instruction set with 32-bit

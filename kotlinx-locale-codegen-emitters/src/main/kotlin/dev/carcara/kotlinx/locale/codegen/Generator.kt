@@ -16,7 +16,10 @@
 
 package dev.carcara.kotlinx.locale.codegen
 
+import dev.carcara.kotlinx.locale.codegen.pipeline.ChainedCodec
+import dev.carcara.kotlinx.locale.codegen.pipeline.DeflateCodec
 import dev.carcara.kotlinx.locale.codegen.pipeline.KeyElisionCodec
+import dev.carcara.kotlinx.locale.codegen.pipeline.Packing
 import dev.carcara.kotlinx.locale.codegen.pipeline.PayloadCodec
 import dev.carcara.kotlinx.locale.codegen.pipeline.PayloadShape
 import java.io.File
@@ -502,6 +505,23 @@ private val PAYLOAD_TABLES = listOf(
 public fun defaultCodecFor(section: String): PayloadCodec =
     if (BundleSection.BY_NAME[section]?.isSparse == true) KeyElisionCodec() else PayloadCodec.Identity
 
+/**
+ * The two packed forms a sparse section is written in, or null for one shared form.
+ *
+ * Key elision first, then compression, because they are not alternatives: the
+ * keys sit between the values, so removing them lets DEFLATE match text across
+ * records it could not reach before. Measured, the two together beat either
+ * alone by a wider margin than elision manages on its own.
+ */
+public fun defaultPackedRootsFor(section: String): Map<String, PayloadCodec>? = if (BundleSection.BY_NAME[section]?.isSparse != true) {
+    null
+} else {
+    mapOf(
+        "utf8Main" to ChainedCodec(KeyElisionCodec(), DeflateCodec(Packing.ASCII7)),
+        "utf16Main" to ChainedCodec(KeyElisionCodec(), DeflateCodec(Packing.BMP15)),
+    )
+}
+
 public fun generateSources(
     bundle: LocaleDataBundle,
     roots: SourceRoots,
@@ -516,6 +536,11 @@ public fun generateSources(
      * until a build asks for something.
      */
     codecs: (String) -> PayloadCodec = ::defaultCodecFor,
+    /**
+     * Which packed forms each section is written in, by section name. Null for a
+     * section whose data is the same on every target.
+     */
+    packedRoots: (String) -> Map<String, PayloadCodec>? = ::defaultPackedRootsFor,
 ) {
     val cldr = bundle.cldrVersion
 
@@ -539,6 +564,11 @@ public fun generateSources(
             // told the same thing the runtime decoder is told, from one place.
             shape = PayloadShape(section?.sparseFields ?: 0),
             codec = codecs(spec.section),
+            // Packing splits a table across utf8Main and utf16Main, which only
+            // the shipped layout has. Anything generating into its own package
+            // is one source set in somebody else's project: nowhere to put a
+            // second form, and no `actual` to answer an `expect`.
+            packedRoots = if (packages === RegistryPackages.SHIPPED) packedRoots(spec.section) else null,
         ).emit(payloads)
     }
 

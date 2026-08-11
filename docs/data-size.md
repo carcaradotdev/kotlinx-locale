@@ -22,34 +22,34 @@ data, which is the half a codec changes.
 
 | module | tables | constants | UTF-8 | modified UTF-8 | UTF-16 |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| kotlinx-locale-language-cldr-full | 2 | 758 | 2,501.7 KB | 2,543.3 KB | 3,291.7 KB |
-| kotlinx-locale-timezone-cldr-full | 3 | 821 | 1,667.1 KB | 1,694.0 KB | 2,124.9 KB |
-| kotlinx-locale-currency-cldr-plurals | 2 | 614 | 1,097.8 KB | 1,111.5 KB | 1,721.5 KB |
-| kotlinx-locale-currency-cldr-full | 4 | 1092 | 1,040.4 KB | 1,055.5 KB | 1,437.6 KB |
-| kotlinx-locale-country-cldr-full | 2 | 697 | 838.9 KB | 852.5 KB | 1,129.2 KB |
+| kotlinx-locale-language-cldr-full | 2 | 1491 | 2,330.8 KB | 2,330.8 KB | 2,932.9 KB |
+| kotlinx-locale-currency-cldr-full | 4 | 1913 | 1,012.0 KB | 1,012.2 KB | 1,294.5 KB |
+| kotlinx-locale-country-cldr-full | 2 | 1376 | 918.3 KB | 918.3 KB | 1,148.4 KB |
 | kotlinx-locale-datetime-cldr-skeletons | 4 | 879 | 543.0 KB | 544.9 KB | 1,000.8 KB |
+| kotlinx-locale-timezone-cldr-full | 3 | 1449 | 774.8 KB | 775.0 KB | 966.2 KB |
+| kotlinx-locale-currency-cldr-plurals | 2 | 1216 | 701.7 KB | 701.7 KB | 882.7 KB |
 | kotlinx-locale-datetime-cldr-relative | 2 | 279 | 567.4 KB | 574.1 KB | 873.8 KB |
 | kotlinx-locale-datetime-cldr-durations | 2 | 184 | 529.0 KB | 533.1 KB | 838.0 KB |
-| kotlinx-locale-timezone-cldr-cities | 2 | 585 | 658.8 KB | 672.6 KB | 694.4 KB |
+| kotlinx-locale-timezone-cldr-cities | 2 | 1161 | 666.2 KB | 666.2 KB | 831.2 KB |
 | kotlinx-locale-datetime-cldr-intervals | 1 | 201 | 379.9 KB | 379.9 KB | 632.1 KB |
 | kotlinx-locale-personname-cldr-full | 2 | 140 | 266.4 KB | 266.4 KB | 532.4 KB |
 | kotlinx-locale-datetime-cldr-full | 3 | 497 | 271.7 KB | 275.6 KB | 428.8 KB |
 | kotlinx-locale-phone-metadata-full | 54 | 502 | 170.6 KB | 170.6 KB | 341.2 KB |
 | kotlinx-locale-number-cldr-full | 10 | 729 | 183.9 KB | 184.3 KB | 305.1 KB |
-| **total** | **93** | **7978** | **10,716.7 KB** | **10,858.3 KB** | **15,351.4 KB** |
+| **total** | **93** | **12017** | **9,315.8 KB** | **9,333.0 KB** | **13,008.1 KB** |
 
 ## By table
 
 | module | table | constants | UTF-8 | modified UTF-8 | UTF-16 |
 | --- | --- | ---: | ---: | ---: | ---: |
-| kotlinx-locale-language-cldr-full | LocaleDisplayNames | 757 | 2,501.7 KB | 2,543.3 KB | 3,291.7 KB |
-| kotlinx-locale-timezone-cldr-full | TimeZoneNames | 635 | 1,647.9 KB | 1,674.7 KB | 2,094.0 KB |
-| kotlinx-locale-currency-cldr-plurals | CurrencyPluralNames | 613 | 1,097.8 KB | 1,111.5 KB | 1,721.4 KB |
-| kotlinx-locale-currency-cldr-full | CurrencyNames | 832 | 943.0 KB | 957.9 KB | 1,281.8 KB |
-| kotlinx-locale-country-cldr-full | CountryNames | 696 | 838.9 KB | 852.5 KB | 1,129.2 KB |
+| kotlinx-locale-language-cldr-full | LocaleDisplayNames | 1490 | 2,330.8 KB | 2,330.8 KB | 2,932.9 KB |
+| kotlinx-locale-country-cldr-full | CountryNames | 1375 | 918.3 KB | 918.3 KB | 1,148.4 KB |
+| kotlinx-locale-currency-cldr-full | CurrencyNames | 1653 | 914.6 KB | 914.6 KB | 1,138.6 KB |
+| kotlinx-locale-timezone-cldr-full | TimeZoneNames | 1263 | 755.6 KB | 755.6 KB | 935.3 KB |
+| kotlinx-locale-currency-cldr-plurals | CurrencyPluralNames | 1215 | 701.6 KB | 701.6 KB | 882.7 KB |
 | kotlinx-locale-datetime-cldr-relative | RelativeTime | 278 | 567.4 KB | 574.0 KB | 873.8 KB |
 | kotlinx-locale-datetime-cldr-durations | DurationUnits | 183 | 529.0 KB | 533.1 KB | 838.0 KB |
-| kotlinx-locale-timezone-cldr-cities | TimeZoneCities | 584 | 658.8 KB | 672.6 KB | 694.3 KB |
+| kotlinx-locale-timezone-cldr-cities | TimeZoneCities | 1160 | 666.2 KB | 666.2 KB | 831.2 KB |
 | kotlinx-locale-datetime-cldr-intervals | IntervalFormats | 201 | 379.9 KB | 379.9 KB | 632.1 KB |
 | kotlinx-locale-datetime-cldr-skeletons | IcuSkeletonGoldenData | 306 | 302.9 KB | 302.9 KB | 580.4 KB |
 | kotlinx-locale-personname-cldr-full | PersonNames | 138 | 252.6 KB | 252.6 KB | 505.0 KB |
