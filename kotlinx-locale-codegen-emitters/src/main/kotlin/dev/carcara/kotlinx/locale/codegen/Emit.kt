@@ -307,13 +307,29 @@ public class KeyedPayloadEmitter(
                     },
                 )
             }
-            dir.resolve("${filePrefix}Registry.kt").writeText(
+            // A different file name from the common expect: two files of the
+            // same name in one compilation would generate one JVM facade class
+            // twice. Only one packing compiles per target, so both may share it.
+            dir.resolve("${filePrefix}RegistryPacked.kt").writeText(
                 buildString {
-                    append(header())
+                    append(registryHeader(report.encoded.sharedTables.isNotEmpty()))
                     append("\ninternal actual val ").append(registryProperty)
-                    append(": Map<String, String> = buildMap(").append(constByTag.size).append(") {\n")
+                    append(": Map<String, String> = buildMap(").append(constByTag.size + 1).append(") {\n")
                     for ((tag, const) in constByTag.entries.sortedBy { it.key }) {
                         append("    put(\"").append(kotlinEscape(tag)).append("\", ").append(const).append(")\n")
+                    }
+                    // The key universes and the bitmap pool the elision step
+                    // hoisted out. Not packed: they are read to find where a key
+                    // sits, which has to work before anything is inflated.
+                    if (report.encoded.sharedTables.isNotEmpty()) {
+                        append("    put(CODEC_TABLES_KEY, \"")
+                        append(
+                            kotlinEscape(
+                                packedCodec.id + FIELD_SEPARATOR +
+                                    report.encoded.sharedTables.joinToString(FIELD_SEPARATOR),
+                            ),
+                        )
+                        append("\")\n")
                     }
                     append("}\n")
                 },

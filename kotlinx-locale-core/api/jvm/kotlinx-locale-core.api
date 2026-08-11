@@ -71,6 +71,18 @@ public final class dev/carcara/kotlinx/locale/internal/GraphemeClusters {
 	public final fun install (Ljava/lang/String;)V
 }
 
+public final class dev/carcara/kotlinx/locale/internal/InflateKt {
+	public static final fun inflateRaw ([BI)[B
+}
+
+public final class dev/carcara/kotlinx/locale/internal/PackedPayloadsKt {
+	public static final fun decodePayload (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class dev/carcara/kotlinx/locale/internal/PackedPayloads_utf8Kt {
+	public static final fun unpackPayload (Ljava/lang/String;)[B
+}
+
 public final class dev/carcara/kotlinx/locale/internal/PayloadRecordsKt {
 	public static final field CODEC_TABLES_KEY Ljava/lang/String;
 	public static final field ENTRY_SEPARATOR C
