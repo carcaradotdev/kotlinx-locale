@@ -18,27 +18,7 @@ package dev.carcara.kotlinx.locale.internal
 
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 
-/**
- * DEFLATE decompression, RFC 1951, in common Kotlin.
- *
- * Common code, with no `expect`/`actual` anywhere in it: every target runs this,
- * Wasm included.
- *
- * Written rather than delegated because there is no inflate in the Kotlin common
- * standard library, and delegating would mean one decoder per platform:
- * `java.util.zip` on the JVM, a browser or bundled library on Kotlin/JS, zlib
- * through cinterop for each native family, and nothing suitable for either Wasm
- * target. Five decoders are five places to disagree with each other and with the
- * encoder. One cannot disagree with itself.
- *
- * Raw DEFLATE streams only, with no zlib or gzip wrapper, because the generator
- * writes them that way: the two header bytes and the four checksum bytes of a
- * zlib wrapper buy nothing when the data ships inside the binary that reads it.
- *
- * The generator compresses with the platform's own zlib, so this only ever has
- * to decode, and `InflateTest` checks it against that encoder over random input
- * rather than against a fixture.
- */
+/** The longest Huffman code RFC 1951 allows. */
 private const val MAX_BITS = 15
 
 /** Extra bits and base value for the 29 length codes, 257..285. */
@@ -140,12 +120,20 @@ private val FIXED_DISTANCES: Huffman by lazy {
 }
 
 /**
- * Inflates a raw DEFLATE stream.
+ * Inflates a raw DEFLATE stream, RFC 1951.
+ *
+ * Raw only: a zlib or gzip wrapper is not accepted, and a stream carrying one
+ * fails on its header rather than decoding it as a block.
+ *
+ * [input] may be longer than the stream. Decoding stops at the final block, so
+ * trailing bytes are ignored, which is what lets a caller pass a buffer whose
+ * last byte holds padding.
  *
  * [expectedSize] sizes the output buffer up front. It is a hint rather than a
- * contract: the generator knows the answer exactly, so the buffer is allocated
- * once and never grown in practice, but a wrong hint costs a copy rather than
- * correctness.
+ * contract: too small costs a copy, too large costs a trim, and neither changes
+ * the result.
+ *
+ * Throws [IllegalStateException] on a malformed stream.
  */
 @InternalKotlinxLocaleApi
 public fun inflateRaw(input: ByteArray, expectedSize: Int): ByteArray {
