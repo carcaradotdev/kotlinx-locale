@@ -19,43 +19,43 @@
 package dev.carcara.kotlinx.locale.currency.cldr.plurals.internal.data
 
 internal val CURRENCY_PLURAL_NAMES_ZA_CN: String =
-    "za\u001F\u001F\u001F"
+    "za\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZGH_MA: String =
-    "zgh\u001F\u001F\u001F"
+    "zgh\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH: String =
-    "root\u001FMOP#other\u001D澳门元\u001ENIO#other\u001D尼加拉瓜金科多巴\u001EXCG#other\u001D加勒比盾\u001EXXX#other\u001D（未知货币）\u001EZWG#other\u001D津巴布韦金元\u001Fu\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001F"
+    "root\u001F2i澳门元\u001E尼加拉瓜金科多巴\u001E加勒比盾\u001E（未知货币）\u001E津巴布韦金元\u001F01{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH_HANS: String =
-    "zh\u001F\u001F\u001F"
+    "zh\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH_HANS_CN: String =
-    "zh-Hans\u001F\u001F\u001F"
+    "zh-Hans\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH_HANS_HK: String =
-    "zh-Hans\u001FNIO#other\u001D尼加拉瓜科多巴\u001EXAG#other\u001D白银\u001Fu\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001F"
+    "zh-Hans\u001F2j尼加拉瓜科多巴\u001E白银\u001F01{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH_HANS_MO: String =
-    "zh-Hans\u001FANG#other\u001D荷兰安的列斯盾\u001ENIO#other\u001D尼加拉瓜科多巴\u001EXAG#other\u001D白银\u001Fu\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001F"
+    "zh-Hans\u001F2k荷兰安的列斯盾\u001E尼加拉瓜科多巴\u001E白银\u001F01{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001D{0} {1}\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH_HANT: String =
-    "root\u001FERN#other\u001D厄利垂亞納可法\u001EMDL#other\u001D摩爾多瓦列伊\u001ENIO#other\u001D尼加拉瓜科多巴\u001EXAF#other\u001D中非法郎\u001EXCG#other\u001D加勒比盾\u001EXOF#other\u001D西非法郎\u001EXPF#other\u001D太平洋法郎\u001EXXX#other\u001D（未知貨幣）\u001EZWG#other\u001D辛巴威金\u001F\u001F"
+    "root\u001F2l厄利垂亞納可法\u001E摩爾多瓦列伊\u001E尼加拉瓜科多巴\u001E中非法郎\u001E加勒比盾\u001E西非法郎\u001E太平洋法郎\u001E（未知貨幣）\u001E辛巴威金\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH_HANT_HK: String =
-    "zh-Hant\u001FKYD#other\u001D開曼群島美元\u001ELTL#other\u001D立陶宛里塔\u001EZWG#other\u001D津布巴韋金\u001F\u001F"
+    "zh-Hant\u001F2m開曼群島美元\u001E立陶宛里塔\u001E津布巴韋金\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH_HANT_MO: String =
-    "zh-Hant-HK\u001F\u001F\u001F"
+    "zh-Hant-HK\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH_HANT_MY: String =
-    "zh-Hant\u001F\u001F\u001F"
+    "zh-Hant\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZH_LATN_CN: String =
-    "zh-Latn\u001F\u001F\u001F"
+    "zh-Latn\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZU: String =
-    "root\u001FCUP#one\u001Di-Cuban pesos\u001ECUP#other\u001Di-Cuban pesos\u001ECVE#one\u001Di-Cape Verdean Escudo\u001ECVE#other\u001Di-Cape Verdean escudos\u001EGHS#one\u001Di-Ghanaian Cedi\u001EGHS#other\u001Di-Ghanaian cedis\u001EGMD#one\u001Di-Gambian Dalasi\u001EGMD#other\u001Di-Gambian dalasis\u001EGNF#one\u001Di-Gunean Franc\u001EGNF#other\u001Di-Guinean francs\u001EHNL#one\u001Di-Honduran Lempira\u001EHNL#other\u001Di-Honduran lempiras\u001ERON#one\u001Di-Romanian leu\u001ERON#other\u001Di-Romanian lei\u001ETTD#one\u001Di-Trinidad and Tobago dollar\u001ETTD#other\u001Di-Trinidad & Tobago dollars\u001EXAF#one\u001Di-CFA Franc BCEA\u001EXAF#other\u001Di-CFA Franc BCEA\u001EXCG#one\u001DCaribbean guilder\u001EXCG#other\u001DCaribbean guilders\u001EXOF#one\u001Di-West African CFA Franc\u001EXOF#other\u001Di-West African CFA francs\u001EZWG#one\u001DZimbabwean gold\u001EZWG#other\u001DZimbabwean gold\u001F\u001F"
+    "root\u001F2ni-Cuban pesos\u001Ei-Cuban pesos\u001Ei-Cape Verdean Escudo\u001Ei-Cape Verdean escudos\u001Ei-Ghanaian Cedi\u001Ei-Ghanaian cedis\u001Ei-Gambian Dalasi\u001Ei-Gambian dalasis\u001Ei-Gunean Franc\u001Ei-Guinean francs\u001Ei-Honduran Lempira\u001Ei-Honduran lempiras\u001Ei-Romanian leu\u001Ei-Romanian lei\u001Ei-Trinidad and Tobago dollar\u001Ei-Trinidad & Tobago dollars\u001Ei-CFA Franc BCEA\u001Ei-CFA Franc BCEA\u001ECaribbean guilder\u001ECaribbean guilders\u001Ei-West African CFA Franc\u001Ei-West African CFA francs\u001EZimbabwean gold\u001EZimbabwean gold\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_ZU_ZA: String =
-    "zu\u001F\u001F\u001F"
+    "zu\u001F00\u001F02\u001F02"

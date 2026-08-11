@@ -51,6 +51,16 @@ tasks.register<JavaExec>("generateLocaleData") {
     args("generate", rootDir.absolutePath)
 }
 
+// Rewrites the shipped sources from the committed bundle. No clone, so it runs
+// anywhere, which is what you want after changing an emitter or a codec.
+tasks.register<JavaExec>("regenerateLocaleSources") {
+    group = "codegen"
+    description = "Regenerate every shipped Kotlin source from the committed bundle"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = mainClassFqn
+    args("regenerate", rootDir.absolutePath)
+}
+
 tasks.test {
     // The round-trip test regenerates the shipped sources and diffs them, so it
     // needs to know where the checked-in ones are.

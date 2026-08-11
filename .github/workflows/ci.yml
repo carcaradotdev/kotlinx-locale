@@ -234,6 +234,7 @@ jobs:
           ./gradlew \
             :kotlinx-locale-gradle-plugin:publishToMavenLocal \
             :kotlinx-locale-codegen-emitters:publishToMavenLocal \
+            :kotlinx-locale-codegen-pipeline:publishToMavenLocal \
             :kotlinx-locale-codegen-data:publishToMavenLocal
           # Every artifact the sample resolves, including the ones it reaches
           # only transitively: currency-core and datetime-cldr-runtime both

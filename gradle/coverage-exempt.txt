@@ -21,4 +21,6 @@
 :codegen
 :kotlinx-locale-codegen-data
 :kotlinx-locale-codegen-emitters
+:kotlinx-locale-codegen-pipeline
 :kotlinx-locale-gradle-plugin
+:kotlinx-locale-size-report

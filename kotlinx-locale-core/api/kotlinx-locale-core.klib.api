@@ -75,6 +75,8 @@ final object dev.carcara.kotlinx.locale.internal/WordBreaks { // dev.carcara.kot
     final fun isMidWord(kotlin/Char): kotlin/Boolean // dev.carcara.kotlinx.locale.internal/WordBreaks.isMidWord|isMidWord(kotlin.Char){}[0]
 }
 
+final const val dev.carcara.kotlinx.locale.internal/CODEC_TABLES_KEY // dev.carcara.kotlinx.locale.internal/CODEC_TABLES_KEY|{}CODEC_TABLES_KEY[0]
+    final fun <get-CODEC_TABLES_KEY>(): kotlin/String // dev.carcara.kotlinx.locale.internal/CODEC_TABLES_KEY.<get-CODEC_TABLES_KEY>|<get-CODEC_TABLES_KEY>(){}[0]
 final const val dev.carcara.kotlinx.locale.internal/ENTRY_SEPARATOR // dev.carcara.kotlinx.locale.internal/ENTRY_SEPARATOR|{}ENTRY_SEPARATOR[0]
     final fun <get-ENTRY_SEPARATOR>(): kotlin/Char // dev.carcara.kotlinx.locale.internal/ENTRY_SEPARATOR.<get-ENTRY_SEPARATOR>|<get-ENTRY_SEPARATOR>(){}[0]
 final const val dev.carcara.kotlinx.locale.internal/FIELD_SEPARATOR // dev.carcara.kotlinx.locale.internal/FIELD_SEPARATOR|{}FIELD_SEPARATOR[0]

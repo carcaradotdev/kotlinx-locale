@@ -97,6 +97,7 @@ val published = listOf(
     "kotlinx-locale-phone-metadata-runtime",
     "kotlinx-locale-phone-metadata-full",
     "kotlinx-locale-phone-serialization",
+    "kotlinx-locale-codegen-pipeline",
     "kotlinx-locale-codegen-emitters",
     "kotlinx-locale-codegen-data",
     "kotlinx-locale-gradle-plugin",
@@ -133,6 +134,10 @@ include(":codegen")
 // Not kotlin-test, because kotlin-test and the test framework cannot share a
 // Kotlin/Wasm compilation; see the module's own build file.
 include(":test-assertions")
+
+// Measures what the generated data weighs, per platform. Not published, and not
+// on any consumer classpath: it reads this checkout and reports on it.
+include(":kotlinx-locale-size-report")
 
 // The live ICU comparison. A plain JVM module, because ICU4J is a JVM library
 // and this is the one place in the build allowed to depend on it at test time.

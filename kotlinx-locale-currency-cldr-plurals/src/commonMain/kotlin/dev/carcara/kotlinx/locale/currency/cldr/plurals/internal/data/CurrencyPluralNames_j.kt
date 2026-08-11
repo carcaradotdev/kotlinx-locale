@@ -19,22 +19,22 @@
 package dev.carcara.kotlinx.locale.currency.cldr.plurals.internal.data
 
 internal val CURRENCY_PLURAL_NAMES_JA: String =
-    "root\u001FAED#other\u001DUAE ディルハム\u001EJPY#other\u001D円\u001EXCG#other\u001Dカリブ ギルダー\u001EZWG#other\u001Dジンバブエ ゴールド\u001Fu\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001F"
+    "root\u001F1DUAE ディルハム\u001E円\u001Eカリブ ギルダー\u001Eジンバブエ ゴールド\u001F01{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001D{0}{1}\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_JA_JP: String =
-    "ja\u001F\u001F\u001F"
+    "ja\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_JBO_001: String =
-    "jbo\u001F\u001F\u001F"
+    "jbo\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_JGO_CM: String =
-    "jgo\u001F\u001F\u001F"
+    "jgo\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_JMC_TZ: String =
-    "jmc\u001F\u001F\u001F"
+    "jmc\u001F00\u001F02\u001F02"
 
 internal val CURRENCY_PLURAL_NAMES_JV: String =
-    "root\u001FMAD#other\u001DDirham Moroko\u001EXCG#other\u001DGuilder Karibia\u001EZWG#other\u001DEmas Zimbabwe\u001F\u001Fn\u001D0123456789\u001D,\u001D.\u001D-\u001D1\u001D#,##0.###"
+    "root\u001F1EDirham Moroko\u001EGuilder Karibia\u001EEmas Zimbabwe\u001F02\u001F010123456789\u001D,\u001D.\u001D-\u001D1\u001D#,##0.###"
 
 internal val CURRENCY_PLURAL_NAMES_JV_ID: String =
-    "jv\u001F\u001F\u001F"
+    "jv\u001F00\u001F02\u001F02"

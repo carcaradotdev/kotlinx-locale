@@ -33,7 +33,16 @@ fun main(args: Array<String>) {
             val icuDir = ensureCloned(rootDir, ICU_REPO)
             generate(rootDir, cldrDir, icuDir)
         }
-        else -> error("Unknown mode '$mode'. Use 'clone' or 'generate'.")
+        // Rewrites every shipped source from the committed bundle, with no CLDR
+        // clone. What `generate` does minus the extraction, which is what you
+        // want when an emitter or a codec changed and the data did not.
+        // `BundleRoundTripTest` runs the same path into a temp directory and
+        // compares, so the two cannot disagree about what a bundle produces.
+        "regenerate" -> {
+            val bundle = bundleFile(rootDir).bufferedReader().use(LocaleDataBundle::readFrom)
+            generateSources(bundle = bundle, roots = shippedRoots(rootDir))
+        }
+        else -> error("Unknown mode '$mode'. Use 'clone', 'generate' or 'regenerate'.")
     }
 }
 

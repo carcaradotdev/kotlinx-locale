@@ -27,6 +27,9 @@ kotlin {
 }
 
 dependencies {
+    // `api`, not `implementation`: a build that configures a codec names types
+    // from the pipeline, and the emitter's own signature exposes one.
+    api(project(":kotlinx-locale-codegen-pipeline"))
     testImplementation(libs.kotlin.test)
 }
 

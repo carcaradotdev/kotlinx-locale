@@ -72,6 +72,7 @@ public final class dev/carcara/kotlinx/locale/internal/GraphemeClusters {
 }
 
 public final class dev/carcara/kotlinx/locale/internal/PayloadRecordsKt {
+	public static final field CODEC_TABLES_KEY Ljava/lang/String;
 	public static final field ENTRY_SEPARATOR C
 	public static final field FIELD_SEPARATOR C
 	public static final field KEY_SEPARATOR C
