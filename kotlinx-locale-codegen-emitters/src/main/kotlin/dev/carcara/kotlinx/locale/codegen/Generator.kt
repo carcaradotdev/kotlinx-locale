@@ -185,7 +185,21 @@ public class SourceRoots private constructor(
  * to the artifact that owns them. A build generating its own narrowed data uses
  * its own, so the two can sit on one classpath.
  */
-public class RegistryPackages private constructor(private val byTable: Map<GeneratedTable, String>) {
+public class RegistryPackages private constructor(
+    private val byTable: Map<GeneratedTable, String>,
+    /**
+     * Where the locale catalog enums go.
+     *
+     * Here rather than in [byTable] because it is not a registry: the catalog is
+     * the public `PT.BR`, not an internal table behind a source object. It is the
+     * only generated public type whose package can move at all. `Country` and
+     * `Currency` cannot, because `kotlinx-locale-country-core` and
+     * `kotlinx-locale-currency-core` declare their extensions on those exact
+     * names, so a generated one has to take the same package and the shipped
+     * artifact has to be off the classpath.
+     */
+    public val catalog: String,
+) {
 
     public operator fun get(table: GeneratedTable): String = byTable[table] ?: error("no registry package declared for $table")
 
@@ -193,7 +207,8 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
 
         /** What the published `-cldr-full` artifacts use. */
         public val SHIPPED: RegistryPackages = RegistryPackages(
-            mapOf(
+            catalog = "dev.carcara.kotlinx.locale.catalog",
+            byTable = mapOf(
                 GeneratedTable.COUNTRY_NAMES to "dev.carcara.kotlinx.locale.country.cldr.internal.data",
                 GeneratedTable.CURRENCY_FORMATS to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.CURRENCY_NAMES to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
@@ -218,8 +233,10 @@ public class RegistryPackages private constructor(private val byTable: Map<Gener
         )
 
         /** Everything under one package, which is what a generated source set wants. */
-        public fun under(basePackage: String): RegistryPackages =
-            RegistryPackages(GeneratedTable.entries.associateWith { "$basePackage.internal.data" })
+        public fun under(basePackage: String): RegistryPackages = RegistryPackages(
+            catalog = "$basePackage.catalog",
+            byTable = GeneratedTable.entries.associateWith { "$basePackage.internal.data" },
+        )
     }
 }
 
@@ -492,9 +509,10 @@ public fun generateSources(bundle: LocaleDataBundle, roots: SourceRoots, package
 
     roots[GeneratedTable.LOCALE_CATALOG]?.let { root ->
         emitLocaleCatalog(
-            outputDir = root.packageDir("dev.carcara.kotlinx.locale.catalog"),
+            outputDir = root.packageDir(packages.catalog),
             cldrTag = cldr,
             localeTags = bundle.localeTags,
+            packageName = packages.catalog,
         )
     }
 

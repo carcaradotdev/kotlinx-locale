@@ -17,6 +17,8 @@
 package dev.carcara.kotlinx.locale.gradle
 
 import dev.carcara.kotlinx.locale.LocaleRef
+import dev.carcara.kotlinx.locale.country.Country
+import dev.carcara.kotlinx.locale.currency.Currency
 import org.gradle.api.Action
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
@@ -31,9 +33,10 @@ import javax.inject.Inject
  *     locales(PT.BR, EN.US, JA)
  *     fallback(EN.US)
  *     packageName = "com.example.locale"
+ *     catalog = true
  *
- *     country { names = true }
- *     currency { names = true; formats = true }
+ *     country { entries(Country.BR, Country.US, Country.JP); names = true }
+ *     currency { entries(Currency.BRL, Currency.USD); names = true; formats = true }
  *     datetime { patterns = true; skeletons = true }
  * }
  * ```
@@ -47,6 +50,11 @@ import javax.inject.Inject
  * it needs. Turning one on can therefore pull in a table another flag also
  * names, and that is deliberate: it is what makes a half-configured source set
  * impossible to express.
+ *
+ * [catalog] and the two `entries` lists turn on a [LocaleType] instead. Those
+ * narrow the entry sets rather than the data: which locales, countries and
+ * currencies this build can name at all. See [LocaleType] for why generating one
+ * takes the published artifact off the classpath and the catalog does not.
  */
 abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory) {
 
@@ -74,6 +82,23 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
      * default and a full one behind a lazy load.
      */
     abstract val objectPrefix: Property<String>
+
+    /**
+     * Generates the locale catalog for the declared locales, into
+     * `<packageName>.catalog`.
+     *
+     * The entries are [locales] and nothing else, so a build that declares three
+     * locales gets three enums rather than the 322 that
+     * `kotlinx-locale-types` ships. A locale the build did not declare then does
+     * not compile, which is the same protection the shipped catalog gives against
+     * a locale CLDR does not have.
+     *
+     * The package is the consumer's, so this does not replace
+     * `kotlinx-locale-types`; it is an alternative to depending on it. Both on
+     * one classpath compiles, and the import decides which `PT` a call site
+     * means.
+     */
+    abstract val catalog: Property<Boolean>
 
     val country: CountryFeatures = objects.newInstance(CountryFeatures::class.java)
 
@@ -146,8 +171,22 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
         .flatMap { block -> block.enabled.filterValues { it.get() }.keys }
         .toSortedSet(compareBy(LocaleFeature::ordinal))
 
+    /**
+     * The public types asked for, in the same stable order.
+     *
+     * A type is asked for by naming its entry set, not by a flag of its own: an
+     * empty `entries` list is a build that did not ask, and the shipped artifact
+     * answers instead. The catalog is the exception, since its entry set is
+     * [locales] and it would have nothing else to say.
+     */
+    internal fun requestedTypes(): Set<LocaleType> = buildSet {
+        if (catalog.getOrElse(false)) add(LocaleType.LOCALE_CATALOG)
+        if (country.entryCodes.get().isNotEmpty()) add(LocaleType.COUNTRY_ENTRIES)
+        if (currency.entryCodes.get().isNotEmpty()) add(LocaleType.CURRENCY_ENTRIES)
+    }.toSortedSet(compareBy(LocaleType::ordinal))
+
     /** True when nothing at all was asked for, which is worth failing on rather than generating an empty source set. */
-    internal fun generatesNothing(): Boolean = requestedFeatures().isEmpty()
+    internal fun generatesNothing(): Boolean = requestedFeatures().isEmpty() && requestedTypes().isEmpty()
 }
 
 /**
@@ -171,12 +210,62 @@ abstract class CountryFeatures @Inject constructor(objects: ObjectFactory) : Fea
 
     /** Localized country names, behind `Country.displayName`. */
     val names: Property<Boolean> = flag(LocaleFeature.COUNTRY_NAMES)
+
+    internal val entryCodes: SetProperty<String> = objects.setProperty(String::class.java)
+
+    /**
+     * Generates the `Country` enum with these entries instead of the 249 that
+     * `kotlinx-locale-country-types` ships, and drops that artifact from the
+     * resolved classpath.
+     *
+     * Worth knowing before reaching for it: this narrows what the build can
+     * represent, not just what it carries. `Country.forAlpha2OrNull("DE")`
+     * answers null for a code left out, and there is no fallback for it the way
+     * there is for an ungenerated locale. A build that parses ISO codes out of
+     * anything it does not control wants the whole enum.
+     *
+     * What it buys is the rest of the domain. [names] narrows with it, since a
+     * territory name for a country the enum no longer has is a row nothing can
+     * look up.
+     */
+    fun entries(vararg countries: Country) {
+        entryCodes.addAll(countries.map(Country::name))
+    }
+
+    /** Adds entries by ISO 3166-1 alpha-2 code, for a set built at configuration time. */
+    fun entries(vararg codes: String) {
+        entryCodes.addAll(codes.toList())
+    }
 }
 
 abstract class CurrencyFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
 
     /** Localized currency symbols and display names. */
     val names: Property<Boolean> = flag(LocaleFeature.CURRENCY_NAMES)
+
+    internal val entryCodes: SetProperty<String> = objects.setProperty(String::class.java)
+
+    /**
+     * Generates the `Currency` enum with these entries instead of every ISO 4217
+     * code, and drops `kotlinx-locale-currency-types` from the resolved
+     * classpath.
+     *
+     * Carries the country-to-currency map with it, narrowed to match, so
+     * `Country.currency` answers null for a country whose codes were all left
+     * out rather than reaching for an entry the enum does not have.
+     *
+     * The same caution as `country { entries(...) }`: a payment API can hand this
+     * build a code it cannot name, and `Currency.forCodeOrNull` will answer null
+     * for it.
+     */
+    fun entries(vararg currencies: Currency) {
+        entryCodes.addAll(currencies.map(Currency::name))
+    }
+
+    /** Adds entries by ISO 4217 alphabetic code, for a set built at configuration time. */
+    fun entries(vararg codes: String) {
+        entryCodes.addAll(codes.toList())
+    }
 
     /**
      * Number patterns, for `CurrencyAmount.format` and `parseFormatted`.

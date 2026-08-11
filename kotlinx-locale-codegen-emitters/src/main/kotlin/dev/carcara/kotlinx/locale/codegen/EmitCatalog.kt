@@ -18,8 +18,6 @@ package dev.carcara.kotlinx.locale.codegen
 
 import java.io.File
 
-private const val CATALOG_PACKAGE = "dev.carcara.kotlinx.locale.catalog"
-
 /**
  * CLDR macroregion codes that appear in locale ids. They are digits, so they
  * cannot be Kotlin identifiers, and backticking them would produce JVM field
@@ -55,8 +53,13 @@ private val MACROREGION_NAMES = mapOf(
  * Two levels, so a reference is always `LANGUAGE.REST`: only 33 of the 322
  * languages carry a script, and a third level would pay for those in every
  * other reference.
+ *
+ * [packageName] is the shipped catalog's package for `kotlinx-locale-types` and
+ * the consumer's own for a build that generates its own. Unlike `Country` and
+ * `Currency`, this one can move: nothing in the library declares an extension on
+ * a catalog enum, so no other module's source names the package.
  */
-public fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeTags: List<String>) {
+public fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeTags: List<String>, packageName: String) {
     outputDir.mkdirs()
     outputDir.listFiles { f: File -> f.extension == "kt" }?.forEach(File::delete)
 
@@ -82,7 +85,7 @@ public fun emitLocaleCatalog(outputDir: File, cldrTag: String, localeTags: List<
                 append(". Do not edit.\n")
                 append("// Regenerate with: ./gradlew :codegen:generateLocaleData\n")
                 append("package ")
-                append(CATALOG_PACKAGE)
+                append(packageName)
                 append("\n\nimport dev.carcara.kotlinx.locale.LocaleRef\n")
                 append("\n/**\n * The CLDR locales whose language subtag is `")
                 append(language)

@@ -386,7 +386,7 @@ plugin flag beside the artifact for every domain that has one.
 | --- | --- |
 | `kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing. |
 | `kotlinx-locale-platform` | What the host can say about locales before any domain is involved: whether it exposes locale data, and which locales it enumerates. |
-| `kotlinx-locale-types` | The generated locale catalog: one enum per language, so `PT.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional. |
+| `kotlinx-locale-types` | The generated locale catalog: one enum per language, so `PT.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional, and generatable: a build that ships a handful of locales can write its own with `catalog = true`. |
 | `kotlinx-locale-serialization` | `LocaleTagSerializer`, which writes a `Locale` as its BCP 47 tag and reads one as leniently as `Locale.forLanguageTag` does. |
 | `kotlinx-locale-country-types` | The `Country` enum: 249 ISO 3166-1 entries carrying their alpha-3 and numeric codes. Generated, and nothing else. |
 | `kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
@@ -572,9 +572,10 @@ Read that CLDR column as the price of all 1121 locales, not the price of CLDR.
 Most products ship a language picker with a handful of entries in it, and the
 Gradle plugin generates the data for exactly those, against the same
 `-cldr-runtime` engine the full artifact uses. The three-locale build in
-`samples/narrowed/` generates 124 KB of Kotlin where the shipped tables are
-3764 KB, roughly a thirtieth of the data, and formats identically for the
-locales it kept because it is running the same code over a smaller table.
+`samples/narrowed/` generates 205 KB of tables where the shipped modules it
+replaces hold 6699 KB, roughly a thirty-third of the data, and formats
+identically for the locales it kept because it is running the same code over a
+smaller table.
 
 So the choice is not the two columns above. It is three:
 
@@ -587,9 +588,10 @@ So the choice is not the two columns above. It is three:
 [Shipping only the locales you use](#shipping-only-the-locales-you-use) covers
 how to set the third one up.
 
-Those 124 KB and 3764 KB are Kotlin source, counted from the sample. The size
-probes in `tools/` do not cover a narrowed build, so there is no gzipped bundle
-figure for it to sit beside the table above.
+Those 205 KB and 6699 KB are Kotlin source, counted from the sample and from the
+`internal/data` trees it replaces. The size probes in `tools/` do not cover a
+narrowed build, so there is no gzipped bundle figure for it to sit beside the
+table above.
 
 Skeleton formatting is CLDR only, and that is a decision rather than a gap. The
 hosts will format from a template, but none of them hands back the pattern it
@@ -770,16 +772,51 @@ nothing. That matters most for dates: a country or a currency can degrade to its
 ISO code, but a date would surface as an ISO 8601 timestamp in the middle of a
 translated screen.
 
-Narrowing only ever touches locale data. `Country.forAlpha2("br")` and
-`Currency.forCode("jpy")` keep working whatever you generated, because an app
-that displays three currencies can still be handed an arbitrary code by a
-payment API.
-
 Every domain that ships a `-cldr-full` artifact has flags of its own: country,
 currency, datetime, language, number, time zones and person names. Phone metadata
 does not, because it is keyed by territory rather than by locale, so a locale set
 narrows nothing about it. [API.md](API.md#feature-flags) lists every flag next to
 what it generates and the `-cldr-runtime` artifact it needs.
+
+### Shipping only the types you use
+
+The flags above narrow locale data. The entry sets are separate, and shipped
+whole by default: `kotlinx-locale-types` carries 322 enums for all 1121 CLDR
+locales, `Country` carries 249 entries and `Currency` every ISO 4217 code. A
+build that uses eight locales still gets all of them.
+
+```kotlin
+kotlinxLocale {
+    locales(PT.BR, EN.US)
+    fallback(EN.US)
+    catalog = true
+
+    country { entries(Country.BR, Country.US); names = true }
+    currency { entries(Currency.BRL, Currency.USD); names = true }
+}
+```
+
+`catalog` generates the locale catalog for the locales already declared, into
+`<packageName>.catalog`, so naming a locale this build does not ship stops
+compiling. It costs nothing else: nothing in the library extends a catalog enum,
+so a build that generates its own leaves `kotlinx-locale-types` out of the
+dependency block and that is the whole change.
+
+`entries` is a real trade rather than a free saving, and worth reading twice
+before turning on. `Country` and `Currency` keep the library's own package,
+because `kotlinx-locale-country-core` declares `Country.alpha2` and
+`Country.forAlpha2` on that exact name, so the plugin drops the shipped artifact
+from the resolved classpath and the generated enum takes its place. You write
+nothing in the dependency block for that. What you give up is representation: an
+unlisted locale answers in the fallback, but there is no fallback for an unlisted
+country. `Country.forAlpha2OrNull("DE")` returns null once DE is out of the enum,
+so a build that parses ISO codes out of a payment API or a partner feed wants the
+whole set.
+
+The names follow the entries. Ask for two countries and the territory tables come
+out holding two names per locale rather than 249, which across every locale is
+the larger half of what narrowing the enum is for.
+[API.md](API.md#type-flags) has the three flags next to what each replaces.
 
 ## Supported platforms
 

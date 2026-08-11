@@ -186,6 +186,121 @@ public class LocaleDataBundle private constructor(
     }
 
     /**
+     * The same bundle carrying only the countries and currencies named.
+     *
+     * The other narrowing axis. [narrowTo] answers "which languages does this
+     * build speak"; this answers "which countries and currencies can it name at
+     * all", and the two are independent: an app that ships one locale may still
+     * list every country, and an app that ships forty locales may only ever
+     * name three currencies.
+     *
+     * A null set keeps that entity whole, which is not the same as an empty one.
+     * Empty would be a build that generated a `Country` enum with no entries,
+     * and nothing that takes a `Country` could then be called at all.
+     *
+     * The entity-keyed payload fields go with the entry set, because they are
+     * unreachable without it: a name for a country the enum no longer has is a
+     * row no call site can look up. Which fields those are is declared on
+     * [BundleSection] rather than listed here, so a section added later has to
+     * answer the question rather than silently keeping every row.
+     *
+     * [countryCurrencies] narrows on both: a row for a dropped country goes, and
+     * a dropped currency comes out of the rows that stay. A row left with no
+     * codes is dropped rather than kept empty, so `Country.currency` answers null
+     * the way it does for a country CLDR lists no currency for.
+     */
+    public fun narrowEntitiesTo(countries: Set<String>? = null, currencies: Set<String>? = null): LocaleDataBundle {
+        if (countries == null && currencies == null) return this
+
+        val keptCountries = validated(countries, this.countries.map(CountryInfo::alpha2), "country")
+        val keptCurrencies = validated(currencies, this.currencies.map(CurrencyEntry::code), "currency")
+
+        val narrowedSections = LinkedHashMap<String, Map<String, String>>(sections.size)
+        for (declared in BundleSection.ALL) {
+            val payloads = sections[declared.name] ?: continue
+            val fields = declared.entityFields.filter { keptCodesFor(it.entity, keptCountries, keptCurrencies) != null }
+            narrowedSections[declared.name] = if (fields.isEmpty()) {
+                payloads
+            } else {
+                payloads.mapValues { (_, record) ->
+                    narrowRecord(record, declared.sparseFields, fields, keptCountries, keptCurrencies)
+                }
+            }
+        }
+
+        return LocaleDataBundle(
+            cldrVersion = cldrVersion,
+            isoPublished = isoPublished,
+            localeTags = localeTags,
+            countries = this.countries.filter { keptCountries == null || it.alpha2 in keptCountries },
+            currencies = this.currencies.filter { keptCurrencies == null || it.code in keptCurrencies },
+            countryCurrencies = narrowCountryCurrencies(keptCountries, keptCurrencies),
+            tables = tables,
+            sections = narrowedSections,
+        )
+    }
+
+    /** [requested] as a set, having checked that the bundle carries every code in it. */
+    private fun validated(requested: Set<String>?, available: List<String>, what: String): Set<String>? {
+        if (requested == null) return null
+        require(requested.isNotEmpty()) { "narrowing to no $what would generate an enum nothing can be called with" }
+        val known = available.toHashSet()
+        val unknown = requested.filterNot { it in known }.sorted()
+        require(unknown.isEmpty()) {
+            "no $what data for ${unknown.joinToString()}. The bundle carries ${available.size} $what codes; " +
+                "these are not among them."
+        }
+        return requested
+    }
+
+    private fun keptCodesFor(entity: BundleEntity, countries: Set<String>?, currencies: Set<String>?): Set<String>? = when (entity) {
+        BundleEntity.COUNTRY -> countries
+        BundleEntity.CURRENCY -> currencies
+    }
+
+    /** One payload with the entries of [fields] whose entity was dropped removed. */
+    private fun narrowRecord(
+        record: String,
+        sparseFields: Int,
+        fields: List<EntityField>,
+        countries: Set<String>?,
+        currencies: Set<String>?,
+    ): String {
+        val parts = record.split(FIELD_SEPARATOR).toMutableList()
+        for (field in fields) {
+            val kept = keptCodesFor(field.entity, countries, currencies) ?: continue
+            val body = parts.getOrNull(field.index) ?: continue
+            if (body.isEmpty()) continue
+            parts[field.index] = body.split(LIST_SEPARATOR)
+                .filter { entry ->
+                    val separator = entry.indexOf(KEY_SEPARATOR)
+                    // An entry with no key separator is not addressable by code,
+                    // so it is not this narrowing's to drop.
+                    separator <= 0 || field.codeOf(entry.substring(0, separator)) in kept
+                }
+                .joinToString(LIST_SEPARATOR)
+        }
+        // The parent at index 0 and one field per sparse field. Checked because
+        // a record that lost a trailing empty field still reads as valid and
+        // resolves the wrong field at runtime.
+        check(parts.size == sparseFields + 1) {
+            "a payload with ${sparseFields + 1} fields came apart into ${parts.size}"
+        }
+        return parts.joinToString(FIELD_SEPARATOR)
+    }
+
+    private fun narrowCountryCurrencies(countries: Set<String>?, currencies: Set<String>?): Map<String, String> {
+        if (countries == null && currencies == null) return countryCurrencies
+        val narrowed = LinkedHashMap<String, String>()
+        for ((alpha2, codes) in countryCurrencies) {
+            if (countries != null && alpha2 !in countries) continue
+            val kept = if (currencies == null) codes else codes.split(' ').filter { it in currencies }.joinToString(" ")
+            if (kept.isNotEmpty()) narrowed[alpha2] = kept
+        }
+        return narrowed
+    }
+
+    /**
      * Replaces the `root` record with the fallback locale's, so an unlisted
      * locale resolves to the fallback instead of to CLDR root.
      *

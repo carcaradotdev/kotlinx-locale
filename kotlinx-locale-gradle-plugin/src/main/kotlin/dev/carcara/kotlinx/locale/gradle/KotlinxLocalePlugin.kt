@@ -55,11 +55,40 @@ class KotlinxLocalePlugin : Plugin<Project> {
         val extension = target.extensions.create("kotlinxLocale", KotlinxLocaleExtension::class.java)
         extension.packageName.convention("kotlinx.locale.generated")
         extension.objectPrefix.convention("Generated")
+        extension.catalog.convention(false)
         // Feature flags default themselves as they are declared; see FeatureBlock.flag.
 
         val cldrData = declareCldrDataConfiguration(target)
         val generate = registerGenerateTask(target, extension, cldrData)
         wireIntoSourceSets(target, generate)
+        excludeReplacedTypes(target, extension)
+    }
+
+    /**
+     * Drops the published artifact of every type this build generates itself.
+     *
+     * Not optional and not something a consumer should have to write. `Country`
+     * and `Currency` are `api` dependencies of their `-core` module, so they
+     * arrive whether or not anyone asked, and a generated enum has to take the
+     * same fully qualified name for the `-core` extensions to resolve against it.
+     * Two of them on one classpath is a duplicate class, which on JVM is a
+     * warning and a coin toss and on Native is a link failure.
+     *
+     * Configured eagerly rather than through a provider because an exclusion has
+     * to be in place before resolution, and reading a property here would force
+     * the extension before the build script that fills it in has run. `afterEvaluate`
+     * is the one place where the DSL is complete and nothing has resolved yet.
+     */
+    private fun excludeReplacedTypes(target: Project, extension: KotlinxLocaleExtension) {
+        target.afterEvaluate {
+            val replaced = extension.requestedTypes().mapNotNull(LocaleType::replaces)
+            if (replaced.isEmpty()) return@afterEvaluate
+            target.configurations.configureEach { configuration ->
+                for (module in replaced) {
+                    configuration.exclude(mapOf("group" to LocaleType.PUBLISHED_GROUP, "module" to module))
+                }
+            }
+        }
     }
 
     /**
@@ -105,11 +134,15 @@ class KotlinxLocalePlugin : Plugin<Project> {
             target.provider {
                 require(!extension.generatesNothing()) {
                     "kotlinxLocale generates nothing: enable at least one of " +
-                        LocaleFeature.entries.joinToString { it.dslName }
+                        (LocaleFeature.entries.map { it.dslName } + LocaleType.entries.map { it.dslName })
+                            .joinToString()
                 }
                 extension.requestedFeatures()
             },
         )
+        task.types.set(target.provider { extension.requestedTypes() })
+        task.countryCodes.set(extension.country.entryCodes)
+        task.currencyCodes.set(extension.currency.entryCodes)
         task.outputDirectory.set(target.layout.buildDirectory.dir("generated/kotlinx-locale"))
     }
 

@@ -16,6 +16,39 @@
 
 package dev.carcara.kotlinx.locale.codegen
 
+/** An entity whose entry set a build can narrow independently of its locale set. */
+public enum class BundleEntity {
+    COUNTRY,
+    CURRENCY,
+    ;
+
+    public companion object
+}
+
+/**
+ * One data field of a payload whose keys are entity codes rather than something
+ * locale-shaped.
+ *
+ * Declared so that narrowing the `Country` enum to three entries also drops the
+ * 246 names no call can now reach. Without it a build that asked for three
+ * countries would still carry every locale's whole territory table, which is the
+ * larger half of what the enum was narrowed to avoid.
+ *
+ * [index] is the field's position in the payload, counted the way [BundleSection.sparseFields]
+ * counts: field 0 is the parent tag, so the first data field is 1.
+ *
+ * [keySeparator] is for a key that is a code and a discriminator rather than a
+ * bare code. The currency plural names are keyed `USD#one`, and narrowing has to
+ * read the code off the front rather than compare the whole key.
+ */
+public class EntityField(public val index: Int, public val entity: BundleEntity, public val keySeparator: Char? = null) {
+
+    /** The entity code a payload key belongs to. */
+    public fun codeOf(key: String): String = if (keySeparator == null) key else key.substringBefore(keySeparator)
+
+    public companion object
+}
+
 /**
  * One per-locale payload section of the bundle: what it is called, how its
  * records reach data they do not declare, and whether narrowing may drop rows.
@@ -27,6 +60,10 @@ package dev.carcara.kotlinx.locale.codegen
  * copied. That number used to be a literal repeated at each call site in
  * [LocaleDataBundle.narrowTo]; declaring it next to the name is the only place
  * it can be checked once.
+ *
+ * [entityFields] is the same idea on the other axis: which fields are keyed by a
+ * country or a currency, so that [LocaleDataBundle.narrowEntitiesTo] can drop the
+ * rows a narrowed entry set can no longer reach.
  */
 public class BundleSection(
     public val name: String,
@@ -38,7 +75,20 @@ public class BundleSection(
      * error.
      */
     public val narrowed: Boolean = true,
+    public val entityFields: List<EntityField> = emptyList(),
 ) {
+
+    init {
+        for (field in entityFields) {
+            // Sparse only, so an index always means the same thing. A resolved
+            // record has no parent field, and counting from 1 in one section and
+            // from 0 in another is the kind of difference that is discovered by
+            // a payload coming apart in a consumer's build.
+            require(field.index in 1..sparseFields) {
+                "$name declares an entity key on field ${field.index}, which is not one of its $sparseFields data fields"
+            }
+        }
+    }
 
     public val isSparse: Boolean get() = sparseFields > 0
 
@@ -48,10 +98,30 @@ public class BundleSection(
 
         public val ALL: List<BundleSection> = listOf(
             BundleSection("dateTime"),
-            BundleSection("countryNames", sparseFields = 1),
+            BundleSection(
+                "countryNames",
+                sparseFields = 1,
+                entityFields = listOf(EntityField(1, BundleEntity.COUNTRY)),
+            ),
             BundleSection("currencyFormats"),
-            BundleSection("currencyNames", sparseFields = 2),
-            BundleSection("currencyPluralNames", sparseFields = 3),
+            // Both data fields are keyed by currency code: field 1 the symbols,
+            // field 2 the display names.
+            BundleSection(
+                "currencyNames",
+                sparseFields = 2,
+                entityFields = listOf(
+                    EntityField(1, BundleEntity.CURRENCY),
+                    EntityField(2, BundleEntity.CURRENCY),
+                ),
+            ),
+            // Only the first field. Fields 2 and 3 hold this locale's unit
+            // patterns and number data under one key each, and neither has a
+            // currency in it.
+            BundleSection(
+                "currencyPluralNames",
+                sparseFields = 3,
+                entityFields = listOf(EntityField(1, BundleEntity.CURRENCY, keySeparator = '#')),
+            ),
             BundleSection("skeletonFormats"),
             BundleSection("skeletonAppendFormats"),
             BundleSection("skeletonNames"),
