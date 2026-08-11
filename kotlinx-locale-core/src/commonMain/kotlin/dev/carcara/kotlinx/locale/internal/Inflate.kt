@@ -21,12 +21,15 @@ import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 /**
  * DEFLATE decompression, RFC 1951, in common Kotlin.
  *
- * Written rather than borrowed because there is no inflate in the Kotlin common
- * standard library and the alternative is four implementations behind
- * `expect`/`actual`: `java.util.zip` on the JVM, `DecompressionStream` or a
- * bundled library on Kotlin/JS, a C library through cinterop on Native, and
- * nothing that works on Wasm. One implementation in common code reaches every
- * target and cannot disagree with itself.
+ * Common code, with no `expect`/`actual` anywhere in it: every target runs this,
+ * Wasm included.
+ *
+ * Written rather than delegated because there is no inflate in the Kotlin common
+ * standard library, and delegating would mean one decoder per platform:
+ * `java.util.zip` on the JVM, a browser or bundled library on Kotlin/JS, zlib
+ * through cinterop for each native family, and nothing suitable for either Wasm
+ * target. Five decoders are five places to disagree with each other and with the
+ * encoder. One cannot disagree with itself.
  *
  * Raw DEFLATE streams only, with no zlib or gzip wrapper, because the generator
  * writes them that way: the two header bytes and the four checksum bytes of a

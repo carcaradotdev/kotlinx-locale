@@ -55,10 +55,24 @@ every character above U+0800, where UTF-8 charges three bytes but UTF-16 still
 charges two, and halves the character count.
 
 So the generator writes both: `ascii7` into `utf8Main`, `bmp15` into `utf16Main`.
-The registry is an `expect` in `commonMain` with an `actual` in each, and the
-unpacking is `expect` beside it. Everything after unpacking is shared, including
-the RFC 1951 inflate, which is written in common Kotlin because the standard
-library has none and no platform library covers Wasm.
+
+| source set | targets |
+| --- | --- |
+| `utf8Main` | jvm, android, js, wasmJs, wasmWasi |
+| `utf16Main` | every native target: linux, mingw, androidNative, macos, ios, tvos, watchos |
+
+Two things are `expect`/`actual` and nothing else: the registry, because the
+bytes differ, and the unpacking, because the bit width does. Both have an
+`actual` in each source set.
+
+Everything after unpacking is shared, the DEFLATE reader included. It is written
+against RFC 1951 in common Kotlin, so every target runs the same code. The
+alternative was one implementation per platform, `java.util.zip` on the JVM, a
+browser or bundled library on Kotlin/JS, zlib through cinterop for each native
+family, and nothing suitable for either Wasm target. Five decoders are five
+places to disagree with each other and with the encoder. One cannot disagree with
+itself, and it is held to `java.util.zip` over 300 random inputs plus a case for
+every block type.
 
 ## Result
 
