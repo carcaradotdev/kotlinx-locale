@@ -72,15 +72,26 @@ val BundleRoundTripTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
                 "kotlinx-locale-datetime-cldr-full",
                 "kotlinx-locale-datetime-cldr-skeletons",
             )
+            // All three source sets, because a compressed table writes its
+            // `expect` into commonMain and one packed `actual` into each of the
+            // others. Comparing only commonMain would leave the data itself,
+            // which is the part worth pinning, unchecked.
+            val sourceSets = listOf("commonMain", "utf8Main", "utf16Main")
             for (module in modules) {
-                val fresh = regenerated.resolve("$module/src/commonMain/kotlin")
-                val shipped = rootDir.resolve("$module/src/commonMain/kotlin")
-                for (file in fresh.walkTopDown().filter(File::isFile)) {
-                    val relative = file.relativeTo(fresh).path
-                    val committed = shipped.resolve(relative)
-                    assertTrue(committed.isFile, "$module/$relative is generated but not checked in")
-                    assertEquals(committed.readText(), file.readText(), "$module/$relative drifted from the bundle")
-                    compared++
+                for (sourceSet in sourceSets) {
+                    val fresh = regenerated.resolve("$module/src/$sourceSet/kotlin")
+                    val shipped = rootDir.resolve("$module/src/$sourceSet/kotlin")
+                    for (file in fresh.walkTopDown().filter(File::isFile)) {
+                        val relative = file.relativeTo(fresh).path
+                        val committed = shipped.resolve(relative)
+                        assertTrue(committed.isFile, "$module/$sourceSet/$relative is generated but not checked in")
+                        assertEquals(
+                            committed.readText(),
+                            file.readText(),
+                            "$module/$sourceSet/$relative drifted from the bundle",
+                        )
+                        compared++
+                    }
                 }
             }
             assertTrue(compared > 400, "expected the whole generated tree, compared only $compared files")

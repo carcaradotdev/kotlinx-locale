@@ -195,6 +195,11 @@ public class KeyedPayloadEmitter(
      * constant saved.
      */
     public fun emit(payloadByTag: Map<String, String>): CodecReport {
+        // Both layouts are cleared whichever one is about to be written. A
+        // section that stops being packed leaves an actual behind that still
+        // declares the same property, and the compiler reports that as a
+        // conflicting declaration rather than as the stale file it is.
+        clearStalePackedSources()
         packedRoots?.let { return emitPacked(payloadByTag, it) }
         val report = PayloadCodecValidator.require(codec, shape, filePrefix, payloadByTag)
         val encoded = report.encoded
@@ -312,25 +317,30 @@ public class KeyedPayloadEmitter(
             // twice. Only one packing compiles per target, so both may share it.
             dir.resolve("${filePrefix}RegistryPacked.kt").writeText(
                 buildString {
-                    append(registryHeader(report.encoded.sharedTables.isNotEmpty()))
+                    append(registryHeader(true))
                     append("\ninternal actual val ").append(registryProperty)
                     append(": Map<String, String> = buildMap(").append(constByTag.size + 1).append(") {\n")
                     for ((tag, const) in constByTag.entries.sortedBy { it.key }) {
                         append("    put(\"").append(kotlinEscape(tag)).append("\", ").append(const).append(")\n")
                     }
-                    // The key universes and the bitmap pool the elision step
-                    // hoisted out. Not packed: they are read to find where a key
-                    // sits, which has to work before anything is inflated.
-                    if (report.encoded.sharedTables.isNotEmpty()) {
-                        append("    put(CODEC_TABLES_KEY, \"")
-                        append(
-                            kotlinEscape(
-                                packedCodec.id + FIELD_SEPARATOR +
-                                    report.encoded.sharedTables.joinToString(FIELD_SEPARATOR),
-                            ),
-                        )
-                        append("\")\n")
-                    }
+                    // The codec id, then whatever the codec hoisted out of the
+                    // records: for key elision, one key universe per field and
+                    // the bitmap pool. Those are read to find where a key sits,
+                    // which has to happen before anything is inflated, so they
+                    // stay readable.
+                    //
+                    // Written whenever a codec ran, not only when it left tables
+                    // behind. A resolved table has no keys to elide and so no
+                    // tables, but its records are still compressed, and the id is
+                    // the only thing that tells the reader to inflate them.
+                    append("    put(CODEC_TABLES_KEY, \"")
+                    append(
+                        kotlinEscape(
+                            (listOf(packedCodec.id) + report.encoded.sharedTables)
+                                .joinToString(FIELD_SEPARATOR),
+                        ),
+                    )
+                    append("\")\n")
                     append("}\n")
                 },
             )
@@ -356,5 +366,25 @@ public class KeyedPayloadEmitter(
         return last ?: error("no packed roots were configured for $filePrefix")
     }
 
-    public companion object
+    /**
+     * Deletes this table's files from the two packed source sets.
+     *
+     * Named for what it is: the packed roots are a property of the build rather
+     * than of the tree, so the tree can hold output from a previous run that
+     * chose differently.
+     */
+    private fun clearStalePackedSources() {
+        for (sourceSet in PACKED_SOURCE_SETS) {
+            val dir =
+                File(outputDir.path.replace("${File.separator}commonMain${File.separator}", "${File.separator}$sourceSet${File.separator}"))
+            if (dir == outputDir || !dir.isDirectory) continue
+            dir.listFiles { f: File -> f.extension == "kt" && f.name.startsWith(filePrefix) }?.forEach(File::delete)
+        }
+    }
+
+    public companion object {
+
+        /** The source sets a packed table is written into, one packing each. */
+        public val PACKED_SOURCE_SETS: List<String> = listOf("utf8Main", "utf8PlainMain", "utf8DeflatedMain", "utf16Main")
+    }
 }

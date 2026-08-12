@@ -22,51 +22,52 @@ data, which is the half a codec changes.
 
 | module | tables | constants | UTF-8 | modified UTF-8 | UTF-16 |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| kotlinx-locale-language-cldr-full | 2 | 1491 | 2,330.8 KB | 2,330.8 KB | 2,932.9 KB |
-| kotlinx-locale-currency-cldr-full | 4 | 1913 | 1,012.0 KB | 1,012.2 KB | 1,294.5 KB |
-| kotlinx-locale-country-cldr-full | 2 | 1376 | 918.3 KB | 918.3 KB | 1,148.4 KB |
-| kotlinx-locale-datetime-cldr-skeletons | 4 | 879 | 543.0 KB | 544.9 KB | 1,000.8 KB |
-| kotlinx-locale-timezone-cldr-full | 3 | 1449 | 774.8 KB | 775.0 KB | 966.2 KB |
-| kotlinx-locale-currency-cldr-plurals | 2 | 1216 | 701.7 KB | 701.7 KB | 882.7 KB |
-| kotlinx-locale-datetime-cldr-relative | 2 | 279 | 567.4 KB | 574.1 KB | 873.8 KB |
-| kotlinx-locale-datetime-cldr-durations | 2 | 184 | 529.0 KB | 533.1 KB | 838.0 KB |
-| kotlinx-locale-timezone-cldr-cities | 2 | 1161 | 666.2 KB | 666.2 KB | 831.2 KB |
-| kotlinx-locale-datetime-cldr-intervals | 1 | 201 | 379.9 KB | 379.9 KB | 632.1 KB |
-| kotlinx-locale-personname-cldr-full | 2 | 140 | 266.4 KB | 266.4 KB | 532.4 KB |
-| kotlinx-locale-datetime-cldr-full | 3 | 497 | 271.7 KB | 275.6 KB | 428.8 KB |
+| kotlinx-locale-language-cldr-full | 2 | 2248 | 4,832.5 KB | 4,874.1 KB | 6,224.5 KB |
+| kotlinx-locale-timezone-cldr-full | 3 | 2453 | 2,458.8 KB | 2,485.8 KB | 3,105.5 KB |
+| kotlinx-locale-currency-cldr-full | 4 | 3262 | 2,029.0 KB | 2,044.0 KB | 2,668.2 KB |
+| kotlinx-locale-currency-cldr-plurals | 2 | 1829 | 1,799.5 KB | 1,813.2 KB | 2,604.1 KB |
+| kotlinx-locale-country-cldr-full | 2 | 2072 | 1,757.2 KB | 1,770.8 KB | 2,277.6 KB |
+| kotlinx-locale-timezone-cldr-cities | 2 | 1745 | 1,325.0 KB | 1,338.8 KB | 1,525.6 KB |
+| kotlinx-locale-datetime-cldr-skeletons | 4 | 2019 | 825.4 KB | 827.3 KB | 1,349.4 KB |
+| kotlinx-locale-datetime-cldr-relative | 2 | 832 | 816.4 KB | 823.1 KB | 1,179.7 KB |
+| kotlinx-locale-datetime-cldr-durations | 2 | 548 | 686.4 KB | 690.5 KB | 1,031.4 KB |
+| kotlinx-locale-datetime-cldr-intervals | 1 | 599 | 600.1 KB | 600.1 KB | 902.9 KB |
+| kotlinx-locale-datetime-cldr-full | 3 | 1488 | 637.8 KB | 641.7 KB | 878.1 KB |
+| kotlinx-locale-personname-cldr-full | 2 | 411 | 347.3 KB | 347.3 KB | 632.8 KB |
+| kotlinx-locale-number-cldr-full | 10 | 1455 | 279.8 KB | 280.2 KB | 421.1 KB |
 | kotlinx-locale-phone-metadata-full | 54 | 502 | 170.6 KB | 170.6 KB | 341.2 KB |
-| kotlinx-locale-number-cldr-full | 10 | 729 | 183.9 KB | 184.3 KB | 305.1 KB |
-| **total** | **93** | **12017** | **9,315.8 KB** | **9,333.0 KB** | **13,008.1 KB** |
+| **total** | **93** | **21463** | **18,565.8 KB** | **18,707.5 KB** | **25,142.1 KB** |
 
 ## By table
 
 | module | table | constants | UTF-8 | modified UTF-8 | UTF-16 |
 | --- | --- | ---: | ---: | ---: | ---: |
-| kotlinx-locale-language-cldr-full | LocaleDisplayNames | 1490 | 2,330.8 KB | 2,330.8 KB | 2,932.9 KB |
-| kotlinx-locale-country-cldr-full | CountryNames | 1375 | 918.3 KB | 918.3 KB | 1,148.4 KB |
-| kotlinx-locale-currency-cldr-full | CurrencyNames | 1653 | 914.6 KB | 914.6 KB | 1,138.6 KB |
-| kotlinx-locale-timezone-cldr-full | TimeZoneNames | 1263 | 755.6 KB | 755.6 KB | 935.3 KB |
-| kotlinx-locale-currency-cldr-plurals | CurrencyPluralNames | 1215 | 701.6 KB | 701.6 KB | 882.7 KB |
-| kotlinx-locale-datetime-cldr-relative | RelativeTime | 278 | 567.4 KB | 574.0 KB | 873.8 KB |
-| kotlinx-locale-datetime-cldr-durations | DurationUnits | 183 | 529.0 KB | 533.1 KB | 838.0 KB |
-| kotlinx-locale-timezone-cldr-cities | TimeZoneCities | 1160 | 666.2 KB | 666.2 KB | 831.2 KB |
-| kotlinx-locale-datetime-cldr-intervals | IntervalFormats | 201 | 379.9 KB | 379.9 KB | 632.1 KB |
+| kotlinx-locale-language-cldr-full | LocaleDisplayNames | 2247 | 4,832.5 KB | 4,874.1 KB | 6,224.5 KB |
+| kotlinx-locale-timezone-cldr-full | TimeZoneNames | 1898 | 2,403.4 KB | 2,430.2 KB | 3,029.3 KB |
+| kotlinx-locale-currency-cldr-plurals | CurrencyPluralNames | 1828 | 1,799.5 KB | 1,813.2 KB | 2,604.1 KB |
+| kotlinx-locale-currency-cldr-full | CurrencyNames | 2485 | 1,857.6 KB | 1,872.5 KB | 2,420.4 KB |
+| kotlinx-locale-country-cldr-full | CountryNames | 2071 | 1,757.2 KB | 1,770.8 KB | 2,277.6 KB |
+| kotlinx-locale-timezone-cldr-cities | TimeZoneCities | 1744 | 1,325.0 KB | 1,338.8 KB | 1,525.6 KB |
+| kotlinx-locale-datetime-cldr-relative | RelativeTime | 831 | 816.4 KB | 823.1 KB | 1,179.7 KB |
+| kotlinx-locale-datetime-cldr-durations | DurationUnits | 547 | 686.3 KB | 690.5 KB | 1,031.3 KB |
+| kotlinx-locale-datetime-cldr-intervals | IntervalFormats | 599 | 600.1 KB | 600.1 KB | 902.9 KB |
+| kotlinx-locale-datetime-cldr-full | LocaleData | 1199 | 599.5 KB | 602.9 KB | 830.3 KB |
+| kotlinx-locale-personname-cldr-full | PersonNames | 409 | 333.5 KB | 333.5 KB | 605.3 KB |
 | kotlinx-locale-datetime-cldr-skeletons | IcuSkeletonGoldenData | 306 | 302.9 KB | 302.9 KB | 580.4 KB |
-| kotlinx-locale-personname-cldr-full | PersonNames | 138 | 252.6 KB | 252.6 KB | 505.0 KB |
-| kotlinx-locale-datetime-cldr-full | LocaleData | 400 | 256.6 KB | 260.0 KB | 409.8 KB |
-| kotlinx-locale-datetime-cldr-skeletons | SkeletonFormats | 251 | 140.5 KB | 140.5 KB | 273.1 KB |
-| kotlinx-locale-datetime-cldr-skeletons | SkeletonNames | 319 | 99.3 KB | 101.1 KB | 146.5 KB |
+| kotlinx-locale-datetime-cldr-skeletons | SkeletonFormats | 748 | 297.0 KB | 297.0 KB | 466.2 KB |
+| kotlinx-locale-datetime-cldr-skeletons | SkeletonNames | 956 | 224.9 KB | 226.7 KB | 301.6 KB |
+| kotlinx-locale-currency-cldr-full | CurrencyCompact | 422 | 144.2 KB | 144.3 KB | 208.6 KB |
+| kotlinx-locale-number-cldr-full | CompactLong | 436 | 99.5 KB | 99.7 KB | 147.7 KB |
 | kotlinx-locale-number-cldr-full | CurrencyCompact | 152 | 91.8 KB | 91.9 KB | 146.4 KB |
-| kotlinx-locale-currency-cldr-full | CurrencyCompact | 141 | 86.3 KB | 86.5 KB | 137.1 KB |
-| kotlinx-locale-number-cldr-full | CompactLong | 146 | 51.0 KB | 51.2 KB | 87.5 KB |
-| kotlinx-locale-number-cldr-full | CompactShort | 122 | 27.4 KB | 27.5 KB | 47.0 KB |
-| kotlinx-locale-timezone-cldr-full | TimeZoneFormats | 185 | 19.2 KB | 19.4 KB | 30.9 KB |
+| kotlinx-locale-number-cldr-full | CompactShort | 366 | 58.7 KB | 58.8 KB | 86.0 KB |
+| kotlinx-locale-timezone-cldr-full | TimeZoneFormats | 554 | 55.4 KB | 55.6 KB | 76.1 KB |
+| kotlinx-locale-datetime-cldr-full | LocaleStandalone | 288 | 38.3 KB | 38.7 KB | 47.7 KB |
+| kotlinx-locale-currency-cldr-full | CurrencyFormats | 354 | 27.2 KB | 27.2 KB | 39.1 KB |
 | kotlinx-locale-personname-cldr-full | PersonNameFormat | 2 | 13.7 KB | 13.7 KB | 27.4 KB |
+| kotlinx-locale-number-cldr-full | NumberSymbols | 288 | 22.2 KB | 22.3 KB | 26.6 KB |
 | kotlinx-locale-phone-metadata-full | PhoneFormats_C | 19 | 10.0 KB | 10.0 KB | 20.0 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_M | 23 | 9.9 KB | 9.9 KB | 19.7 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_A | 16 | 9.8 KB | 9.8 KB | 19.5 KB |
-| kotlinx-locale-datetime-cldr-full | LocaleStandalone | 96 | 15.1 KB | 15.6 KB | 19.0 KB |
-| kotlinx-locale-currency-cldr-full | CurrencyFormats | 118 | 11.1 KB | 11.1 KB | 18.7 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_C | 19 | 9.0 KB | 9.0 KB | 18.0 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_B | 20 | 9.0 KB | 9.0 KB | 18.0 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_G | 18 | 8.6 KB | 8.6 KB | 17.2 KB |
@@ -77,7 +78,6 @@ data, which is the half a codec changes.
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_K | 11 | 5.4 KB | 5.4 KB | 10.9 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_T | 16 | 5.2 KB | 5.2 KB | 10.4 KB |
 | kotlinx-locale-phone-metadata-full | PhoneFormats_A | 15 | 4.9 KB | 4.9 KB | 9.9 KB |
-| kotlinx-locale-number-cldr-full | NumberSymbols | 96 | 6.1 KB | 6.2 KB | 9.7 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_U | 5 | 4.1 KB | 4.1 KB | 8.3 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_N | 12 | 4.0 KB | 4.0 KB | 8.1 KB |
 | kotlinx-locale-number-cldr-full | PluralRuleSets | 63 | 4.0 KB | 4.0 KB | 8.0 KB |
@@ -111,10 +111,10 @@ data, which is the half a codec changes.
 | kotlinx-locale-phone-metadata-full | PhoneFormats | 9 | 0.9 KB | 0.9 KB | 1.7 KB |
 | kotlinx-locale-phone-metadata-full | PhoneFormats_H | 5 | 0.8 KB | 0.8 KB | 1.5 KB |
 | kotlinx-locale-phone-metadata-full | PhoneFormats_F | 5 | 0.6 KB | 0.6 KB | 1.1 KB |
+| kotlinx-locale-datetime-cldr-skeletons | SkeletonAppendFormats | 9 | 0.7 KB | 0.7 KB | 1.1 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_Y | 2 | 0.5 KB | 0.5 KB | 1.0 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_W | 2 | 0.4 KB | 0.4 KB | 0.8 KB |
 | kotlinx-locale-number-cldr-full | PluralRuleIndex | 72 | 0.4 KB | 0.4 KB | 0.7 KB |
-| kotlinx-locale-datetime-cldr-skeletons | SkeletonAppendFormats | 3 | 0.4 KB | 0.4 KB | 0.7 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_O | 1 | 0.3 KB | 0.3 KB | 0.5 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_X | 1 | 0.2 KB | 0.2 KB | 0.5 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_Q | 1 | 0.2 KB | 0.2 KB | 0.5 KB |
