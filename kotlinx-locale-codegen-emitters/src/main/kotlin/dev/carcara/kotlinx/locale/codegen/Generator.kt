@@ -513,12 +513,85 @@ public fun defaultCodecFor(section: String): PayloadCodec =
  * records it could not reach before. Measured, the two together beat either
  * alone by a wider margin than elision manages on its own.
  */
-public fun defaultPackedRootsFor(section: String): Map<String, PayloadCodec>? = if (BundleSection.BY_NAME[section]?.isSparse != true) {
-    null
-} else {
-    mapOf(
-        "utf8Main" to ChainedCodec(KeyElisionCodec(), DeflateCodec(Packing.ASCII7)),
-        "utf16Main" to ChainedCodec(KeyElisionCodec(), DeflateCodec(Packing.BMP15)),
+/**
+ * Sections whose records are too short to compress.
+ *
+ * A DEFLATE stream carries a block header, and a packed record carries four
+ * characters of inflated length. Records of two to six characters, which is what
+ * these hold, cost more to describe than to store: measured, `ordinalRuleIndex`
+ * grows 260% and `pluralRuleIndex` 143%. Together they are under a kilobyte, so
+ * there is nothing to win by trying harder.
+ */
+private val TOO_SMALL_TO_COMPRESS = setOf("ordinalRuleIndex", "pluralRuleIndex", "numberPatterns")
+
+/**
+ * Sections that compress on one packing and swell on the other.
+ *
+ * `numberSymbols` is 6 KB of two-character records. Packed fifteen bits to a
+ * character it shrinks 27%, because UTF-16 charges by the character and there
+ * are half as many; packed seven bits it grows 18%, because UTF-8 charges by the
+ * character's value and the length header outweighs the record. The two sides
+ * are already separate maps, and the runtime reads the codec id out of the
+ * registry it compiled against, so they are allowed to disagree.
+ */
+private val UTF16_ONLY_COMPRESSION = setOf("numberSymbols")
+
+/**
+ * Sections a reader takes straight out of the map, by something other than a
+ * locale tag.
+ *
+ * Every other table is reached through `resolvedRecord` or `sparseRecordValue`,
+ * which is where a packed record is inflated. These two are keyed by rule id and
+ * read as `ruleSets[id]`, so compressing them hands a plural-rule parser a
+ * DEFLATE stream. They are seven kilobytes between them and would save about one
+ * on the JVM, so the reader change that would let them in is not worth writing.
+ */
+private val READ_OUTSIDE_THE_LOCALE_LOOKUP = setOf("pluralRuleSets", "ordinalRuleSets")
+
+/**
+ * The packed forms a section is written in, or null for one shared readable form.
+ *
+ * Key elision runs first where there are keys to elide, which is every sparse
+ * section: they sit between the values, so removing them does not only delete
+ * those bytes, it lets DEFLATE match text across records it could not reach
+ * before. A resolved section has no repeated keys to hoist, so it is compressed
+ * and nothing more.
+ */
+/**
+ * The packed forms a section is written in, or null for one shared readable form.
+ *
+ * Three, because two questions cut across each other. How a target charges for a
+ * character decides the packing: seven bits where UTF-8 bills by value, fifteen
+ * where UTF-16 bills by the each. Whether the artifact reaches the consumer
+ * compressed decides whether to deflate at all: a jar, an aar and a native
+ * binary ship as they are, so compressing pays, while a Kotlin/JS bundle is
+ * gzipped in transit and gzip cannot compress what is already compressed.
+ *
+ * So the JS family gets the records readable and lets gzip do the work, and the
+ * two binary families get them deflated in the packing each one bills least for.
+ *
+ * Key elision runs first where there are keys to elide, which is every sparse
+ * section, and it helps all three: the keys sit between the values, so removing
+ * them does not only delete those bytes, it lets whichever compressor runs match
+ * text across records it could not reach before.
+ */
+public fun defaultPackedRootsFor(section: String): Map<String, PayloadCodec>? {
+    if (section in READ_OUTSIDE_THE_LOCALE_LOOKUP) return null
+    val sparse = BundleSection.BY_NAME[section]?.isSparse == true
+    val elision = if (sparse) KeyElisionCodec() else null
+    val plain: PayloadCodec = elision ?: PayloadCodec.Identity
+    if (section in TOO_SMALL_TO_COMPRESS) {
+        // Nothing to gain from deflating, but the keys still come out where
+        // there are any, so a sparse section keeps that half on every target.
+        if (elision == null) return null
+        return mapOf("utf8PlainMain" to plain, "utf8DeflatedMain" to plain, "utf16Main" to plain)
+    }
+    fun deflated(packing: Packing): PayloadCodec =
+        if (elision != null) ChainedCodec(elision, DeflateCodec(packing)) else DeflateCodec(packing)
+    return mapOf(
+        "utf8PlainMain" to plain,
+        "utf8DeflatedMain" to if (section in UTF16_ONLY_COMPRESSION) plain else deflated(Packing.ASCII7),
+        "utf16Main" to deflated(Packing.BMP15),
     )
 }
 

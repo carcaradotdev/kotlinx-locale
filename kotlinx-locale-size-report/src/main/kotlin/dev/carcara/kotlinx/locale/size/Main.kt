@@ -31,17 +31,24 @@ public fun main(args: Array<String>) {
         "report" -> {
             val root = File(args[1])
             val out = File(args[2])
-            val tables = GeneratedData.tablesOf(readWorkingTree(root))
+            val sources = readWorkingTree(root)
+            val byPlatform = GeneratedData.PLATFORMS.mapValues { (_, sets) ->
+                GeneratedData.tablesOf(sources, sets)
+            }
             out.parentFile?.mkdirs()
-            out.writeText(DataSizeDocument.render(tables))
-            println("[size] ${tables.size} tables measured into $out")
+            out.writeText(DataSizeDocument.render(byPlatform))
+            println("[size] ${byPlatform.values.first().size} tables measured into $out")
         }
 
         "compare" -> {
             val root = File(args[1])
             val ref = args.getOrElse(2) { "origin/main" }
-            val after = GeneratedData.tablesOf(readWorkingTree(root))
-            val before = GeneratedData.tablesOf(readGitRef(root, ref))
+            // Both sides read through the same platform selection, so a
+            // comparison against a ref that packed its data differently still
+            // compares what one platform paid then against what it pays now.
+            val platform = GeneratedData.PLATFORMS.getValue("Android, JVM")
+            val after = GeneratedData.tablesOf(readWorkingTree(root), platform)
+            val before = GeneratedData.tablesOf(readGitRef(root, ref), platform + "utf8Main")
             println(DataSizeDocument.renderComparison(ref, before, after))
         }
 

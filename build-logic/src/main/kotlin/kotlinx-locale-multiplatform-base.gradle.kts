@@ -169,6 +169,17 @@ kotlin {
     val utf16Targets = listOf("nativeMain").mapNotNull { sourceSets.findByName(it) }
     val utf8Targets = listOf("jvmMain", "androidMain", "jsMain", "wasmJsMain", "wasmWasiMain")
         .mapNotNull { sourceSets.findByName(it) }
+    // A second question, cutting across the first: does the artifact reach the
+    // consumer compressed?
+    //
+    // A jar, an aar and a dex do not. Every byte of a string literal is a byte
+    // installed, so compressing the records pays. A Kotlin/JS bundle is gzipped
+    // in transit, and gzip cannot compress what is already compressed, so
+    // pre-compressing there trades a smaller file for a larger download. Both
+    // families charge UTF-8 per character, so they share a packing and differ
+    // only in whether the data is deflated at all.
+    val deflatedTargets = listOf("jvmMain", "androidMain").mapNotNull { sourceSets.findByName(it) }
+    val plainTargets = listOf("jsMain", "wasmJsMain", "wasmWasiMain").mapNotNull { sourceSets.findByName(it) }
     if (utf16Targets.isNotEmpty()) {
         val utf16Main by sourceSets.creating { dependsOn(sourceSets.getByName("commonMain")) }
         utf16Targets.forEach { it.dependsOn(utf16Main) }
@@ -178,6 +189,16 @@ kotlin {
     if (utf8Targets.isNotEmpty()) {
         val utf8Main by sourceSets.creating { dependsOn(sourceSets.getByName("commonMain")) }
         utf8Targets.forEach { it.dependsOn(utf8Main) }
+        // The unpacking lives in utf8Main, which both of these inherit; only the
+        // data differs, so only the data needs a source set of its own.
+        if (deflatedTargets.isNotEmpty()) {
+            val utf8DeflatedMain by sourceSets.creating { dependsOn(utf8Main) }
+            deflatedTargets.forEach { it.dependsOn(utf8DeflatedMain) }
+        }
+        if (plainTargets.isNotEmpty()) {
+            val utf8PlainMain by sourceSets.creating { dependsOn(utf8Main) }
+            plainTargets.forEach { it.dependsOn(utf8PlainMain) }
+        }
         val utf8Test by sourceSets.creating { dependsOn(sourceSets.getByName("commonTest")) }
         listOf("jvmTest", "androidHostTest", "jsTest", "wasmJsTest", "wasmWasiTest")
             .mapNotNull { sourceSets.findByName(it) }
