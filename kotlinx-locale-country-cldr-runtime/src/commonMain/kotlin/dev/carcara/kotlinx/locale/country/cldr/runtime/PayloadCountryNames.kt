@@ -37,14 +37,29 @@ import dev.carcara.kotlinx.locale.internal.supportedLocalesOf
  * inheritance chain and honors the `parentLocales` overrides: `es-AR` reads its
  * names from `es-419`.
  */
-public class PayloadCountryNames(private val records: Map<String, String>) : CountryNameSource {
+public class PayloadCountryNames private constructor(
+    private val lookup: (String, Locale) -> String?,
+    supported: () -> Set<Locale>,
+) : CountryNameSource {
 
-    override val supportedLocales: Set<Locale> by lazy {
-        supportedLocalesOf(records)
-    }
+    /**
+     * Over a table of records, which is what a generated build hands it.
+     */
+    public constructor(records: Map<String, String>) : this(
+        { alpha2, locale -> sparseRecordValue(records, locale, field = 1, fieldCount = 2, key = alpha2) },
+        { supportedLocalesOf(records) },
+    )
 
-    override fun countryNameOrNull(alpha2: String, locale: Locale): String? =
-        sparseRecordValue(records, locale, field = 1, fieldCount = 2, key = alpha2)
+    /**
+     * Over a lookup somebody else owns, which is what the shipped artifact hands
+     * it: the table lives in `kotlinx-locale-territory-cldr-full`, where the
+     * language domain can read it too.
+     */
+    public constructor(lookup: (String, Locale) -> String?, supported: Set<Locale>) : this(lookup, { supported })
+
+    override val supportedLocales: Set<Locale> by lazy(supported)
+
+    override fun countryNameOrNull(alpha2: String, locale: Locale): String? = lookup(alpha2, locale)
 
     public companion object
 }

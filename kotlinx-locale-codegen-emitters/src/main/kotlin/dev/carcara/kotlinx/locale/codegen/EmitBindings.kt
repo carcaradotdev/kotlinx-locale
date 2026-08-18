@@ -42,6 +42,22 @@ public class BindingSpec(
     /** What the header credits the data to. */
     public val source: String,
 ) {
+
+    /**
+     * The object holding the territory names, fully qualified.
+     *
+     * Derived from [registryPackage] rather than passed, because it is the same
+     * table: the registry package names where the data was written, and the
+     * object sits one package above it. A shipped build writes both into
+     * `...territory.cldr`, and a generated build writes them into whatever
+     * package the plugin was given.
+     */
+    public val territoryObject: String
+        get() = registryPackage.removeSuffix(".internal.data") + "." + territoryName
+
+    /** The object's simple name, which the shipped and generated builds share. */
+    public val territoryName: String get() = "CldrTerritory"
+
     public companion object
 }
 
@@ -85,17 +101,22 @@ public fun emitCountryBinding(outputRoot: File, spec: BindingSpec) {
                 "dev.carcara.kotlinx.locale.country.cldr.runtime.PayloadCountryNames",
                 "dev.carcara.kotlinx.locale.country.countryForDisplayNameOrNull",
                 "dev.carcara.kotlinx.locale.country.displayName",
-                "${spec.registryPackage}.countryNamesRegistry",
+                "${spec.territoryObject}",
             ),
         ) + """
         |
         |/**
         | * The country names this build carries.
         | *
-        | * The lookup lives in `kotlinx-locale-country-cldr-runtime`; all this object
-        | * contributes is the table.
+        | * The table is the territory one, because the language domain needs the
+        | * same names for `regionName` and used to carry its own copy of all of
+        | * them. The lookup lives in `kotlinx-locale-country-cldr-runtime`. What
+        | * this object contributes is the `Country`-typed view of both.
         | */
-        |public object ${spec.objectName} : CountryNameSource by PayloadCountryNames(countryNamesRegistry)
+        |public object ${spec.objectName} : CountryNameSource by PayloadCountryNames(
+        |    ${spec.territoryName}::nameOrNull,
+        |    ${spec.territoryName}.supportedLocales,
+        |)
         |
         |/**
         | * The country name for [locale], resolved through the locale's inheritance

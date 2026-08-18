@@ -63,6 +63,7 @@ val published = listOf(
     "kotlinx-locale-country-core",
     "kotlinx-locale-country-cldr-runtime",
     "kotlinx-locale-country-cldr-full",
+    "kotlinx-locale-territory-cldr-full",
     "kotlinx-locale-country-platform",
     "kotlinx-locale-country-serialization",
     "kotlinx-locale-language-core",

@@ -14,6 +14,13 @@
  * limitations under the License.
  */
 
+// The territory names, which the country domain and the language domain both
+// need and which used to ship in each of them.
+//
+// A module of its own rather than a dependency from one domain on the other, so
+// that neither pays for the other's types: the table is keyed by alpha-2 code
+// rather than by `Country`, so a language picker asking for region names does
+// not compile the 249-entry enum to get them.
 plugins {
     id("kotlinx-locale-multiplatform")
 }
@@ -21,13 +28,10 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            api(project(":kotlinx-locale-country-cldr-runtime"))
-            // The names themselves, shared with the language domain.
-            api(project(":kotlinx-locale-territory-cldr-full"))
+            api(project(":kotlinx-locale-core"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-            implementation(project(":conformance-test-suite"))
         }
     }
 }

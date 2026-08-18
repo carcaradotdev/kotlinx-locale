@@ -21,18 +21,23 @@ package dev.carcara.kotlinx.locale.country.cldr
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.country.Country
 import dev.carcara.kotlinx.locale.country.CountryNameSource
-import dev.carcara.kotlinx.locale.country.cldr.internal.data.countryNamesRegistry
 import dev.carcara.kotlinx.locale.country.cldr.runtime.PayloadCountryNames
 import dev.carcara.kotlinx.locale.country.countryForDisplayNameOrNull
 import dev.carcara.kotlinx.locale.country.displayName
+import dev.carcara.kotlinx.locale.territory.cldr.CldrTerritory
 
 /**
  * The country names this build carries.
  *
- * The lookup lives in `kotlinx-locale-country-cldr-runtime`; all this object
- * contributes is the table.
+ * The table is the territory one, because the language domain needs the
+ * same names for `regionName` and used to carry its own copy of all of
+ * them. The lookup lives in `kotlinx-locale-country-cldr-runtime`. What
+ * this object contributes is the `Country`-typed view of both.
  */
-public object CldrCountry : CountryNameSource by PayloadCountryNames(countryNamesRegistry)
+public object CldrCountry : CountryNameSource by PayloadCountryNames(
+    CldrTerritory::nameOrNull,
+    CldrTerritory.supportedLocales,
+)
 
 /**
  * The country name for [locale], resolved through the locale's inheritance

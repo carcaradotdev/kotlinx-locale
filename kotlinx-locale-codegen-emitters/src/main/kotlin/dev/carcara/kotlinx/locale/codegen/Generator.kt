@@ -215,7 +215,7 @@ public class RegistryPackages private constructor(
         public val SHIPPED: RegistryPackages = RegistryPackages(
             catalog = "dev.carcara.kotlinx.locale.catalog",
             byTable = mapOf(
-                GeneratedTable.COUNTRY_NAMES to "dev.carcara.kotlinx.locale.country.cldr.internal.data",
+                GeneratedTable.COUNTRY_NAMES to "dev.carcara.kotlinx.locale.territory.cldr.internal.data",
                 GeneratedTable.CURRENCY_FORMATS to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.CURRENCY_NAMES to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.CURRENCY_PLURAL_NAMES to "dev.carcara.kotlinx.locale.currency.cldr.plurals.internal.data",
