@@ -338,12 +338,16 @@ private fun resolveCurrencyPluralName(flattener: Flattener, extras: ExtrasResolv
  * script and territory names this locale's own file declares, then its three
  * composition patterns.
  *
- * The territory table here is the unfiltered one, macro-regions included,
- * because naming `es-419` needs `419` and the country enum does not carry it.
- * That means a build taking both this domain and the country domain holds two
- * copies of the ISO 3166-1 names. Deliberate: the alternative is a locale name
- * that cannot name its own region unless the consumer also took the country
- * artifact, which is a surprising way for the flagship call to fail.
+ * The territory names this writes are only the ones the shared territory table
+ * does not carry: the macro-regions and the codes that are not countries, `419`
+ * and `EU` and `ZZ`. Naming `es-419` needs `419`, and the country table has no
+ * entry for it.
+ *
+ * The ISO 3166-1 names used to be written here as well, which meant a build
+ * taking this domain and the country domain held two copies of all 54118 of
+ * them. They now live once, in `kotlinx-locale-territory-cldr-full`, which this
+ * domain depends on, so `regionName` still answers for every code without a
+ * consumer having to take the country artifact to get it.
  */
 fun buildLocaleDisplayNamePayloads(flattener: Flattener, extras: ExtrasResolver): Map<String, String> {
     fun entries(map: Map<String, String>): String = map.entries

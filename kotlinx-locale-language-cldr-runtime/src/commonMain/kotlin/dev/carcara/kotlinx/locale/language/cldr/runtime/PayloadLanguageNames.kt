@@ -57,7 +57,19 @@ private const val SHORT_SUFFIX = "#short"
  * which is what keeps the table from repeating every English name under every
  * English variant.
  */
-public class PayloadLanguageNames(private val records: Map<String, String>) : LanguageNameSource {
+public class PayloadLanguageNames(
+    private val records: Map<String, String>,
+    /**
+     * The shared territory names, or nothing.
+     *
+     * A parameter rather than a direct dependency, because this module is the
+     * lookup and knows about no table at all: the shipped artifact passes the
+     * one in `kotlinx-locale-territory-cldr-full`, and a generated build passes
+     * whatever the plugin wrote. The default answers nothing, which is what a
+     * build that generated no territory table needs.
+     */
+    private val territoryNames: (String, Locale) -> String? = { _, _ -> null },
+) : LanguageNameSource {
 
     override val supportedLocales: Set<Locale> by lazy { supportedLocalesOf(records) }
 
@@ -74,7 +86,12 @@ public class PayloadLanguageNames(private val records: Map<String, String>) : La
         sparseRecordValue(records, locale, field = 2, fieldCount = FIELD_COUNT, key = code)
 
     override fun regionNameOrNull(code: String, locale: Locale): String? =
-        sparseRecordValue(records, locale, field = 3, fieldCount = FIELD_COUNT, key = code)
+        // The shared territory table first, then this locale's own field. The
+        // two are disjoint: everything CLDR calls a country lives in the shared
+        // one, and what is left here is the macro-regions and the codes that
+        // are not countries, `419` and `EU` and `ZZ`.
+        territoryNames(code, locale)
+            ?: sparseRecordValue(records, locale, field = 3, fieldCount = FIELD_COUNT, key = code)
 
     /**
      * The three patterns, walked up the chain together rather than one at a

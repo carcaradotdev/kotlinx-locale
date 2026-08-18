@@ -37,10 +37,8 @@ import dev.carcara.kotlinx.locale.internal.supportedLocalesOf
  * inheritance chain and honors the `parentLocales` overrides: `es-AR` reads its
  * names from `es-419`.
  */
-public class PayloadCountryNames private constructor(
-    private val lookup: (String, Locale) -> String?,
-    supported: () -> Set<Locale>,
-) : CountryNameSource {
+public class PayloadCountryNames private constructor(private val lookup: (String, Locale) -> String?, supported: () -> Set<Locale>) :
+    CountryNameSource {
 
     /**
      * Over a table of records, which is what a generated build hands it.

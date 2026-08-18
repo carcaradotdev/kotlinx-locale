@@ -24,7 +24,7 @@ public fun emitLanguageBinding(outputRoot: File, spec: BindingSpec) {
     file.writeText(
         preamble(
             spec,
-            listOf(
+            listOfNotNull(
                 "dev.carcara.kotlinx.locale.Locale",
                 "dev.carcara.kotlinx.locale.language.LanguageDisplay",
                 "dev.carcara.kotlinx.locale.language.LanguageNameSource",
@@ -36,7 +36,11 @@ public fun emitLanguageBinding(outputRoot: File, spec: BindingSpec) {
                 "dev.carcara.kotlinx.locale.language.regionName",
                 "dev.carcara.kotlinx.locale.language.scriptName",
                 "${spec.registryPackage}.localeDisplayNamesRegistry",
+                if (spec.hasSharedTerritory) null else "dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi",
+                if (spec.hasSharedTerritory) null else "dev.carcara.kotlinx.locale.internal.sparseRecordValue",
+                if (spec.hasSharedTerritory) spec.territoryObject else "${spec.registryPackage}.countryNamesRegistry",
             ),
+            fileAnnotation = "@file:OptIn(InternalKotlinxLocaleApi::class)".takeIf { !spec.hasSharedTerritory },
         ) + """
         |
         |/**
@@ -46,7 +50,7 @@ public fun emitLanguageBinding(outputRoot: File, spec: BindingSpec) {
         | * `kotlinx-locale-language-cldr-runtime` and `-core`; all this object
         | * contributes is the table.
         | */
-        |public object ${spec.objectName} : LanguageNameSource by PayloadLanguageNames(localeDisplayNamesRegistry)
+        |public object ${spec.objectName} : LanguageNameSource by ${spec.languageNamesArgument()}
         |
         |/**
         | * This locale's name written in [inLocale], e.g. `Brazilian Portuguese` for
