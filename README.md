@@ -191,6 +191,7 @@ locale-country-types = { module = "dev.carcara:kotlinx-locale-country-types", ve
 locale-country-core = { module = "dev.carcara:kotlinx-locale-country-core", version.ref = "kotlinx-locale" }
 locale-country-cldr-runtime = { module = "dev.carcara:kotlinx-locale-country-cldr-runtime", version.ref = "kotlinx-locale" }
 locale-country-cldr-full = { module = "dev.carcara:kotlinx-locale-country-cldr-full", version.ref = "kotlinx-locale" }
+locale-territory-cldr-full = { module = "dev.carcara:kotlinx-locale-territory-cldr-full", version.ref = "kotlinx-locale" }
 locale-country-platform = { module = "dev.carcara:kotlinx-locale-country-platform", version.ref = "kotlinx-locale" }
 locale-country-serialization = { module = "dev.carcara:kotlinx-locale-country-serialization", version.ref = "kotlinx-locale" }
 
@@ -392,6 +393,7 @@ plugin flag beside the artifact for every domain that has one.
 | `kotlinx-locale-country-core` | `alpha2`, the `for*` lookups, and `CountryNameSource` with the total operations and the fallback composer over it. |
 | `kotlinx-locale-country-cldr-runtime` | The country-name lookup over CLDR-shaped name records, and none of the records. The table is a constructor argument, which is what a narrowed build binds its own to. |
 | `kotlinx-locale-country-cldr-full` | `-cldr-runtime` plus the CLDR name tables for all 1121 locales: `CldrCountry` and `Country.displayName`. |
+| `kotlinx-locale-territory-cldr-full` | The CLDR territory names, keyed by alpha-2 code. Comes with the country and language tables rather than being named directly. |
 | `kotlinx-locale-country-platform` | `PlatformCountry`: country names from `java.util.Locale`, `Intl.DisplayNames` or `NSLocale`. Ships no tables. |
 | `kotlinx-locale-country-serialization` | One `Country` serializer per ISO 3166-1 code (alpha-2, alpha-3, numeric), plus a lenient reader that takes all three and writes alpha-2. |
 | `kotlinx-locale-language-core` | `LanguageNameSource` and the locale display name algorithm of UTS #35 Part 2: how a language name and its unconsumed subtags compose into `Serbian (Cyrillic)`. |
@@ -894,6 +896,7 @@ and it is why the zone tests skip where a zone cannot be built.
 | `kotlinx-locale-core` | 🟢 | 🟢 | 🟢 | 🟢 |
 | `kotlinx-locale-types` | 🟢 | 🟢 | 🟢 | 🟢 |
 | `kotlinx-locale-country-cldr-full` | 🟢 | 🟢 | 🟢 | 🟢 |
+| `kotlinx-locale-territory-cldr-full` | 🟢 | 🟢 | 🟢 | 🟢 |
 | `kotlinx-locale-currency-cldr-full` | 🟢 | 🟢 | 🟢 | 🟢 |
 | `kotlinx-locale-datetime-cldr-full` | 🟢 | 🟢 | 🟢 | 🟢 |
 | `kotlinx-locale-datetime-cldr-skeletons` | 🟢 | 🟢 | 🟢 | 🟢 |

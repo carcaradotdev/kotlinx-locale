@@ -42,7 +42,56 @@ public class BindingSpec(
     /** What the header credits the data to. */
     public val source: String,
 ) {
-    public companion object
+
+    /**
+     * The object holding the territory names, fully qualified.
+     *
+     * Two domains read it and neither owns it, so it cannot be derived from
+     * either one's registry package. A shipped build finds it under the
+     * library's own package; a generated build finds it under the one the
+     * plugin was given, which is the package every generated table shares.
+     */
+    public val territoryObject: String
+        get() = "$SHIPPED_PACKAGE_ROOT.territory.cldr.$territoryName"
+
+    /** The object's simple name. */
+    public val territoryName: String get() = "CldrTerritory"
+
+    /**
+     * True when the territory names live in a module of their own, which only
+     * the shipped layout has.
+     *
+     * A generated build writes every table into one package, so there is no
+     * separate object to read and the binding takes the registry directly. The
+     * table is the same either way; only who owns it differs.
+     */
+    public val hasSharedTerritory: Boolean get() = registryPackage.startsWith(SHIPPED_PACKAGE_ROOT)
+
+    /** How the country binding reaches the names, which differs by layout. */
+    public fun countryNamesArgument(): String = if (hasSharedTerritory) {
+        "PayloadCountryNames(\n        |    $territoryName::nameOrNull,\n        |    $territoryName.supportedLocales,\n        |)"
+    } else {
+        "PayloadCountryNames(countryNamesRegistry)"
+    }
+
+    /**
+     * How the language binding reaches the territory names.
+     *
+     * A generated build has both tables in one package, so it passes a lookup
+     * over its own country registry rather than an object it does not have.
+     */
+    public fun languageNamesArgument(): String = if (hasSharedTerritory) {
+        "PayloadLanguageNames(\n        |    localeDisplayNamesRegistry,\n        |    $territoryName::nameOrNull,\n        |)"
+    } else {
+        "PayloadLanguageNames(\n        |    localeDisplayNamesRegistry,\n        |    { code, locale -> " +
+            "sparseRecordValue(countryNamesRegistry, locale, field = 1, fieldCount = 2, key = code) },\n        |)"
+    }
+
+    public companion object {
+
+        /** Where the shipped artifacts live, which a generated build never matches. */
+        private const val SHIPPED_PACKAGE_ROOT = "dev.carcara.kotlinx.locale"
+    }
 }
 
 /**
@@ -85,17 +134,19 @@ public fun emitCountryBinding(outputRoot: File, spec: BindingSpec) {
                 "dev.carcara.kotlinx.locale.country.cldr.runtime.PayloadCountryNames",
                 "dev.carcara.kotlinx.locale.country.countryForDisplayNameOrNull",
                 "dev.carcara.kotlinx.locale.country.displayName",
-                "${spec.registryPackage}.countryNamesRegistry",
+                if (spec.hasSharedTerritory) spec.territoryObject else "${spec.registryPackage}.countryNamesRegistry",
             ),
         ) + """
         |
         |/**
         | * The country names this build carries.
         | *
-        | * The lookup lives in `kotlinx-locale-country-cldr-runtime`; all this object
-        | * contributes is the table.
+        | * The table is the territory one, because the language domain needs the
+        | * same names for `regionName` and used to carry its own copy of all of
+        | * them. The lookup lives in `kotlinx-locale-country-cldr-runtime`. What
+        | * this object contributes is the `Country`-typed view of both.
         | */
-        |public object ${spec.objectName} : CountryNameSource by PayloadCountryNames(countryNamesRegistry)
+        |public object ${spec.objectName} : CountryNameSource by ${spec.countryNamesArgument()}
         |
         |/**
         | * The country name for [locale], resolved through the locale's inheritance

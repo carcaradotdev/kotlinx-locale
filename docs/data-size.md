@@ -23,9 +23,9 @@ and `docs/size.md` measures that end for Kotlin/JS.
 
 | module | Android, JVM | Kotlin/JS, Wasm | Kotlin/Native |
 | --- | ---: | ---: | ---: |
-| kotlinx-locale-language-cldr-full | 1,097.4 KB | 2,555.9 KB | 1,078.4 KB |
+| kotlinx-locale-language-cldr-full | 729.6 KB | 1,699.2 KB | 730.8 KB |
 | kotlinx-locale-currency-cldr-full | 453.7 KB | 1,065.0 KB | 451.8 KB |
-| kotlinx-locale-country-cldr-full | 408.8 KB | 844.0 KB | 387.7 KB |
+| kotlinx-locale-territory-cldr-full | 408.8 KB | 844.0 KB | 387.7 KB |
 | kotlinx-locale-currency-cldr-plurals | 376.6 KB | 1,161.9 KB | 420.4 KB |
 | kotlinx-locale-timezone-cldr-full | 365.9 KB | 1,693.1 KB | 370.9 KB |
 | kotlinx-locale-timezone-cldr-cities | 306.7 KB | 674.2 KB | 303.5 KB |
@@ -38,14 +38,14 @@ and `docs/size.md` measures that end for Kotlin/JS.
 | kotlinx-locale-datetime-cldr-durations | 66.4 KB | 529.0 KB | 62.4 KB |
 | kotlinx-locale-personname-cldr-full | 48.4 KB | 266.4 KB | 60.2 KB |
 | kotlinx-locale-currency-types | 6.6 KB | 6.6 KB | 13.1 KB |
-| **total** | **3,911.3 KB** | **10,609.8 KB** | **4,134.1 KB** |
+| **total** | **3,543.4 KB** | **9,753.1 KB** | **3,786.6 KB** |
 
 ## By table
 
 | module | table | constants | Android, JVM | Kotlin/JS, Wasm | Kotlin/Native |
 | --- | --- | ---: | ---: | ---: | ---: |
-| kotlinx-locale-language-cldr-full | LocaleDisplayNames | 757 | 1,043.2 KB | 2,501.7 KB | 970.0 KB |
-| kotlinx-locale-country-cldr-full | CountryNames | 696 | 403.7 KB | 838.9 KB | 377.5 KB |
+| kotlinx-locale-language-cldr-full | LocaleDisplayNames | 755 | 681.7 KB | 1,651.4 KB | 635.1 KB |
+| kotlinx-locale-territory-cldr-full | CountryNames | 696 | 403.7 KB | 838.9 KB | 377.5 KB |
 | kotlinx-locale-currency-cldr-full | CurrencyNames | 832 | 397.9 KB | 943.0 KB | 372.4 KB |
 | kotlinx-locale-timezone-cldr-full | TimeZoneNames | 635 | 324.7 KB | 1,647.9 KB | 303.9 KB |
 | kotlinx-locale-currency-cldr-plurals | CurrencyPluralNames | 613 | 312.5 KB | 1,097.8 KB | 292.2 KB |
@@ -57,8 +57,8 @@ and `docs/size.md` measures that end for Kotlin/JS.
 | kotlinx-locale-datetime-cldr-skeletons | SkeletonFormats | 251 | 66.4 KB | 140.5 KB | 62.7 KB |
 | kotlinx-locale-datetime-cldr-durations | DurationUnits | 183 | 66.4 KB | 529.0 KB | 62.4 KB |
 | kotlinx-locale-currency-cldr-plurals | CurrencyPluralNamesRegistryPacked | 1 | 64.1 KB | 64.1 KB | 128.2 KB |
-| kotlinx-locale-language-cldr-full | LocaleDisplayNamesRegistryPacked | 1 | 54.2 KB | 54.2 KB | 108.5 KB |
 | kotlinx-locale-datetime-cldr-skeletons | SkeletonNames | 319 | 52.7 KB | 99.3 KB | 50.4 KB |
+| kotlinx-locale-language-cldr-full | LocaleDisplayNamesRegistryPacked | 1 | 47.8 KB | 47.8 KB | 95.7 KB |
 | kotlinx-locale-personname-cldr-full | PersonNames | 138 | 34.6 KB | 252.6 KB | 32.8 KB |
 | kotlinx-locale-timezone-cldr-full | TimeZoneNamesRegistryPacked | 1 | 26.0 KB | 26.0 KB | 52.0 KB |
 | kotlinx-locale-currency-cldr-full | CurrencyNamesRegistryPacked | 1 | 24.6 KB | 24.6 KB | 49.2 KB |
@@ -84,7 +84,7 @@ and `docs/size.md` measures that end for Kotlin/JS.
 | kotlinx-locale-phone-metadata-full | PhoneFormats_I | 10 | 5.7 KB | 5.7 KB | 11.3 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_K | 11 | 5.4 KB | 5.4 KB | 10.9 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_T | 16 | 5.2 KB | 5.2 KB | 10.4 KB |
-| kotlinx-locale-country-cldr-full | CountryNamesRegistryPacked | 1 | 5.1 KB | 5.1 KB | 10.2 KB |
+| kotlinx-locale-territory-cldr-full | CountryNamesRegistryPacked | 1 | 5.1 KB | 5.1 KB | 10.2 KB |
 | kotlinx-locale-phone-metadata-full | PhoneFormats_A | 15 | 4.9 KB | 4.9 KB | 9.9 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_U | 5 | 4.1 KB | 4.1 KB | 8.3 KB |
 | kotlinx-locale-phone-metadata-full | PhoneTerritories_N | 12 | 4.0 KB | 4.0 KB | 8.1 KB |
@@ -148,7 +148,6 @@ and `docs/size.md` measures that end for Kotlin/JS.
 | kotlinx-locale-number-cldr-full | CompactShortRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-personname-cldr-full | PersonNamesRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-timezone-cldr-full | TimeZoneFormatsRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
-| kotlinx-locale-country-cldr-full | CountryNamesRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-currency-cldr-full | CurrencyFormatsRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-currency-cldr-plurals | CurrencyPluralNamesRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-datetime-cldr-durations | DurationUnitsRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
@@ -156,6 +155,7 @@ and `docs/size.md` measures that end for Kotlin/JS.
 | kotlinx-locale-datetime-cldr-relative | RelativeTimeRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-language-cldr-full | LocaleDisplayNamesRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-number-cldr-full | NumberSymbolsRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
+| kotlinx-locale-territory-cldr-full | CountryNamesRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-timezone-cldr-cities | TimeZoneCitiesRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-timezone-cldr-full | TimeZoneFormatsRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-number-cldr-full | NumberSymbolsRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |

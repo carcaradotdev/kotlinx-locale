@@ -22,6 +22,10 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(project(":kotlinx-locale-language-cldr-runtime"))
+            // The territory names, shared with the country domain rather than
+            // copied into this one. Transitive, so `regionName` answers for
+            // every code without a consumer taking the country artifact.
+            api(project(":kotlinx-locale-territory-cldr-full"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

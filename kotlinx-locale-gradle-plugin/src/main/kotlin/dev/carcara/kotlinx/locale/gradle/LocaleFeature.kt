@@ -150,8 +150,12 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
      */
     LANGUAGE_NAMES(
         dslName = "language.names",
-        tables = setOf(GeneratedTable.LANGUAGE_NAMES),
-        bindings = setOf(GeneratedBinding.LANGUAGE),
+        // The country table too, because it is where the territory names live.
+        // `regionName` reads it for anything CLDR calls a country and its own
+        // table only for the macro-regions, so a build with one and not the
+        // other would answer null for `BR` while answering for `419`.
+        tables = setOf(GeneratedTable.LANGUAGE_NAMES, GeneratedTable.COUNTRY_NAMES),
+        bindings = setOf(GeneratedBinding.LANGUAGE, GeneratedBinding.COUNTRY),
     ),
 
     /**

@@ -29,6 +29,7 @@ import dev.carcara.kotlinx.locale.language.languageName
 import dev.carcara.kotlinx.locale.language.nativeDisplayName
 import dev.carcara.kotlinx.locale.language.regionName
 import dev.carcara.kotlinx.locale.language.scriptName
+import dev.carcara.kotlinx.locale.territory.cldr.CldrTerritory
 
 /**
  * The language, script and region names this build carries.
@@ -37,7 +38,10 @@ import dev.carcara.kotlinx.locale.language.scriptName
  * `kotlinx-locale-language-cldr-runtime` and `-core`; all this object
  * contributes is the table.
  */
-public object CldrLanguage : LanguageNameSource by PayloadLanguageNames(localeDisplayNamesRegistry)
+public object CldrLanguage : LanguageNameSource by PayloadLanguageNames(
+    localeDisplayNamesRegistry,
+    CldrTerritory::nameOrNull,
+)
 
 /**
  * This locale's name written in [inLocale], e.g. `Brazilian Portuguese` for

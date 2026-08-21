@@ -7,7 +7,7 @@
 
 // Library unique name: <dev.carcara:kotlinx-locale-language-cldr-runtime>
 final class dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames : dev.carcara.kotlinx.locale.language/LanguageNameSource { // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames|null[0]
-    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>) // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin/Function2<kotlin/String, dev.carcara.kotlinx.locale/Locale, kotlin/String?> = ...) // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.Function2<kotlin.String,dev.carcara.kotlinx.locale.Locale,kotlin.String?>){}[0]
 
     final val supportedLocales // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.supportedLocales|{}supportedLocales[0]
         final fun <get-supportedLocales>(): kotlin.collections/Set<dev.carcara.kotlinx.locale/Locale> // dev.carcara.kotlinx.locale.language.cldr.runtime/PayloadLanguageNames.supportedLocales.<get-supportedLocales>|<get-supportedLocales>(){}[0]

@@ -154,7 +154,7 @@ private fun generate(rootDir: File, cldrDir: File, icuDir: File) {
 internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.LOCALE_CATALOG, rootDir.sourceRoot("kotlinx-locale-types"))
     .table(GeneratedTable.COUNTRY_ENUM, rootDir.sourceRoot("kotlinx-locale-country-types"))
-    .table(GeneratedTable.COUNTRY_NAMES, rootDir.sourceRoot("kotlinx-locale-country-cldr-full"))
+    .table(GeneratedTable.COUNTRY_NAMES, rootDir.sourceRoot("kotlinx-locale-territory-cldr-full"))
     .table(GeneratedTable.CURRENCY_ENUM, rootDir.sourceRoot("kotlinx-locale-currency-types"))
     .table(GeneratedTable.COUNTRY_CURRENCIES, rootDir.sourceRoot("kotlinx-locale-currency-types"))
     .table(GeneratedTable.CURRENCY_FORMATS, rootDir.sourceRoot("kotlinx-locale-currency-cldr-full"))

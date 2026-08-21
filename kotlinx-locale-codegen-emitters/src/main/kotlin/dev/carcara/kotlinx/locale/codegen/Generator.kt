@@ -215,7 +215,7 @@ public class RegistryPackages private constructor(
         public val SHIPPED: RegistryPackages = RegistryPackages(
             catalog = "dev.carcara.kotlinx.locale.catalog",
             byTable = mapOf(
-                GeneratedTable.COUNTRY_NAMES to "dev.carcara.kotlinx.locale.country.cldr.internal.data",
+                GeneratedTable.COUNTRY_NAMES to "dev.carcara.kotlinx.locale.territory.cldr.internal.data",
                 GeneratedTable.CURRENCY_FORMATS to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.CURRENCY_NAMES to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.CURRENCY_PLURAL_NAMES to "dev.carcara.kotlinx.locale.currency.cldr.plurals.internal.data",
@@ -595,6 +595,38 @@ public fun defaultPackedRootsFor(section: String): Map<String, PayloadCodec>? {
     )
 }
 
+/**
+ * The display-name records without the territory names the country table holds.
+ *
+ * Field 3 is the territory field. What is left after this is the macro-regions
+ * and the codes that are not countries, `419` and `EU` and `ZZ`, which the
+ * country table has no entry for and which `regionName` still has to answer.
+ */
+internal fun withoutSharedTerritories(displayNames: Map<String, String>, countryNames: Map<String, String>): Map<String, String> {
+    val shared = buildSet {
+        for (record in countryNames.values) {
+            val field = record.split(FIELD_SEPARATOR).getOrNull(1) ?: continue
+            for (entry in field.split(LIST_SEPARATOR)) {
+                val separator = entry.indexOf(KEY_SEPARATOR)
+                if (separator > 0) add(entry.substring(0, separator))
+            }
+        }
+    }
+    if (shared.isEmpty()) return displayNames
+    return displayNames.mapValues { (_, record) ->
+        val fields = record.split(FIELD_SEPARATOR).toMutableList()
+        if (fields.size > 3) {
+            fields[3] = fields[3].split(LIST_SEPARATOR)
+                .filterNot { entry ->
+                    val separator = entry.indexOf(KEY_SEPARATOR)
+                    separator > 0 && entry.substring(0, separator) in shared
+                }
+                .joinToString(LIST_SEPARATOR)
+        }
+        fields.joinToString(FIELD_SEPARATOR)
+    }
+}
+
 public fun generateSources(
     bundle: LocaleDataBundle,
     roots: SourceRoots,
@@ -619,7 +651,18 @@ public fun generateSources(
 
     for (spec in PAYLOAD_TABLES) {
         val root = roots[spec.table] ?: continue
-        val payloads = bundle.section(spec.section)
+        val payloads = when (spec.section) {
+            // The territory names live once, in the country section, and both
+            // domains read them from there. The bundle still carries the copy
+            // inside localeDisplayNames, because a bundle describes CLDR rather
+            // than this build's module graph; dropping it here is what stops the
+            // 54118 duplicated entries from reaching an artifact.
+            "localeDisplayNames" -> withoutSharedTerritories(
+                bundle.section(spec.section),
+                bundle.section("countryNames"),
+            )
+            else -> bundle.section(spec.section)
+        }
         check(payloads.isNotEmpty()) {
             "the bundle carries no '${spec.section}' section, but ${spec.table} was asked for. " +
                 "Either the bundle predates that section or generation skipped it."

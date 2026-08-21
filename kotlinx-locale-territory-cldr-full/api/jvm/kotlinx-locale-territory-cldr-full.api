@@ -1,0 +1,6 @@
+public final class dev/carcara/kotlinx/locale/territory/cldr/CldrTerritory {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/territory/cldr/CldrTerritory;
+	public final fun getSupportedLocales ()Ljava/util/Set;
+	public final fun nameOrNull (Ljava/lang/String;Ldev/carcara/kotlinx/locale/Locale;)Ljava/lang/String;
+}
+

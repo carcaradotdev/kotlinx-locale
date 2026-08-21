@@ -22,6 +22,8 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(project(":kotlinx-locale-country-cldr-runtime"))
+            // The names themselves, shared with the language domain.
+            api(project(":kotlinx-locale-territory-cldr-full"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
