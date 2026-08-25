@@ -166,8 +166,14 @@ kotlin {
     //
     // Looked up rather than named, because a narrowed build may have no target
     // on one side, and a source set that belongs to no compilation is an error.
-    val utf16Targets = listOf("nativeMain").mapNotNull { sourceSets.findByName(it) }
-    val utf8Targets = listOf("jvmMain", "androidMain", "jsMain", "wasmJsMain", "wasmWasiMain")
+    // wasmWasi sits with the native targets rather than with the other two Wasm
+    // ones. Kotlin/Wasm-JS compiles a literal to an imported extern whose field
+    // name is the text itself, so it pays UTF-8; wasmWasi stores its own strings
+    // and charges UTF-16 for anything outside Latin-1. Measured on a linked
+    // binary: fifteen bits a character beats seven there by 6.6%, and loses to
+    // it on wasmJs by 39%.
+    val utf16Targets = listOf("nativeMain", "wasmWasiMain").mapNotNull { sourceSets.findByName(it) }
+    val utf8Targets = listOf("jvmMain", "androidMain", "jsMain", "wasmJsMain")
         .mapNotNull { sourceSets.findByName(it) }
     // A second question, cutting across the first: does the artifact reach the
     // consumer compressed?
@@ -179,12 +185,14 @@ kotlin {
     // families charge UTF-8 per character, so they share a packing and differ
     // only in whether the data is deflated at all.
     val deflatedTargets = listOf("jvmMain", "androidMain").mapNotNull { sourceSets.findByName(it) }
-    val plainTargets = listOf("jsMain", "wasmJsMain", "wasmWasiMain").mapNotNull { sourceSets.findByName(it) }
+    val plainTargets = listOf("jsMain", "wasmJsMain").mapNotNull { sourceSets.findByName(it) }
     if (utf16Targets.isNotEmpty()) {
         val utf16Main by sourceSets.creating { dependsOn(sourceSets.getByName("commonMain")) }
         utf16Targets.forEach { it.dependsOn(utf16Main) }
         val utf16Test by sourceSets.creating { dependsOn(sourceSets.getByName("commonTest")) }
-        sourceSets.findByName("nativeTest")?.dependsOn(utf16Test)
+        listOf("nativeTest", "wasmWasiTest")
+            .mapNotNull { sourceSets.findByName(it) }
+            .forEach { it.dependsOn(utf16Test) }
     }
     if (utf8Targets.isNotEmpty()) {
         val utf8Main by sourceSets.creating { dependsOn(sourceSets.getByName("commonMain")) }
