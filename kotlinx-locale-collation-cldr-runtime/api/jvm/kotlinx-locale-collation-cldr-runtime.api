@@ -1,0 +1,16 @@
+public final class dev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadCollation {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadCollation;
+	public final fun install (Ljava/lang/String;)V
+	public final fun tailored (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadCollation$Tailored;
+}
+
+public final class dev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadCollation$Tailored : java/util/Comparator {
+	public static final field Companion Ldev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadCollation$Tailored$Companion;
+	public synthetic fun compare (Ljava/lang/Object;Ljava/lang/Object;)I
+	public fun compare (Ljava/lang/String;Ljava/lang/String;)I
+	public final fun sortKey (Ljava/lang/String;)[I
+}
+
+public final class dev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadCollation$Tailored$Companion {
+}
+

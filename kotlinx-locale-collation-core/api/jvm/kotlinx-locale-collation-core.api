@@ -1,0 +1,21 @@
+public abstract interface class dev/carcara/kotlinx/locale/collation/CollationSource {
+	public static final field Companion Ldev/carcara/kotlinx/locale/collation/CollationSource$Companion;
+	public abstract fun comparatorOrNull (Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/collation/CollationStrength;)Ljava/util/Comparator;
+}
+
+public final class dev/carcara/kotlinx/locale/collation/CollationSource$Companion {
+}
+
+public final class dev/carcara/kotlinx/locale/collation/CollationStrength : java/lang/Enum {
+	public static final field Companion Ldev/carcara/kotlinx/locale/collation/CollationStrength$Companion;
+	public static final field PRIMARY Ldev/carcara/kotlinx/locale/collation/CollationStrength;
+	public static final field SECONDARY Ldev/carcara/kotlinx/locale/collation/CollationStrength;
+	public static final field TERTIARY Ldev/carcara/kotlinx/locale/collation/CollationStrength;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/collation/CollationStrength;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/collation/CollationStrength;
+}
+
+public final class dev/carcara/kotlinx/locale/collation/CollationStrength$Companion {
+}
+

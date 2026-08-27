@@ -67,6 +67,14 @@ val CLDR_REPO = RepoSpec(
         "common/testData/localeIdentifiers",
         // Duration and measurement unit cases, normative for the same reason.
         "common/testData/units",
+        // The root collation table and the per-locale tailorings. FractionalUCA.txt
+        // rather than allkeys_CLDR.txt: allkeys lists no Han at all, Han sorts
+        // below the Kangxi radicals, and every implicit weight scheme puts an
+        // unlisted character above every listed one, so the root order cannot be
+        // expressed there. The radical-stroke order that places Han is in
+        // FractionalUCA's own [radical ...] lines.
+        "common/uca",
+        "common/collation",
     ),
 )
 
@@ -148,6 +156,24 @@ const val EMOJI_VERSION: String = "17.0"
  * header, and parsing fails if it is not this one.
  */
 const val UCD_VERSION: String = "15.1.0"
+
+/**
+ * The Unicode release the collation data comes from, which is not [UCD_VERSION].
+ *
+ * Two subsystems here depend on the UCD and they are held to different
+ * conformance files, so they pin separately rather than agreeing on a number
+ * neither one wants. Segmentation is held to CLDR's `GraphemeBreakTest.txt` and
+ * pins to what that release was built against. Collation is held to the root
+ * table in the same CLDR checkout, and `allkeys_CLDR.txt` there declares
+ * `UCA Version: 17.0.0` and `UCD Version: 17.0.0` in its own header.
+ *
+ * UTS #10 maps a string to collation elements over its canonical decomposition,
+ * so the decomposition data and the weights have to be one release: taking the
+ * mappings from 15.1.0 and the weights from 17.0.0 would disagree about every
+ * character added between them, and it would fail as though the algorithm were
+ * wrong. Checked the same way, against each file's own header where it has one.
+ */
+const val UCA_UCD_VERSION: String = "17.0.0"
 
 fun reposDir(rootDir: File): File = rootDir.resolve("codegen/repos")
 
