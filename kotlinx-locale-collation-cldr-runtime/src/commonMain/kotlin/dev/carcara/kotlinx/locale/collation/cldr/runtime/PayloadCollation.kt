@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package dev.carcara.kotlinx.locale.internal
+package dev.carcara.kotlinx.locale.collation.cldr.runtime
 
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
+import dev.carcara.kotlinx.locale.internal.Normalization
 
 /**
  * Sorting text the way a reader reads it, per UTS #10 and UTS #35 Part 5.

@@ -1,0 +1,19 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-collation-cldr-runtime>
+final object dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation { // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation|null[0]
+    final fun install(kotlin/String) // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.install|install(kotlin.String){}[0]
+    final fun tailored(kotlin/String): dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.tailored|tailored(kotlin.String){}[0]
+
+    final class Tailored : kotlin/Comparator<kotlin/String> { // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored|null[0]
+        final fun compare(kotlin/String, kotlin/String): kotlin/Int // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored.compare|compare(kotlin.String;kotlin.String){}[0]
+        final fun sortKey(kotlin/String): kotlin/IntArray // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored.sortKey|sortKey(kotlin.String){}[0]
+
+        final object Companion // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored.Companion|null[0]
+    }
+}

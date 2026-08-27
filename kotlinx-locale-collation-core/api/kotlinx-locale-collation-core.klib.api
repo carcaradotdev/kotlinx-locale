@@ -1,0 +1,27 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <dev.carcara:kotlinx-locale-collation-core>
+final enum class dev.carcara.kotlinx.locale.collation/CollationStrength : kotlin/Enum<dev.carcara.kotlinx.locale.collation/CollationStrength> { // dev.carcara.kotlinx.locale.collation/CollationStrength|null[0]
+    enum entry PRIMARY // dev.carcara.kotlinx.locale.collation/CollationStrength.PRIMARY|null[0]
+    enum entry SECONDARY // dev.carcara.kotlinx.locale.collation/CollationStrength.SECONDARY|null[0]
+    enum entry TERTIARY // dev.carcara.kotlinx.locale.collation/CollationStrength.TERTIARY|null[0]
+
+    final val entries // dev.carcara.kotlinx.locale.collation/CollationStrength.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.carcara.kotlinx.locale.collation/CollationStrength> // dev.carcara.kotlinx.locale.collation/CollationStrength.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.carcara.kotlinx.locale.collation/CollationStrength // dev.carcara.kotlinx.locale.collation/CollationStrength.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.carcara.kotlinx.locale.collation/CollationStrength> // dev.carcara.kotlinx.locale.collation/CollationStrength.values|values#static(){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.collation/CollationStrength.Companion|null[0]
+}
+
+abstract interface dev.carcara.kotlinx.locale.collation/CollationSource { // dev.carcara.kotlinx.locale.collation/CollationSource|null[0]
+    abstract fun comparatorOrNull(dev.carcara.kotlinx.locale/Locale, dev.carcara.kotlinx.locale.collation/CollationStrength): kotlin/Comparator<kotlin/String>? // dev.carcara.kotlinx.locale.collation/CollationSource.comparatorOrNull|comparatorOrNull(dev.carcara.kotlinx.locale.Locale;dev.carcara.kotlinx.locale.collation.CollationStrength){}[0]
+
+    final object Companion // dev.carcara.kotlinx.locale.collation/CollationSource.Companion|null[0]
+}

@@ -16,9 +16,11 @@
 
 @file:OptIn(InternalKotlinxLocaleApi::class)
 
-package dev.carcara.kotlinx.locale.internal
+package dev.carcara.kotlinx.locale.collation
 
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
+import dev.carcara.kotlinx.locale.collation.cldr.runtime.Collation
+import dev.carcara.kotlinx.locale.internal.Normalization
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
