@@ -44,7 +44,10 @@ class CollationTailoringTest {
     fun everyShippedTailoringAgreesWithIcu() {
         // The generator's inputs come from the pinned CLDR checkout, which a plain
         // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) { println("skipped: no collation data at $dataDir"); return }
+        if (!dataDir.isDirectory) {
+            println("skipped: no collation data at $dataDir")
+            return
+        }
         val root = parseFractionalUca(File(dataDir, "FractionalUCA.txt"))
         val ranks = WeightRanks.of(root)
         val normalization = parseNormalizationData()
@@ -74,7 +77,10 @@ class CollationTailoringTest {
     fun tailoringPlacesTheLettersItsReadersLookFor() {
         // The generator's inputs come from the pinned CLDR checkout, which a plain
         // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) { println("skipped: no collation data at $dataDir"); return }
+        if (!dataDir.isDirectory) {
+            println("skipped: no collation data at $dataDir")
+            return
+        }
         val root = parseFractionalUca(File(dataDir, "FractionalUCA.txt"))
         val ranks = WeightRanks.of(root)
         val normalization = parseNormalizationData()
@@ -110,7 +116,9 @@ class CollationTailoringTest {
         words.addAll(elements)
         for (a in elements.take(26)) {
             for (b in elements.take(26)) words.add(a + b)
-            words.add(a + "a"); words.add("a" + a); words.add(a + "z")
+            words.add(a + "a")
+            words.add("a" + a)
+            words.add(a + "z")
         }
         return words.toList()
     }

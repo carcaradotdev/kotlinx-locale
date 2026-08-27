@@ -6,14 +6,14 @@
 // - Show declarations: true
 
 // Library unique name: <dev.carcara:kotlinx-locale-collation-cldr-runtime>
-final object dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation { // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation|null[0]
-    final fun install(kotlin/String) // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.install|install(kotlin.String){}[0]
-    final fun tailored(kotlin/String): dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.tailored|tailored(kotlin.String){}[0]
+final object dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation { // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation|null[0]
+    final fun install(kotlin/String) // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.install|install(kotlin.String){}[0]
+    final fun tailored(kotlin/String): dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.tailored|tailored(kotlin.String){}[0]
 
-    final class Tailored : kotlin/Comparator<kotlin/String> { // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored|null[0]
-        final fun compare(kotlin/String, kotlin/String): kotlin/Int // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored.compare|compare(kotlin.String;kotlin.String){}[0]
-        final fun sortKey(kotlin/String): kotlin/IntArray // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored.sortKey|sortKey(kotlin.String){}[0]
+    final class Tailored : kotlin/Comparator<kotlin/String> { // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored|null[0]
+        final fun compare(kotlin/String, kotlin/String): kotlin/Int // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored.compare|compare(kotlin.String;kotlin.String){}[0]
+        final fun sortKey(kotlin/String): kotlin/IntArray // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored.sortKey|sortKey(kotlin.String){}[0]
 
-        final object Companion // dev.carcara.kotlinx.locale.collation.cldr.runtime/Collation.Tailored.Companion|null[0]
+        final object Companion // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored.Companion|null[0]
     }
 }

@@ -41,7 +41,10 @@ class CollationCodegenTest {
     fun rootTableMatchesTheValidatedReference() {
         // The generator's inputs come from the pinned CLDR checkout, which a plain
         // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) { println("skipped: no collation data at $dataDir"); return }
+        if (!dataDir.isDirectory) {
+            println("skipped: no collation data at $dataDir")
+            return
+        }
         val source = File(dataDir, "FractionalUCA.txt")
         val expectedFile = File(dataDir, "root_table.txt")
 
@@ -87,7 +90,10 @@ class CollationCodegenTest {
     fun hanIsOrderedByRadicalStroke() {
         // The generator's inputs come from the pinned CLDR checkout, which a plain
         // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) { println("skipped: no collation data at $dataDir"); return }
+        if (!dataDir.isDirectory) {
+            println("skipped: no collation data at $dataDir")
+            return
+        }
         val root = parseFractionalUca(File(dataDir, "FractionalUCA.txt"))
         assertEquals(101_996, root.hanOrder.size, "every Unified_Ideograph should be ordered once")
         assertEquals(root.hanOrder.size, root.hanOrder.toSet().size, "no ideograph should appear twice")
@@ -97,7 +103,10 @@ class CollationCodegenTest {
     fun collationRulesAreReadFromCldr() {
         // The generator's inputs come from the pinned CLDR checkout, which a plain
         // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) { println("skipped: no collation data at $dataDir"); return }
+        if (!dataDir.isDirectory) {
+            println("skipped: no collation data at $dataDir")
+            return
+        }
         val czech = collationRules(File(dataDir, "collation/cs.xml"))
         assertTrue(czech.contains("&C<"), "expected the Czech c-caron rule, got: ${czech.take(120)}")
         assertTrue(czech.contains("ch"), "expected the Czech ch digraph rule")

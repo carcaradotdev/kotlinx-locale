@@ -46,14 +46,19 @@ fun tokenizeRules(rules: String): List<RuleToken> {
                 var depth = 1
                 var j = i + 1
                 while (j < text.length && depth > 0) {
-                    if (text[j] == '[') depth++ else if (text[j] == ']') depth--
+                    if (text[j] == '[') {
+                        depth++
+                    } else if (text[j] == ']') {
+                        depth--
+                    }
                     j++
                 }
                 tokens.add(RuleToken(KIND_DIRECTIVE, text.substring(i + 1, j - 1).trim(), null, null))
                 i = j
             }
             ch == '&' -> {
-                tokens.add(RuleToken(KIND_RESET, "", null, null)); i++
+                tokens.add(RuleToken(KIND_RESET, "", null, null))
+                i++
             }
             ch == '<' || ch == '=' -> {
                 var op = ch.toString()
@@ -107,11 +112,7 @@ fun tokenizeRules(rules: String): List<RuleToken> {
  * what ships: a few dozen rows beside a root table of a hundred and fifty
  * thousand.
  */
-class TailoredTable(
-    private val root: CollationRoot,
-    private val ranks: WeightRanks,
-    private val normalization: NormalizationData,
-) {
+class TailoredTable(private val root: CollationRoot, private val ranks: WeightRanks, private val normalization: NormalizationData) {
     private val entries = LinkedHashMap<List<Int>, List<IntArray>>()
     private val prefixed = LinkedHashMap<Pair<Int, Int>, List<IntArray>>()
     private val addedEntries = LinkedHashMap<List<Int>, List<IntArray>>()
@@ -136,14 +137,22 @@ class TailoredTable(
         while (i < points.size) {
             if (i > 0) {
                 val rule = prefixed[points[i - 1] to points[i]]
-                if (rule != null) { out.addAll(rule); i++; continue }
+                if (rule != null) {
+                    out.addAll(rule)
+                    i++
+                    continue
+                }
             }
             var matched: List<IntArray>? = null
             var length = 0
             var take = minOf(longest, points.size - i)
             while (take >= 1) {
                 val candidate = entries[points.subList(i, i + take).toList()]
-                if (candidate != null) { matched = candidate; length = take; break }
+                if (candidate != null) {
+                    matched = candidate
+                    length = take
+                    break
+                }
                 take--
             }
             if (matched == null) {
@@ -235,7 +244,11 @@ class TailoredTable(
                 }
                 KIND_OP -> {
                     val strength = when (token.text) {
-                        "<" -> 1; "<<" -> 2; "<<<" -> 3; "<<<<" -> 4; else -> 0
+                        "<" -> 1
+                        "<<" -> 2
+                        "<<<" -> 3
+                        "<<<<" -> 4
+                        else -> 0
                     }
                     i++
                     if (i < tokens.size && tokens[i].kind == KIND_TEXT) {
@@ -309,8 +322,11 @@ class TailoredTable(
         val contractions = ArrayList<String>()
         for ((key, elements) in addedEntries) {
             val encoded = encodeRankedElements(elements)
-            if (key.size == 1) singles.add(key[0].toString(36) + ":" + encoded)
-            else contractions.add(key.joinToString(".") { it.toString(36) } + ":" + encoded)
+            if (key.size == 1) {
+                singles.add(key[0].toString(36) + ":" + encoded)
+            } else {
+                contractions.add(key.joinToString(".") { it.toString(36) } + ":" + encoded)
+            }
         }
         val prefixes = addedPrefixes.map { (pair, elements) ->
             pair.first.toString(36) + "." + pair.second.toString(36) + ":" + encodeRankedElements(elements)

@@ -19,7 +19,7 @@
 package dev.carcara.kotlinx.locale.collation
 
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
-import dev.carcara.kotlinx.locale.collation.cldr.runtime.Collation
+import dev.carcara.kotlinx.locale.collation.cldr.runtime.PayloadCollation
 import dev.carcara.kotlinx.locale.internal.Normalization
 import java.io.File
 import kotlin.test.Test
@@ -44,16 +44,19 @@ class CollationConformanceJvmTest {
 
     private fun install() {
         Normalization.install(File(dataDir, "norm_table.txt").readText())
-        Collation.install(File(dataDir, "root_table.txt").readText())
+        PayloadCollation.install(File(dataDir, "root_table.txt").readText())
     }
 
     @Test
     fun rootCollationOrdersUnicodesOwnConformanceFile() {
         // The generator's inputs come from the pinned CLDR checkout, which a plain
         // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) { println("skipped: no collation data at $dataDir"); return }
+        if (!dataDir.isDirectory) {
+            println("skipped: no collation data at $dataDir")
+            return
+        }
         install()
-        val collator = Collation.tailored("")
+        val collator = PayloadCollation.tailored("")
         val file = File(dataDir, "CollationTest_CLDR_NON_IGNORABLE_SHORT.txt")
 
         var previous: IntArray? = null
@@ -89,9 +92,12 @@ class CollationConformanceJvmTest {
     fun accentedNamesSortWithTheirBaseLetter() {
         // The generator's inputs come from the pinned CLDR checkout, which a plain
         // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) { println("skipped: no collation data at $dataDir"); return }
+        if (!dataDir.isDirectory) {
+            println("skipped: no collation data at $dataDir")
+            return
+        }
         install()
-        val collator = Collation.tailored("")
+        val collator = PayloadCollation.tailored("")
         val names = listOf("Ísland", "Írland", "Ítalía", "Indland", "Japan", "Simbabve", "Albanía")
         val sorted = names.sortedWith(collator)
 
@@ -105,7 +111,10 @@ class CollationConformanceJvmTest {
     fun normalisationMatchesUnicodesOwnConformanceFile() {
         // The generator's inputs come from the pinned CLDR checkout, which a plain
         // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) { println("skipped: no collation data at $dataDir"); return }
+        if (!dataDir.isDirectory) {
+            println("skipped: no collation data at $dataDir")
+            return
+        }
         install()
         val file = File(dataDir, "NormalizationTest.txt")
 
@@ -123,12 +132,18 @@ class CollationConformanceJvmTest {
                 cases++
                 // c3 == toNFD(c1) == toNFD(c2) == toNFD(c3)
                 for (input in listOf(source, nfc, nfd)) {
-                    if (!Normalization.decompose(input).contentEquals(nfd.toCodePointArray())) { nfdFailures++; break }
+                    if (!Normalization.decompose(input).contentEquals(nfd.toCodePointArray())) {
+                        nfdFailures++
+                        break
+                    }
                 }
                 // c2 == toNFC(c1) == toNFC(c2) == toNFC(c3)
                 for (input in listOf(source, nfc, nfd)) {
                     val composed = Normalization.compose(Normalization.decompose(input))
-                    if (!composed.contentEquals(nfc.toCodePointArray())) { nfcFailures++; break }
+                    if (!composed.contentEquals(nfc.toCodePointArray())) {
+                        nfcFailures++
+                        break
+                    }
                 }
             }
         }

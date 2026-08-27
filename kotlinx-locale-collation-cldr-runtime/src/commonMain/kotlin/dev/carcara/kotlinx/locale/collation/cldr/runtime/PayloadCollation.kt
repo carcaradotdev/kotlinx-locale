@@ -41,7 +41,7 @@ import dev.carcara.kotlinx.locale.internal.Normalization
  * same.
  */
 @InternalKotlinxLocaleApi
-public object Collation {
+public object PayloadCollation {
 
     /** A collation element: one weight per level, zero meaning ignorable. */
     internal class Elements(val primary: IntArray, val secondary: IntArray, val tertiary: IntArray)
@@ -195,7 +195,9 @@ public object Collation {
                 if (i > 0) {
                     val prefixed = prefixes[points[i - 1].toLong() shl 21 or points[i].toLong()]
                     if (prefixed != null) {
-                        out.add(prefixed); i++; continue
+                        out.add(prefixed)
+                        i++
+                        continue
                     }
                 }
                 var matched: Elements? = null
@@ -204,7 +206,9 @@ public object Collation {
                 while (take > 1) {
                     val candidate = contractions[keyOf(points, i, take)]
                     if (candidate != null) {
-                        matched = candidate; length = take; break
+                        matched = candidate
+                        length = take
+                        break
                     }
                     take--
                 }
@@ -214,7 +218,9 @@ public object Collation {
                 }
                 val found = matched
                 if (found == null) {
-                    out.add(implicitFor(points[i])); i++; continue
+                    out.add(implicitFor(points[i]))
+                    i++
+                    continue
                 }
                 var resolved: Elements = found
                 // A following non-starter joins the contraction when nothing
@@ -275,8 +281,7 @@ public object Collation {
         append((codePoint and 0xFFFF).toChar())
     }
 
-    private fun encodePoint(codePoint: Int): String =
-        buildString(2) { appendPoint(codePoint) }
+    private fun encodePoint(codePoint: Int): String = buildString(2) { appendPoint(codePoint) }
 
     private fun decodeElements(encoded: String): Elements {
         val levels = encoded.split('/')

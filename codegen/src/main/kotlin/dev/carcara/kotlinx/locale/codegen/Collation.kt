@@ -220,8 +220,7 @@ class WeightRanks(
                 primaryRanks[weight] = run
                 if (weight == lastRegular) run += IMPLICIT_ROOM
             }
-            fun ranked(values: Collection<List<Int>>) =
-                values.withIndex().associate { (i, v) -> v to (i + 1) * LEVEL_GAP }
+            fun ranked(values: Collection<List<Int>>) = values.withIndex().associate { (i, v) -> v to (i + 1) * LEVEL_GAP }
             return WeightRanks(
                 primaryRanks,
                 ranked(secondaries),
@@ -254,8 +253,11 @@ fun encodeCollationRoot(root: CollationRoot, ranks: WeightRanks): String {
     val contractions = ArrayList<String>()
     for ((key, elements) in root.entries) {
         val encoded = encodeElements(elements.map { ranks.rank(it) })
-        if (key.size == 1) singles.add(base36(key[0]) + ":" + encoded)
-        else contractions.add(key.joinToString(".") { base36(it) } + ":" + encoded)
+        if (key.size == 1) {
+            singles.add(base36(key[0]) + ":" + encoded)
+        } else {
+            contractions.add(key.joinToString(".") { base36(it) } + ":" + encoded)
+        }
     }
     val prefixes = root.prefixed.map { (pair, elements) ->
         base36(pair.first) + "." + base36(pair.second) + ":" + encodeElements(elements.map { ranks.rank(it) })
