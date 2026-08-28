@@ -1,0 +1,10 @@
+public final class dev/carcara/kotlinx/locale/collation/cldr/CldrCollation : dev/carcara/kotlinx/locale/collation/CollationSource {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/collation/cldr/CldrCollation;
+	public fun comparatorOrNull (Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/collation/CollationStrength;)Ljava/util/Comparator;
+}
+
+public final class dev/carcara/kotlinx/locale/collation/cldr/CollationKt {
+	public static final fun collationComparator (Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/collation/CollationStrength;)Ljava/util/Comparator;
+	public static synthetic fun collationComparator$default (Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/collation/CollationStrength;ILjava/lang/Object;)Ljava/util/Comparator;
+}
+

@@ -6,6 +6,8 @@
 # was held to an oracle.
 #
 # domain	locales	cases
+collation-order	905	905
+collation-strength	905	3620
 country-names	905	195957
 currency-formats	905	36200
 currency-minor-units	1	307

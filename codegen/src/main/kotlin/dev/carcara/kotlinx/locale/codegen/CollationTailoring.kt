@@ -33,6 +33,39 @@ private const val KIND_OP = "op"
 private const val KIND_TEXT = "text"
 private const val KIND_DIRECTIVE = "directive"
 
+/**
+ * The items of a starred rule list, one string each.
+ *
+ * Characters stand for themselves, `a-z` is the range between two of them, and a
+ * quoted run is literal so that a locale can list a hyphen. Ranges count in code
+ * points rather than in chars: Japanese lists its era signs that way and they
+ * are all above the basic plane.
+ */
+internal fun expandRuleList(source: String): List<String> {
+    val items = ArrayList<String>()
+    var index = 0
+    while (index < source.length) {
+        if (source[index] == '\'') {
+            index++
+            val literal = StringBuilder()
+            while (index < source.length && source[index] != '\'') literal.append(source[index++])
+            index++
+            if (literal.isNotEmpty()) items.add(literal.toString())
+            continue
+        }
+        val point = source.codePointAt(index)
+        index += Character.charCount(point)
+        if (index < source.length && source[index] == '-' && index + 1 < source.length) {
+            val last = source.codePointAt(index + 1)
+            index += 1 + Character.charCount(last)
+            for (cp in point..last) items.add(String(Character.toChars(cp)))
+        } else {
+            items.add(String(Character.toChars(point)))
+        }
+    }
+    return items
+}
+
 /** Rule text to tokens. Comments, quoting, expansions and prefixes are handled here. */
 fun tokenizeRules(rules: String): List<RuleToken> {
     val text = rules.lines().joinToString("\n") { it.substringBefore('#') }
@@ -63,8 +96,23 @@ fun tokenizeRules(rules: String): List<RuleToken> {
             ch == '<' || ch == '=' -> {
                 var op = ch.toString()
                 while (ch == '<' && i + op.length < text.length && text[i + op.length] == ch) op += ch
-                tokens.add(RuleToken(KIND_OP, op, null, null))
                 i += op.length
+                // `&x <* abcd` is `&x < a < b < c < d`, and `<* a-d` is the same
+                // written as a range. Japanese, Korean, Persian, Pashto and
+                // Chinese all use it, and reading the list as one long piece of
+                // text places a word nobody wrote instead of four letters.
+                if (i < text.length && text[i] == '*') {
+                    i++
+                    while (i < text.length && text[i].isWhitespace()) i++
+                    val start = i
+                    while (i < text.length && !text[i].isWhitespace() && text[i] !in "<=&[") i++
+                    for (item in expandRuleList(text.substring(start, i))) {
+                        tokens.add(RuleToken(KIND_OP, op, null, null))
+                        tokens.add(RuleToken(KIND_TEXT, item, null, null))
+                    }
+                } else {
+                    tokens.add(RuleToken(KIND_OP, op, null, null))
+                }
             }
             else -> {
                 val buffer = StringBuilder()
@@ -112,13 +160,78 @@ fun tokenizeRules(rules: String): List<RuleToken> {
  * what ships: a few dozen rows beside a root table of a hundred and fifty
  * thousand.
  */
-class TailoredTable(private val root: CollationRoot, private val ranks: WeightRanks, private val normalization: NormalizationData) {
+class TailoredTable(
+    private val root: CollationRoot,
+    private val ranks: WeightRanks,
+    private val normalization: NormalizationData,
+    /**
+     * How finely a chain divides the gap it is minting into: the step is a
+     * [spread]th of what is left, never less than one.
+     *
+     * There is no value that suits every locale, which is why it is a parameter
+     * rather than a constant. A large spread steps by one and gives a chain the
+     * whole gap, which is what Japanese needs for its thousands of kana, but it
+     * leaves nothing between two links for a later rule to sit in. A small
+     * spread leaves that room, which is what Tamil needs, and runs out sooner.
+     *
+     * [tailoringFor] tries them in turn. Both orders are correct; they differ
+     * only in where they put the numbers.
+     */
+    private val spread: Int = SPREAD_ROOMY,
+) {
     private val entries = LinkedHashMap<List<Int>, List<IntArray>>()
     private val prefixed = LinkedHashMap<Pair<Int, Int>, List<IntArray>>()
     private val addedEntries = LinkedHashMap<List<Int>, List<IntArray>>()
     private val addedPrefixes = LinkedHashMap<Pair<Int, Int>, List<IntArray>>()
     private val used = Array(3) { sortedSetOf<Int>() }
     private var longest = 1
+
+    /**
+     * Where the reordered groups move to, as `(from, to, newFrom)` over primary
+     * ranks. Empty until a `[reorder ...]` directive says otherwise.
+     */
+    private var reorder: List<IntArray> = emptyList()
+
+    /**
+     * Tertiary ranks that exchange, for `[caseFirst upper]`.
+     *
+     * Always empty today, and the section it writes is always empty with it.
+     * A tertiary weight is a class shared by many characters rather than a
+     * per-letter value, and deriving which class is the capital of which from
+     * the table gives the wrong answer for the ordinary Latin letters: the
+     * pairing that occurs most often across the whole table is not the one
+     * between `a` and `A`. Shipping a swap that is nearly right would reorder
+     * every cased letter in Danish and Maltese by a rule nobody wrote, so the
+     * directive is read and left alone until the class structure is understood.
+     * `conformance/ledger/collation-order.tsv` records the three locales.
+     */
+    private var caseSwap: List<IntArray> = emptyList()
+
+    /**
+     * Whether the secondary level is read back to front, for `[backwards 2]`.
+     *
+     * Canadian French orders words by their last accent rather than their first,
+     * so `côté` sorts before `coté`. It is the one level-ordering rule in CLDR
+     * and it applies to the whole locale.
+     */
+    private var backwardsSecondary = false
+
+    /** Contractions the locale asks to be ignored, by their first code point. */
+    private val suppressed = HashSet<Int>()
+
+    /**
+     * A primary rank after reordering.
+     *
+     * Applied when the sort key is built rather than when the table is loaded,
+     * because the rules that follow the directive anchor on root weights and
+     * have to keep doing so. Reordering is the last thing that happens to a
+     * primary, which is also how ICU does it: it permutes lead bytes after the
+     * tailoring is folded in.
+     */
+    private fun reordered(primary: Int): Int {
+        for (range in reorder) if (primary >= range[0] && primary <= range[1]) return primary - range[0] + range[2]
+        return primary
+    }
 
     init {
         for ((key, elements) in root.entries) {
@@ -145,7 +258,10 @@ class TailoredTable(private val root: CollationRoot, private val ranks: WeightRa
             }
             var matched: List<IntArray>? = null
             var length = 0
-            var take = minOf(longest, points.size - i)
+            // A suppressed first character takes its own weight and never starts
+            // a contraction. Serbian and Macedonian ask for that so that "Ии"
+            // does not swallow the letter after it.
+            var take = if (points[i] in suppressed) 1 else minOf(longest, points.size - i)
             while (take >= 1) {
                 val candidate = entries[points.subList(i, i + take).toList()]
                 if (candidate != null) {
@@ -209,17 +325,66 @@ class TailoredTable(private val root: CollationRoot, private val ranks: WeightRa
         // neighbour, and the gap halves once per chain until it closes.
         val key = Triple(level, after, before ?: -1)
         minted[key]?.let { return it }
-        val next = before ?: (used[level].tailSet(after + 1).firstOrNull() ?: (after + 2 * WeightRanks.BASE_GAP))
-        val value = ((after.toLong() + next.toLong()) / 2).toInt()
+        // The first weight already in use above the anchor, which is the real
+        // ceiling whether or not the rule named one. Taking `before` on its own
+        // was the bug: a rule asking to sit before X would bisect a span that
+        // already had weights in it, land on one of them, and then have to walk,
+        // and walking packs the span solid until the next rule has nowhere left.
+        // Stopping at the first used value instead leaves the whole interval
+        // free by construction, so nothing ever has to walk.
+        val used = used[level].tailSet(after + 1).firstOrNull()
+        val next = when {
+            before != null -> if (used != null && used < before) used else before
+            used != null -> used
+            else -> after + 2 * WeightRanks.BASE_GAP
+        }
+        // Always just above the anchor, never the midpoint.
+        //
+        // The midpoint looks like the fair answer and converges. `[before 3]`
+        // rules chain by anchoring each new weight on the one before it while
+        // keeping the same ceiling, so bisecting halves the same interval once
+        // per rule and closes it after twenty-six. Japanese writes more than
+        // twenty-six of them over its kana.
+        //
+        // Stepping up from the anchor cannot converge, because the interval
+        // above is free by construction: `next` is the first weight already in
+        // use, so nothing else is claiming the space this walks into.
+        //
+        // The step also has a floor, and that is what makes `[before]` work. A
+        // chain that stepped by one would leave adjacent links with no integer
+        // between them, and the next rule asking to sit before one of them would
+        // have nowhere to go. A floor of a two-thousandth of the level's own gap
+        // leaves two thousand links, each with room inside it for the same again.
+        val room = (next.toLong() - after.toLong()).toInt()
+        val step = minOf(maxOf(room / spread, stepFloor(level)), maxOf(1, room - 1))
+        val value = after + step
         require(value > after && value < next) { "no room at level $level between $after and $next" }
-        used[level].add(value)
+        this.used[level].add(value)
         minted[key] = value
         return value
     }
 
+    /**
+     * The smallest step a chain takes at [level], which is what decides how many
+     * links fit in a gap and how much room is left inside each link.
+     *
+     * The two are in tension and the levels want opposite answers. The primary
+     * level has the narrowest gap and the longest chains, because Japanese places
+     * several thousand kana one after another, so it steps by two and leaves one
+     * slot between links. The secondary and tertiary levels have gaps thousands
+     * of times wider and shorter chains, and they are where `[before]` rules
+     * insert, so they leave far more.
+     */
+    private fun stepFloor(level: Int): Int = when (level) {
+        0 -> 2
+        1 -> WeightRanks.LEVEL_GAP / 2048
+        else -> WeightRanks.TERTIARY_GAP / 2048
+    }
+
     private fun predecessor(level: Int, value: Int): Int = used[level].headSet(value).lastOrNull() ?: 0
 
-    fun apply(rules: String) {
+    @JvmOverloads
+    fun apply(rules: String, resolveImport: (String) -> String? = { null }) {
         val tokens = tokenizeRules(rules)
         var anchor: List<IntArray>? = null
         var beforeLevel: Int? = null
@@ -228,7 +393,34 @@ class TailoredTable(private val root: CollationRoot, private val ranks: WeightRa
             val token = tokens[i]
             when (token.kind) {
                 KIND_DIRECTIVE -> {
-                    if (token.text.startsWith("before")) beforeLevel = token.text.split(' ')[1].toInt()
+                    when {
+                        token.text.startsWith("before") -> beforeLevel = token.text.split(' ')[1].toInt()
+                        token.text.startsWith("reorder") -> {
+                            val scripts = token.text.removePrefix("reorder").trim()
+                                .split(' ')
+                                .filter(String::isNotEmpty)
+                            val groups = scripts.mapNotNull { root.groupOfScript[it] }.distinct()
+                            if (groups.isNotEmpty()) reorder = reorderPlan(groupRanges(root, ranks), groups)
+                        }
+                        // Applied where it stands rather than hoisted: an import
+                        // is a paste, and the rules after it anchor on what it
+                        // brought in.
+                        token.text.startsWith("import") -> {
+                            val id = token.text.removePrefix("import").trim()
+                            val imported = resolveImport(id)
+                            if (imported == null) {
+                                println("[codegen] collation: no rules for [import $id], skipped")
+                            } else {
+                                apply(imported, resolveImport)
+                            }
+                        }
+                        token.text.startsWith("backwards") -> backwardsSecondary = token.text.trim().endsWith("2")
+                        token.text.startsWith("suppressContractions") -> {
+                            for (point in unicodeSetCodePoints(token.text.substringAfter("suppressContractions"))) {
+                                suppressed.add(point)
+                            }
+                        }
+                    }
                     i++
                 }
                 KIND_RESET -> {
@@ -265,6 +457,14 @@ class TailoredTable(private val root: CollationRoot, private val ranks: WeightRa
     private fun place(token: RuleToken, anchor: List<IntArray>?, strength: Int, beforeLevel: Int?): List<IntArray>? {
         if (anchor == null || anchor.isEmpty()) return anchor
         val base = anchor[0]
+        // An anchor that is ignorable at the level being tailored has no weight
+        // there to count from, and counting from zero asks for a weight between
+        // nothing and nothing. The default is what an unmarked character carries
+        // at that level, so it is the weight the rule means: Arabic's
+        // `&[before 2]` on a secondary-ignorable anchor is asking to sit before
+        // the plain form, not before the absence of one.
+        val secondaryAnchor = if (base[1] == 0) ranks.defaultSecondary() else base[1]
+        val tertiaryAnchor = if (base[2] == 0) ranks.defaultTertiary() else base[2]
         val minted = when (strength) {
             0 -> intArrayOf(base[0], base[1], base[2])
             1 -> intArrayOf(
@@ -274,13 +474,21 @@ class TailoredTable(private val root: CollationRoot, private val ranks: WeightRa
             )
             2 -> intArrayOf(
                 base[0],
-                if (beforeLevel == 2) mint(1, predecessor(1, base[1]), base[1]) else mint(1, base[1], null),
+                if (beforeLevel == 2) {
+                    mint(1, predecessor(1, secondaryAnchor), secondaryAnchor)
+                } else {
+                    mint(1, secondaryAnchor, null)
+                },
                 ranks.defaultTertiary(),
             )
             else -> intArrayOf(
                 base[0],
                 base[1],
-                if (beforeLevel == 3) mint(2, predecessor(2, base[2]), base[2]) else mint(2, base[2], null),
+                if (beforeLevel == 3) {
+                    mint(2, predecessor(2, tertiaryAnchor), tertiaryAnchor)
+                } else {
+                    mint(2, tertiaryAnchor, null)
+                },
             )
         }
         var elements = if (strength >= 2) listOf(minted) + anchor.drop(1) else listOf(minted)
@@ -305,12 +513,25 @@ class TailoredTable(private val root: CollationRoot, private val ranks: WeightRa
         return elements
     }
 
+    private fun cased(tertiary: Int): Int {
+        for (pair in caseSwap) if (pair[0] == tertiary) return pair[1]
+        return tertiary
+    }
+
     /** The sort key this table gives a string, for holding it to ICU. */
     fun sortKey(text: String): List<Int> {
         val elements = elementsFor(text)
         val key = ArrayList<Int>(elements.size * 3 + 2)
         for (level in 0..2) {
-            for (element in elements) if (element[level] != 0) key.add(element[level])
+            val weights = elements.mapNotNull { element ->
+                when {
+                    element[level] == 0 -> null
+                    level == 0 -> reordered(element[level])
+                    level == 2 -> cased(element[level])
+                    else -> element[level]
+                }
+            }
+            key.addAll(if (level == 1 && backwardsSecondary) weights.reversed() else weights)
             if (level < 2) key.add(0)
         }
         return key
@@ -331,8 +552,97 @@ class TailoredTable(private val root: CollationRoot, private val ranks: WeightRa
         val prefixes = addedPrefixes.map { (pair, elements) ->
             pair.first.toString(36) + "." + pair.second.toString(36) + ":" + encodeRankedElements(elements)
         }
-        return listOf(singles.joinToString(","), contractions.joinToString(","), prefixes.joinToString(",")).joinToString(";")
+        return listOf(
+            singles.joinToString(","),
+            contractions.joinToString(","),
+            prefixes.joinToString(","),
+            encodeReorderPlan(reorder),
+            caseSwap.joinToString(",") { it[0].toString(36) + "." + it[1].toString(36) },
+            if (backwardsSecondary) "b" else "",
+            suppressed.sorted().joinToString(",") { it.toString(36) },
+        ).joinToString(";")
     }
+}
+
+/**
+ * The code points of a bracketed UnicodeSet, which is all CLDR writes here.
+ *
+ * `[เ-ไ ເ-ໄ ꪵ]` and `[Ии]`: literal characters, ranges, and `\uXXXX` escapes.
+ * The full UnicodeSet grammar has properties and set algebra in it and no CLDR
+ * collation file uses any of that, so parsing it would be code no data reaches.
+ */
+internal fun unicodeSetCodePoints(source: String): Set<Int> {
+    val body = source.trim().removePrefix("[").removeSuffix("]")
+    val points = LinkedHashSet<Int>()
+    var index = 0
+    var previous = -1
+    while (index < body.length) {
+        val ch = body[index]
+        if (ch.isWhitespace()) {
+            index++
+            previous = -1
+            continue
+        }
+        if (ch == '-' && previous >= 0 && index + 1 < body.length) {
+            index++
+            val (last, next) = readSetPoint(body, index)
+            for (point in previous..last) points.add(point)
+            index = next
+            previous = -1
+            continue
+        }
+        val (point, next) = readSetPoint(body, index)
+        points.add(point)
+        previous = point
+        index = next
+    }
+    return points
+}
+
+private fun readSetPoint(body: String, at: Int): Pair<Int, Int> {
+    if (body.startsWith("\\u", at)) {
+        return body.substring(at + 2, at + 6).toInt(16) to at + 6
+    }
+    val point = body.codePointAt(at)
+    return point to at + Character.charCount(point)
+}
+
+/** Leaves room between the links of a chain, and runs out of gap sooner. */
+const val SPREAD_ROOMY: Int = 1024
+
+/** Steps by one: the whole gap for one chain, and nothing between its links. */
+const val SPREAD_LONG: Int = Int.MAX_VALUE
+
+/**
+ * One locale's table, built with whichever spread its rules fit in.
+ *
+ * Every spread produces the same order. They differ in how the minted weights
+ * are spaced, and a locale's rules decide which spacing has room: Japanese needs
+ * the long one and Tamil needs the roomy one. Trying them in turn is cheaper
+ * than a weight allocator that cannot run out, and the result is identical
+ * wherever both succeed.
+ *
+ * Throws when no spread fits, because a tailoring that cannot be built is a
+ * locale that would silently sort in root order.
+ */
+fun tailoringFor(
+    root: CollationRoot,
+    ranks: WeightRanks,
+    normalization: NormalizationData,
+    rules: String,
+    resolveImport: (String) -> String? = { null },
+): TailoredTable {
+    var failure: Exception? = null
+    for (spread in intArrayOf(SPREAD_ROOMY, SPREAD_LONG)) {
+        val table = TailoredTable(root, ranks, normalization, spread)
+        try {
+            table.apply(rules, resolveImport)
+            return table
+        } catch (e: IllegalArgumentException) {
+            failure = e
+        }
+    }
+    throw IllegalStateException("no weight spread fits these rules", failure)
 }
 
 internal fun encodeRankedElements(elements: List<IntArray>): String {

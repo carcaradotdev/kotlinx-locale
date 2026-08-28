@@ -61,6 +61,7 @@ dependencies {
     testImplementation(project(":kotlinx-locale-timezone-cldr-full"))
     testImplementation(project(":kotlinx-locale-timezone-cldr-cities"))
     testImplementation(project(":kotlinx-locale-personname-cldr-full"))
+    testImplementation(project(":kotlinx-locale-collation-cldr-full"))
     testImplementation(project(":kotlinx-locale-phone-metadata-full"))
 }
 

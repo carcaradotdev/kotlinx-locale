@@ -91,6 +91,24 @@ enum class LocaleFeature(val dslName: String, val tables: Set<GeneratedTable>, v
     ),
 
     /**
+     * Sorting text the way a reader reads it, per UTS #10.
+     *
+     * The one table here carries three things that cannot be separated: the root
+     * weights, the normalisation data the weights are stated over, and the
+     * per-locale tailorings. Narrowing drops tailorings, never the root, so a
+     * build that ships three locales still sorts every string it is given rather
+     * than only the ones in those three languages.
+     *
+     * The root table is the largest thing this library generates, so this is the
+     * flag most worth leaving off in a build that never sorts a list.
+     */
+    COLLATION_ORDER(
+        dslName = "collation.order",
+        tables = setOf(GeneratedTable.COLLATION),
+        bindings = setOf(GeneratedBinding.COLLATION),
+    ),
+
+    /**
      * Date and time intervals: `Jul 18 – 22, 2026`.
      *
      * Includes the skeleton tables, because an interval is a split of the

@@ -358,20 +358,49 @@ it also feeds is exercised by none of CLDR's 36,960 test cases.
 
 ## Diacritic-insensitive search
 
-Not implemented, and an approximation would be worse than nothing.
+Partly implemented, through the collation tables rather than beside them.
 
-The correct answer is the `search` collation type in UTS #35 Part 5, comparing
-at the primary level of UTS #10. That is out of reach: it needs the default
-collation table, the per-locale tailorings and normalization underneath, which
-together are larger than everything this library currently ships.
+`collationComparator(locale, CollationStrength.PRIMARY)` compares at the primary
+level of UTS #10, which is the correct answer to "are these the same word". At
+that strength resume matches résumé. In German ö matches o, and in Swedish it
+does not, because the Swedish tailoring makes ö a letter of its own. That is the
+per-language decision a global rule cannot make, and the tables already carry it.
 
-The cheap version, decomposing and dropping the combining marks, is not the same
-thing and is wrong in ways that matter. Whether a mark is decoration on a base
-letter or part of a distinct letter is a per-language decision: in German ö is a
-variant of o and should match it, in Swedish it is its own letter near the end
-of the alphabet and should not, and Turkish keeps dotted and dotless i apart.
-One global rule cannot serve all three, and shipping it under a locale-aware
-name would invite callers to trust it for exactly the cases it gets wrong.
+What is still missing is CLDR's `search` collation type, which is a second
+tailoring per locale with looser rules than the sorting one. CLDR ships it for 21
+locales and this build reads only the `standard` type, so a search today uses the
+sorting tailoring at primary strength. That is close and not identical.
+
+The cheap version, decomposing and dropping the combining marks, remains wrong
+and remains unimplemented. Whether a mark is decoration on a base letter or part
+of a distinct letter is a per-language decision: in German ö is a variant of o
+and should match it, in Swedish it is its own letter near the end of the alphabet
+and should not, and Turkish keeps dotted and dotless i apart. One global rule
+cannot serve all three.
+
+## Collation rules this build does not read
+
+CLDR writes twelve directives into its collation files. This build implements
+five of them, along with the `<*` list syntax: `before`, `reorder`, `import`,
+`suppressContractions`, and `backwards` at the secondary level, which is the only
+level any CLDR locale asks for.
+
+Two more are ignored without cost. `normalization` asks for the decomposed form,
+which the algorithm always uses anyway, and `optimize` is a speed hint about
+which characters to precompute.
+
+The remaining five are read and ignored, and the result differs from ICU where a
+locale uses one: `caseFirst` (Danish, Maltese, Church Slavonic),
+`alternate shifted` (Thai), `caseLevel` (Church Slavonic), and the `[first ...]`
+and `[last ...]` anchors. `caseFirst` is the one with an implementation that was
+written and then removed: a tertiary weight is a class shared by many characters
+rather than a per-letter value, and the pairing derivable from the root table is
+not the one between `a` and `A`. Applying it would have reordered every cased
+letter in those locales by a rule nobody wrote.
+
+`conformance/ledger/collation-order.tsv` records every locale whose order differs
+from ICU4J and why, so a locale that sorts differently is written down rather
+than discovered.
 
 ## Domestic bank account identifiers
 

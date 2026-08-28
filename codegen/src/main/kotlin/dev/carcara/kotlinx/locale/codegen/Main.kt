@@ -168,6 +168,7 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
     .table(GeneratedTable.RELATIVE_TIME, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-relative"))
     .table(GeneratedTable.DURATION_UNITS, rootDir.sourceRoot("kotlinx-locale-datetime-cldr-durations"))
     .table(GeneratedTable.PERSON_NAMES, rootDir.sourceRoot("kotlinx-locale-personname-cldr-full"))
+    .table(GeneratedTable.COLLATION, rootDir.sourceRoot("kotlinx-locale-collation-cldr-full"))
     .table(GeneratedTable.TIME_ZONE_FORMATS, rootDir.sourceRoot("kotlinx-locale-timezone-cldr-full"))
     .table(GeneratedTable.TIME_ZONE_NAMES, rootDir.sourceRoot("kotlinx-locale-timezone-cldr-full"))
     .table(GeneratedTable.TIME_ZONE_CITIES, rootDir.sourceRoot("kotlinx-locale-timezone-cldr-cities"))
@@ -273,6 +274,14 @@ internal fun shippedRoots(rootDir: File): SourceRoots = SourceRoots.Builder()
             root = rootDir.sourceRoot("kotlinx-locale-personname-cldr-full"),
             packageName = "dev.carcara.kotlinx.locale.personname.cldr",
             objectName = "CldrPersonName",
+        ),
+    )
+    .binding(
+        GeneratedBinding.COLLATION,
+        BindingTarget(
+            root = rootDir.sourceRoot("kotlinx-locale-collation-cldr-full"),
+            packageName = "dev.carcara.kotlinx.locale.collation.cldr",
+            objectName = "CldrCollation",
         ),
     )
     .binding(
@@ -548,6 +557,8 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         hasFormats = true,
     )
 
+    val collation = buildCollationPayloads(cldrDir)
+
     return LocaleDataBundle.Builder()
         .apply {
             cldrVersion = CLDR_REPO.tag
@@ -589,6 +600,9 @@ private fun extractBundle(rootDir: File, cldrDir: File, icuDir: File): LocaleDat
         .section("pluralRuleIndex", plurals.index.mapKeys(::canonicalTagOf))
         .section("ordinalRuleSets", rbnf.closures)
         .section("ordinalRuleIndex", rbnf.index.mapKeys(::canonicalTagOf))
+        .section("collationRoot", mapOf("root" to collation.root))
+        .section("normalization", mapOf("root" to collation.normalization))
+        .section("collationTailorings", collation.tailorings)
         .build()
 }
 

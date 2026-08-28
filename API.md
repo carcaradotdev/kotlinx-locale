@@ -59,6 +59,7 @@ All date and time examples are real output for 2026-07-27, a Monday, at
 - [Time zones](#time-zones)
 - [Country.flagEmoji](#countryflagemoji)
 - [Person names](#person-names)
+- [Sorting text](#sorting-text)
 - [Phone numbers](#phone-numbers)
 - [Serialization](#serialization)
 - [Gradle plugin](#gradle-plugin)
@@ -1603,6 +1604,64 @@ Three fields cannot be derived and must be supplied if the locale asks for them:
 
 Falls back to the given name and surname joined by a space.
 
+## Sorting text
+
+From `kotlinx-locale-collation-cldr-full`, or with `collation { order = true }`.
+
+```kotlin
+public enum class CollationStrength { PRIMARY, SECONDARY, TERTIARY }
+
+public fun collationComparator(
+    locale: Locale = Locale.current,
+    strength: CollationStrength = CollationStrength.TERTIARY,
+): Comparator<String>
+```
+
+Comparing strings with `<` orders them by code point, which is a number nobody
+sees: it puts `Ísland` after `Zimbabwe` and every accented initial at the bottom
+of the list. This orders them the way a reader of `locale` expects.
+
+```kotlin
+val de = Locale.forLanguageTag("de")
+listOf("Zypern", "Ísland", "Österreich").sortedWith(collationComparator(de))
+// Ísland, Österreich, Zypern
+```
+
+The order is per language, not universal. Czech sorts `č` as its own letter after
+`c` and `ch` after `h`; Icelandic ends its alphabet with `þ`; Hungarian reads
+`cs` and `zs` as single letters; Russian lifts the whole Cyrillic block above
+Latin.
+
+```kotlin
+val cs = Locale.forLanguageTag("cs")
+listOf("Chorvatsko", "Česko", "Cyprus").sortedWith(collationComparator(cs))
+// Cyprus, Česko, Chorvatsko
+```
+
+`strength` says how much of a difference counts.
+
+| Strength | `resume` vs `résumé` | `a` vs `A` | For |
+| --- | --- | --- | --- |
+| `PRIMARY` | equal | equal | matching |
+| `SECONDARY` | different | equal | matching, keeping accents |
+| `TERTIARY` | different | different | ordering a list |
+
+`PRIMARY` is what a search box wants, and it is locale-aware in the way a
+diacritic fold is not: in German `ö` matches `o`, and in Swedish it does not,
+because Swedish makes `ö` its own letter.
+
+```kotlin
+val en = Locale.forLanguageTag("en")
+collationComparator(en, CollationStrength.PRIMARY).compare("resume", "résumé") // 0
+```
+
+Falls back to CLDR's root order for a locale this build carries no tailoring for.
+Normalization is applied first, so `Ä` written as one code point and as two
+compare equal.
+
+Which CLDR collation rules this build reads, and which it does not, is in
+[docs/boundaries.md](docs/boundaries.md).
+
 ## Phone numbers
 
 From `kotlinx-locale-phone-metadata-full`. The plugin has no flag for this one:
@@ -1975,6 +2034,7 @@ The last column is the artifact a narrowed build declares in place of
 | `timezone { names }` | [`TimeZone.displayName`](#timezonedisplayname). Writes the format table, which every name falls back to. | `kotlinx-locale-timezone-cldr-runtime` |
 | `timezone { exemplarCities }` | [`TimeZone.exemplarCity`](#timezoneexemplarcity) and the generic location format. The largest zone table by a wide margin; without it the location format uses the identifier's last part, which is the fallback UTS #35 prescribes. | `kotlinx-locale-timezone-cldr-runtime` |
 | `personName { formats }` | [`personNameFormat` and `personNameOrder`](#person-names) | `kotlinx-locale-personname-cldr-runtime` |
+| `collation { order }` | [`collationComparator`](#sorting-text). The one flag narrowing barely shrinks: the root weight table is the same for every locale, and only the per-locale tailorings are dropped. | `kotlinx-locale-collation-cldr-runtime` |
 
 Some flags bring another domain's entry points with them, because the two share a
 source object. Any `timezone` flag writes the number binding, since the GMT
