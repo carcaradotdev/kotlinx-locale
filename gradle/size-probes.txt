@@ -25,3 +25,4 @@ probe-everything
 probe-everything-platform
 probe-datetime-intervals
 probe-personname-full
+probe-collation-full

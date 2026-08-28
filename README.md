@@ -240,6 +240,9 @@ locale-timezone-cldr-cities = { module = "dev.carcara:kotlinx-locale-timezone-cl
 locale-personname-core = { module = "dev.carcara:kotlinx-locale-personname-core", version.ref = "kotlinx-locale" }
 locale-personname-cldr-runtime = { module = "dev.carcara:kotlinx-locale-personname-cldr-runtime", version.ref = "kotlinx-locale" }
 locale-personname-cldr-full = { module = "dev.carcara:kotlinx-locale-personname-cldr-full", version.ref = "kotlinx-locale" }
+locale-collation-core = { module = "dev.carcara:kotlinx-locale-collation-core", version.ref = "kotlinx-locale" }
+locale-collation-cldr-runtime = { module = "dev.carcara:kotlinx-locale-collation-cldr-runtime", version.ref = "kotlinx-locale" }
+locale-collation-cldr-full = { module = "dev.carcara:kotlinx-locale-collation-cldr-full", version.ref = "kotlinx-locale" }
 locale-phone-core = { module = "dev.carcara:kotlinx-locale-phone-core", version.ref = "kotlinx-locale" }
 locale-phone-metadata-runtime = { module = "dev.carcara:kotlinx-locale-phone-metadata-runtime", version.ref = "kotlinx-locale" }
 locale-phone-metadata-full = { module = "dev.carcara:kotlinx-locale-phone-metadata-full", version.ref = "kotlinx-locale" }
@@ -261,6 +264,9 @@ locale-datetime-durations = ["locale-datetime-core", "locale-datetime-cldr-durat
 # Ranges, which pull the skeletons in because an interval is a split of one.
 locale-datetime-intervals = ["locale-datetime-core", "locale-datetime-cldr-full", "locale-datetime-cldr-skeletons", "locale-datetime-cldr-intervals"]
 locale-personname-cldr = ["locale-personname-core", "locale-personname-cldr-full"]
+# Sorting. The root weight table dominates, so this costs the same whether a
+# build sorts one language or all of them.
+locale-collation-cldr = ["locale-collation-core", "locale-collation-cldr-full"]
 locale-language-cldr = ["locale-language-core", "locale-language-cldr-full"]
 locale-number-cldr = ["locale-number-core", "locale-number-cldr-full"]
 # Zone names. The second adds the exemplar cities, which is the larger half.
@@ -280,6 +286,7 @@ locale-datetime-narrowed = ["locale-datetime-core", "locale-datetime-cldr-runtim
 locale-language-narrowed = ["locale-language-core", "locale-language-cldr-runtime"]
 locale-number-narrowed = ["locale-number-core", "locale-number-cldr-runtime"]
 locale-personname-narrowed = ["locale-personname-core", "locale-personname-cldr-runtime"]
+locale-collation-narrowed = ["locale-collation-core", "locale-collation-cldr-runtime"]
 locale-timezone-narrowed = ["locale-timezone-core", "locale-timezone-cldr-runtime"]
 # There is no locale-phone-narrowed: the phone metadata is keyed by territory
 # rather than by locale, so declaring three locales narrows nothing about it.
@@ -417,6 +424,9 @@ plugin flag beside the artifact for every domain that has one.
 | `kotlinx-locale-personname-core` | `PersonName` and the option enums, plus `PersonNameSource`. No data. |
 | `kotlinx-locale-personname-cldr-runtime` | Pattern selection, field modifiers and the empty-field cleanup. Carries no records. |
 | `kotlinx-locale-personname-cldr-full` | `CldrPersonName`, `personNameFormat` and `personNameOrder`: a name written the way a locale writes one, and its initials. |
+| `kotlinx-locale-collation-core` | `CollationStrength` and `CollationSource`: how much of a difference counts, and the contract a table answers through. No algorithm. |
+| `kotlinx-locale-collation-cldr-runtime` | The Unicode Collation Algorithm over a weight table it does not carry: contractions, prefixes, script reordering and sort keys. |
+| `kotlinx-locale-collation-cldr-full` | `CldrCollation` and `collationComparator`: sorting text the way a reader reads it, per UTS #10 and the tailorings of UTS #35 Part 5. Costs the same at three locales as at 1121, because the root weight table does not vary by locale and it is nearly all of the weight. |
 | `kotlinx-locale-datetime-cldr-relative` | `CldrRelativeTime` and `relativeTimeFormat`: `3 days ago` and `včera`, with the plural rules that pick among a language's forms. Its own artifact because it needs no date patterns. |
 | `kotlinx-locale-datetime-cldr-durations` | `CldrDurationUnits` and `durationFormat`: `2 hours`, `2 hr`, `2h`, across fourteen time units and three widths. Its own artifact for the same reason as the relative tables, and around 117 KB gzipped. Not the same thing as `durationPattern`, which gives `h:mm` and ships with `-cldr-full`. |
 | `kotlinx-locale-datetime-platform` | `PlatformDateTime`: the four lengths and the calendar names from `DateTimeFormatter`, `Intl.DateTimeFormat` or `NSDateFormatter`. Ships no tables. |
@@ -430,6 +440,7 @@ plugin flag beside the artifact for every domain that has one.
 | `kotlinx-locale-phone-serialization` | One serializer per written form, a lenient one that reads all four, and a metadata-free one over the parts. No default: the forms carry different amounts of information. |
 | `kotlinx-locale-codegen-emitters` | The emitters and the bundle reader: the half of code generation a build can run. Parses no XML and clones nothing, so it is safe on a build classpath. |
 | `kotlinx-locale-codegen-data` | CLDR resolved into one compact record per locale, versioned by the release it came from. What a build reads instead of cloning CLDR. |
+| `kotlinx-locale-codegen-pipeline` | How a table is written down: key elision, DEFLATE, and the two character packings a target bills for. Shared by the emitters and by the runtime decoders, so a generated table cannot be encoded one way and read another. |
 | `kotlinx-locale-gradle-plugin` | The `dev.carcara.kotlinx-locale` plugin, which generates a data set narrowed to the locales a build declares. |
 
 Anything named `kotlinx-locale-codegen-*` runs at build time and never belongs

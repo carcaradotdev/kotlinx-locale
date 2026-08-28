@@ -105,7 +105,18 @@ from memory. Bumping any of them is a deliberate commit.
 | libphonenumber | `v9.0.19` | `PHONE_REPO` in `codegen/.../Repos.kt`, mirrored by `libphonenumber` in `gradle/libs.versions.toml` |
 | ISO 4217 list one and list three | published 2026-01-01 | vendored at `codegen/src/main/resources/iso4217/` |
 | Unicode Emoji | 17.0 | `EMOJI_VERSION` in `codegen/.../Repos.kt`, vendored at `codegen/src/main/resources/emoji/` |
-| Unicode Character Database | 15.1.0 | `UCD_VERSION` in `codegen/.../Repos.kt`, vendored at `codegen/src/main/resources/ucd/` |
+| Unicode Character Database, for segmentation | 15.1.0 | `UCD_VERSION` in `codegen/.../Repos.kt`, vendored at `codegen/src/main/resources/ucd/` |
+| Unicode Character Database, for collation and normalization | 17.0.0 | `UCA_UCD_VERSION` in `codegen/.../Repos.kt`, vendored at `codegen/src/main/resources/ucd/` |
+| Unicode Collation Algorithm | 17.0.0 | `common/uca/FractionalUCA.txt` in the CLDR checkout |
+
+The two UCD rows are one file set pinned at two releases, and that is deliberate
+rather than drift. Segmentation is held to CLDR's `GraphemeBreakTest.txt` and
+follows whatever release that was built against. Collation is held to the root
+table in the same CLDR checkout, and `allkeys_CLDR.txt` there declares UCA 17.0.0
+in its own header. UTS #10 states collation over the canonical decomposition, so
+the decomposition data and the weights have to come from one release: mixing them
+would disagree about every character added between the two and fail as though the
+algorithm were wrong.
 
 ICU is read two ways and shipped neither: parsed as data for its resource
 bundles, and called as a library to generate the expected answers the conformance

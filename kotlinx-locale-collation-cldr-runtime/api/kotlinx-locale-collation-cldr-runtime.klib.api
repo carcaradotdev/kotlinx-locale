@@ -11,6 +11,7 @@ final object dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation 
     final fun tailored(kotlin/String): dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.tailored|tailored(kotlin.String){}[0]
 
     final class Tailored : kotlin/Comparator<kotlin/String> { // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored|null[0]
+        final fun at(dev.carcara.kotlinx.locale.collation/CollationStrength): dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored.at|at(dev.carcara.kotlinx.locale.collation.CollationStrength){}[0]
         final fun compare(kotlin/String, kotlin/String): kotlin/Int // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored.compare|compare(kotlin.String;kotlin.String){}[0]
         final fun sortKey(kotlin/String): kotlin/IntArray // dev.carcara.kotlinx.locale.collation.cldr.runtime/PayloadCollation.Tailored.sortKey|sortKey(kotlin.String){}[0]
 

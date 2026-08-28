@@ -114,8 +114,10 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     val personName: PersonNameFeatures = objects.newInstance(PersonNameFeatures::class.java)
 
+    val collation: CollationFeatures = objects.newInstance(CollationFeatures::class.java)
+
     private val blocks: List<FeatureBlock>
-        get() = listOf(country, currency, datetime, number, language, timezone, personName)
+        get() = listOf(country, currency, datetime, number, language, timezone, personName, collation)
 
     /** Adds locales by reference, which is the form the compiler checks. */
     fun locales(vararg refs: LocaleRef) {
@@ -149,6 +151,10 @@ abstract class KotlinxLocaleExtension @Inject constructor(objects: ObjectFactory
 
     fun personName(action: Action<PersonNameFeatures>) {
         action.execute(personName)
+    }
+
+    fun collation(action: Action<CollationFeatures>) {
+        action.execute(collation)
     }
 
     fun number(action: Action<NumberFeatures>) {
@@ -415,4 +421,19 @@ abstract class PersonNameFeatures @Inject constructor(objects: ObjectFactory) : 
      * to, not whose names can be written.
      */
     val formats: Property<Boolean> = flag(LocaleFeature.PERSONNAME_FORMATS)
+}
+
+/** Sorting text the way a reader reads it. */
+abstract class CollationFeatures @Inject constructor(objects: ObjectFactory) : FeatureBlock(objects) {
+
+    /**
+     * The collation order, behind `collationComparator`.
+     *
+     * Narrowing the locale set drops tailorings, not the root table, so a build
+     * that ships three locales still sorts every string it is handed. The root
+     * is the largest table this library generates and it is the same for every
+     * locale, so this flag costs roughly the same whether a build declares three
+     * locales or a hundred.
+     */
+    val order: Property<Boolean> = flag(LocaleFeature.COLLATION_ORDER)
 }

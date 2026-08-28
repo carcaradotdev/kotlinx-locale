@@ -17,6 +17,7 @@
 package dev.carcara.kotlinx.locale.collation.cldr.runtime
 
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
+import dev.carcara.kotlinx.locale.collation.CollationStrength
 import dev.carcara.kotlinx.locale.internal.Normalization
 
 /**
@@ -46,6 +47,22 @@ public object PayloadCollation {
     /** A collation element: one weight per level, zero meaning ignorable. */
     internal class Elements(val primary: IntArray, val secondary: IntArray, val tertiary: IntArray)
 
+    /**
+     * The Han ideographs, as spans rather than as entries.
+     *
+     * A hundred and two thousand of the root table's entries are ideographs, and
+     * each one carries a primary weight that is a function of its place in the
+     * radical-stroke order and nothing else. The generator writes the places
+     * where both the code point and the weight run on together, so this reads
+     * three parallel arrays and computes the rest. It is the difference between
+     * 2.19 million characters of table and a hundred and forty thousand.
+     *
+     * Sorted by [hanStart], so a lookup is a binary search.
+     */
+    private var hanStart = IntArray(0)
+    private var hanLength = IntArray(0)
+    private var hanRank = IntArray(0)
+
     private var singles = HashMap<Int, Elements>()
     private var contractions = HashMap<String, Elements>()
     private var prefixes = HashMap<Long, Elements>()
@@ -53,6 +70,9 @@ public object PayloadCollation {
     private var implicitBase = 0
     private var defaultSecondary = 0
     private var defaultTertiary = 0
+
+    /** How far apart two neighbouring ranks sit, which is what a span steps by. */
+    private var rankStride = 0
 
     /**
      * Installs the root table. Until then every code point weighs by its own
@@ -64,9 +84,12 @@ public object PayloadCollation {
         val sections = table.split(SECTION)
         if (sections.size < 5) return
 
-        implicitBase = sections[0].substringBefore(',').toInt(36)
-        defaultSecondary = sections[0].substringAfter(',').substringBefore(',').toInt(36)
-        defaultTertiary = sections[0].substringAfterLast(',').toInt(36)
+        val header = sections[0].split(ENTRY)
+        if (header.size < 4) return
+        implicitBase = header[0].toInt(36)
+        defaultSecondary = header[1].toInt(36)
+        defaultTertiary = header[2].toInt(36)
+        rankStride = header[3].toInt(36)
 
         val single = HashMap<Int, Elements>()
         for (entry in sections[1].split(ENTRY)) {
@@ -95,10 +118,52 @@ public object PayloadCollation {
             prefixed[before shl 21 or at] = decodeElements(entry.substring(colon + 1))
         }
 
+        // Deltas on both climbing columns, so the values written down stay short
+        // where the numbers themselves do not.
+        val spans = sections[4].split(ENTRY).filter(String::isNotEmpty)
+        val starts = IntArray(spans.size)
+        val lengths = IntArray(spans.size)
+        val firstRanks = IntArray(spans.size)
+        var codePoint = 0
+        var rank = 0
+        for ((index, span) in spans.withIndex()) {
+            val first = span.indexOf('.')
+            val second = span.indexOf('.', first + 1)
+            codePoint += span.substring(0, first).toInt(36)
+            rank += span.substring(second + 1).toInt(36)
+            starts[index] = codePoint
+            lengths[index] = span.substring(first + 1, second).toInt(36)
+            firstRanks[index] = rank
+        }
+
         singles = single
         contractions = many
         prefixes = prefixed
         longestContraction = longest
+        hanStart = starts
+        hanLength = lengths
+        hanRank = firstRanks
+    }
+
+    /**
+     * The rank of an ideograph, or zero when [codePoint] is not in a span.
+     *
+     * Zero rather than null so the lookup allocates nothing: a real rank is
+     * always positive, because [WeightRanks] starts counting at one gap.
+     */
+    private fun hanRankOf(codePoint: Int): Int {
+        var low = 0
+        var high = hanStart.size - 1
+        while (low <= high) {
+            val mid = (low + high) ushr 1
+            val start = hanStart[mid]
+            when {
+                codePoint < start -> high = mid - 1
+                codePoint >= start + hanLength[mid] -> low = mid + 1
+                else -> return hanRank[mid] + (codePoint - start) * rankStride
+            }
+        }
+        return 0
     }
 
     /**
@@ -113,8 +178,49 @@ public object PayloadCollation {
         val many = HashMap(contractions)
         val prefixed = HashMap(prefixes)
         var longest = longestContraction
+        var reorderFrom = IntArray(0)
+        var reorderTo = IntArray(0)
+        var reorderShift = IntArray(0)
+        var caseFrom = IntArray(0)
+        var caseTo = IntArray(0)
+        var backwardsSecondary = false
+        var suppressed: Set<Int> = emptySet()
         if (delta.isNotEmpty()) {
             val sections = delta.split(SECTION)
+            if (sections.size >= 7) {
+                // Upper-first exchanges two bands of tertiary weights, so the
+                // pairs run both ways and one pass swaps rather than collapses.
+                val swaps = sections[4].split(ENTRY).filter(String::isNotEmpty)
+                caseFrom = IntArray(swaps.size)
+                caseTo = IntArray(swaps.size)
+                for ((index, swap) in swaps.withIndex()) {
+                    val dot = swap.indexOf('.')
+                    caseFrom[index] = swap.substring(0, dot).toInt(36)
+                    caseTo[index] = swap.substring(dot + 1).toInt(36)
+                }
+                backwardsSecondary = sections[5] == "b"
+                suppressed = sections[6].split(ENTRY).filter(String::isNotEmpty)
+                    .mapTo(HashSet()) { it.toInt(36) }
+            }
+            if (sections.size >= 4) {
+                // `[reorder Cyrl]` lifts a whole writing system above the others,
+                // which moves a band of primary weights rather than any one
+                // letter. Three parallel arrays of `(from, to, newFrom)`: a
+                // primary inside a band shifts by a constant and one outside
+                // every band does not move at all.
+                val bands = sections[3].split(ENTRY).filter(String::isNotEmpty)
+                reorderFrom = IntArray(bands.size)
+                reorderTo = IntArray(bands.size)
+                reorderShift = IntArray(bands.size)
+                for ((index, band) in bands.withIndex()) {
+                    val first = band.indexOf('.')
+                    val second = band.indexOf('.', first + 1)
+                    val from = band.substring(0, first).toInt(36)
+                    reorderFrom[index] = from
+                    reorderTo[index] = band.substring(first + 1, second).toInt(36)
+                    reorderShift[index] = band.substring(second + 1).toInt(36) - from
+                }
+            }
             if (sections.size >= 3) {
                 for (entry in sections[0].split(ENTRY)) {
                     if (entry.isEmpty()) continue
@@ -138,7 +244,19 @@ public object PayloadCollation {
                 }
             }
         }
-        return Tailored(single, many, prefixed, longest)
+        return Tailored(
+            single,
+            many,
+            prefixed,
+            longest,
+            reorderFrom,
+            reorderTo,
+            reorderShift,
+            caseFrom,
+            caseTo,
+            backwardsSecondary,
+            suppressed,
+        )
     }
 
     /** One locale's table: the root with its tailoring already folded in. */
@@ -148,7 +266,49 @@ public object PayloadCollation {
         private val contractions: Map<String, Elements>,
         private val prefixes: Map<Long, Elements>,
         private val longestContraction: Int,
+        private val reorderFrom: IntArray,
+        private val reorderTo: IntArray,
+        private val reorderShift: IntArray,
+        private val caseFrom: IntArray,
+        private val caseTo: IntArray,
+        /** Whether the secondary level reads back to front, for Canadian French. */
+        private val backwardsSecondary: Boolean,
+        /** Characters that never start a contraction in this locale. */
+        private val suppressed: Set<Int>,
+        /** How many levels a comparison reads, one to three. */
+        private val levels: Int = 3,
     ) : Comparator<String> {
+
+        /**
+         * The same table, answering at [strength].
+         *
+         * A new view rather than a new table: the maps are shared, so asking the
+         * same locale for a search comparator beside its sorting one costs three
+         * references.
+         */
+        @InternalKotlinxLocaleApi
+        public fun at(strength: CollationStrength): Tailored {
+            val wanted = when (strength) {
+                CollationStrength.PRIMARY -> 1
+                CollationStrength.SECONDARY -> 2
+                CollationStrength.TERTIARY -> 3
+            }
+            if (wanted == levels) return this
+            return Tailored(
+                singles,
+                contractions,
+                prefixes,
+                longestContraction,
+                reorderFrom,
+                reorderTo,
+                reorderShift,
+                caseFrom,
+                caseTo,
+                backwardsSecondary,
+                suppressed,
+                wanted,
+            )
+        }
 
         override fun compare(a: String, b: String): Int {
             if (a == b) return 0
@@ -161,27 +321,62 @@ public object PayloadCollation {
             return left.size.compareTo(right.size)
         }
 
+        /** A primary after the locale's script reordering, if it has one. */
+        private fun reordered(primary: Int): Int {
+            for (index in reorderFrom.indices) {
+                if (primary >= reorderFrom[index] && primary <= reorderTo[index]) return primary + reorderShift[index]
+            }
+            return primary
+        }
+
         /**
          * The sort key: every non-zero primary, then a separator, then the
          * secondaries, then the tertiaries. Comparing two keys compares the
          * base letters first and only looks at accents where the letters agree,
          * which is what makes resume and résumé neighbours rather than strangers.
+         *
+         * A key built at a lower strength stops early rather than comparing and
+         * discarding: at PRIMARY there are no secondaries in it at all, so
+         * resume and résumé produce the same key and compare equal.
          */
         public fun sortKey(text: String): IntArray {
             val elements = elementsFor(Normalization.decompose(text))
-            val key = ArrayList<Int>(elements.size * 3 + 2)
-            for (level in 0 until 3) {
+            val key = ArrayList<Int>(elements.size * levels + levels)
+            val level1 = ArrayList<Int>()
+            for (level in 0 until levels) {
+                val into = if (level == 1 && backwardsSecondary) level1 else key
                 for (element in elements) {
                     val weights = when (level) {
                         0 -> element.primary
                         1 -> element.secondary
                         else -> element.tertiary
                     }
-                    for (weight in weights) if (weight != 0) key.add(weight)
+                    for (weight in weights) {
+                        if (weight == 0) continue
+                        into.add(
+                            when (level) {
+                                0 -> reordered(weight)
+                                2 -> cased(weight)
+                                else -> weight
+                            },
+                        )
+                    }
                 }
-                if (level < 2) key.add(0)
+                if (into === level1) {
+                    // Canadian French orders by the last accent rather than the
+                    // first, so this level is read back to front.
+                    for (index in level1.indices.reversed()) key.add(level1[index])
+                    level1.clear()
+                }
+                if (level < levels - 1) key.add(0)
             }
             return key.toIntArray()
+        }
+
+        /** A tertiary after the locale's case ordering, if it asked for one. */
+        private fun cased(tertiary: Int): Int {
+            for (index in caseFrom.indices) if (caseFrom[index] == tertiary) return caseTo[index]
+            return tertiary
         }
 
         private fun elementsFor(decomposed: IntArray): List<Elements> {
@@ -202,7 +397,15 @@ public object PayloadCollation {
                 }
                 var matched: Elements? = null
                 var length = 0
-                var take = if (longestContraction < points.size - i) longestContraction else points.size - i
+                // A suppressed character never starts a contraction: Serbian and
+                // Macedonian ask for that so one letter does not swallow the next.
+                var take = if (points[i] in suppressed) {
+                    1
+                } else if (longestContraction < points.size - i) {
+                    longestContraction
+                } else {
+                    points.size - i
+                }
                 while (take > 1) {
                     val candidate = contractions[keyOf(points, i, take)]
                     if (candidate != null) {
@@ -218,7 +421,7 @@ public object PayloadCollation {
                 }
                 val found = matched
                 if (found == null) {
-                    out.add(implicitFor(points[i]))
+                    out.add(unlisted(points[i]))
                     i++
                     continue
                 }
@@ -261,8 +464,20 @@ public object PayloadCollation {
         public companion object {}
     }
 
-    private fun implicitFor(codePoint: Int): Elements =
-        Elements(intArrayOf(implicitBase + codePoint), intArrayOf(defaultSecondary), intArrayOf(defaultTertiary))
+    /**
+     * What a character the table does not list weighs.
+     *
+     * An ideograph is looked up in the spans first: it is not listed, but its
+     * weight is known exactly, and falling through to the implicit band would
+     * put every Han character above every letter instead of in radical-stroke
+     * order. Anything still unlisted lands in the implicit band, which orders by
+     * code point and is what UTS #10 asks for.
+     */
+    private fun unlisted(codePoint: Int): Elements {
+        val rank = hanRankOf(codePoint)
+        if (rank != 0) return Elements(intArrayOf(rank), intArrayOf(defaultSecondary), intArrayOf(defaultTertiary))
+        return Elements(intArrayOf(implicitBase + codePoint), intArrayOf(defaultSecondary), intArrayOf(defaultTertiary))
+    }
 
     private fun decodeKey(encoded: String): Pair<String, Int> {
         val parts = encoded.split('.')

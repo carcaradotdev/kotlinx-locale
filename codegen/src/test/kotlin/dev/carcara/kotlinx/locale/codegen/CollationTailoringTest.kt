@@ -24,70 +24,66 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * Holds every shipped tailoring to ICU, which is what the other domains do.
+ * The tailoring generator, held to ICU at the point the tables are made.
  *
- * The corpus is built from each locale's own rule elements, so it exercises the
- * letters that locale actually tailors rather than a generic word list: the
- * Czech digraph, the Hungarian expansions, the Icelandic reset-before rules.
+ * `CollationConformanceTest` in `:conformance-icu` compares the shipped artifact
+ * across 905 locales and is the broader check. This one runs against the
+ * generator directly, so a rule the parser drops is caught here with the rule in
+ * hand rather than as a locale that sorts oddly three steps downstream.
+ *
+ * Skipped where the CLDR clone is absent, which is CI.
  */
 class CollationTailoringTest {
 
-    private val dataDir = File(
-        System.getenv("COLLATION_DATA")
-            ?: System.getProperty("collation.data")
-            ?: "build/collation-data",
+    private val rootDir = File(
+        System.getProperty("kotlinx.locale.rootDir") ?: error("kotlinx.locale.rootDir is not set"),
     )
 
-    private val locales = listOf("en", "de", "es", "it", "pt", "hr", "cs", "is", "sk", "hu", "vi")
+    private val cldrDir = reposDir(rootDir).resolve("cldr")
+    private val uca = cldrDir.resolve("common/uca/FractionalUCA.txt")
+    private val collationDir = cldrDir.resolve("common/collation")
+
+    private fun cloned(): Boolean = uca.isFile
+
+    private fun tableFor(locale: String, root: CollationRoot, ranks: WeightRanks, norm: NormalizationData) =
+        tailoringFor(root, ranks, norm, collationRules(collationDir.resolve("$locale.xml"))) { id ->
+            importedRules(collationDir, id)
+        }
 
     @Test
-    fun everyShippedTailoringAgreesWithIcu() {
-        // The generator's inputs come from the pinned CLDR checkout, which a plain
-        // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) {
-            println("skipped: no collation data at $dataDir")
-            return
-        }
-        val root = parseFractionalUca(File(dataDir, "FractionalUCA.txt"))
+    fun everyTailoringCldrShipsCanBeBuilt() {
+        if (!cloned()) return
+        val root = parseFractionalUca(uca)
         val ranks = WeightRanks.of(root)
-        val normalization = parseNormalizationData()
+        val norm = parseNormalizationData()
 
-        val disagreeing = ArrayList<String>()
-        for (locale in locales) {
-            val rules = collationRules(File(dataDir, "collation/$locale.xml"))
-            val table = TailoredTable(root, ranks, normalization)
-            if (rules.isNotEmpty()) table.apply(rules)
-
-            val words = corpus(rules)
-            val mine = words.sortedWith { a, b -> compareKeys(table.sortKey(a), table.sortKey(b)) }
-            val icu = Collator.getInstance(ULocale(locale)).apply { strength = Collator.TERTIARY }
-            val theirs = words.sortedWith(icu)
-
-            if (mine != theirs) {
-                val at = mine.indices.first { mine[it] != theirs[it] }
-                disagreeing.add("$locale at $at: mine=${mine[at]} icu=${theirs[at]}")
-            } else {
-                println("$locale: ${words.size} words identical to ICU (delta ${table.encodeDelta().length} chars)")
+        val broken = ArrayList<String>()
+        var built = 0
+        for (file in collationDir.listFiles().orEmpty().filter { it.name.endsWith(".xml") }.sortedBy(File::getName)) {
+            val rules = collationRules(file)
+            if (rules.isEmpty()) continue
+            try {
+                tailoringFor(root, ranks, norm, rules) { id -> importedRules(collationDir, id) }
+                built++
+            } catch (e: Exception) {
+                broken.add("${file.name}: ${e.message}")
             }
         }
-        assertTrue(disagreeing.isEmpty(), "locales disagreeing with ICU:\n" + disagreeing.joinToString("\n"))
+        // A tailoring that cannot be built is a locale that silently sorts in
+        // root order, which is the failure this whole file exists to prevent.
+        assertEquals(emptyList(), broken, "tailorings that could not be built")
+        assertTrue(built > 100, "only $built tailorings were built, which suggests the reader stopped early")
     }
 
     @Test
     fun tailoringPlacesTheLettersItsReadersLookFor() {
-        // The generator's inputs come from the pinned CLDR checkout, which a plain
-        // `check` does not have. Point -Dcollation.data at it to run these.
-        if (!dataDir.isDirectory) {
-            println("skipped: no collation data at $dataDir")
-            return
-        }
-        val root = parseFractionalUca(File(dataDir, "FractionalUCA.txt"))
+        if (!cloned()) return
+        val root = parseFractionalUca(uca)
         val ranks = WeightRanks.of(root)
-        val normalization = parseNormalizationData()
+        val norm = parseNormalizationData()
 
         fun sorted(locale: String, names: List<String>): List<String> {
-            val table = TailoredTable(root, ranks, normalization)
-            collationRules(File(dataDir, "collation/$locale.xml")).takeIf { it.isNotEmpty() }?.let { table.apply(it) }
+            val table = tableFor(locale, root, ranks, norm)
             return names.sortedWith { a, b -> compareKeys(table.sortKey(a), table.sortKey(b)) }
         }
 
@@ -106,6 +102,40 @@ class CollationTailoringTest {
             listOf("Ciprus", "Csád", "Zambia", "Zsombó"),
             sorted("hu", listOf("Zsombó", "Csád", "Ciprus", "Zambia")),
         )
+        // Russian lifts the whole Cyrillic block above Latin, which is a
+        // `[reorder]` directive rather than any letter rule.
+        assertEquals(
+            listOf("Ель", "Elm"),
+            sorted("ru", listOf("Elm", "Ель")),
+        )
+    }
+
+    @Test
+    fun everyTailoredLocaleAgreesWithIcu() {
+        if (!cloned()) return
+        val root = parseFractionalUca(uca)
+        val ranks = WeightRanks.of(root)
+        val norm = parseNormalizationData()
+
+        // The locales whose rules this build reads in full. The rest are
+        // recorded in conformance/ledger/collation-order.tsv with the directive
+        // that explains them, and comparing them here would duplicate that.
+        // Not `th`: Thai asks for `[alternate shifted]`, which this build reads
+        // and does not apply, and the ledger records it.
+        val locales = listOf("en", "de", "es", "it", "pt", "hr", "cs", "is", "sk", "hu", "vi", "ru", "el", "he")
+        val disagreeing = ArrayList<String>()
+        for (locale in locales) {
+            val table = tableFor(locale, root, ranks, norm)
+            val words = corpus(collationRules(collationDir.resolve("$locale.xml")))
+            val mine = words.sortedWith { a, b -> compareKeys(table.sortKey(a), table.sortKey(b)) }
+            val icu = Collator.getInstance(ULocale(locale)).apply { strength = Collator.TERTIARY }
+            val theirs = words.sortedWith(icu)
+            if (mine != theirs) {
+                val at = mine.indices.first { mine[it] != theirs[it] }
+                disagreeing.add("$locale at $at: mine=${mine[at]} icu=${theirs[at]}")
+            }
+        }
+        assertEquals(emptyList(), disagreeing, "locales disagreeing with ICU")
     }
 
     private fun corpus(rules: String): List<String> {

@@ -6,6 +6,7 @@ public final class dev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadColl
 
 public final class dev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadCollation$Tailored : java/util/Comparator {
 	public static final field Companion Ldev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadCollation$Tailored$Companion;
+	public final fun at (Ldev/carcara/kotlinx/locale/collation/CollationStrength;)Ldev/carcara/kotlinx/locale/collation/cldr/runtime/PayloadCollation$Tailored;
 	public synthetic fun compare (Ljava/lang/Object;Ljava/lang/Object;)I
 	public fun compare (Ljava/lang/String;Ljava/lang/String;)I
 	public final fun sortKey (Ljava/lang/String;)[I

@@ -109,6 +109,17 @@ public enum class GeneratedTable {
     /** Person name patterns: the forty-two cells of UTS #35 Part 8. */
     PERSON_NAMES,
 
+    /**
+     * The UCA root weight table, the NFD data under it, and one tailoring per
+     * locale: everything `collationComparator` reads.
+     *
+     * One table rather than three, because none of the three answers on its own.
+     * A tailoring is a delta over the root, and the root is stated over the
+     * decomposed form, so a build that took any two of them would sort wrongly
+     * rather than partially.
+     */
+    COLLATION,
+
     /** Cardinal and ordinal plural rules, shared by id across locales. */
     PLURALS,
 
@@ -149,6 +160,7 @@ public enum class GeneratedBinding(public val objectSuffix: String) {
     TIME_ZONE("TimeZone"),
     TIME_ZONE_CITIES("TimeZoneCities"),
     PERSON_NAME("PersonName"),
+    COLLATION("Collation"),
     ;
 
     public companion object
@@ -227,6 +239,7 @@ public class RegistryPackages private constructor(
                 GeneratedTable.NUMBER_COMPACT to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.CURRENCY_COMPACT to "dev.carcara.kotlinx.locale.currency.cldr.internal.data",
                 GeneratedTable.PERSON_NAMES to "dev.carcara.kotlinx.locale.personname.cldr.internal.data",
+                GeneratedTable.COLLATION to "dev.carcara.kotlinx.locale.collation.cldr.internal.data",
                 GeneratedTable.PLURALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.ORDINALS to "dev.carcara.kotlinx.locale.number.cldr.internal.data",
                 GeneratedTable.LANGUAGE_NAMES to "dev.carcara.kotlinx.locale.language.cldr.internal.data",
@@ -448,6 +461,28 @@ private val PAYLOAD_TABLES = listOf(
         "CurrencyCompact",
         "CURRENCY_COMPACT",
         "currencyCompactRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.COLLATION,
+        "collationRoot",
+        "CollationRoot",
+        "COLLATION_ROOT",
+        "collationRootRegistry",
+        "COLLATION_CLDR_VERSION",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.COLLATION,
+        "normalization",
+        "NormalizationData",
+        "NORMALIZATION",
+        "normalizationRegistry",
+    ),
+    PayloadTableSpec(
+        GeneratedTable.COLLATION,
+        "collationTailorings",
+        "CollationTailorings",
+        "COLLATION_TAILORING",
+        "collationTailoringsRegistry",
     ),
     PayloadTableSpec(
         GeneratedTable.PLURALS,
@@ -721,6 +756,10 @@ public fun generateSources(
             cldrTag = cldr,
             mapping = bundle.countryCurrencies,
         )
+    }
+
+    roots[GeneratedBinding.COLLATION]?.let { target ->
+        emitCollationBinding(target.root, target.spec(packages[GeneratedTable.COLLATION], cldr))
     }
 
     roots[GeneratedBinding.COUNTRY]?.let { target ->

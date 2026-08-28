@@ -25,9 +25,10 @@ kotlin {
         commonMain.dependencies {
             api(project(":kotlinx-locale-collation-cldr-runtime"))
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-            implementation(project(":conformance-test-suite"))
-        }
+        // No test dependency block. The assertions and the framework come from
+        // the convention plugin, and `:conformance-test-suite` is not taken:
+        // it compiles into every test binary that depends on it, and this
+        // domain's fixtures are ICU comparisons in `:conformance-icu` rather
+        // than a generated case file.
     }
 }

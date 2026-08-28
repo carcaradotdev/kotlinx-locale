@@ -27,8 +27,9 @@ kotlin {
         commonMain.dependencies {
             api(project(":kotlinx-locale-collation-core"))
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-        }
+        // No test dependency block: the assertions and the framework come from
+        // the convention plugin. kotlin-test cannot share a Kotlin/Wasm
+        // compilation with the test framework, so a module that asks for it
+        // compiles everywhere except wasmJs.
     }
 }

@@ -139,6 +139,21 @@ public class BundleSection(
             BundleSection("numberCompactShort"),
             BundleSection("numberCompactLong"),
             BundleSection("currencyCompactShort"),
+            // One entry each, under the tag `root`, because both are the same for
+            // every locale. Sections rather than entries in `BundleTables` so
+            // that they ride the packing pipeline: the root weight table is the
+            // largest thing this library generates, and a table written straight
+            // into a source file is neither deflated nor packed for what its
+            // target charges per character.
+            //
+            // Not narrowed, for the same reason as the plural rules: a build that
+            // dropped the root table would sort by code point and say nothing.
+            BundleSection("collationRoot", narrowed = false),
+            BundleSection("normalization", narrowed = false),
+            // Narrowed, and the reason the domain is three modules: a tailoring
+            // belongs to one locale, so a build that ships eight locales has no
+            // use for the other hundred.
+            BundleSection("collationTailorings"),
             // Not narrowed. The plural tables are four kilobytes for every locale
             // in CLDR, so dropping rows saves nothing, and a build that asked for
             // a locale it did not generate would fall back to root's other-only

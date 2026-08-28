@@ -69,9 +69,15 @@ So three source sets, one per answer:
 
 | source set | targets | form |
 | --- | --- | --- |
-| `utf8PlainMain` | js, wasmJs, wasmWasi | keys elided, records readable |
+| `utf8PlainMain` | js, wasmJs | keys elided, records readable |
 | `utf8DeflatedMain` | jvm, android | keys elided, deflated, seven bits per character |
-| `utf16Main` | every native target | keys elided, deflated, fifteen bits per character |
+| `utf16Main` | every native target, wasmWasi | keys elided, deflated, fifteen bits per character |
+
+wasmWasi sits with the native targets rather than with the other two Wasm ones.
+Kotlin/Wasm-JS compiles a string literal to an imported extern whose field name
+is the text itself, so it pays UTF-8; wasmWasi stores its own strings and charges
+UTF-16 for anything outside Latin-1. Measured on a linked binary: fifteen bits a
+character beats seven there by 6.6%, and loses to it on wasmJs by 39%.
 
 The registry is an `expect` in `commonMain` with an `actual` in each, and the
 unpacking is an `expect` beside it. Everything after unpacking is shared,

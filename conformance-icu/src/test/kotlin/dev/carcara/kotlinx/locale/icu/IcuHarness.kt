@@ -159,7 +159,25 @@ class DomainComparison(private val domain: String) {
      * nothing for the classifier on the overwhelming majority of cases that
      * agree.
      */
-    fun compare(locale: String, case: String, ours: String, icu: String, classify: () -> Divergence?) {
+    @JvmOverloads
+    fun compare(
+        locale: String,
+        case: String,
+        ours: String,
+        icu: String,
+        /**
+         * The reason, where the comparison can derive one.
+         *
+         * A judgement kind still needs a sentence in the ledger, and for some
+         * domains the sentence is derivable rather than a matter of opinion: a
+         * locale whose rules use a directive this build does not read diverges
+         * for that reason and no other. Supplying it here beats writing the same
+         * sentence into two hundred rows by hand, and it is regenerated rather
+         * than carried, so it cannot go stale.
+         */
+        note: () -> String = { "" },
+        classify: () -> Divergence?,
+    ) {
         compared++
         localesCompared.add(locale)
         if (ours.normalizedSpaces() == icu.normalizedSpaces()) return
@@ -170,7 +188,7 @@ class DomainComparison(private val domain: String) {
             derived[kind] = (derived[kind] ?: 0) + 1
             return
         }
-        val row = LedgerRow(domain, locale, case, ours, icu, kind ?: Divergence.DEFECT, "")
+        val row = LedgerRow(domain, locale, case, ours, icu, kind ?: Divergence.DEFECT, note())
         found[row.key()] = row
     }
 

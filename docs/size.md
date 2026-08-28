@@ -31,6 +31,7 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | country-full | 320.2 KB | 942.1 KB | 460.0 KB | 139.7 KB |
 | currency-full | 383.9 KB | 1281.8 KB | 500.0 KB | 116.0 KB |
 | timezone-full | 425.3 KB | 2315.3 KB | 700.0 KB | 274.6 KB |
+| collation-full | 497.6 KB | 2218.9 KB | 600.0 KB | 102.3 KB |
 | currency-plurals | 647.9 KB | 2457.9 KB | 900.0 KB | 252.0 KB |
 | timezone-cities | 668.7 KB | 3004.6 KB | 1200.0 KB | 531.2 KB |
 | everything | 793.1 KB | 2599.9 KB | 1100.0 KB | 306.8 KB |
