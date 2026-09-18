@@ -245,6 +245,37 @@ locales it can answer for, which is the evidence that the preference is being
 honoured where it is specified. Extending it to the standard patterns would mean
 overriding data a locale states on purpose, on the strength of a region default.
 
+## What an explicit hour cycle changes
+
+A caller who writes `-u-hc-h12` is naming the cycle rather than leaving it to the
+region, and this library honours that on both the standard patterns and the
+skeletons. It changes as little as it can: the letter is swapped in place where
+the cycle stays in the twelve- or twenty-four hour family the locale already
+writes, and the opposite family's pattern is used where it crosses.
+
+ICU does something larger. With the keyword present it stops rendering the
+standard pattern at all: it reads the skeleton off that pattern and asks
+`DateTimePatternGenerator` for a pattern again, so the answer comes out of
+`availableFormats` with that table's widths and literals. Wherever the two tables
+say anything different, the two libraries do too. Amharic states `h:mm:ss a` as
+its standard medium time and `a h:mm:ss` as its `hms` item, so `am-u-hc-h12`
+moves the day period to the front in ICU and leaves it at the end here, for a
+cycle Amharic already used. ICU drops the `hh` that Gujarati's own pattern
+states, and gains the `ч.` that Bulgarian's `Hms` item carries. The full list is
+`conformance/ledger/hour-cycle-patterns.tsv`, 132 rows. Twenty-four of them are
+the Low German and Occitan unconfirmed drafts covered above rather than anything
+the keyword did, and they carry the same two answers with no cycle named.
+
+Korean is the one case where neither side can just read an answer off the data.
+It states no twenty-four hour standard pattern, so `ko-u-hc-h23` has to be built:
+this library takes the `Hms` item, `H시 m분 s초`, and ICU reads the field widths
+off the twelve-hour pattern and lands on the `HHmmss` item, `HH:mm:ss`.
+
+Naming a cycle removes the Kurdish divergence above outright, since neither side
+is reading a region preference any more. Argentina still differs at MEDIUM, where
+ICU takes `es-AR`'s own `hms` item, `hh:mm:ss`, by the keyword route rather than
+the preference one.
+
 ## Time zone naming at a past instant
 
 The zone name API takes a style and an offset. It does not take an instant and
