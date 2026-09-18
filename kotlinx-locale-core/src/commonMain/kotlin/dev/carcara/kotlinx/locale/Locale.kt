@@ -231,11 +231,19 @@ public class Locale private constructor(
         /**
          * The locale [LocaleDefaults] names, the platform's own when it names
          * none, or `en` when the platform exposes none either (e.g. WASI).
+         *
+         * The platform's own carries the device hour cycle as an `hc` keyword
+         * where the platform reports one. A locale set on [LocaleDefaults]
+         * replaces it, hour cycle included.
          */
         public val current: Locale
-            get() = LocaleDefaults.locale
-                ?: platformSystemLocaleTag()?.let(::forLanguageTagOrNull)
-                ?: of("en")
+            get() = LocaleDefaults.locale ?: platformCurrent()
+
+        private fun platformCurrent(): Locale {
+            val base = platformSystemLocaleTag()?.let(::forLanguageTagOrNull) ?: of("en")
+            val keyword = platformHourCycleKeyword()?.takeIf(::isWellFormedUnicodeValue) ?: return base
+            return base.withUnicodeKeyword("hc", keyword)
+        }
     }
 }
 

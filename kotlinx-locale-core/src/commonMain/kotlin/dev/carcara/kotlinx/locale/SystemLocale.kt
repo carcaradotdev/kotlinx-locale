@@ -22,3 +22,11 @@ package dev.carcara.kotlinx.locale
  * surface in the library; all parsing and formatting happens in common code.
  */
 internal expect fun platformSystemLocaleTag(): String?
+
+/**
+ * The hour cycle the platform's user has chosen, as an `hc` keyword value
+ * (`h11`, `h12`, `h23`, `h24`, `c12` or `c24`), or `null` when the platform
+ * exposes none. A device 12/24-hour toggle maps to `c12` or `c24`, which
+ * resolve against the locale's own allowed list.
+ */
+internal expect fun platformHourCycleKeyword(): String?

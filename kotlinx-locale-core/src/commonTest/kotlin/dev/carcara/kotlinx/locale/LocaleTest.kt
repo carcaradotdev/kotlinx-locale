@@ -213,4 +213,15 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
         val written = Locale.forLanguageTag("de-DE").withUnicodeKeyword("hc", "h23")
         assertEquals(written, Locale.forLanguageTag(written.toLanguageTag()))
     }
+
+    test("theCurrentLocaleCarriesWhateverCycleThePlatformNames") {
+        val keyword = Locale.current.unicodeKeywordOrNull("hc")
+        assertTrue(keyword == null || keyword in setOf("h11", "h12", "h23", "h24", "c12", "c24"), "hc was '$keyword'")
+    }
+
+    test("theCurrentLocaleTagRoundTripsThePlatformCycle") {
+        val current = Locale.current
+        assertEquals(current, Locale.forLanguageTag(current.toLanguageTag()))
+        platformHourCycleKeyword()?.let { assertEquals(it, current.unicodeKeywordOrNull("hc")) }
+    }
 }
