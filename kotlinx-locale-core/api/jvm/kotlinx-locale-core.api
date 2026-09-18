@@ -24,10 +24,14 @@ public final class dev/carcara/kotlinx/locale/Locale {
 	public final fun getLanguage ()Ljava/lang/String;
 	public final fun getRegion ()Ljava/lang/String;
 	public final fun getScript ()Ljava/lang/String;
+	public final fun getUnicodeAttributes ()Ljava/util/Set;
 	public final fun getVariant ()Ljava/lang/String;
 	public fun hashCode ()I
+	public final fun stripExtensions ()Ldev/carcara/kotlinx/locale/Locale;
 	public final fun toLanguageTag ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;
+	public final fun unicodeKeyword (Ljava/lang/String;)Ljava/lang/String;
+	public final fun withUnicodeKeyword (Ljava/lang/String;Ljava/lang/String;)Ldev/carcara/kotlinx/locale/Locale;
 }
 
 public final class dev/carcara/kotlinx/locale/Locale$Companion {

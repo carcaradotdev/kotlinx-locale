@@ -17,10 +17,19 @@
 package dev.carcara.kotlinx.locale
 
 /**
- * An immutable Unicode locale identifier: language, optional script, region and variant.
+ * An immutable Unicode locale identifier: a Unicode language identifier plus
+ * optional locale extensions.
  *
- * Instances are normalized: lowercase language and variant, title-case script,
- * uppercase region. Create instances with [of] or [forLanguageTag].
+ * Subtags are normalized: lowercase language, variant and extensions, title-case
+ * script, uppercase region. Extensions are held in the canonical order UTS #35
+ * Annex C defines, and [toLanguageTag] writes them back in it.
+ *
+ * Of the `-u-` keys, only `hc` changes what this library renders. `nu`, `ca` and
+ * the rest are kept and round-tripped, and do nothing. That statement is what
+ * UAX35-C2 asks an implementation to make.
+ *
+ * Data lookup runs on the language identifier alone, so two identifiers that
+ * differ only in an extension read the same tables.
  */
 public class Locale private constructor(
     public val language: String,
@@ -31,6 +40,35 @@ public class Locale private constructor(
     private val keywords: Map<String, String>,
     private val otherExtensions: Map<Char, String>,
 ) {
+
+    /**
+     * The `-u-` attributes this identifier carries. Never acted on.
+     */
+    public val unicodeAttributes: Set<String> get() = attributes.sorted().toSet()
+
+    /**
+     * The value of a `-u-` keyword, or `null` when the identifier names none.
+     * An absent value reads as `true`, which is what UTS #35 assumes.
+     *
+     * Only `hc` changes what this library renders. Every other key round-trips
+     * through [toLanguageTag] and has no effect.
+     */
+    public fun unicodeKeyword(key: String): String? = keywords[key.lowercase()]
+
+    /** This identifier with [key] set to [value], or removed when [value] is `null`. */
+    public fun withUnicodeKeyword(key: String, value: String?): Locale {
+        val normalized = key.lowercase()
+        val updated = if (value == null) keywords - normalized else keywords + (normalized to value.lowercase())
+        if (updated == keywords) return this
+        return Locale(language, script, region, variant, attributes, updated, otherExtensions)
+    }
+
+    /** The Unicode language identifier alone, with every extension removed. */
+    public fun stripExtensions(): Locale = if (attributes.isEmpty() && keywords.isEmpty() && otherExtensions.isEmpty()) {
+        this
+    } else {
+        Locale(language, script, region, variant, emptyList(), emptyMap(), emptyMap())
+    }
 
     /** The canonical BCP 47 language tag, e.g. `pt-BR` or `sr-Cyrl-BA`. */
     public fun toLanguageTag(): String = buildString {
@@ -115,10 +153,9 @@ public class Locale private constructor(
         }
 
         /**
-         * Parses a language tag leniently: accepts BCP 47 (`pt-BR`) as well as
-         * POSIX-style identifiers (`pt_BR.UTF-8@latin`). Unicode locale extensions
-         * (`-u-`) and other singleton extensions (`-x-`, `-t-`, ...) are kept and
-         * canonicalised: lowercased, with their subtags and singletons reordered.
+         * Parses a language tag leniently: accepts BCP 47 (`pt-BR`), the `-u-`,
+         * `-t-` and `-x-` extensions, and POSIX-style identifiers
+         * (`pt_BR.UTF-8@latin`) including the old `@hc=h23` keyword syntax.
          *
          * Returns `null` when no valid language subtag can be extracted.
          */

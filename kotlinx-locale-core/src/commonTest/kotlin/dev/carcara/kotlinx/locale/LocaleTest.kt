@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(InternalKotlinxLocaleApi::class)
+
 package dev.carcara.kotlinx.locale
 
 import at.asitplus.testballoon.matrix.matrixConfig
@@ -164,5 +166,28 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
         // Whatever the platform reports must parse into a usable locale.
         val current = Locale.current
         assertTrue(current.language.length in 2..8, "language was '${current.language}'")
+    }
+
+    test("readsAndWritesUnicodeKeywords") {
+        val locale = Locale.forLanguageTag("de-DE-u-hc-h12")
+        assertEquals("h12", locale.unicodeKeyword("hc"))
+        assertNull(locale.unicodeKeyword("nu"))
+        assertEquals("de-DE-u-hc-h23", locale.withUnicodeKeyword("hc", "h23").toLanguageTag())
+        assertEquals("de-DE", locale.withUnicodeKeyword("hc", null).toLanguageTag())
+    }
+
+    test("readsUnicodeAttributes") {
+        assertEquals(setOf("bar", "foo"), Locale.forLanguageTag("en-u-foo-bar-hc-h23").unicodeAttributes)
+    }
+
+    test("stripExtensionsLeavesTheLanguageIdentifier") {
+        val locale = Locale.forLanguageTag("sr-Cyrl-BA-u-hc-h23-x-lorem")
+        assertEquals(Locale.forLanguageTag("sr-Cyrl-BA"), locale.stripExtensions())
+    }
+
+    test("extensionsNeverReachDataLookup") {
+        val plain = Locale.forLanguageTag("pt-BR")
+        val extended = Locale.forLanguageTag("pt-BR-u-hc-h12-nu-latn")
+        assertEquals(plain.dataLookupTags(), extended.dataLookupTags())
     }
 }
