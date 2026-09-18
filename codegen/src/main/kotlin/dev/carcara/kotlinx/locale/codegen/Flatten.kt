@@ -238,6 +238,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
 
         val digits = supplemental.numberingSystemDigits[numberingSystem ?: "latn"]
             ?: supplemental.numberingSystemDigits.getValue("latn")
+        val hourCycle = supplemental.hourCycleFor(id)
 
         fun full(name: String, values: Array<String?>): List<String> =
             values.mapIndexed { i, v -> checkNotNull(v) { "$id: missing $name[$i] after flattening" } }
@@ -266,8 +267,8 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             glueFormats = full("glueFormats", glueFormats),
             digits = digits,
             durationPatterns = full("durationPatterns", durationPatterns),
-            hourPreferred = supplemental.hourCycleFor(id).preferred,
-            hourAllowed = supplemental.hourCycleFor(id).allowed,
+            hourPreferred = hourCycle.preferred,
+            hourAllowed = hourCycle.allowed,
         )
     }
 
@@ -347,7 +348,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
  * list items joined by U+001E. Decoded at runtime by LocaleData.
  */
 fun ResolvedLocaleData.encode(): String {
-    val fields = ArrayList<String>(25)
+    val fields = ArrayList<String>(27)
     fun list(items: List<String>) = fields.add(items.joinToString("\u001E"))
     list(monthsWide)
     list(monthsAbbr)

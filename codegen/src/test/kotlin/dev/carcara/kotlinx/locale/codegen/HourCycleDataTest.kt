@@ -21,6 +21,7 @@ import at.asitplus.testballoon.matrix.matrixSuite
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertTrue
 import java.io.File
 
 val HourCycleDataTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
@@ -50,5 +51,12 @@ val HourCycleDataTest by matrixSuite(matrixConfig { testConfig = TestConfig.test
         val row = flattener.resolve("en_US").encode().split(FIELD_SEPARATOR)[26].split(LIST_SEPARATOR)
         assertEquals("h", row[0])
         assertEquals(supplemental.hourCycleFor("en_US").allowed, row.drop(1))
+    }
+
+    test("multiCharacterAllowedEntriesSurviveVerbatim") {
+        if (!cloned) return@test
+        val allowed = supplemental.hourCycleFor("hi_IN").allowed
+        assertTrue(allowed.any { it.length > 1 }, "hi_IN allowed was $allowed")
+        assertEquals("hB", allowed.first())
     }
 }
