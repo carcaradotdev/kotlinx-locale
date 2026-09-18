@@ -30,10 +30,30 @@ internal object LocaleContext {
  * Keeps the application context so [Locale.current] can read the 12/24-hour
  * setting from it.
  *
- * Public because `androidx.startup` builds it by reflection from the manifest
- * entry this library contributes, not because an app has any reason to name it.
- * An app that would rather not have it can remove the entry with
- * `tools:node="remove"`, and the hour cycle then goes unreported.
+ * Public because `androidx.startup` builds it by reflection from the `meta-data`
+ * node this library adds to the manifest, not because an app has any reason to
+ * name it.
+ *
+ * An app that would rather not have it removes that one `meta-data` node from
+ * its own manifest, and [Locale.current] then reports no hour cycle:
+ *
+ * ```xml
+ * <provider
+ *     android:name="androidx.startup.InitializationProvider"
+ *     android:authorities="${applicationId}.androidx-startup"
+ *     android:exported="false"
+ *     tools:node="merge">
+ *     <meta-data
+ *         android:name="dev.carcara.kotlinx.locale.LocaleContextInitializer"
+ *         tools:node="remove" />
+ * </provider>
+ * ```
+ *
+ * Do not put `tools:node="remove"` on the provider. Every library that uses
+ * `androidx.startup` enters through that one provider, WorkManager, `emoji2`,
+ * `profileinstaller` and `lifecycle-process` among them, so removing it stops
+ * their initialisers too. The build stays green and the damage shows up at run
+ * time as initialisation that never happened.
  */
 public class LocaleContextInitializer : Initializer<Unit> {
 

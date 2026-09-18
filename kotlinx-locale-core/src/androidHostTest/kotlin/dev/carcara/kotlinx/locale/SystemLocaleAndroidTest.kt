@@ -20,25 +20,30 @@ import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
-import dev.carcara.kotlinx.locale.test.assertContains
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertNull
 
 /**
- * A host test runs off a device, so the 12/24-hour setting it would read does
- * not exist and no context is ever registered. What is provable here is the
- * shape of the answer and the behaviour with no context; which of the two
- * cycles a device reports is provable only on a device.
+ * A host test runs off a device, and the stub `android.jar` throws rather than
+ * answering, so `DateFormat.is24HourFormat` is never reached here. The mapping
+ * it feeds is tested directly instead; what a device still has to prove is that
+ * the setting arrives as the boolean these cases assume.
  */
 val SystemLocaleAndroidTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
-    test("theKeywordNamesACycleFamilyOrNothing") {
-        assertContains(listOf(null, "c12", "c24"), platformHourCycleKeyword())
+    test("theCycleFamilyFollowsThe24HourSetting") {
+        assertEquals("c24", hourCycleKeyword(is24Hour = true))
+        assertEquals("c12", hourCycleKeyword(is24Hour = false))
     }
 
     test("withoutAnApplicationContextThereIsNoKeyword") {
-        assertNull(LocaleContext.applicationContext)
-        assertNull(platformHourCycleKeyword())
+        val restore = LocaleContext.applicationContext
+        try {
+            LocaleContext.applicationContext = null
+            assertNull(platformHourCycleKeyword())
+        } finally {
+            LocaleContext.applicationContext = restore
+        }
     }
 
     test("theInitializerWaitsOnNothingElse") {

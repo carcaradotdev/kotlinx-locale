@@ -20,8 +20,10 @@ agp = "9.3.0"
 android-compileSdk = "36"
 android-minSdk = "21"
 # Android keeps the 12/24-hour setting behind a Context and a library is handed
-# none. This is the smallest thing that hands one over: a single ContentProvider
-# the manifest merger contributes, which an app can disable if it wants to.
+# none. This is the smallest thing that hands one over: one meta-data node in a
+# provider the manifest merger shares with every other androidx initialiser. The
+# KDoc on LocaleContextInitializer says how an app opts out of that one node,
+# and why removing the provider instead breaks other libraries.
 androidx-startup = "1.2.0"
 ktlint-gradle = "14.2.0"
 maven-publish = "0.37.0"

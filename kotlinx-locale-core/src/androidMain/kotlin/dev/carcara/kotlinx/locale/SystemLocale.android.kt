@@ -26,5 +26,11 @@ internal actual fun platformSystemLocaleTag(): String? = java.util.Locale.getDef
  */
 internal actual fun platformHourCycleKeyword(): String? {
     val context = LocaleContext.applicationContext ?: return null
-    return if (DateFormat.is24HourFormat(context)) "c24" else "c12"
+    return hourCycleKeyword(DateFormat.is24HourFormat(context))
 }
+
+/**
+ * The cycle family rather than the cycle: `c24` and `c12` resolve against the
+ * locale's own allowed list, so Japan still reaches `h11` instead of `h12`.
+ */
+internal fun hourCycleKeyword(is24Hour: Boolean): String = if (is24Hour) "c24" else "c12"
