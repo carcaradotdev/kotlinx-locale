@@ -26,6 +26,7 @@ import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.internal.data.localeDataRegistry
 import dev.carcara.kotlinx.locale.datetime.cldr.runtime.DateTimeRecord
+import dev.carcara.kotlinx.locale.datetime.cldr.runtime.resolveHourCycle
 import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.resolvedRecord
 import dev.carcara.kotlinx.locale.test.assertEquals
@@ -77,5 +78,12 @@ val HourCycleRecordTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
     test("theLetterSwapLeavesQuotedTextAlone") {
         val record = recordFor("fr-CA")
         assertEquals("K 'h' mm\u202Fa", record.timePattern(FormatStyle.SHORT, HourCycle.H11))
+    }
+
+    test("theAllowedScanComparesSymbolsNotWholeEntries") {
+        assertEquals(HourCycle.H11, resolveHourCycle(HourCycle.C12, listOf("Kb", "h")))
+        assertEquals(HourCycle.H12, resolveHourCycle(HourCycle.C12, listOf("hb", "K")))
+        assertEquals(HourCycle.H24, resolveHourCycle(HourCycle.C24, listOf("kb", "H")))
+        assertEquals(HourCycle.H23, resolveHourCycle(HourCycle.C24, listOf("Hb", "k")))
     }
 }
