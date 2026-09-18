@@ -27,6 +27,7 @@ import dev.carcara.kotlinx.locale.datetime.DateTimeFormatSource
 import dev.carcara.kotlinx.locale.datetime.DurationPatternSource
 import dev.carcara.kotlinx.locale.datetime.DurationStyle
 import dev.carcara.kotlinx.locale.datetime.FormatStyle
+import dev.carcara.kotlinx.locale.datetime.HourCycle
 import dev.carcara.kotlinx.locale.datetime.NameContext
 import dev.carcara.kotlinx.locale.datetime.TextStyle
 import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
@@ -282,7 +283,87 @@ public class DateTimeRecord(record: String, standaloneRecord: String? = null) {
         else -> dayPeriodNames[code - 2].ifEmpty { null }
     }
 
+    private val hourCycleRow: List<String> = fields.getOrNull(26)
+        ?.takeIf(String::isNotEmpty)
+        ?.split(LIST_SEPARATOR)
+        .orEmpty()
+
+    /** CLDR's preferred hour cycle pattern letter for this locale; `H` when the record carries none. */
+    public val hourPreferred: Char = hourCycleRow.firstOrNull()?.firstOrNull() ?: 'H'
+
+    /** The `<timeData>` allowed entries in CLDR preference order, past [hourPreferred]. */
+    public val hourAllowed: List<String> = hourCycleRow.drop(1)
+
+    /**
+     * The opposite hour family's time patterns, FULL to SHORT; empty where it
+     * says nothing this locale's own pattern at that style does not, and empty
+     * for a record written before these existed.
+     */
+    public val alternateTimeFormats: List<String> = fields.getOrNull(27)
+        ?.takeIf(String::isNotEmpty)
+        ?.split(LIST_SEPARATOR)
+        .orEmpty()
+
+    /** [cycle] with [HourCycle.C12] and [HourCycle.C24] resolved against [hourAllowed]. */
+    public fun resolveHourCycle(cycle: HourCycle): HourCycle = resolveHourCycle(cycle, hourAllowed)
+
+    /** The time pattern for [style], written in [cycle]; the locale's own when [cycle] is null. */
+    public fun timePattern(style: FormatStyle, cycle: HourCycle?): String {
+        val own = timeFormats[style.ordinal]
+        if (cycle == null) return own
+        val target = resolveHourCycle(cycle).patternLetter ?: return own
+        val ownLetter = patternHourLetter(own) ?: return own
+        if (isTwelveHour(ownLetter) == isTwelveHour(target)) return replaceHourLetter(own, ownLetter, target)
+        val alternate = alternateTimeFormats.getOrNull(style.ordinal)?.takeIf(String::isNotEmpty) ?: return own
+        val alternateLetter = patternHourLetter(alternate) ?: return alternate
+        return replaceHourLetter(alternate, alternateLetter, target)
+    }
+
     public companion object
+}
+
+private val HOUR_LETTERS = setOf('h', 'H', 'K', 'k')
+
+private fun isTwelveHour(letter: Char): Boolean = letter == 'h' || letter == 'K'
+
+/** The first hour field [pattern] writes, outside quoted literal text, or null when it writes none. */
+internal fun patternHourLetter(pattern: String): Char? {
+    var quoted = false
+    for (character in pattern) {
+        when {
+            character == '\'' -> quoted = !quoted
+            quoted -> {}
+            character in HOUR_LETTERS -> return character
+        }
+    }
+    return null
+}
+
+private fun replaceHourLetter(pattern: String, from: Char, to: Char): String {
+    if (from == to) return pattern
+    var quoted = false
+    return buildString(pattern.length) {
+        for (character in pattern) {
+            if (character == '\'') quoted = !quoted
+            append(if (!quoted && character == from) to else character)
+        }
+    }
+}
+
+/**
+ * [HourCycle.C12] and [HourCycle.C24] resolved against [allowed], a
+ * preference-ordered list of `<timeData>` entries; every other cycle resolves
+ * to itself. Shared between [DateTimeRecord] and the skeleton matcher, which
+ * carries the same allowed list in a different shape.
+ */
+@InternalKotlinxLocaleApi
+public fun resolveHourCycle(cycle: HourCycle, allowed: List<String>): HourCycle {
+    fun first(symbol: Char): Int = allowed.indexOfFirst { it.firstOrNull() == symbol }.let { if (it < 0) Int.MAX_VALUE else it }
+    return when (cycle) {
+        HourCycle.C12 -> if (first('K') < first('h')) HourCycle.H11 else HourCycle.H12
+        HourCycle.C24 -> if (first('k') < first('H')) HourCycle.H24 else HourCycle.H23
+        else -> cycle
+    }
 }
 
 /**

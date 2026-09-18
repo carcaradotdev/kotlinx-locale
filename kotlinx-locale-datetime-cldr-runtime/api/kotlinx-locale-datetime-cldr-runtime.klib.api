@@ -109,6 +109,8 @@ sealed interface dev.carcara.kotlinx.locale.datetime.cldr.runtime/PatternToken {
 final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord { // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord|null[0]
     constructor <init>(kotlin/String, kotlin/String? = ...) // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.<init>|<init>(kotlin.String;kotlin.String?){}[0]
 
+    final val alternateTimeFormats // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.alternateTimeFormats|{}alternateTimeFormats[0]
+        final fun <get-alternateTimeFormats>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.alternateTimeFormats.<get-alternateTimeFormats>|<get-alternateTimeFormats>(){}[0]
     final val am // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.am|{}am[0]
         final fun <get-am>(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.am.<get-am>|<get-am>(){}[0]
     final val capitalizationBits // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.capitalizationBits|{}capitalizationBits[0]
@@ -141,6 +143,10 @@ final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord { //
         final fun <get-era1>(): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.era1.<get-era1>|<get-era1>(){}[0]
     final val glueFormats // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.glueFormats|{}glueFormats[0]
         final fun <get-glueFormats>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.glueFormats.<get-glueFormats>|<get-glueFormats>(){}[0]
+    final val hourAllowed // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.hourAllowed|{}hourAllowed[0]
+        final fun <get-hourAllowed>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.hourAllowed.<get-hourAllowed>|<get-hourAllowed>(){}[0]
+    final val hourPreferred // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.hourPreferred|{}hourPreferred[0]
+        final fun <get-hourPreferred>(): kotlin/Char // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.hourPreferred.<get-hourPreferred>|<get-hourPreferred>(){}[0]
     final val monthsAbbr // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.monthsAbbr|{}monthsAbbr[0]
         final fun <get-monthsAbbr>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.monthsAbbr.<get-monthsAbbr>|<get-monthsAbbr>(){}[0]
     final val monthsNarrow // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.monthsNarrow|{}monthsNarrow[0]
@@ -161,6 +167,8 @@ final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord { //
     final fun dayOfWeek(kotlin/Int, dev.carcara.kotlinx.locale.datetime/TextStyle, dev.carcara.kotlinx.locale.datetime/NameContext): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.dayOfWeek|dayOfWeek(kotlin.Int;dev.carcara.kotlinx.locale.datetime.TextStyle;dev.carcara.kotlinx.locale.datetime.NameContext){}[0]
     final fun dayPeriodName(kotlin/Int): kotlin/String? // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.dayPeriodName|dayPeriodName(kotlin.Int){}[0]
     final fun month(kotlin/Int, dev.carcara.kotlinx.locale.datetime/TextStyle, dev.carcara.kotlinx.locale.datetime/NameContext): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.month|month(kotlin.Int;dev.carcara.kotlinx.locale.datetime.TextStyle;dev.carcara.kotlinx.locale.datetime.NameContext){}[0]
+    final fun resolveHourCycle(dev.carcara.kotlinx.locale.datetime/HourCycle): dev.carcara.kotlinx.locale.datetime/HourCycle // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.resolveHourCycle|resolveHourCycle(dev.carcara.kotlinx.locale.datetime.HourCycle){}[0]
+    final fun timePattern(dev.carcara.kotlinx.locale.datetime/FormatStyle, dev.carcara.kotlinx.locale.datetime/HourCycle?): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.timePattern|timePattern(dev.carcara.kotlinx.locale.datetime.FormatStyle;dev.carcara.kotlinx.locale.datetime.HourCycle?){}[0]
 
     final object Companion // dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord.Companion|null[0]
 }
@@ -348,3 +356,4 @@ final fun (kotlin.collections/List<dev.carcara.kotlinx.locale.datetime.cldr.runt
 final fun dev.carcara.kotlinx.locale.datetime.cldr.runtime/dateTimeRecordFor(kotlin.collections/Map<kotlin/String, kotlin/String>, dev.carcara.kotlinx.locale/Locale, kotlin.collections/Map<kotlin/String, kotlin/String> = ...): dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord // dev.carcara.kotlinx.locale.datetime.cldr.runtime/dateTimeRecordFor|dateTimeRecordFor(kotlin.collections.Map<kotlin.String,kotlin.String>;dev.carcara.kotlinx.locale.Locale;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
 final fun dev.carcara.kotlinx.locale.datetime.cldr.runtime/formatPattern(kotlin.collections/List<dev.carcara.kotlinx.locale.datetime.cldr.runtime/PatternToken>, dev.carcara.kotlinx.locale.datetime.cldr.runtime/DateTimeRecord, kotlinx.datetime/LocalDate?, kotlinx.datetime/LocalTime?, dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord? = ...): kotlin/String // dev.carcara.kotlinx.locale.datetime.cldr.runtime/formatPattern|formatPattern(kotlin.collections.List<dev.carcara.kotlinx.locale.datetime.cldr.runtime.PatternToken>;dev.carcara.kotlinx.locale.datetime.cldr.runtime.DateTimeRecord;kotlinx.datetime.LocalDate?;kotlinx.datetime.LocalTime?;dev.carcara.kotlinx.locale.datetime.cldr.runtime.SkeletonRecord?){}[0]
 final fun dev.carcara.kotlinx.locale.datetime.cldr.runtime/parseDateTimePattern(kotlin/String): kotlin.collections/List<dev.carcara.kotlinx.locale.datetime.cldr.runtime/PatternToken> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/parseDateTimePattern|parseDateTimePattern(kotlin.String){}[0]
+final fun dev.carcara.kotlinx.locale.datetime.cldr.runtime/resolveHourCycle(dev.carcara.kotlinx.locale.datetime/HourCycle, kotlin.collections/List<kotlin/String>): dev.carcara.kotlinx.locale.datetime/HourCycle // dev.carcara.kotlinx.locale.datetime.cldr.runtime/resolveHourCycle|resolveHourCycle(dev.carcara.kotlinx.locale.datetime.HourCycle;kotlin.collections.List<kotlin.String>){}[0]
