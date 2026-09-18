@@ -82,6 +82,10 @@ public class SkeletonRecord(formats: String, appendFormats: String, names: Strin
     /** What `C` resolves to; a trailing `b` or `B` names the day period letter. */
     public val firstAllowedHourFormat: String = hourCycle.getOrNull(1)?.ifEmpty { null } ?: preferredHourChar.toString()
 
+    /** The `<timeData>` allowed entries in preference order; what an `hc` override resolves against. */
+    public val allowedHourFormats: List<String> = hourCycle.drop(1).filter(String::isNotEmpty)
+        .ifEmpty { listOf(preferredHourChar.toString()) }
+
     /**
      * The `atTime` date-time glue, in FULL, LONG, MEDIUM, SHORT order.
      *

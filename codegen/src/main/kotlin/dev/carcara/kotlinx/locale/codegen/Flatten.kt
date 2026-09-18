@@ -100,8 +100,8 @@ class ResolvedSkeletonData(
     val glueAtTimeFormats: List<String>,
     /** What the `j` skeleton letter resolves to for this locale. */
     val hourPreferred: Char,
-    /** What `C` resolves to; a trailing `b` or `B` names the day period letter. */
-    val hourFirstAllowed: String,
+    /** `<timeData>` allowed, in preference order; what `C` and an `hc` override resolve against. */
+    val hourAllowed: List<String>,
 )
 
 class Flattener(private val cldrDir: File, private val supplemental: SupplementalData) {
@@ -384,7 +384,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             quartersStandaloneAbbr = quartersStandaloneAbbr.map { it.orEmpty() },
             glueAtTimeFormats = List(4) { glueAtTime[it] ?: standardGlue[it] },
             hourPreferred = hourCycle.preferred,
-            hourFirstAllowed = hourCycle.firstAllowed,
+            hourAllowed = hourCycle.allowed,
         )
     }
 }
@@ -547,7 +547,7 @@ fun ResolvedSkeletonData.encodeNames(): String = listOf(
     fieldNames.joinToString(LIST_SEPARATOR),
     quartersWide.joinToString(LIST_SEPARATOR),
     quartersAbbr.joinToString(LIST_SEPARATOR),
-    listOf(hourPreferred.toString(), hourFirstAllowed).joinToString(LIST_SEPARATOR),
+    (listOf(hourPreferred.toString()) + hourAllowed).joinToString(LIST_SEPARATOR),
     glueAtTimeFormats.joinToString(LIST_SEPARATOR),
     // Appended rather than inserted, so a record written by an older generator
     // still decodes: the reader takes these positionally and falls back to the

@@ -19,4 +19,4 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_QU: String =
-    "002Y㋦㡃䁆ऄ⺊䌙㺀᱈堂䪜त䂋ఫ㰕纮䅄糎搐౐蔟攽浕䵂ᩚ㧏⺕䳅⌛瑊攲ᨀ拌Ṯ㇥⌹⯗ช䘂菈晎ℿ楻㗧ᥥ∜癹㐼ุ⟠⯼૿ᚺလᅮ᚛廳䬟盐漞砐"
+    "002g㋦ᡂ恆ै⼌申䐃ⱚ节⢸່膆孌ᄦ墒♝副㽮䨛㑟࿭㛥囄樥㵻㑋溦㲏Ἢᛱ舐౐䘲䂮元᭓烩⟰Ꮀ偬稔䃓蔟⥧皕ィ荁熥䡘卻ା栧曭帏ง瘆珌癗㒇櫝䯆樔檾"

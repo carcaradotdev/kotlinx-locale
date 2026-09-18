@@ -301,6 +301,7 @@ public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/SkeletonForm
 public final class dev/carcara/kotlinx/locale/datetime/cldr/runtime/SkeletonRecord {
 	public static final field Companion Ldev/carcara/kotlinx/locale/datetime/cldr/runtime/SkeletonRecord$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getAllowedHourFormats ()Ljava/util/List;
 	public final fun getAvailableFormats ()Ljava/util/List;
 	public final fun getFirstAllowedHourFormat ()Ljava/lang/String;
 	public final fun getGlueAtTimeFormats ()Ljava/util/List;

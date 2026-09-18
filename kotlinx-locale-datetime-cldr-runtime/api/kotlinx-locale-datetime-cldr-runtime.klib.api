@@ -311,6 +311,8 @@ final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/RelativeTimeRecord 
 final class dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord { // dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord|null[0]
     constructor <init>(kotlin/String, kotlin/String, kotlin/String) // dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord.<init>|<init>(kotlin.String;kotlin.String;kotlin.String){}[0]
 
+    final val allowedHourFormats // dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord.allowedHourFormats|{}allowedHourFormats[0]
+        final fun <get-allowedHourFormats>(): kotlin.collections/List<kotlin/String> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord.allowedHourFormats.<get-allowedHourFormats>|<get-allowedHourFormats>(){}[0]
     final val availableFormats // dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord.availableFormats|{}availableFormats[0]
         final fun <get-availableFormats>(): kotlin.collections/List<kotlin/Pair<kotlin/String, kotlin/String>> // dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord.availableFormats.<get-availableFormats>|<get-availableFormats>(){}[0]
     final val firstAllowedHourFormat // dev.carcara.kotlinx.locale.datetime.cldr.runtime/SkeletonRecord.firstAllowedHourFormat|{}firstAllowedHourFormat[0]

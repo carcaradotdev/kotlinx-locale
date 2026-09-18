@@ -19,46 +19,103 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_FA: String =
-    "دوره\u001Eسال\u001Eسه‌ماهه\u001Eماه\u001E\u001E\u001Eروز هفته\u001Eروز\u001E\u001E\u001Eق.ظ/ب.ظ\u001Eساعت\u001Eدقیقه\u001Eثانیه\u001E\u001E\u001Fسه‌ماههٔ اول\u001Eسه‌ماههٔ دوم\u001Eسه‌ماههٔ سوم\u001Eسه‌ماههٔ چهارم\u001Fس‌م۱\u001Eس‌م۲\u001Eس‌م۳\u001Eس‌م۴\u001FH\u001EhB\u001F{1} ساعت {0}\u001E{1} ساعت {0}\u001E{1}، {0}\u001E{1}, {0}\u001F\u001Fسه‌ماههٔ اول\u001Eسه‌ماههٔ دوم\u001Eسه‌ماههٔ سوم\u001Eسه‌ماههٔ چهارم"
+    "دوره\u001Eسال\u001Eسه‌ماهه\u001Eماه\u001E\u001E\u001Eروز هفته\u001Eروز\u001E\u001E\u001Eق.ظ/ب.ظ\u001Eساعت\u001Eدقیقه\u001Eثانیه\u001E\u001E\u001Fسه‌ماههٔ اول\u001Eسه‌ماههٔ دوم\u001Eسه‌ماههٔ سوم\u001Eسه‌ماههٔ چهارم\u001Fس‌م۱\u001Eس‌م۲\u001Eس‌م۳\u001Eس‌م۴\u001FH\u001EhB\u001EH\u001F{1} ساعت {0}\u001E{1} ساعت {0}\u001E{1}، {0}\u001E{1}, {0}\u001F\u001Fسه‌ماههٔ اول\u001Eسه‌ماههٔ دوم\u001Eسه‌ماههٔ سوم\u001Eسه‌ماههٔ چهارم"
 
 internal val SKELETON_NAMES_FA_AF: String =
-    "دوره\u001Eسال\u001Eسه‌ماهه\u001Eماه\u001E\u001E\u001Eروز هفته\u001Eروز\u001E\u001E\u001Eق.ظ/ب.ظ\u001Eساعت\u001Eدقیقه\u001Eثانیه\u001E\u001E\u001Fربع اول\u001Eربع دوم\u001Eربع سوم\u001Eربع چهارم\u001Fر۱\u001Eر۲\u001Eر۳\u001Eر۴\u001FH\u001EH\u001F{1} ساعت {0}\u001E{1} ساعت {0}\u001E{1}، {0}\u001E{1}, {0}\u001F\u001Fربع اول\u001Eربع دوم\u001Eربع سوم\u001Eربع چهارم"
+    "دوره\u001Eسال\u001Eسه‌ماهه\u001Eماه\u001E\u001E\u001Eروز هفته\u001Eروز\u001E\u001E\u001Eق.ظ/ب.ظ\u001Eساعت\u001Eدقیقه\u001Eثانیه\u001E\u001E\u001Fربع اول\u001Eربع دوم\u001Eربع سوم\u001Eربع چهارم\u001Fر۱\u001Eر۲\u001Eر۳\u001Eر۴\u001FH\u001EH\u001Ehb\u001EhB\u001Eh\u001F{1} ساعت {0}\u001E{1} ساعت {0}\u001E{1}، {0}\u001E{1}, {0}\u001F\u001Fربع اول\u001Eربع دوم\u001Eربع سوم\u001Eربع چهارم"
 
 internal val SKELETON_NAMES_FF: String =
-    "Jamaanu\u001EHitaande\u001EQuarter\u001ELewru\u001E\u001E\u001EÑalɗi yontere\u001EÑalnde\u001E\u001E\u001ESahnga\u001EWaktu\u001EHoƴom\u001EMajaango\u001E\u001E\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4"
+    "Jamaanu\u001EHitaande\u001EQuarter\u001ELewru\u001E\u001E\u001EÑalɗi yontere\u001EÑalnde\u001E\u001E\u001ESahnga\u001EWaktu\u001EHoƴom\u001EMajaango\u001E\u001E\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001Eh\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4"
 
 internal val SKELETON_NAMES_FF_ADLM: String =
-    "𞤺𞤭𞤪𞤢𞤤\u001E𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫\u001E𞤲𞤢𞤴𞤢𞤩𞤭𞥅𞤪𞤫\u001E𞤤𞤫𞤱𞤪𞤵\u001E\u001E\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫\u001E\u001E\u001E𞤀𞤎/𞤇𞤎\u001E𞤲𞤶𞤢𞤥𞤣𞤭\u001E𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫\u001E𞤳𞤭𞤲𞤰𞤫𞤪𞤫\u001E\u001E\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001FH\u001EH\u001F{1} 𞤉 {0}\u001E{1} 𞤉 {0}\u001E{1} {0}\u001E{1} {0}\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫"
+    "𞤺𞤭𞤪𞤢𞤤\u001E𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫\u001E𞤲𞤢𞤴𞤢𞤩𞤭𞥅𞤪𞤫\u001E𞤤𞤫𞤱𞤪𞤵\u001E\u001E\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫\u001E\u001E\u001E𞤀𞤎/𞤇𞤎\u001E𞤲𞤶𞤢𞤥𞤣𞤭\u001E𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫\u001E𞤳𞤭𞤲𞤰𞤫𞤪𞤫\u001E\u001E\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001FH\u001EH\u001EhB\u001F{1} 𞤉 {0}\u001E{1} 𞤉 {0}\u001E{1} {0}\u001E{1} {0}\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫"
+
+internal val SKELETON_NAMES_FF_ADLM_CM: String =
+    "𞤺𞤭𞤪𞤢𞤤\u001E𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫\u001E𞤲𞤢𞤴𞤢𞤩𞤭𞥅𞤪𞤫\u001E𞤤𞤫𞤱𞤪𞤵\u001E\u001E\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫\u001E\u001E\u001E𞤀𞤎/𞤇𞤎\u001E𞤲𞤶𞤢𞤥𞤣𞤭\u001E𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫\u001E𞤳𞤭𞤲𞤰𞤫𞤪𞤫\u001E\u001E\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001FH\u001EH\u001Eh\u001EhB\u001F{1} 𞤉 {0}\u001E{1} 𞤉 {0}\u001E{1} {0}\u001E{1} {0}\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫"
 
 internal val SKELETON_NAMES_FF_ADLM_GH: String =
-    "𞤺𞤭𞤪𞤢𞤤\u001E𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫\u001E𞤲𞤢𞤴𞤢𞤩𞤭𞥅𞤪𞤫\u001E𞤤𞤫𞤱𞤪𞤵\u001E\u001E\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫\u001E\u001E\u001E𞤀𞤎/𞤇𞤎\u001E𞤲𞤶𞤢𞤥𞤣𞤭\u001E𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫\u001E𞤳𞤭𞤲𞤰𞤫𞤪𞤫\u001E\u001E\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001Fh\u001Eh\u001F{1} 𞤉 {0}\u001E{1} 𞤉 {0}\u001E{1} {0}\u001E{1} {0}\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫"
+    "𞤺𞤭𞤪𞤢𞤤\u001E𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫\u001E𞤲𞤢𞤴𞤢𞤩𞤭𞥅𞤪𞤫\u001E𞤤𞤫𞤱𞤪𞤵\u001E\u001E\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫\u001E\u001E\u001E𞤀𞤎/𞤇𞤎\u001E𞤲𞤶𞤢𞤥𞤣𞤭\u001E𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫\u001E𞤳𞤭𞤲𞤰𞤫𞤪𞤫\u001E\u001E\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001Fh\u001Eh\u001EH\u001F{1} 𞤉 {0}\u001E{1} 𞤉 {0}\u001E{1} {0}\u001E{1} {0}\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫"
+
+internal val SKELETON_NAMES_FF_ADLM_GM: String =
+    "𞤺𞤭𞤪𞤢𞤤\u001E𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫\u001E𞤲𞤢𞤴𞤢𞤩𞤭𞥅𞤪𞤫\u001E𞤤𞤫𞤱𞤪𞤵\u001E\u001E\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫\u001E\u001E\u001E𞤀𞤎/𞤇𞤎\u001E𞤲𞤶𞤢𞤥𞤣𞤭\u001E𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫\u001E𞤳𞤭𞤲𞤰𞤫𞤪𞤫\u001E\u001E\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001Fh\u001Eh\u001Ehb\u001EH\u001EhB\u001F{1} 𞤉 {0}\u001E{1} 𞤉 {0}\u001E{1} {0}\u001E{1} {0}\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫"
+
+internal val SKELETON_NAMES_FF_ADLM_MR: String =
+    "𞤺𞤭𞤪𞤢𞤤\u001E𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫\u001E𞤲𞤢𞤴𞤢𞤩𞤭𞥅𞤪𞤫\u001E𞤤𞤫𞤱𞤪𞤵\u001E\u001E\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫\u001E\u001E\u001E𞤀𞤎/𞤇𞤎\u001E𞤲𞤶𞤢𞤥𞤣𞤭\u001E𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫\u001E𞤳𞤭𞤲𞤰𞤫𞤪𞤫\u001E\u001E\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001Fh\u001Eh\u001EhB\u001Ehb\u001EH\u001F{1} 𞤉 {0}\u001E{1} 𞤉 {0}\u001E{1} {0}\u001E{1} {0}\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫"
+
+internal val SKELETON_NAMES_FF_ADLM_NE: String =
+    "𞤺𞤭𞤪𞤢𞤤\u001E𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫\u001E𞤲𞤢𞤴𞤢𞤩𞤭𞥅𞤪𞤫\u001E𞤤𞤫𞤱𞤪𞤵\u001E\u001E\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫\u001E\u001E\u001E𞤀𞤎/𞤇𞤎\u001E𞤲𞤶𞤢𞤥𞤣𞤭\u001E𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫\u001E𞤳𞤭𞤲𞤰𞤫𞤪𞤫\u001E\u001E\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001FH\u001EH\u001F{1} 𞤉 {0}\u001E{1} 𞤉 {0}\u001E{1} {0}\u001E{1} {0}\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫"
+
+internal val SKELETON_NAMES_FF_ADLM_NG: String =
+    "𞤺𞤭𞤪𞤢𞤤\u001E𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫\u001E𞤲𞤢𞤴𞤢𞤩𞤭𞥅𞤪𞤫\u001E𞤤𞤫𞤱𞤪𞤵\u001E\u001E\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫\u001E𞤻𞤢𞤤𞤢𞥄𞤲𞤣𞤫\u001E\u001E\u001E𞤀𞤎/𞤇𞤎\u001E𞤲𞤶𞤢𞤥𞤣𞤭\u001E𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫\u001E𞤳𞤭𞤲𞤰𞤫𞤪𞤫\u001E\u001E\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001F𞤐𞥑\u001E𞤐𞥒\u001E𞤐𞥓\u001E𞤐𞥔\u001FH\u001EH\u001Eh\u001Ehb\u001EhB\u001F{1} 𞤉 {0}\u001E{1} 𞤉 {0}\u001E{1} {0}\u001E{1} {0}\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫\u001F𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥑𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥒𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥓𞤪𞤫\u001E𞤐𞤢𞤴𞤩𞤭𞥅𞤪𞤫 𞥔𞤪𞤫"
+
+internal val SKELETON_NAMES_FF_LATN_BF: String =
+    "Jamaanu\u001EHitaande\u001EQuarter\u001ELewru\u001E\u001E\u001EÑalɗi yontere\u001EÑalnde\u001E\u001E\u001ESahnga\u001EWaktu\u001EHoƴom\u001EMajaango\u001E\u001E\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4"
 
 internal val SKELETON_NAMES_FF_LATN_GH: String =
-    "Jamaanu\u001EHitaande\u001EQuarter\u001ELewru\u001E\u001E\u001EÑalɗi yontere\u001EÑalnde\u001E\u001E\u001ESahnga\u001EWaktu\u001EHoƴom\u001EMajaango\u001E\u001E\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4\u001FT1\u001ET2\u001ET3\u001ET4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4"
+    "Jamaanu\u001EHitaande\u001EQuarter\u001ELewru\u001E\u001E\u001EÑalɗi yontere\u001EÑalnde\u001E\u001E\u001ESahnga\u001EWaktu\u001EHoƴom\u001EMajaango\u001E\u001E\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4\u001FT1\u001ET2\u001ET3\u001ET4\u001Fh\u001Eh\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4"
+
+internal val SKELETON_NAMES_FF_LATN_GM: String =
+    "Jamaanu\u001EHitaande\u001EQuarter\u001ELewru\u001E\u001E\u001EÑalɗi yontere\u001EÑalnde\u001E\u001E\u001ESahnga\u001EWaktu\u001EHoƴom\u001EMajaango\u001E\u001E\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4\u001FT1\u001ET2\u001ET3\u001ET4\u001Fh\u001Eh\u001Ehb\u001EH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4"
+
+internal val SKELETON_NAMES_FF_LATN_MR: String =
+    "Jamaanu\u001EHitaande\u001EQuarter\u001ELewru\u001E\u001E\u001EÑalɗi yontere\u001EÑalnde\u001E\u001E\u001ESahnga\u001EWaktu\u001EHoƴom\u001EMajaango\u001E\u001E\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4\u001FT1\u001ET2\u001ET3\u001ET4\u001Fh\u001Eh\u001EhB\u001Ehb\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4"
+
+internal val SKELETON_NAMES_FF_LATN_NE: String =
+    "Jamaanu\u001EHitaande\u001EQuarter\u001ELewru\u001E\u001E\u001EÑalɗi yontere\u001EÑalnde\u001E\u001E\u001ESahnga\u001EWaktu\u001EHoƴom\u001EMajaango\u001E\u001E\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4"
+
+internal val SKELETON_NAMES_FF_LATN_NG: String =
+    "Jamaanu\u001EHitaande\u001EQuarter\u001ELewru\u001E\u001E\u001EÑalɗi yontere\u001EÑalnde\u001E\u001E\u001ESahnga\u001EWaktu\u001EHoƴom\u001EMajaango\u001E\u001E\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001Eh\u001Ehb\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FTermes 1\u001ETermes 2\u001ETermes 3\u001ETermes 4"
 
 internal val SKELETON_NAMES_FI: String =
     "aikakausi\u001Evuosi\u001Eneljännesvuosi\u001Ekuukausi\u001E\u001E\u001Eviikonpäivä\u001Epäivä\u001E\u001E\u001Evuorokaudenaika\u001Etunti\u001Eminuutti\u001Esekunti\u001E\u001E\u001F1. neljännes\u001E2. neljännes\u001E3. neljännes\u001E4. neljännes\u001F1. nelj.\u001E2. nelj.\u001E3. nelj.\u001E4. nelj.\u001FH\u001EH\u001F{1} 'klo' {0}\u001E{1} 'klo' {0}\u001E{1} 'klo' {0}\u001E{1} 'klo' {0}\u001F\u001F1. neljännes\u001E2. neljännes\u001E3. neljännes\u001E4. neljännes"
 
 internal val SKELETON_NAMES_FIL: String =
-    "panahon\u001Etaon\u001Equarter\u001Ebuwan\u001E\u001E\u001Earaw ng linggo\u001Earaw\u001E\u001E\u001EAM/PM\u001Eoras\u001Eminuto\u001Esegundo\u001E\u001E\u001Fika-1 quarter\u001Eika-2 quarter\u001Eika-3 quarter\u001Eika-4 na quarter\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} 'nang' {0}\u001E{1} 'nang' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fika-1 quarter\u001Eika-2 quarter\u001Eika-3 quarter\u001Eika-4 na quarter"
+    "panahon\u001Etaon\u001Equarter\u001Ebuwan\u001E\u001E\u001Earaw ng linggo\u001Earaw\u001E\u001E\u001EAM/PM\u001Eoras\u001Eminuto\u001Esegundo\u001E\u001E\u001Fika-1 quarter\u001Eika-2 quarter\u001Eika-3 quarter\u001Eika-4 na quarter\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001EhB\u001Ehb\u001EH\u001F{1} 'nang' {0}\u001E{1} 'nang' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fika-1 quarter\u001Eika-2 quarter\u001Eika-3 quarter\u001Eika-4 na quarter"
 
 internal val SKELETON_NAMES_FO: String =
+    "tíðarrokning\u001Eár\u001Eársfjórðingur\u001Emánaður\u001E\u001E\u001Evikudagur\u001Edagur\u001E\u001E\u001EAM/PM\u001Etími\u001Eminuttur\u001Esekund\u001E\u001E\u001F1. ársfjórðingur\u001E2. ársfjórðingur\u001E3. ársfjórðingur\u001E4. ársfjórðingur\u001F1. ársfj.\u001E2. ársfj.\u001E3. ársfj.\u001E4. ársfj.\u001FH\u001EH\u001Eh\u001F{1} 'kl'. {0}\u001E{1} 'kl'. {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1. ársfjórðingur\u001E2. ársfjórðingur\u001E3. ársfjórðingur\u001E4. ársfjórðingur"
+
+internal val SKELETON_NAMES_FO_DK: String =
     "tíðarrokning\u001Eár\u001Eársfjórðingur\u001Emánaður\u001E\u001E\u001Evikudagur\u001Edagur\u001E\u001E\u001EAM/PM\u001Etími\u001Eminuttur\u001Esekund\u001E\u001E\u001F1. ársfjórðingur\u001E2. ársfjórðingur\u001E3. ársfjórðingur\u001E4. ársfjórðingur\u001F1. ársfj.\u001E2. ársfj.\u001E3. ársfj.\u001E4. ársfj.\u001FH\u001EH\u001F{1} 'kl'. {0}\u001E{1} 'kl'. {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1. ársfjórðingur\u001E2. ársfjórðingur\u001E3. ársfjórðingur\u001E4. ársfjórðingur"
 
 internal val SKELETON_NAMES_FR: String =
-    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001EhB\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+
+internal val SKELETON_NAMES_FR_BI: String =
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001Eh\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+
+internal val SKELETON_NAMES_FR_CA: String =
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001Eh\u001EhB\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
 
 internal val SKELETON_NAMES_FR_CD: String =
-    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EhB\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EhB\u001EH\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+
+internal val SKELETON_NAMES_FR_CH: String =
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001EhB\u001Eh\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
 
 internal val SKELETON_NAMES_FR_DJ: String =
-    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001Fh\u001Eh\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001Fh\u001Eh\u001EH\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+
+internal val SKELETON_NAMES_FR_DZ: String =
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001Fh\u001Eh\u001EhB\u001Ehb\u001EH\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+
+internal val SKELETON_NAMES_FR_GQ: String =
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001EhB\u001Eh\u001Ehb\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+
+internal val SKELETON_NAMES_FR_KM: String =
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001Eh\u001EhB\u001Ehb\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
 
 internal val SKELETON_NAMES_FR_ML: String =
     "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001Fle 1er trimestre\u001Ele 2ème trimestre\u001Ele 3ème trimestre\u001Ele 4ème trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F1er trimestre\u001E2ème trimestre\u001E3ème trimestre\u001E4ème trimestre\u001F1er trimestre\u001E2ème trimestre\u001E3ème trimestre\u001E4ème trimestre"
 
+internal val SKELETON_NAMES_FR_NE: String =
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+
+internal val SKELETON_NAMES_FR_TD: String =
+    "ère\u001Eannée\u001Etrimestre\u001Emois\u001E\u001E\u001Ejour de la semaine\u001Ejour\u001E\u001E\u001Ecadran\u001Eheure\u001Eminute\u001Eseconde\u001E\u001E\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre\u001FT1\u001ET2\u001ET3\u001ET4\u001Fh\u001Eh\u001EH\u001EhB\u001F{1} 'à' {0}\u001E{1} 'à' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1er trimestre\u001E2e trimestre\u001E3e trimestre\u001E4e trimestre"
+
 internal val SKELETON_NAMES_FUR: String =
-    "ere\u001Ean\u001EQuarter\u001Emês\u001E\u001E\u001Edì de setemane\u001Edì\u001E\u001E\u001Etoc dal dì\u001Eore\u001Eminût\u001Esecont\u001E\u001E\u001FPrin trimestri\u001ESecont trimestri\u001ETierç trimestri\u001ECuart trimestri\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FPrin trimestri\u001ESecont trimestri\u001ETierç trimestri\u001ECuart trimestri"
+    "ere\u001Ean\u001EQuarter\u001Emês\u001E\u001E\u001Edì de setemane\u001Edì\u001E\u001E\u001Etoc dal dì\u001Eore\u001Eminût\u001Esecont\u001E\u001E\u001FPrin trimestri\u001ESecont trimestri\u001ETierç trimestri\u001ECuart trimestri\u001FT1\u001ET2\u001ET3\u001ET4\u001FH\u001EH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FPrin trimestri\u001ESecont trimestri\u001ETierç trimestri\u001ECuart trimestri"
 
 internal val SKELETON_NAMES_FY: String =
-    "Tiidsrin\u001EJier\u001EQuarter\u001EMoanne\u001E\u001E\u001Edei van de wike\u001Edei\u001E\u001E\u001EAM/PM\u001Eoere\u001EMinút\u001ESekonde\u001E\u001E\u001F1e fearnsjier\u001E2e fearnsjier\u001E3e fearnsjier\u001E4e fearnsjier\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001F{1} 'om' {0}\u001E{1} 'om' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1e fearnsjier\u001E2e fearnsjier\u001E3e fearnsjier\u001E4e fearnsjier"
+    "Tiidsrin\u001EJier\u001EQuarter\u001EMoanne\u001E\u001E\u001Edei van de wike\u001Edei\u001E\u001E\u001EAM/PM\u001Eoere\u001EMinút\u001ESekonde\u001E\u001E\u001F1e fearnsjier\u001E2e fearnsjier\u001E3e fearnsjier\u001E4e fearnsjier\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EH\u001EhB\u001F{1} 'om' {0}\u001E{1} 'om' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1e fearnsjier\u001E2e fearnsjier\u001E3e fearnsjier\u001E4e fearnsjier"

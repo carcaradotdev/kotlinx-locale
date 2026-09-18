@@ -21,6 +21,7 @@ package dev.carcara.kotlinx.locale.datetime.cldr.runtime
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.LocaleDataSource
+import dev.carcara.kotlinx.locale.datetime.hourCycle
 import dev.carcara.kotlinx.locale.internal.resolvedRecord
 import dev.carcara.kotlinx.locale.internal.supportedLocalesOf
 import kotlinx.datetime.LocalDate
@@ -159,7 +160,7 @@ public class PayloadSkeletonFormats(
         } else {
             val record = SkeletonRecord(formats, appendFormats, names)
             val dateTimeRecord = DateTimeRecord(dateTime, resolvedRecord(standaloneRecords, locale))
-            LocaleSkeletons(record, dateTimeRecord, SkeletonMatcher(record, dateTimeRecord))
+            LocaleSkeletons(record, dateTimeRecord, SkeletonMatcher(record, dateTimeRecord, locale.hourCycle))
         }
         matchers[key] = built
         return built

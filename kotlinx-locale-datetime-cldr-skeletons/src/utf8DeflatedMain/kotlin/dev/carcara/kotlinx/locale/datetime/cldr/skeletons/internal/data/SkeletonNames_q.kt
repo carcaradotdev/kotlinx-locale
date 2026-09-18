@@ -19,4 +19,4 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_QU: String =
-    "002Y+t\u0019\u0011o\u0009a\u0011#5*m3n\u0001\u0015%)\u0001QTA\u0013\$E-\u0011Wi\u0016wX\u001DR\u001E\u001AlB\u0001#Du@;>f+cQEL'\u001D{5W\u0014\u000B7\u001Cm&/MEA\u000C-b4:(K7:\$lD\u0003PA0=Fs9eC|.tIZ'DNhKbq\u0019q@a\$\u007F\u0002@dX\"\u0002aL9;8.tD\u0010x5\u001Ado\u0002"
+    "002g+t\u0009\u0011W\u0009a\u0015C945gy\u0004%.>!I\u0018\u0001mHM\u001BN\u0019\u0013'QJ\u0010\u00183Nwwu\u0011n2?\u0010n/sh2\u0019EWX[c0\u001BMj\u0010\u0018\u0016\u0008=?C\u0001F\u0004rJc^\u0013D\u0014*u;(\u007F\u0002<\u0005D4I)rT~\u0010QZ|SV\u000B [\u0008'L\u0001YL>BPY\u0005|on1=\u0019\u0010]\u0007lg8\u0016l\u0011}.m\u001F\u001C\u0009*F?"
