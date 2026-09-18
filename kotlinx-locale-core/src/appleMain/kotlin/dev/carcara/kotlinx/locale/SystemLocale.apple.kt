@@ -16,16 +16,57 @@
 
 package dev.carcara.kotlinx.locale
 
+import platform.Foundation.NSCurrentLocaleDidChangeNotification
 import platform.Foundation.NSDateFormatter
 import platform.Foundation.NSLocale
+import platform.Foundation.NSNotificationCenter
 import platform.Foundation.currentLocale
 import platform.Foundation.localeIdentifier
 import platform.Foundation.preferredLanguages
+import kotlin.concurrent.Volatile
 
 internal actual fun platformSystemLocaleTag(): String? = (NSLocale.preferredLanguages.firstOrNull() as? String)
     ?: NSLocale.currentLocale.localeIdentifier
 
-internal actual fun platformHourCycleKeyword(): String? = keywordFromIdentifier() ?: keywordFromTimePreference()
+internal actual fun platformHourCycleKeyword(): String? = observedHourCycle.current()
+
+private val observedHourCycle = ObservedHourCycle()
+
+/**
+ * What Foundation says about the hour cycle, held for the process and dropped
+ * when Foundation says the current locale changed.
+ *
+ * Reading it crosses into ICU, and [Locale.current] is the default argument of
+ * every formatting call in this library, so an uncached read would put ICU on
+ * the path of every format. The cache is not keyed on the locale identifier:
+ * the identifier does not change when the 12/24-hour setting does, measured on
+ * iOS 26.5 and macOS 26, so a key like that would go stale exactly when the
+ * setting flips.
+ */
+private class ObservedHourCycle {
+
+    @Volatile
+    private var cached: String? = null
+
+    @Volatile
+    private var stale: Boolean = true
+
+    init {
+        NSNotificationCenter.defaultCenter().addObserverForName(NSCurrentLocaleDidChangeNotification, null, null) {
+            stale = true
+        }
+    }
+
+    fun current(): String? {
+        if (stale) {
+            stale = false
+            cached = read()
+        }
+        return cached
+    }
+
+    private fun read(): String? = keywordFromIdentifier() ?: keywordFromTimePreference()
+}
 
 private fun keywordFromIdentifier(): String? = Locale
     .forLanguageTagOrNull(NSLocale.currentLocale.localeIdentifier)
@@ -36,25 +77,8 @@ private fun keywordFromIdentifier(): String? = Locale
  * the hour field of the `j` skeleton. The identifier carries no `hc` keyword for
  * it, measured on iOS 26.5 and macOS 26.
  */
-private fun keywordFromTimePreference(): String? {
-    val pattern = NSDateFormatter.dateFormatFromTemplate(TIME_SKELETON, 0u, NSLocale.currentLocale) ?: return null
-    return when (hourField(pattern)) {
-        'H', 'k' -> "c24"
-        'h', 'K' -> "c12"
-        else -> null
-    }
-}
+private fun keywordFromTimePreference(): String? = NSDateFormatter
+    .dateFormatFromTemplate(HOUR_SKELETON, 0u, NSLocale.currentLocale)
+    ?.let(::hourCycleFromTimePattern)
 
-private fun hourField(pattern: String): Char? {
-    var quoted = false
-    for (character in pattern) {
-        when {
-            character == '\'' -> quoted = !quoted
-            !quoted && character in HOUR_FIELDS -> return character
-        }
-    }
-    return null
-}
-
-private const val TIME_SKELETON = "j"
-private const val HOUR_FIELDS = "HhKk"
+private const val HOUR_SKELETON = "j"

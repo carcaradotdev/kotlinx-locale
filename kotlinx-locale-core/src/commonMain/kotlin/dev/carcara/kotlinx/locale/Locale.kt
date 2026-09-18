@@ -262,7 +262,8 @@ private fun Char.isAsciiAlphanumeric(): Boolean = isLatinLetter() || isAsciiDigi
 
 internal const val TRUE_VALUE: String = "true"
 
-private fun isWellFormedUnicodeValue(value: String): Boolean =
+/** Whether [value] is a `-u-` keyword value UTS #35 would accept, case aside. */
+internal fun isWellFormedUnicodeValue(value: String): Boolean =
     value == TRUE_VALUE || value.split('-').all { it.length in 3..8 && it.all(Char::isAsciiAlphanumeric) }
 
 private class ParsedExtensions(val attributes: List<String>, val keywords: Map<String, String>, val other: Map<Char, String>)

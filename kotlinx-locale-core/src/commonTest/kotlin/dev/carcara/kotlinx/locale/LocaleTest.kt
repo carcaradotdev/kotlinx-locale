@@ -24,6 +24,7 @@ import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertFailsWith
+import dev.carcara.kotlinx.locale.test.assertFalse
 import dev.carcara.kotlinx.locale.test.assertNull
 import dev.carcara.kotlinx.locale.test.assertTrue
 
@@ -222,6 +223,39 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
     test("theCurrentLocaleTagRoundTripsThePlatformCycle") {
         val current = Locale.current
         assertEquals(current, Locale.forLanguageTag(current.toLanguageTag()))
-        platformHourCycleKeyword()?.let { assertEquals(it, current.unicodeKeywordOrNull("hc")) }
+        val keyword = current.unicodeKeywordOrNull("hc")
+        assertTrue(
+            keyword == null || keyword == platformHourCycleKeyword()?.lowercase(),
+            "hc was '$keyword' for platform cycle '${platformHourCycleKeyword()}'",
+        )
+    }
+
+    test("onlyAWellFormedPlatformCycleReachesTheTag") {
+        assertTrue(isWellFormedUnicodeValue("h12"))
+        assertTrue(isWellFormedUnicodeValue("h99"))
+        assertTrue(isWellFormedUnicodeValue("H23"))
+        assertFalse(isWellFormedUnicodeValue("x"))
+        assertFalse(isWellFormedUnicodeValue(""))
+    }
+
+    test("aTimePatternNamesTheCycleFamilyItsHourFieldBelongsTo") {
+        assertEquals("c24", hourCycleFromTimePattern("HH:mm"))
+        assertEquals("c24", hourCycleFromTimePattern("kk:mm"))
+        assertEquals("c12", hourCycleFromTimePattern("h:mm a"))
+        assertEquals("c12", hourCycleFromTimePattern("K:mm a"))
+        assertNull(hourCycleFromTimePattern("yyyy-MM-dd"))
+        assertNull(hourCycleFromTimePattern(""))
+    }
+
+    test("aQuotedLiteralIsNeverReadAsAnHourField") {
+        assertEquals("c24", hourCycleFromTimePattern("'h' HH"))
+        assertEquals("c24", hourCycleFromTimePattern("'o''h' HH"))
+        assertEquals("c12", hourCycleFromTimePattern("'' h"))
+        assertNull(hourCycleFromTimePattern("'HH:mm'"))
+    }
+
+    test("theDayPeriodMayComeBeforeTheHourField") {
+        assertEquals("c12", hourCycleFromTimePattern("ah:mm"))
+        assertEquals("c24", hourCycleFromTimePattern("BHH:mm"))
     }
 }
