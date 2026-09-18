@@ -23,6 +23,7 @@ import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.skeletons.format
 import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotEquals
 import kotlinx.datetime.LocalTime
 
 val HourCycleSkeletonTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
@@ -44,5 +45,27 @@ val HourCycleSkeletonTest by matrixSuite(matrixConfig { testConfig = TestConfig.
             time.format("jm", locale("en-US")),
             time.format("jm", locale("en-US-u-nu-latn")),
         )
+    }
+
+    test("cyclesThatResolveAgainstTheAllowedListReachTheSkeletonPath") {
+        // ja: allowed is H K h, so c12 gives h11 (K) and c24 gives h23 (H).
+        // At 15:30 the K/h numeral is the same ("3"), so this pins the h23 answer
+        // and, separately, a midnight case where K writes "0" and h writes "12".
+        val midnight = LocalTime(0, 30)
+        assertEquals("15:30", time.format("jm", locale("ja-u-hc-c24")))
+        assertEquals("午前0:30", midnight.format("jm", locale("ja-u-hc-c12")))
+        assertEquals("午前0:30", midnight.format("jm", locale("ja-u-hc-h11")))
+        assertNotEquals(
+            midnight.format("jm", locale("ja-u-hc-c12")),
+            midnight.format("jm", locale("ja-u-hc-h12")),
+        )
+    }
+
+    test("cIsUnaffectedByTheOverrideThatChangesJ") {
+        val plain = locale("de-DE")
+        val overridden = locale("de-DE-u-hc-h12")
+        assertNotEquals(time.format("jm", plain), time.format("jm", overridden))
+        assertEquals(time.format("Cm", plain), time.format("Cm", overridden))
+        assertEquals("15:30", time.format("Cm", overridden))
     }
 }

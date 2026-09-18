@@ -96,11 +96,12 @@ class WeekDataRow(val firstDay: Int, val minDays: Int, val weekend: Set<Int>)
 private val CLDR_DAYS = mapOf("mon" to 1, "tue" to 2, "wed" to 3, "thu" to 4, "fri" to 5, "sat" to 6, "sun" to 7)
 
 /**
- * A `<timeData>` row: which hour field a locale prefers, which one the `C`
- * skeleton letter takes, and the whole preference-ordered allowed list, which is
- * what the `c12` and `c24` hour cycle values resolve against.
+ * A `<timeData>` row: which hour field a locale prefers, and the whole
+ * preference-ordered allowed list, whose head is what the `C` skeleton letter
+ * takes and whose order is what the `c12` and `c24` hour cycle values resolve
+ * against.
  */
-class HourCycle(val preferred: Char, val firstAllowed: String, val allowed: List<String>)
+class HourCycle(val preferred: Char, val allowed: List<String>)
 
 /**
  * The day period types, in the order used by the encoded rule records. am and pm
@@ -221,7 +222,6 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
                 ?: "H"
             val cycle = HourCycle(
                 preferred = preferred[0],
-                firstAllowed = allowed.firstOrNull() ?: preferred,
                 allowed = allowed.ifEmpty { listOf(preferred) },
             )
             for (key in hours.getAttribute("regions").split(' ')) {

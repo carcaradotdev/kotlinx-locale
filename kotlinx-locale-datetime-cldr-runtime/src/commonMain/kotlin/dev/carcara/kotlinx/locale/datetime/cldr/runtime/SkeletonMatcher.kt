@@ -62,7 +62,11 @@ internal class SkeletonCandidate(
  * tersely. Nothing here delegates to ICU at runtime; the agreement between the
  * two is a test, not a dependency.
  */
-internal class SkeletonMatcher(private val record: SkeletonRecord, private val dateTime: DateTimeRecord, override: HourCycle? = null) {
+internal class SkeletonMatcher(
+    private val record: SkeletonRecord,
+    private val dateTime: DateTimeRecord,
+    hourCycleOverride: HourCycle? = null,
+) {
 
     /**
      * The pool, ordered the way ICU keys its candidate map.
@@ -77,7 +81,7 @@ internal class SkeletonMatcher(private val record: SkeletonRecord, private val d
      * What `j` writes the hour with when the caller named an `hc` cycle;
      * `null` to defer to [SkeletonRecord.preferredHourChar].
      */
-    private val overrideHourChar: Char? = override
+    private val overrideHourChar: Char? = hourCycleOverride
         ?.let { resolveHourCycle(it, record.allowedHourFormats) }
         ?.patternLetter
 
