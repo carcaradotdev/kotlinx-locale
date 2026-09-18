@@ -30,7 +30,7 @@ public final class dev/carcara/kotlinx/locale/Locale {
 	public final fun stripExtensions ()Ldev/carcara/kotlinx/locale/Locale;
 	public final fun toLanguageTag ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;
-	public final fun unicodeKeyword (Ljava/lang/String;)Ljava/lang/String;
+	public final fun unicodeKeywordOrNull (Ljava/lang/String;)Ljava/lang/String;
 	public final fun withUnicodeKeyword (Ljava/lang/String;Ljava/lang/String;)Ldev/carcara/kotlinx/locale/Locale;
 }
 

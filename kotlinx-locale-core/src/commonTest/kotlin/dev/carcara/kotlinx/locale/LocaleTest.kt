@@ -23,6 +23,7 @@ import at.asitplus.testballoon.matrix.matrixSuite
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertFailsWith
 import dev.carcara.kotlinx.locale.test.assertNull
 import dev.carcara.kotlinx.locale.test.assertTrue
 
@@ -170,10 +171,11 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
 
     test("readsAndWritesUnicodeKeywords") {
         val locale = Locale.forLanguageTag("de-DE-u-hc-h12")
-        assertEquals("h12", locale.unicodeKeyword("hc"))
-        assertNull(locale.unicodeKeyword("nu"))
+        assertEquals("h12", locale.unicodeKeywordOrNull("hc"))
+        assertNull(locale.unicodeKeywordOrNull("nu"))
         assertEquals("de-DE-u-hc-h23", locale.withUnicodeKeyword("hc", "h23").toLanguageTag())
         assertEquals("de-DE", locale.withUnicodeKeyword("hc", null).toLanguageTag())
+        assertEquals(Locale.forLanguageTag("de-DE-u-hc-h23"), Locale.forLanguageTag("de-DE").withUnicodeKeyword("HC", "H23"))
     }
 
     test("readsUnicodeAttributes") {
@@ -187,7 +189,28 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
 
     test("extensionsNeverReachDataLookup") {
         val plain = Locale.forLanguageTag("pt-BR")
-        val extended = Locale.forLanguageTag("pt-BR-u-hc-h12-nu-latn")
+        val extended = Locale.forLanguageTag("pt-BR-u-foo-hc-h12-nu-latn")
         assertEquals(plain.dataLookupTags(), extended.dataLookupTags())
+    }
+
+    test("aKeywordKeyMustBeTwoCharacters") {
+        val locale = Locale.forLanguageTag("de-DE")
+        assertFailsWith<IllegalArgumentException> { locale.withUnicodeKeyword("hour", "h23") }
+        assertFailsWith<IllegalArgumentException> { locale.withUnicodeKeyword("h", "h23") }
+    }
+
+    test("aKeywordValueMustBeWellFormed") {
+        val locale = Locale.forLanguageTag("de-DE")
+        assertFailsWith<IllegalArgumentException> { locale.withUnicodeKeyword("hc", "x") }
+        assertFailsWith<IllegalArgumentException> { locale.withUnicodeKeyword("hc", "") }
+    }
+
+    test("aMalformedOldSyntaxValueIsDropped") {
+        assertEquals("en", Locale.forLanguageTag("en@hc=x").toLanguageTag())
+    }
+
+    test("everythingWithUnicodeKeywordWritesRoundTrips") {
+        val written = Locale.forLanguageTag("de-DE").withUnicodeKeyword("hc", "h23")
+        assertEquals(written, Locale.forLanguageTag(written.toLanguageTag()))
     }
 }

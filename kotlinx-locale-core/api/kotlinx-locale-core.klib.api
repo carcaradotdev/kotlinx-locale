@@ -55,7 +55,7 @@ final class dev.carcara.kotlinx.locale/Locale { // dev.carcara.kotlinx.locale/Lo
     final fun stripExtensions(): dev.carcara.kotlinx.locale/Locale // dev.carcara.kotlinx.locale/Locale.stripExtensions|stripExtensions(){}[0]
     final fun toLanguageTag(): kotlin/String // dev.carcara.kotlinx.locale/Locale.toLanguageTag|toLanguageTag(){}[0]
     final fun toString(): kotlin/String // dev.carcara.kotlinx.locale/Locale.toString|toString(){}[0]
-    final fun unicodeKeyword(kotlin/String): kotlin/String? // dev.carcara.kotlinx.locale/Locale.unicodeKeyword|unicodeKeyword(kotlin.String){}[0]
+    final fun unicodeKeywordOrNull(kotlin/String): kotlin/String? // dev.carcara.kotlinx.locale/Locale.unicodeKeywordOrNull|unicodeKeywordOrNull(kotlin.String){}[0]
     final fun withUnicodeKeyword(kotlin/String, kotlin/String?): dev.carcara.kotlinx.locale/Locale // dev.carcara.kotlinx.locale/Locale.withUnicodeKeyword|withUnicodeKeyword(kotlin.String;kotlin.String?){}[0]
 
     final object Companion { // dev.carcara.kotlinx.locale/Locale.Companion|null[0]

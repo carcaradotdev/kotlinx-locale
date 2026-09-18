@@ -53,12 +53,24 @@ public class Locale private constructor(
      * Only `hc` changes what this library renders. Every other key round-trips
      * through [toLanguageTag] and has no effect.
      */
-    public fun unicodeKeyword(key: String): String? = keywords[key.lowercase()]
+    public fun unicodeKeywordOrNull(key: String): String? = keywords[key.lowercase()]
 
-    /** This identifier with [key] set to [value], or removed when [value] is `null`. */
+    /**
+     * This identifier with [key] set to [value], or removed when [value] is `null`.
+     *
+     * @throws IllegalArgumentException if [key] or [value] is not well-formed `-u-`
+     * syntax. This is a syntax check only, never whether [key] is a keyword this
+     * library recognises.
+     */
     public fun withUnicodeKeyword(key: String, value: String?): Locale {
         val normalized = key.lowercase()
-        val updated = if (value == null) keywords - normalized else keywords + (normalized to value.lowercase())
+        require(normalized.length == 2 && normalized[0].isAsciiAlphanumeric() && normalized[1].isLatinLetter()) {
+            "Invalid Unicode keyword key: '$key'"
+        }
+        val normalizedValue = value?.lowercase()?.also {
+            require(isWellFormedUnicodeValue(it)) { "Invalid Unicode keyword value: '$value'" }
+        }
+        val updated = if (normalizedValue == null) keywords - normalized else keywords + (normalized to normalizedValue)
         if (updated == keywords) return this
         return Locale(language, script, region, variant, attributes, updated, otherExtensions)
     }
@@ -236,8 +248,12 @@ private fun legacyLanguageAlias(language: String): String = when (language) {
 
 private fun Char.isLatinLetter(): Boolean = this in 'a'..'z' || this in 'A'..'Z'
 private fun Char.isAsciiDigit(): Boolean = this in '0'..'9'
+private fun Char.isAsciiAlphanumeric(): Boolean = isLatinLetter() || isAsciiDigit()
 
 internal const val TRUE_VALUE: String = "true"
+
+private fun isWellFormedUnicodeValue(value: String): Boolean =
+    value == TRUE_VALUE || value.split('-').all { it.length in 3..8 && it.all(Char::isAsciiAlphanumeric) }
 
 private class ParsedExtensions(val attributes: List<String>, val keywords: Map<String, String>, val other: Map<Char, String>)
 
@@ -297,7 +313,7 @@ private fun parseOldKeywords(segment: String): Map<String, String> {
     for (entry in segment.split(';')) {
         val name = entry.substringBefore('=', "").lowercase()
         val value = entry.substringAfter('=', "").lowercase()
-        if (name.isEmpty() || value.isEmpty()) continue
+        if (name.isEmpty() || value.isEmpty() || !isWellFormedUnicodeValue(value)) continue
         val key = OLD_KEYWORD_ALIASES[name] ?: name
         if (key.length == 2) keywords[key] = value
     }
