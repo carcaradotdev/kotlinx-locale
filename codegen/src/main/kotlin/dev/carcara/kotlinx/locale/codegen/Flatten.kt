@@ -53,6 +53,10 @@ class ResolvedLocaleData(
     val digits: String,
     /** `durationUnit` patterns indexed by [DURATION_UNIT_TYPES]; root answers for almost every locale. */
     val durationPatterns: List<String>,
+    /** `<timeData>` preferred, resolved the way ICU resolves it. */
+    val hourPreferred: Char,
+    /** `<timeData>` allowed, in preference order; what `c12` and `c24` resolve against. */
+    val hourAllowed: List<String>,
 )
 
 /**
@@ -262,6 +266,8 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             glueFormats = full("glueFormats", glueFormats),
             digits = digits,
             durationPatterns = full("durationPatterns", durationPatterns),
+            hourPreferred = supplemental.hourCycleFor(id).preferred,
+            hourAllowed = supplemental.hourCycleFor(id).allowed,
         )
     }
 
@@ -364,6 +370,7 @@ fun ResolvedLocaleData.encode(): String {
     // still decodes: the reader takes this positionally and falls back to root's
     // patterns when it is absent.
     list(durationPatterns)
+    list(listOf(hourPreferred.toString()) + hourAllowed)
     return fields.joinToString("\u001F")
 }
 
