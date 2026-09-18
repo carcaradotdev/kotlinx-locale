@@ -16,6 +16,15 @@
 
 package dev.carcara.kotlinx.locale
 
+import android.text.format.DateFormat
+
 internal actual fun platformSystemLocaleTag(): String? = java.util.Locale.getDefault().toLanguageTag()
 
-internal actual fun platformHourCycleKeyword(): String? = null
+/**
+ * Read on every call rather than cached: the setting behind it is
+ * `Settings.System.TIME_12_24`, and the user can change it while the app runs.
+ */
+internal actual fun platformHourCycleKeyword(): String? {
+    val context = LocaleContext.applicationContext ?: return null
+    return if (DateFormat.is24HourFormat(context)) "c24" else "c12"
+}
