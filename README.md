@@ -61,6 +61,7 @@ Every function, parameter and default is listed in [API.md](API.md).
 - [Using it in your project](#using-it-in-your-project)
 - [Modules](#modules)
 - [Naming the fields instead of picking a length](#naming-the-fields-instead-of-picking-a-length)
+- [The hour cycle a time is written in](#the-hour-cycle-a-time-is-written-in)
 - [Using the host's data instead of ours](#using-the-hosts-data-instead-of-ours)
 - [Serializing these types](#serializing-these-types)
 - [Shipping only the locales you use](#shipping-only-the-locales-you-use)
@@ -95,6 +96,9 @@ Dates and times:
 - Flexible day periods where a locale's standard patterns use them. zh-Hant
   times render as 凌晨2:05 at two in the morning, 下午3:05 in the afternoon and
   晚上8:05 in the evening.
+- The hour cycle a caller asks for, through the `-u-hc-` extension UTS #35
+  defines. Ask for `en-US-u-hc-h23` and both the standard patterns and the
+  skeletons write `15:05`.
 - Native digit systems. ar-EG writes years as ٢٠٢٦, fa as ۲۰۲۶, bn as ২০২৬.
 
 Countries:
@@ -139,9 +143,12 @@ Locales:
 
 - A `Locale` type that parses BCP 47 tags and POSIX identifiers, with CLDR
   fallback. pt-XX falls back to pt, and an unknown language to CLDR root.
-- `Locale.current` reads the system locale. This is the project's single
-  expect/actual: one function per platform returns a raw tag, and everything
-  else runs in commonMain.
+- Unicode locale extensions are parsed, canonicalized and written back, so
+  `en-US-u-hc-h23-nu-latn` survives a round trip in the order UTS #35 Annex C
+  prescribes.
+- `Locale.current` reads the system locale, and the device 12/24-hour setting
+  with it where the host exposes one. Two `expect` functions per platform return
+  the raw tag and the raw cycle; everything else runs in commonMain.
 
 Serialization:
 
@@ -392,7 +399,7 @@ plugin flag beside the artifact for every domain that has one.
 
 | Module | What it contains |
 | --- | --- |
-| `kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing. |
+| `kotlinx-locale-core` | The `Locale` type: tag parsing, normalization, the Unicode extensions a tag carries, system locale detection, the fallback chain, and the `LocaleDataSource` contract every data source answers. Depends on nothing except on Android, where reaching a `Context` for the 12/24-hour setting costs `androidx.startup`. |
 | `kotlinx-locale-platform` | What the host can say about locales before any domain is involved: whether it exposes locale data, and which locales it enumerates. |
 | `kotlinx-locale-types` | The generated locale catalog: one enum per language, so `PT.BR` names a locale the compiler checks instead of a string that fails at runtime. Optional, and generatable: a build that ships a handful of locales can write its own with `catalog = true`. |
 | `kotlinx-locale-serialization` | `LocaleTagSerializer`, which writes a `Locale` as its BCP 47 tag and reads one as leniently as `Locale.forLanguageTag` does. |
@@ -419,7 +426,7 @@ plugin flag beside the artifact for every domain that has one.
 | `kotlinx-locale-datetime-core` | `FormatStyle`, `TextStyle` and the `DateTimeFormatSource` contract. The only module that depends on kotlinx-datetime. |
 | `kotlinx-locale-datetime-cldr-runtime` | The pattern parser and formatter plus the record lookup, over CLDR-shaped records it does not carry. |
 | `kotlinx-locale-datetime-cldr-full` | `-cldr-runtime` plus the CLDR pattern data for all 1121 locales: `CldrDateTime`, `LocalDate.format` and friends. |
-| `kotlinx-locale-datetime-cldr-skeletons` | `-cldr-full` plus the skeleton tables: `CldrDateTimeSkeletons` and `date.format("yMMMd", locale)`, where you name the fields and the locale decides their order. Opt in, at around 58 KB gzipped on top of `-cldr-full`. |
+| `kotlinx-locale-datetime-cldr-skeletons` | `-cldr-full` plus the skeleton tables: `CldrDateTimeSkeletons` and `date.format("yMMMd", locale)`, where you name the fields and the locale decides their order. Opt in, at around 61 KB gzipped on top of `-cldr-full`. |
 | `kotlinx-locale-datetime-cldr-intervals` | `CldrDateTimeIntervals` and `intervalFormat`: `Jul 18 – 22, 2026`, with the parts both ends share written once. Builds on `-cldr-skeletons`, since a range is a split of the pattern the matcher picks, and adds around 28 KB gzipped over it. |
 | `kotlinx-locale-personname-core` | `PersonName` and the option enums, plus `PersonNameSource`. No data. |
 | `kotlinx-locale-personname-cldr-runtime` | Pattern selection, field modifiers and the empty-field cleanup. Carries no records. |
@@ -532,9 +539,9 @@ gzipped bundle size:
 
 | take | size | added |
 | --- | ---: | ---: |
-| `-cldr-full` | 127.3 KB | |
-| plus `-cldr-skeletons` | 185.8 KB | 58.5 KB |
-| plus `-cldr-intervals` | 213.3 KB | 27.5 KB |
+| `-cldr-full` | 136.3 KB | |
+| plus `-cldr-skeletons` | 197.5 KB | 61.2 KB |
+| plus `-cldr-intervals` | 226.0 KB | 28.5 KB |
 
 Each layer builds on the one above it rather than repeating its tables, so
 asking for intervals brings the skeletons and the patterns with it. That is not
@@ -549,6 +556,119 @@ own tables, and each feature declares the whole closure it needs, so
 `datetime { intervals = true }` generates the pattern, skeleton and interval
 tables together. The numbers above are the cost of the bundled path, not of the
 narrowed one.
+
+## The hour cycle a time is written in
+
+Every locale has a clock its region reads by default, and CLDR's `timeData` says
+which. A person can disagree with their region, which is why phones have a
+24-hour switch in settings, and UTS #35 gives that disagreement a spelling: the
+`hc` key of the `-u-` extension, as in `en-US-u-hc-h23`.
+
+`Locale.current` carries the device setting where the host exposes one, so an
+Android or iOS app that formats against `Locale.current` already follows the
+switch and there is nothing to write:
+
+```kotlin
+import dev.carcara.kotlinx.locale.Locale
+import dev.carcara.kotlinx.locale.datetime.*
+import dev.carcara.kotlinx.locale.datetime.cldr.*
+
+LocalTime(15, 5).format(FormatStyle.SHORT, Locale.current)
+// "3:05 PM" on an en-US phone, "15:05" once 24-hour time is switched on
+// Locale.current.toLanguageTag() reads "en-US-u-hc-c12" and then "en-US-u-hc-c24"
+
+Locale.current.hourCycle   // HourCycle.C12, then HourCycle.C24
+```
+
+That is per call. The style-based datetime functions take their locale
+explicitly rather than defaulting to `Locale.current`, so a call that names
+`Locale.forLanguageTag("en-US")` is asking for US English as CLDR describes it
+and gets the region's clock, switch or no switch.
+
+To name a cycle yourself, put it on the locale:
+
+```kotlin
+val locale = Locale.forLanguageTag("en-US").withHourCycle(HourCycle.H23)
+LocalTime(15, 5).format(FormatStyle.SHORT, locale)   // "15:05"
+LocalDate(2026, 7, 27).format(FormatStyle.SHORT, locale)   // unchanged, "7/27/26"
+```
+
+`withHourCycle(null)` takes it off again, and `Locale.forLanguageTag("en-US-u-hc-h23")`
+is the same locale written as a tag. The six values are `H11`, `H12`, `H23`,
+`H24` and the two from the standard's Technical Preview, `C12` and `C24`. The
+first four name a concrete cycle. The last two say only which family, and resolve
+against the locale's own `allowed` list: ask Japanese for `C12` and you get
+`h11`, where midnight is hour 0, rather than `h12`, where it is 12. A device
+switch maps to `C12` or `C24` for exactly that reason.
+
+To answer a whole application in one cycle, name a default once at startup:
+
+```kotlin
+import dev.carcara.kotlinx.locale.LocaleDefaults
+
+LocaleDefaults.locale = Locale.forLanguageTag("pt-BR-u-hc-h23")
+```
+
+`Locale.current` then answers with that and stops asking the platform, hour cycle
+included. An app that wants the device clock under a chosen language composes the
+two itself.
+
+A named cycle reaches both the four standard lengths and the skeletons, `j`
+included. It changes as little as it can: inside the family the locale already
+writes, only the hour letter moves, so the locale's own separators, literals and
+day period stay where they are. ICU rebuilds the pattern from `availableFormats`
+instead, which shows up for 48 of the 905 locales the conformance suite compares
+and is recorded in
+[docs/boundaries.md](docs/boundaries.md#what-an-explicit-hour-cycle-changes)
+along with the rest.
+
+### Where each platform reads it
+
+Android reads `DateFormat.is24HourFormat`, which needs a `Context`. This library
+gets one through `androidx.startup`, so `kotlinx-locale-core` pulls in
+`androidx.startup:startup-runtime` and merges one `<meta-data>` node into the
+application manifest, inside the `InitializationProvider` that library already
+declares. Every artifact that resolves a locale depends on `kotlinx-locale-core`,
+so an Android app using this library at all gets both. An app that would rather
+not removes the node, and `Locale.current` then reports no hour cycle:
+
+```xml
+<provider
+    android:name="androidx.startup.InitializationProvider"
+    android:authorities="${applicationId}.androidx-startup"
+    android:exported="false"
+    tools:node="merge">
+    <meta-data
+        android:name="dev.carcara.kotlinx.locale.LocaleContextInitializer"
+        tools:node="remove" />
+</provider>
+```
+
+Remove the `<meta-data>` node, never the `<provider>`. WorkManager, `emoji2`,
+`profileinstaller` and `lifecycle-process` all enter through that one provider,
+so `tools:node="remove"` on it stops their initializers as well. The build stays
+green and the damage shows up at run time as initialization that never happened.
+
+Apple platforms are the awkward one. `NSLocale.currentLocale.localeIdentifier`
+carries an `hc` keyword only when something wrote one into it, and the Settings
+switch does not: the identifier comes back the same whichever way the switch is
+set, measured on iOS 26.5 and macOS 26. There is no `NSLocaleHourCycle` key to
+fall back on either. What does move is
+`NSDateFormatter.dateFormatFromTemplate("j")`, so the keyword is read first and
+that template second, with its hour field mapped to `c24` or `c12`. The answer is
+cached for the process and dropped when Foundation posts
+`NSCurrentLocaleDidChangeNotification`.
+
+On JS and Wasm-JS, `Intl.DateTimeFormat().resolvedOptions().hourCycle` is
+`undefined` unless the formatter was asked for an hour field, which is what
+ECMA-402 specifies. The read passes `{ hour: 'numeric' }` and uses whichever of
+`h11`, `h12`, `h23` or `h24` the engine names.
+
+JVM exposes nothing, and neither do Linux, Windows, Android Native or Wasm-WASI,
+so `Locale.current` names no cycle there and the region's own clock applies.
+`java.util.Locale.getDefault()` on a desktop JVM carries whatever extensions the
+user's locale string had, and if that includes `hc` it is read like any other
+tag.
 
 ## Using the host's data instead of ours
 
@@ -571,10 +691,10 @@ calls against each layer:
 
 | domain | platform | CLDR | saved |
 | --- | ---: | ---: | ---: |
-| datetime | 35.3 KB | 127.3 KB | 92.0 KB |
-| country | 20.2 KB | 376.4 KB | 356.2 KB |
-| currency | 25.1 KB | 442.8 KB | 417.7 KB |
-| all three | 49.1 KB | 911.0 KB | 861.9 KB |
+| datetime | 36.9 KB | 136.3 KB | 99.3 KB |
+| country | 23.9 KB | 324.1 KB | 300.1 KB |
+| currency | 26.8 KB | 386.3 KB | 359.5 KB |
+| all three | 49.9 KB | 800.3 KB | 750.4 KB |
 
 Gzipped over the minified bundle. Datetime saves the least because
 kotlinx-datetime sits in both numbers and only the formatting moved.
@@ -876,14 +996,23 @@ those two lists. Everything else is target-independent.
 
 ### Locale.current
 
-| Platform | Source |
-| --- | --- |
-| JVM and Android | `java.util.Locale.getDefault()` |
-| Apple platforms | `NSLocale.preferredLanguages`, then `NSLocale.currentLocale` |
-| JS and Wasm-JS | `Intl.DateTimeFormat().resolvedOptions().locale` |
-| Linux and Android Native | `LC_ALL`, `LC_TIME`, `LANG` |
-| Windows | `GetUserDefaultLocaleName` |
-| Wasm-WASI | nothing exposed, so `Locale.current` returns `en` |
+Two reads per platform, one for the language tag and one for the hour cycle,
+joined into a single `Locale`. The cycle arrives as a `-u-hc-` keyword on the
+tag, and [the hour cycle a time is written in](#the-hour-cycle-a-time-is-written-in)
+covers what each source means and how to switch it off.
+
+| Platform | Language tag | Hour cycle |
+| --- | --- | --- |
+| JVM | `java.util.Locale.getDefault()` | nothing beyond what the tag itself carries |
+| Android | `java.util.Locale.getDefault()` | `DateFormat.is24HourFormat`, as `c24` or `c12` |
+| Apple platforms | `NSLocale.preferredLanguages`, then `NSLocale.currentLocale` | the `hc` keyword on `NSLocale.currentLocale.localeIdentifier`, then the hour field of `NSDateFormatter.dateFormatFromTemplate("j")`, as `c24` or `c12` |
+| JS and Wasm-JS | `Intl.DateTimeFormat().resolvedOptions().locale` | `Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions().hourCycle` |
+| Linux and Android Native | `LC_ALL`, `LC_TIME`, `LANG` | nothing exposed |
+| Windows | `GetUserDefaultLocaleName` | nothing exposed |
+| Wasm-WASI | nothing exposed, so `Locale.current` returns `en` | nothing exposed |
+
+An app can replace the whole answer with `LocaleDefaults.locale`, which
+`Locale.current` returns instead of asking the platform at all.
 
 ### What each module answers, per target
 
@@ -916,7 +1045,8 @@ and it is why the zone tests skip where a zone cannot be built.
 | `kotlinx-locale-currency-serialization` | 🟢 | 🟢 | 🟢 | 🟢 |
 
 `Locale.current` is the one exception in `-core`. It reads a real tag everywhere
-except Wasm-WASI, which exposes nothing and so returns `en`.
+except Wasm-WASI, which exposes nothing and so returns `en`, and it reads the
+device hour cycle on Android, Apple platforms, JS and Wasm-JS.
 
 The `-platform` modules are where the gaps are, and they are not uniform:
 
@@ -1131,6 +1261,10 @@ library has decided to stop is in [docs/boundaries.md](docs/boundaries.md).
 - Formatting uses each locale's gregorian calendar data. Non-gregorian calendars
   (Buddhist years in Thai, Japanese imperial eras) are not implemented, so Thai
   dates come out as "27 กรกฎาคม ค.ศ. 2026".
+- Of the Unicode `-u-` extension keys, `hc` is the one that changes what gets
+  rendered. `nu`, `ca` and the rest are parsed, canonicalized and written back
+  unchanged, and have no effect: the numbering system comes from the locale's own
+  data, and the calendar is the gregorian one above.
 - CLDR's FULL and LONG time patterns end with a time-zone name. The formatted
   types carry no zone, so those fields are dropped and FULL and LONG times equal
   the MEDIUM ones in most locales.
