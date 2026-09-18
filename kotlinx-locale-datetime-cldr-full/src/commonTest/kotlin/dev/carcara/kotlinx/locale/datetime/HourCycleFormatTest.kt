@@ -21,6 +21,7 @@ import at.asitplus.testballoon.matrix.matrixSuite
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.Locale
+import dev.carcara.kotlinx.locale.LocaleDefaults
 import dev.carcara.kotlinx.locale.datetime.cldr.format
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertNotEquals
@@ -78,5 +79,15 @@ val HourCycleFormatTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
             dateTime.format(FormatStyle.MEDIUM, FormatStyle.SHORT, locale),
         )
         assertEquals("27.07.2026", dateTime.date.format(FormatStyle.MEDIUM, locale))
+    }
+
+    test("anApplicationWideDefaultReachesAFormatCall") {
+        val restore = LocaleDefaults.locale
+        try {
+            LocaleDefaults.locale = locale("de-DE-u-hc-h12")
+            assertEquals("3:30${nnbsp}PM", time.format(FormatStyle.SHORT, Locale.current))
+        } finally {
+            LocaleDefaults.locale = restore
+        }
     }
 }

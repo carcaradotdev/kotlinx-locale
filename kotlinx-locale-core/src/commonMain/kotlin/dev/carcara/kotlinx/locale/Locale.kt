@@ -229,11 +229,13 @@ public class Locale private constructor(
         public fun forLanguageTag(tag: String): Locale = requireNotNull(forLanguageTagOrNull(tag)) { "Cannot parse language tag: '$tag'" }
 
         /**
-         * The current locale of the underlying platform, or `en` when the platform
-         * does not expose one (e.g. WASI).
+         * The locale [LocaleDefaults] names, the platform's own when it names
+         * none, or `en` when the platform exposes none either (e.g. WASI).
          */
         public val current: Locale
-            get() = platformSystemLocaleTag()?.let(::forLanguageTagOrNull) ?: of("en")
+            get() = LocaleDefaults.locale
+                ?: platformSystemLocaleTag()?.let(::forLanguageTagOrNull)
+                ?: of("en")
     }
 }
 

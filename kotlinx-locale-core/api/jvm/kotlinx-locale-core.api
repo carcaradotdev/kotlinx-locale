@@ -54,6 +54,12 @@ public abstract interface class dev/carcara/kotlinx/locale/LocaleDataSource {
 public final class dev/carcara/kotlinx/locale/LocaleDataSource$Companion {
 }
 
+public final class dev/carcara/kotlinx/locale/LocaleDefaults {
+	public static final field INSTANCE Ldev/carcara/kotlinx/locale/LocaleDefaults;
+	public final fun getLocale ()Ldev/carcara/kotlinx/locale/Locale;
+	public final fun setLocale (Ldev/carcara/kotlinx/locale/Locale;)V
+}
+
 public abstract interface class dev/carcara/kotlinx/locale/LocaleRef {
 	public static final field Companion Ldev/carcara/kotlinx/locale/LocaleRef$Companion;
 	public abstract fun getTag ()Ljava/lang/String;
