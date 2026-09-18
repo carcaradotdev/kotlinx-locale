@@ -30,6 +30,7 @@ import dev.carcara.kotlinx.locale.datetime.FormatStyle
 import dev.carcara.kotlinx.locale.datetime.HourCycle
 import dev.carcara.kotlinx.locale.datetime.NameContext
 import dev.carcara.kotlinx.locale.datetime.TextStyle
+import dev.carcara.kotlinx.locale.datetime.hourCycle
 import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
 import dev.carcara.kotlinx.locale.internal.resolvedRecord
 import dev.carcara.kotlinx.locale.internal.supportedLocalesOf
@@ -86,7 +87,7 @@ public class PayloadDateTimeFormats(
      */
     override fun formatTimeOrNull(time: LocalTime, style: FormatStyle, locale: Locale): String? {
         val data = recordFor(locale) ?: return null
-        val tokens = parseDateTimePattern(data.timeFormats[style.ordinal]).withoutZoneFields()
+        val tokens = parseDateTimePattern(data.timePattern(style, locale.hourCycle)).withoutZoneFields()
         return formatPattern(tokens, data, date = null, time = time)
     }
 
@@ -103,7 +104,7 @@ public class PayloadDateTimeFormats(
             time = null,
         )
         val timePart = formatPattern(
-            parseDateTimePattern(data.timeFormats[timeStyle.ordinal]).withoutZoneFields(),
+            parseDateTimePattern(data.timePattern(timeStyle, locale.hourCycle)).withoutZoneFields(),
             data,
             date = null,
             time = dateTime.time,
