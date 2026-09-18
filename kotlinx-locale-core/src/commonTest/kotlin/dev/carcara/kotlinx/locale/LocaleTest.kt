@@ -68,8 +68,27 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
     }
 
     test("ordersSingletonsAlphabeticallyWithPrivateUseLast") {
-        val locale = Locale.forLanguageTag("en-x-lorem-u-hc-h23-t-de")
+        val locale = Locale.forLanguageTag("en-u-hc-h23-t-de-x-lorem")
         assertEquals("en-t-de-u-hc-h23-x-lorem", locale.toLanguageTag())
+    }
+
+    test("privateUseKeepsEverySubtag") {
+        assertEquals("en-x-a-b", Locale.forLanguageTag("en-x-a-b").toLanguageTag())
+    }
+
+    test("anEmptyExtensionIsDropped") {
+        assertEquals("en", Locale.forLanguageTag("en-u").toLanguageTag())
+        assertEquals("en", Locale.forLanguageTag("en-t").toLanguageTag())
+    }
+
+    test("aKeywordValueCanSpanSeveralSubtags") {
+        val locale = Locale.forLanguageTag("en-u-ca-islamic-civil")
+        assertEquals("en-u-ca-islamic-civil", locale.toLanguageTag())
+    }
+
+    test("aKeywordWithNoValueReadsAsTrue") {
+        assertEquals("en-u-kk", Locale.forLanguageTag("en-u-kk-true").toLanguageTag())
+        assertEquals("en-u-kk", Locale.forLanguageTag("en-u-kk").toLanguageTag())
     }
 
     test("extensionsAreLowercased") {

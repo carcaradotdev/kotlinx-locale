@@ -231,7 +231,7 @@ private fun parseExtensions(parts: List<String>, from: Int): ParsedExtensions {
             flush()
         } else {
             val payload = ArrayList<String>()
-            while (index < parts.size && (parts[index].length != 1 || (singleton == 'x' && payload.isEmpty()))) {
+            while (index < parts.size && (singleton == 'x' || parts[index].length != 1)) {
                 payload.add(parts[index].lowercase())
                 index++
             }
