@@ -43,17 +43,17 @@ plugins {
 
 val libs = the<VersionCatalogsExtension>().named("libs")
 
-// Narrows the build to the four platforms a release ships: JVM, Android, iOS
-// and JS. Off by default, so a developer and CI still see all twenty-five
-// targets; the release workflow turns it on with
+// Narrows the build to the five platforms a release ships: JVM, Android, iOS,
+// JS and Wasm-JS. Off by default, so a developer and CI still see all
+// twenty-five targets; the release workflow turns it on with
 // ORG_GRADLE_PROJECT_slimTargets=true.
 //
 // Maven Central meters file count per month, and a target costs the same in
 // files whoever uses it. Twenty-five targets across forty-two multiplatform
 // modules is twenty-six publications each, and each publication carries an
 // artifact, sources, javadoc, a POM and module metadata, every one of them with
-// a signature and checksums beside it. The four platforms here are a quarter of
-// that.
+// a signature and checksums beside it. The five platforms here are under a
+// third of that.
 //
 // This has to narrow the targets rather than skip the publishing tasks. The
 // root module metadata of a multiplatform publication lists every target the
@@ -100,6 +100,17 @@ kotlin {
     iosArm64()
     iosX64()
 
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        nodejs {
+            testTask {
+                useMocha {
+                    timeout = "120s"
+                }
+            }
+        }
+    }
+
     // Everything a release currently leaves out. Still built and tested on
     // every push; see the note on slimTargets above for why publishing them is
     // a separate question from supporting them.
@@ -107,17 +118,6 @@ kotlin {
     // Native targets follow the tiers of <https://kotlinlang.org/docs/native-target-support.html>,
     // matching the targets published by kotlinx-datetime.
     if (!slimTargets) {
-        @OptIn(ExperimentalWasmDsl::class)
-        wasmJs {
-            nodejs {
-                testTask {
-                    useMocha {
-                        timeout = "120s"
-                    }
-                }
-            }
-        }
-
         @OptIn(ExperimentalWasmDsl::class)
         wasmWasi {
             nodejs()

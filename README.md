@@ -835,13 +835,13 @@ the larger half of what narrowing the enum is for.
 
 ### Kotlin targets
 
-The build compiles and tests twenty-five targets. A release publishes six of
+The build compiles and tests twenty-five targets. A release publishes seven of
 them.
 
 | Group | Targets |
 | --- | --- |
 | JVM | `jvm` (toolchain 21), Android (`compileSdk` 36, `minSdk` 21) |
-| Web | `js` |
+| Web | `js`, `wasmJs` |
 | Apple | `iosArm64`, `iosSimulatorArm64`, `iosX64` |
 
 `js` and `wasmJs` run in a browser as readily as under Node. Neither touches the
@@ -850,7 +850,7 @@ DOM or a Node built-in: `Locale.current` and the `-platform` modules go through
 tasks use Node because it starts faster than a headless browser, which is a
 choice about the test runner rather than about where the artifact works.
 
-The other nineteen are missing from Maven Central rather than unsupported. Each
+The other eighteen are missing from Maven Central rather than unsupported. Each
 one compiles and runs its tests on every push. They do not ship yet because
 Maven Central
 [meters how many files an organization publishes each month](https://central.sonatype.org/publish/maven-central-publishing-limits/),
@@ -861,7 +861,7 @@ and matches what kotlinx-datetime publishes.
 
 | Group | Targets |
 | --- | --- |
-| Web | `wasmJs`, `wasmWasi` |
+| Web | `wasmWasi` |
 | Native tier 1 | `macosArm64` |
 | Native tier 2 | `linuxX64`, `linuxArm64`, `watchosArm32`, `watchosArm64`, `watchosSimulatorArm64`, `tvosArm64`, `tvosSimulatorArm64` |
 | Native tier 3 | `androidNativeArm32`, `androidNativeArm64`, `androidNativeX86`, `androidNativeX64`, `mingwX64`, `watchosDeviceArm64` |
