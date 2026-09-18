@@ -76,6 +76,6 @@ val HourCycleRecordTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
 
     test("theLetterSwapLeavesQuotedTextAlone") {
         val record = recordFor("fr-CA")
-        assertEquals("kk 'h' mm", record.timePattern(FormatStyle.SHORT, HourCycle.H24))
+        assertEquals("K 'h' mm\u202Fa", record.timePattern(FormatStyle.SHORT, HourCycle.H11))
     }
 }
