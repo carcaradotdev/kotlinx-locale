@@ -256,15 +256,26 @@ writes, and the opposite family's pattern is used where it crosses.
 ICU does something larger. With the keyword present it stops rendering the
 standard pattern at all: it reads the skeleton off that pattern and asks
 `DateTimePatternGenerator` for a pattern again, so the answer comes out of
-`availableFormats` with that table's widths and literals. Wherever the two tables
-say anything different, the two libraries do too. Amharic states `h:mm:ss a` as
-its standard medium time and `a h:mm:ss` as its `hms` item, so `am-u-hc-h12`
-moves the day period to the front in ICU and leaves it at the end here, for a
-cycle Amharic already used. ICU drops the `hh` that Gujarati's own pattern
-states, and gains the `ч.` that Bulgarian's `Hms` item carries. The full list is
-`conformance/ledger/hour-cycle-patterns.tsv`, 132 rows. Twenty-four of them are
-the Low German and Occitan unconfirmed drafts covered above rather than anything
-the keyword did, and they carry the same two answers with no cycle named.
+`availableFormats` with that table's widths, literals and day period field.
+Wherever the two tables say anything different, the two libraries do too. Amharic
+states `h:mm:ss a` as its standard medium time and `a h:mm:ss` as its `hms` item,
+so `am-u-hc-h12` moves the day period to the front in ICU and leaves it at the
+end here, for a cycle Amharic already used. ICU drops the `hh` that Gujarati's
+own pattern states, and gains the `ч.` that Bulgarian's `Hms` item carries.
+
+Some of it only shows at midnight. Armenian writes `H:mm` in its `Hm` item and
+inherits root's `HH:mm` as its standard pattern, and at every hour past nine the
+two read the same, so `hy-u-hc-h23` is `0:30` in ICU and `00:30` here and
+identical for the rest of the day. Eleven languages differ that way, in both
+directions.
+
+Traditional Chinese is the one where a day period moves rather than a width.
+`zh-Hant` states `Bh:mm` as both its standard short time and its `hm` item, so
+this library writes the flexible day period the locale asks for, `凌晨` at half
+past midnight. ICU re-derives, reads `hm` as `ah:mm` because its bundle parent
+for `zh_Hant` is `zh` where CLDR's `parentLocales` makes it root, and writes
+`上午`. That is the parent chain question the currency entry above records,
+reached through the hour cycle.
 
 Korean is the one case where neither side can just read an answer off the data.
 It states no twenty-four hour standard pattern, so `ko-u-hc-h23` has to be built:
@@ -275,6 +286,12 @@ Naming a cycle removes the Kurdish divergence above outright, since neither side
 is reading a region preference any more. Argentina still differs at MEDIUM, where
 ICU takes `es-AR`'s own `hms` item, `hh:mm:ss`, by the keyword route rather than
 the preference one.
+
+None of it is the hour itself. Every case is waived by name in
+`conformance/ledger/hour-cycle-patterns.tsv` and
+`conformance/ledger/hour-cycle-skeletons.tsv`, each row carrying the category it
+belongs to and the reason, and a disagreement those files do not list fails the
+build. So does a row in them that stops reproducing.
 
 ## Time zone naming at a past instant
 
