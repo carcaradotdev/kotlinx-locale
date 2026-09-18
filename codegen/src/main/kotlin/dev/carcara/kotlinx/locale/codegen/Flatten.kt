@@ -57,6 +57,17 @@ class ResolvedLocaleData(
     val hourPreferred: Char,
     /** `<timeData>` allowed, in preference order; what `c12` and `c24` resolve against. */
     val hourAllowed: List<String>,
+    /**
+     * The other hour family's time patterns, FULL to SHORT, each empty where it
+     * says nothing the locale's own pattern at that style does not.
+     *
+     * Carried rather than derived at runtime because no rule produces them:
+     * Korean leads with the day period, Danish drops `HH` to `h` as it crosses,
+     * English separates with U+202F, and Korean's two families do not share a
+     * skeleton at all, the twelve-hour form using colons where the twenty-four
+     * hour form names each unit.
+     */
+    val alternateTimeFormats: List<String>,
 )
 
 /**
@@ -243,6 +254,8 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
         fun full(name: String, values: Array<String?>): List<String> =
             values.mapIndexed { i, v -> checkNotNull(v) { "$id: missing $name[$i] after flattening" } }
 
+        val resolvedTimeFormats = full("timeFormats", timeFormats)
+
         return ResolvedLocaleData(
             monthsWide = full("monthsWide", monthsWide),
             monthsAbbr = full("monthsAbbr", monthsAbbr),
@@ -263,13 +276,47 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
             era0 = checkNotNull(era0) { "$id: missing era0" },
             era1 = checkNotNull(era1) { "$id: missing era1" },
             dateFormats = full("dateFormats", dateFormats),
-            timeFormats = full("timeFormats", timeFormats),
+            timeFormats = resolvedTimeFormats,
             glueFormats = full("glueFormats", glueFormats),
             digits = digits,
             durationPatterns = full("durationPatterns", durationPatterns),
             hourPreferred = hourCycle.preferred,
             hourAllowed = hourCycle.allowed,
+            alternateTimeFormats = alternateTimeFormatsFor(id, resolvedTimeFormats),
         )
+    }
+
+    /**
+     * The opposite-family time patterns for [id], FULL to SHORT.
+     *
+     * The family is the one [timeFormats] MEDIUM writes, not the one `timeData`
+     * prefers: `docs/boundaries.md` records the two disagreeing for Kurdish in
+     * Iraq and for Argentina, and the pattern is what renders. FULL and LONG are
+     * MEDIUM plus their own style's zone decoration, which `withoutZoneFields()`
+     * strips before either entry point renders it.
+     */
+    private fun alternateTimeFormatsFor(id: String, timeFormats: List<String>): List<String> {
+        val ownLetter = patternHourLetter(timeFormats[2]) ?: return List(4) { "" }
+        val wantTwelve = ownLetter == 'H' || ownLetter == 'k'
+        val skeletons = availableFormatsFor(id)
+        val short = skeletons[if (wantTwelve) "hm" else "Hm"] ?: return List(4) { "" }
+        val medium = skeletons[if (wantTwelve) "hms" else "Hms"] ?: return List(4) { "" }
+        val alternates = listOf(
+            medium + zoneTail(timeFormats[0]),
+            medium + zoneTail(timeFormats[1]),
+            medium,
+            short,
+        )
+        return alternates.mapIndexed { index, alternate -> if (alternate == timeFormats[index]) "" else alternate }
+    }
+
+    /** `availableFormats` for [id], merged per skeleton id down its data chain. */
+    private fun availableFormatsFor(id: String): Map<String, String> {
+        val merged = LinkedHashMap<String, String>()
+        for (level in dataChain(id)) {
+            for ((skeleton, pattern) in partial(level).availableFormats) merged.putIfAbsent(skeleton, pattern)
+        }
+        return merged
     }
 
     /**
@@ -281,7 +328,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
      * alone declares.
      */
     fun resolveSkeletons(id: String): ResolvedSkeletonData {
-        val availableFormats = LinkedHashMap<String, String>()
+        val availableFormats = availableFormatsFor(id)
         val appendItems = arrayOfNulls<String>(DATE_FIELD_TYPES.size)
         val fieldNames = arrayOfNulls<String>(DATE_FIELD_TYPES.size)
         val quartersWide = arrayOfNulls<String>(4)
@@ -291,7 +338,6 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
 
         for (level in dataChain(id)) {
             val p = partial(level)
-            for ((skeleton, pattern) in p.availableFormats) availableFormats.putIfAbsent(skeleton, pattern)
             for (i in appendItems.indices) {
                 if (appendItems[i] == null) appendItems[i] = p.appendItems[i]
                 if (fieldNames[i] == null) fieldNames[i] = p.fieldNames[i]
@@ -348,7 +394,7 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
  * list items joined by U+001E. Decoded at runtime by LocaleData.
  */
 fun ResolvedLocaleData.encode(): String {
-    val fields = ArrayList<String>(27)
+    val fields = ArrayList<String>(28)
     fun list(items: List<String>) = fields.add(items.joinToString("\u001E"))
     list(monthsWide)
     list(monthsAbbr)
@@ -372,8 +418,13 @@ fun ResolvedLocaleData.encode(): String {
     // patterns when it is absent.
     list(durationPatterns)
     list(listOf(hourPreferred.toString()) + hourAllowed)
+    list(alternateTimeFormats)
     return fields.joinToString("\u001F")
 }
+
+private val HOUR_LETTERS = setOf('h', 'H', 'K', 'k')
+
+private val ZONE_LETTERS = setOf('v', 'z', 'Z', 'V', 'O', 'X', 'x')
 
 /**
  * Field letters this library cannot render, and so will not offer a skeleton for.
@@ -390,12 +441,10 @@ fun ResolvedLocaleData.encode(): String {
  * Across CLDR 48.2 this drops thirteen ids, all of them zone or week:
  * `Hv Hmv Hmsv hv hmv hmsv` and their `vvvv` forms, `HHmmZ`, `MMMMW` and `yw`.
  */
-private val UNSUPPORTED_FIELD_LETTERS = setOf(
-    'U',
-    'v', 'z', 'Z', 'V', 'O', 'X', 'x',
-    'w', 'W', 'F',
-    'g', 'S', 'A',
-)
+private val UNSUPPORTED_FIELD_LETTERS = ZONE_LETTERS +
+    setOf('U') +
+    setOf('w', 'W', 'F') +
+    setOf('g', 'S', 'A')
 
 /**
  * The field letters of a CLDR pattern, ignoring `'quoted literals'`.
@@ -404,8 +453,11 @@ private val UNSUPPORTED_FIELD_LETTERS = setOf(
  * `z` of `'zeg'` and the `g` of `'ga'` as fields and throw away forty-seven
  * perfectly renderable entries.
  */
-internal fun patternFieldLetters(pattern: String): Set<Char> {
-    val letters = LinkedHashSet<Char>()
+internal fun patternFieldLetters(pattern: String): Set<Char> = patternFields(pattern).mapTo(LinkedHashSet()) { it.value }
+
+/** The same field letters, each with the offset it sits at. */
+private fun patternFields(pattern: String): List<IndexedValue<Char>> {
+    val fields = ArrayList<IndexedValue<Char>>()
     var i = 0
     while (i < pattern.length) {
         val ch = pattern[i]
@@ -420,13 +472,37 @@ internal fun patternFieldLetters(pattern: String): Set<Char> {
                 }
             }
             ch in 'a'..'z' || ch in 'A'..'Z' -> {
-                letters.add(ch)
+                fields.add(IndexedValue(i, ch))
                 i++
             }
             else -> i++
         }
     }
-    return letters
+    return fields
+}
+
+/** The first hour field [pattern] writes, or null when it writes none. */
+private fun patternHourLetter(pattern: String): Char? = patternFields(pattern).firstOrNull { it.value in HOUR_LETTERS }?.value
+
+/**
+ * The zone decoration [pattern] closes with, its separating space or opening
+ * bracket included, or "" when [pattern] states no zone or does not close with
+ * one.
+ *
+ * The walk back stops at the first character that is neither, which keeps the
+ * words around the zone out of the tail. Bulgarian writes `'ч'.` ahead of its
+ * zone and Thai a combining vowel, and carrying either into another pattern
+ * repeats a word or strands a mark. Nineteen locales open with the zone rather
+ * than close with it, `zh` among them, and answer "" instead: appending one of
+ * those would write the time twice.
+ */
+private fun zoneTail(pattern: String): String {
+    val fields = patternFields(pattern)
+    val zone = fields.indexOfFirst { it.value in ZONE_LETTERS }
+    if (zone < 0 || fields.drop(zone).any { it.value !in ZONE_LETTERS }) return ""
+    var start = fields[zone].index
+    while (start > 0 && pattern[start - 1].let { it.isWhitespace() || it == '(' || it == '[' }) start--
+    return pattern.substring(start)
 }
 
 /**
