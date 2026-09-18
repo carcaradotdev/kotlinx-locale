@@ -123,7 +123,10 @@ public class Locale private constructor(
          * Returns `null` when no valid language subtag can be extracted.
          */
         public fun forLanguageTagOrNull(tag: String): Locale? {
-            val cleaned = tag.substringBefore('@').substringBefore('.').trim()
+            val atIndex = tag.indexOf('@')
+            val head = if (atIndex >= 0) tag.substring(0, atIndex) else tag
+            val oldKeywords = if (atIndex >= 0) tag.substring(atIndex + 1) else ""
+            val cleaned = head.substringBefore('.').trim()
             if (cleaned.isEmpty()) return null
             val parts = cleaned.split('-', '_').filter(String::isNotEmpty)
             if (parts.isEmpty()) return null
@@ -159,7 +162,7 @@ public class Locale private constructor(
                 index++
             }
 
-            val extensions = parseExtensions(parts, index)
+            val extensions = parseExtensions(parts, index).mergedWith(parseOldKeywords(oldKeywords))
             return Locale(
                 language = legacyLanguageAlias(language),
                 script = script,
@@ -240,3 +243,29 @@ private fun parseExtensions(parts: List<String>, from: Int): ParsedExtensions {
     }
     return ParsedExtensions(attributes, keywords, other)
 }
+
+private val OLD_KEYWORD_ALIASES = mapOf(
+    "calendar" to "ca",
+    "collation" to "co",
+    "currency" to "cu",
+    "hours" to "hc",
+    "numbers" to "nu",
+    "timezone" to "tz",
+    "variant" to "va",
+)
+
+private fun parseOldKeywords(segment: String): Map<String, String> {
+    if (segment.isEmpty()) return emptyMap()
+    val keywords = LinkedHashMap<String, String>()
+    for (entry in segment.split(';')) {
+        val name = entry.substringBefore('=', "").lowercase()
+        val value = entry.substringAfter('=', "").lowercase()
+        if (name.isEmpty() || value.isEmpty()) continue
+        val key = OLD_KEYWORD_ALIASES[name] ?: name
+        if (key.length == 2) keywords[key] = value
+    }
+    return keywords
+}
+
+private fun ParsedExtensions.mergedWith(old: Map<String, String>): ParsedExtensions =
+    if (old.isEmpty()) this else ParsedExtensions(attributes, keywords + old, other)

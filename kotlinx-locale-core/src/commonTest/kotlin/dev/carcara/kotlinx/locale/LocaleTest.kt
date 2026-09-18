@@ -91,6 +91,26 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
         assertEquals("en-u-kk", Locale.forLanguageTag("en-u-kk").toLanguageTag())
     }
 
+    test("readsOldKeywordSyntax") {
+        assertEquals("en-US-u-hc-h23", Locale.forLanguageTag("en_US@hc=h23").toLanguageTag())
+    }
+
+    test("mapsOldKeywordAliases") {
+        assertEquals("en-US-u-hc-h23", Locale.forLanguageTag("en_US@hours=h23").toLanguageTag())
+        assertEquals(
+            "en-u-ca-japanese-co-phonebk",
+            Locale.forLanguageTag("en@collation=phonebk;calendar=japanese").toLanguageTag(),
+        )
+    }
+
+    test("ignoresOldKeywordsWithoutAValue") {
+        assertEquals("pt-BR", Locale.forLanguageTag("PT_br.UTF-8@latin").toLanguageTag())
+    }
+
+    test("keywordsFromBothSyntaxesMerge") {
+        assertEquals("de-DE-u-hc-h12-nu-latn", Locale.forLanguageTag("de-DE-u-nu-latn@hc=h12").toLanguageTag())
+    }
+
     test("extensionsAreLowercased") {
         assertEquals("en-US-u-hc-h23", Locale.forLanguageTag("EN-us-U-HC-H23").toLanguageTag())
     }
