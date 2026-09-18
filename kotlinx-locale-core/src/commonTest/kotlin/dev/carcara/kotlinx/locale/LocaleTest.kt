@@ -106,6 +106,8 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
     test("ignoresOldKeywordsWithoutAValue") {
         assertEquals("pt-BR", Locale.forLanguageTag("PT_br.UTF-8@latin").toLanguageTag())
         assertEquals("en-u-hc-h23", Locale.forLanguageTag("en@latin;hc=h23").toLanguageTag())
+        assertEquals("en-u-hc-h23", Locale.forLanguageTag("en@hc=;hc=h23").toLanguageTag())
+        assertEquals("en", Locale.forLanguageTag("en@hc=").toLanguageTag())
     }
 
     test("keywordsFromBothSyntaxesMerge") {
