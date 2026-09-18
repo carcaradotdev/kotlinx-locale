@@ -115,6 +115,28 @@ val HourCycleDataTest by matrixSuite(matrixConfig { testConfig = TestConfig.test
         assertEquals(resolved.alternateTimeFormats, fields[27].split(LIST_SEPARATOR))
     }
 
+    test("theDerivationInvariantsHoldAcrossCldr") {
+        if (!cloned) return@test
+        val mixedFamily = mutableListOf<String>()
+        val multipleHourRuns = mutableListOf<String>()
+        val emptyEntries = mutableListOf<String>()
+        for (id in flattener.localeIds) {
+            val resolved = flattener.resolve(id)
+            val medium = patternHourRuns(resolved.timeFormats[2]).firstOrNull()
+            val short = patternHourRuns(resolved.timeFormats[3]).firstOrNull()
+            if (medium != null && short != null && isTwelveHourLetter(medium) != isTwelveHourLetter(short)) {
+                mixedFamily.add("$id MEDIUM $medium against SHORT $short")
+            }
+            for (alternate in resolved.alternateTimeFormats) {
+                if (patternHourRuns(alternate).size > 1) multipleHourRuns.add("$id $alternate")
+            }
+            if (resolved.alternateTimeFormats.any(String::isEmpty)) emptyEntries.add(id)
+        }
+        assertEquals(emptyList<String>(), mixedFamily, "locales whose SHORT and MEDIUM sit in different families")
+        assertEquals(emptyList<String>(), multipleHourRuns, "alternates carrying more than one hour field run")
+        assertEquals(listOf("byn", "byn_ER"), emptyEntries, "locales with an empty alternate entry")
+    }
+
     test("almostEveryLocaleCanAnswerAnOverride") {
         if (!cloned) return@test
         val silent = flattener.localeIds.filter { flattener.resolve(it).alternateTimeFormats.all(String::isEmpty) }

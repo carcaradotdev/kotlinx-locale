@@ -296,8 +296,8 @@ class Flattener(private val cldrDir: File, private val supplemental: Supplementa
      * strips before either entry point renders it.
      */
     private fun alternateTimeFormatsFor(id: String, timeFormats: List<String>): List<String> {
-        val ownLetter = patternHourLetter(timeFormats[2]) ?: return List(4) { "" }
-        val wantTwelve = ownLetter == 'H' || ownLetter == 'k'
+        val ownLetter = patternHourRuns(timeFormats[2]).firstOrNull() ?: return List(4) { "" }
+        val wantTwelve = !isTwelveHourLetter(ownLetter)
         val skeletons = availableFormatsFor(id)
         val short = skeletons[if (wantTwelve) "hm" else "Hm"] ?: return List(4) { "" }
         val medium = skeletons[if (wantTwelve) "hms" else "Hms"] ?: return List(4) { "" }
@@ -481,8 +481,23 @@ private fun patternFields(pattern: String): List<IndexedValue<Char>> {
     return fields
 }
 
-/** The first hour field [pattern] writes, or null when it writes none. */
-private fun patternHourLetter(pattern: String): Char? = patternFields(pattern).firstOrNull { it.value in HOUR_LETTERS }?.value
+/** Whether [letter] is one of the twelve-hour field letters. */
+internal fun isTwelveHourLetter(letter: Char): Boolean = letter == 'h' || letter == 'K'
+
+/**
+ * The hour fields [pattern] writes, in order, one entry per run of the same
+ * letter. Empty when the pattern writes no hour.
+ */
+internal fun patternHourRuns(pattern: String): List<Char> {
+    val runs = ArrayList<Char>()
+    var previous: IndexedValue<Char>? = null
+    for (field in patternFields(pattern)) {
+        val continues = previous != null && previous.value == field.value && previous.index == field.index - 1
+        if (field.value in HOUR_LETTERS && !continues) runs.add(field.value)
+        previous = field
+    }
+    return runs
+}
 
 /**
  * The zone decoration [pattern] closes with, its separating space or opening
