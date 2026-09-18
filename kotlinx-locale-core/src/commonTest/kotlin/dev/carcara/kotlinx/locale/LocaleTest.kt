@@ -105,10 +105,19 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
 
     test("ignoresOldKeywordsWithoutAValue") {
         assertEquals("pt-BR", Locale.forLanguageTag("PT_br.UTF-8@latin").toLanguageTag())
+        assertEquals("en-u-hc-h23", Locale.forLanguageTag("en@latin;hc=h23").toLanguageTag())
     }
 
     test("keywordsFromBothSyntaxesMerge") {
         assertEquals("de-DE-u-hc-h12-nu-latn", Locale.forLanguageTag("de-DE-u-nu-latn@hc=h12").toLanguageTag())
+    }
+
+    test("theOldSyntaxWinsOverTheSameKeyInTheNewOne") {
+        assertEquals("en-u-hc-h23", Locale.forLanguageTag("en-u-hc-h11@hc=h23").toLanguageTag())
+    }
+
+    test("aCharsetSuffixAndKeywordsCoexist") {
+        assertEquals("de-DE-u-hc-h23", Locale.forLanguageTag("de_DE.UTF-8@hc=h23").toLanguageTag())
     }
 
     test("extensionsAreLowercased") {
