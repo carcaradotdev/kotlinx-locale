@@ -55,9 +55,30 @@ val LocaleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(i
         assertEquals("ca-ES-valencia", locale.toLanguageTag())
     }
 
-    test("dropsExtensions") {
+    test("keepsUnicodeExtensions") {
         val locale = Locale.forLanguageTag("en-US-u-ca-japanese")
-        assertEquals("en-US", locale.toLanguageTag())
+        assertEquals("en", locale.language)
+        assertEquals("US", locale.region)
+        assertEquals("en-US-u-ca-japanese", locale.toLanguageTag())
+    }
+
+    test("canonicalisesExtensionOrder") {
+        val locale = Locale.forLanguageTag("en-u-foo-bar-nu-thai-ca-buddhist-kk-true")
+        assertEquals("en-u-bar-foo-ca-buddhist-kk-nu-thai", locale.toLanguageTag())
+    }
+
+    test("ordersSingletonsAlphabeticallyWithPrivateUseLast") {
+        val locale = Locale.forLanguageTag("en-x-lorem-u-hc-h23-t-de")
+        assertEquals("en-t-de-u-hc-h23-x-lorem", locale.toLanguageTag())
+    }
+
+    test("extensionsAreLowercased") {
+        assertEquals("en-US-u-hc-h23", Locale.forLanguageTag("EN-us-U-HC-H23").toLanguageTag())
+    }
+
+    test("extensionsParticipateInEquality") {
+        assertTrue(Locale.forLanguageTag("en-u-hc-h23") != Locale.forLanguageTag("en"))
+        assertEquals(Locale.forLanguageTag("en-u-hc-h23"), Locale.forLanguageTag("en-U-hc-h23"))
     }
 
     test("mapsLegacyLanguageCodes") {
