@@ -24,6 +24,10 @@ import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
+import dev.carcara.kotlinx.locale.datetime.cldr.internal.data.localeDataRegistry
+import dev.carcara.kotlinx.locale.datetime.cldr.runtime.DateTimeRecord
+import dev.carcara.kotlinx.locale.internal.FIELD_SEPARATOR
+import dev.carcara.kotlinx.locale.internal.resolvedRecord
 import dev.carcara.kotlinx.locale.test.assertEquals
 
 private fun recordFor(tag: String) = localeDataFor(Locale.forLanguageTag(tag))
@@ -35,6 +39,9 @@ val HourCycleRecordTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
         assertEquals(HourCycle.H12, recordFor("en").resolveHourCycle(HourCycle.C12))
         assertEquals(HourCycle.H23, recordFor("ja").resolveHourCycle(HourCycle.C24))
         assertEquals(HourCycle.H23, recordFor("en").resolveHourCycle(HourCycle.C24))
+        assertEquals(listOf("hB", "h", "H"), recordFor("hi-IN").hourAllowed)
+        assertEquals(HourCycle.H12, recordFor("hi-IN").resolveHourCycle(HourCycle.C12))
+        assertEquals(HourCycle.H23, recordFor("hi-IN").resolveHourCycle(HourCycle.C24))
     }
 
     test("aConcreteCycleResolvesToItself") {
@@ -52,5 +59,23 @@ val HourCycleRecordTest by matrixSuite(matrixConfig { testConfig = TestConfig.te
 
     test("noCycleLeavesThePatternAlone") {
         assertEquals(recordFor("en").timeFormats[3], recordFor("en").timePattern(FormatStyle.SHORT, null))
+    }
+
+    test("anEmptyAlternateFallsBackToTheOwnPattern") {
+        val record = recordFor("byn")
+        assertEquals(record.timeFormats[0], record.timePattern(FormatStyle.FULL, HourCycle.H23))
+    }
+
+    test("aRecordWithNoHourDataStillAnswers") {
+        val full = requireNotNull(resolvedRecord(localeDataRegistry, Locale.forLanguageTag("en")))
+        val truncated = full.split(FIELD_SEPARATOR).take(26).joinToString(FIELD_SEPARATOR.toString())
+        val record = DateTimeRecord(truncated)
+        assertEquals(record.timeFormats[3], record.timePattern(FormatStyle.SHORT, HourCycle.H23))
+        assertEquals(HourCycle.H12, record.resolveHourCycle(HourCycle.C12))
+    }
+
+    test("theLetterSwapLeavesQuotedTextAlone") {
+        val record = recordFor("fr-CA")
+        assertEquals("kk 'h' mm", record.timePattern(FormatStyle.SHORT, HourCycle.H24))
     }
 }

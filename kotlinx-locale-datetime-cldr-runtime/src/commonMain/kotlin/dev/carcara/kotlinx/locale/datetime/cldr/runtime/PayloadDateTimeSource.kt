@@ -295,9 +295,10 @@ public class DateTimeRecord(record: String, standaloneRecord: String? = null) {
     public val hourAllowed: List<String> = hourCycleRow.drop(1)
 
     /**
-     * The opposite hour family's time patterns, FULL to SHORT; empty where it
-     * says nothing this locale's own pattern at that style does not, and empty
-     * for a record written before these existed.
+     * The opposite hour family's time patterns, FULL to SHORT; an entry is
+     * empty where the alternate matches this locale's own pattern for that
+     * style, and the whole list is empty for a record written before these
+     * existed.
      */
     public val alternateTimeFormats: List<String> = fields.getOrNull(27)
         ?.takeIf(String::isNotEmpty)
