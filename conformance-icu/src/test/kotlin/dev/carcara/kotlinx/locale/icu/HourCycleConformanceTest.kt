@@ -51,7 +51,7 @@ import kotlinx.datetime.LocalTime
  * Nothing here classifies a disagreement into a counted kind. Every other domain
  * in this module pins the derivable kinds by number, because writing out several
  * thousand bundle fallbacks would be a file nobody reads twice. This one is small
- * enough to enumerate, so it is enumerated: all 294 waivers are rows in
+ * enough to enumerate, so it is enumerated: all 466 waivers are rows in
  * `conformance/ledger/hour-cycle-patterns.tsv` and
  * `conformance/ledger/hour-cycle-skeletons.tsv`, each naming its category and its
  * reason, and a number a reader cannot check against a list is exactly where a
@@ -135,24 +135,29 @@ val HourCycleConformanceTest by matrixSuite(matrixConfig { testConfig = TestConf
     }
 
     test("a standard time pattern under an hc override writes the cycle's own hour") {
-        val midnight = REFERENCE_INSTANTS.last()
+        assertTrue(
+            REFERENCE_INSTANTS.map { it.label } == HOUR_READING_INSTANTS,
+            "HOUR_READINGS is written against $HOUR_READING_INSTANTS in that order, and the instants are " +
+                "now ${REFERENCE_INSTANTS.map { it.label }}",
+        )
         val wrong = ArrayList<String>()
         var checked = 0
         for (tag in patternTags) {
             val plain = IcuHarness.locale(tag)
             for (cycle in CONCRETE_CYCLES) {
-                val rendered =
-                    CldrDateTime.formatTimeOrNull(midnight.time, FormatStyle.MEDIUM, plain.withHourCycle(cycle)) ?: continue
+                val locale = plain.withHourCycle(cycle)
+                val rendered = REFERENCE_INSTANTS.map { CldrDateTime.formatTimeOrNull(it.time, FormatStyle.MEDIUM, locale) }
+                if (rendered.any { it == null }) continue
                 checked++
-                val hour = leadingNumber(rendered)
-                if (hour != MIDNIGHT_HOURS.getValue(cycle)) wrong.add("$tag $cycle read $hour in <$rendered>")
+                val hours = rendered.map { leadingNumber(it.orEmpty()) }
+                if (hours != HOUR_READINGS.getValue(cycle)) wrong.add("$tag $cycle read $hours in $rendered")
             }
         }
         assertTrue(checked >= patternTags.size * 4, "only $checked of the ${patternTags.size * 4} cases rendered")
         assertTrue(
             wrong.isEmpty(),
-            "${wrong.size} of $checked standard patterns write an hour the named cycle does not call for " +
-                "at 00:30:45, where h11 is 0, h12 is 12, h23 is 0 and h24 is 24:\n" +
+            "${wrong.size} of $checked standard patterns write an hour the named cycle does not call for. " +
+                "Read at $HOUR_READING_INSTANTS, the four cycles are $HOUR_READINGS:\n" +
                 wrong.take(20).joinToString("\n") { "    $it" },
         )
     }
@@ -217,7 +222,7 @@ val HourCycleConformanceTest by matrixSuite(matrixConfig { testConfig = TestConf
 private val HOUR_CYCLE_DOMAINS = listOf("hour-cycle-patterns", "hour-cycle-skeletons")
 
 /**
- * The five reasons a waiver can give, read off the data rather than chosen in
+ * The six reasons a waiver can give, read off the data rather than chosen in
  * advance.
  *
  * Checked rather than written down and trusted: a waiver whose note opens with
@@ -231,7 +236,7 @@ private val WAIVER_CATEGORIES = listOf(
     "UNCONFIRMED_DRAFT",
     "KOREAN_TWENTY_FOUR_HOUR_MEDIUM",
     "RECORDED_IN_BOUNDARIES",
-    "ICU_PARENT_CHAIN",
+    "ICU_SUBSTITUTES_THE_DAY_PERIOD",
 )
 
 /** The four cycles that name a pattern letter, which are the four ICU answers for reliably. */
@@ -286,18 +291,26 @@ private val REFERENCE_INSTANTS = listOf(
     ),
 )
 
+/** The instants [HOUR_READINGS] is written against, in order. */
+private val HOUR_READING_INSTANTS = listOf("15:30:45", "00:30:45")
+
 /**
- * What each cycle writes the hour as at half past midnight, which is the reading
- * that tells all four apart.
+ * What each cycle writes the hour as at each of [HOUR_READING_INSTANTS].
+ *
+ * The pair is the identity, and neither reading alone is. Half past three cannot
+ * separate `h11` from `h12` or `h23` from `h24`, which is what the second instant
+ * was added for. Half past midnight cannot separate `h11` from `h23`, because
+ * both write 0, so a `K` that regressed to `H` would read the same there. Only
+ * the two together name the letter.
  *
  * Read off UTS #35's definitions rather than off the library: `h11` is 0 to 11,
  * `h12` is 1 to 12, `h23` is 0 to 23 and `h24` is 1 to 24.
  */
-private val MIDNIGHT_HOURS = mapOf(
-    HourCycle.H11 to 0,
-    HourCycle.H12 to 12,
-    HourCycle.H23 to 0,
-    HourCycle.H24 to 24,
+private val HOUR_READINGS = mapOf(
+    HourCycle.H11 to listOf(3, 0),
+    HourCycle.H12 to listOf(3, 12),
+    HourCycle.H23 to listOf(15, 0),
+    HourCycle.H24 to listOf(15, 24),
 )
 
 /**
@@ -393,9 +406,12 @@ private class OverrideEffect {
 /**
  * How many cases a cycle has to move before the override counts as wired.
  *
- * Every cycle crosses the family for a large majority of the catalogue, since
- * CLDR's locales are overwhelmingly one family or the other, so the true numbers
- * are in the hundreds. Two hundred is low enough that a CLDR release reshuffling
- * which locales prefer what cannot trip it.
+ * Two questions share this floor, and the same reasoning covers both: how many
+ * cases naming a cycle moved at all, and how many cases the two cycles within one
+ * family render differently. Every cycle crosses the family for a large majority
+ * of the catalogue, since CLDR's locales are overwhelmingly one family or the
+ * other, so the true numbers are in the hundreds. Two hundred is low enough that
+ * a CLDR release reshuffling which locales prefer what cannot trip it, and high
+ * enough that a comparison which stopped discriminating would fall through it.
  */
 private const val MINIMUM_MOVED = 200

@@ -269,13 +269,15 @@ two read the same, so `hy-u-hc-h23` is `0:30` in ICU and `00:30` here and
 identical for the rest of the day. Eleven languages differ that way, in both
 directions.
 
-Traditional Chinese is the one where a day period moves rather than a width.
+Traditional Chinese is the one where a day period is lost rather than a width.
 `zh-Hant` states `Bh:mm` as both its standard short time and its `hm` item, so
-this library writes the flexible day period the locale asks for, `凌晨` at half
-past midnight. ICU re-derives, reads `hm` as `ah:mm` because its bundle parent
-for `zh_Hant` is `zh` where CLDR's `parentLocales` makes it root, and writes
-`上午`. That is the parent chain question the currency entry above records,
-reached through the hour cycle.
+this library writes the flexible day period the locale asks for and reads `凌晨`
+at half past midnight. ICU writes `上午`, the plain AM name, because its
+re-derivation asks for a skeleton that does not name `B`, and a request without
+`B` is answered with `a` even where the matching entry states `B`. ICU's own
+`getBestPattern` shows it: `Bhm` gives `Bh:mm` and `hm` gives `ah:mm`, from the
+same data and with no cycle named. The `B` is dropped by the request, not missing
+from the table.
 
 Korean is the one case where neither side can just read an answer off the data.
 It states no twenty-four hour standard pattern, so `ko-u-hc-h23` has to be built:
