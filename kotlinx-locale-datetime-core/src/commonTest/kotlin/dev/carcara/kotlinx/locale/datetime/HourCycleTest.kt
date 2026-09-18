@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
+@file:OptIn(InternalKotlinxLocaleApi::class)
+
 package dev.carcara.kotlinx.locale.datetime
 
 import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
+import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
 import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertNull
@@ -46,5 +49,20 @@ val HourCycleTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScop
         for (cycle in HourCycle.entries) {
             assertEquals(cycle, Locale.forLanguageTag("en").withHourCycle(cycle).hourCycle)
         }
+    }
+
+    test("everyCycleNamesItsPatternLetter") {
+        assertEquals('K', HourCycle.H11.patternLetter)
+        assertEquals('h', HourCycle.H12.patternLetter)
+        assertEquals('H', HourCycle.H23.patternLetter)
+        assertEquals('k', HourCycle.H24.patternLetter)
+        assertNull(HourCycle.C12.patternLetter)
+        assertNull(HourCycle.C24.patternLetter)
+    }
+
+    test("clearingTheCycleKeepsTheOtherKeywords") {
+        val locale = Locale.forLanguageTag("de-DE-u-ca-gregory-hc-h12")
+        assertEquals("de-DE-u-ca-gregory", locale.withHourCycle(null).toLanguageTag())
+        assertEquals("de-DE-u-ca-gregory-hc-h23", locale.withHourCycle(HourCycle.H23).toLanguageTag())
     }
 }
