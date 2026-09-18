@@ -70,7 +70,7 @@ jobs:
           ./gradlew :help --configuration-cache && ./gradlew :help --configuration-cache
           ./gradlew :kotlinx-locale-types:jvmTest --configuration-cache
           ./gradlew :kotlinx-locale-types:jvmTest --configuration-cache
-      # A release narrows the build to four platforms, which drops source sets
+      # A release narrows the build to five platforms, which drops source sets
       # the rest of CI always has. Nothing else here configures that shape, so
       # without this the first thing to find a break in it would be a release.
       - name: Check the narrowed release target set still configures

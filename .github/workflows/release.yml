@@ -128,10 +128,10 @@ jobs:
           # The version goes the same way, so the tag is the only thing that
           # decides what gets released.
           ORG_GRADLE_PROJECT_version: ${{ needs.version.outputs.version }}
-          # Publishes JVM, Android, iOS and JS only. Maven Central meters file
-          # count per month and the full twenty-five targets are four times the
-          # files. The verify job above still built and tested every one of
-          # them; this decides what ships, not what works.
+          # Publishes JVM, Android, iOS, JS and Wasm-JS only. Maven Central
+          # meters file count per month and the full twenty-five targets are
+          # over three times the files. The verify job above still built and
+          # tested every one of them; this decides what ships, not what works.
           ORG_GRADLE_PROJECT_slimTargets: "true"
           # A Central Portal user token, generated at
           # https://central.sonatype.com/account, not the account login.
