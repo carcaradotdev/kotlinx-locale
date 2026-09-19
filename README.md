@@ -541,7 +541,7 @@ gzipped bundle size:
 | --- | ---: | ---: |
 | `-cldr-full` | 136.3 KB | |
 | plus `-cldr-skeletons` | 197.5 KB | 61.2 KB |
-| plus `-cldr-intervals` | 226.1 KB | 28.6 KB |
+| plus `-cldr-intervals` | 226.0 KB | 28.5 KB |
 
 Each layer builds on the one above it rather than repeating its tables, so
 asking for intervals brings the skeletons and the patterns with it. That is not

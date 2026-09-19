@@ -14,28 +14,28 @@ set. The budget is a ceiling `checkSize` enforces, not a target.
 | scenario | gzip | raw | budget | headroom |
 | --- | ---: | ---: | ---: | ---: |
 | country-codes | 14.6 KB | 41.1 KB | 20.0 KB | 5.3 KB |
-| locale | 17.6 KB | 53.8 KB | 20.0 KB | 2.3 KB |
-| country-platform | 23.9 KB | 70.3 KB | 25.0 KB | 1.0 KB |
+| locale | 17.5 KB | 53.7 KB | 20.0 KB | 2.4 KB |
+| country-platform | 23.9 KB | 70.2 KB | 25.0 KB | 1.0 KB |
 | currency-codes | 25.0 KB | 74.4 KB | 30.0 KB | 4.9 KB |
-| currency-platform | 26.8 KB | 81.8 KB | 28.0 KB | 1.1 KB |
+| currency-platform | 26.8 KB | 81.7 KB | 28.0 KB | 1.1 KB |
 | datetime-platform | 36.9 KB | 118.7 KB | 42.0 KB | 5.0 KB |
 | everything-platform | 49.9 KB | 156.0 KB | 54.0 KB | 4.0 KB |
-| personname-full | 52.8 KB | 384.5 KB | 60.0 KB | 7.1 KB |
+| personname-full | 52.7 KB | 384.5 KB | 60.0 KB | 7.2 KB |
 | phone-full | 79.9 KB | 276.2 KB | 110.0 KB | 30.0 KB |
 | number-full | 82.4 KB | 328.8 KB | 110.0 KB | 27.5 KB |
 | datetime-durations | 127.9 KB | 849.4 KB | 150.0 KB | 22.0 KB |
 | datetime-full | 136.3 KB | 590.8 KB | 140.0 KB | 3.6 KB |
-| datetime-relative | 154.4 KB | 899.4 KB | 190.0 KB | 35.5 KB |
-| datetime-skeletons | 197.5 KB | 951.0 KB | 205.0 KB | 7.4 KB |
-| datetime-intervals | 226.1 KB | 1324.9 KB | 280.0 KB | 53.8 KB |
-| country-full | 324.1 KB | 953.9 KB | 460.0 KB | 135.8 KB |
+| datetime-relative | 154.3 KB | 899.4 KB | 190.0 KB | 35.6 KB |
+| datetime-skeletons | 197.5 KB | 950.9 KB | 205.0 KB | 7.4 KB |
+| datetime-intervals | 226.0 KB | 1324.9 KB | 280.0 KB | 53.9 KB |
+| country-full | 324.1 KB | 953.8 KB | 460.0 KB | 135.8 KB |
 | currency-full | 386.3 KB | 1289.6 KB | 500.0 KB | 113.6 KB |
 | timezone-full | 427.5 KB | 2321.9 KB | 700.0 KB | 272.4 KB |
-| collation-full | 500.2 KB | 2230.3 KB | 600.0 KB | 99.7 KB |
-| currency-plurals | 651.2 KB | 2467.7 KB | 900.0 KB | 248.7 KB |
-| timezone-cities | 670.8 KB | 3011.3 KB | 1200.0 KB | 529.1 KB |
+| collation-full | 500.2 KB | 2230.2 KB | 600.0 KB | 99.7 KB |
+| currency-plurals | 651.2 KB | 2467.6 KB | 900.0 KB | 248.7 KB |
+| timezone-cities | 670.7 KB | 3011.3 KB | 1200.0 KB | 529.2 KB |
 | everything | 800.3 KB | 2692.8 KB | 1100.0 KB | 299.6 KB |
-| language-full | 897.5 KB | 2670.8 KB | 1400.0 KB | 502.5 KB |
+| language-full | 897.4 KB | 2670.7 KB | 1400.0 KB | 502.5 KB |
 
 ## What the platform layer costs
 

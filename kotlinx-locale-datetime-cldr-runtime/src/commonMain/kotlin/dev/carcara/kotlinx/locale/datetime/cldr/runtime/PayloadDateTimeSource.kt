@@ -95,7 +95,9 @@ public class PayloadDateTimeFormats(
 
     /**
      * Combines the locale's date and time patterns with its CLDR "glue" pattern,
-     * e.g. `Sunday, July 27, 2026, 3:05 PM` for `en`.
+     * e.g. `Sunday, July 27, 2026, 3:05 PM` for `en`. The time pattern is the
+     * one [hourCycle] names when the locale asks for a cycle, and the locale's
+     * own otherwise.
      */
     override fun formatDateTimeOrNull(dateTime: LocalDateTime, dateStyle: FormatStyle, timeStyle: FormatStyle, locale: Locale): String? {
         val data = recordFor(locale) ?: return null
