@@ -24,9 +24,12 @@ package dev.carcara.kotlinx.locale
  * script, uppercase region. Extensions are held in the canonical order UTS #35
  * Annex C defines, and [toLanguageTag] writes them back in it.
  *
- * Of the `-u-` keys, only `hc` changes what this library renders. `nu`, `ca` and
- * the rest are kept and round-tripped, and do nothing. That statement is what
- * UAX35-C2 asks an implementation to make.
+ * Of the `-u-` keys, only `hc` changes what the bundled CLDR sources render.
+ * `nu`, `ca` and the rest are kept and round-tripped, and those sources act on
+ * none of them. That statement is what UAX35-C2 asks an implementation to make,
+ * and it covers the bundled path. The `-platform` sources hand [toLanguageTag]
+ * to the host with its extensions on, so the host may act on keys this library
+ * does not; [stripExtensions] keeps it to the language identifier.
  *
  * Data lookup runs on the language identifier alone, so two identifiers that
  * differ only in an extension read the same tables.
@@ -50,8 +53,9 @@ public class Locale private constructor(
      * The value of a `-u-` keyword, or `null` when the identifier names none.
      * An absent value reads as `true`, which is what UTS #35 assumes.
      *
-     * Only `hc` changes what this library renders. Every other key round-trips
-     * through [toLanguageTag] and has no effect.
+     * Only `hc` changes what the bundled CLDR sources render. Every other key
+     * round-trips through [toLanguageTag], which the `-platform` sources pass to
+     * the host as it stands.
      */
     public fun unicodeKeywordOrNull(key: String): String? = keywords[key.lowercase()]
 

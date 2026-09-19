@@ -236,15 +236,24 @@ value is `"true"` or hyphen-separated runs of three to eight alphanumerics. It
 never checks whether the key is one this library acts on, because a caller has
 every right to carry a keyword through that only the far end understands.
 
-Of all the `-u-` keys, `hc` is the only one that changes what this library
-renders, and [the hour cycle](#the-hour-cycle) is where it does.
+Of all the `-u-` keys, `hc` is the only one that changes what the bundled CLDR
+sources render, and [the hour cycle](#the-hour-cycle) is where it does.
 
 Every other key is kept, canonicalized and written back by `toLanguageTag`, and
-has no effect. `th-TH-u-nu-thai` writes the same digits as `th-TH`, because the
-[numbering system](#numbering-systems) comes from the locale's own data.
-`en-US-u-ca-buddhist` writes the same calendar as `en-US`, because only the
-gregorian calendar is implemented. That statement is the one UAX35-C2 asks an
-implementation to make: say which keys are acted on, and preserve the rest.
+those sources act on none of them. `th-TH-u-nu-thai` writes the same digits as
+`th-TH`, because the [numbering system](#numbering-systems) comes from the
+locale's own data. `en-US-u-ca-buddhist` writes the same calendar as `en-US`,
+because only the gregorian calendar is implemented. That is the statement
+UAX35-C2 asks an implementation to make: say which keys are acted on, and
+preserve the rest. It describes the bundled path.
+
+The `-platform` sources sit outside it. Each one hands the host what
+`toLanguageTag` wrote, extensions included, so a key the bundled path ignores
+can still change the answer there. `Intl.NumberFormat("th-TH-u-nu-thai")`
+formats 1234.5 as `๑,๒๓๔.๕`, and a Foundation formatter built from an
+identifier carrying `ca` uses the calendar it names. That is the host's own
+behaviour rather than this library's, and `stripExtensions` is how you keep the
+host to the language identifier alone.
 
 Data lookup runs on the language identifier alone, so two locales that differ
 only in an extension read the same tables, and the

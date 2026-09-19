@@ -16,16 +16,23 @@
 
 package dev.carcara.kotlinx.locale
 
-internal actual fun platformSystemLocaleTag(): String? = try {
-    val locale: Any? = js("Intl.DateTimeFormat().resolvedOptions().locale")
-    locale as? String
+/**
+ * What ECMA-402 resolves for the default locale, read once and held for the
+ * process.
+ *
+ * One formatter answers both the tag and the cycle: `hourCycle` is filled in
+ * only when an hour field is asked for, and asking for one leaves `locale`
+ * alone. `Locale.current` is the default argument of every locale-taking
+ * function in this library, so reading afresh would build two formatters on
+ * every format call. Nothing in a browser or in Node moves the `Intl` default
+ * inside a process, so there is nothing to invalidate on.
+ */
+private val resolvedOptions: Any? = try {
+    js("Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions()")
 } catch (_: Throwable) {
     null
 }
 
-internal actual fun platformHourCycleKeyword(): String? = try {
-    val hourCycle: Any? = js("Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions().hourCycle")
-    (hourCycle as? String)?.lowercase()
-} catch (_: Throwable) {
-    null
-}
+internal actual fun platformSystemLocaleTag(): String? = resolvedOptions?.asDynamic()?.locale as? String
+
+internal actual fun platformHourCycleKeyword(): String? = (resolvedOptions?.asDynamic()?.hourCycle as? String)?.lowercase()

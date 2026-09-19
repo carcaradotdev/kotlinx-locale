@@ -83,7 +83,9 @@ public class PayloadDateTimeFormats(
 
     /**
      * Time-zone fields present in the FULL and LONG patterns are omitted, since
-     * a [LocalTime] carries no zone information.
+     * a [LocalTime] carries no zone information. The pattern is the one
+     * [hourCycle] names when the locale asks for a cycle, and the locale's own
+     * otherwise.
      */
     override fun formatTimeOrNull(time: LocalTime, style: FormatStyle, locale: Locale): String? {
         val data = recordFor(locale) ?: return null

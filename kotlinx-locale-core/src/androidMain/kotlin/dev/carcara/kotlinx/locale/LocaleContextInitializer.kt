@@ -49,6 +49,10 @@ internal object LocaleContext {
  * </provider>
  * ```
  *
+ * The `tools:` prefix needs `xmlns:tools="http://schemas.android.com/tools"` on
+ * the `<manifest>` root, which a manifest that has never used a `tools:`
+ * attribute does not have.
+ *
  * Do not put `tools:node="remove"` on the provider. Every library that uses
  * `androidx.startup` enters through that one provider, WorkManager, `emoji2`,
  * `profileinstaller` and `lifecycle-process` among them, so removing it stops

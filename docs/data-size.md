@@ -24,21 +24,22 @@ and `docs/size.md` measures that end for Kotlin/JS.
 | module | Android, JVM | Kotlin/JS, Wasm | Kotlin/Native |
 | --- | ---: | ---: | ---: |
 | kotlinx-locale-language-cldr-full | 729.6 KB | 1,699.2 KB | 730.8 KB |
+| kotlinx-locale-collation-cldr-full | 541.0 KB | 2,146.9 KB | 500.0 KB |
 | kotlinx-locale-currency-cldr-full | 453.7 KB | 1,065.0 KB | 451.8 KB |
 | kotlinx-locale-territory-cldr-full | 408.8 KB | 844.0 KB | 387.7 KB |
 | kotlinx-locale-currency-cldr-plurals | 376.6 KB | 1,161.9 KB | 420.4 KB |
 | kotlinx-locale-timezone-cldr-full | 365.9 KB | 1,693.1 KB | 370.9 KB |
 | kotlinx-locale-timezone-cldr-cities | 306.7 KB | 674.2 KB | 303.5 KB |
+| kotlinx-locale-datetime-cldr-full | 197.0 KB | 353.3 KB | 185.4 KB |
 | kotlinx-locale-phone-metadata-full | 170.6 KB | 170.6 KB | 341.2 KB |
-| kotlinx-locale-datetime-cldr-full | 153.5 KB | 271.7 KB | 144.7 KB |
 | kotlinx-locale-number-cldr-full | 139.2 KB | 183.9 KB | 200.5 KB |
-| kotlinx-locale-datetime-cldr-skeletons | 119.2 KB | 240.1 KB | 113.3 KB |
+| kotlinx-locale-datetime-cldr-skeletons | 133.2 KB | 263.5 KB | 126.6 KB |
 | kotlinx-locale-datetime-cldr-relative | 105.0 KB | 567.4 KB | 98.6 KB |
 | kotlinx-locale-datetime-cldr-intervals | 93.3 KB | 379.9 KB | 87.4 KB |
 | kotlinx-locale-datetime-cldr-durations | 66.4 KB | 529.0 KB | 62.4 KB |
 | kotlinx-locale-personname-cldr-full | 48.4 KB | 266.4 KB | 60.2 KB |
 | kotlinx-locale-currency-types | 6.6 KB | 6.6 KB | 13.1 KB |
-| **total** | **3,543.4 KB** | **9,753.1 KB** | **3,786.6 KB** |
+| **total** | **4,141.9 KB** | **12,004.9 KB** | **4,340.6 KB** |
 
 ## By table
 
@@ -47,23 +48,26 @@ and `docs/size.md` measures that end for Kotlin/JS.
 | kotlinx-locale-language-cldr-full | LocaleDisplayNames | 755 | 681.7 KB | 1,651.4 KB | 635.1 KB |
 | kotlinx-locale-territory-cldr-full | CountryNames | 696 | 403.7 KB | 838.9 KB | 377.5 KB |
 | kotlinx-locale-currency-cldr-full | CurrencyNames | 832 | 397.9 KB | 943.0 KB | 372.4 KB |
+| kotlinx-locale-collation-cldr-full | CollationRoot | 1 | 384.3 KB | 1,388.3 KB | 355.5 KB |
 | kotlinx-locale-timezone-cldr-full | TimeZoneNames | 635 | 324.7 KB | 1,647.9 KB | 303.9 KB |
 | kotlinx-locale-currency-cldr-plurals | CurrencyPluralNames | 613 | 312.5 KB | 1,097.8 KB | 292.2 KB |
 | kotlinx-locale-timezone-cldr-cities | TimeZoneCities | 584 | 291.3 KB | 658.8 KB | 272.6 KB |
-| kotlinx-locale-datetime-cldr-full | LocaleData | 400 | 143.7 KB | 256.6 KB | 135.2 KB |
+| kotlinx-locale-datetime-cldr-full | LocaleData | 494 | 187.2 KB | 338.2 KB | 175.9 KB |
+| kotlinx-locale-collation-cldr-full | CollationTailorings | 104 | 137.9 KB | 721.6 KB | 127.1 KB |
 | kotlinx-locale-datetime-cldr-relative | RelativeTime | 278 | 105.0 KB | 567.4 KB | 98.6 KB |
 | kotlinx-locale-datetime-cldr-intervals | IntervalFormats | 201 | 93.3 KB | 379.9 KB | 87.4 KB |
 | kotlinx-locale-number-cldr-full | CurrencyCompact | 152 | 91.9 KB | 91.8 KB | 146.4 KB |
+| kotlinx-locale-datetime-cldr-skeletons | SkeletonNames | 398 | 66.6 KB | 122.7 KB | 63.7 KB |
 | kotlinx-locale-datetime-cldr-skeletons | SkeletonFormats | 251 | 66.4 KB | 140.5 KB | 62.7 KB |
 | kotlinx-locale-datetime-cldr-durations | DurationUnits | 183 | 66.4 KB | 529.0 KB | 62.4 KB |
 | kotlinx-locale-currency-cldr-plurals | CurrencyPluralNamesRegistryPacked | 1 | 64.1 KB | 64.1 KB | 128.2 KB |
-| kotlinx-locale-datetime-cldr-skeletons | SkeletonNames | 319 | 52.7 KB | 99.3 KB | 50.4 KB |
 | kotlinx-locale-language-cldr-full | LocaleDisplayNamesRegistryPacked | 1 | 47.8 KB | 47.8 KB | 95.7 KB |
 | kotlinx-locale-personname-cldr-full | PersonNames | 138 | 34.6 KB | 252.6 KB | 32.8 KB |
 | kotlinx-locale-timezone-cldr-full | TimeZoneNamesRegistryPacked | 1 | 26.0 KB | 26.0 KB | 52.0 KB |
 | kotlinx-locale-currency-cldr-full | CurrencyNamesRegistryPacked | 1 | 24.6 KB | 24.6 KB | 49.2 KB |
 | kotlinx-locale-currency-cldr-full | CurrencyCompact | 141 | 24.4 KB | 86.3 KB | 23.3 KB |
 | kotlinx-locale-number-cldr-full | CompactLong | 146 | 20.5 KB | 51.0 KB | 19.7 KB |
+| kotlinx-locale-collation-cldr-full | NormalizationData | 1 | 18.8 KB | 36.8 KB | 17.3 KB |
 | kotlinx-locale-timezone-cldr-cities | TimeZoneCitiesRegistryPacked | 1 | 15.4 KB | 15.4 KB | 30.9 KB |
 | kotlinx-locale-timezone-cldr-full | TimeZoneFormats | 185 | 15.2 KB | 19.2 KB | 15.0 KB |
 | kotlinx-locale-personname-cldr-full | PersonNameFormat | 2 | 13.7 KB | 13.7 KB | 27.4 KB |
@@ -134,6 +138,9 @@ and `docs/size.md` measures that end for Kotlin/JS.
 | kotlinx-locale-phone-metadata-full | PhoneFormats_O | 1 | 0.1 KB | 0.1 KB | 0.2 KB |
 | kotlinx-locale-number-cldr-full | OrdinalRuleIndex | 33 | 0.1 KB | 0.1 KB | 0.2 KB |
 | kotlinx-locale-phone-metadata-full | PhoneFormats_Q | 1 | 0.1 KB | 0.1 KB | 0.1 KB |
+| kotlinx-locale-collation-cldr-full | CollationRootRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
+| kotlinx-locale-collation-cldr-full | CollationTailoringsRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
+| kotlinx-locale-collation-cldr-full | NormalizationDataRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-currency-cldr-full | CurrencyCompactRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-currency-cldr-full | CurrencyFormatsRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-datetime-cldr-durations | DurationUnitsRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
@@ -148,6 +155,7 @@ and `docs/size.md` measures that end for Kotlin/JS.
 | kotlinx-locale-number-cldr-full | CompactShortRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-personname-cldr-full | PersonNamesRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-timezone-cldr-full | TimeZoneFormatsRegistryPacked | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
+| kotlinx-locale-collation-cldr-full | CollationRootRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-currency-cldr-full | CurrencyFormatsRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-currency-cldr-plurals | CurrencyPluralNamesRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |
 | kotlinx-locale-datetime-cldr-durations | DurationUnitsRegistry | 1 | 0.0 KB | 0.0 KB | 0.0 KB |

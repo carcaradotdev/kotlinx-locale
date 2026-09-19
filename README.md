@@ -541,7 +541,7 @@ gzipped bundle size:
 | --- | ---: | ---: |
 | `-cldr-full` | 136.3 KB | |
 | plus `-cldr-skeletons` | 197.5 KB | 61.2 KB |
-| plus `-cldr-intervals` | 226.0 KB | 28.5 KB |
+| plus `-cldr-intervals` | 226.1 KB | 28.6 KB |
 
 Each layer builds on the one above it rather than repeating its tables, so
 asking for intervals brings the skeletons and the patterns with it. That is not
@@ -644,6 +644,10 @@ not removes the node, and `Locale.current` then reports no hour cycle:
 </provider>
 ```
 
+The `tools:` prefix needs `xmlns:tools="http://schemas.android.com/tools"` on
+the `<manifest>` root. A manifest that has never used a `tools:` attribute does
+not have it, and the build fails on the prefix rather than on the node.
+
 Remove the `<meta-data>` node, never the `<provider>`. WorkManager, `emoji2`,
 `profileinstaller` and `lifecycle-process` all enter through that one provider,
 so `tools:node="remove"` on it stops their initializers as well. The build stays
@@ -685,6 +689,14 @@ date.format(FormatStyle.LONG, Locale.forLanguageTag("pt-BR"))
 
 The same call as the CLDR version with a different import, which is what the
 package split buys.
+
+One difference in what the two do with a locale. The platform sources hand the
+host the whole identifier, `-u-` extensions included, so a keyword the bundled
+tables ignore can still change the answer. `Intl.NumberFormat("th-TH-u-nu-thai")`
+formats 1234.5 as `๑,๒๓๔.๕` where the CLDR path writes `1,234.5`, and a Foundation
+formatter built from an identifier carrying `ca` uses the calendar it names.
+Pass `locale.stripExtensions()` when you want the host to see the language
+identifier on its own.
 
 What it saves, measured by the Kotlin/JS probes in `tools/` making identical
 calls against each layer:

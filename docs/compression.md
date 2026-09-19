@@ -94,9 +94,9 @@ in it, so every target runs the same reader.
 The Kotlin/JS column is the largest because nothing there is deflated, and that
 is the point: it is the column that gets compressed again on the way out. What
 the consumer downloads is in `docs/size.md`, and every scenario there is smaller
-than it was before any of this work: `everything` 911.0 to 793.3 KB,
-`language-full` 1179.3 to 892.4, `timezone-cities` 885.8 to 668.7,
-`currency-plurals` 811.2 to 647.9.
+than it was before any of this work: `everything` 911.0 to 800.3 KB,
+`language-full` 1179.3 to 897.5, `timezone-cities` 885.8 to 670.8,
+`currency-plurals` 811.2 to 651.2.
 
 ## What it costs
 
