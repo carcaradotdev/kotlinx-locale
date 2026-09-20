@@ -20,11 +20,20 @@ import at.asitplus.testballoon.matrix.matrixConfig
 import at.asitplus.testballoon.matrix.matrixSuite
 import de.infix.testBalloon.framework.core.TestConfig
 import de.infix.testBalloon.framework.core.testScope
+import dev.carcara.kotlinx.locale.Locale
+import dev.carcara.kotlinx.locale.codegen.FIELD_SEPARATOR
+import dev.carcara.kotlinx.locale.codegen.LIST_SEPARATOR
 import dev.carcara.kotlinx.locale.codegen.emittedFilePrefixes
+import dev.carcara.kotlinx.locale.codegen.kotlinUnescape
+import dev.carcara.kotlinx.locale.datetime.FormatStyle
+import dev.carcara.kotlinx.locale.datetime.cldr.runtime.PayloadDateTimeFormats
+import dev.carcara.kotlinx.locale.datetime.format
 import dev.carcara.kotlinx.locale.test.assertContains
 import dev.carcara.kotlinx.locale.test.assertEquals
 import dev.carcara.kotlinx.locale.test.assertFalse
+import dev.carcara.kotlinx.locale.test.assertNotNull
 import dev.carcara.kotlinx.locale.test.assertTrue
+import kotlinx.datetime.LocalTime
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
@@ -133,6 +142,49 @@ private fun LocaleFeature.asBuildScript(): String {
     return "$block { $property = true }"
 }
 
+/** The fields a pattern record carries once the hour cycle is on it. */
+private const val RECORD_FIELDS = 28
+
+/** The locale's own SHORT time pattern. */
+private const val SHORT_TIME_FIELD = 17
+
+/** The `<timeData>` row: the preferred hour letter, then the allowed entries in preference order. */
+private const val HOUR_CYCLE_FIELD = 26
+
+/** The other hour family's time patterns, FULL to SHORT. */
+private const val ALTERNATE_TIME_FIELD = 27
+
+/** One record's fields, in the order the generator wrote them. */
+private fun String.fields(): List<String> = split(FIELD_SEPARATOR)
+
+/** The list items of one field. */
+private fun String.entries(field: Int): List<String> = fields()[field].split(LIST_SEPARATOR)
+
+private val PAYLOAD_CONSTANT = Regex("""internal val (\w+): String =\n\s+"(.*)"\n""")
+
+private val REGISTRY_ENTRY = Regex("""put\("([^"]+)", (\w+)\)""")
+
+/**
+ * The pattern table this build generated, read back out of the Kotlin it wrote.
+ *
+ * The emitter deduplicates records into constants bucketed by the first letter
+ * of the tag that owns them and leaves the registry saying which constant
+ * answers for which tag, so reading a field means putting those halves back
+ * together and undoing the escaping. What comes out is the map the generated
+ * binding hands the runtime.
+ */
+private fun ConsumerProject.localeDataTable(): Map<String, String> {
+    val dataDir = generated("com/example/locale/internal/data")
+    val constants = dataDir.listFiles().orEmpty()
+        .filter { it.name.startsWith("LocaleData_") }
+        .flatMap { PAYLOAD_CONSTANT.findAll(it.readText()) }
+        .associate { it.groupValues[1] to kotlinUnescape(it.groupValues[2]) }
+    val registry = dataDir.resolve("LocaleDataRegistry.kt")
+    assertTrue(registry.isFile, "the pattern table was not generated")
+    return REGISTRY_ENTRY.findAll(registry.readText())
+        .associate { it.groupValues[1] to constants.getValue(it.groupValues[2]) }
+}
+
 val GenerateLocaleSourcesFunctionalTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
     test("generates a narrowed source set") {
@@ -194,6 +246,62 @@ val GenerateLocaleSourcesFunctionalTest by matrixSuite(matrixConfig { testConfig
             assertTrue(tables.any { it.startsWith("SkeletonAppendFormats") }, "the append formats are missing")
             assertTrue(tables.any { it.startsWith("SkeletonNames") }, "the names and quarters are missing")
             assertTrue(tables.any { it.startsWith("LocaleData") }, "the patterns to match against are missing")
+        }
+    }
+
+    test("the pattern table carries the hour cycle row CLDR gives each locale") {
+        withProject {
+            buildFile(locales = """locales("de", "en")""", features = "datetime { patterns = true }")
+            run("generateLocaleSources")
+
+            val table = localeDataTable()
+            assertTrue(table.isNotEmpty(), "the pattern table is empty")
+            for ((tag, record) in table) {
+                assertEquals(RECORD_FIELDS, record.fields().size, "$tag's record stops short of the hour cycle fields")
+            }
+
+            // supplementalData.xml gives DE `preferred="H" allowed="H hB"` and US
+            // `preferred="h" allowed="h hb H hB"`. A row that kept only its head
+            // would still decode, and would answer c12 with the locale's own cycle.
+            assertEquals(listOf("H", "H", "hB"), assertNotNull(table["de"]).entries(HOUR_CYCLE_FIELD))
+            assertEquals(listOf("h", "h", "hb", "H", "hB"), assertNotNull(table["en"]).entries(HOUR_CYCLE_FIELD))
+        }
+    }
+
+    test("a narrowed German build carries the twelve-hour patterns German never writes") {
+        withProject {
+            buildFile(locales = """locales("de", "en")""", features = "datetime { patterns = true }")
+            run("generateLocaleSources")
+
+            val table = localeDataTable()
+            val german = assertNotNull(table["de"], "the locale that was asked for is missing from the table")
+            assertEquals("HH:mm", german.fields()[SHORT_TIME_FIELD], "de's own SHORT time left the 24-hour clock")
+            // de.xml declares no twelve-hour time pattern of its own, so these are
+            // its hm and hms skeletons carrying the zone decoration of its own FULL
+            // and LONG patterns. The day period is separated by U+202F.
+            assertEquals(
+                listOf("h:mm:ss\u202Fa zzzz", "h:mm:ss\u202Fa z", "h:mm:ss\u202Fa", "h:mm\u202Fa"),
+                german.entries(ALTERNATE_TIME_FIELD),
+            )
+            assertEquals(
+                listOf("HH:mm:ss zzzz", "HH:mm:ss z", "HH:mm:ss", "HH:mm"),
+                assertNotNull(table["en"]).entries(ALTERNATE_TIME_FIELD),
+            )
+        }
+    }
+
+    test("a narrowed build renders the clock the locale asks for") {
+        withProject {
+            buildFile(locales = """locales("de", "en")""", features = "datetime { patterns = true }")
+            run("generateLocaleSources")
+
+            // The same class the generated binding constructs, over the same table
+            // it would hand it.
+            val formats = PayloadDateTimeFormats(localeDataTable())
+            val time = LocalTime(15, 30)
+            assertEquals("15:30", formats.format(time, FormatStyle.SHORT, Locale.forLanguageTag("de")))
+            assertEquals("3:30\u202FPM", formats.format(time, FormatStyle.SHORT, Locale.forLanguageTag("de-u-hc-h12")))
+            assertEquals("15:30", formats.format(time, FormatStyle.SHORT, Locale.forLanguageTag("en-u-hc-h23")))
         }
     }
 
