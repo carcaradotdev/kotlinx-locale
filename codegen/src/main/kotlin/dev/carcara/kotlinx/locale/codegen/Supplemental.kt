@@ -96,16 +96,12 @@ class WeekDataRow(val firstDay: Int, val minDays: Int, val weekend: Set<Int>)
 private val CLDR_DAYS = mapOf("mon" to 1, "tue" to 2, "wed" to 3, "thu" to 4, "fri" to 5, "sat" to 6, "sun" to 7)
 
 /**
- * A `<timeData>` row: which hour field a locale prefers, and which one the `C`
- * skeleton letter reaches for.
- *
- * [preferred] answers the `j` skeleton letter. [firstAllowed] answers `C`, which
- * takes the first *allowed* format rather than the preferred one, and whose
- * trailing `b` or `B` decides which day period letter comes with it — so `C` in
- * `hi-IN`, whose first allowed format is `hB`, asks for a flexible day period
- * where `j` would ask for AM/PM.
+ * A `<timeData>` row: which hour field a locale prefers, and the whole
+ * preference-ordered allowed list, whose head is what the `C` skeleton letter
+ * takes and whose order is what the `c12` and `c24` hour cycle values resolve
+ * against.
  */
-class HourCycle(val preferred: Char, val firstAllowed: String)
+class HourCycle(val preferred: Char, val allowed: List<String>)
 
 /**
  * The day period types, in the order used by the encoded rule records. am and pm
@@ -224,7 +220,10 @@ fun parseSupplemental(cldrDir: File): SupplementalData {
             val preferred = hours.getAttribute("preferred").takeIf(String::isNotEmpty)
                 ?: allowed.firstOrNull()
                 ?: "H"
-            val cycle = HourCycle(preferred = preferred[0], firstAllowed = allowed.firstOrNull() ?: preferred)
+            val cycle = HourCycle(
+                preferred = preferred[0],
+                allowed = allowed.ifEmpty { listOf(preferred) },
+            )
             for (key in hours.getAttribute("regions").split(' ')) {
                 if (key.isNotBlank()) hourCycles[key] = cycle
             }

@@ -20,6 +20,10 @@ plugins {
 
 kotlin {
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.androidx.startup.runtime)
+        }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

@@ -30,3 +30,5 @@ internal actual fun platformSystemLocaleTag(): String? = memScoped {
     val length = GetUserDefaultLocaleName(buffer, LOCALE_NAME_MAX_LENGTH)
     if (length > 0) buffer.toKStringFromUtf16() else null
 }
+
+internal actual fun platformHourCycleKeyword(): String? = null

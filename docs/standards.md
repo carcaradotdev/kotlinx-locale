@@ -21,10 +21,10 @@ an implementation of a few of them.
 
 | Specification | What it defines | Where it is used |
 | --- | --- | --- |
-| [UTS #35 Part 1: Core][tr35-1] | Locale identifiers, likely subtags, the inheritance chain | `kotlinx-locale-core`, and the resolution every other module depends on |
+| [UTS #35 Part 1: Core][tr35-1] | Locale identifiers, the `-u-`, `-t-` and `-x-` extensions and the Annex C order they are written in, likely subtags, the inheritance chain | `kotlinx-locale-core`, and the resolution every other module depends on |
 | [UTS #35 Part 2: General][tr35-2] | Display names for languages, scripts, regions; duration patterns | `-language-*`, `durationPattern` |
 | [UTS #35 Part 3: Numbers][tr35-3] | Number and currency formatting, plural and ordinal rules, compact notation | `-number-*`, `-currency-*` |
-| [UTS #35 Part 4: Dates][tr35-4] | Date and time patterns, skeletons, interval formats, week data, time zone names | `-datetime-*`, `-timezone-*` |
+| [UTS #35 Part 4: Dates][tr35-4] | Date and time patterns, skeletons, interval formats, week data, time zone names, and the hour cycle an `hc` keyword resolves to | `-datetime-*`, `-timezone-*` |
 | [UTS #35 Part 6: Supplemental][tr35-6] | Territory, currency and calendar metadata not tied to one locale | `Country`, `Currency`, `WeekInfo` |
 | [UTS #35 Part 8: Person Names][tr35-8] | Name field order, patterns per length and formality, initials | `-personname-*` |
 | [UTS #51: Emoji][tr51] | Emoji sequences, which is where flag emoji come from | `Country.flagEmoji` |

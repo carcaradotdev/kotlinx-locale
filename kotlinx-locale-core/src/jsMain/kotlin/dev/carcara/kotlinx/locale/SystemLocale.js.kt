@@ -22,3 +22,10 @@ internal actual fun platformSystemLocaleTag(): String? = try {
 } catch (_: Throwable) {
     null
 }
+
+internal actual fun platformHourCycleKeyword(): String? = try {
+    val hourCycle: Any? = js("Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions().hourCycle")
+    (hourCycle as? String)?.lowercase()
+} catch (_: Throwable) {
+    null
+}

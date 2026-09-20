@@ -19,11 +19,11 @@ plugins {
 }
 
 sizeProbe {
-    // Below probe-currency-codes, which is not an error: that probe calls
-    // Country.currency and so carries the country-to-currency table and the
-    // Country enum, neither of which this one touches. The comparison that means
-    // something is probe-currency-full, which makes these exact calls.
-    budgetBytes = 26 * 1024
+    // Near probe-currency-codes, from the other side: that probe carries the
+    // country-to-currency table and the Country enum and no Locale, this one
+    // the reverse. The comparison that means something is probe-currency-full,
+    // which makes these exact calls.
+    budgetBytes = 28 * 1024
 }
 
 kotlin {

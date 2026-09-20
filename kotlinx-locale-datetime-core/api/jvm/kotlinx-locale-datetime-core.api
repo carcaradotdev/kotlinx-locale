@@ -121,6 +121,28 @@ public final class dev/carcara/kotlinx/locale/datetime/FormatStyle : java/lang/E
 public final class dev/carcara/kotlinx/locale/datetime/FormatStyle$Companion {
 }
 
+public final class dev/carcara/kotlinx/locale/datetime/HourCycle : java/lang/Enum {
+	public static final field C12 Ldev/carcara/kotlinx/locale/datetime/HourCycle;
+	public static final field C24 Ldev/carcara/kotlinx/locale/datetime/HourCycle;
+	public static final field Companion Ldev/carcara/kotlinx/locale/datetime/HourCycle$Companion;
+	public static final field H11 Ldev/carcara/kotlinx/locale/datetime/HourCycle;
+	public static final field H12 Ldev/carcara/kotlinx/locale/datetime/HourCycle;
+	public static final field H23 Ldev/carcara/kotlinx/locale/datetime/HourCycle;
+	public static final field H24 Ldev/carcara/kotlinx/locale/datetime/HourCycle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getPatternLetter ()Ljava/lang/Character;
+	public static fun valueOf (Ljava/lang/String;)Ldev/carcara/kotlinx/locale/datetime/HourCycle;
+	public static fun values ()[Ldev/carcara/kotlinx/locale/datetime/HourCycle;
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/HourCycle$Companion {
+}
+
+public final class dev/carcara/kotlinx/locale/datetime/HourCycleKt {
+	public static final fun getHourCycle (Ldev/carcara/kotlinx/locale/Locale;)Ldev/carcara/kotlinx/locale/datetime/HourCycle;
+	public static final fun withHourCycle (Ldev/carcara/kotlinx/locale/Locale;Ldev/carcara/kotlinx/locale/datetime/HourCycle;)Ldev/carcara/kotlinx/locale/Locale;
+}
+
 public final class dev/carcara/kotlinx/locale/datetime/NameContext : java/lang/Enum {
 	public static final field Companion Ldev/carcara/kotlinx/locale/datetime/NameContext$Companion;
 	public static final field FORMAT Ldev/carcara/kotlinx/locale/datetime/NameContext;

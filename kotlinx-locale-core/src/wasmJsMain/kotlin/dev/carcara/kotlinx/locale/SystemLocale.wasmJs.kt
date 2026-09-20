@@ -23,3 +23,11 @@ internal actual fun platformSystemLocaleTag(): String? = try {
 } catch (_: Throwable) {
     null
 }
+
+private fun intlHourCycle(): String = js("Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions().hourCycle || ''")
+
+internal actual fun platformHourCycleKeyword(): String? = try {
+    intlHourCycle().lowercase().takeIf(String::isNotEmpty)
+} catch (_: Throwable) {
+    null
+}

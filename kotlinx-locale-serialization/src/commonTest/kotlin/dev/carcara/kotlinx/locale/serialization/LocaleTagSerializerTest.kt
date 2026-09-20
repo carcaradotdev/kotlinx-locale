@@ -70,16 +70,15 @@ val LocaleTagSerializerTest by matrixSuite(matrixConfig { testConfig = TestConfi
     }
 
     test("readsLenientlyBecauseForLanguageTagDoes") {
-        // POSIX identifiers and Unicode extensions parse, so a tag written by
-        // something other than this serializer still reads.
+        // POSIX identifiers parse, and Unicode extensions survive the round
+        // trip, so a tag written by something else still reads.
         assertEquals(
             Locale.of("pt", region = "BR"),
             Json.decodeFromString(LocaleTagSerializer, "\"pt_BR.UTF-8@latin\""),
         )
-        assertEquals(
-            Locale.of("en", region = "US"),
-            Json.decodeFromString(LocaleTagSerializer, "\"en-US-u-ca-buddhist\""),
-        )
+        val extended = Json.decodeFromString(LocaleTagSerializer, "\"en-US-u-ca-buddhist\"")
+        assertEquals(Locale.of("en", region = "US"), extended.stripExtensions())
+        assertEquals("en-US-u-ca-buddhist", extended.toLanguageTag())
     }
 
     test("rejectsATagWithNoLanguageSubtag") {

@@ -19,37 +19,43 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.skeletons.internal.data
 
 internal val SKELETON_NAMES_CA: String =
-    "era\u001Eany\u001Etrimestre\u001Emes\u001E\u001E\u001Edia de la setmana\u001Edia\u001E\u001E\u001Ea. m./p. m.\u001Ehora\u001Eminut\u001Esegon\u001E\u001E\u001F1r trimestre\u001E2n trimestre\u001E3r trimestre\u001E4t trimestre\u001F1T\u001E2T\u001E3T\u001E4T\u001FH\u001EH\u001F{1}, 'a' 'les' {0}\u001E{1}, 'a' 'les' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1r trimestre\u001E2n trimestre\u001E3r trimestre\u001E4t trimestre"
+    "era\u001Eany\u001Etrimestre\u001Emes\u001E\u001E\u001Edia de la setmana\u001Edia\u001E\u001E\u001Ea. m./p. m.\u001Ehora\u001Eminut\u001Esegon\u001E\u001E\u001F1r trimestre\u001E2n trimestre\u001E3r trimestre\u001E4t trimestre\u001F1T\u001E2T\u001E3T\u001E4T\u001FH\u001EH\u001Eh\u001EhB\u001F{1}, 'a' 'les' {0}\u001E{1}, 'a' 'les' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1r trimestre\u001E2n trimestre\u001E3r trimestre\u001E4t trimestre"
+
+internal val SKELETON_NAMES_CA_AD: String =
+    "era\u001Eany\u001Etrimestre\u001Emes\u001E\u001E\u001Edia de la setmana\u001Edia\u001E\u001E\u001Ea. m./p. m.\u001Ehora\u001Eminut\u001Esegon\u001E\u001E\u001F1r trimestre\u001E2n trimestre\u001E3r trimestre\u001E4t trimestre\u001F1T\u001E2T\u001E3T\u001E4T\u001FH\u001EH\u001EhB\u001F{1}, 'a' 'les' {0}\u001E{1}, 'a' 'les' {0}\u001E{1}, {0}\u001E{1} {0}\u001F\u001F1r trimestre\u001E2n trimestre\u001E3r trimestre\u001E4t trimestre"
 
 internal val SKELETON_NAMES_CCP: String =
-    "𑄡𑄪𑄇𑄴\u001E𑄝𑄧𑄏𑄧𑄢𑄴\u001E𑄖𑄨𑄚𑄴𑄟𑄏𑄧𑄢𑄴\u001E𑄟𑄏𑄴\u001E\u001E\u001E𑄥𑄛𑄴𑄖𑄢𑄴 𑄘𑄨𑄚𑄴\u001E𑄘𑄨𑄚𑄴\u001E\u001E\u001EAM/PM\u001E𑄊𑄮𑄚𑄴𑄓\u001E𑄟𑄨𑄚𑄨𑄖𑄴\u001E𑄥𑄬𑄉𑄬𑄚𑄴\u001E\u001E\u001F𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄘𑄨 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄖𑄨𑄚𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄌𑄳𑄆𑄬𑄢𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄘𑄨 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄖𑄨𑄚𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄌𑄳𑄆𑄬𑄢𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴"
+    "𑄡𑄪𑄇𑄴\u001E𑄝𑄧𑄏𑄧𑄢𑄴\u001E𑄖𑄨𑄚𑄴𑄟𑄏𑄧𑄢𑄴\u001E𑄟𑄏𑄴\u001E\u001E\u001E𑄥𑄛𑄴𑄖𑄢𑄴 𑄘𑄨𑄚𑄴\u001E𑄘𑄨𑄚𑄴\u001E\u001E\u001EAM/PM\u001E𑄊𑄮𑄚𑄴𑄓\u001E𑄟𑄨𑄚𑄨𑄖𑄴\u001E𑄥𑄬𑄉𑄬𑄚𑄴\u001E\u001E\u001F𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄘𑄨 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄖𑄨𑄚𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄌𑄳𑄆𑄬𑄢𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001EhB\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄘𑄨 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄖𑄨𑄚𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄌𑄳𑄆𑄬𑄢𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴"
+
+internal val SKELETON_NAMES_CCP_IN: String =
+    "𑄡𑄪𑄇𑄴\u001E𑄝𑄧𑄏𑄧𑄢𑄴\u001E𑄖𑄨𑄚𑄴𑄟𑄏𑄧𑄢𑄴\u001E𑄟𑄏𑄴\u001E\u001E\u001E𑄥𑄛𑄴𑄖𑄢𑄴 𑄘𑄨𑄚𑄴\u001E𑄘𑄨𑄚𑄴\u001E\u001E\u001EAM/PM\u001E𑄊𑄮𑄚𑄴𑄓\u001E𑄟𑄨𑄚𑄨𑄖𑄴\u001E𑄥𑄬𑄉𑄬𑄚𑄴\u001E\u001E\u001F𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄘𑄨 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄖𑄨𑄚𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄌𑄳𑄆𑄬𑄢𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄘𑄨 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄖𑄨𑄚𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴\u001E𑄌𑄳𑄆𑄬𑄢𑄴 𑄛𑄳𑄆𑄘𑄳𑄠𑄬 𑄖𑄨𑄚𑄴𑄟𑄎𑄧𑄢𑄴"
 
 internal val SKELETON_NAMES_CE: String =
     "мур\u001Eшо\u001EКвартал\u001Eбутт\u001E\u001E\u001EкӀиранан де\u001Eде\u001E\u001E\u001Eделкъал тӀехьа\u001Eсахьт\u001Eминот\u001Eсекунд\u001E\u001E\u001F1-гӀа квартал\u001E2-гӀа квартал\u001E3-гӀа квартал\u001E4-гӀа квартал\u001F1-гӀа кв.\u001E2-гӀа кв.\u001E3-гӀа кв.\u001E4-гӀа кв.\u001FH\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1-гӀа квартал\u001E2-гӀа квартал\u001E3-гӀа квартал\u001E4-гӀа квартал"
 
 internal val SKELETON_NAMES_CEB: String =
-    "panahon\u001Etuig\u001Equarter\u001Ebuwan\u001E\u001E\u001Eadlaw sa semana\u001Eadlaw\u001E\u001E\u001EAM/PM\u001Eoras\u001Eminuto\u001Esegundo\u001E\u001E\u001Fika-1 nga quarter\u001Eika-2 nga quarter\u001Eika-3 nga quarter\u001Eika-4 nga quarter\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} 'sa' {0}\u001E{1} 'sa' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fika-1 nga quarter\u001Eika-2 nga quarter\u001Eika-3 nga quarter\u001Eika-4 nga quarter"
+    "panahon\u001Etuig\u001Equarter\u001Ebuwan\u001E\u001E\u001Eadlaw sa semana\u001Eadlaw\u001E\u001E\u001EAM/PM\u001Eoras\u001Eminuto\u001Esegundo\u001E\u001E\u001Fika-1 nga quarter\u001Eika-2 nga quarter\u001Eika-3 nga quarter\u001Eika-4 nga quarter\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001EhB\u001Ehb\u001EH\u001F{1} 'sa' {0}\u001E{1} 'sa' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fika-1 nga quarter\u001Eika-2 nga quarter\u001Eika-3 nga quarter\u001Eika-4 nga quarter"
 
 internal val SKELETON_NAMES_CGG: String =
-    "Obunaku\u001EOmwaka\u001EQuarter\u001EOmwezi\u001E\u001E\u001EEizooba ry’okukora\u001EEizooba\u001E\u001E\u001ENyomushana/nyekiro\u001EShaaha\u001EEdakiika\u001EObucweka/Esekendi\u001E\u001E\u001FKWOTA 1\u001EKWOTA 2\u001EKWOTA 3\u001EKWOTA 4\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FKWOTA 1\u001EKWOTA 2\u001EKWOTA 3\u001EKWOTA 4"
+    "Obunaku\u001EOmwaka\u001EQuarter\u001EOmwezi\u001E\u001E\u001EEizooba ry’okukora\u001EEizooba\u001E\u001E\u001ENyomushana/nyekiro\u001EShaaha\u001EEdakiika\u001EObucweka/Esekendi\u001E\u001E\u001FKWOTA 1\u001EKWOTA 2\u001EKWOTA 3\u001EKWOTA 4\u001FK1\u001EK2\u001EK3\u001EK4\u001FH\u001EhB\u001Ehb\u001EH\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001FKWOTA 1\u001EKWOTA 2\u001EKWOTA 3\u001EKWOTA 4"
 
 internal val SKELETON_NAMES_CHR: String =
-    "ᏗᏓᎴᏂᏍᎬ\u001EᎤᏕᏘᏴᏌᏗᏒᎢ\u001EᎩᏄᏙᏗ\u001EᎧᎸᎢ\u001E\u001E\u001EᎢᎦ ᏕᎨᏌᏗᏒ\u001EᎢᎦ\u001E\u001E\u001EᏌᎾᎴ/ᏒᎯᏱ\u001EᏑᏟᎶᏓ\u001EᎢᏯᏔᏬᏍᏔᏅ\u001EᎠᏎᏢ\u001E\u001E\u001F1st ᎩᏄᏙᏗ\u001E2nd ᎩᏄᏙᏗ\u001E3rd ᎩᏄᏙᏗ\u001E4th ᎩᏄᏙᏗ\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} ᎤᎾᎢ {0}\u001E{1} ᎤᎾᎢ {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1st ᎩᏄᏙᏗ\u001E2nd ᎩᏄᏙᏗ\u001E3rd ᎩᏄᏙᏗ\u001E4th ᎩᏄᏙᏗ"
+    "ᏗᏓᎴᏂᏍᎬ\u001EᎤᏕᏘᏴᏌᏗᏒᎢ\u001EᎩᏄᏙᏗ\u001EᎧᎸᎢ\u001E\u001E\u001EᎢᎦ ᏕᎨᏌᏗᏒ\u001EᎢᎦ\u001E\u001E\u001EᏌᎾᎴ/ᏒᎯᏱ\u001EᏑᏟᎶᏓ\u001EᎢᏯᏔᏬᏍᏔᏅ\u001EᎠᏎᏢ\u001E\u001E\u001F1st ᎩᏄᏙᏗ\u001E2nd ᎩᏄᏙᏗ\u001E3rd ᎩᏄᏙᏗ\u001E4th ᎩᏄᏙᏗ\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001Ehb\u001EH\u001EhB\u001F{1} ᎤᎾᎢ {0}\u001E{1} ᎤᎾᎢ {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F1st ᎩᏄᏙᏗ\u001E2nd ᎩᏄᏙᏗ\u001E3rd ᎩᏄᏙᏗ\u001E4th ᎩᏄᏙᏗ"
 
 internal val SKELETON_NAMES_CKB: String =
-    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم\u001Fچ١\u001Eچ٢\u001Eچ٣\u001Eچ٤\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم"
+    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم\u001Fچ١\u001Eچ٢\u001Eچ٣\u001Eچ٤\u001Fh\u001Eh\u001EhB\u001Ehb\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم"
 
 internal val SKELETON_NAMES_CKB_IR: String =
-    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم\u001Fچ١\u001Eچ٢\u001Eچ٣\u001Eچ٤\u001FH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم"
+    "Era\u001EYear\u001EQuarter\u001EMonth\u001E\u001E\u001EDay of the Week\u001EDay\u001E\u001E\u001EDayperiod\u001EHour\u001EMinute\u001ESecond\u001E\u001E\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم\u001Fچ١\u001Eچ٢\u001Eچ٣\u001Eچ٤\u001FH\u001EhB\u001EH\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001Fچارەکی یەکەم\u001Eچارەکی دووەم\u001Eچارەکی سێەم\u001Eچارەکی چوارەم"
 
 internal val SKELETON_NAMES_CS: String =
     "letopočet\u001Erok\u001Ečtvrtletí\u001Eměsíc\u001E\u001E\u001Eden v týdnu\u001Eden\u001E\u001E\u001Ečást dne\u001Ehodina\u001Eminuta\u001Esekunda\u001E\u001E\u001F1. čtvrtletí\u001E2. čtvrtletí\u001E3. čtvrtletí\u001E4. čtvrtletí\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FH\u001EH\u001F{1} 'v' {0}\u001E{1} 'v' {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F1. čtvrtletí\u001E2. čtvrtletí\u001E3. čtvrtletí\u001E4. čtvrtletí"
 
 internal val SKELETON_NAMES_CSW: String =
-    "Era\u001Eᐊᐢᑭᕀ\u001EQuarter\u001Eᐲᓯᒼ\u001E\u001E\u001EDay of the Week\u001Eᑮᓯᑳᐤ\u001E\u001E\u001EDayperiod\u001Eᐚᐢᑳᐸᓂᐤ\u001Eᑎᐸᐦᐃᑲᓂᐢ\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
+    "Era\u001Eᐊᐢᑭᕀ\u001EQuarter\u001Eᐲᓯᒼ\u001E\u001E\u001EDay of the Week\u001Eᑮᓯᑳᐤ\u001E\u001E\u001EDayperiod\u001Eᐚᐢᑳᐸᓂᐤ\u001Eᑎᐸᐦᐃᑲᓂᐢ\u001ESecond\u001E\u001E\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001FQ1\u001EQ2\u001EQ3\u001EQ4\u001Fh\u001Eh\u001Ehb\u001EH\u001EhB\u001F{1} {0}\u001E{1} {0}\u001E{1} {0}\u001E{1} {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_CV: String =
     "самана\u001Eҫул\u001Eчӗрӗк\u001Eуйӑх\u001E\u001E\u001Eэрнен кунӗ\u001Eкун\u001E\u001E\u001Eк. у./к. х.\u001Eсехет\u001Eминут\u001Eҫеккунт\u001E\u001E\u001F1-мӗш чӗрӗк\u001E2-мӗш чӗрӗк\u001E3-мӗш чӗрӗк\u001E4-мӗш чӗрӗк\u001F1-мӗш чӗр.\u001E2-мӗш чӗр.\u001E3-мӗш чӗр.\u001E4-мӗш чӗр.\u001FH\u001EH\u001F{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001F"
 
 internal val SKELETON_NAMES_CY: String =
-    "oes\u001Eblwyddyn\u001Echwarter\u001Emis\u001E\u001E\u001Ediwrnod o’r wythnos\u001Ediwrnod\u001E\u001E\u001EAM/PM\u001Eawr\u001Emunud\u001Eeiliad\u001E\u001E\u001Fchwarter 1af\u001E2il chwarter\u001E3ydd chwarter\u001E4ydd chwarter\u001FCh1\u001ECh2\u001ECh3\u001ECh4\u001FH\u001EH\u001F{1} 'am' {0}\u001E{1} 'am' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fchwarter 1af\u001E2il chwarter\u001E3ydd chwarter\u001E4ydd chwarter"
+    "oes\u001Eblwyddyn\u001Echwarter\u001Emis\u001E\u001E\u001Ediwrnod o’r wythnos\u001Ediwrnod\u001E\u001E\u001EAM/PM\u001Eawr\u001Emunud\u001Eeiliad\u001E\u001E\u001Fchwarter 1af\u001E2il chwarter\u001E3ydd chwarter\u001E4ydd chwarter\u001FCh1\u001ECh2\u001ECh3\u001ECh4\u001FH\u001EH\u001Eh\u001Ehb\u001EhB\u001F{1} 'am' {0}\u001E{1} 'am' {0}\u001E{1}, {0}\u001E{1}, {0}\u001F\u001Fchwarter 1af\u001E2il chwarter\u001E3ydd chwarter\u001E4ydd chwarter"

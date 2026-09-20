@@ -19,6 +19,12 @@ kotlinx-serialization = "1.11.0"
 agp = "9.3.0"
 android-compileSdk = "36"
 android-minSdk = "21"
+# Android keeps the 12/24-hour setting behind a Context and a library is handed
+# none. This is the smallest thing that hands one over: one meta-data node in a
+# provider the manifest merger shares with every other androidx initialiser. The
+# KDoc on LocaleContextInitializer says how an app opts out of that one node,
+# and why removing the provider instead breaks other libraries.
+androidx-startup = "1.2.0"
 ktlint-gradle = "14.2.0"
 maven-publish = "0.37.0"
 kover = "0.9.9"
@@ -42,6 +48,7 @@ libphonenumber = "9.0.19"
 [libraries]
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 
 # The test framework. The Gradle plugin instruments the compilation but does not
 # put the framework on the classpath, so this is declared for every test source

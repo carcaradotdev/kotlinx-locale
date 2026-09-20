@@ -106,11 +106,16 @@ public class Locale {
     public val script: String?
     public val region: String?
     public val variant: String?
+    public val unicodeAttributes: Set<String>
+    public fun unicodeKeywordOrNull(key: String): String?
+    public fun withUnicodeKeyword(key: String, value: String?): Locale
+    public fun stripExtensions(): Locale
     public fun toLanguageTag(): String
 }
 ```
 
-An immutable locale identifier with four normalized parts. There is no public
+An immutable Unicode locale identifier: a language identifier of four normalized
+parts, plus whatever locale extensions the tag carried. There is no public
 constructor; build one with `Locale.of` or `Locale.forLanguageTag`.
 
 | Property | Example | Normalization |
@@ -120,8 +125,9 @@ constructor; build one with `Locale.of` or `Locale.forLanguageTag`.
 | `region` | `"BR"` | uppercase, 2 letters or 3 digits |
 | `variant` | `"valencia"` | lowercase |
 
-Two locales are equal when all four parts are equal, so `Locale` works as a map
-key. `toString()` returns `toLanguageTag()`.
+Two locales are equal when their four parts and their extensions are equal, so
+`Locale` works as a map key and `en-US` and `en-US-u-hc-h23` are two different
+keys. `toString()` returns `toLanguageTag()`.
 
 ```kotlin
 val locale = Locale.forLanguageTag("sr-Cyrl-BA")
@@ -166,20 +172,27 @@ Parses a language tag. `forLanguageTag` throws `IllegalArgumentException` when
 no language subtag can be extracted; `forLanguageTagOrNull` returns null.
 
 Parsing is lenient on purpose, because its main job is digesting whatever a
-platform reports. It accepts `-` or `_` as separators, cuts everything after `.`
-or `@` (POSIX encoding and modifier suffixes), stops at the first single-letter
-subtag (BCP 47 extensions), and maps the legacy codes `iw`, `in`, `ji`, `mo` and
-`tl` to `he`, `id`, `yi`, `ro` and `fil`.
+platform reports. It accepts `-` or `_` as separators, cuts a POSIX encoding
+suffix after `.`, reads POSIX `@key=value` modifiers as Unicode keywords, keeps
+the `-u-`, `-t-` and `-x-` extensions, and maps the legacy codes `iw`, `in`,
+`ji`, `mo` and `tl` to `he`, `id`, `yi`, `ro` and `fil`.
 
 | Input | `toLanguageTag()` |
 | --- | --- |
 | `pt-BR` | `pt-BR` |
 | `PT_br.UTF-8@latin` | `pt-BR` |
 | `sr-Cyrl-BA` | `sr-Cyrl-BA` |
-| `en-US-u-ca-japanese` | `en-US` |
+| `en-US-u-ca-japanese` | `en-US-u-ca-japanese` |
+| `en-US-u-nu-latn-hc-h23` | `en-US-u-hc-h23-nu-latn` |
+| `pt_BR@hours=h23` | `pt-BR-u-hc-h23` |
 | `ca-ES-VALENCIA` | `ca-ES-valencia` |
 | `in-ID` | `id-ID` |
 | `iw` | `he` |
+
+Extensions come back in the canonical order of UTS #35 Annex C: the singletons
+alphabetically with `-x-` last, and inside `-u-` the attributes sorted, then the
+keywords by key. A tag read and written again is therefore the same string
+whichever order it arrived in.
 
 ```kotlin
 Locale.forLanguageTag("pt-BR")
@@ -188,17 +201,79 @@ Locale.forLanguageTagOrNull("POSIX")        // null
 Locale.forLanguageTagOrNull("123")          // null
 ```
 
+### Unicode extensions
+
+```kotlin
+public val unicodeAttributes: Set<String>
+public fun unicodeKeywordOrNull(key: String): String?
+public fun withUnicodeKeyword(key: String, value: String?): Locale
+public fun stripExtensions(): Locale
+```
+
+Four members of `Locale` that reach the `-u-` extension of a tag by key.
+`unicodeKeywordOrNull` returns null when the identifier names no such key, and
+`"true"` for a key written with no value, which is what UTS #35 assumes there.
+`withUnicodeKeyword` returns a new locale with the key set, or removed when the
+value is null. `stripExtensions` returns the language identifier on its own, with
+`-u-`, `-t-` and `-x-` all gone.
+
+```kotlin
+val locale = Locale.forLanguageTag("th-TH-u-nu-thai-ca-buddhist")
+
+locale.unicodeKeywordOrNull("nu")        // "thai"
+locale.unicodeKeywordOrNull("co")        // null
+locale.withUnicodeKeyword("hc", "h23")   // th-TH-u-ca-buddhist-hc-h23-nu-thai
+locale.withUnicodeKeyword("nu", null)    // th-TH-u-ca-buddhist
+locale.stripExtensions()                 // th-TH
+
+Locale.forLanguageTag("de-u-co-phonebk").unicodeAttributes      // []
+Locale.forLanguageTag("en-u-foobar-hc-h23").unicodeAttributes   // ["foobar"]
+```
+
+`withUnicodeKeyword` throws `IllegalArgumentException` on a key or value that is
+not well-formed `-u-` syntax. A key is two characters, the second a letter; a
+value is `"true"` or hyphen-separated runs of three to eight alphanumerics. It
+never checks whether the key is one this library acts on, because a caller has
+every right to carry a keyword through that only the far end understands.
+
+Of all the `-u-` keys, `hc` is the only one that changes what the bundled CLDR
+sources render, and [the hour cycle](#the-hour-cycle) is where it does.
+
+Every other key is kept, canonicalized and written back by `toLanguageTag`, and
+those sources act on none of them. `th-TH-u-nu-thai` writes the same digits as
+`th-TH`, because the [numbering system](#numbering-systems) comes from the
+locale's own data. `en-US-u-ca-buddhist` writes the same calendar as `en-US`,
+because only the gregorian calendar is implemented. That is the statement
+UAX35-C2 asks an implementation to make: say which keys are acted on, and
+preserve the rest. It describes the bundled path.
+
+The `-platform` sources sit outside it. Each one hands the host what
+`toLanguageTag` wrote, extensions included, so a key the bundled path ignores
+can still change the answer there. `Intl.NumberFormat("th-TH-u-nu-thai")`
+formats 1234.5 as `๑,๒๓๔.๕`, and a Foundation formatter built from an
+identifier carrying `ca` uses the calendar it names. That is the host's own
+behaviour rather than this library's, and `stripExtensions` is how you keep the
+host to the language identifier alone.
+
+Data lookup runs on the language identifier alone, so two locales that differ
+only in an extension read the same tables, and the
+[fallback chain](#what-happens-for-a-locale-with-no-data) is unchanged by one.
+
 ### Locale.current
 
 ```kotlin
 public val Locale.Companion.current: Locale
 ```
 
-The system locale, read from the host and parsed with the rules above. When the
-platform exposes nothing (Wasm-WASI) or reports something unparseable, you get
-`Locale.of("en")`, so this never throws and never returns an unusable value. The
-per-platform sources are listed in the
+The locale `LocaleDefaults` names, or the system locale read from the host and
+parsed with the rules above. When the platform exposes nothing (Wasm-WASI) or
+reports something unparseable, you get `Locale.of("en")`, so this never throws
+and never returns an unusable value. The per-platform sources are listed in the
 [README](README.md#localecurrent).
+
+Where the host reports a 12/24-hour setting, it arrives as an `hc` keyword on
+this locale, so `Locale.current.toLanguageTag()` can read `en-US-u-hc-c24`.
+Android, Apple platforms, JS and Wasm-JS report one.
 
 `Locale.current` is the default argument on every locale-taking function except
 the style-based date and time ones.
@@ -208,6 +283,40 @@ Country.BR.displayName()                    // in the system locale
 price.format()                              // in the system locale
 date.format(FormatStyle.LONG, Locale.current)   // datetime asks explicitly
 ```
+
+### LocaleDefaults
+
+```kotlin
+public object LocaleDefaults {
+    public var locale: Locale?
+}
+```
+
+The locale this library answers with when a caller names none. Unset, which is
+the default, `Locale.current` asks the platform. Set, `Locale.current` returns
+this and stops asking.
+
+```kotlin
+LocaleDefaults.locale = Locale.forLanguageTag("pt-BR-u-hc-h23")
+Locale.current            // pt-BR-u-hc-h23, on every platform
+LocaleDefaults.locale = null
+Locale.current            // back to the platform's answer
+```
+
+It replaces the platform's answer whole, hour cycle included, rather than
+merging with it. An app that wants the device clock under a language of its own
+choosing composes the two itself:
+
+```kotlin
+val deviceCycle = Locale.current.unicodeKeywordOrNull("hc")
+LocaleDefaults.locale = Locale.forLanguageTag("pt-BR").withUnicodeKeyword("hc", deviceCycle)
+```
+
+Read the device cycle before the write, because after it `Locale.current` no
+longer reports one.
+
+The property is `@Volatile`, so a write is visible to other threads, and it is a
+process-wide setting rather than a scoped one. Write it once during startup.
 
 ### What happens for a locale with no data
 
@@ -498,6 +607,69 @@ variant get `12:00 noon` in `en`, while German has a name for midnight but none
 for noon, so 12:00 stays `PM`. A period the locale has no name for falls back to
 AM or PM, so something is always produced.
 
+### The hour cycle
+
+From `kotlinx-locale-datetime-core`, which every datetime artifact depends on.
+
+```kotlin
+public enum class HourCycle { H11, H12, H23, H24, C12, C24 }
+
+public val Locale.hourCycle: HourCycle?
+public fun Locale.withHourCycle(cycle: HourCycle?): Locale
+```
+
+`hourCycle` reads the `hc` keyword off a locale and returns null when it names
+none or names a value the standard does not define. `withHourCycle` writes it,
+and `withHourCycle(null)` removes it. The two are a typed view of
+`unicodeKeywordOrNull("hc")` and `withUnicodeKeyword("hc", ...)`.
+
+| Value | Hours | CLDR pattern letter |
+| --- | --- | :-: |
+| `H11` | 0 to 11, with a day period | `K` |
+| `H12` | 1 to 12, with a day period | `h` |
+| `H23` | 0 to 23 | `H` |
+| `H24` | 1 to 24 | `k` |
+| `C12` | the twelve-hour cycle the locale allows | resolved |
+| `C24` | the twenty-four hour cycle the locale allows | resolved |
+
+`C12` and `C24` are the Technical Preview values of UTS #35 and name a family
+rather than a cycle. They resolve against the locale's own `allowed` list, so
+`C12` is `H12` in English and `H11` in Japanese, which is why a device 12/24-hour
+switch maps to them rather than to a concrete pair.
+
+```kotlin
+val en = Locale.forLanguageTag("en")
+val time = LocalTime(15, 5, 9)
+val midnight = LocalTime(0, 30, 0)
+
+time.format(FormatStyle.SHORT, en)                                  // "3:05 PM"
+time.format(FormatStyle.SHORT, en.withHourCycle(HourCycle.H23))     // "15:05"
+time.format(FormatStyle.SHORT, en.withHourCycle(HourCycle.H24))     // "15:05"
+
+// H11 and H12 differ only where the hour is 0 or 12
+midnight.format(FormatStyle.SHORT, en.withHourCycle(HourCycle.H12)) // "12:30 AM"
+midnight.format(FormatStyle.SHORT, en.withHourCycle(HourCycle.H11)) // "0:30 AM"
+midnight.format(FormatStyle.SHORT, en.withHourCycle(HourCycle.H24)) // "24:30"
+
+Locale.forLanguageTag("de-u-hc-h12").hourCycle   // HourCycle.H12
+en.withHourCycle(HourCycle.H23).toLanguageTag()  // "en-u-hc-h23"
+```
+
+A named cycle reaches the four standard lengths and the skeletons alike, `j`
+included. What changes is the hour and nothing else: inside the family the locale
+already writes, only the hour letter moves, and the locale's own separators,
+literals and day period stay where they are. Crossing between the twelve- and
+twenty-four hour families uses the other family's pattern for the same locale.
+A skeleton that spells its hour out is the one thing a named cycle does not
+override, since `hm` is a request for a twelve-hour time in its own right; see
+[skeleton formatting](#skeleton-formatting).
+
+A date carries no hour, so `LocalDate.format` ignores the keyword entirely.
+
+Where this sits relative to CLDR's regional preference, and where ICU answers
+differently, is in
+[docs/boundaries.md](docs/boundaries.md#what-an-explicit-hour-cycle-changes).
+
 ### Numbering systems
 
 Each locale carries the digits of its default numbering system, and every number
@@ -553,6 +725,13 @@ Repeat a letter to ask for a width, so `MMM` is an abbreviated month name and
 `MMMM` a full one. `j` asks for whichever hour the locale prefers with the day
 period that goes with it, `J` for the hour with no day period, and `C` for the
 locale's first allowed hour format.
+
+A locale that names an [hour cycle](#the-hour-cycle) moves `j` onto it, so
+`time.format("jm", Locale.forLanguageTag("en-u-hc-h23"))` reads "15:05". A
+skeleton that spells its hour out keeps the family it asked for, because asking
+for `h` is asking for a twelve-hour time. What the named cycle decides there is
+the choice within a family, `h` against `K` and `H` against `k`. `C` keeps
+reading the locale's allowed list, which is what that letter is for.
 
 A skeleton spanning both a date and a time joins the halves with CLDR's `atTime`
 glue rather than the standard glue the style-based API uses, so `en` reads
@@ -2131,15 +2310,18 @@ locale falls back along the chain in
 [what happens for a locale with no data](#what-happens-for-a-locale-with-no-data),
 and names additionally fall back to the ISO code.
 
-The throwing entry points are `Locale.of`, `Locale.forLanguageTag`, the
-non-`OrNull` code lookups on `Country` and `Currency`, `CurrencyAmount.of`,
-`CurrencyAmount.parse`, `CurrencyAmount.parseFormatted`, and `CurrencyAmount`
-arithmetic or comparison across two different currencies. All of them throw
-`IllegalArgumentException`, and every lookup that can fail has a non-throwing
-alternative.
+The throwing entry points are `Locale.of`, `Locale.forLanguageTag`,
+`Locale.withUnicodeKeyword`, the non-`OrNull` code lookups on `Country` and
+`Currency`, `CurrencyAmount.of`, `CurrencyAmount.parse`,
+`CurrencyAmount.parseFormatted`, and `CurrencyAmount` arithmetic or comparison
+across two different currencies. All of them throw `IllegalArgumentException`,
+and every lookup that can fail has a non-throwing alternative.
 
-All types are immutable and safe to share between threads. Formatting allocates
-its working state per call and touches no global mutable data.
+All types are immutable and safe to share between threads, `Locale` and its
+extensions included, and formatting allocates its working state per call. The one
+piece of mutable state a caller can reach is
+[`LocaleDefaults.locale`](#localedefaults), which is `@Volatile` and meant to be
+written once during startup.
 
 The bundled data comes from CLDR `release-48-2` plus, for currency identity
 (numeric codes and ISO minor units), the official ISO 4217 list one published

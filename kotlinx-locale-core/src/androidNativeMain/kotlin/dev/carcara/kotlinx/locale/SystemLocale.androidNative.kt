@@ -28,3 +28,5 @@ internal actual fun platformSystemLocaleTag(): String? {
         ?: return null
     return raw.takeUnless { it == "C" || it == "POSIX" }
 }
+
+internal actual fun platformHourCycleKeyword(): String? = null

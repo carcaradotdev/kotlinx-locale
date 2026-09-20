@@ -24,8 +24,10 @@ import dev.carcara.kotlinx.locale.Locale
 import dev.carcara.kotlinx.locale.datetime.cldr.intervals.conformance.icuIntervalGolden
 import dev.carcara.kotlinx.locale.datetime.cldr.intervals.conformance.icuIntervalGoldenCases
 import dev.carcara.kotlinx.locale.test.assertEquals
+import dev.carcara.kotlinx.locale.test.assertNotEquals
 import dev.carcara.kotlinx.locale.test.assertTrue
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalTime
 
 val IntervalFormatTest by matrixSuite(matrixConfig { testConfig = TestConfig.testScope(isEnabled = false) }) {
 
@@ -104,6 +106,21 @@ val IntervalFormatTest by matrixSuite(matrixConfig { testConfig = TestConfig.tes
         // The case most likely to come out as the same text twice with a dash.
         val once = intervalFormat(date("2026-07-22"), date("2026-07-22"), "yMMMd", en)
         assertTrue('–' !in once && '-' !in once, "an identical pair should not be joined: $once")
+    }
+
+    test("intervalsFollowTheOverrideToo") {
+        // Intervals share the skeleton matcher, so an hc override that changes
+        // j changes an interval built from j the same way.
+        val start = LocalTime(9, 0)
+        val end = LocalTime(15, 30)
+        val plain = Locale.forLanguageTag("de-DE")
+        val overridden = Locale.forLanguageTag("de-DE-u-hc-h12")
+        assertEquals("09:00 – 15:30", intervalFormat(start, end, "jm", plain).spaces())
+        assertEquals("9:00 AM – 3:30 PM", intervalFormat(start, end, "jm", overridden).spaces())
+        assertNotEquals(
+            intervalFormat(start, end, "jm", plain),
+            intervalFormat(start, end, "jm", overridden),
+        )
     }
 
     test("everyLocaleAgreesWithIcu") {

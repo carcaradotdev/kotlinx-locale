@@ -19,7 +19,12 @@ plugins {
 }
 
 sizeProbe {
-    budgetBytes = 18 * 1024
+    // About half this reading is the `-u-` extension machinery: the attribute
+    // list, the keyword map and the sorting that writes them back in Annex C
+    // order reach for standard library collections Kotlin/JS eliminates from a
+    // `Locale` without them. 18 KB left 0.4 KB of headroom, which is not enough
+    // room for an unrelated edit to Locale.kt.
+    budgetBytes = 20 * 1024
 }
 
 kotlin {

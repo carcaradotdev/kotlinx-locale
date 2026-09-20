@@ -19,6 +19,7 @@
 package dev.carcara.kotlinx.locale.datetime.cldr.runtime
 
 import dev.carcara.kotlinx.locale.InternalKotlinxLocaleApi
+import dev.carcara.kotlinx.locale.datetime.HourCycle
 
 /**
  * The letters a caller may ask for.
@@ -61,7 +62,11 @@ internal class SkeletonCandidate(
  * tersely. Nothing here delegates to ICU at runtime; the agreement between the
  * two is a test, not a dependency.
  */
-internal class SkeletonMatcher(private val record: SkeletonRecord, private val dateTime: DateTimeRecord) {
+internal class SkeletonMatcher(
+    private val record: SkeletonRecord,
+    private val dateTime: DateTimeRecord,
+    hourCycleOverride: HourCycle? = null,
+) {
 
     /**
      * The pool, ordered the way ICU keys its candidate map.
@@ -71,6 +76,14 @@ internal class SkeletonMatcher(private val record: SkeletonRecord, private val d
      * is what makes those ties resolve the same way.
      */
     private val candidates: List<SkeletonCandidate> = buildPool().sortedWith { a, b -> b.fields.compareTo(a.fields) }
+
+    /**
+     * What `j` writes the hour with when the caller named an `hc` cycle;
+     * `null` to defer to [SkeletonRecord.preferredHourChar].
+     */
+    private val overrideHourChar: Char? = hourCycleOverride
+        ?.let { resolveHourCycle(it, record.allowedHourFormats) }
+        ?.patternLetter
 
     /**
      * Builds the pool in ICU's order, with its two rejection rules.
@@ -258,7 +271,7 @@ internal class SkeletonMatcher(private val record: SkeletonRecord, private val d
      * twelve- and twenty-four-hour families is left alone.
      */
     private fun hourLetterFor(requestedChar: Char, patternChar: Char, usesCapitalJ: Boolean): Char {
-        val preferred = record.preferredHourChar
+        val preferred = overrideHourChar ?: record.preferredHourChar
         return when {
             usesCapitalJ || requestedChar == preferred -> preferred
             requestedChar == 'h' && preferred == 'K' -> 'K'
@@ -302,7 +315,7 @@ internal class SkeletonMatcher(private val record: SkeletonRecord, private val d
                     var hourChar = 'h'
                     var dayPeriodChar = 'a'
                     if (ch == 'j') {
-                        hourChar = record.preferredHourChar
+                        hourChar = overrideHourChar ?: record.preferredHourChar
                     } else {
                         val allowed = record.firstAllowedHourFormat
                         hourChar = allowed[0]

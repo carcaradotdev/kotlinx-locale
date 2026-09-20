@@ -91,12 +91,15 @@ in it, so every target runs the same reader.
 | 0.1.0 | 12,840 KB | 12,840 KB | 19,624 KB |
 | now | 3,911 KB | 10,610 KB | 4,134 KB |
 
+The `now` row was measured at commit `c78fb410`, before the collation domain
+existed, so it reads lower than the total `docs/data-size.md` reports today.
+
 The Kotlin/JS column is the largest because nothing there is deflated, and that
 is the point: it is the column that gets compressed again on the way out. What
 the consumer downloads is in `docs/size.md`, and every scenario there is smaller
-than it was before any of this work: `everything` 911.0 to 793.3 KB,
-`language-full` 1179.3 to 892.4, `timezone-cities` 885.8 to 668.7,
-`currency-plurals` 811.2 to 647.9.
+than it was before any of this work: `everything` 911.0 to 800.3 KB,
+`language-full` 1179.3 to 897.4, `timezone-cities` 885.8 to 670.7,
+`currency-plurals` 811.2 to 651.2.
 
 ## What it costs
 
